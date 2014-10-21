@@ -1,0 +1,45 @@
+{
+    "name": "coolie",
+    "version": "0.0.1",
+    "description": "A JavaScript module builder for coolie.",
+    "script": {},
+    "bin": {},
+    "main": "index.js",
+    "keywords": [
+        "cloudcome",
+        "javascript",
+        "seajs",
+        "AMD",
+        "AMDJS",
+        "package",
+        "module",
+        "coolie",
+        "builder"
+    ],
+    "author": {
+        "name": "cloudcome",
+        "email": "cloudcome@163.com",
+        "url": "http://ydr.me"
+    },
+    "homepage": "https://github.com/cloudcome/nodejs-coolie",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cloudcome/nodejs-coolie"
+    },
+    "bugs": {
+        "url": "https://github.com/cloudcome/nodejs-coolie/issues"
+    },
+    "licenses": "MIT",
+    "spm": {
+        "main": "index.js",
+        "dependencies": {}
+    },
+    "dependencies": {
+        "clean-css": "^2.2.14",
+        "colors": "^0.6.2",
+        "fs-extra": "^0.11.0",
+        "glob": "^4.0.5",
+        "howdo": "^1.1.2",
+        "uglify-js": "^2.4.15"
+    }
+}
