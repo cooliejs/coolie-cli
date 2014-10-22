@@ -46,6 +46,7 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
     }
 
     type = type || 'muted';
+    message = message || 'empty message';
     var color = map[type] || type;
 
     console.log((event).bold, ('=>').cyan, (message)[color]);
