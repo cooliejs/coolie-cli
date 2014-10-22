@@ -1,0 +1,7 @@
+{
+    "src": ["./static/js/app/**/*.js"],
+    "base":"./static/js/app/",
+    "dest": "../dest/",
+    "sea-config.js": "./static/js/sea-config.js",
+    "copyFiles": ["./**/*.*"]
+}
