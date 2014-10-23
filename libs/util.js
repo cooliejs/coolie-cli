@@ -9,6 +9,8 @@
 
 
 var fs = require("fs");
+var REG_FIX = /[.*+?^=!:${}()|[\]/\\]/g;
+
 
 /**
  * 简单合并两个对象
@@ -62,6 +64,16 @@ module.exports.isFile = function (_path) {
     }
 
     return stat.isFile();
+};
+
+
+/**
+ * 修复正则字符串
+ * @param str
+ * @returns {string}
+ */
+module.exports.fixRegExp = function (str) {
+    return String(str).replace(REG_FIX, "\\$&");
 };
 
 

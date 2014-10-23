@@ -29,7 +29,9 @@ var replaceDefine = require('../libs/replace-define.js');
  */
 module.exports = function (file, increase, depIdsMap, callback) {
     // 原始依赖
-    var deps = [];
+    var absDeps = [];
+    var relDeps = [];
+    var relIdsMap = {};
     // 当前文件的目录
     var relativeDir = path.dirname(file);
 
@@ -56,13 +58,16 @@ module.exports = function (file, increase, depIdsMap, callback) {
             parseDeps(code).forEach(function (dep) {
                 var absDep;
 
-                if (deps.indexOf(dep) === -1) {
+                if (absDeps.indexOf(dep) === -1) {
                     absDep = path.join(relativeDir, dep);
-                    deps.push(absDep);
+                    absDeps.push(absDep);
+                    relDeps.push(dep);
 
-                    if(!depIdsMap[absDep]){
+                    if (!depIdsMap[absDep]) {
                         depIdsMap[absDep] = increase.add();
                     }
+
+                    relIdsMap[dep] = depIdsMap[absDep];
                 }
             });
 
@@ -78,14 +83,14 @@ module.exports = function (file, increase, depIdsMap, callback) {
 
         // 4. 替换 define
         .task(function (next, code) {
-            code = replaceDefine(file, code, deps, depIdsMap);
+            code = replaceDefine(file, code, absDeps, depIdsMap);
             next(null, code);
         })
 
 
         // 5. 替换 require
         .task(function (next, code) {
-            code = replaceRequire(code, deps, depIdsMap);
+            code = replaceRequire(code, relDeps, relIdsMap);
             next(null, code);
         })
 
@@ -93,7 +98,7 @@ module.exports = function (file, increase, depIdsMap, callback) {
         .follow(function (err, code) {
             callback(err, {
                 code: code,
-                deps: deps
+                deps: absDeps
             });
         });
 };

@@ -13,7 +13,7 @@ var log = require('../libs/log.js');
 var Increase = require('../libs/Increase.js');
 var buildModule = require('./build-module.js');
 
-module.exports = function (mainFile, dest, callback) {
+module.exports = function (mainFile, callback) {
     var bufferList = [];
     // 入口模块名称
     var mainName = path.basename(mainFile);
@@ -23,11 +23,11 @@ module.exports = function (mainFile, dest, callback) {
     var depIdsMap = {};
     // 记录已经构建的列表
     var depsCache = {};
+    var depsLength = 1;
     var _deepBuld = function (file) {
-        // 构建入口模块
         buildModule(file, increase, depIdsMap, function (err, meta) {
             if (err) {
-                log('build', file);
+                log("build", file, "error");
                 process.exit();
             }
 
@@ -36,22 +36,28 @@ module.exports = function (mainFile, dest, callback) {
             var output;
 
             depsCache[mainFile] = true;
-            bufferList.push(new Buffer(code + "\n", "utf8"));
+            bufferList.push(new Buffer("\n" + code, "utf8"));
 
             if (deps.length) {
                 deps.forEach(function (dep) {
                     if (!depsCache[dep]) {
+                        depsCache[dep] = true;
+                        log("require", dep);
                         _deepBuld(dep);
+                        depsLength++;
                     }
                 });
-            } else {
-                output = Buffer.concat(bufferList).toString() +
-                "/*coolie " + Date.now() + "*/";
-                callback(null);
+            }
+
+            if (depsLength === bufferList.length) {
+                output = "/*coolie " + Date.now() + "*/" +
+                Buffer.concat(bufferList).toString();
+                callback(null, output);
             }
         });
     };
 
     depIdsMap[mainFile] = mainName;
+    log("build main", mainFile, "warning");
     _deepBuld(mainFile);
 };

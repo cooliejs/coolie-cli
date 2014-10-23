@@ -1,5 +1,5 @@
 /*!
- * lib.js
+ * all.js
  * @author ydr.me
  * @create 2014-09-25 19:19
  */
@@ -7,10 +7,9 @@
 
 define(function () {
     /**
-     * @module libs/lib
+     * @module libs/all
      */
     'use strict';
 
-    require('./jquery.js');
-    console.log('libs/lib.js');
+    console.log('libs/all.js');
 });

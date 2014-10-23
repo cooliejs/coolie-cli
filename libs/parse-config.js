@@ -8,7 +8,7 @@
 "use strict";
 
 var path = require("path");
-var fs = require("fs");
+var fs = require("fs-extra");
 var log = require("../libs/log.js");
 var util = require("../libs/util.js");
 
@@ -78,6 +78,28 @@ module.exports = function (relative) {
         process.exit();
     }
 
+    src = path.join(relative, config.src);
+
+    if (!util.isDirectory(src)) {
+        log("parse config", "`" + src + "` is NOT a directory", "error");
+        process.exit();
+    }
+
+    //dest = path.join(relative, config.dest);
+    //
+    //if (!util.isDirectory(dest)) {
+    //    log("parse config", "`" + dest + "` is NOT a directory", "error");
+    //    process.exit();
+    //}
+
+    coolieConfigJS = path.join(relative, config["coolie-config.js"]);
+
+    if (!util.isFile(coolieConfigJS)) {
+        log("parse config", coolieConfigJS + " is NOT a file", "error");
+        process.exit();
+    }
+
+
 
     if (config.main) {
         mainType = util.type(config.main);
@@ -122,26 +144,6 @@ module.exports = function (relative) {
         }
     } else {
         config.copyFiles = [];
-    }
-
-
-    src = path.join(relative, config.src);
-    dest = path.join(relative, config.dest);
-    coolieConfigJS = path.join(relative, config["coolie-config.js"]);
-
-    if (!util.isDirectory(src)) {
-        log("parse config", "`" + src + "` is NOT a directory", "error");
-        process.exit();
-    }
-
-    if (!util.isDirectory(dest)) {
-        log("parse config", "`" + dest + "` is NOT a directory", "error");
-        process.exit();
-    }
-
-    if (!util.isFile(coolieConfigJS)) {
-        log("parse config", coolieConfigJS + " is NOT a file", "error");
-        process.exit();
     }
 
 

@@ -30,6 +30,10 @@ module.exports = function (file, code, deps, depIdsMap) {
 
     deps.forEach(function (dep) {
         if (depIdsMap[dep]) {
+            if (depsCode) {
+                depsCode += ",";
+            }
+
             depsCode += "\"" + depIdsMap[dep] + "\"";
         } else {
             log("replace define", "can not find " + dep + " map", "error");
