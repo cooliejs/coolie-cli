@@ -32,6 +32,15 @@ var map = {
  * @param {String} event 事件名称，如“build”
  * @param {String} message 事件消息
  * @param {String} type 显示类型
+ *
+ * @example
+ * 事件长度20个字符
+ * 默认：
+ *          hi => hello world!
+ *         hi2 => hello world again!
+ * 左对齐
+ * hi          => hello world!
+ * hi2         => hello world again!
  */
 module.exports = function log(isTextAlignLeft, event, message, type) {
     if (typeof arguments[0] !== 'boolean') {
@@ -41,7 +50,7 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
         isTextAlignLeft = false;
     }
 
-    while (20 - event.length > 0) {
+    while (20 - _bytes(event, 2) > 0) {
         event = isTextAlignLeft ? event + ' ' : ' ' + event;
     }
 
@@ -49,5 +58,34 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
     message = message || 'empty message';
     var color = map[type] || type;
 
+    message = message.replace(/[\n\r]/g, '\n                        ');
+
     console.log((event).bold, ('=>').cyan, (message)[color]);
 };
+
+
+/**
+ * 计算字节长度
+ * @param {String} string 源字符串
+ * @param {Number} [length] 1个中文占用长度，默认2
+ * @return {Number} 总长度
+ */
+function _bytes(string, length) {
+    var i = 0,
+        j = string.length,
+        k = 0,
+        c;
+
+    length = length || 2;
+
+    for (; i < j; i++) {
+        c = string.charCodeAt(i);
+        k += (c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f) ? 1 : length;
+    }
+
+    return k;
+}
+
+
+
+
