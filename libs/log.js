@@ -6,7 +6,25 @@
 
 'use strict';
 
-require('colors');
+var colors = require('colors/safe');
+
+// set theme
+var map = {
+    normal: 'white',
+    silly: 'rainbow',
+    input: 'grey',
+    verbose: 'cyan',
+    prompt: 'grey',
+    success: 'green',
+    info: 'green',
+    data: 'grey',
+    muted: 'grey',
+    help: 'cyan',
+    warn: 'yellow',
+    warning: 'yellow',
+    debug: 'blue',
+    error: 'bgRed'
+};
 
 /**
  * 输出消息
@@ -16,15 +34,6 @@ require('colors');
  */
 
 
-var map = {
-    info: 'blue',
-    success: 'green',
-    warning: 'yellow',
-    error: 'red',
-    danger: 'red',
-    muted: 'grey',
-    normal: 'white'
-};
 
 /**
  * 输出日志
@@ -50,17 +59,19 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
         isTextAlignLeft = false;
     }
 
-    while (20 - _bytes(event, 2) > 0) {
+    while (30 - _bytes(event, 2) > 0) {
         event = isTextAlignLeft ? event + ' ' : ' ' + event;
     }
 
     type = type || 'muted';
     message = message || 'empty message';
-    var color = map[type] || type;
 
-    message = message.replace(/[\n\r]/g, '\n                        ');
+    var color = map[type] || "white";
 
-    console.log((event).bold, ('=>').cyan, (message)[color]);
+
+    message = message.replace(/[\n\r]/g, '\n                                  ');
+
+    console.log(colors.yellow.bold(event), colors.cyan('=>'), _splitColors(color)(message));
 };
 
 
@@ -86,6 +97,24 @@ function _bytes(string, length) {
     return k;
 }
 
+
+/**
+ * 分割颜色
+ * @param color
+ * @returns {*|exports}
+ * @private
+ */
+function _splitColors(color){
+    var array = color.split(".");
+    var length = array.length;
+    var ret = colors;
+
+    while(length--){
+        ret = colors[array[length]];
+    }
+
+    return ret;
+}
 
 
 

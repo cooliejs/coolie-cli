@@ -34,7 +34,7 @@ module.exports = function (basedir) {
                 log("1/1", "请输入base目录，默认为“./”：" +
                 "\n`base`路径是相对于页面`coolie.js`所在的路径的" +
                 "\n`base`即为入口模块的相对路径，更多详情访问`coolie`帮助" +
-                "\nhttps://github.com/cloudcome/coolie", "info");
+                "\nhttps://github.com/cloudcome/coolie", "success");
                 break;
 
             case 1:
