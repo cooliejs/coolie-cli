@@ -2,8 +2,9 @@
   "name": "coolie",
   "version": "0.0.1",
   "description": "A JavaScript module builder for coolie.",
-  "script": {},
-  "bin": {},
+  "bin": {
+      "coolie": "./bind/coolie.js"
+  },
   "main": "index.js",
   "keywords": [
     "cloudcome",
