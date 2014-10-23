@@ -36,10 +36,7 @@ switch ((cmdArg0 || "").toLowerCase()) {
 //        break;
 //
     case "build":
-        time = Date.now();
-        buildModules(buildPath, function () {
-            log(true, "build", "build success, past " + (Date.now() - time) + " ms.", "success");
-        });
+        buildModules(buildPath);
         break;
 
     default:

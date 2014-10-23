@@ -36,7 +36,13 @@ module.exports.extend = function(a, b){
  * @returns {Boolean}
  */
 module.exports.isDirectory = function (_path) {
-    var stat = fs.statSync(_path);
+    var stat;
+
+    try{
+        stat= fs.statSync(_path);
+    }catch(err){
+        return !1;
+    }
 
     return stat.isDirectory();
 };
@@ -47,7 +53,13 @@ module.exports.isDirectory = function (_path) {
  * @returns {Boolean}
  */
 module.exports.isFile = function (_path) {
-    var stat = fs.statSync(_path);
+    var stat;
+
+    try{
+        stat= fs.statSync(_path);
+    }catch(err){
+        return !1;
+    }
 
     return stat.isFile();
 };
