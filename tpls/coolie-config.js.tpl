@@ -1,4 +1,4 @@
 coolie.config({
-    base: '{{base}}',
-    version: ''
+    base: "{{base}}",
+    version: ""
 }).use();
