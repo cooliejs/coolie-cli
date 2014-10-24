@@ -22,11 +22,9 @@ var util = require("../libs/util.js");
 module.exports = function (relative) {
     var file = path.join(relative, "./coolie.json");
     var config = {};
-    var src;
     var dest;
     var coolieConfigJS;
     var mainType;
-    var coolieConfigType;
     var copyFilesType;
 
 
@@ -46,60 +44,6 @@ module.exports = function (relative) {
             process.exit();
         }
     }
-
-
-    if (!config.src) {
-        log("parse config", "coolie.json require `src` property", "error");
-        process.exit();
-    }
-
-    if (util.type(config.src) !== "string") {
-        log("parse config", "`src` property must be a string", "error");
-        process.exit();
-    }
-
-    if (!config.dest) {
-        log("parse config", "coolie.json require `dest` property", "error");
-        process.exit();
-    }
-
-    if (util.type(config.dest) !== "string") {
-        log("parse config", "`dest` property must be a string", "error");
-        process.exit();
-    }
-
-    if (!config["coolie-config.js"]) {
-        log("parse config", "coolie.json require `coolie-config.js` property", "error");
-        process.exit();
-    }
-
-    if (util.type(config["coolie-config.js"]) !== "string") {
-        log("parse config", "`coolie-config.js` property must be a string", "error");
-        process.exit();
-    }
-
-    src = path.join(relative, config.src);
-
-    if (!util.isDirectory(src)) {
-        log("parse config", "`" + src + "` is NOT a directory", "error");
-        process.exit();
-    }
-
-    //dest = path.join(relative, config.dest);
-    //
-    //if (!util.isDirectory(dest)) {
-    //    log("parse config", "`" + dest + "` is NOT a directory", "error");
-    //    process.exit();
-    //}
-
-    coolieConfigJS = path.join(relative, config["coolie-config.js"]);
-
-    if (!util.isFile(coolieConfigJS)) {
-        log("parse config", coolieConfigJS + " is NOT a file", "error");
-        process.exit();
-    }
-
-
 
     if (config.main) {
         mainType = util.type(config.main);
@@ -123,6 +67,39 @@ module.exports = function (relative) {
         config.main = [];
     }
 
+    if (!config.dest) {
+        log("parse config", "coolie.json require `dest` property", "error");
+        process.exit();
+    }
+
+    if (util.type(config.dest) !== "string") {
+        log("parse config", "`dest` property must be a string", "error");
+        process.exit();
+    }
+
+    dest = path.join(relative, config.dest);
+
+    if (!util.isDirectory(dest)) {
+        log("parse config", "`" + dest + "` is NOT a directory", "error");
+        process.exit();
+    }
+
+    if (!config["coolie-config.js"]) {
+        log("parse config", "coolie.json require `coolie-config.js` property", "error");
+        process.exit();
+    }
+
+    if (util.type(config["coolie-config.js"]) !== "string") {
+        log("parse config", "`coolie-config.js` property must be a string", "error");
+        process.exit();
+    }
+
+    coolieConfigJS = path.join(relative, config["coolie-config.js"]);
+
+    if (!util.isFile(coolieConfigJS)) {
+        log("parse config", coolieConfigJS + " is NOT a file", "error");
+        process.exit();
+    }
 
     if (config.copyFiles) {
         copyFilesType = util.type(config.copyFiles);

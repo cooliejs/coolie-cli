@@ -34,7 +34,7 @@ module.exports = function (basedir) {
         log("coolie", "coolie 苦力 builder", "help");
         log("tips", "以下操作留空回车表示同意默认配置。", "warning");
         log("write file", util.fixPath(writeFile), "error");
-        log("hint", "如果上述目录不正确，请按`ctrl+C`退出后重新指定。", "warning");
+        log("warning", "如果上述目录不正确，请按`ctrl+C`退出后重新指定。", "warning");
 
         if(isExist){
             log("warning", "该文件已存在，是否覆盖？（y/[n]）", "warning");

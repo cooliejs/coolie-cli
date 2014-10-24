@@ -19,7 +19,7 @@ var buildMain = require('./build-main.js');
 
 module.exports = function (buildPath) {
     var config = parseConfig(buildPath);
-    var src = path.join(buildPath, config.src);
+    var src = buildPath;
     var dest = path.join(buildPath, config.dest);
     var coolieConfigJS = path.join(buildPath, config['coolie-config.js']);
     var time = Date.now();
