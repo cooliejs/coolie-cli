@@ -10,6 +10,7 @@
 var path = require('path');
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
+var util = require('../libs/util.js');
 var Increase = require('../libs/Increase.js');
 var buildModule = require('./build-module.js');
 
@@ -24,10 +25,12 @@ module.exports = function (mainFile, callback) {
     // 记录已经构建的列表
     var depsCache = {};
     var depsLength = 1;
+    var depsRelationship = {};
     var _deepBuld = function (file) {
         buildModule(file, increase, depIdsMap, function (err, meta) {
             if (err) {
-                log("build", file, "error");
+                log("build", util.fixPath(file), "error");
+                log('build', err.message, 'error');
                 process.exit();
             }
 
@@ -37,12 +40,20 @@ module.exports = function (mainFile, callback) {
 
             depsCache[mainFile] = true;
             bufferList.push(new Buffer("\n" + code, "utf8"));
+            depsRelationship[file] = {};
 
             if (deps.length) {
                 deps.forEach(function (dep) {
+                    depsRelationship[file][dep] = true;
+
+                    if (depsRelationship[dep] && depsRelationship[dep][file]) {
+                        log('depend cycle', util.fixPath(file) + '\n' + util.fixPath(dep), 'error');
+                        process.exit();
+                    }
+
                     if (!depsCache[dep]) {
                         depsCache[dep] = true;
-                        log("require", dep);
+                        log("require", util.fixPath(dep));
                         _deepBuld(dep);
                         depsLength++;
                     }
@@ -58,6 +69,6 @@ module.exports = function (mainFile, callback) {
     };
 
     depIdsMap[mainFile] = mainName;
-    log("build main", mainFile, "warning");
+    log("build main", util.fixPath(mainFile), "warning");
     _deepBuld(mainFile);
 };

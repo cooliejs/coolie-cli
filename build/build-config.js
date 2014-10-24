@@ -33,7 +33,7 @@ module.exports = function (basedir) {
     steps.push(function () {
         log("coolie", "coolie 苦力 builder", "help");
         log("tips", "以下操作留空回车表示同意默认配置。", "warning");
-        log("write file", writeFile, "error");
+        log("write file", util.fixPath(writeFile), "error");
         log("hint", "如果上述目录不正确，请按`ctrl+C`退出后重新指定。", "warning");
 
         if(isExist){
@@ -66,11 +66,11 @@ module.exports = function (basedir) {
         if(data.trim().toLocaleLowerCase().indexOf("n") === -1){
             fs.outputFile(writeFile, template, "utf-8", function (err) {
                 if (err) {
-                    log("write", writeFile, "error");
+                    log("write", util.fixPath(writeFile), "error");
                     return process.exit();
                 }
 
-                log("write", writeFile, "success");
+                log("write", util.fixPath(writeFile), "success");
                 process.exit();
             });
         }else{

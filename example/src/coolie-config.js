@@ -1,4 +1,4 @@
 coolie.config({
     base: './',
-    version: ''
+    version: "v8lysr"
 }).use();

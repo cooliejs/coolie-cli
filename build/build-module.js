@@ -11,6 +11,7 @@ var howdo = require('howdo');
 var path = require('path');
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
+var util = require('../libs/util.js');
 var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');
 var replaceRequire = require('../libs/replace-require.js');
@@ -46,8 +47,8 @@ module.exports = function (file, increase, depIdsMap, callback) {
                 code = fs.readFileSync(file, 'utf8');
                 next(null, code);
             } catch (err) {
-                log('read', file, 'error');
-                console.log(err);
+                log('read', util.fixPath(file), 'error');
+                log('read', err.message, 'error');
                 process.exit();
             }
         })

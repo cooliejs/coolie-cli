@@ -9,7 +9,9 @@
 
 
 var fs = require("fs");
+var path = require('path');
 var REG_FIX = /[.*+?^=!:${}()|[\]/\\]/g;
+var REG_PATH = path.sep === '/' ?  /\\/: /\//g;
 
 
 /**
@@ -18,12 +20,12 @@ var REG_FIX = /[.*+?^=!:${}()|[\]/\\]/g;
  * @param b
  * @returns {*|{}}
  */
-module.exports.extend = function(a, b){
+module.exports.extend = function (a, b) {
     a = a || {};
     b = b || {};
 
-    for(var i in b){
-        if(b.hasOwnProperty(i)){
+    for (var i in b) {
+        if (b.hasOwnProperty(i)) {
             a[i] = b[i];
         }
     }
@@ -40,9 +42,9 @@ module.exports.extend = function(a, b){
 module.exports.isDirectory = function (_path) {
     var stat;
 
-    try{
-        stat= fs.statSync(_path);
-    }catch(err){
+    try {
+        stat = fs.statSync(_path);
+    } catch (err) {
         return !1;
     }
 
@@ -57,9 +59,9 @@ module.exports.isDirectory = function (_path) {
 module.exports.isFile = function (_path) {
     var stat;
 
-    try{
-        stat= fs.statSync(_path);
-    }catch(err){
+    try {
+        stat = fs.statSync(_path);
+    } catch (err) {
         return !1;
     }
 
@@ -75,6 +77,68 @@ module.exports.isFile = function (_path) {
 module.exports.fixRegExp = function (str) {
     return String(str).replace(REG_FIX, "\\$&");
 };
+
+
+/**
+ * 随机数字
+ * @param min
+ * @param max
+ * @returns {number}
+ */
+module.exports.randomNumber = function (min, max) {
+    return Math.floor(Math.random() * max + min);
+};
+
+
+/**
+ * 生成指定长度的随机字符，包含小写字母和数字
+ * @param length
+ * @returns {string}
+ */
+module.exports.randomString = function (length) {
+    length = length || 6;
+
+    var str = '';
+
+    while (length--) {
+        str += this.randomNumber(0, 35).toString(36);
+    }
+
+    return str;
+};
+
+/**
+ * 计算字符字节长度
+ * @param string
+ * @param [length=2] 双字节长度，默认2
+ * @returns {number}
+ */
+module.exports.bytes = function (string, length) {
+        var i = 0,
+            j = string.length,
+            k = 0,
+            c;
+
+        length = length || 2;
+
+        for (; i < j; i++) {
+            c = string.charCodeAt(i);
+            k += (c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f) ? 1 : length;
+        }
+
+        return k;
+};
+
+
+/**
+ * 修正 path 路径为系统分隔符
+ * @param pt
+ * @returns {String}
+ */
+module.exports.fixPath = function (pt) {
+    return pt.replace(REG_PATH, path.sep);
+};
+
 
 
 /**

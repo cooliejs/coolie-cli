@@ -5,7 +5,7 @@
  */
 
 
-define(function () {
+define(function (require) {
     /**
      * @module libs/all
      */

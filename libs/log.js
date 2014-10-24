@@ -6,7 +6,8 @@
 
 'use strict';
 
-var colors = require('colors/safe');
+var colors = require('colors/safe.js');
+var util = require('./util.js');
 
 // set theme
 var map = {
@@ -34,7 +35,6 @@ var map = {
  */
 
 
-
 /**
  * 输出日志
  * @param {Boolean} isTextAlignLeft 是否事件左对齐
@@ -59,7 +59,7 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
         isTextAlignLeft = false;
     }
 
-    while (30 - _bytes(event, 2) > 0) {
+    while (30 - util.bytes(event, 2) > 0) {
         event = isTextAlignLeft ? event + ' ' : ' ' + event;
     }
 
@@ -69,51 +69,40 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
     var color = map[type] || "white";
 
 
-    message = message.replace(/[\n\r]/g, '\n                                  ');
-
-    console.log(colors.yellow.bold(event), colors.cyan('=>'), _splitColors(color)(message));
+    console.log(colors.yellow.bold(event), colors.cyan('=>'), _splitColors(color, message));
 };
 
 
-/**
- * 计算字节长度
- * @param {String} string 源字符串
- * @param {Number} [length] 1个中文占用长度，默认2
- * @return {Number} 总长度
- */
-function _bytes(string, length) {
-    var i = 0,
-        j = string.length,
-        k = 0,
-        c;
-
-    length = length || 2;
-
-    for (; i < j; i++) {
-        c = string.charCodeAt(i);
-        k += (c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f) ? 1 : length;
-    }
-
-    return k;
-}
 
 
 /**
  * 分割颜色
  * @param color
+ * @param message
  * @returns {*|exports}
  * @private
+ *
+ * @example
+ *          event => message line1
+ *                   message line2
+ *                   message line3
+ *                   message line4
  */
-function _splitColors(color){
-    var array = color.split(".");
-    var length = array.length;
-    var ret = colors;
+var REG_BREAK_LINE = /[\n\r]/g;
+function _splitColors(color, message) {
+    var newMessage = '';
+    var space = '\n                                  ';
+    var messageList = message.split(REG_BREAK_LINE);
 
-    while(length--){
-        ret = colors[array[length]];
-    }
+    messageList.forEach(function (msg, index) {
+        if (index) {
+            newMessage += space + colors[color](msg);
+        } else {
+            newMessage += colors[color](msg);
+        }
+    });
 
-    return ret;
+    return newMessage;
 }
 
 
