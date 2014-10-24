@@ -102,14 +102,14 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         template = template.replace(RE_COPY, _toStringArray(_clean(data)) || "");
 
-        log("6/"+ (steps.length - 2), "文件内容为：", "success");
+        log("6/" + (steps.length - 2), "文件内容为：", "success");
         console.log(template);
         log("confirm", "确认文件内容正确并生成文件？（[y]/n）", "warning");
     });
 
     // write
     steps.push(function (data) {
-        if(data.trim().toLocaleLowerCase().indexOf("n") === -1){
+        if (data.trim().toLocaleLowerCase().indexOf("n") === -1) {
             fs.outputFile(writeFile, template, "utf-8", function (err) {
                 if (err) {
                     log("write", util.fixPath(writeFile), "error");
@@ -119,7 +119,7 @@ module.exports = function (basedir) {
                 log("write", util.fixPath(writeFile), "success");
                 process.exit();
             });
-        }else{
+        } else {
             process.exit();
         }
     });
@@ -148,12 +148,14 @@ function _clean(chunk) {
 function _toStringArray(str) {
     var ret = "";
 
-    str = str.trim().split(RE_SPACE).forEach(function (s) {
+    str.trim().split(RE_SPACE).forEach(function (s) {
         if (ret) {
-            str += ",";
+            ret += ", ";
         }
 
-        str += "\"" + s + "\"";
+        if (s) {
+            ret += "\"" + s + "\"";
+        }
     });
 
     return ret;
