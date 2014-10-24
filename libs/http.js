@@ -12,14 +12,14 @@ var http = require('http');
 // http://registry.npmjs.org/coolie
 module.exports = function (url, callback) {
     var req = http.request(url, function (res) {
-        var data = '';
+        var bufferList = [];
 
         res.setEncoding('utf8');
         res.on('data', function (chunk) {
-            data+=chunk;
+            bufferList.push(new Buffer(chunk, 'utf8'));
         });
         res.on('end', function () {
-            callback(data);
+            callback(null, Buffer.concat(bufferList).toString());
         });
 
         res.on('error', function(err){
