@@ -40,13 +40,15 @@ module.exports = function (file, code) {
         .replace(REG_FUNCTION_START, '')
         .replace(REG_FUNCTION_END, '');
 
-    var fn = new Function('config',coolieString + code);
+    var fn = new Function('config', coolieString + code);
     var base;
     var version = util.randomString(6);
 
     try {
         fn(config);
 
+        log('coolie config', 'base: "' + config.base + '"', 'success');
+        log('coolie config', 'version: "' + version + '"', 'success');
         return 'coolie.config({base:"' + config.base + '",version:"' + version + '"}).use();';
     } catch (err) {
         log('replace config', util.fixPath(file), 'error');
