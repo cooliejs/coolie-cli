@@ -92,7 +92,7 @@ module.exports = function (file, code, callback) {
     try {
         ret = uglifyJS.minify(code, {
             fromString: true,
-            warnings: true,
+            warnings: false,
             mangle: true,
             compress: true
         });
