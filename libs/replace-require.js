@@ -14,11 +14,12 @@ var REG_DEFINE = /\bdefine.*\bfunction[^(]*\(([^,)]*)/;
 
 /**
  * 替换 require
+ * @param file
  * @param code 代码必须先进行压缩过后的，保证没有其他注释干扰
  * @param depNameList 依赖数组
  * @param depName2IdMap 依赖对应表
  */
-module.exports = function (code, depNameList, depName2IdMap) {
+module.exports = function (file, code, depNameList, depName2IdMap) {
     var requireVar = _getRequireVar(code);
 
     if (!requireVar && depNameList.length) {
@@ -31,6 +32,7 @@ module.exports = function (code, depNameList, depName2IdMap) {
         var id = depName2IdMap[depName];
 
         if (!id) {
+            log("replace require", util.fixPath(file), "error");
             log("replace require", "can not found `" + depName + "` map", "error");
             process.exit();
         }

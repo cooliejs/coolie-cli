@@ -23,9 +23,50 @@ module.exports = function (buildPath) {
     var dest = path.join(buildPath, config.dest);
     var coolieConfigJS = path.join(buildPath, config['coolie-config.js']);
     var time = Date.now();
+    var copyLength = 0;
     var mainLength = 0;
 
-    howdo.each(config.main, function (i, main, nextMain) {
+    howdo.task(function (next) {
+        log('1/3', 'copy files', 'task');
+        next();
+    }).each(config.copyFiles, function (i, copyFile, nextCopy) {
+        // copy files
+        var gbPath = path.join(buildPath, copyFile);
+
+        log('copy files', util.fixPath(gbPath));
+
+        glob(gbPath, function (err, files) {
+            if (err) {
+                log('glob', util.fixPath(gbPath), 'error');
+                log('glob', err.message, 'error');
+                process.exit();
+            }
+
+            howdo.each(files, function (j, file, nextFile) {
+                var relative = path.relative(src, file);
+                var destFile = path.join(dest, relative);
+
+                fs.copy(file, destFile, function (err) {
+                    if (err) {
+                        log('copy from', util.fixPath(file), 'error');
+                        log('copy to', util.fixPath(destFile), 'error');
+                        log('copy error', err.message, 'error');
+                        process.exit();
+                    }
+
+                    log('copy write', util.fixPath(destFile));
+                    copyLength++;
+                    nextFile();
+                });
+            }).follow(function () {
+                nextCopy();
+            });
+        });
+    }).task(function (next) {
+        log('2/3', 'build main', 'task');
+        next();
+    }).each(config.main, function (i, main, nextMain) {
+        // 构建入口模块
         var gbPath = path.join(buildPath, main);
 
         log('build files', util.fixPath(gbPath));
@@ -64,6 +105,9 @@ module.exports = function (buildPath) {
             });
         });
     }).task(function (next) {
+        log('3/3', 'overwrite config', 'task');
+        next();
+    }).task(function (next) {
         // 覆盖生成 coolie-config.js
         var code = fs.readFileSync(coolieConfigJS, 'utf8');
         var relative = path.relative(src, coolieConfigJS);
@@ -87,6 +131,8 @@ module.exports = function (buildPath) {
 
         var past = Date.now() - time;
 
-        log('build', 'build ' + mainLength + ' file(s), past ' + past + ' ms', 'success');
+        log('build success', 'copy ' + copyLength + ' file(s),' +
+        ' build ' + mainLength + ' file(s),' +
+        ' past ' + past + ' ms', 'success');
     });
 };

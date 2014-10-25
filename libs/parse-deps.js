@@ -9,13 +9,16 @@
 
 var REG_REQUIRE = /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'|\/\*[\S\s]*?\*\/|\/(?:\\\/|[^\/\r\n])+\/(?=[^\/])|\/\/.*|\.\s*require|(?:^|[^$])\brequire\s*\(\s*(["'])(.+?)\1\s*\)/g;
 var REG_SLASH = /\\\\/g;
+var log = require('./log.js');
+var util = require('./util.js');
 
 /**
  * 解析依赖，返回数组
+ * @param file
  * @param code
  * @returns {Array} 依赖数组
  */
-module.exports = function (code) {
+module.exports = function (file, code) {
     var deps = [];
 
     code.replace(REG_SLASH, '').replace(REG_REQUIRE, function ($0, $1, $2) {

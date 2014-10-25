@@ -96,6 +96,7 @@ module.exports = function (file, code, callback) {
             mangle: true,
             compress: true
         });
+
         callback(null, ret.code);
     } catch (err) {
         log('jsminify', util.fixPath(file), 'error');

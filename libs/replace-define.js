@@ -9,6 +9,7 @@
 
 var log = require("../libs/log.js");
 var util = require("../libs/util.js");
+var util = require("../libs/util.js");
 var REG_DEFINE = /\bdefine\s*?\(.*?function/;
 
 

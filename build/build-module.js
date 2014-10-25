@@ -63,7 +63,7 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
         // 2. 读取依赖
         .task(function (next, code) {
             if (!isText) {
-                parseDeps(code).forEach(function (depName) {
+                parseDeps(file, code).forEach(function (depName) {
                     var relDepName = depName.replace(REG_TEXT, '');
                     var depId = path.join(relativeDir, relDepName);
 
@@ -88,7 +88,6 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
         .task(function (next, code) {
             if (isText) {
                 next(null, code);
-
             } else {
                 jsminify(file, code, next);
             }
@@ -98,7 +97,7 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
         // 4. 替换 define
         .task(function (next, code) {
             if (isText) {
-                code = wrapDefine(depIdsMap[file], code);
+                code = wrapDefine(file, code, depIdsMap);
             } else {
                 code = replaceDefine(file, code, depIdList, depIdsMap);
             }
@@ -110,7 +109,7 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
         // 5. 替换 require
         .task(function (next, code) {
             if (!isText) {
-                code = replaceRequire(code, depNameList, depName2IdMap);
+                code = replaceRequire(file, code, depNameList, depName2IdMap);
             }
 
             next(null, code);

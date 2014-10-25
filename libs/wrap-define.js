@@ -9,14 +9,16 @@
 
 var REG_HUA_START = /^.*?:/;
 var REG_HUA_END = /}$/;
-var REG_SINGLE = /'/g;
+var log = require('./log.js');
+var util = require('./util.js');
 
 /**
  * 包裹一层 define
- * @param id
+ * @param file
  * @param code
+ * @param depIdsMap
  */
-module.exports = function wrapDefine(id, code) {
+module.exports = function wrapDefine(file, code, depIdsMap) {
     var o = {
         o: code
     };
@@ -24,7 +26,7 @@ module.exports = function wrapDefine(id, code) {
         .replace(REG_HUA_START, '')
         .replace(REG_HUA_END, '');
 
-    return 'define("' + id + '",[],function(y,d,r){' +
+    return 'define("' + depIdsMap[file] + '",[],function(y,d,r){' +
         'r.exports=' + text + ';' +
         '});';
 };

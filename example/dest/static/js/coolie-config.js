@@ -1,4 +1,4 @@
 coolie.config({
     base: './app/',
-    version: "nikcnj"
+    version: "10g95r"
 }).use();

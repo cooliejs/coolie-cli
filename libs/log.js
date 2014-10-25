@@ -22,9 +22,16 @@ var map = {
     muted: 'grey',
     help: 'cyan',
     warn: 'yellow',
-    warning: 'yellow',
+    warning: 'bgYellow',
     debug: 'blue',
-    error: 'bgRed'
+    error: 'bgRed',
+    bgBlack: 'bgBlack',
+    bgGreen: 'bgGreen',
+    bgYellow: 'bgYellow',
+    bgBlue: 'bgBlue',
+    bgMagenta: 'bgMagenta',
+    task: 'bgCyan',
+    bgWhite: 'bgWhite'
 };
 
 /**
@@ -69,10 +76,8 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
     var color = map[type] || "white";
 
 
-    console.log(colors.yellow.bold(event), colors.cyan('=>'), _splitColors(color, message));
+    console.log(colors.yellow(event), colors.cyan('=>'), _splitColors(color, message));
 };
-
-
 
 
 /**
