@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A JavaScript module builder for coolie.",
   "bin": {
     "coolie": "./bin/coolie.js"
@@ -36,12 +36,10 @@
     "dependencies": {}
   },
   "dependencies": {
-    "clean-css": "^2.2.14",
     "colors": "^1.0.3",
     "fs-extra": "^0.11.1",
     "glob": "^4.0.5",
     "howdo": "^1.1.3",
-    "uglify-js": "^2.4.15",
-    "yuicompressor": "^2.4.8"
+    "uglify-js": "^2.4.15"
   }
 }
