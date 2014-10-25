@@ -1,4 +1,1 @@
-coolie.config({
-    base: './app/',
-    version: "10g95r"
-}).use();
+coolie.config({base:"./app/",version:"a61s0a"}).use()

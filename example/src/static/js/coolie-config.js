@@ -1,4 +1,3 @@
 coolie.config({
-    base: './app/',
-    version: "v8lysr"
+    base: './app/'
 }).use();
