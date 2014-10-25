@@ -16,10 +16,13 @@ var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');
 var replaceRequire = require('../libs/replace-require.js');
 var replaceDefine = require('../libs/replace-define.js');
+var wrapDefine = require('../libs/wrap-define.js');
+var REG_TEXT = /^text!/i;
 
 
 /**
  * 构建一个模块
+ * @param name 文件名称
  * @param file 文件路径
  * @param increase 自增对象
  * @param depIdsMap 依赖ID对应表
@@ -28,14 +31,17 @@ var replaceDefine = require('../libs/replace-define.js');
  * @arguments[1].deps 文件依赖的文件列表
  * @arguments[1].depIdsMap 文件依赖的文件列表
  */
-module.exports = function (file, increase, depIdsMap, callback) {
-    // 原始依赖
-    var absDeps = [];
-    var relDeps = [];
-    var relIdsMap = {};
+module.exports = function (name, file, increase, depIdsMap, callback) {
+    // 依赖 ID 列表
+    var depIdList = [];
+    // 依赖名称列表
+    var depNameList = [];
+    // 依赖名称与 ID 对应关系
+    var depName2IdMap = {};
     // 当前文件的目录
+    var isText = REG_TEXT.test(name);
+    // 相对目录
     var relativeDir = path.dirname(file);
-
 
     howdo
         // 1. 读取文件内容
@@ -56,21 +62,23 @@ module.exports = function (file, increase, depIdsMap, callback) {
 
         // 2. 读取依赖
         .task(function (next, code) {
-            parseDeps(code).forEach(function (dep) {
-                var absDep;
+            if (!isText) {
+                parseDeps(code).forEach(function (depName) {
+                    var relDepName = depName.replace(REG_TEXT, '');
+                    var depId = path.join(relativeDir, relDepName);
 
-                if (absDeps.indexOf(dep) === -1) {
-                    absDep = path.join(relativeDir, dep);
-                    absDeps.push(absDep);
-                    relDeps.push(dep);
+                    if (depIdList.indexOf(depId) === -1) {
+                        depIdList.push(depId);
+                        depNameList.push(depName);
 
-                    if (!depIdsMap[absDep]) {
-                        depIdsMap[absDep] = increase.add();
+                        if (!depIdsMap[depId]) {
+                            depIdsMap[depId] = increase.add();
+                        }
+
+                        depName2IdMap[depName] = depIdsMap[depId];
                     }
-
-                    relIdsMap[dep] = depIdsMap[absDep];
-                }
-            });
+                });
+            }
 
             next(null, code);
         })
@@ -78,20 +86,33 @@ module.exports = function (file, increase, depIdsMap, callback) {
 
         // 3. 压缩
         .task(function (next, code) {
-            jsminify(code, next);
+            if (isText) {
+                next(null, code);
+
+            } else {
+                jsminify(file, code, next);
+            }
         })
 
 
         // 4. 替换 define
         .task(function (next, code) {
-            code = replaceDefine(file, code, absDeps, depIdsMap);
+            if (isText) {
+                code = wrapDefine(depIdsMap[file], code);
+            } else {
+                code = replaceDefine(file, code, depIdList, depIdsMap);
+            }
+
             next(null, code);
         })
 
 
         // 5. 替换 require
         .task(function (next, code) {
-            code = replaceRequire(code, relDeps, relIdsMap);
+            if (!isText) {
+                code = replaceRequire(code, depNameList, depName2IdMap);
+            }
+
             next(null, code);
         })
 
@@ -99,7 +120,8 @@ module.exports = function (file, increase, depIdsMap, callback) {
         .follow(function (err, code) {
             callback(err, {
                 code: code,
-                deps: absDeps
+                depNameList: depNameList,
+                depIdList: depIdList
             });
         });
 };

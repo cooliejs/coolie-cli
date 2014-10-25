@@ -11,7 +11,12 @@ define(function (require) {
      */
     'use strict';
 
-    require('./jquery.js');
+    var $ = require('./jquery.js');
+
+    $('body').css({
+        background: '#eee'
+    });
+
     require('./all.js');
     console.log('libs/lib.js');
 });

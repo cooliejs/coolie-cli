@@ -1,5 +1,5 @@
 {
-    "main": "./static/js/app/**/*.js",
+    "main": "./static/js/app/jquery.js",
     "dest": "../dest/",
     "coolie-config.js": "./static/js/coolie-config.js",
     "copyFiles": "./**/*.*"

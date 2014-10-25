@@ -7,6 +7,9 @@
 'use strict';
 
 var uglifyJS = require("uglify-js");
+var log = require('./log.js');
+var util = require('./util.js');
+var yuicompressor = require('yuicompressor');
 var compressorOptions = {
     // 连续单语句，逗号分开
     // 如： alert(1);alert(2); => alert(1),alert(2)
@@ -29,15 +32,15 @@ var compressorOptions = {
     // 压缩常数表达式
     evaluate: false,
     // 压缩布尔值
-    booleans: true,
+    booleans: false,
     // 压缩循环
     loops: false,
     // 移除未使用变量
     unused: false,
     // 函数声明提前
-    hoist_funs: true,
+    hoist_funs: false,
     // 变量声明提前
-    hoist_vars: true,
+    hoist_vars: false,
     // 压缩 if return if continue
     if_return: false,
     // 合并连续变量省略
@@ -46,10 +49,10 @@ var compressorOptions = {
     cascade: false,
     // 不显示警告语句
     warnings: false,
-    side_effects: true,
-    pure_getters: true,
-    pure_funcs: null,
-    negate_iife: true,
+    side_effects: false,
+    pure_getters: false,
+    pure_funcs: false,
+    negate_iife: false,
     // 全局变量
     global_defs: {}
 };
@@ -60,21 +63,60 @@ var compressorOptions = {
  * @param code
  * @param callback
  */
-module.exports = function (code, callback) {
+module.exports = function (file, code, callback) {
     var ast;
     var compressor;
+    var ret;
 
+    //try {
+    //    ast = uglifyJS.parse(code);
+    //    ast.figure_out_scope();
+    //    compressor = uglifyJS.Compressor(compressorOptions);
+    //    ast = ast.transform(compressor);
+    //    ast.figure_out_scope();
+    //    ast.compute_char_frequency();
+    //    ast.mangle_names();
+    //    code = ast.print_to_string();
+    //    callback(null, code);
+    //} catch (err) {
+    //    log('jsminify', util.fixPath(file), 'error');
+    //    log('jsminify', err.message, 'error');
+    //    process.exit();
+    //}
+
+    // - warnings (default false) — pass true to display compressor warnings.
+    // - fromString (default false) — if you pass true then you can pass JavaScript source code, rather than file names.
+    // - mangle — pass false to skip mangling names.
+    // - output (default null) — pass an object if you wish to specify additional [output options][codegen]. The defaults are optimized for best compression.
+    // - compress (default {}) — pass false to skip compressing entirely. Pass an object to specify custom [compressor options][compressor].
     try {
-        ast = uglifyJS.parse(code);
-        ast.figure_out_scope();
-        compressor = uglifyJS.Compressor(compressorOptions);
-        ast = ast.transform(compressor);
-        ast.figure_out_scope();
-        ast.compute_char_frequency();
-        ast.mangle_names();
-        code = ast.print_to_string();
-        callback(null, code);
+        ret = uglifyJS.minify(code, {
+            fromString: true,
+            warnings: true,
+            mangle: true,
+            compress: true
+        });
+        callback(null, ret.code);
     } catch (err) {
-        callback(err);
+        log('jsminify', util.fixPath(file), 'error');
+        log('jsminify', err.message, 'error');
+        process.exit();
     }
+
+    //yuicompressor.compress(code, {
+    //    charset: 'utf8',
+    //    type: 'js',
+    //    nomunge: true,
+    //    'line-break': -1,
+    //    'preserve-semi': true
+    //}, function (err, code, extra) {
+    //    if (err) {
+    //        log('jsminify', util.fixPath(file), 'error');
+    //        log('jsminify', err.message, 'error');
+    //        log('jsminify', extra, 'error');
+    //        process.exit();
+    //    }
+    //
+    //    callback(null, code);
+    //});
 };

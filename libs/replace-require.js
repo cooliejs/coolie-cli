@@ -9,32 +9,33 @@
 
 var util = require("./util.js");
 var log = require("./log.js");
-var REG_DEFINE = /^define\(.*?function\(([^,)]*).*?\)/;
+var REG_DEFINE = /\bdefine.*\bfunction[^(]*\(([^,)]*)/;
 
 
 /**
  * 替换 require
  * @param code 代码必须先进行压缩过后的，保证没有其他注释干扰
- * @param deps 依赖数组
- * @param depsMap 依赖对应表
+ * @param depNameList 依赖数组
+ * @param depName2IdMap 依赖对应表
  */
-module.exports = function (code, relDeps, relDepsMap) {
+module.exports = function (code, depNameList, depName2IdMap) {
     var requireVar = _getRequireVar(code);
 
-    if (!requireVar) {
-        return code;
+    if (!requireVar && depNameList.length) {
+        log('replace require', 'can not found require variable, but used', 'error');
+        process.exit();
     }
 
-    relDeps.forEach(function (dep) {
-        var reg = _buildReg(requireVar, dep);
-        var id = relDepsMap[dep];
+    depNameList.forEach(function (depName) {
+        var reg = _buildReg(requireVar, depName);
+        var id = depName2IdMap[depName];
 
         if (!id) {
-            log("replace require", "can not found `" + dep + "` map", "error");
+            log("replace require", "can not found `" + depName + "` map", "error");
             process.exit();
         }
 
-        code = code.replace(reg, requireVar + "(\"" + relDepsMap[dep] + "\")");
+        code = code.replace(reg, requireVar + "(\"" + depName2IdMap[depName] + "\")");
     });
 
     return code;
@@ -47,7 +48,7 @@ module.exports = function (code, relDeps, relDepsMap) {
  * @private
  */
 function _getRequireVar(str) {
-    return (str.match(REG_DEFINE) || ["", ""])[1];
+    return (str.match(REG_DEFINE) || ["", ""])[1].trim();
 }
 
 

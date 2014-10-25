@@ -26,8 +26,8 @@ module.exports = function (mainFile, callback) {
     var depsCache = {};
     var depsLength = 1;
     var depsRelationship = {};
-    var _deepBuld = function (file) {
-        buildModule(file, increase, depIdsMap, function (err, meta) {
+    var _deepBuld = function (name, file) {
+        buildModule(name, file, increase, depIdsMap, function (err, meta) {
             if (err) {
                 log("build", util.fixPath(file), "error");
                 log('build', err.message, 'error');
@@ -35,26 +35,27 @@ module.exports = function (mainFile, callback) {
             }
 
             var code = meta.code;
-            var deps = meta.deps;
+            var depIdList = meta.depIdList;
+            var depNameList = meta.depNameList;
             var output;
 
             depsCache[mainFile] = true;
             bufferList.push(new Buffer("\n" + code, "utf8"));
             depsRelationship[file] = {};
 
-            if (deps.length) {
-                deps.forEach(function (dep) {
-                    depsRelationship[file][dep] = true;
+            if (depIdList.length) {
+                depIdList.forEach(function (depId, index) {
+                    depsRelationship[file][depId] = true;
 
-                    if (depsRelationship[dep] && depsRelationship[dep][file]) {
-                        log('depend cycle', util.fixPath(file) + '\n' + util.fixPath(dep), 'error');
+                    if (depsRelationship[depId] && depsRelationship[depId][file]) {
+                        log('depend cycle', util.fixPath(file) + '\n' + util.fixPath(depId), 'error');
                         process.exit();
                     }
 
-                    if (!depsCache[dep]) {
-                        depsCache[dep] = true;
-                        log("require", util.fixPath(dep));
-                        _deepBuld(dep);
+                    if (!depsCache[depId]) {
+                        depsCache[depId] = true;
+                        log("require", util.fixPath(depId));
+                        _deepBuld(depNameList[index], depId);
                         depsLength++;
                     }
                 });
@@ -70,5 +71,5 @@ module.exports = function (mainFile, callback) {
 
     depIdsMap[mainFile] = mainName;
     log("build main", util.fixPath(mainFile), "warning");
-    _deepBuld(mainFile);
+    _deepBuld(mainName, mainFile);
 };

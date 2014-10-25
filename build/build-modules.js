@@ -69,15 +69,15 @@ module.exports = function (buildPath) {
         var relative = path.relative(src, coolieConfigJS);
         var destFile = path.join(dest, relative);
 
-        code = replaceConfig(code);
+        code = replaceConfig(coolieConfigJS, code);
         fs.outputFile(destFile, code, function (err) {
             if (err) {
-                log('overwrite version', util.fixPath(destFile), 'error');
-                log('overwrite version', err.message, 'error');
+                log('overwrite config', util.fixPath(destFile), 'error');
+                log('overwrite config', err.message, 'error');
                 process.exit();
             }
 
-            log('overwrite version', util.fixPath(destFile), 'success');
+            log('overwrite config', util.fixPath(destFile), 'success');
             next();
         });
     }).follow(function (err) {
@@ -87,6 +87,6 @@ module.exports = function (buildPath) {
 
         var past = Date.now() - time;
 
-        log('build', 'build ' + mainLength + ' main files, past ' + past + ' ms', 'success');
+        log('build', 'build ' + mainLength + ' file(s), past ' + past + ' ms', 'success');
     });
 };
