@@ -11,11 +11,11 @@ var fs = require('fs-extra');
 var howdo = require('howdo');
 var path = require('path');
 var glob = require('glob');
-var log = require('../libs/log.js');
-var util = require('../libs/util.js');
-var replaceConfig = require('../libs/replace-config.js');
-var parseConfig = require('../libs/parse-config.js');
-var buildMain = require('./build-main.js');
+var log = require('../libs/log');
+var util = require('../libs/util');
+var replaceConfig = require('../libs/replace-config');
+var parseConfig = require('../libs/parse-config');
+var buildMain = require('./build-main');
 
 module.exports = function (buildPath) {
     var config = parseConfig(buildPath);

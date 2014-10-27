@@ -9,8 +9,8 @@
 
 var REG_HUA_START = /^.*?:/;
 var REG_HUA_END = /}$/;
-var log = require('./log.js');
-var util = require('./util.js');
+var log = require('./log');
+var util = require('./util');
 
 /**
  * 包裹一层 define

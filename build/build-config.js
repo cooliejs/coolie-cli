@@ -9,9 +9,9 @@
 
 var fs = require("fs-extra");
 var path = require("path");
-var log = require("../libs/log.js");
-var util = require("../libs/util.js");
-var nextStep = require("../libs/next-step.js");
+var log = require("../libs/log");
+var util = require("../libs/util");
+var nextStep = require("../libs/next-step");
 var template = fs.readFileSync(path.join(__dirname, "../tpls/coolie-config.js.tpl"), "utf-8");
 var RE_BASE = /{{base}}/g;
 var RE_CLEAN = /[\r\n\t\v""]/g;

@@ -10,13 +10,13 @@
 var howdo = require('howdo');
 var path = require('path');
 var fs = require('fs-extra');
-var log = require('../libs/log.js');
-var util = require('../libs/util.js');
-var parseDeps = require('../libs/parse-deps.js');
-var jsminify = require('../libs/jsminify.js');
-var replaceRequire = require('../libs/replace-require.js');
-var replaceDefine = require('../libs/replace-define.js');
-var wrapDefine = require('../libs/wrap-define.js');
+var log = require('../libs/log');
+var util = require('../libs/util');
+var parseDeps = require('../libs/parse-deps');
+var jsminify = require('../libs/jsminify');
+var replaceRequire = require('../libs/replace-require');
+var replaceDefine = require('../libs/replace-define');
+var wrapDefine = require('../libs/wrap-define');
 var REG_TEXT = /^text!/i;
 
 

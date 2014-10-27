@@ -9,8 +9,8 @@
 
 var path = require("path");
 var fs = require("fs-extra");
-var log = require("../libs/log.js");
-var util = require("../libs/util.js");
+var log = require("./log");
+var util = require("./util");
 
 
 /**
