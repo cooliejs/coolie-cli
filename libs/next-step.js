@@ -6,7 +6,7 @@
 
 "use strict";
 
-var util = require("./util.js");
+var util = require("./util");
 
 module.exports = function (steps) {
     if (util.type(steps) !== "array") {

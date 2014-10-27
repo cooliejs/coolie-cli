@@ -6,9 +6,9 @@
 
 'use strict';
 
-var http = require('../libs/http.js');
-var log = require('../libs/log.js');
-var pkg = require('../package.json');
+var http = require('../libs/http');
+var log = require('../libs/log');
+var pkg = require('../package');
 var currentVersion = pkg.version;
 var url = 'http://registry.npmjs.org/coolie';
 
