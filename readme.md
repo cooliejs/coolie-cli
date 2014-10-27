@@ -29,7 +29,7 @@ npm install -g coolie
 ## `coolie json [path]`
 在指定目录（默认为当前工作目录）生成`coolie.json`，即`coolie`构建工具的配置文件。
 
-![coolie json](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20141024180918554912453789.png)
+![coolie json](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20141027100536566924235390.png)
 
 ## `coolie build [path]`
 在指定目录（默认为当前工作目录），根据`coolie.json`配置来执行构建操作。
