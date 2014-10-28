@@ -69,7 +69,8 @@ module.exports = function (mainFile, callback) {
         });
     };
 
-    depIdsMap[mainFile] = mainName;
+    // 第一个 define 模块为入口模块，不必指定其 name
+    depIdsMap[mainFile] = '0';
     log("build main", util.fixPath(mainFile), "warning");
     _deepBuld(mainName, mainFile);
 };

@@ -1,12 +1,13 @@
-/*!
+/**
  * coolie 苦力
  * @author ydr.me
- * @create 2014-10-21 14:52
+ * @version 0.1.1
  */
 
 (function () {
     'use strict';
 
+    var version = '0.1.1';
     // 该正则取自 seajs
     var REG_REQUIRE = /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'|\/\*[\S\s]*?\*\/|\/(?:\\\/|[^\/\r\n])+\/(?=[^\/])|\/\/.*|\.\s*require|(?:^|[^$])\brequire\s*\(\s*(["'])(.+?)\1\s*\)/g;
     var REG_SLASH = /\\\\/g;
@@ -16,26 +17,31 @@
     var REG_END_PART = /[^\/]+\/$/;
     var REG_HOST = /^.*\/\/[^\/]*/;
     var REG_TEXT = /^text!/i;
-    // 入口模块
+    // 入口文件
     var mainFile;
+    // 入口模块ID，构建之后情况
+    var mainID;
     var execModule;
     // 当前脚本
     var currentScript = _getCurrentScript();
     var containerNode = currentScript.parentNode;
-    var mePath = _getPathname(_pathJoin(_getPathname(location.pathname), currentScript.getAttribute('src')));
+    var mePath = location.protocol + '//' + location.host + _getPathname(_pathJoin(_getPathname(location.pathname), currentScript.getAttribute('src')));
     var meMain = _getMain(currentScript);
     // 配置
     var config = {
         base: mePath
     };
-    var modulesCache = {};
+    var moduleDepsMap = {};
     var modules = {};
     // 依赖长度
     var requireLength = 0;
     // 完成加载长度
     var doneLength = 0;
     // 加载依赖队列
-    var dependencies = [];
+    var defineModules = [];
+    // 依赖数组
+    var dependencyModules = [];
+    var beginTime;
 
 
     /**
@@ -49,8 +55,17 @@
         var args = arguments;
         var isAnonymous = args.length === 1;
 
-        if (execModule === undefined) {
-            execModule = isAnonymous ? mainFile : id;
+        // 第一个运行 define 的为入口模块（？）
+        if (!execModule) {
+            if (isAnonymous) {
+                execModule = mainFile;
+            } else {
+                // define('0', ['1','2'], fn);
+                // id = 0
+                mainID = execModule = id;
+                moduleDepsMap = {};
+                moduleDepsMap[mainID] = {};
+            }
         }
 
         // define(fn);
@@ -69,7 +84,7 @@
             }
 
             if (!_isArray(deps)) {
-                throw new Error('module dependencies must be an array');
+                throw new Error('module defineModules must be an array');
             }
         }
 
@@ -78,7 +93,7 @@
         }
 
         deps = isAnonymous ? _parseRequires(factory.toString()) : deps;
-        dependencies.push([id, deps, factory]);
+        defineModules.push([id, deps, factory]);
     };
 
 
@@ -92,7 +107,14 @@
          * @name version
          * @type String
          */
-        version: '0.1.0',
+        version: version,
+
+        /**
+         * 模块出口
+         * @name modules
+         * @type Object
+         */
+        modules: modules,
 
 
         /**
@@ -130,13 +152,15 @@
 
             if (meMain && meMain !== main) {
                 if (main) {
-                    console.log('inline main is `' + meMain + '`, use main is `' + main + '`');
+                    console.warn('attribute main is `' + meMain + '`, but use main is `' + main + '`');
                 }
 
                 main = meMain;
             }
 
             mainFile = _pathJoin(config.base, main);
+            beginTime = Date.now();
+            console.group('coolie modules');
             _loadScript(mainFile);
 
             return this;
@@ -146,72 +170,96 @@
 
     /**
      * 脚本加载完毕保存模块
-     * @param [script]
-     * @param [id]
+     * @param [scriptORxhr] script对象或xhr对象
+     * @param [id] xhr 请求的地址
      * @private
      */
-    function _saveModule(script, id) {
+    function _saveModule(scriptORxhr, id) {
         var module = {};
         var meta;
+        var script;
+        var xhr;
 
         // ajax text
         if (arguments.length === 2) {
-            module.isAnonymous = !1;
-            module.id = id;
-            module.path = _getPathname(id);
-            module.deps = [];
-            module.factory = function (require, exports, module) {
-                module.exports = script;
+            xhr = scriptORxhr;
+            // 是否命名
+            module._isAn = !1;
+            // 模块ID
+            module._id = id;
+            // 模块类型
+            module._type = 'ajax';
+            // 模块目录
+            module._path = _getPathname(id);
+            // 模块依赖
+            module._deps = [];
+            // 模块原始方法
+            module._factory = function (require, exports, module) {
+                module.exports = xhr.responseText || '';
+                xhr = null;
             };
             // 包装
-            // 添加 module.exec 执行函数
+            // 添加 module._exec 执行函数
             _wrapModule(module);
-            if (!modules[module.id]) {
-                modules[module.id] = module;
+
+            if (!modules[module._id]) {
+                modules[module._id] = module;
             }
         }
-        // load/import script
-        else if (dependencies.length) {
+        // load/local script
+        else if (defineModules.length) {
+            script = scriptORxhr;
             // 总是按照添加的脚本顺序执行，因此这里取出依赖的第0个元素
-            meta = dependencies.shift();
+            meta = defineModules.shift();
 
             // 是否为匿名模块
-            module.isAnonymous = meta[0] === '';
+            module._isAn = meta[0] === '';
 
             // 模块ID
             // 匿名：模块加载的路径
             // 具名：模块的ID
-            module.id = meta[0] || script.id;
+            module._id = meta[0] || script.id;
+            module._type = meta[0] ? 'local' : 'script';
+            script = null;
 
             // 模块所在路径
-            module.path = module.isAnonymous ? _getPathname(module.id) : '';
+            module._path = module._isAn ? _getPathname(module._id) : '';
 
             // 模块依赖数组
-            module.deps = meta[1];
+            module._deps = meta[1];
 
             // 模块出厂函数
-            module.factory = meta[2];
+            module._factory = meta[2];
 
             // 包装
-            // 添加 module.exec 执行函数
+            // 添加 module._exec 执行函数
             _wrapModule(module);
 
-            if (!modules[module.id]) {
-                modules[module.id] = module;
+            if (modules[module._id]) {
+                console.warn('repeat ignore', module._id);
+            } else {
+                modules[module._id] = module;
             }
 
-            if (module.deps.length) {
-                _each(module.deps, function (i, dep) {
+            moduleDepsMap[module._id] = {};
+
+            if (module._deps.length) {
+                _each(module._deps, function (i, dep) {
                     // 匿名模块：依赖采用相对路径方式
                     // 具名模块：依赖采用绝对路径方式
                     var relDep = dep.replace(REG_TEXT, '');
-                    var depId = module.isAnonymous ? _pathJoin(module.path, relDep) : relDep;
+                    var depId = module._isAn ? _pathJoin(module._path, relDep) : relDep;
 
-                    if (_isDepCircle(module.id, depId)) {
-                        throw new Error('`' + module.id + '` and `' + depId + '` make up a circular dependencies relationship');
+                    if (moduleDepsMap[depId] && moduleDepsMap[depId][module._id]) {
+                        throw 'module `' + module._id + '` and module `' + depId + '` make up a circular dependency relationship';
                     }
 
-                    module.deps[i] = depId;
+                    module._deps[i] = depId;
+                    moduleDepsMap[module._id][depId] = 1;
+                    dependencyModules.push({
+                        id: depId,
+                        by: module._id
+                    });
 
                     if (REG_TEXT.test(dep)) {
                         _ajaxText(depId);
@@ -222,38 +270,19 @@
             }
         }
 
-
         // 依赖全部加载完成
-        if (requireLength === doneLength && execModule && modules[execModule]) {
+        if (requireLength === doneLength && !defineModules.length && execModule && modules[execModule]) {
+            _each(dependencyModules, function (i, module) {
+                if (!moduleDepsMap[module.id]) {
+                    throw 'can not found module `' + module.id + '`, but module `' + module.by + '` dependence on it';
+                }
+            });
+
             _execModule(execModule);
+            moduleDepsMap = null;
+            defineModules = null;
+            dependencyModules = null;
         }
-    }
-
-
-    /**
-     * 判断是否构成循环引用
-     * @param src
-     * @param dep
-     * @returns {boolean}
-     * @private
-     */
-    function _isDepCircle(src, dep) {
-        var ret = !1;
-
-        if (!modules[dep]) {
-            return ret;
-        }
-
-        var deps = modules[dep].deps;
-
-        _each(deps, function (i, _dep) {
-            if (src === _dep) {
-                ret = !0;
-                return !1;
-            }
-        });
-
-        return ret;
     }
 
 
@@ -266,21 +295,21 @@
      */
     function _wrapModule(module) {
         module.exports = {};
-        module.exec = (function () {
+        module._exec = (function () {
             var require = function (dep) {
                 dep = dep.replace(REG_TEXT, '');
 
-                var depId = module.isAnonymous ? _pathJoin(_getPathname(module.id), dep) : dep;
+                var depId = module._isAn ? _pathJoin(_getPathname(module._id), dep) : dep;
 
                 if (!modules[depId]) {
-                    throw new Error('can not found module `' + depId + '`, require in `' + module.id + '`');
+                    throw 'can not found module `' + depId + '`, require in `' + module._id + '`';
                 }
 
-                return modules[depId].exec();
+                return modules[depId]._exec();
             };
 
             return function () {
-                module.factory.call(window, require, module.exports, module);
+                module._factory.call(window, require, module.exports, module);
                 return module.exports;
             };
         })();
@@ -294,10 +323,12 @@
      */
     function _execModule(module) {
         if (!modules[module]) {
-            throw new Error('can not found module `' + module + '`');
+            throw 'can not found module `' + module + '`';
         }
 
-        modules[module].exec();
+        console.log('past ' + (Date.now() - beginTime) + ' ms');
+        console.groupEnd('coolie modules');
+        modules[module]._exec();
     }
 
 
@@ -307,19 +338,14 @@
      * @private
      *
      * @example
-     * src为相对、绝对路径的都会被加载，如“./”、“../”、“/”、“//”或“http://”
+     * // src为相对、绝对路径的都会被加载，如“./”、“../”、“/”、“//”或“http://”
      */
     function _loadScript(src) {
         var script;
-        var time = Date.now();
         var complete;
         var srcType = _getPathType(src);
+        var time = Date.now();
 
-        if (modulesCache[src]) {
-            return !1;
-        }
-
-        modulesCache[src] = 1;
         requireLength++;
 
         // 非路径型地址，主动触发 _saveModule
@@ -328,7 +354,7 @@
             // 1. 与 onload 有相同效果了
             // 2. 不再是同步函数了，不会递归执行，导致计数错误
             return setTimeout(function () {
-                console.log('>import module', src, '0ms');
+                console.log('local module', src, (Date.now() - time) + 'ms');
                 doneLength++;
                 _saveModule();
             }, 1);
@@ -336,10 +362,8 @@
 
         script = document.createElement('script');
         complete = function (err) {
-            script.onload = script.onerror = null;
-
             if (!(err && err.constructor === Error)) {
-                console.log('>load   module', src, (Date.now() - time) + 'ms');
+                console.log('script module', src, (Date.now() - time) + 'ms');
                 doneLength++;
                 _saveModule(script);
             }
@@ -362,19 +386,20 @@
      * @private
      */
     function _ajaxText(url) {
+        requireLength++;
+
         var xhr = new XMLHttpRequest();
         var time = Date.now();
         var complete = function () {
             if (xhr.status === 200 || xhr.status === 304) {
-                console.log('>ajax   module', url, (Date.now() - time) + 'ms');
+                console.log('ajax module', url, (Date.now() - time) + 'ms');
                 doneLength++;
-                _saveModule(xhr.responseText, url);
+                _saveModule(xhr, url);
             } else {
-                throw new Error('can not ajax ' + url + ', response status is ' + xhr.status);
+                throw 'can not ajax ' + url + ', response status is ' + xhr.status;
             }
         };
 
-        requireLength++;
         xhr.onload = xhr.onerror = xhr.onabort = xhr.ontimeout = complete;
         xhr.open('GET', url);
         xhr.send(null);
@@ -389,17 +414,6 @@
      */
     function _getPathname(filepath) {
         return filepath.replace(REG_FILE_BASENAME, '/');
-    }
-
-
-    /**
-     * 获取文件路径的名称
-     * @param filepath
-     * @returns {*|string}
-     * @private
-     */
-    function _getBasename(filepath){
-        return (filepath.match(REG_FILE_BASENAME) || ['',''])[1];
     }
 
 
@@ -458,7 +472,7 @@
 
                 while (toDepth-- > 0) {
                     if (!REG_END_PART.test(from2)) {
-                        throw new Error('can not change path from `' + from + '` to `' + to + '`');
+                        throw 'can not change path from `' + from + '` to `' + to + '`';
                     }
 
                     from2 = from2.replace(REG_END_PART, '');
@@ -592,4 +606,3 @@
     }
 
 })();
-
