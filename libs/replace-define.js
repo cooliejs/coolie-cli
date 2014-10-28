@@ -7,9 +7,9 @@
 
 "use strict";
 
-var log = require("../libs/log.js");
-var util = require("../libs/util.js");
-var util = require("../libs/util.js");
+var log = require("./log.js");
+var util = require("./util.js");
+var util = require("./util.js");
 var REG_DEFINE = /\bdefine\s*?\(.*?function/;
 
 
