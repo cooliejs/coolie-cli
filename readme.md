@@ -9,6 +9,8 @@ A JavaScript module builder for coolie.
 npm install -g coolie
 ```
 
+[see](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20141028170749360717674649.jpg)
+
 
 # API
 ## `coolie`
