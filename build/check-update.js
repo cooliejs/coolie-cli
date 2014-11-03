@@ -13,7 +13,8 @@ var currentVersion = pkg.version;
 var url = 'http://registry.npmjs.org/coolie';
 
 module.exports = function(){
-    log('check update', 'wait a moment');
+    log('local version', currentVersion, 'success');
+    log('check update', 'wait a moment...');
 
     http(url, function (err, data) {
         if(err){
@@ -30,7 +31,6 @@ module.exports = function(){
             process.exit();
         }
 
-        log('local version', currentVersion, 'success');
         log('online version', json['dist-tags'].latest, 'success');
     });
 };
