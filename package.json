@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "A JavaScript module builder for coolie.",
   "bin": {
     "coolie": "./bin/coolie.js"
@@ -10,6 +10,9 @@
     "cloudcome",
     "javascript",
     "seajs",
+    "Common JS",
+    "CMD",
+    "CMDJS",
     "AMD",
     "AMDJS",
     "package",
@@ -31,11 +34,8 @@
     "url": "https://github.com/cloudcome/nodejs-coolie/issues"
   },
   "licenses": "MIT",
-  "spm": {
-    "main": "index.js",
-    "dependencies": {}
-  },
   "dependencies": {
+    "clean-css": "^2.2.16",
     "colors": "^1.0.3",
     "fs-extra": "^0.11.1",
     "glob": "^4.0.5",
