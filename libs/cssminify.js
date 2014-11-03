@@ -8,7 +8,9 @@
 "use strict";
 
 var minifyCSS = require("clean-css");
-var minifyCSSOptions = {
+var log = require('./log.js');
+var util = require('./util.js');
+var options = {
     keepSpecialComments: 0,
     keepBreaks: false
 };
@@ -19,11 +21,13 @@ var minifyCSSOptions = {
  * @param code
  * @param callback
  */
-module.exports = function (code, callback) {
+module.exports = function (file, code, callback) {
      try{
-         code = new minifyCSS(minifyCSSOptions).minify(code);
+         code = new minifyCSS(options).minify(code);
          callback(null, code);
      }catch (err){
-         callback(err);
+         log('cssminify', util.fixPath(file), 'error');
+         log('cssminify', err.message, 'error');
+         process.exit();
      }
 };

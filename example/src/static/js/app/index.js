@@ -14,7 +14,8 @@ define(function (require, exports, module) {
     require('../libs/lib.js');
     require('../libs/all.js');
     var txt = require('text!../libs/some.txt');
-    var style = require('text!../libs/style.css');
+    var style = require('css!../libs/some.css');
+    var html = require('html!../libs/some.html');
 
     console.log('app/index.js');
     console.log(txt);

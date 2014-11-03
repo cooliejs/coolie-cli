@@ -39,3 +39,10 @@ npm install -g coolie
 ![coolie build](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20141024181025427785800803.png)
 
 
+
+# Version
+## 0.0.14
+- build 的时候支持压缩 css、html 模块
+- 入口模块简化为0
+- 一个模块占用一行
+- 预计下个版本增加css、html文件的压缩，静态文件的版本

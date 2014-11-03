@@ -63,8 +63,6 @@ var util = require('./util.js');
  * @param callback
  */
 module.exports = function (file, code, callback) {
-    var ast;
-    var compressor;
     var ret;
 
     //try {

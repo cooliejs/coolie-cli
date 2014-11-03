@@ -17,7 +17,7 @@ var jsminify = require('../libs/jsminify.js');
 var replaceRequire = require('../libs/replace-require.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
-var REG_TEXT = /^text!/i;
+var REG_TEXT = /^(css|html|text)!/i;
 
 
 /**
@@ -39,7 +39,9 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
     // 依赖名称与 ID 对应关系
     var depName2IdMap = {};
     // 当前文件的目录
-    var isText = REG_TEXT.test(name);
+    var textMatched = name.match(REG_TEXT);
+    var isText = !!textMatched;
+    var textType = (textMatched || ['',''])[1];
     // 相对目录
     var relativeDir = path.dirname(file);
 
@@ -97,12 +99,11 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
         // 4. 替换 define
         .task(function (next, code) {
             if (isText) {
-                code = wrapDefine(file, code, depIdsMap);
+               wrapDefine(file, code, depIdsMap, textType, next);
             } else {
                 code = replaceDefine(file, code, depIdList, depIdsMap);
+                next(null, code);
             }
-
-            next(null, code);
         })
 
 
