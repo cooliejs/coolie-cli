@@ -12,9 +12,9 @@ var path = require("path");
 var log = require("../libs/log.js");
 var util = require("../libs/util.js");
 var nextStep = require("../libs/next-step.js");
-var template = fs.readFileSync(path.join(__dirname, "../tpls/coolie-config.js.tpl"), "utf-8");
-var RE_BASE = /{{base}}/g;
 var RE_CLEAN = /[\r\n\t\v""]/g;
+var RE_SPACE = /\s+/g;
+
 
 require("colors");
 
@@ -28,6 +28,7 @@ module.exports = function (basedir) {
         "\n`base`即为入口模块的相对路径，更多详情访问`coolie`帮助：" +
         "\nhttps://github.com/cloudcome/coolie", "success");
     };
+    var json = {};
 
     // 0
     steps.push(function () {
@@ -55,16 +56,16 @@ module.exports = function (basedir) {
 
     // base
     steps.push(function (data) {
-        template = template.replace(RE_BASE, _clean(data) || "./");
+        json.base = _getVal(data, './', false);
         log("2/"+ (steps.length - 2), "文件内容为：", "success");
-        console.log(template);
+        console.log(JSON.stringify(json));
         log("confirm", "确认文件内容正确并生成文件？（[y]/n）", "warning");
     });
 
     // write file
     steps.push(function (data) {
         if(data.trim().toLocaleLowerCase().indexOf("n") === -1){
-            fs.outputFile(writeFile, template, "utf-8", function (err) {
+            fs.outputFile(writeFile, JSON.stringify(json), "utf-8", function (err) {
                 if (err) {
                     log("write", util.fixPath(writeFile), "error");
                     return process.exit();
@@ -82,14 +83,19 @@ module.exports = function (basedir) {
 };
 
 
+
 /**
- * 清理用户输入
- * @param chunk
- * @returns {string}
+ * 获取输入内容
+ * @param data
+ * @param dft
+ * @param isArray
+ * @returns {Array|string|*}
  * @private
  */
-function _clean(chunk) {
-    return chunk.replace(RE_CLEAN, "").trim();
+function _getVal(data, dft, isArray) {
+    var input = data.replace(RE_CLEAN, "").trim() || dft;
+
+    return isArray ? input.split(RE_SPACE) : input;
 }
 
 

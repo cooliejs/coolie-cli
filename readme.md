@@ -41,7 +41,8 @@ npm install -g coolie
 
 
 # Version
-## 0.0.14
+## 0.0.15
+- 优化构建配置
 - build 的时候支持压缩 css、html 模块
 - 入口模块简化为0
 - 一个模块占用一行

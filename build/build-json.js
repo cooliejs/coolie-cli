@@ -12,13 +12,7 @@ var path = require("path");
 var log = require("../libs/log.js");
 var util = require("../libs/util.js");
 var nextStep = require("../libs/next-step.js");
-var template = fs.readFileSync(path.join(__dirname, "../tpls/coolie.json.tpl"), "utf-8");
-var RE_SRC = /{{src}}/g;
-var RE_DEST = /{{dest}}/g;
-var RE_MAIN = /{{main}}/g;
-var RE_CONFIG = /{{config}}/g;
-var RE_COPY = /{{copy}}/g;
-var RE_CLEAN = /[\r\n\t\v""]/g;
+var RE_CLEAN = /[\r\n\t\v"']/g;
 var RE_SPACE = /\s+/g;
 
 require("colors");
@@ -34,6 +28,7 @@ module.exports = function (basedir) {
         "\nhttps://github.com/cloudcome/coolie", "success");
 
     };
+    var json = {};
 
     // 0
     steps.push(function () {
@@ -61,9 +56,9 @@ module.exports = function (basedir) {
 
     // main
     steps.push(function (data) {
-        template = template.replace(RE_MAIN, _clean(data) || "./dest/");
+        json.main = _getVal(data, '', true);
 
-        log("2/" + (steps.length - 2), "请输入`dest`值，默认为“./dest/”：" +
+        log("2/" + (steps.length - 2), "请输入`dest`值，默认为“../dest/”：" +
         "\n`dest`路径是相对于`coolie.json`所在的路径的；" +
         "\n`dest`即为构建的目标目录，更多详情访问`coolie`帮助：" +
         "\nhttps://github.com/cloudcome/coolie", "success");
@@ -71,7 +66,7 @@ module.exports = function (basedir) {
 
     // dest
     steps.push(function (data) {
-        template = template.replace(RE_DEST, _toStringArray(_clean(data)) || "");
+        json.dest = _getVal(data, '../dest/', false);
 
         log("3/" + (steps.length - 2), "请输入`coolie-config.js`值，默认为空：" +
         "\n`coolie-config.js`路径是相对于`coolie.json`所在的路径的；" +
@@ -81,9 +76,9 @@ module.exports = function (basedir) {
 
     // coolie-config.js
     steps.push(function (data) {
-        template = template.replace(RE_CONFIG, _clean(data) || "");
+        json['coolie-config.js'] = _getVal(data, '', false);
 
-        log("4/" + (steps.length - 2), "请输入`copyFiles`值，默认为空：" +
+        log("4/" + (steps.length - 2), "请输入`copyFiles`值，默认为“./**/*.*”：" +
         "\n`copyFiles`路径是相对于`coolie.json`所在的路径的；" +
         "\n`copyFiles`即为构建时需要原样复制的文件，支持通配符，多个入口使用空格分开，更多详情访问`coolie`帮助：" +
         "\nhttps://github.com/cloudcome/coolie", "success");
@@ -91,17 +86,17 @@ module.exports = function (basedir) {
 
     // copyFiles
     steps.push(function (data) {
-        template = template.replace(RE_COPY, _toStringArray(_clean(data)) || "");
+        json.copyFiles = _getVal(data, './**/*.*', true);
 
         log("5/" + (steps.length - 2), "文件内容为：", "success");
-        console.log(template);
+        console.log(JSON.stringify(json));
         log("confirm", "确认文件内容正确并生成文件？（[y]/n）", "warning");
     });
 
     // write
     steps.push(function (data) {
         if (data.trim().toLocaleLowerCase().indexOf("n") === -1) {
-            fs.outputFile(writeFile, template, "utf-8", function (err) {
+            fs.outputFile(writeFile, JSON.stringify(json), "utf-8", function (err) {
                 if (err) {
                     log("write", util.fixPath(writeFile), "error");
                     return process.exit();
@@ -120,36 +115,16 @@ module.exports = function (basedir) {
 
 
 /**
- * 清理用户输入
- * @param chunk
- * @returns {string}
+ * 获取输入内容
+ * @param data
+ * @param dft
+ * @param isArray
+ * @returns {Array|string|*}
  * @private
  */
-function _clean(chunk) {
-    return chunk.replace(RE_CLEAN, "").trim();
+function _getVal(data, dft, isArray) {
+    var input = data.replace(RE_CLEAN, "").trim() || dft;
+
+    return isArray ? input.split(RE_SPACE) : input;
 }
-
-
-/**
- * 转换为字符串数组
- * @param str
- * @returns {string}
- * @private
- */
-function _toStringArray(str) {
-    var ret = "";
-
-    str.trim().split(RE_SPACE).forEach(function (s) {
-        if (ret) {
-            ret += ", ";
-        }
-
-        if (s) {
-            ret += "\"" + s + "\"";
-        }
-    });
-
-    return ret;
-}
-
 
