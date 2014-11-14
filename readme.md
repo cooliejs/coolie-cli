@@ -3,6 +3,7 @@
 A JavaScript module builder for coolie.
 
 服务于[coolie](https://github.com/cloudcome/coolie)的脚本模块化打包工具。
+[关于 coolie 的最佳实践。]()
 
 `coolie`是一个全局模块，因此需要全局安装。
 ```
@@ -41,9 +42,11 @@ npm install -g coolie
 
 
 # Version
+## 0.1.0
+- 支持 css 引用的合并替换，更多信息参阅帮助
+
 ## 0.0.17
 - 优化构建配置
 - build 的时候支持压缩 css、html 模块
 - 入口模块简化为0
 - 一个模块占用一行
-- 预计下个版本增加css、html文件的压缩，静态文件的版本

@@ -22,10 +22,9 @@ module.exports = function (basedir) {
     var writeFile = path.join(basedir, "./coolie.json");
     var isExist = util.isFile(writeFile);
     var continueStep = function () {
-        log("1/" + (steps.length - 2), "请输入`main`值，默认为空：" +
-        "\n`main`路径是相对于`coolie.json`所在的路径的；" +
-        "\n`main`即为构建的入口模块，支持通配符，多个入口使用空格分开，更多详情访问`coolie`帮助：" +
-        "\nhttps://github.com/cloudcome/coolie", "success");
+        log("1/6", "请输入`js`值，默认为空：" +
+        "\n`js`路径是相对于`coolie.json`所在的目录；" +
+        "\n`js`即为构建的入口 JS 模块，支持通配符，多个文件使用空格分开。", "success");
 
     };
     var json = {};
@@ -54,41 +53,56 @@ module.exports = function (basedir) {
         });
     }
 
-    // main
+    // js
     steps.push(function (data) {
-        json.main = _getVal(data, '', true);
+        json.js = _getVal(data, '', true);
 
-        log("2/" + (steps.length - 2), "请输入`dest`值，默认为“../dest/”：" +
-        "\n`dest`路径是相对于`coolie.json`所在的路径的；" +
-        "\n`dest`即为构建的目标目录，更多详情访问`coolie`帮助：" +
-        "\nhttps://github.com/cloudcome/coolie", "success");
+        log("2/6", "请输入`html`值，默认为空：" +
+        "\n`html`路径是相对于`coolie.json`所在的目录；" +
+        "\n`html`即为构建的 HTML 文件，支持通配符，多个文件使用空格分开。", "success");
+    });
+
+    // html
+    steps.push(function (data) {
+        json.html = _getVal(data, '', true);
+
+        log("3/6", "请输入`css`值，默认为空：" +
+        "\n`css`路径是相对于`coolie.json`所在的目录；" +
+        "\n`css`即为构建的 CSS 目录。", "success");
+    });
+
+    // css
+    steps.push(function (data) {
+        json.css = _getVal(data, '', false);
+
+        log("4/6", "请输入`dest`值，默认为“../dest/”：" +
+        "\n`dest`路径是相对于`coolie.json`所在的目录；" +
+        "\n`dest`即为构建的目标目录。", "success");
     });
 
     // dest
     steps.push(function (data) {
         json.dest = _getVal(data, '../dest/', false);
 
-        log("3/" + (steps.length - 2), "请输入`coolie-config.js`值，默认为空：" +
-        "\n`coolie-config.js`路径是相对于`coolie.json`所在的路径的；" +
-        "\n`coolie-config.js`即为模块入口的配置文件，更多详情访问`coolie`帮助：" +
-        "\nhttps://github.com/cloudcome/coolie", "success");
+        log("5/6", "请输入`coolie-config.js`值，默认为空：" +
+        "\n`coolie-config.js`路径是相对于`coolie.json`所在的目录；" +
+        "\n`coolie-config.js`即为模块入口的配置文件。", "success");
     });
 
     // coolie-config.js
     steps.push(function (data) {
         json['coolie-config.js'] = _getVal(data, '', false);
 
-        log("4/" + (steps.length - 2), "请输入`copyFiles`值，默认为“./**/*.*”：" +
-        "\n`copyFiles`路径是相对于`coolie.json`所在的路径的；" +
-        "\n`copyFiles`即为构建时需要原样复制的文件，支持通配符，多个入口使用空格分开，更多详情访问`coolie`帮助：" +
-        "\nhttps://github.com/cloudcome/coolie", "success");
+        log("6/6", "请输入`copy`值，默认为“./**/*.*”：" +
+        "\n`copy`路径是相对于`coolie.json`所在的目录；" +
+        "\n`copy`即为构建时需要原样复制的文件，支持通配符，多个入口使用空格分开。", "success");
     });
 
-    // copyFiles
+    // copy
     steps.push(function (data) {
-        json.copyFiles = _getVal(data, './**/*.*', true);
+        json.copy = _getVal(data, './**/*.*', true);
 
-        log("5/" + (steps.length - 2), "文件内容为：", "success");
+        log("confirm", "文件内容为：", "success");
         console.log(JSON.stringify(json));
         log("confirm", "确认文件内容正确并生成文件？（[y]/n）", "warning");
     });

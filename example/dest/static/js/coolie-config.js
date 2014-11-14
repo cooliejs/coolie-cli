@@ -1,1 +1,1 @@
-coolie.config({base:"./app/",version:"iyyhoj"}).use();
+coolie.config({base:"./app/",version:"ywokbi"}).use();

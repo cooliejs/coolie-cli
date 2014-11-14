@@ -19,15 +19,20 @@ var options = {
 /**
  * 样式压缩
  * @param code
- * @param callback
+ * @param [callback]
  */
 module.exports = function (file, code, callback) {
-     try{
-         code = new minifyCSS(options).minify(code);
-         callback(null, code);
-     }catch (err){
-         log('cssminify', util.fixPath(file), 'error');
-         log('cssminify', err.message, 'error');
-         process.exit();
-     }
+    try {
+        code = new minifyCSS(options).minify(code);
+
+        if (callback) {
+            callback(null, code);
+        } else {
+            return code;
+        }
+    } catch (err) {
+        log('cssminify', util.fixPath(file), 'error');
+        log('cssminify', err.message, 'error');
+        process.exit();
+    }
 };

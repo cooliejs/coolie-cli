@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.0.17",
+  "version": "0.1.0",
   "description": "A JavaScript module builder for coolie.",
   "bin": {
     "coolie": "./bin/coolie.js"
@@ -26,6 +26,7 @@
     "url": "http://ydr.me"
   },
   "homepage": "https://github.com/cloudcome/nodejs-coolie",
+  "help": "https://github.com/cloudcome/coolie/blob/master/help/introduction.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/cloudcome/nodejs-coolie"
@@ -35,12 +36,13 @@
   },
   "licenses": "MIT",
   "dependencies": {
-    "clean-css": "^2.2.16",
+    "clean-css": "^2.2.17",
     "colors": "^1.0.3",
     "fs-extra": "^0.11.1",
     "glob": "^4.0.5",
-    "howdo": "^1.1.3",
+    "howdo": "^1.1.4",
     "html-minifier": "^0.6.9",
+    "open": "0.0.5",
     "uglify-js": "^2.4.15"
   }
 }

@@ -11,7 +11,8 @@
 var fs = require("fs");
 var path = require('path');
 var REG_FIX = /[.*+?^=!:${}()|[\]/\\]/g;
-var REG_PATH = path.sep === '/' ?  /\\/: /\//g;
+var REG_PATH = path.sep === '/' ? /\\/ : /\//g;
+var REG_URL = /\\/g;
 
 
 /**
@@ -80,6 +81,16 @@ module.exports.fixRegExp = function (str) {
 
 
 /**
+ * 转换路径为 URL 格式
+ * @param p
+ * @returns {string}
+ */
+module.exports.toURLPath = function (p) {
+    return String(p).replace(REG_URL, '/');
+};
+
+
+/**
  * 随机数字
  * @param min
  * @param max
@@ -114,19 +125,19 @@ module.exports.randomString = function (length) {
  * @returns {number}
  */
 module.exports.bytes = function (string, length) {
-        var i = 0,
-            j = string.length,
-            k = 0,
-            c;
+    var i = 0,
+        j = string.length,
+        k = 0,
+        c;
 
-        length = length || 2;
+    length = length || 2;
 
-        for (; i < j; i++) {
-            c = string.charCodeAt(i);
-            k += (c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f) ? 1 : length;
-        }
+    for (; i < j; i++) {
+        c = string.charCodeAt(i);
+        k += (c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f) ? 1 : length;
+    }
 
-        return k;
+    return k;
 };
 
 
@@ -138,7 +149,6 @@ module.exports.bytes = function (string, length) {
 module.exports.fixPath = function (pt) {
     return pt.replace(REG_PATH, path.sep);
 };
-
 
 
 /**

@@ -23,10 +23,9 @@ module.exports = function (basedir) {
     var writeFile = path.join(basedir, "./coolie-config.js");
     var isExist = util.isFile(writeFile);
     var continueStep = function () {
-        log("1/" + (steps.length - 2), "请输入`base`值，默认为“./”：" +
-        "\n`base`路径是相对于页面`coolie.js`所在的路径的；" +
-        "\n`base`即为入口模块的相对路径，更多详情访问`coolie`帮助：" +
-        "\nhttps://github.com/cloudcome/coolie", "success");
+        log("1/2", "请输入`base`值，默认为“./”：" +
+        "\n`base`路径是相对于页面`coolie.js`所在的目录；" +
+        "\n`base`即为入口模块的相对路径。", "success");
     };
     var json = {};
 
@@ -37,18 +36,18 @@ module.exports = function (basedir) {
         log("write file", util.fixPath(writeFile), "error");
         log("warning", "如果上述目录不正确，请按`ctrl+C`退出后重新指定。", "warning");
 
-        if(isExist){
+        if (isExist) {
             log("warning", "该文件已存在，是否覆盖？（y/[n]）", "warning");
-        }else{
+        } else {
             continueStep();
         }
     });
 
-    if(isExist){
+    if (isExist) {
         steps.push(function (data) {
-            if(data.toLowerCase().indexOf("y") === -1){
+            if (data.toLowerCase().indexOf("y") === -1) {
                 process.exit();
-            }else{
+            } else {
                 continueStep();
             }
         });
@@ -57,15 +56,15 @@ module.exports = function (basedir) {
     // base
     steps.push(function (data) {
         json.base = _getVal(data, './', false);
-        log("2/"+ (steps.length - 2), "文件内容为：", "success");
-        console.log(JSON.stringify(json));
+        log("2/2", "文件内容为：", "success");
+        console.log(_config(json));
         log("confirm", "确认文件内容正确并生成文件？（[y]/n）", "warning");
     });
 
     // write file
     steps.push(function (data) {
-        if(data.trim().toLocaleLowerCase().indexOf("n") === -1){
-            fs.outputFile(writeFile, JSON.stringify(json), "utf-8", function (err) {
+        if (data.trim().toLocaleLowerCase().indexOf("n") === -1) {
+            fs.outputFile(writeFile, _config(json), "utf-8", function (err) {
                 if (err) {
                     log("write", util.fixPath(writeFile), "error");
                     return process.exit();
@@ -74,14 +73,13 @@ module.exports = function (basedir) {
                 log("write", util.fixPath(writeFile), "success");
                 process.exit();
             });
-        }else{
+        } else {
             process.exit();
         }
     });
 
     nextStep(steps);
 };
-
 
 
 /**
@@ -96,6 +94,18 @@ function _getVal(data, dft, isArray) {
     var input = data.replace(RE_CLEAN, "").trim() || dft;
 
     return isArray ? input.split(RE_SPACE) : input;
+}
+
+
+/**
+ * 生成配置代码
+ * @param json
+ * @private
+ */
+function _config(json) {
+    var code = JSON.stringify(json);
+
+    return 'coolie.config(' + code + ');';
 }
 
 

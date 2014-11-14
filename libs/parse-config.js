@@ -22,107 +22,178 @@ var util = require("./util.js");
 module.exports = function (relative) {
     var file = path.join(relative, "./coolie.json");
     var config = {};
-    var dest;
-    var coolieConfigJS;
-    var mainType;
-    var copyFilesType;
+    var check = {};
 
-
-    if (util.type(file) === "string") {
-        try {
-            config = fs.readFileSync(file);
-
+    // 检查文件
+    check.file = function () {
+        if (util.type(file) === "string") {
             try {
-                config = JSON.parse(config);
+                config = fs.readFileSync(file);
+
+                try {
+                    config = JSON.parse(config);
+                } catch (err) {
+                    log("parse config", "coolie.json JSON parse error", "error");
+                    console.log(err);
+                    process.exit();
+                }
             } catch (err) {
-                log("parse config", "coolie.json JSON parse error", "error");
-                console.log(err);
+                log("read config", err.message, "error");
                 process.exit();
             }
-        } catch (err) {
-            log("read config", err.message, "error");
-            process.exit();
         }
-    }
+    };
 
-    if (config.main) {
-        mainType = util.type(config.main);
 
-        if (mainType !== "string" && mainType !== "array") {
-            log("parse config", "`main` property must be a string or an array object", "error");
-            process.exit();
-        }
+    // 检查 js 路径
+    check.js = function () {
+        if (config.js) {
+            var jsType = util.type(config.js);
 
-        if (mainType === "array") {
-            config.main.forEach(function (mn, index) {
-                if (util.type(mn) !== "string") {
-                    log("parse config", "`main` property[" + index + "] must be a string", "error");
-                    process.exit();
-                }
-            });
+            if (jsType !== "string" && jsType !== "array") {
+                log("parse config", "`js` property must be a string path or an array object", "error");
+                process.exit();
+            }
+
+            if (jsType === "array") {
+                config.js.forEach(function (mn, index) {
+                    if (util.type(mn) !== "string") {
+                        log("parse config", "`js` property[" + index + "] must be a string", "error");
+                        process.exit();
+                    }
+                });
+            } else {
+                config.js = [config.js];
+            }
         } else {
-            config.main = [config.main];
+            config.js = [];
         }
-    } else {
-        config.main = [];
-    }
+    };
 
-    if (!config.dest) {
-        log("parse config", "coolie.json require `dest` property", "error");
-        process.exit();
-    }
 
-    if (util.type(config.dest) !== "string") {
-        log("parse config", "`dest` property must be a string", "error");
-        process.exit();
-    }
-
-    dest = path.join(relative, config.dest);
-
-    if (!util.isDirectory(dest)) {
-        log("parse config", "`" + dest + "` is NOT a directory", "error");
-        process.exit();
-    }
-
-    if (!config["coolie-config.js"]) {
-        log("parse config", "coolie.json require `coolie-config.js` property", "error");
-        process.exit();
-    }
-
-    if (util.type(config["coolie-config.js"]) !== "string") {
-        log("parse config", "`coolie-config.js` property must be a string", "error");
-        process.exit();
-    }
-
-    coolieConfigJS = path.join(relative, config["coolie-config.js"]);
-
-    if (!util.isFile(coolieConfigJS)) {
-        log("parse config", coolieConfigJS + " is NOT a file", "error");
-        process.exit();
-    }
-
-    if (config.copyFiles) {
-        copyFilesType = util.type(config.copyFiles);
-
-        if (copyFilesType !== "string" && copyFilesType !== "array") {
-            log("parse config", "`copyFiles` property must be a string or an array object", "error");
+    // 检查 css 路径
+    check.css = function () {
+        if (config.css && util.type(config.css) !== "string") {
+            log("parse config", "`css` property must be a string path", "error");
             process.exit();
         }
 
-        if (copyFilesType === "array") {
-            config.copyFiles.forEach(function (cp, index) {
-                if (util.type(cp) !== "string") {
-                    log("parse config", "`copyFiles` property[" + index + "] must be a string", "error");
-                    process.exit();
-                }
-            });
-        } else {
-            config.copyFiles = [config.copyFiles];
-        }
-    } else {
-        config.copyFiles = [];
-    }
+        var css = path.join(relative, config.css);
 
+        if (!util.isDirectory(css)) {
+            log("parse config", "`" + css + "` is NOT a directory", "error");
+            process.exit();
+        }
+    };
+
+
+    // 检查 html 路径
+    check.html = function () {
+        if (config.html) {
+            var htmlType = util.type(config.html);
+
+            if (htmlType !== "string" && htmlType !== "array") {
+                log("parse config", "`html` property must be a string path or an array object", "error");
+                process.exit();
+            }
+
+            if (htmlType === "array") {
+                config.html.forEach(function (mn, index) {
+                    if (util.type(mn) !== "string") {
+                        log("parse config", "`html` property[" + index + "] must be a string", "error");
+                        process.exit();
+                    }
+                });
+            } else {
+                config.html = [config.html];
+            }
+        } else {
+            config.html = [];
+        }
+    };
+
+
+    // 检查 css 路径
+    check.dest = function () {
+        if (!config.dest) {
+            log("parse config", "coolie.json require `dest` property", "error");
+            process.exit();
+        }
+
+        if (util.type(config.dest) !== "string") {
+            log("parse config", "`dest` property must be a string path", "error");
+            process.exit();
+        }
+
+        var dest = path.join(relative, config.dest);
+
+        if (!util.isDirectory(dest)) {
+            log("parse config", "`" + dest + "` is NOT a directory", "error");
+            process.exit();
+        }
+    };
+
+
+    // 检查配置
+    check.config = function () {
+        if (!config["coolie-config.js"]) {
+            log("parse config", "coolie.json require `coolie-config.js` property", "error");
+            process.exit();
+        }
+
+        if (util.type(config["coolie-config.js"]) !== "string") {
+            log("parse config", "`coolie-config.js` property must be a string", "error");
+            process.exit();
+        }
+
+        var coolieConfigJS = path.join(relative, config["coolie-config.js"]);
+
+        if (!util.isFile(coolieConfigJS)) {
+            log("parse config", coolieConfigJS + " is NOT a file", "error");
+            process.exit();
+        }
+    };
+
+
+    // 检查复制
+    check.copy = function () {
+        if (config.copy) {
+            var copyFilesType = util.type(config.copy);
+
+            if (copyFilesType !== "string" && copyFilesType !== "array") {
+                log("parse config", "`copy` property must be a string or an array object", "error");
+                process.exit();
+            }
+
+            if (copyFilesType === "array") {
+                config.copy.forEach(function (cp, index) {
+                    if (util.type(cp) !== "string") {
+                        log("parse config", "`copy` property[" + index + "] must be a string", "error");
+                        process.exit();
+                    }
+                });
+            } else {
+                config.copy = [config.copy];
+            }
+        } else {
+            config.copy = [];
+        }
+
+    };
+
+
+    check.file();
+    check.js();
+    check.css();
+    check.html();
+    check.dest();
+    check.config();
+    check.copy();
 
     return config;
 };
+
+
+////////////////////////////////////////////////////////////////////////////
+//var ret = module.exports(path.join(__dirname, '../example/src/'));
+//console.log(ret);

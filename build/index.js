@@ -11,6 +11,7 @@ var buildConfig = require("./build-config.js");
 var buildJSON = require("./build-json.js");
 var buildModules = require("./build-modules.js");
 var checkUpdate = require("./check-update.js");
+var openHelp = require("./open-help.js");
 var path = require("path");
 var CWD = process.cwd();
 var cmdArgs = process.argv.slice(2);
@@ -19,6 +20,10 @@ var cmdArg1 = cmdArgs[1];
 var buildPath = cmdArg1 ? path.join(CWD, cmdArg1) : CWD;
 
 switch ((cmdArg0 || "").toLowerCase()) {
+    case "help":
+        openHelp();
+        break;
+
     case "version":
         checkUpdate();
         break;
@@ -36,10 +41,10 @@ switch ((cmdArg0 || "").toLowerCase()) {
         break;
 
     default:
-        log(true, "coolie help", "输出帮助信息", "success");
+        log(true, "coolie help", "打开帮助页面", "success");
         log(true, "coolie version", "输出版本号", "success");
         log(true, "coolie config [path]", "在指定目录生成`coolie-config.js`", "success");
         log(true, "coolie json [path]", "在指定目录生成`coolie.json`", "success");
-        log(true, "coolie build [path]", "在指定目录根据`coolie.json`配置文件执行构建操作", "success");
+        log(true, "coolie build [path]", "在指定目录根据`coolie.json`配置文件执行构建HTML/JS/CSS", "success");
 }
 
