@@ -137,7 +137,7 @@ module.exports = function (buildPath) {
         })
 
         .task(function (next) {
-            log('4/4', 'build html', 'task');
+            log('4/4', 'build html css', 'task');
             next();
         })
         .each(config.html, function (i, htmlFile, nextHTML) {
