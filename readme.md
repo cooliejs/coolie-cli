@@ -3,7 +3,7 @@
 A JavaScript module builder for coolie.
 
 服务于[coolie](https://github.com/cloudcome/coolie)的脚本模块化打包工具。
-[关于 coolie 的最佳实践。]()
+**[关于 coolie 脚本加载器以及构建工具的完整帮助。](https://github.com/cloudcome/coolie/blob/master/help/introduction.md)**
 
 `coolie`是一个全局模块，因此需要全局安装。
 ```
