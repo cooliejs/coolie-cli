@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A JavaScript module builder for coolie.",
   "bin": {
     "coolie": "./bin/coolie.js"
@@ -26,7 +26,7 @@
     "url": "http://ydr.me"
   },
   "homepage": "https://github.com/cloudcome/nodejs-coolie",
-  "help": "https://github.com/cloudcome/coolie/blob/master/help/introduction.md",
+  "help": "https://github.com/cloudcome/coolie/wiki/production",
   "repository": {
     "type": "git",
     "url": "https://github.com/cloudcome/nodejs-coolie"
