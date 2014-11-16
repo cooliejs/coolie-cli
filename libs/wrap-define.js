@@ -10,7 +10,6 @@
 var REG_HUA_START = /^.*?:/;
 var REG_HUA_END = /}$/;
 var log = require('./log.js');
-var util = require('./util.js');
 var cssminify = require('./cssminify.js');
 var htmlminify = require('./htmlminify.js');
 

@@ -8,8 +8,7 @@
 "use strict";
 
 var log = require("./log.js");
-var util = require("./util.js");
-var util = require("./util.js");
+var ydrUtil = require("ydr-util");
 var REG_DEFINE = /\bdefine\s*?\(.*?function/;
 
 
@@ -26,7 +25,7 @@ module.exports = function (file, code, deps, depIdsMap) {
     var id = depIdsMap[file];
 
     if (!id) {
-        log("replace define", "the module ID is undefined in " + util.fixPath(file), "error");
+        log("replace define", "the module ID is undefined in " + ydrUtil.dato.fixPath(file), "error");
         process.exit();
     }
 

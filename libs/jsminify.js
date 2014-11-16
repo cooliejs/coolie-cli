@@ -8,7 +8,7 @@
 
 var uglifyJS = require("uglify-js");
 var log = require('./log.js');
-var util = require('./util.js');
+var ydrUtil = require('ydr-util');
 //var compressorOptions = {
 //    // 连续单语句，逗号分开
 //    // 如： alert(1);alert(2); => alert(1),alert(2)
@@ -76,7 +76,7 @@ module.exports = function (file, code, callback) {
     //    code = ast.print_to_string();
     //    callback(null, code);
     //} catch (err) {
-    //    log('jsminify', util.fixPath(file), 'error');
+    //    log('jsminify', ydrUtil.dato.fixPath(file), 'error');
     //    log('jsminify', err.message, 'error');
     //    process.exit();
     //}
@@ -96,7 +96,7 @@ module.exports = function (file, code, callback) {
 
         callback(null, ret.code);
     } catch (err) {
-        log('jsminify', util.fixPath(file), 'error');
+        log('jsminify', ydrUtil.dato.fixPath(file), 'error');
         log('jsminify', err.message, 'error');
         process.exit();
     }
@@ -109,7 +109,7 @@ module.exports = function (file, code, callback) {
     //    'preserve-semi': true
     //}, function (err, code, extra) {
     //    if (err) {
-    //        log('jsminify', util.fixPath(file), 'error');
+    //        log('jsminify', ydrUtil.dato.fixPath(file), 'error');
     //        log('jsminify', err.message, 'error');
     //        log('jsminify', extra, 'error');
     //        process.exit();

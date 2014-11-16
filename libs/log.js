@@ -7,7 +7,7 @@
 'use strict';
 
 var colors = require('colors/safe.js');
-var util = require('./util.js');
+var ydrUtil = require('ydr-util');
 
 // set theme
 var map = {
@@ -66,7 +66,7 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
         isTextAlignLeft = false;
     }
 
-    while (30 - util.bytes(event, 2) > 0) {
+    while (30 - ydrUtil.dato.bytes(event, 2) > 0) {
         event = isTextAlignLeft ? event + ' ' : ' ' + event;
     }
 

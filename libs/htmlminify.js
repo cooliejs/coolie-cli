@@ -8,7 +8,7 @@
 
 var htmlminify = require('html-minifier').minify;
 var log = require('./log.js');
-var util = require('./util.js');
+var ydrUtil = require('ydr-util');
 var options = {
     // 删除注释
     removeComments: true,
@@ -35,7 +35,7 @@ module.exports = function (file, code, callback) {
             return code;
         }
     } catch (err) {
-        log('htmlminify', util.fixPath(file), 'error');
+        log('htmlminify', ydrUtil.dato.fixPath(file), 'error');
         log('htmlminify', err.message, 'error');
         process.exit();
     }

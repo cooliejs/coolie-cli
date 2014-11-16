@@ -11,7 +11,7 @@ var howdo = require('howdo');
 var path = require('path');
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
-var util = require('../libs/util.js');
+var ydrUtil = require('ydr-util');
 var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');
 var replaceRequire = require('../libs/replace-require.js');
@@ -41,7 +41,7 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
     // 当前文件的目录
     var textMatched = name.match(REG_TEXT);
     var isText = !!textMatched;
-    var textType = (textMatched || ['',''])[1];
+    var textType = (textMatched || ['', ''])[1];
     // 相对目录
     var relativeDir = path.dirname(file);
 
@@ -55,7 +55,7 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
                 code = fs.readFileSync(file, 'utf8');
                 next(null, code);
             } catch (err) {
-                log('read', util.fixPath(file), 'error');
+                log('read', ydrUtil.dato.fixPath(file), 'error');
                 log('read', err.message, 'error');
                 process.exit();
             }
@@ -86,7 +86,17 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
         })
 
 
-        // 3. 压缩
+        // 3. 替换 require
+        .task(function (next, code) {
+            if (!isText) {
+                code = replaceRequire(file, code, depNameList, depName2IdMap);
+            }
+
+            next(null, code);
+        })
+
+
+        // 4. 压缩
         .task(function (next, code) {
             if (isText) {
                 next(null, code);
@@ -96,24 +106,14 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
         })
 
 
-        // 4. 替换 define
+        // 5. 替换 define
         .task(function (next, code) {
             if (isText) {
-               wrapDefine(file, code, depIdsMap, textType, next);
+                wrapDefine(file, code, depIdsMap, textType, next);
             } else {
                 code = replaceDefine(file, code, depIdList, depIdsMap);
                 next(null, code);
             }
-        })
-
-
-        // 5. 替换 require
-        .task(function (next, code) {
-            if (!isText) {
-                code = replaceRequire(file, code, depNameList, depName2IdMap);
-            }
-
-            next(null, code);
         })
 
 

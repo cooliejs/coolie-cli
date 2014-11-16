@@ -12,7 +12,7 @@ var howdo = require('howdo');
 var path = require('path');
 var glob = require('glob');
 var log = require('../libs/log.js');
-var util = require('../libs/util.js');
+var ydrUtil = require('ydr-util');
 var replaceConfig = require('../libs/replace-config.js');
 var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
@@ -30,18 +30,35 @@ module.exports = function (buildPath) {
 
     howdo
         .task(function (next) {
-            log('1/4', 'copy files', 'task');
+            log('1/5', 'clean dest', 'task');
+            next();
+        })
+        .task(function (next) {
+            fs.remove(destPath, function (err) {
+                if (err) {
+                    log('remove', ydrUtil.dato.fixPath(destPath), 'error');
+                    log('remove', err.message, 'error');
+                    process.exit();
+                }
+
+                log('remove', ydrUtil.dato.fixPath(destPath), 'success');
+                next();
+            });
+        })
+
+        .task(function (next) {
+            log('2/5', 'copy files', 'task');
             next();
         })
         .each(config.copy, function (i, copyFile, nextCopy) {
             // copy files
             var gbPath = path.join(buildPath, copyFile);
 
-            log('copy files', util.fixPath(gbPath));
+            log('copy files', ydrUtil.dato.fixPath(gbPath));
 
             glob(gbPath, function (err, files) {
                 if (err) {
-                    log('glob', util.fixPath(gbPath), 'error');
+                    log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
                     log('glob', err.message, 'error');
                     process.exit();
                 }
@@ -52,13 +69,13 @@ module.exports = function (buildPath) {
 
                     fs.copy(file, destFile, function (err) {
                         if (err) {
-                            log('copy from', util.fixPath(file), 'error');
-                            log('copy to', util.fixPath(destFile), 'error');
+                            log('copy from', ydrUtil.dato.fixPath(file), 'error');
+                            log('copy to', ydrUtil.dato.fixPath(destFile), 'error');
                             log('copy error', err.message, 'error');
                             process.exit();
                         }
 
-                        log('copy write', util.fixPath(destFile));
+                        log('copy write', ydrUtil.dato.fixPath(destFile), 'success');
                         copyLength++;
                         nextFile();
                     });
@@ -69,18 +86,18 @@ module.exports = function (buildPath) {
         })
 
         .task(function (next) {
-            log('2/4', 'build main', 'task');
+            log('3/5', 'build main', 'task');
             next();
         })
         .each(config.js, function (i, main, nextMain) {
             // 构建入口模块
             var gbPath = path.join(buildPath, main);
 
-            log('build files', util.fixPath(gbPath));
+            log('build files', ydrUtil.dato.fixPath(gbPath));
 
             glob(gbPath, function (err, files) {
                 if (err) {
-                    log('glob', util.fixPath(gbPath), 'error');
+                    log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
                     log('glob', err.message, 'error');
                     process.exit();
                 }
@@ -97,12 +114,12 @@ module.exports = function (buildPath) {
 
                         fs.outputFile(destFile, code, function (err) {
                             if (err) {
-                                log('write main', util.fixPath(destFile), 'error');
+                                log('write main', ydrUtil.dato.fixPath(destFile), 'error');
                                 log('write main', err.message, 'error');
                                 process.exit();
                             }
 
-                            log('write main', util.fixPath(destFile), 'success');
+                            log('write main', ydrUtil.dato.fixPath(destFile), 'success');
                             mainLength++;
                             nextFile();
                         });
@@ -114,7 +131,7 @@ module.exports = function (buildPath) {
         })
 
         .task(function (next) {
-            log('3/4', 'overwrite config', 'task');
+            log('4/5', 'overwrite config', 'task');
             next();
         })
         .task(function (next) {
@@ -126,18 +143,18 @@ module.exports = function (buildPath) {
             code = replaceConfig(coolieConfigJS, code);
             fs.outputFile(destFile, code, function (err) {
                 if (err) {
-                    log('overwrite config', util.fixPath(destFile), 'error');
+                    log('overwrite config', ydrUtil.dato.fixPath(destFile), 'error');
                     log('overwrite config', err.message, 'error');
                     process.exit();
                 }
 
-                log('overwrite config', util.fixPath(destFile), 'success');
+                log('overwrite config', ydrUtil.dato.fixPath(destFile), 'success');
                 next();
             });
         })
 
         .task(function (next) {
-            log('4/4', 'build html css', 'task');
+            log('5/5', 'build html css', 'task');
             next();
         })
         .each(config.html, function (i, htmlFile, nextHTML) {
@@ -145,11 +162,11 @@ module.exports = function (buildPath) {
             var gbPath = path.join(buildPath, htmlFile);
             var cssPath = path.join(buildPath, config.css);
 
-            log('html files', util.fixPath(gbPath));
+            log('html files', ydrUtil.dato.fixPath(gbPath));
 
             glob(gbPath, function (err, files) {
                 if (err) {
-                    log('glob', util.fixPath(gbPath), 'error');
+                    log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
                     log('glob', err.message, 'error');
                     process.exit();
                 }
@@ -172,7 +189,7 @@ module.exports = function (buildPath) {
 
             log('build success',
                 'copy ' + copyLength + ' file(s), ' +
-                 mainLength + ' js file(s), ' +
+                mainLength + ' js file(s), ' +
                 htmlLength + ' html file(s), ' +
                 'past ' + past + ' ms', 'success');
         });

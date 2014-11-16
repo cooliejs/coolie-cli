@@ -6,7 +6,7 @@
 
 "use strict";
 
-var util = require('./util.js');
+var ydrUtil = require('ydr-util');
 var log = require('./log.js');
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /\}$/;
@@ -30,11 +30,11 @@ var coolieFn = function () {
 
 module.exports = function (file, code) {
     //if(!REG_VERSION.test(code)){
-    //    log('replace config', 'can not found version config in ' + util.fixPath(file), 'error');
+    //    log('replace config', 'can not found version config in ' + ydrUtil.dato.fixPath(file), 'error');
     //    process.exit();
     //}
     //
-    //return code.replace(REG_VERSION, 'version: "' + util.randomString(6) + '"');
+    //return code.replace(REG_VERSION, 'version: "' + ydrUtil.random.string(6) + '"');
 
     var coolieString = coolieFn.toString()
         .replace(REG_FUNCTION_START, '')
@@ -42,7 +42,7 @@ module.exports = function (file, code) {
 
     var fn = new Function('config', coolieString + code);
     var base;
-    var version = util.randomString(6);
+    var version = ydrUtil.random.string(6);
 
     try {
         fn(config);
@@ -51,7 +51,7 @@ module.exports = function (file, code) {
         log('coolie config', 'version: "' + version + '"', 'success');
         return 'coolie.config({base:"' + config.base + '",version:"' + version + '"}).use();';
     } catch (err) {
-        log('replace config', util.fixPath(file), 'error');
+        log('replace config', ydrUtil.dato.fixPath(file), 'error');
         log('replace config', err.message, 'error');
     }
 };

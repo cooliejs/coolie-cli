@@ -10,7 +10,7 @@
 var path = require('path');
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
-var util = require('../libs/util.js');
+var ydrUtil = require('ydr-util');
 var Increase = require('../libs/Increase.js');
 var buildModule = require('./build-module.js');
 
@@ -29,7 +29,7 @@ module.exports = function (mainFile, callback) {
     var _deepBuld = function (name, file) {
         buildModule(name, file, increase, depIdsMap, function (err, meta) {
             if (err) {
-                log("build", util.fixPath(file), "error");
+                log("build", ydrUtil.dato.fixPath(file), "error");
                 log('build', err.message, 'error');
                 process.exit();
             }
@@ -48,13 +48,13 @@ module.exports = function (mainFile, callback) {
                     depsRelationship[file][depId] = true;
 
                     if (depsRelationship[depId] && depsRelationship[depId][file]) {
-                        log('depend cycle', util.fixPath(file) + '\n' + util.fixPath(depId), 'error');
+                        log('depend cycle', ydrUtil.dato.fixPath(file) + '\n' + ydrUtil.dato.fixPath(depId), 'error');
                         process.exit();
                     }
 
                     if (!depsCache[depId]) {
                         depsCache[depId] = true;
-                        log("require", util.fixPath(depId));
+                        log("require", ydrUtil.dato.fixPath(depId));
                         _deepBuld(depNameList[index], depId);
                         depsLength++;
                     }
@@ -71,6 +71,6 @@ module.exports = function (mainFile, callback) {
 
     // 第一个 define 模块为入口模块，不必指定其 name
     depIdsMap[mainFile] = '0';
-    log("build main", util.fixPath(mainFile), "warning");
+    log("build main", ydrUtil.dato.fixPath(mainFile), "warning");
     _deepBuld(mainName, mainFile);
 };

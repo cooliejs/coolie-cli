@@ -8,7 +8,7 @@
 
 var path = require('path');
 var fs = require('fs');
-var util = require('./util.js');
+var ydrUtil = require('ydr-util');
 var log = require('./log.js');
 var cssminify = require('./cssminify.js');
 var htmlminify = require('./htmlminify.js');
@@ -16,6 +16,8 @@ var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/g;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/ig;
+// 相同的组合只产生出一个文件
+var concatMap = {};
 
 
 module.exports = function (file, data, cssPath) {
@@ -30,9 +32,10 @@ module.exports = function (file, data, cssPath) {
         var hrefMatches;
         var files = [];
         var relativePath = path.relative(dirname, cssPath);
-        var fileName = util.randomString(20) + '.css';
+        var fileName = ydrUtil.random.string(20) + '.css';
         var filePath = path.join(relativePath, fileName);
-        var fileURL = util.toURLPath(filePath);
+        var fileURL = ydrUtil.dato.toURLPath(filePath);
+        var findMath = null;
 
         if (array.length === 2) {
             while ((hrefMatches = REG_LINK.exec(link))) {
@@ -40,31 +43,41 @@ module.exports = function (file, data, cssPath) {
             }
         }
 
-        //files.forEach(function (file) {
-        //    var data;
-        //    try {
-        //        data = fs.readFileSync(file, 'utf8');
-        //        data = cssminify(file, data);
-        //        bufferList.push(new Buffer(data + '\n', 'utf8'));
-        //    } catch (err) {
-        //        log('replace html', util.fixPath(file), 'error');
-        //        log('replace html', err.message, 'error');
-        //        process.exit();
-        //    }
-        //});
+        ydrUtil.dato.each(concatMap, function (name, matched) {
+            if (matched.files.length !== files.length) {
+                return false;
+            }
 
-        if (files.length) {
-            concat.push({
-                name: fileName,
-                url: fileURL,
-                files: files
-            });
+            var compare = ydrUtil.dato.compare(matched.files, files);
+
+            // 完全匹配
+            if (compare && compare.different.length === 0) {
+                findMath = ydrUtil.dato.extend(true, {}, matched);
+                return false;
+            }
+        });
+
+        if (findMath) {
+            filePath = path.join(relativePath, findMath.name);
+            fileURL = ydrUtil.dato.toURLPath(filePath);
+            findMath.url = fileURL;
+            findMath.isRepeat = true;
+            concat.push(findMath);
+        } else {
+            if (files.length) {
+                concat.push({
+                    name: fileName,
+                    url: fileURL,
+                    files: files
+                });
+                concatMap[fileName] = concat[concat.length - 1];
+            }
         }
     });
 
 
-    data = data.replace(REG_COOLIE, function($0, $1){
-        return $1 ? '<link rel="stylesheet" href="'+concat[replaceIndex++].url+'"/>' : $0;
+    data = data.replace(REG_COOLIE, function ($0, $1) {
+        return $1 ? '<link rel="stylesheet" href="' + concat[replaceIndex++].url + '"/>' : $0;
     });
 
     return {

@@ -6,10 +6,10 @@
 
 "use strict";
 
-var util = require("./util.js");
+var ydrUtil = require("ydr-util");
 
 module.exports = function (steps) {
-    if (util.type(steps) !== "array") {
+    if (ydrUtil.typeis(steps) !== "array") {
         throw new Error("confirm steps must be an array");
     }
 
@@ -23,7 +23,7 @@ module.exports = function (steps) {
     process.stdin.on("readable", function () {
         var chunk = process.stdin.read();
 
-        if (util.type(steps[step]) !== "function") {
+        if (ydrUtil.typeis(steps[step]) !== "function") {
             throw new Error("steps[" + step + "] must be a function");
         }
 

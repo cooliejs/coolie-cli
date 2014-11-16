@@ -10,7 +10,7 @@
 var path = require("path");
 var fs = require("fs-extra");
 var log = require("./log.js");
-var util = require("./util.js");
+var ydrUtil = require("ydr-util");
 
 
 /**
@@ -26,7 +26,7 @@ module.exports = function (relative) {
 
     // 检查文件
     check.file = function () {
-        if (util.type(file) === "string") {
+        if (ydrUtil.typeis(file) === "string") {
             try {
                 config = fs.readFileSync(file);
 
@@ -48,7 +48,7 @@ module.exports = function (relative) {
     // 检查 js 路径
     check.js = function () {
         if (config.js) {
-            var jsType = util.type(config.js);
+            var jsType = ydrUtil.typeis(config.js);
 
             if (jsType !== "string" && jsType !== "array") {
                 log("parse config", "`js` property must be a string path or an array object", "error");
@@ -57,7 +57,7 @@ module.exports = function (relative) {
 
             if (jsType === "array") {
                 config.js.forEach(function (mn, index) {
-                    if (util.type(mn) !== "string") {
+                    if (ydrUtil.typeis(mn) !== "string") {
                         log("parse config", "`js` property[" + index + "] must be a string", "error");
                         process.exit();
                     }
@@ -73,14 +73,14 @@ module.exports = function (relative) {
 
     // 检查 css 路径
     check.css = function () {
-        if (config.css && util.type(config.css) !== "string") {
+        if (config.css && ydrUtil.typeis(config.css) !== "string") {
             log("parse config", "`css` property must be a string path", "error");
             process.exit();
         }
 
         var css = path.join(relative, config.css);
 
-        if (!util.isDirectory(css)) {
+        if (!ydrUtil.typeis.directory(css)) {
             log("parse config", "`" + css + "` is NOT a directory", "error");
             process.exit();
         }
@@ -90,7 +90,7 @@ module.exports = function (relative) {
     // 检查 html 路径
     check.html = function () {
         if (config.html) {
-            var htmlType = util.type(config.html);
+            var htmlType = ydrUtil.typeis(config.html);
 
             if (htmlType !== "string" && htmlType !== "array") {
                 log("parse config", "`html` property must be a string path or an array object", "error");
@@ -99,7 +99,7 @@ module.exports = function (relative) {
 
             if (htmlType === "array") {
                 config.html.forEach(function (mn, index) {
-                    if (util.type(mn) !== "string") {
+                    if (ydrUtil.typeis(mn) !== "string") {
                         log("parse config", "`html` property[" + index + "] must be a string", "error");
                         process.exit();
                     }
@@ -120,7 +120,7 @@ module.exports = function (relative) {
             process.exit();
         }
 
-        if (util.type(config.dest) !== "string") {
+        if (ydrUtil.typeis(config.dest) !== "string") {
             log("parse config", "`dest` property must be a string path", "error");
             process.exit();
         }
@@ -134,14 +134,14 @@ module.exports = function (relative) {
             process.exit();
         }
 
-        if (util.type(config["coolie-config.js"]) !== "string") {
+        if (ydrUtil.typeis(config["coolie-config.js"]) !== "string") {
             log("parse config", "`coolie-config.js` property must be a string", "error");
             process.exit();
         }
 
         var coolieConfigJS = path.join(relative, config["coolie-config.js"]);
 
-        if (!util.isFile(coolieConfigJS)) {
+        if (!ydrUtil.typeis.file(coolieConfigJS)) {
             log("parse config", coolieConfigJS + " is NOT a file", "error");
             process.exit();
         }
@@ -151,7 +151,7 @@ module.exports = function (relative) {
     // 检查复制
     check.copy = function () {
         if (config.copy) {
-            var copyFilesType = util.type(config.copy);
+            var copyFilesType = ydrUtil.typeis(config.copy);
 
             if (copyFilesType !== "string" && copyFilesType !== "array") {
                 log("parse config", "`copy` property must be a string or an array object", "error");
@@ -160,7 +160,7 @@ module.exports = function (relative) {
 
             if (copyFilesType === "array") {
                 config.copy.forEach(function (cp, index) {
-                    if (util.type(cp) !== "string") {
+                    if (ydrUtil.typeis(cp) !== "string") {
                         log("parse config", "`copy` property[" + index + "] must be a string", "error");
                         process.exit();
                     }

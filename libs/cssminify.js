@@ -9,7 +9,7 @@
 
 var minifyCSS = require("clean-css");
 var log = require('./log.js');
-var util = require('./util.js');
+var ydrUtil = require('ydr-util');
 var options = {
     keepSpecialComments: 0,
     keepBreaks: false
@@ -31,7 +31,7 @@ module.exports = function (file, code, callback) {
             return code;
         }
     } catch (err) {
-        log('cssminify', util.fixPath(file), 'error');
+        log('cssminify', ydrUtil.dato.fixPath(file), 'error');
         log('cssminify', err.message, 'error');
         process.exit();
     }

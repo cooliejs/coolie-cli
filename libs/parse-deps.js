@@ -10,7 +10,6 @@
 var REG_REQUIRE = /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'|\/\*[\S\s]*?\*\/|\/(?:\\\/|[^\/\r\n])+\/(?=[^\/])|\/\/.*|\.\s*require|(?:^|[^$])\brequire\s*\(\s*(["'])(.+?)\1\s*\)/g;
 var REG_SLASH = /\\\\/g;
 var log = require('./log.js');
-var util = require('./util.js');
 
 /**
  * 解析依赖，返回数组
