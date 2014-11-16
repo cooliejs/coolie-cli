@@ -113,7 +113,7 @@ module.exports = function (relative) {
     };
 
 
-    // 检查 css 路径
+    // 检查 dest 路径
     check.dest = function () {
         if (!config.dest) {
             log("parse config", "coolie.json require `dest` property", "error");
@@ -122,13 +122,6 @@ module.exports = function (relative) {
 
         if (util.type(config.dest) !== "string") {
             log("parse config", "`dest` property must be a string path", "error");
-            process.exit();
-        }
-
-        var dest = path.join(relative, config.dest);
-
-        if (!util.isDirectory(dest)) {
-            log("parse config", "`" + dest + "` is NOT a directory", "error");
             process.exit();
         }
     };
