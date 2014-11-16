@@ -43,7 +43,7 @@ npm install -g coolie
 
 
 # Version
-- 0.1.1
+- 0.1.2
 	- 支持 html 文件的构建
 	- 支持 css 引用的合并替换
 	- 新增命令打开帮助页面
