@@ -27,6 +27,7 @@ module.exports = function (buildPath) {
     var copyLength = 0;
     var mainLength = 0;
     var htmlLength = 0;
+    var cssLength = 0;
 
     howdo
         .task(function (next) {
@@ -172,7 +173,10 @@ module.exports = function (buildPath) {
                 }
                 howdo.each(files, function (j, file, nextFile) {
                     htmlLength++;
-                    buildHTML(file, cssPath, srcPath, destPath, nextFile);
+                    buildHTML(file, cssPath, srcPath, destPath, function (err, _cssLength) {
+                        cssLength += _cssLength;
+                        nextFile(err);
+                    });
                 }).follow(function () {
                     nextHTML();
                 });
@@ -189,8 +193,9 @@ module.exports = function (buildPath) {
 
             log('build success',
                 'copy ' + copyLength + ' file(s), ' +
-                mainLength + ' js file(s), ' +
-                htmlLength + ' html file(s), ' +
+                'build ' + mainLength + ' js file(s), ' +
+                'build ' + htmlLength + ' html file(s), ' +
+                'build ' + cssLength + ' css file(s), ' +
                 'past ' + past + ' ms', 'success');
         });
 };

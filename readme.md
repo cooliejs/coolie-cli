@@ -1,17 +1,22 @@
 # Coolie 苦力
 
-A JavaScript module builder for coolie.
+A builder for front-end developments.
 
-服务于[coolie](https://github.com/cloudcome/coolie)的脚本模块化打包工具。
-**[关于 coolie 脚本加载器以及构建工具的完整帮助。](https://github.com/cloudcome/coolie/wiki)**
+# 功能
+- js 模块的合并、压缩、依赖分析、构建，【[coolie 模块加载器](https://github.com/cloudcome/coolie)】；
+- css 模块的合并、压缩、构建；
+- html 样式依赖分析、压缩、构建。
+
+# 特点
+- js 模块合并、模块路径压缩、模块合并、版本号更新；
+- css 模块合并、版本号更新；
+- html 模板压缩、link合并。
 
 
 `coolie`是一个全局模块，因此需要全局安装。
 ```
 npm install -g coolie
 ```
-
-![see](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20141028170749360717674649.jpg)
 
 
 # API
@@ -37,13 +42,13 @@ npm install -g coolie
 
 ## `coolie build [path]`
 在指定目录（默认为当前工作目录），根据`coolie.json`配置来执行构建操作。
-
-![coolie build](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20141114175311946304195012.jpg)
+![coolie](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20141116220221094451640234.jpg)
 
 
 
 # Version
-- 0.1.6
+- 0.1.7
+	- 修正 css 引用构建顺序
 	- 优化了 css 文件重复引用
 	- 支持 html 文件的构建
 	- 支持 css 引用的合并替换

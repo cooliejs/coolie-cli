@@ -1,1 +1,1 @@
-coolie.config({base:"./app/",version:"ogfdvb"}).use();
+coolie.config({base:"./app/",version:"ajdbiq"}).use();

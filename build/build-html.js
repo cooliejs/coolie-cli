@@ -24,6 +24,8 @@ var cssminify = require('../libs/cssminify.js');
  * @param callback {Function} 回调
  */
 module.exports = function (file, cssPath, srcPath, destPath, callback) {
+    var cssLength = 0;
+
     fs.readFile(file, 'utf8', function (err, data) {
         if (err) {
             log("read file", ydrUtil.dato.fixPath(file), "error");
@@ -65,6 +67,8 @@ module.exports = function (file, cssPath, srcPath, destPath, callback) {
 
                     // 合并多个文件
                     howdo.each(matched.files, function (index, file, doneConcat) {
+                        cssLength++;
+
                         fs.readFile(file, 'utf8', function (err, data) {
                             if (err) {
                                 log("read file", ydrUtil.dato.fixPath(file), "error");
@@ -77,7 +81,7 @@ module.exports = function (file, cssPath, srcPath, destPath, callback) {
                             log('require', ydrUtil.dato.fixPath(file));
                             doneConcat();
                         });
-                    }).together(function () {
+                    }).follow(function () {
                         var data = Buffer.concat(bufferList).toString();
                         var relative = path.relative(srcPath, cssPath);
                         var destFile = path.join(destPath, relative, matched.name);
@@ -100,7 +104,9 @@ module.exports = function (file, cssPath, srcPath, destPath, callback) {
                 });
             })
             // 并行
-            .together(callback);
+            .together(function () {
+                callback(null, cssLength);
+            });
 
     });
 };
