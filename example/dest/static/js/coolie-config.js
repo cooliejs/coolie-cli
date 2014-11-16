@@ -1,0 +1,1 @@
+coolie.config({base:"./app/",version:"ogfdvb"}).use();

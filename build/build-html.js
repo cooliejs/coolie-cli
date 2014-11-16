@@ -73,7 +73,7 @@ module.exports = function (file, cssPath, srcPath, destPath, callback) {
                             }
 
                             data = cssminify(file, data);
-                            bufferList.push(new Buffer(data + '\n', 'utf8'));
+                            bufferList.push(new Buffer('\n' + data, 'utf8'));
                             log('require', ydrUtil.dato.fixPath(file));
                             doneConcat();
                         });
@@ -81,6 +81,8 @@ module.exports = function (file, cssPath, srcPath, destPath, callback) {
                         var data = Buffer.concat(bufferList).toString();
                         var relative = path.relative(srcPath, cssPath);
                         var destFile = path.join(destPath, relative, matched.name);
+
+                        data = '/*coolie ' + Date.now() + '*/' + data;
 
                         fs.outputFile(destFile, data, function (err) {
                             if (err) {
