@@ -1,4 +1,4 @@
-# Coolie 苦力
+# Coolie 苦力 [![coolie](https://img.shields.io/npm/v/coolie.svg?style=flat)](https://www.npmjs.org/package/coolie)
 
 A builder for front-end developments.
 
@@ -47,7 +47,7 @@ npm install -g coolie
 
 
 # Version
-- 0.1.7
+- 0.1.8
 	- 修正 css 引用构建顺序
 	- 优化了 css 文件重复引用
 	- 支持 html 文件的构建
