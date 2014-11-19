@@ -28,28 +28,28 @@ var coolieFn = function () {
 };
 
 
-module.exports = function (file, code) {
-    //if(!REG_VERSION.test(code)){
-    //    log('replace config', 'can not found version config in ' + ydrUtil.dato.fixPath(file), 'error');
-    //    process.exit();
-    //}
-    //
-    //return code.replace(REG_VERSION, 'version: "' + ydrUtil.random.string(6) + '"');
-
+/**
+ * 构建配置文件
+ * @param file {String} 文件地址
+ * @param code {String} 文件内容
+ * @param versionMap {Object} 版本 MAP
+ * @returns {string}
+ */
+module.exports = function (file, code, versionMap) {
     var coolieString = coolieFn.toString()
         .replace(REG_FUNCTION_START, '')
         .replace(REG_FUNCTION_END, '');
 
     var fn = new Function('config', coolieString + code);
     var base;
-    var version = ydrUtil.random.string(6);
+    var version = JSON.stringify(versionMap);
 
     try {
         fn(config);
 
         log('coolie config', 'base: "' + config.base + '"', 'success');
-        log('coolie config', 'version: "' + version + '"', 'success');
-        return 'coolie.config({base:"' + config.base + '",version:"' + version + '"}).use();';
+        log('coolie config', 'version: ' + version + '', 'success');
+        return 'coolie.config({base:"' + config.base + '",version:' + version + '}).use();';
     } catch (err) {
         log('replace config', ydrUtil.dato.fixPath(file), 'error');
         log('replace config', err.message, 'error');
