@@ -26,6 +26,7 @@ module.exports = function (mainFile, callback) {
     var depsCache = {};
     var depsLength = 1;
     var depsRelationship = {};
+    var md5List = '';
     var _deepBuld = function (name, file) {
         buildModule(name, file, increase, depIdsMap, function (err, meta) {
             if (err) {
@@ -38,6 +39,7 @@ module.exports = function (mainFile, callback) {
             var depIdList = meta.depIdList;
             var depNameList = meta.depNameList;
             var output;
+            md5List+=ydrUtil.crypto.etag(file);
 
             depsCache[mainFile] = true;
             bufferList.push(new Buffer("\n" + code, "utf8"));
@@ -62,8 +64,9 @@ module.exports = function (mainFile, callback) {
             }
 
             if (depsLength === bufferList.length) {
-                output = Buffer.concat(bufferList).toString();
-                callback(null, output);
+                output = '/*coolie ' + Date.now() + '*/';
+                output += Buffer.concat(bufferList).toString();
+                callback(null, output, md5List);
             }
         });
     };
