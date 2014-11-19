@@ -86,6 +86,8 @@ module.exports = function (file, cssPath, srcPath, destPath, callback) {
                         var relative = path.relative(srcPath, cssPath);
                         var destFile = path.join(destPath, relative, matched.name);
 
+                        data = '/*coolie ' + Date.now() + '*/' + data;
+
                         fs.outputFile(destFile, data, function (err) {
                             if (err) {
                                 log("write file", ydrUtil.dato.fixPath(destFile), "error");
