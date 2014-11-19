@@ -62,8 +62,7 @@ module.exports = function (mainFile, callback) {
             }
 
             if (depsLength === bufferList.length) {
-                output = "/*coolie " + Date.now() + "*/" +
-                Buffer.concat(bufferList).toString();
+                output = Buffer.concat(bufferList).toString();
                 callback(null, output);
             }
         });
