@@ -1,10 +1,10 @@
 {
   "name": "coolie",
-  "version": "0.1.8",
+  "version": "0.2.0",
   "description": "A builder for front-end developments.",
   "preferGlobal": true,
   "bin": {
-    "coolie": "./bin/coolie.js"
+    "coolie": "./bin/coolie"
   },
   "main": "index.js",
   "keywords": [

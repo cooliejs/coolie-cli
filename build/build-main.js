@@ -39,8 +39,9 @@ module.exports = function (mainFile, callback) {
             var depIdList = meta.depIdList;
             var depNameList = meta.depNameList;
             var output;
-            md5List+=ydrUtil.crypto.etag(file);
 
+            // 采用内容 MD5
+            md5List+=ydrUtil.crypto.etag(code);
             depsCache[mainFile] = true;
             bufferList.push(new Buffer("\n" + code, "utf8"));
             depsRelationship[file] = {};

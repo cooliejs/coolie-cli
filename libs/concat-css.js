@@ -22,6 +22,7 @@ module.exports = function (files) {
 
     files.forEach(function (file) {
         var code;
+
         try {
             code = fs.readFileSync(file, 'utf8');
             md5List += ydrUtil.crypto.md5(code);
