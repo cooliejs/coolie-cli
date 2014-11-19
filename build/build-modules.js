@@ -17,6 +17,7 @@ var replaceConfig = require('../libs/replace-config.js');
 var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
 var buildHTML = require('./build-html.js');
+var REG_END = /(\.[^.]*)$/;
 
 module.exports = function (buildPath) {
     var config = parseConfig(buildPath);
@@ -28,9 +29,10 @@ module.exports = function (buildPath) {
     var mainLength = 0;
     var htmlLength = 0;
     var cssLength = 0;
+    var versionMap = {};
 
     howdo
-        // 这里采用增量覆盖，而不能全部清空
+        // 这里采用增量覆盖，而不是全部清空
         //.task(function (next) {
         //    log('1/5', 'clean dest', 'task');
         //    next();
@@ -48,44 +50,44 @@ module.exports = function (buildPath) {
         //    });
         //})
 
-        .task(function (next) {
-            log('1/4', 'copy files', 'task');
-            next();
-        })
-        .each(config.copy, function (i, copyFile, nextCopy) {
-            // copy files
-            var gbPath = path.join(buildPath, copyFile);
-
-            log('copy files', ydrUtil.dato.fixPath(gbPath));
-
-            glob(gbPath, function (err, files) {
-                if (err) {
-                    log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
-                    log('glob', err.message, 'error');
-                    process.exit();
-                }
-
-                howdo.each(files, function (j, file, nextFile) {
-                    var relative = path.relative(srcPath, file);
-                    var destFile = path.join(destPath, relative);
-
-                    fs.copy(file, destFile, function (err) {
-                        if (err) {
-                            log('copy from', ydrUtil.dato.fixPath(file), 'error');
-                            log('copy to', ydrUtil.dato.fixPath(destFile), 'error');
-                            log('copy error', err.message, 'error');
-                            process.exit();
-                        }
-
-                        log('copy write', ydrUtil.dato.fixPath(destFile), 'success');
-                        copyLength++;
-                        nextFile();
-                    });
-                }).follow(function () {
-                    nextCopy();
-                });
-            });
-        })
+        //.task(function (next) {
+        //    log('1/4', 'copy files', 'task');
+        //    next();
+        //})
+        //.each(config.copy, function (i, copyFile, nextCopy) {
+        //    // copy files
+        //    var gbPath = path.join(buildPath, copyFile);
+        //
+        //    log('copy files', ydrUtil.dato.fixPath(gbPath));
+        //
+        //    glob(gbPath, function (err, files) {
+        //        if (err) {
+        //            log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
+        //            log('glob', err.message, 'error');
+        //            process.exit();
+        //        }
+        //
+        //        howdo.each(files, function (j, file, nextFile) {
+        //            var relative = path.relative(srcPath, file);
+        //            var destFile = path.join(destPath, relative);
+        //
+        //            fs.copy(file, destFile, function (err) {
+        //                if (err) {
+        //                    log('copy from', ydrUtil.dato.fixPath(file), 'error');
+        //                    log('copy to', ydrUtil.dato.fixPath(destFile), 'error');
+        //                    log('copy error', err.message, 'error');
+        //                    process.exit();
+        //                }
+        //
+        //                log('copy write', ydrUtil.dato.fixPath(destFile), 'success');
+        //                copyLength++;
+        //                nextFile();
+        //            });
+        //        }).follow(function () {
+        //            nextCopy();
+        //        });
+        //    });
+        //})
 
         .task(function (next) {
             log('2/4', 'build main', 'task');
@@ -95,7 +97,7 @@ module.exports = function (buildPath) {
             // 构建入口模块
             var gbPath = path.join(buildPath, main);
 
-            log('build files', ydrUtil.dato.fixPath(gbPath));
+            log('build js', ydrUtil.dato.fixPath(gbPath));
 
             glob(gbPath, function (err, files) {
                 if (err) {
@@ -107,21 +109,25 @@ module.exports = function (buildPath) {
                 howdo.each(files, function (j, file, nextFile) {
                     var relative = path.relative(srcPath, file);
 
-                    buildMain(file, function (err, code) {
+                    buildMain(file, function (err, code, md5List) {
                         if (err) {
                             return;
                         }
 
+                        var md5Version = ydrUtil.crypto.md5(md5List).slice(0, 8);
                         var destFile = path.join(destPath, relative);
+
+                        destFile = destFile.replace(REG_END, '.' + md5Version + '$1');
+                        versionMap[ydrUtil.dato.toURLPath(relative)] = md5Version;
 
                         fs.outputFile(destFile, code, function (err) {
                             if (err) {
-                                log('write main', ydrUtil.dato.fixPath(destFile), 'error');
-                                log('write main', err.message, 'error');
+                                log('write file', ydrUtil.dato.fixPath(destFile), 'error');
+                                log('write file', err.message, 'error');
                                 process.exit();
                             }
 
-                            log('write main', ydrUtil.dato.fixPath(destFile), 'success');
+                            log('write js', ydrUtil.dato.fixPath(destFile), 'success');
                             mainLength++;
                             nextFile();
                         });
@@ -142,7 +148,7 @@ module.exports = function (buildPath) {
             var relative = path.relative(srcPath, coolieConfigJS);
             var destFile = path.join(destPath, relative);
 
-            code = replaceConfig(coolieConfigJS, code);
+            code = replaceConfig(coolieConfigJS, code, versionMap);
             fs.outputFile(destFile, code, function (err) {
                 if (err) {
                     log('overwrite config', ydrUtil.dato.fixPath(destFile), 'error');
@@ -155,34 +161,34 @@ module.exports = function (buildPath) {
             });
         })
 
-        .task(function (next) {
-            log('4/4', 'build html css', 'task');
-            next();
-        })
-        .each(config.html, function (i, htmlFile, nextHTML) {
-            // html files
-            var gbPath = path.join(buildPath, htmlFile);
-            var cssPath = path.join(buildPath, config.css);
-
-            log('html files', ydrUtil.dato.fixPath(gbPath));
-
-            glob(gbPath, function (err, files) {
-                if (err) {
-                    log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
-                    log('glob', err.message, 'error');
-                    process.exit();
-                }
-                howdo.each(files, function (j, file, nextFile) {
-                    htmlLength++;
-                    buildHTML(file, cssPath, srcPath, destPath, function (err, _cssLength) {
-                        cssLength += _cssLength;
-                        nextFile(err);
-                    });
-                }).follow(function () {
-                    nextHTML();
-                });
-            });
-        })
+        //.task(function (next) {
+        //    log('4/4', 'build html css', 'task');
+        //    next();
+        //})
+        //.each(config.html, function (i, htmlFile, nextHTML) {
+        //    // html files
+        //    var gbPath = path.join(buildPath, htmlFile);
+        //    var cssPath = path.join(buildPath, config.css);
+        //
+        //    log('html files', ydrUtil.dato.fixPath(gbPath));
+        //
+        //    glob(gbPath, function (err, files) {
+        //        if (err) {
+        //            log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
+        //            log('glob', err.message, 'error');
+        //            process.exit();
+        //        }
+        //        howdo.each(files, function (j, file, nextFile) {
+        //            htmlLength++;
+        //            buildHTML(file, cssPath, srcPath, destPath, function (err, _cssLength) {
+        //                cssLength += _cssLength;
+        //                nextFile(err);
+        //            });
+        //        }).follow(function () {
+        //            nextHTML();
+        //        });
+        //    });
+        //})
 
         // 结束了
         .follow(function (err) {
