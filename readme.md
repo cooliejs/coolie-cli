@@ -47,6 +47,9 @@ npm install -g coolie
 
 
 # Version
+- 0.2.1
+	- 适配了[coolie.js@0.2.0](https://github.com/cloudcome/coolie)
+	- 生成完整的模块版本MAP
 - 0.1.8
 	- 修正 css 引用构建顺序
 	- 优化了 css 文件重复引用
