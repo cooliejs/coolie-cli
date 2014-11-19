@@ -26,20 +26,25 @@ module.exports = function (file, data, cssPath) {
     var replaceIndex = 0;
     var dirname = path.dirname(file);
 
+    // 循环匹配 <!--coolie-->(matched)<!--/coolie-->
     matches.forEach(function (matched) {
         var array = matched.split(REG_END);
         var link = array[0];
         var hrefMatches;
         var files = [];
         var relativePath = path.relative(dirname, cssPath);
-        var fileName = ydrUtil.random.string(20) + '.css';
-        var filePath = path.join(relativePath, fileName);
-        var fileURL = ydrUtil.dato.toURLPath(filePath);
+        var md5List = '';
+        var fileName;
+        var filePath;
+        var fileURL;
         var findMath = null;
+        var file;
 
         if (array.length === 2) {
             while ((hrefMatches = REG_LINK.exec(link))) {
-                files.push(path.join(dirname, hrefMatches[1]));
+                file = path.join(dirname, hrefMatches[1]);
+                files.push(file);
+                md5List += ydrUtil.crypto.etag(file);
             }
         }
 
@@ -65,6 +70,9 @@ module.exports = function (file, data, cssPath) {
             concat.push(findMath);
         } else {
             if (files.length) {
+                fileName = ydrUtil.crypto.md5(md5List).slice(0, 8) + '.css';
+                filePath = path.join(relativePath, fileName);
+                fileURL = ydrUtil.dato.toURLPath(filePath);
                 concat.push({
                     name: fileName,
                     url: fileURL,
@@ -74,7 +82,6 @@ module.exports = function (file, data, cssPath) {
             }
         }
     });
-
 
     data = data.replace(REG_COOLIE, function ($0, $1) {
         return $1 ? '<link rel="stylesheet" href="' + concat[replaceIndex++].url + '"/>' : $0;
