@@ -30,25 +30,26 @@ module.exports = function (buildPath) {
     var cssLength = 0;
 
     howdo
-        .task(function (next) {
-            log('1/5', 'clean dest', 'task');
-            next();
-        })
-        .task(function (next) {
-            fs.remove(destPath, function (err) {
-                if (err) {
-                    log('remove', ydrUtil.dato.fixPath(destPath), 'error');
-                    log('remove', err.message, 'error');
-                    process.exit();
-                }
+        // 这里采用增量覆盖，而不能全部清空
+        //.task(function (next) {
+        //    log('1/5', 'clean dest', 'task');
+        //    next();
+        //})
+        //.task(function (next) {
+        //    fs.remove(destPath, function (err) {
+        //        if (err) {
+        //            log('remove', ydrUtil.dato.fixPath(destPath), 'error');
+        //            log('remove', err.message, 'error');
+        //            process.exit();
+        //        }
+        //
+        //        log('remove', ydrUtil.dato.fixPath(destPath), 'success');
+        //        next();
+        //    });
+        //})
 
-                log('remove', ydrUtil.dato.fixPath(destPath), 'success');
-                next();
-            });
-        })
-
         .task(function (next) {
-            log('2/5', 'copy files', 'task');
+            log('1/4', 'copy files', 'task');
             next();
         })
         .each(config.copy, function (i, copyFile, nextCopy) {
@@ -87,7 +88,7 @@ module.exports = function (buildPath) {
         })
 
         .task(function (next) {
-            log('3/5', 'build main', 'task');
+            log('2/4', 'build main', 'task');
             next();
         })
         .each(config.js, function (i, main, nextMain) {
@@ -132,7 +133,7 @@ module.exports = function (buildPath) {
         })
 
         .task(function (next) {
-            log('4/5', 'overwrite config', 'task');
+            log('3/4', 'overwrite config', 'task');
             next();
         })
         .task(function (next) {
@@ -155,7 +156,7 @@ module.exports = function (buildPath) {
         })
 
         .task(function (next) {
-            log('5/5', 'build html css', 'task');
+            log('4/4', 'build html css', 'task');
             next();
         })
         .each(config.html, function (i, htmlFile, nextHTML) {
