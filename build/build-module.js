@@ -66,8 +66,9 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
         .task(function (next, code) {
             if (!isText) {
                 parseDeps(file, code).forEach(function (depName) {
+                    var isTextPath = !!depName.match(REG_TEXT);
                     var relDepName = depName.replace(REG_TEXT, '');
-                    var depId = path.join(relativeDir, relDepName);
+                    var depId = path.join(relativeDir, _fixPath(relDepName, isTextPath));
 
                     if (depIdList.indexOf(depId) === -1) {
                         depIdList.push(depId);
@@ -125,3 +126,45 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
             });
         });
 };
+
+
+/**
+ * 修正路径
+ * @param path {String}
+ * @param isRequireText {Boolean}
+ * @private
+ *
+ * @example
+ * "text!path/to/a.css" => "path/to/a.css"
+ * "path/to/a.min.js?abc123" => "path/to/a.min.js"
+ * "path/to/a" => "path/to/a.js"
+ * "path/to/a.php#" => "path/to/a.php"
+ * "path/to/a/" => "path/to/a/index.js"
+ * "path/to/a.js" => "path/to/a.js"
+ */
+var REG_JS = /\.js$/i;
+var REG_SEARCH_HASH = /[?#].*$/;
+function _fixPath(path, isTextPath) {
+    if (isTextPath) {
+        return path.replace(REG_SEARCH_HASH, '');
+    }
+
+    var index;
+
+    if ((index = path.indexOf('?')) > -1) {
+        return path.slice(0, index);
+    }
+
+    var lastChar = path.slice(-1);
+
+    switch (lastChar) {
+        case '#':
+            return path.slice(0, -1);
+
+        case '/':
+            return path + 'index.js';
+
+        default :
+            return REG_JS.test(path) ? path : path + '.js';
+    }
+}
