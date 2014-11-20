@@ -80,10 +80,11 @@ module.exports = function (file, data, cssPath) {
                 fileName = ydrUtil.crypto.md5(md5List).slice(0, 8) + '.css';
                 filePath = path.join(relativePath, fileName);
                 fileURL = ydrUtil.dato.toURLPath(filePath);
+
                 concat.push({
                     name: fileName,
                     url: fileURL,
-                    file: filePath,
+                    file: path.join(dirname, filePath),
                     files: files
                 });
                 concatMap[fileName] = concat[concat.length - 1];
