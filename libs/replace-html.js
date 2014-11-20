@@ -20,6 +20,13 @@ var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/ig;
 var concatMap = {};
 
 
+/**
+ * 提取 CSS 依赖并合并依赖
+ * @param file {String} HTML 文件路径
+ * @param data {String} HTML 文件内容
+ * @param cssPath {String} 生成CSS文件路径
+ * @returns {{concat: Array, data: *}}
+ */
 module.exports = function (file, data, cssPath) {
     var matches = data.split(REG_BEGIN);
     var concat = [];
@@ -76,6 +83,7 @@ module.exports = function (file, data, cssPath) {
                 concat.push({
                     name: fileName,
                     url: fileURL,
+                    file: filePath,
                     files: files
                 });
                 concatMap[fileName] = concat[concat.length - 1];
