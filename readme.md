@@ -47,6 +47,10 @@ npm install -g coolie
 
 
 # Version
+- 0.3.0
+	- 适配了[coolie.js@0.3.0](https://github.com/cloudcome/coolie)
+	- 支持依赖省略
+	- 生成模块依赖MAP
 - 0.2.1
 	- 适配了[coolie.js@0.2.0](https://github.com/cloudcome/coolie)
 	- 生成完整的模块版本MAP
