@@ -27,6 +27,8 @@ module.exports = function (mainFile, callback) {
     var depsLength = 1;
     var depsRelationship = {};
     var md5List = '';
+    var deepDeps = [];
+
     var _deepBuld = function (name, file) {
         buildModule(name, file, increase, depIdsMap, function (err, meta) {
             if (err) {
@@ -50,6 +52,10 @@ module.exports = function (mainFile, callback) {
                 depIdList.forEach(function (depId, index) {
                     depsRelationship[file][depId] = true;
 
+                    if(deepDeps.indexOf(depId) === -1){
+                        deepDeps.push(depId);
+                    }
+
                     if (depsRelationship[depId] && depsRelationship[depId][file]) {
                         log('depend cycle', ydrUtil.dato.fixPath(file) + '\n' + ydrUtil.dato.fixPath(depId), 'error');
                         process.exit();
@@ -67,7 +73,7 @@ module.exports = function (mainFile, callback) {
             if (depsLength === bufferList.length) {
                 output = '/*coolie ' + Date.now() + '*/';
                 output += Buffer.concat(bufferList).toString();
-                callback(null, output, md5List);
+                callback(null, output, md5List, deepDeps);
             }
         });
     };
