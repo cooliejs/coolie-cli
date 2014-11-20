@@ -18,6 +18,8 @@ var replaceRequire = require('../libs/replace-require.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
 var REG_TEXT = /^(css|html|text)!/i;
+var REG_JS = /\.js$/i;
+var REG_SEARCH_HASH = /[?#].*$/;
 
 
 /**
@@ -66,9 +68,7 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
         .task(function (next, code) {
             if (!isText) {
                 parseDeps(file, code).forEach(function (depName) {
-                    var isTextPath = !!depName.match(REG_TEXT);
-                    var relDepName = depName.replace(REG_TEXT, '');
-                    var depId = path.join(relativeDir, _fixPath(relDepName, isTextPath));
+                    var depId = path.join(relativeDir, _fixPath(depName));
 
                     if (depIdList.indexOf(depId) === -1) {
                         depIdList.push(depId);
@@ -131,22 +131,23 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
 /**
  * 修正路径
  * @param path {String}
- * @param isRequireText {Boolean}
  * @private
  *
  * @example
  * "text!path/to/a.css" => "path/to/a.css"
+ * "text!path/to/a.css?abc123" => "path/to/a.css"
+ * "text!path/to/a.css#abc123" => "path/to/a.css"
+ * "text!path/to/a.css?abc123#abc123" => "path/to/a.css"
  * "path/to/a.min.js?abc123" => "path/to/a.min.js"
  * "path/to/a" => "path/to/a.js"
  * "path/to/a.php#" => "path/to/a.php"
  * "path/to/a/" => "path/to/a/index.js"
  * "path/to/a.js" => "path/to/a.js"
  */
-var REG_JS = /\.js$/i;
-var REG_SEARCH_HASH = /[?#].*$/;
-function _fixPath(path, isTextPath) {
-    if (isTextPath) {
-        return path.replace(REG_SEARCH_HASH, '');
+function _fixPath(path) {
+    // 文本路径
+    if (REG_TEXT.test(path)) {
+        return path.replace(REG_SEARCH_HASH, '').replace(REG_TEXT, '');
     }
 
     var index;
