@@ -25,6 +25,7 @@ var cssminify = require('../libs/cssminify.js');
  */
 module.exports = function (file, cssPath, srcPath, destPath, callback) {
     var cssLength = 0;
+    var depCSS = [];
 
     fs.readFile(file, 'utf8', function (err, data) {
         if (err) {
@@ -59,6 +60,14 @@ module.exports = function (file, cssPath, srcPath, destPath, callback) {
                 // 读取多个替换
                 howdo.each(ret.concat, function (index, matched, nextCSSFile) {
                     var bufferList = [];
+                    var map = {};
+                    var relativeURL = ydrUtil.dato.toURLPath(path.relative(srcPath, matched.file));
+                    var depURLs = matched.files.map(function (file) {
+                        return ydrUtil.dato.toURLPath(path.relative(srcPath, file));
+                    });
+
+                    map[relativeURL] = depURLs;
+                    depCSS.push(map);
 
                     // 重复的css文件依赖
                     if (matched.isRepeat) {
@@ -105,8 +114,7 @@ module.exports = function (file, cssPath, srcPath, destPath, callback) {
             })
             // 并行
             .together(function () {
-                callback(null, cssLength);
+                callback(null, cssLength, depCSS);
             });
-
     });
 };
