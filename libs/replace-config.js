@@ -48,6 +48,7 @@ module.exports = function (file, code, versionMap) {
         fn(config);
 
         log('coolie config', 'base: "' + config.base + '"', 'success');
+        log('coolie config', 'version: "' + JSON.stringify(versionMap, null, 4) + '"', 'success');
         return 'coolie.config({base:"' + config.base + '",version:' + version + '}).use();';
     } catch (err) {
         log('replace config', ydrUtil.dato.fixPath(file), 'error');
