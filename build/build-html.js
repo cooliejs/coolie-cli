@@ -66,6 +66,8 @@ module.exports = function (file, cssPath, srcPath, destPath, callback) {
                         return ydrUtil.dato.toURLPath(path.relative(srcPath, file));
                     });
 
+                    console.log(srcPath);
+                    console.log(matched.file);
                     map[relativeURL] = depURLs;
                     depCSS.push(map);
 
