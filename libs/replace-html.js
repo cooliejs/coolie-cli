@@ -16,6 +16,7 @@ var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/g;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/ig;
+var REG_ABSOLUTE = /^\//;
 // 相同的组合只产生出一个文件
 var concatMap = {};
 
@@ -24,10 +25,11 @@ var concatMap = {};
  * 提取 CSS 依赖并合并依赖
  * @param file {String} HTML 文件路径
  * @param data {String} HTML 文件内容
+ * @param srcPath {String} 源路径
  * @param cssPath {String} 生成CSS文件路径
  * @returns {{concat: Array, data: *}}
  */
-module.exports = function (file, data, cssPath) {
+module.exports = function (file, data, srcPath, cssPath) {
     var matches = data.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
@@ -46,10 +48,18 @@ module.exports = function (file, data, cssPath) {
         var fileURL;
         var findMath = null;
         var file;
+        var href;
 
         if (array.length === 2) {
             while ((hrefMatches = REG_LINK.exec(link))) {
-                file = path.join(dirname, hrefMatches[1]);
+                href = hrefMatches[1];
+
+                if (REG_ABSOLUTE.test(href)) {
+                    file = path.join(srcPath, href);
+                } else {
+                    file = path.join(dirname, href);
+                }
+
                 files.push(file);
                 md5List += ydrUtil.crypto.etag(file);
             }

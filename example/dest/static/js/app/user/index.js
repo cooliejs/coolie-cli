@@ -1,3 +1,17 @@
-/*coolie 1416146363813*/
-define("0",["1"],function(e){"use strict";e("1"),console.log("app/user/index")});
-define("1",[],function(){"use strict";console.log("libs/all.js")});
+/*!
+ * index.js
+ * @author ydr.me
+ * @create 2014-09-25 21:48
+ */
+
+
+define(function (require) {
+    /**
+     * @module app/user/index
+     */
+    'use strict';
+
+    require('../../libs/all.js');
+
+    console.log('app/user/index');
+});
