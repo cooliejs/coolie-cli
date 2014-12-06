@@ -28,6 +28,7 @@ module.exports = function (basedir) {
         "\n`base`即为入口模块的相对路径。", "success");
     };
     var json = {};
+    var jsonString = '';
 
     // 0
     steps.push(function () {
@@ -57,14 +58,15 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.base = _getVal(data, './', false);
         log("2/2", "文件内容为：", "success");
-        console.log(_config(json));
+        jsonString = _config(json);
+        log('coolie-config.js', jsonString, 'success');
         log("confirm", "确认文件内容正确并生成文件？（[y]/n）", "warning");
     });
 
     // write file
     steps.push(function (data) {
         if (data.trim().toLocaleLowerCase().indexOf("n") === -1) {
-            fs.outputFile(writeFile, _config(json), "utf-8", function (err) {
+            fs.outputFile(writeFile, jsonString, "utf-8", function (err) {
                 if (err) {
                     log("write", ydrUtil.dato.fixPath(writeFile), "error");
                     return process.exit();
@@ -103,7 +105,7 @@ function _getVal(data, dft, isArray) {
  * @private
  */
 function _config(json) {
-    var code = JSON.stringify(json);
+    var code = JSON.stringify(json, null, 4);
 
     return 'coolie.config(' + code + ');';
 }
