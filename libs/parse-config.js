@@ -71,17 +71,17 @@ module.exports = function (relative) {
     };
 
 
-    // 检查 css 路径
+    // 检查 css 路径与URL前缀
     check.css = function () {
-        if (config.css && ydrUtil.typeis(config.css) !== "string") {
-            log("parse config", "`css` property must be a string path", "error");
+        if (config.css && ydrUtil.typeis(config.css) !== "object") {
+            log("parse config", "`css` property must be a object", "error");
             process.exit();
         }
 
-        var css = path.join(relative, config.css);
+        var cssPath = path.join(relative, config.css.path);
 
-        if (!ydrUtil.typeis.directory(css)) {
-            log("parse config", "`" + css + "` is NOT a directory", "error");
+        if (!ydrUtil.typeis.directory(cssPath)) {
+            log("parse config", "`" + cssPath + "` is NOT a directory", "error");
             process.exit();
         }
     };
