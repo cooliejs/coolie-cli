@@ -27,9 +27,10 @@ var concatMap = {};
  * @param data {String} HTML 文件内容
  * @param srcPath {String} 源路径
  * @param cssPath {String} 生成CSS文件路径
+ * @param cssURL {String} CSS URL 前缀
  * @returns {{concat: Array, data: *}}
  */
-module.exports = function (file, data, srcPath, cssPath) {
+module.exports = function (file, data, srcPath, cssPath, cssURL) {
     var matches = data.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
@@ -41,7 +42,6 @@ module.exports = function (file, data, srcPath, cssPath) {
         var link = array[0];
         var hrefMatches;
         var files = [];
-        var relativePath = path.relative(dirname, cssPath);
         var md5List = '';
         var fileName;
         var filePath;
@@ -51,6 +51,7 @@ module.exports = function (file, data, srcPath, cssPath) {
         var href;
 
         if (array.length === 2) {
+            // <link href=".*">
             while ((hrefMatches = REG_LINK.exec(link))) {
                 href = hrefMatches[1];
 
@@ -80,7 +81,7 @@ module.exports = function (file, data, srcPath, cssPath) {
         });
 
         if (findMath) {
-            filePath = path.join(relativePath, findMath.name);
+            filePath = path.join(cssURL, findMath.name);
             fileURL = ydrUtil.dato.toURLPath(filePath);
             findMath.url = fileURL;
             findMath.isRepeat = true;
@@ -88,7 +89,7 @@ module.exports = function (file, data, srcPath, cssPath) {
         } else {
             if (files.length) {
                 fileName = ydrUtil.crypto.md5(md5List).slice(0, 8) + '.css';
-                filePath = path.join(relativePath, fileName);
+                filePath = path.join(cssURL, fileName);
                 fileURL = ydrUtil.dato.toURLPath(filePath);
 
                 concat.push({

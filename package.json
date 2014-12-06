@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "A builder for front-end developments.",
   "preferGlobal": true,
   "bin": {
@@ -9,6 +9,7 @@
   "main": "index.js",
   "keywords": [
     "cloudcome",
+    "ydr.me",
     "javascript",
     "seajs",
     "Common JS",
@@ -45,6 +46,6 @@
     "html-minifier": "^0.6.9",
     "open": "0.0.5",
     "uglify-js": "^2.4.15",
-    "ydr-util": "*"
+    "ydr-util": "^1.10.12"
   }
 }

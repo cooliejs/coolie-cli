@@ -1,7 +1,10 @@
 {
   "js": "./static/js/app/**/*.js",
   "html": "./html/**/*.html",
-  "css": "./static/css/",
+  "css": {
+    "path": "./static/css/",
+    "url": "/static/css/"
+  },
   "coolie-config.js": "./static/js/coolie-config.js",
   "copy": "./**/*.*",
   "dest": "../dest/"

@@ -47,8 +47,10 @@ npm install -g coolie
 
 
 # Version
-- 0.3.1
+- 0.4.0
 	- 支持绝对路径
+	- 完善css配置
+- 0.3.1
 	- 适配了[coolie.js@0.3.0](https://github.com/cloudcome/coolie)
 	- 支持依赖省略
 	- 生成模块依赖MAP
