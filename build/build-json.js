@@ -114,7 +114,7 @@ module.exports = function (basedir) {
         jsonString = JSON.stringify(json, null, 4);
 
         log("confirm", "文件内容为：", "success");
-        console.log(jsonString);
+        log('coolie.json', jsonString, 'success');
         log("confirm", "确认文件内容正确并生成文件？（[y]/n）", "warning");
     });
 
