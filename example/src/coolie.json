@@ -3,7 +3,7 @@
   "html": "./html/**/*.html",
   "css": {
     "path": "./static/css/",
-    "url": "/static/css/"
+    "root": "/"
   },
   "coolie-config.js": "./static/js/coolie-config.js",
   "copy": "./**/*.*",

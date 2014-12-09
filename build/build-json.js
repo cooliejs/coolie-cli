@@ -67,7 +67,7 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.html = _getVal(data, '', true);
 
-        log("3/7", "请输入`css.path`值，默认为空：" +
+        log("3/7", "请输入`css.path`值，默认为“./static/css/”：" +
         "\n`css.path`路径是相对于`coolie.json`所在的目录；" +
         "\n`css.path`即为构建的 CSS 目录。", "success");
     });
@@ -75,15 +75,15 @@ module.exports = function (basedir) {
     // css path
     steps.push(function (data) {
         json.css = {};
-        json.css.path = _getVal(data, '', false);
+        json.css.path = _getVal(data, './static/css/', false);
 
-        log("4/7", "请输入`css.url`值，默认为空：" +
-        "\n`css.url`即为构建后的的 CSS URL 前缀。", "success");
+        log("4/7", "请输入`css.root`值，默认为“/”：" +
+        "\n`css.root`即为 CSS ", "success");
     });
 
-    // css url
+    // css root
     steps.push(function (data) {
-        json.css.url = _getVal(data, '', false);
+        json.css.url = _getVal(data, '/', false);
 
         log("5/7", "请输入`dest`值，默认为“../dest/”：" +
         "\n`dest`路径是相对于`coolie.json`所在的目录；" +
