@@ -19,12 +19,12 @@ var cssminify = require('../libs/cssminify.js');
  * 构建一个 HTML 文件
  * @param file {String} 源文件
  * @param cssPath {String} css 路径
- * @param cssURL {String} css URL 前缀
+ * @param cssRoot {String} css 根目录
  * @param srcPath {String} 构建源路径
  * @param destPath {String} 构建目标路径
  * @param callback {Function} 回调
  */
-module.exports = function (file, cssPath, cssURL, srcPath, destPath, callback) {
+module.exports = function (file, cssPath, cssRoot, srcPath, destPath, callback) {
     var cssLength = 0;
     var depCSS = [];
 
@@ -35,7 +35,7 @@ module.exports = function (file, cssPath, cssURL, srcPath, destPath, callback) {
             process.exit();
         }
 
-        var ret = replaceHtml(file, data, srcPath, cssPath, cssURL);
+        var ret = replaceHtml(file, data, srcPath, cssPath, cssRoot);
 
         log('build html', ydrUtil.dato.fixPath(file), 'warning');
 

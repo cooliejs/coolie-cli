@@ -84,6 +84,18 @@ module.exports = function (relative) {
             log("parse config", "`" + cssPath + "` is NOT a directory", "error");
             process.exit();
         }
+
+        if(ydrUtil.typeis(config.css.root) !=='string'){
+            log("parse config", "`css.root` must be a string", "error");
+            process.exit();
+        }
+
+        config.css.host = config.css.host || '';
+
+        if(ydrUtil.typeis(config.css.host) !=='string'){
+            log("parse config", "`css.host` must be a string", "error");
+            process.exit();
+        }
     };
 
 

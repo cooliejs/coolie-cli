@@ -47,9 +47,11 @@ npm install -g coolie
 
 
 # Version
+- 0.5.0
+	- 最新的 css 构建方式，统一为绝对路径
 - 0.4.0
 	- 支持绝对路径
-	- 完善css配置
+	- 完善 css 配置
 - 0.3.1
 	- 适配了[coolie.js@0.3.0](https://github.com/cloudcome/coolie)
 	- 支持依赖省略
