@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "A builder for front-end developments.",
   "preferGlobal": true,
   "bin": {
@@ -28,7 +28,8 @@
     "url": "http://ydr.me"
   },
   "homepage": "https://github.com/cloudcome/nodejs-coolie",
-  "help": "https://github.com/cloudcome/coolie/wiki/production",
+  "wiki": "https://github.com/cloudcome/coolie/wiki",
+  "coolie": "https://raw.githubusercontent.com/cloudcome/coolie/master/coolie.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/cloudcome/nodejs-coolie"
@@ -46,6 +47,6 @@
     "html-minifier": "^0.6.9",
     "open": "0.0.5",
     "uglify-js": "^2.4.15",
-    "ydr-util": "^1.10.12"
+    "ydr-util": "^1.10.15"
   }
 }

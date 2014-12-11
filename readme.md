@@ -47,6 +47,8 @@ npm install -g coolie
 
 
 # Version
+- 0.7.0
+	- 新增命令`coolie pull`
 - 0.6.1
 	- 更为科学的构建过程
 	- 生成更为科学的`relationship-map.json`

@@ -11,13 +11,13 @@ var pkg = require('../package.json');
 var log = require('../libs/log.js');
 
 module.exports = function () {
-    open(pkg.help, function(err){
+    open(pkg.wiki, function(err){
         if(err){
-            log('open help', pkg.help, 'error');
+            log('open help', pkg.wiki, 'error');
             log('open help', err.message, 'error');
             process.exit();
         }
 
-        log('open help', pkg.help, 'success');
+        log('open help', pkg.wiki, 'success');
     });
 };
