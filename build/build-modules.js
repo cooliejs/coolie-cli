@@ -23,6 +23,7 @@ module.exports = function (buildPath) {
     var config = parseConfig(buildPath);
     var srcPath = buildPath;
     var destPath = path.join(buildPath, config.dest);
+    var cssPath = path.join(buildPath, config.css.path);
     var coolieConfigJS = path.join(buildPath, config['coolie-config.js']);
     var time = Date.now();
     var copyLength = 0;
@@ -32,7 +33,7 @@ module.exports = function (buildPath) {
     var versionMap = {};
     var JSRelationshipMap = {};
     var HTMLCSSRelationshipMap = {};
-
+    var jsBase;
 
     howdo
         .task(function (next) {
@@ -78,7 +79,7 @@ module.exports = function (buildPath) {
             log('2/5', 'build main', 'task');
             next();
         })
-        .each(config.js, function (i, main, nextMain) {
+        .each(config.js.main, function (i, main, nextMain) {
             // 构建入口模块
             var gbPath = path.join(buildPath, main);
 
@@ -138,9 +139,10 @@ module.exports = function (buildPath) {
             var code = fs.readFileSync(coolieConfigJS, 'utf8');
             var relative = path.relative(srcPath, coolieConfigJS);
             var destFile = path.join(destPath, relative);
+            var coolieInfo = replaceConfig(coolieConfigJS, code, versionMap);
 
-            code = replaceConfig(coolieConfigJS, code, versionMap);
-            fs.outputFile(destFile, code, function (err) {
+            jsBase = path.join(srcPath, path.dirname(config['coolie.js']), coolieInfo.config.base);
+            fs.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {
                     log('overwrite config', ydrUtil.dato.fixPath(destFile), 'error');
                     log('overwrite config', err.message, 'error');
@@ -159,7 +161,7 @@ module.exports = function (buildPath) {
         .each(config.html, function (i, htmlFile, nextGlob) {
             // html files
             var gbPath = path.join(buildPath, htmlFile);
-            var cssPath = path.join(buildPath, config.css.path);
+
 
             log('html files', ydrUtil.dato.fixPath(gbPath));
 
@@ -173,11 +175,14 @@ module.exports = function (buildPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, config.css.host, config.js.host, srcPath, destPath, function (err, _cssLength, depCSS) {
+                    buildHTML(file, cssPath, config.css.host, jsBase, config.js.host, srcPath, destPath, function (err, _cssLength, depCSS, depJS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = ydrUtil.dato.toURLPath(htmlRelative);
 
-                        HTMLCSSRelationshipMap[url] = depCSS;
+                        HTMLCSSRelationshipMap[url] = {
+                            css: depCSS,
+                            js: depJS
+                        };
                         cssLength += _cssLength;
                         nextHTML(err);
                     });
@@ -187,25 +192,25 @@ module.exports = function (buildPath) {
             });
         })
 
-        //.task(function (next) {
-        //    log('5/5', 'generator relationship map', 'task');
-        //    next();
-        //})
-        //.task(function (next) {
-        //    var map = ydrUtil.dato.extend(JSRelationshipMap, HTMLCSSRelationshipMap);
-        //    var mapFile = path.join(destPath, './relationship-map.json');
-        //
-        //    fs.outputJSON(mapFile, map, function (err) {
-        //        if (err) {
-        //            log('write relationship map', ydrUtil.dato.fixPath(mapFile), 'error');
-        //            log('write relationship map', err.message, 'error');
-        //            return process.exit();
-        //        }
-        //
-        //        log('write relationship map', ydrUtil.dato.fixPath(mapFile), 'success');
-        //        next();
-        //    });
-        //})
+        .task(function (next) {
+            log('5/5', 'generator relationship map', 'task');
+            next();
+        })
+        .task(function (next) {
+            var map = ydrUtil.dato.extend(JSRelationshipMap, HTMLCSSRelationshipMap);
+            var mapFile = path.join(destPath, './relationship-map.json');
+
+            fs.outputJSON(mapFile, map, function (err) {
+                if (err) {
+                    log('write relationship map', ydrUtil.dato.fixPath(mapFile), 'error');
+                    log('write relationship map', err.message, 'error');
+                    return process.exit();
+                }
+
+                log('write relationship map', ydrUtil.dato.fixPath(mapFile), 'success');
+                next();
+            });
+        })
 
         // 异步串行结束
         .follow(function (err) {
