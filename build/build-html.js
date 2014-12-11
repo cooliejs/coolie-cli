@@ -20,12 +20,13 @@ var cssminify = require('../libs/cssminify.js');
  * @param file {String} 源文件
  * @param cssPath {String} css 路径
  * @param cssHost {String} css 根目录
+ * @param coolieBase {String} coolie 配置的 base 目录
  * @param jsHost {String} js 根目录
  * @param srcPath {String} 构建源路径
  * @param destPath {String} 构建目标路径
  * @param callback {Function} 回调
  */
-module.exports = function (file, cssPath, cssHost, jsHost, srcPath, destPath, callback) {
+module.exports = function (file, cssPath, cssHost, coolieBase, jsHost, srcPath, destPath, callback) {
     var cssLength = 0;
     var depCSS = [];
 
@@ -36,7 +37,7 @@ module.exports = function (file, cssPath, cssHost, jsHost, srcPath, destPath, ca
             process.exit();
         }
 
-        var ret = replaceHtml(file, data, srcPath, cssPath, cssHost, jsHost);
+        var ret = replaceHtml(file, data, srcPath, cssPath, cssHost, coolieBase, jsHost);
 
         log('build html', ydrUtil.dato.fixPath(file), 'warning');
 
