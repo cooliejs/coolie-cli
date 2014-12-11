@@ -33,7 +33,7 @@ var coolieFn = function () {
  * @param file {String} 文件地址
  * @param code {String} 文件内容
  * @param versionMap {Object} 版本 MAP
- * @returns {string}
+ * @returns {Object}
  */
 module.exports = function (file, code, versionMap) {
     var coolieString = coolieFn.toString()
@@ -49,7 +49,10 @@ module.exports = function (file, code, versionMap) {
 
         log('coolie config', 'base: "' + config.base + '"', 'success');
         log('coolie config', 'version: "' + JSON.stringify(versionMap, null, 4) + '"', 'success');
-        return 'coolie.config({base:"' + config.base + '",version:' + version + '}).use();';
+        return {
+            condig: config,
+            code: 'coolie.config({base:"' + config.base + '",version:' + version + '}).use();'
+        };
     } catch (err) {
         log('replace config', ydrUtil.dato.fixPath(file), 'error');
         log('replace config', err.message, 'error');
