@@ -18,6 +18,7 @@ var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/g;
 var REG_SCRIPT = /<script\b([^>]*?)\bsrc\b\s*?=\s*?['"](.*?)['"]([^>]*?)><\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
 var REG_ABSOLUTE = /^\//;
+var REG_MAIN = /\bdata-main\b\s*?=\s*?['"](.*?)['"]/;
 // 相同的组合只产生出一个文件
 var concatMap = {};
 
@@ -29,20 +30,28 @@ var concatMap = {};
  * @param srcPath {String} 源路径
  * @param cssPath {String} 生成CSS文件路径
  * @param cssHost {String} CSS 根目录
+ * @param jsMain {String} JS 入口目录
  * @param jsHost {String} JS 根目录
  * @returns {{concat: Array, data: *}}
  */
-module.exports = function (file, data, srcPath, cssPath, cssHost, jsHost) {
+module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase, jsHost) {
     var matches = data.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
     var dirname = path.dirname(file);
     // HTML 中依赖的 JS 文件
     var depJS = [];
+    var mainJS = '';
 
     // 直接进行脚本路径替换，不需要额外操作
     data = data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
         var file;
+        var main = _getMain($1, $3);
+
+        if (main) {
+            main = path.join(jsBase, main);
+            mainJS = path.relative(srcPath, main);
+        }
 
         if (REG_ABSOLUTE.test($2)) {
             file = path.join(srcPath, $2);
@@ -134,7 +143,35 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsHost) {
     return {
         concat: concat,
         data: htmlminify(file, data),
-        depJS: depJS
+        depJS: depJS,
+        mainJS: mainJS
     };
 };
 
+
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////
+
+/**
+ * 提取 data-main 值
+ * @param $1 {String} 前
+ * @param $3 {String} 后
+ * @returns {String|null}
+ * @private
+ */
+function _getMain($1, $3) {
+    var matches = $1.match(REG_MAIN);
+
+    if (matches) {
+        return matches[1];
+    }
+
+    matches = $3.match(REG_MAIN);
+
+    if (matches) {
+        return matches[1];
+    }
+
+    return null;
+}
