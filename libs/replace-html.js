@@ -50,7 +50,8 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase, jsHost
 
         if (main) {
             main = path.join(jsBase, main);
-            mainJS = path.relative(srcPath, main);
+            main = path.relative(srcPath, main);
+            mainJS = dato.toURLPath(main);
         }
 
         if (REG_ABSOLUTE.test($2)) {
