@@ -37,6 +37,8 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsHost) {
     var concat = [];
     var replaceIndex = 0;
     var dirname = path.dirname(file);
+    // HTML 中依赖的 JS 文件
+    var depJS = [];
 
     // 直接进行脚本路径替换，不需要额外操作
     data = data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
@@ -50,6 +52,8 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsHost) {
 
         var relative = path.relative(srcPath, file);
         var url = jsHost + dato.toURLPath(relative);
+
+        depJS.push(relative);
 
         return '<script' + $1 + 'src="' + url + '"' + $3 + '></script>';
     });
@@ -129,7 +133,8 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsHost) {
 
     return {
         concat: concat,
-        data: htmlminify(file, data)
+        data: htmlminify(file, data),
+        depJS: depJS
     };
 };
 
