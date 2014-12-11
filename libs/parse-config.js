@@ -47,7 +47,6 @@ module.exports = function (relative) {
 
     // 检查 js 路径
     // js: {
-    //    path: ,
     //    main: ,
     //    host: ,
     // }
@@ -57,18 +56,18 @@ module.exports = function (relative) {
             process.exit();
         }
 
-        // js.path
-        if (typeis(config.js.path) !== 'string') {
-            log("parse config", "`js.path` property must be a string path", "error");
-            process.exit();
-        }
-
-        var jsPath = path.join(relative, config.js.path);
-
-        if (!typeis.directory(jsPath)) {
-            log("parse config", "`" + jsPath + "` is NOT a directory", "error");
-            process.exit();
-        }
+        //// js.path
+        //if (typeis(config.js.path) !== 'string') {
+        //    log("parse config", "`js.path` property must be a string path", "error");
+        //    process.exit();
+        //}
+        //
+        //var jsPath = path.join(relative, config.js.path);
+        //
+        //if (!typeis.directory(jsPath)) {
+        //    log("parse config", "`" + jsPath + "` is NOT a directory", "error");
+        //    process.exit();
+        //}
 
         // js.main
         var jsMainType = typeis(config.js.main);
@@ -179,8 +178,29 @@ module.exports = function (relative) {
     };
 
 
-    // 检查配置
-    check.config = function () {
+    // 检查 coolie.js
+    check.coolie = function () {
+        if (!config["coolie.js"]) {
+            log("parse config", "coolie.json require `coolie.js` property", "error");
+            process.exit();
+        }
+
+        if (typeis(config["coolie.js"]) !== "string") {
+            log("parse config", "`coolie.js` property must be a string", "error");
+            process.exit();
+        }
+
+        var coolieConfigJS = path.join(relative, config["coolie.js"]);
+
+        if (!typeis.file(coolieConfigJS)) {
+            log("parse config", coolieConfigJS + " is NOT a file", "error");
+            process.exit();
+        }
+    };
+
+
+    // 检查 coolie-config.js
+    check.coolieConfig = function () {
         if (!config["coolie-config.js"]) {
             log("parse config", "coolie.json require `coolie-config.js` property", "error");
             process.exit();
@@ -233,7 +253,8 @@ module.exports = function (relative) {
     check.css();
     check.html();
     check.dest();
-    check.config();
+    check.coolie();
+    check.coolieConfig();
     check.copy();
 
     return config;
