@@ -21,14 +21,12 @@ module.exports = function (basedir) {
     var steps = [];
     var writeFile = path.join(basedir, "./coolie.json");
     var isExist = ydrUtil.typeis.file(writeFile);
-    var continueStep = function () {
-        log("1/8", "请输入`js`值，默认为空：" +
-        "\n`js`路径是相对于`coolie.json`所在的目录；" +
-        "\n`js`即为构建的入口 JS 模块，支持通配符，多个文件使用空格分开。", "success");
-
-    };
     var json = {};
     var jsonString = '';
+    var continueStep = function () {
+        json.js = {};
+        log("1/9", "请输入 JS 入口模块的目录，支持通配符，多个目录使用空格分开，默认为空。", "success");
+    };
 
     // 0
     steps.push(function () {
@@ -54,22 +52,18 @@ module.exports = function (basedir) {
         });
     }
 
-    // js
+    // js.main
     steps.push(function (data) {
-        json.js = _getVal(data, '', true);
+        json.js.main = _getVal(data, '', true);
 
-        log("2/8", "请输入`html`值，默认为空：" +
-        "\n`html`路径是相对于`coolie.json`所在的目录；" +
-        "\n`html`即为构建的 HTML 文件，支持通配符，多个文件使用空格分开。", "success");
+        log("2/9", "请输入发布后 JS 文件所在的域，通常发布线上的 CDN 环境，默认为空。", "success");
     });
 
-    // html
+    // js.host
     steps.push(function (data) {
-        json.html = _getVal(data, '', true);
+        json.js.host = _getVal(data, '', false);
 
-        log("3/8", "请输入`css.path`值，默认为“./static/css/”：" +
-        "\n`css.path`路径是相对于`coolie.json`所在的目录；" +
-        "\n`css.path`即为构建的 CSS 目录。", "success");
+        log("3/9", "请输入生成 CSS 文件的存放目录。", "success");
     });
 
     // css path
@@ -77,43 +71,45 @@ module.exports = function (basedir) {
         json.css = {};
         json.css.path = _getVal(data, './static/css/', false);
 
-        log("4/8", "请输入`css.root`值，默认为“./”：" +
-        "\n`css.root`即为 CSS URL 路径的根目录", "success");
-    });
-
-    // css root
-    steps.push(function (data) {
-        json.css.root = _getVal(data, './', false);
-
-        log("5/8", "请输入`css.host`值，默认为空：" +
-        "\n`css.host`即为 CSS URL 所在的域，通常发布线上环境为 CDN 环境", "success");
+        log("4/9", "请输入发布后 CSS 文件所在的域，通常发布线上的 CDN 环境，默认为空。", "success");
     });
 
     // css host
     steps.push(function (data) {
         json.css.host = _getVal(data, '', false);
 
-        log("6/8", "请输入`dest`值，默认为“../dest/”：" +
-        "\n`dest`路径是相对于`coolie.json`所在的目录；" +
-        "\n`dest`即为构建的目标目录。", "success");
+        log("5/9", "请输入 HTML 文件的目录，支持通配符，多个文件使用空格分开。", "success");
+
+    });
+
+    // html
+    steps.push(function (data) {
+        json.html = _getVal(data, '', true);
+
+        log("6/9", "请输入构建的目标目录，默认为“../dest/”。", "success");
     });
 
     // dest
     steps.push(function (data) {
         json.dest = _getVal(data, '../dest/', false);
 
-        log("7/8", "请输入`coolie-config.js`值，默认为空：" +
-        "\n`coolie-config.js`路径是相对于`coolie.json`所在的目录；" +
-        "\n`coolie-config.js`即为模块入口的配置文件。", "success");
+        log("7/9", "请输入`coolie.js`的路径，默认为“./static/js/coolie.js”：" +
+        "\n`coolie.js`是模块加载器的主文件。", "success");
+    });
+
+    // coolie.js
+    steps.push(function (data) {
+        json['coolie.js'] = _getVal(data, './static/js/coolie.js', false);
+
+        log("8/9", "请输入`coolie-config.js`的路径，默认为“./static/js/coolie-config.js”：" +
+        "\n`coolie-config.js`是模块入口及版本号的配置文件。", "success");
     });
 
     // coolie-config.js
     steps.push(function (data) {
-        json['coolie-config.js'] = _getVal(data, '', false);
+        json['coolie-config.js'] = _getVal(data, './static/js/coolie-config.js', false);
 
-        log("8/8", "请输入`copy`值，默认为“./**/*.*”：" +
-        "\n`copy`路径是相对于`coolie.json`所在的目录；" +
-        "\n`copy`即为构建时需要原样复制的文件，支持通配符，多个入口使用空格分开。", "success");
+        log("9/9", "请输入构建时需要原样复制的文件目录，支持通配符，多个入口使用空格分开，默认为复制所有文件。", "success");
     });
 
     // copy
