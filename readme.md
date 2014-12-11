@@ -47,7 +47,7 @@ npm install -g coolie
 
 
 # Version
-- 0.6.0
+- 0.6.1
 	- 更为科学的构建过程
 	- 生成更为科学的`relationship-map.json`
 - 0.5.0
