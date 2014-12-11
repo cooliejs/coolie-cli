@@ -1,10 +1,14 @@
 {
-  "js": "./static/js/app/**/*.js",
+  "js": {
+    "main": "./static/js/app/**/*.js",
+    "host": "http://s.ydr.me/testdomain/"
+  },
   "html": "./html/**/*.html",
   "css": {
     "path": "./static/css/",
-    "url": "/static/css/"
+    "host": "http://s.ydr.me/testdomain/"
   },
+  "coolie.js": "./static/js/coolie.js",
   "coolie-config.js": "./static/js/coolie-config.js",
   "copy": "./**/*.*",
   "dest": "../dest/"

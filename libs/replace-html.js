@@ -129,7 +129,7 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase, jsHost
                 concat.push({
                     name: fileName,
                     url: fileURL,
-                    file: path.join(dirname, filePath),
+                    file: filePath,
                     files: files
                 });
                 concatMap[fileName] = concat[concat.length - 1];

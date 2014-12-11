@@ -50,7 +50,7 @@ module.exports = function (file, code, versionMap) {
         log('coolie config', 'base: "' + config.base + '"', 'success');
         log('coolie config', 'version: "' + JSON.stringify(versionMap, null, 4) + '"', 'success');
         return {
-            condig: config,
+            config: config,
             code: 'coolie.config({base:"' + config.base + '",version:' + version + '}).use();'
         };
     } catch (err) {

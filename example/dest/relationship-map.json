@@ -1,0 +1,43 @@
+{
+    "html/index.html": {
+        "css": [
+            {
+                "static/css/c94c12f2.css": [
+                    "static/css/1.css",
+                    "static/css/2.css"
+                ]
+            }
+        ],
+        "js": [
+            "static/js/coolie.js",
+            "static/js/coolie-config.js"
+        ],
+        "main": "static/js/app/index.js",
+        "deps": [
+            "static/js/libs/lib.js",
+            "static/js/libs/jquery.js",
+            "static/js/libs/all.js",
+            "static/js/libs/some.txt",
+            "static/js/libs/some.css",
+            "static/js/libs/some.html"
+        ]
+    },
+    "html/user/index.html": {
+        "css": [
+            {
+                "static/css/c94c12f2.css": [
+                    "static/css/1.css",
+                    "static/css/2.css"
+                ]
+            }
+        ],
+        "js": [
+            "static/js/coolie.js",
+            "static/js/coolie-config.js"
+        ],
+        "main": "static/js/app/user/index.js",
+        "deps": [
+            "static/js/libs/all.js"
+        ]
+    }
+}

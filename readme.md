@@ -47,6 +47,9 @@ npm install -g coolie
 
 
 # Version
+- 0.6.0
+	- 更为科学的构建过程
+	- 生成更为科学的`relationship-map.json`
 - 0.5.0
 	- 最新的 css 构建方式，统一为绝对路径
 - 0.4.0

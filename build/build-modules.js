@@ -13,6 +13,7 @@ var path = require('path');
 var glob = require('glob');
 var log = require('../libs/log.js');
 var ydrUtil = require('ydr-util');
+var dato = require('ydr-util').dato;
 var replaceConfig = require('../libs/replace-config.js');
 var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
@@ -31,8 +32,8 @@ module.exports = function (buildPath) {
     var htmlLength = 0;
     var cssLength = 0;
     var versionMap = {};
-    var JSRelationshipMap = {};
-    var HTMLCSSRelationshipMap = {};
+    var MainRelationshipMap = {};
+    var htmlJsCssRelationshipMap = {};
     var jsBase;
 
     howdo
@@ -44,11 +45,11 @@ module.exports = function (buildPath) {
             // copy files
             var gbPath = path.join(buildPath, copyFile);
 
-            log('copy files', ydrUtil.dato.fixPath(gbPath));
+            log('copy files', dato.fixPath(gbPath));
 
             glob(gbPath, function (err, files) {
                 if (err) {
-                    log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
+                    log('glob', dato.fixPath(gbPath), 'error');
                     log('glob', err.message, 'error');
                     process.exit();
                 }
@@ -59,13 +60,13 @@ module.exports = function (buildPath) {
 
                     fs.copy(file, destFile, function (err) {
                         if (err) {
-                            log('copy from', ydrUtil.dato.fixPath(file), 'error');
-                            log('copy to', ydrUtil.dato.fixPath(destFile), 'error');
+                            log('copy from', dato.fixPath(file), 'error');
+                            log('copy to', dato.fixPath(destFile), 'error');
                             log('copy error', err.message, 'error');
                             process.exit();
                         }
 
-                        log('copy write', ydrUtil.dato.fixPath(destFile), 'success');
+                        log('copy write', dato.fixPath(destFile), 'success');
                         copyLength++;
                         nextFile();
                     });
@@ -83,11 +84,11 @@ module.exports = function (buildPath) {
             // 构建入口模块
             var gbPath = path.join(buildPath, main);
 
-            log('build js', ydrUtil.dato.fixPath(gbPath));
+            log('build js', dato.fixPath(gbPath));
 
             glob(gbPath, function (err, files) {
                 if (err) {
-                    log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
+                    log('glob', dato.fixPath(gbPath), 'error');
                     log('glob', err.message, 'error');
                     process.exit();
                 }
@@ -101,25 +102,25 @@ module.exports = function (buildPath) {
                         }
 
                         var depNames = deepDeps.map(function (dep) {
-                            return ydrUtil.dato.toURLPath(path.relative(srcPath, dep));
+                            return dato.toURLPath(path.relative(srcPath, dep));
                         });
 
-                        JSRelationshipMap[ydrUtil.dato.toURLPath(relative)] = depNames;
+                        MainRelationshipMap[dato.toURLPath(relative)] = depNames;
 
                         var md5Version = ydrUtil.crypto.md5(md5List).slice(0, 8);
                         var destFile = path.join(destPath, relative);
 
                         destFile = destFile.replace(REG_END, '.' + md5Version + '$1');
-                        versionMap[ydrUtil.dato.toURLPath(relative)] = md5Version;
+                        versionMap[dato.toURLPath(relative)] = md5Version;
 
                         fs.outputFile(destFile, code, function (err) {
                             if (err) {
-                                log('write file', ydrUtil.dato.fixPath(destFile), 'error');
+                                log('write file', dato.fixPath(destFile), 'error');
                                 log('write file', err.message, 'error');
                                 process.exit();
                             }
 
-                            log('write js', ydrUtil.dato.fixPath(destFile), 'success');
+                            log('write js', dato.fixPath(destFile), 'success');
                             mainLength++;
                             nextFile();
                         });
@@ -144,12 +145,12 @@ module.exports = function (buildPath) {
             jsBase = path.join(srcPath, path.dirname(config['coolie.js']), coolieInfo.config.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {
-                    log('overwrite config', ydrUtil.dato.fixPath(destFile), 'error');
+                    log('overwrite config', dato.fixPath(destFile), 'error');
                     log('overwrite config', err.message, 'error');
                     process.exit();
                 }
 
-                log('overwrite config', ydrUtil.dato.fixPath(destFile), 'success');
+                log('overwrite config', dato.fixPath(destFile), 'success');
                 next();
             });
         })
@@ -163,11 +164,11 @@ module.exports = function (buildPath) {
             var gbPath = path.join(buildPath, htmlFile);
 
 
-            log('html files', ydrUtil.dato.fixPath(gbPath));
+            log('html files', dato.fixPath(gbPath));
 
             glob(gbPath, function (err, htmls) {
                 if (err) {
-                    log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
+                    log('glob', dato.fixPath(gbPath), 'error');
                     log('glob', err.message, 'error');
                     process.exit();
                 }
@@ -175,13 +176,14 @@ module.exports = function (buildPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, config.css.host, jsBase, config.js.host, srcPath, destPath, function (err, _cssLength, depCSS, depJS) {
+                    buildHTML(file, cssPath, config.css.host, jsBase, config.js.host, srcPath, destPath, function (err, _cssLength, depCSS, depJS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
-                        var url = ydrUtil.dato.toURLPath(htmlRelative);
+                        var url = dato.toURLPath(htmlRelative);
 
-                        HTMLCSSRelationshipMap[url] = {
+                        htmlJsCssRelationshipMap[url] = {
                             css: depCSS,
-                            js: depJS
+                            js: depJS,
+                            main: mainJS
                         };
                         cssLength += _cssLength;
                         nextHTML(err);
@@ -197,17 +199,26 @@ module.exports = function (buildPath) {
             next();
         })
         .task(function (next) {
-            var map = ydrUtil.dato.extend(JSRelationshipMap, HTMLCSSRelationshipMap);
-            var mapFile = path.join(destPath, './relationship-map.json');
+            dato.each(htmlJsCssRelationshipMap, function (key, item) {
+                if (MainRelationshipMap[item.main]) {
+                    item.deps = MainRelationshipMap[item.main];
+                } else {
+                    log('miss main', item.main, 'error');
+                    item.deps = [];
+                }
+            });
 
-            fs.outputJSON(mapFile, map, function (err) {
+            var mapFile = path.join(destPath, './relationship-map.json');
+            var data = JSON.stringify(htmlJsCssRelationshipMap, null, 4);
+
+            fs.outputFile(mapFile, data, function (err) {
                 if (err) {
-                    log('write relationship map', ydrUtil.dato.fixPath(mapFile), 'error');
+                    log('write relationship map', dato.fixPath(mapFile), 'error');
                     log('write relationship map', err.message, 'error');
                     return process.exit();
                 }
 
-                log('write relationship map', ydrUtil.dato.fixPath(mapFile), 'success');
+                log('write relationship map', dato.fixPath(mapFile), 'success');
                 next();
             });
         })
