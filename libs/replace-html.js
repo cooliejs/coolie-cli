@@ -51,11 +51,11 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsHost) {
         }
 
         var relative = path.relative(srcPath, file);
-        var url = jsHost + dato.toURLPath(relative);
 
+        relative = dato.toURLPath(relative);
         depJS.push(relative);
 
-        return '<script' + $1 + 'src="' + url + '"' + $3 + '></script>';
+        return '<script' + $1 + 'src="' + jsHost + relative + '"' + $3 + '></script>';
     });
 
     // 循环匹配 <!--coolie-->(matched)<!--/coolie-->
