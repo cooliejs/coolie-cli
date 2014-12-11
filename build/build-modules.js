@@ -35,122 +35,122 @@ module.exports = function (buildPath) {
 
 
     howdo
-        //.task(function (next) {
-        //    log('1/5', 'copy files', 'task');
-        //    next();
-        //})
-        //.each(config.copy, function (i, copyFile, nextCopy) {
-        //    // copy files
-        //    var gbPath = path.join(buildPath, copyFile);
-        //
-        //    log('copy files', ydrUtil.dato.fixPath(gbPath));
-        //
-        //    glob(gbPath, function (err, files) {
-        //        if (err) {
-        //            log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
-        //            log('glob', err.message, 'error');
-        //            process.exit();
-        //        }
-        //
-        //        howdo.each(files, function (j, file, nextFile) {
-        //            var relative = path.relative(srcPath, file);
-        //            var destFile = path.join(destPath, relative);
-        //
-        //            fs.copy(file, destFile, function (err) {
-        //                if (err) {
-        //                    log('copy from', ydrUtil.dato.fixPath(file), 'error');
-        //                    log('copy to', ydrUtil.dato.fixPath(destFile), 'error');
-        //                    log('copy error', err.message, 'error');
-        //                    process.exit();
-        //                }
-        //
-        //                log('copy write', ydrUtil.dato.fixPath(destFile), 'success');
-        //                copyLength++;
-        //                nextFile();
-        //            });
-        //        }).follow(function () {
-        //            nextCopy();
-        //        });
-        //    });
-        //})
-        //
-        //.task(function (next) {
-        //    log('2/5', 'build main', 'task');
-        //    next();
-        //})
-        //.each(config.js, function (i, main, nextMain) {
-        //    // 构建入口模块
-        //    var gbPath = path.join(buildPath, main);
-        //
-        //    log('build js', ydrUtil.dato.fixPath(gbPath));
-        //
-        //    glob(gbPath, function (err, files) {
-        //        if (err) {
-        //            log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
-        //            log('glob', err.message, 'error');
-        //            process.exit();
-        //        }
-        //
-        //        howdo.each(files, function (j, file, nextFile) {
-        //            var relative = path.relative(srcPath, file);
-        //
-        //            buildMain(file, function (err, code, md5List, deepDeps) {
-        //                if (err) {
-        //                    return;
-        //                }
-        //
-        //                var depNames = deepDeps.map(function (dep) {
-        //                    return ydrUtil.dato.toURLPath(path.relative(srcPath, dep));
-        //                });
-        //
-        //                JSRelationshipMap[ydrUtil.dato.toURLPath(relative)] = depNames;
-        //
-        //                var md5Version = ydrUtil.crypto.md5(md5List).slice(0, 8);
-        //                var destFile = path.join(destPath, relative);
-        //
-        //                destFile = destFile.replace(REG_END, '.' + md5Version + '$1');
-        //                versionMap[ydrUtil.dato.toURLPath(relative)] = md5Version;
-        //
-        //                fs.outputFile(destFile, code, function (err) {
-        //                    if (err) {
-        //                        log('write file', ydrUtil.dato.fixPath(destFile), 'error');
-        //                        log('write file', err.message, 'error');
-        //                        process.exit();
-        //                    }
-        //
-        //                    log('write js', ydrUtil.dato.fixPath(destFile), 'success');
-        //                    mainLength++;
-        //                    nextFile();
-        //                });
-        //            });
-        //        }).follow(function () {
-        //            nextMain();
-        //        });
-        //    });
-        //})
-        //
-        //.task(function (next) {
-        //    log('3/5', 'overwrite config', 'task');
-        //    next();
-        //})
-        //.task(function (next) {
-        //    // 覆盖生成 coolie-config.js
-        //    var code = fs.readFileSync(coolieConfigJS, 'utf8');
-        //    var relative = path.relative(srcPath, coolieConfigJS);
-        //    var destFile = path.join(destPath, relative);
-        //
-        //    code = replaceConfig(coolieConfigJS, code, versionMap);
-        //    fs.outputFile(destFile, code, function (err) {
-        //        if (err) {
-        //            log('overwrite config', ydrUtil.dato.fixPath(destFile), 'error');
-        //            log('overwrite config', err.message, 'error');
-        //            process.exit();
-        //        }
-        //
-        //        log('overwrite config', ydrUtil.dato.fixPath(destFile), 'success');
-        //        next();
-        //    });
-        //})
+        .task(function (next) {
+            log('1/5', 'copy files', 'task');
+            next();
+        })
+        .each(config.copy, function (i, copyFile, nextCopy) {
+            // copy files
+            var gbPath = path.join(buildPath, copyFile);
+
+            log('copy files', ydrUtil.dato.fixPath(gbPath));
+
+            glob(gbPath, function (err, files) {
+                if (err) {
+                    log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
+                    log('glob', err.message, 'error');
+                    process.exit();
+                }
+
+                howdo.each(files, function (j, file, nextFile) {
+                    var relative = path.relative(srcPath, file);
+                    var destFile = path.join(destPath, relative);
+
+                    fs.copy(file, destFile, function (err) {
+                        if (err) {
+                            log('copy from', ydrUtil.dato.fixPath(file), 'error');
+                            log('copy to', ydrUtil.dato.fixPath(destFile), 'error');
+                            log('copy error', err.message, 'error');
+                            process.exit();
+                        }
+
+                        log('copy write', ydrUtil.dato.fixPath(destFile), 'success');
+                        copyLength++;
+                        nextFile();
+                    });
+                }).follow(function () {
+                    nextCopy();
+                });
+            });
+        })
+
+        .task(function (next) {
+            log('2/5', 'build main', 'task');
+            next();
+        })
+        .each(config.js, function (i, main, nextMain) {
+            // 构建入口模块
+            var gbPath = path.join(buildPath, main);
+
+            log('build js', ydrUtil.dato.fixPath(gbPath));
+
+            glob(gbPath, function (err, files) {
+                if (err) {
+                    log('glob', ydrUtil.dato.fixPath(gbPath), 'error');
+                    log('glob', err.message, 'error');
+                    process.exit();
+                }
+
+                howdo.each(files, function (j, file, nextFile) {
+                    var relative = path.relative(srcPath, file);
+
+                    buildMain(file, function (err, code, md5List, deepDeps) {
+                        if (err) {
+                            return;
+                        }
+
+                        var depNames = deepDeps.map(function (dep) {
+                            return ydrUtil.dato.toURLPath(path.relative(srcPath, dep));
+                        });
+
+                        JSRelationshipMap[ydrUtil.dato.toURLPath(relative)] = depNames;
+
+                        var md5Version = ydrUtil.crypto.md5(md5List).slice(0, 8);
+                        var destFile = path.join(destPath, relative);
+
+                        destFile = destFile.replace(REG_END, '.' + md5Version + '$1');
+                        versionMap[ydrUtil.dato.toURLPath(relative)] = md5Version;
+
+                        fs.outputFile(destFile, code, function (err) {
+                            if (err) {
+                                log('write file', ydrUtil.dato.fixPath(destFile), 'error');
+                                log('write file', err.message, 'error');
+                                process.exit();
+                            }
+
+                            log('write js', ydrUtil.dato.fixPath(destFile), 'success');
+                            mainLength++;
+                            nextFile();
+                        });
+                    });
+                }).follow(function () {
+                    nextMain();
+                });
+            });
+        })
+
+        .task(function (next) {
+            log('3/5', 'overwrite config', 'task');
+            next();
+        })
+        .task(function (next) {
+            // 覆盖生成 coolie-config.js
+            var code = fs.readFileSync(coolieConfigJS, 'utf8');
+            var relative = path.relative(srcPath, coolieConfigJS);
+            var destFile = path.join(destPath, relative);
+
+            code = replaceConfig(coolieConfigJS, code, versionMap);
+            fs.outputFile(destFile, code, function (err) {
+                if (err) {
+                    log('overwrite config', ydrUtil.dato.fixPath(destFile), 'error');
+                    log('overwrite config', err.message, 'error');
+                    process.exit();
+                }
+
+                log('overwrite config', ydrUtil.dato.fixPath(destFile), 'success');
+                next();
+            });
+        })
 
         .task(function (next) {
             log('4/5', 'build html css', 'task');
