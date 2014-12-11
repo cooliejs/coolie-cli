@@ -7,7 +7,6 @@
 'use strict';
 
 var path = require('path');
-var fs = require('fs');
 var ydrUtil = require('ydr-util');
 var dato = require('ydr-util').dato;
 var log = require('./log.js');
@@ -16,7 +15,8 @@ var htmlminify = require('./htmlminify.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/g;
-var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/ig;
+var REG_SCRIPT = /<script\b([^>]*?)\bsrc\b\s*?=\s*?['"](.*?)['"]([^>]*?)><\/script>/gi;
+var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
 var REG_ABSOLUTE = /^\//;
 // 相同的组合只产生出一个文件
 var concatMap = {};
@@ -29,13 +29,30 @@ var concatMap = {};
  * @param srcPath {String} 源路径
  * @param cssPath {String} 生成CSS文件路径
  * @param cssHost {String} CSS 根目录
+ * @param jsHost {String} JS 根目录
  * @returns {{concat: Array, data: *}}
  */
-module.exports = function (file, data, srcPath, cssPath, cssHost) {
+module.exports = function (file, data, srcPath, cssPath, cssHost, jsHost) {
     var matches = data.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
     var dirname = path.dirname(file);
+
+    // 直接进行脚本路径替换，不需要额外操作
+    data = data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
+        var file;
+
+        if (REG_ABSOLUTE.test($2)) {
+            file = path.join(srcPath, $2);
+        } else {
+            file = path.join(dirname, $2);
+        }
+
+        var relative = path.relative(srcPath, file);
+        var url = jsHost + dato.toURLPath(relative);
+
+        return '<script' + $1 + 'src="' + url + '"' + $3 + '></script>';
+    });
 
     // 循环匹配 <!--coolie-->(matched)<!--/coolie-->
     matches.forEach(function (matched) {
@@ -116,13 +133,3 @@ module.exports = function (file, data, srcPath, cssPath, cssHost) {
     };
 };
 
-
-/////////////////////////////////////////////////////
-//var filePath = path.join(__dirname, '../example/src/html/index.html');
-//var html = fs.readFileSync(filePath, 'utf8');
-//var cssPath =  path.join(__dirname, '../example/src/static/css/');
-//
-//html = module.exports(filePath, html, cssPath);
-//
-//console.log(html);
-//
