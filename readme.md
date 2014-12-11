@@ -38,7 +38,7 @@ npm install -g coolie
 输出本地版本号和线上最新版本号，方便更新。
 
 
-## `coolie pull`
+## `coolie pull [path]`
 下载`coolie.min.js`到指定目录。
 
 
@@ -57,7 +57,7 @@ npm install -g coolie
 
 
 # Version
-- 0.7.0
+- 0.7.2
 	- 新增命令`coolie pull`
 - 0.6.1
 	- 更为科学的构建过程
