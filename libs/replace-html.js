@@ -9,6 +9,7 @@
 var path = require('path');
 var fs = require('fs');
 var ydrUtil = require('ydr-util');
+var dato = require('ydr-util').dato;
 var log = require('./log.js');
 var cssminify = require('./cssminify.js');
 var htmlminify = require('./htmlminify.js');
@@ -27,10 +28,10 @@ var concatMap = {};
  * @param data {String} HTML 文件内容
  * @param srcPath {String} 源路径
  * @param cssPath {String} 生成CSS文件路径
- * @param cssRoot {String} CSS 根目录
+ * @param cssHost {String} CSS 根目录
  * @returns {{concat: Array, data: *}}
  */
-module.exports = function (file, data, srcPath, cssPath, cssRoot) {
+module.exports = function (file, data, srcPath, cssPath, cssHost) {
     var matches = data.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
@@ -56,7 +57,7 @@ module.exports = function (file, data, srcPath, cssPath, cssRoot) {
                 href = hrefMatches[1];
 
                 if (REG_ABSOLUTE.test(href)) {
-                    file = path.join(cssRoot, href);
+                    file = path.join(srcPath, href);
                 } else {
                     file = path.join(dirname, href);
                 }
@@ -66,24 +67,24 @@ module.exports = function (file, data, srcPath, cssPath, cssRoot) {
             }
         }
 
-        ydrUtil.dato.each(concatMap, function (name, matched) {
+        dato.each(concatMap, function (name, matched) {
             if (matched.files.length !== files.length) {
                 return false;
             }
 
-            var compare = ydrUtil.dato.compare(matched.files, files);
+            var compare = dato.compare(matched.files, files);
 
             // 完全匹配
             if (compare && compare.different.length === 0) {
-                findMath = ydrUtil.dato.extend(true, {}, matched);
+                findMath = dato.extend(true, {}, matched);
                 return false;
             }
         });
 
         if (findMath) {
             filePath = path.join(cssPath, findMath.name);
-            filePath = path.relative(cssRoot, filePath);
-            fileURL = '/' + ydrUtil.dato.toURLPath(filePath);
+            filePath = path.relative(srcPath, filePath);
+            fileURL = cssHost + dato.toURLPath(filePath);
             findMath.url = fileURL;
             findMath.isRepeat = true;
             concat.push(findMath);
@@ -91,8 +92,8 @@ module.exports = function (file, data, srcPath, cssPath, cssRoot) {
             if (files.length) {
                 fileName = ydrUtil.crypto.md5(md5List).slice(0, 8) + '.css';
                 filePath = path.join(cssPath, fileName);
-                filePath = path.relative(cssRoot, filePath);
-                fileURL = '/' + ydrUtil.dato.toURLPath(filePath);
+                filePath = path.relative(srcPath, filePath);
+                fileURL = cssHost + dato.toURLPath(filePath);
 
                 concat.push({
                     name: fileName,
