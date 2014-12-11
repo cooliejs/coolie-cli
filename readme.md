@@ -24,12 +24,16 @@ npm install -g coolie
 输出命令帮助信息。
 
 
-## `coolie help`
+## `coolie wiki`
 打开 coolie wiki 页面。
 
 
 ## `coolie version`
 输出本地版本号和线上最新版本号，方便更新。
+
+
+## `coolie pull`
+下载`coolie.min.js`到指定目录。
 
 
 ## `coolie config [path]`
