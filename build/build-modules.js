@@ -202,7 +202,7 @@ module.exports = function (buildPath) {
             dato.each(htmlJsCssRelationshipMap, function (key, item) {
                 if (MainRelationshipMap[item.main]) {
                     item.deps = MainRelationshipMap[item.main];
-                } else if(item.main) {
+                } else if (item.main) {
                     log('miss main', item.main, 'error');
                     item.deps = [];
                 }
