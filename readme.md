@@ -1,16 +1,22 @@
 # Coolie 苦力 [![coolie](https://img.shields.io/npm/v/coolie.svg?style=flat)](https://www.npmjs.org/package/coolie)
 
-A builder for front-end developments.
+__A builder for front-end developments.__
+
+__前端发布工具。__
 
 # 功能
-- js 模块的合并、压缩、依赖分析、构建，【[coolie 模块加载器](https://github.com/cloudcome/coolie)】；
-- css 模块的合并、压缩、构建；
-- html 样式依赖分析、压缩、构建。
+- js 模块的合并、压缩、依赖分析、构建，【[coolie 模块加载器](https://github.com/cloudcome/coolie)】。
+- css 模块的合并、压缩、构建。
+- html 样式依赖分析、压缩、构建，资源地址替换。
+- 生成资源引用关系地图（relationship-map.json）。
+- 命令生成`coolie-config.js`。
+- 命令生成`coolie.json`。
+
 
 # 特点
-- js 模块合并、模块路径压缩、模块合并、版本号更新；
-- css 模块合并、版本号更新；
-- html 模板压缩、link合并。
+- js 依赖模块合并、模块路径压缩、模块合并、版本号更新。
+- css 模块合并、版本号更新。
+- html 模板压缩、link合并、资源引用地址替换等。
 
 
 `coolie`是一个全局模块，因此需要全局安装。
