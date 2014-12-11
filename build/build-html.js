@@ -64,12 +64,12 @@ module.exports = function (file, cssPath, cssHost, jsBase, jsHost, srcPath, dest
                 howdo.each(ret.concat, function (index, matched, nextCSSFile) {
                     var bufferList = [];
                     var map = {};
-                    var relativeURL = ydrUtil.dato.toURLPath(path.relative(srcPath, matched.file));
                     var depURLs = matched.files.map(function (file) {
                         return ydrUtil.dato.toURLPath(path.relative(srcPath, file));
                     });
+                    var url = ydrUtil.dato.toURLPath(matched.file);
 
-                    map[relativeURL] = depURLs;
+                    map[url] = depURLs;
                     depCSS.push(map);
 
                     // 重复的css文件依赖
