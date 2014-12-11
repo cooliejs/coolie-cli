@@ -1,6 +1,5 @@
 {
   "js": {
-    "path": "./static/js/",
     "main": "./static/js/app/**/*.js",
     "host": "http://s.ydr.me/testdomain/"
   },
@@ -9,6 +8,7 @@
     "path": "./static/css/",
     "host": "http://s.ydr.me/testdomain/"
   },
+  "coolie.js": "./static/js/coolie.js",
   "coolie-config.js": "./static/js/coolie-config.js",
   "copy": "./**/*.*",
   "dest": "../dest/"
