@@ -33,6 +33,7 @@ module.exports = function (buildPath) {
     var JSRelationshipMap = {};
     var HTMLCSSRelationshipMap = {};
 
+
     howdo
         //.task(function (next) {
         //    log('1/5', 'copy files', 'task');
@@ -159,7 +160,6 @@ module.exports = function (buildPath) {
             // html files
             var gbPath = path.join(buildPath, htmlFile);
             var cssPath = path.join(buildPath, config.css.path);
-            var cssRoot = path.join(srcPath, config.css.root);
 
             log('html files', ydrUtil.dato.fixPath(gbPath));
 
@@ -173,7 +173,7 @@ module.exports = function (buildPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, cssRoot, srcPath, destPath, function (err, _cssLength, depCSS) {
+                    buildHTML(file, cssPath, config.css.host, config.js.host, srcPath, destPath, function (err, _cssLength, depCSS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = ydrUtil.dato.toURLPath(htmlRelative);
 
