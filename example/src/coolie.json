@@ -1,9 +1,13 @@
 {
-  "js": "./static/js/app/**/*.js",
+  "js": {
+    "path": "./static/js/",
+    "main": "./static/js/app/**/*.js",
+    "host": "http://s.ydr.me/testdomain/"
+  },
   "html": "./html/**/*.html",
   "css": {
     "path": "./static/css/",
-    "root": "./"
+    "host": "http://s.ydr.me/testdomain/"
   },
   "coolie-config.js": "./static/js/coolie-config.js",
   "copy": "./**/*.*",
