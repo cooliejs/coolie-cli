@@ -13,11 +13,11 @@ var log = require('../libs/log.js');
 module.exports = function () {
     open(pkg.wiki, function(err){
         if(err){
-            log('open help', pkg.wiki, 'error');
-            log('open help', err.message, 'error');
+            log('open wiki', pkg.wiki, 'error');
+            log('open wiki', err.message, 'error');
             process.exit();
         }
 
-        log('open help', pkg.wiki, 'success');
+        log('open wiki', pkg.wiki, 'success');
     });
 };

@@ -11,7 +11,7 @@ var buildConfig = require("./build-config.js");
 var buildJSON = require("./build-json.js");
 var buildModules = require("./build-modules.js");
 var checkUpdate = require("./check-update.js");
-var openHelp = require("./open-help.js");
+var openWiki = require("./open-wiki.js");
 var pullCoolie = require("./pull-coolie.js");
 var path = require("path");
 var CWD = process.cwd();
@@ -22,11 +22,15 @@ var buildPath = cmdArg1 ? path.join(CWD, cmdArg1) : CWD;
 
 switch ((cmdArg0 || "").toLowerCase()) {
     case "wiki":
-        openHelp();
+        openWiki();
         break;
 
     case "version":
         checkUpdate();
+        break;
+
+    case "pull":
+        pullCoolie(buildPath);
         break;
 
     case "config":
@@ -39,10 +43,6 @@ switch ((cmdArg0 || "").toLowerCase()) {
 
     case "build":
         buildModules(buildPath);
-        break;
-
-    case "pull":
-        pullCoolie(buildPath);
         break;
 
     default:
