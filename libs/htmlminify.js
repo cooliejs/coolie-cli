@@ -1,23 +1,14 @@
 /*!
- * 文件描述
+ * html 去换行和 tab 符
  * @author ydr.me
  * @create 2014-11-03 17:43
  */
 
 'use strict';
 
-var htmlminify = require('html-minifier').minify;
 var log = require('./log.js');
-var ydrUtil = require('ydr-util');
-var options = {
-    // 删除注释
-    removeComments: true,
-    removeCommentsFromCDATA: true,
-    removeCDATASectionsFromCDATA: true,
-    collapseWhitespace: true,
-    preserveLineBreaks: true,
-    conservativeCollapse: true
-};
+var dato = require('ydr-util').dato;
+var REG_LINES = /[\n\r\t]/g;
 
 
 /**
@@ -26,26 +17,11 @@ var options = {
  * @param [callback]
  */
 module.exports = function (file, code, callback) {
-    try {
-        code = htmlminify(code, options);
+    code = code.replace(REG_LINES, '');
 
-        if (callback) {
-            callback(null, code);
-        } else {
-            return code;
-        }
-    } catch (err) {
-        log('htmlminify', ydrUtil.dato.fixPath(file), 'error');
-        log('htmlminify', err.message, 'error');
-        process.exit();
+    if (callback) {
+        callback(null, code);
+    } else {
+        return code;
     }
 };
-
-
-////////////////////////////////////////////////////////////////////////
-//
-//var html = '<p>123</p><!--呵呵--->\n\n\n<br>';
-//
-//module.exports('', html, function () {
-//    console.log(arguments);
-//});

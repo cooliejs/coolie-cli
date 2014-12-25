@@ -6,7 +6,8 @@
 
 "use strict";
 
-var ydrUtil = require('ydr-util');
+var dato = require('ydr-util').dato;
+var path = require('path');
 var log = require('./log.js');
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /\}$/;
@@ -47,14 +48,23 @@ module.exports = function (file, code, versionMap) {
     try {
         fn(config);
 
+        var versionMap2 = {};
+
+        dato.each(versionMap, function (file, ver) {
+            file = path.relative(file, config.base);
+            versionMap2[file] = ver;
+        });
+
+        var version = JSON.stringify(versionMap2);
+
         log('coolie config', 'base: "' + config.base + '"', 'success');
-        log('coolie config', 'version: "' + JSON.stringify(versionMap, null, 4) + '"', 'success');
+        log('coolie config', 'version: "' + JSON.stringify(versionMap2, null, 4) + '"', 'success');
         return {
             config: config,
             code: 'coolie.config({base:"' + config.base + '",version:' + version + '}).use();'
         };
     } catch (err) {
-        log('replace config', ydrUtil.dato.fixPath(file), 'error');
+        log('replace config', dato.fixPath(file), 'error');
         log('replace config', err.message, 'error');
     }
 };
