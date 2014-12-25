@@ -31,12 +31,14 @@ var coolieFn = function () {
 
 /**
  * 构建配置文件
+ * @param coolieJS {String} srcPath 源路径
+ * @param coolieJS {String} coolieJS 路径
  * @param file {String} 文件地址
  * @param code {String} 文件内容
  * @param versionMap {Object} 版本 MAP
  * @returns {Object}
  */
-module.exports = function (file, code, versionMap) {
+module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
     var coolieString = coolieFn.toString()
         .replace(REG_FUNCTION_START, '')
         .replace(REG_FUNCTION_END, '');
@@ -48,11 +50,16 @@ module.exports = function (file, code, versionMap) {
     try {
         fn(config);
 
+        var basePath = path.join(path.dirname(coolieJSPath), config.base);
         var versionMap2 = {};
 
         dato.each(versionMap, function (file, ver) {
-            file = path.relative(file, config.base);
-            versionMap2[file] = ver;
+            file = path.join(srcPath, file);
+
+            var relative = path.relative(basePath, file);
+
+            relative = dato.toURLPath(relative);
+            versionMap2[relative] = ver;
         });
 
         var version = JSON.stringify(versionMap2);

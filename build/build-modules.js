@@ -25,7 +25,8 @@ module.exports = function (buildPath) {
     var srcPath = buildPath;
     var destPath = path.join(buildPath, config.dest);
     var cssPath = path.join(buildPath, config.css.path);
-    var coolieConfigJS = path.join(buildPath, config['coolie-config.js']);
+    var coolieJSPath = path.join(buildPath, config['coolie.js']);
+    var coolieConfigJSPath = path.join(buildPath, config['coolie-config.js']);
     var time = Date.now();
     var copyLength = 0;
     var mainLength = 0;
@@ -137,10 +138,10 @@ module.exports = function (buildPath) {
         })
         .task(function (next) {
             // 覆盖生成 coolie-config.js
-            var code = fs.readFileSync(coolieConfigJS, 'utf8');
-            var relative = path.relative(srcPath, coolieConfigJS);
+            var code = fs.readFileSync(coolieConfigJSPath, 'utf8');
+            var relative = path.relative(srcPath, coolieConfigJSPath);
             var destFile = path.join(destPath, relative);
-            var coolieInfo = replaceConfig(coolieConfigJS, code, versionMap);
+            var coolieInfo = replaceConfig(srcPath, coolieJSPath, coolieConfigJSPath, code, versionMap);
 
             jsBase = path.join(srcPath, path.dirname(config['coolie.js']), coolieInfo.config.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {
