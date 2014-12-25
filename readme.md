@@ -59,7 +59,7 @@ npm install -g coolie
 # Version
 - 0.8.0
 	- 修正生成 version 不正确的BUG
-	- HTML 压缩只去除换行等多余空白
+	- 重构 HTML 压缩
 - 0.7.3
 	- 新增命令`coolie pull`
 - 0.6.1
