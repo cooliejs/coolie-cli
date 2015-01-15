@@ -10,7 +10,6 @@ var path = require('path');
 var ydrUtil = require('ydr-util');
 var dato = require('ydr-util').dato;
 var log = require('./log.js');
-var cssminify = require('./cssminify.js');
 var htmlminify = require('./htmlminify.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;

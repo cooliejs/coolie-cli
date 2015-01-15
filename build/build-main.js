@@ -42,8 +42,6 @@ module.exports = function (mainFile, callback) {
             var depNameList = meta.depNameList;
             var output;
 
-            console.log(code);
-
             // 采用内容 MD5
             md5List += ydrUtil.crypto.etag(code);
             depsCache[mainFile] = true;

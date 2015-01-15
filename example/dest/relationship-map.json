@@ -15,7 +15,6 @@
         "main": "static/js/app/index.js",
         "deps": [
             "static/js/libs/lib.js",
-            "static/js/libs/jquery.js",
             "static/js/libs/all.js",
             "static/js/libs/some.txt",
             "static/js/libs/some.css",
