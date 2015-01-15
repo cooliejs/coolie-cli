@@ -89,10 +89,11 @@ module.exports = function (file, cssPath, cssHost, jsBase, jsHost, srcPath, dest
                                 process.exit();
                             }
 
-                            data = cssminify(file, data);
-                            bufferList.push(new Buffer('\n' + data, 'utf8'));
-                            log('require', ydrUtil.dato.fixPath(file));
-                            doneConcat();
+                            cssminify(file, data, resVersionMap, function (err, data) {
+                                bufferList.push(new Buffer('\n' + data, 'utf8'));
+                                log('require', ydrUtil.dato.fixPath(file));
+                                doneConcat();
+                            });
                         });
                     }).follow(function () {
                         var data = Buffer.concat(bufferList).toString();
