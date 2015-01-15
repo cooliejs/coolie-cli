@@ -24,9 +24,10 @@ var cssminify = require('../libs/cssminify.js');
  * @param jsHost {String} js 根目录
  * @param srcPath {String} 构建源路径
  * @param destPath {String} 构建目标路径
+ * @param fileVersionMap {Object} 文件版本号
  * @param callback {Function} 回调
  */
-module.exports = function (file, cssPath, cssHost, jsBase, jsHost, srcPath, destPath, callback) {
+module.exports = function (file, cssPath, cssHost, jsBase, jsHost, srcPath, destPath, fileVersionMap, callback) {
     var cssLength = 0;
     var depCSS = [];
 

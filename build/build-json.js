@@ -25,7 +25,7 @@ module.exports = function (basedir) {
     var jsonString = '';
     var continueStep = function () {
         json.js = {};
-        log("1/9", "请输入 JS 入口模块的目录，支持通配符，多个目录使用空格分开，默认为空。", "success");
+        log("1/10", "请输入 JS 入口模块的目录，支持通配符，多个目录使用空格分开，默认为空。", "success");
     };
 
     // 0
@@ -56,14 +56,14 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.js.main = _getVal(data, '', true);
 
-        log("2/9", "请输入发布后 JS 文件所在的域，通常发布线上的 CDN 环境，默认为空。", "success");
+        log("2/10", "请输入发布后 JS 文件所在的域，通常发布线上的 CDN 环境，默认为空。", "success");
     });
 
     // js.host
     steps.push(function (data) {
         json.js.host = _getVal(data, '', false);
 
-        log("3/9", "请输入生成 CSS 文件的存放目录。", "success");
+        log("3/10", "请输入生成 CSS 文件的存放目录。", "success");
     });
 
     // css path
@@ -71,14 +71,14 @@ module.exports = function (basedir) {
         json.css = {};
         json.css.path = _getVal(data, './static/css/', false);
 
-        log("4/9", "请输入发布后 CSS 文件所在的域，通常发布线上的 CDN 环境，默认为空。", "success");
+        log("4/10", "请输入发布后 CSS 文件所在的域，通常发布线上的 CDN 环境，默认为空。", "success");
     });
 
     // css host
     steps.push(function (data) {
         json.css.host = _getVal(data, '', false);
 
-        log("5/9", "请输入 HTML 文件的目录，支持通配符，多个文件使用空格分开。", "success");
+        log("5/10", "请输入 HTML 文件的目录，支持通配符，多个文件使用空格分开。", "success");
 
     });
 
@@ -86,14 +86,21 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.html = _getVal(data, '', true);
 
-        log("6/9", "请输入构建的目标目录，默认为“../dest/”。", "success");
+        log("6/10", "请输入 resource 文件的目录，支持通配符，多个文件使用空格分开。", "success");
+    });
+
+    // html
+    steps.push(function (data) {
+        json.res = _getVal(data, '', true);
+
+        log("7/10", "请输入构建的目标目录，默认为“../dest/”。", "success");
     });
 
     // dest
     steps.push(function (data) {
         json.dest = _getVal(data, '../dest/', false);
 
-        log("7/9", "请输入`coolie.js`的路径，默认为“./static/js/coolie.js”：" +
+        log("8/10", "请输入`coolie.js`的路径，默认为“./static/js/coolie.js”：" +
         "\n`coolie.js`是模块加载器的主文件。", "success");
     });
 
@@ -101,7 +108,7 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json['coolie.js'] = _getVal(data, './static/js/coolie.js', false);
 
-        log("8/9", "请输入`coolie-config.js`的路径，默认为“./static/js/coolie-config.js”：" +
+        log("9/10", "请输入`coolie-config.js`的路径，默认为“./static/js/coolie-config.js”：" +
         "\n`coolie-config.js`是模块入口及版本号的配置文件。", "success");
     });
 
@@ -109,7 +116,7 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json['coolie-config.js'] = _getVal(data, './static/js/coolie-config.js', false);
 
-        log("9/9", "请输入构建时需要原样复制的文件目录，支持通配符，多个入口使用空格分开，默认为复制所有文件。", "success");
+        log("10/10", "请输入构建时需要原样复制的文件目录，支持通配符，多个入口使用空格分开，默认为复制所有文件。", "success");
     });
 
     // copy

@@ -22,7 +22,7 @@ var map = {
     muted: 'grey',
     help: 'cyan',
     warn: 'yellow',
-    warning: 'bgYellow',
+    warning: 'bgMagenta',
     debug: 'blue',
     error: 'bgRed',
     bgBlack: 'bgBlack',

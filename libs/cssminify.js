@@ -9,11 +9,12 @@
 
 var minifyCSS = require("clean-css");
 var log = require('./log.js');
-var ydrUtil = require('ydr-util');
+var dato = require('ydr-util').dato;
 var options = {
     keepSpecialComments: 0,
     keepBreaks: false
 };
+var REG_URL = /url\(['"]?(.*?)['"]?\)/ig;
 
 
 /**
@@ -31,8 +32,26 @@ module.exports = function (file, code, callback) {
             return code;
         }
     } catch (err) {
-        log('cssminify', ydrUtil.dato.fixPath(file), 'error');
+        log('cssminify', dato.fixPath(file), 'error');
         log('cssminify', err.message, 'error');
         process.exit();
     }
 };
+
+
+function _cssUrlVersion(code, version) {
+    return code.replace(REG_URL, function ($0, $1) {
+        // url 中没有查询字符
+        if ($1.indexOf('?') > -1 || $1.indexOf('#') > -1) {
+            return 'url(' + $1 + ')';
+        }
+
+        return 'url(' + $1 + '?v=' + version + ')';
+    });
+}
+
+
+var css1 = 'body{background: url("123.png");}';
+var css2 = _cssUrlVersion(css1);
+
+console.log(css2);

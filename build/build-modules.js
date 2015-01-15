@@ -12,8 +12,8 @@ var howdo = require('howdo');
 var path = require('path');
 var glob = require('glob');
 var log = require('../libs/log.js');
-var ydrUtil = require('ydr-util');
 var dato = require('ydr-util').dato;
+var crypto = require('ydr-util').crypto;
 var replaceConfig = require('../libs/replace-config.js');
 var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
@@ -33,6 +33,7 @@ module.exports = function (buildPath) {
     var htmlLength = 0;
     var cssLength = 0;
     var versionMap = {};
+    var cssVersionMap = {};
     var MainRelationshipMap = {};
     var htmlJsCssRelationshipMap = {};
     var jsBase;
@@ -108,7 +109,7 @@ module.exports = function (buildPath) {
 
                         MainRelationshipMap[dato.toURLPath(relative)] = depNames;
 
-                        var md5Version = ydrUtil.crypto.md5(md5List).slice(0, 16);
+                        var md5Version = crypto.md5(md5List).slice(0, 16);
                         var destFile = path.join(destPath, relative);
 
                         destFile = destFile.replace(REG_END, '.' + md5Version + '$1');
@@ -160,6 +161,17 @@ module.exports = function (buildPath) {
             log('4/5', 'build html css', 'task');
             next();
         })
+        .task(function (next) {
+            var gbPath = path.join(cssPath, './**/*.*');
+
+            glob(gbPath, function (err, files) {
+                if (err) {
+                    log('glob', dato.fixPath(gbPath), 'error');
+                    log('glob', err.message, 'error');
+                    process.exit();
+                }
+            });
+        })
         .each(config.html, function (i, htmlFile, nextGlob) {
             // html files
             var gbPath = path.join(buildPath, htmlFile);
@@ -177,7 +189,7 @@ module.exports = function (buildPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, config.css.host, jsBase, config.js.host, srcPath, destPath, function (err, _cssLength, depCSS, depJS, mainJS) {
+                    buildHTML(file, cssPath, config.css.host, jsBase, config.js.host, srcPath, destPath, fileVersionMap, function (err, _cssLength, depCSS, depJS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = dato.toURLPath(htmlRelative);
 
