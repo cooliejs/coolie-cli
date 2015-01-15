@@ -31,16 +31,17 @@ module.exports = function (buildPath) {
     var copyLength = 0;
     var mainLength = 0;
     var htmlLength = 0;
+    var resLength = 0;
     var cssLength = 0;
     var versionMap = {};
-    var cssVersionMap = {};
+    var resVersionMap = {};
     var MainRelationshipMap = {};
     var htmlJsCssRelationshipMap = {};
     var jsBase;
 
     howdo
         .task(function (next) {
-            log('1/5', 'copy files', 'task');
+            log('1/6', 'copy files', 'task');
             next();
         })
         .each(config.copy, function (i, copyFile, nextCopy) {
@@ -79,7 +80,7 @@ module.exports = function (buildPath) {
         })
 
         .task(function (next) {
-            log('2/5', 'build main', 'task');
+            log('2/6', 'build main', 'task');
             next();
         })
         .each(config.js.main, function (i, main, nextMain) {
@@ -134,7 +135,7 @@ module.exports = function (buildPath) {
         })
 
         .task(function (next) {
-            log('3/5', 'overwrite config', 'task');
+            log('3/6', 'overwrite config', 'task');
             next();
         })
         .task(function (next) {
@@ -158,11 +159,14 @@ module.exports = function (buildPath) {
         })
 
         .task(function (next) {
-            log('4/5', 'build html css', 'task');
+            log('4/6', 'build resource version', 'task');
             next();
         })
-        .task(function (next) {
-            var gbPath = path.join(cssPath, './**/*.*');
+        .each(config.res, function (i, resFile, nextRes) {
+            // res files
+            var gbPath = path.join(buildPath, resFile);
+
+            log('build files', dato.fixPath(gbPath));
 
             glob(gbPath, function (err, files) {
                 if (err) {
@@ -170,7 +174,21 @@ module.exports = function (buildPath) {
                     log('glob', err.message, 'error');
                     process.exit();
                 }
+
+                howdo.each(files, function (j, file, nextFile) {
+                    resVersionMap[file] = crypto.etag(file).slice(0, 16);
+                    resLength++;
+                    nextFile();
+                }).follow(function () {
+                    nextRes();
+                });
             });
+        })
+
+
+        .task(function (next) {
+            log('5/6', 'build html css', 'task');
+            next();
         })
         .each(config.html, function (i, htmlFile, nextGlob) {
             // html files
@@ -189,7 +207,7 @@ module.exports = function (buildPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, config.css.host, jsBase, config.js.host, srcPath, destPath, fileVersionMap, function (err, _cssLength, depCSS, depJS, mainJS) {
+                    buildHTML(file, cssPath, config.css.host, jsBase, config.js.host, srcPath, destPath, resVersionMap, function (err, _cssLength, depCSS, depJS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = dato.toURLPath(htmlRelative);
 
@@ -208,7 +226,7 @@ module.exports = function (buildPath) {
         })
 
         .task(function (next) {
-            log('5/5', 'generator relationship map', 'task');
+            log('6/6', 'generator relationship map', 'task');
             next();
         })
         .task(function (next) {
@@ -250,6 +268,7 @@ module.exports = function (buildPath) {
                 'build ' + mainLength + ' js file(s), ' +
                 'build ' + htmlLength + ' html file(s), ' +
                 'build ' + cssLength + ' css file(s), ' +
+                'build ' + resLength + ' res file(s), ' +
                 'past ' + past + ' ms', 'success');
         });
 };
