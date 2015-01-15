@@ -108,7 +108,7 @@ module.exports = function (buildPath) {
 
                         MainRelationshipMap[dato.toURLPath(relative)] = depNames;
 
-                        var md5Version = ydrUtil.crypto.md5(md5List).slice(0, 8);
+                        var md5Version = ydrUtil.crypto.md5(md5List).slice(0, 16);
                         var destFile = path.join(destPath, relative);
 
                         destFile = destFile.replace(REG_END, '.' + md5Version + '$1');

@@ -43,7 +43,7 @@ module.exports = function (mainFile, callback) {
             var output;
 
             // 采用内容 MD5
-            md5List+=ydrUtil.crypto.etag(code);
+            md5List += ydrUtil.crypto.etag(code);
             depsCache[mainFile] = true;
             bufferList.push(new Buffer("\n" + code, "utf8"));
             depsRelationship[file] = {};
@@ -52,7 +52,7 @@ module.exports = function (mainFile, callback) {
                 depIdList.forEach(function (depId, index) {
                     depsRelationship[file][depId] = true;
 
-                    if(deepDeps.indexOf(depId) === -1){
+                    if (deepDeps.indexOf(depId) === -1) {
                         deepDeps.push(depId);
                     }
 

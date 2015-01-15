@@ -121,7 +121,7 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase, jsHost
             concat.push(findMath);
         } else {
             if (files.length) {
-                fileName = ydrUtil.crypto.md5(md5List).slice(0, 8) + '.css';
+                fileName = ydrUtil.crypto.md5(md5List).slice(0, 16) + '.css';
                 filePath = path.join(cssPath, fileName);
                 filePath = path.relative(srcPath, filePath);
                 fileURL = cssHost + dato.toURLPath(filePath);
