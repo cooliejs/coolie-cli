@@ -57,6 +57,8 @@ npm install -g coolie
 
 
 # Version
+- 0.9.0
+	- 新增引用资源版本号
 - 0.8.2
 	- 修正生成 version 不正确的BUG
 	- 重构 HTML 压缩

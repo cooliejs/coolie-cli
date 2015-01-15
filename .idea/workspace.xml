@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/e04125b58beaee68.css" afterPath="$PROJECT_DIR$/example/dest/static/css/e04125b58beaee68.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/readme.md" afterPath="$PROJECT_DIR$/readme.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -27,114 +28,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="cssminify.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/libs/cssminify.js">
+      <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6097561" vertical-offset="630" max-vertical-offset="1245">
-              <caret line="67" column="0" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#371#461#0" expanded="true" />
-                <element signature="e#893#916#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build-modules.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build/build-modules.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4200">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="e04125b58beaee68.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/dest/static/css/e04125b58beaee68.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
-              <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
+            <state vertical-scroll-proportion="-19.625" vertical-offset="264" max-vertical-offset="855">
+              <caret line="49" column="3" selection-start-line="49" selection-start-column="3" selection-end-line="49" selection-end-column="3" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="1.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/dest/static/css/1.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
+      <file leaf-file-name="readme.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/readme.md">
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
           </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="2.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/dest/static/css/2.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="parse-config.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libs/parse-config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="3617" max-vertical-offset="4170">
-              <caret line="257" column="0" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build-html.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build/build-html.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.703704" vertical-offset="314" max-vertical-offset="1950">
-              <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#355#695#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="replace-html.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libs/replace-html.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="2535">
-              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="1.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/src/static/css/1.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
-              <caret line="1" column="49" selection-start-line="1" selection-start-column="49" selection-end-line="1" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="2.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/src/static/css/2.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
-              <caret line="3" column="1" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+            <state vertical-scroll-proportion="0.32136753" vertical-offset="727" max-vertical-offset="1470">
+              <caret line="61" column="7" selection-start-line="61" selection-start-column="7" selection-end-line="61" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -149,8 +60,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/build/build-main.js" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/readme.md" />
         <option value="$PROJECT_DIR$/example/src/static/css/2.css" />
         <option value="$PROJECT_DIR$/example/src/static/css/1.css" />
         <option value="$PROJECT_DIR$/example/src/coolie.json" />
@@ -162,6 +71,8 @@
         <option value="$PROJECT_DIR$/example/dest/static/css/e04125b58beaee68.css" />
         <option value="$PROJECT_DIR$/build/build-modules.js" />
         <option value="$PROJECT_DIR$/libs/cssminify.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/readme.md" />
       </list>
     </option>
   </component>
@@ -514,7 +425,13 @@
       <option name="project" value="LOCAL" />
       <updated>1421313681556</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="build res">
+      <created>1421313801003</created>
+      <option name="number" value="00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1421313801003</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -638,25 +555,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="855">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/readme.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.7666667" vertical-offset="832" max-vertical-offset="1440">
-          <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/ydr-util/libs/crypto.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.70471466" vertical-offset="661" max-vertical-offset="2655">
@@ -705,7 +603,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/parse-config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3617" max-vertical-offset="4170">
+        <state vertical-scroll-proportion="0.36585367" vertical-offset="3555" max-vertical-offset="4170">
           <caret line="257" column="0" selection-start-line="257" selection-start-column="0" selection-end-line="257" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -715,7 +613,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/replace-html.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="2535">
+        <state vertical-scroll-proportion="0.5121951" vertical-offset="285" max-vertical-offset="2535">
           <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -725,7 +623,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build/build-html.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.703704" vertical-offset="314" max-vertical-offset="1950">
+        <state vertical-scroll-proportion="0.30782312" vertical-offset="314" max-vertical-offset="1950">
           <caret line="33" column="0" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -736,7 +634,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/example/src/static/css/2.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="135">
+        <state vertical-scroll-proportion="0.07317073" vertical-offset="0" max-vertical-offset="615">
           <caret line="3" column="1" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
           <folding />
         </state>
@@ -744,7 +642,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/example/src/static/css/1.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
+        <state vertical-scroll-proportion="0.024390243" vertical-offset="0" max-vertical-offset="615">
           <caret line="1" column="49" selection-start-line="1" selection-start-column="49" selection-end-line="1" selection-end-column="49" />
           <folding />
         </state>
@@ -752,7 +650,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build/build-modules.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="4200">
+        <state vertical-scroll-proportion="0.5121951" vertical-offset="0" max-vertical-offset="4200">
           <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
@@ -778,7 +676,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/example/dest/static/css/e04125b58beaee68.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="120">
+        <state vertical-scroll-proportion="0.048780486" vertical-offset="0" max-vertical-offset="615">
           <caret line="2" column="30" selection-start-line="2" selection-start-column="30" selection-end-line="2" selection-end-column="30" />
           <folding />
         </state>
@@ -793,6 +691,25 @@
             <element signature="e#371#461#0" expanded="true" />
             <element signature="e#893#916#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.625" vertical-offset="264" max-vertical-offset="855">
+          <caret line="49" column="3" selection-start-line="49" selection-start-column="3" selection-end-line="49" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/readme.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.32136753" vertical-offset="727" max-vertical-offset="1470">
+          <caret line="61" column="7" selection-start-line="61" selection-start-column="7" selection-end-line="61" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
