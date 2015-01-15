@@ -6,3 +6,10 @@ body{
 .body{
     background: #ccc url(../img/100x100.png);
 }
+
+.f-loading {
+    background: url(../img/100x100.png) no-repeat 0 4px/16px;
+    display: inline-block;
+    padding-left: 20px;
+    color: #888;
+}
