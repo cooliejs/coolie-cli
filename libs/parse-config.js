@@ -56,18 +56,6 @@ module.exports = function (relative) {
             process.exit();
         }
 
-        //// js.path
-        //if (typeis(config.js.path) !== 'string') {
-        //    log("parse config", "`js.path` property must be a string path", "error");
-        //    process.exit();
-        //}
-        //
-        //var jsPath = path.join(relative, config.js.path);
-        //
-        //if (!typeis.directory(jsPath)) {
-        //    log("parse config", "`" + jsPath + "` is NOT a directory", "error");
-        //    process.exit();
-        //}
 
         // js.main
         var jsMainType = typeis(config.js.main);
@@ -137,7 +125,6 @@ module.exports = function (relative) {
 
 
     // 检查 html 路径
-    //    html: ,
     check.html = function () {
         if (config.html) {
             var htmlType = typeis(config.html);
@@ -163,8 +150,33 @@ module.exports = function (relative) {
     };
 
 
+    // 检查 res 路径
+    check.res = function () {
+        if (config.res) {
+            var resType = typeis(config.res);
+
+            if (resType !== "string" && resType !== "array") {
+                log("parse config", "`res` property must be a string path or an array object", "error");
+                process.exit();
+            }
+
+            if (resType === "array") {
+                config.res.forEach(function (mn, index) {
+                    if (typeis(mn) !== "string") {
+                        log("parse config", "`res` property[" + index + "] must be a string", "error");
+                        process.exit();
+                    }
+                });
+            } else {
+                config.res = [config.res];
+            }
+        } else {
+            config.res = [];
+        }
+    };
+
+
     // 检查 dest 路径
-    //    html: ,
     check.dest = function () {
         if (!config.dest) {
             log("parse config", "coolie.json require `dest` property", "error");
@@ -221,7 +233,6 @@ module.exports = function (relative) {
 
 
     // 检查复制
-    //    copy: ,
     check.copy = function () {
         if (config.copy) {
             var copyFilesType = typeis(config.copy);
@@ -252,6 +263,7 @@ module.exports = function (relative) {
     check.js();
     check.css();
     check.html();
+    check.res();
     check.dest();
     check.coolie();
     check.coolieConfig();
