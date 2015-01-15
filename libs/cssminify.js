@@ -15,7 +15,7 @@ var options = {
     keepSpecialComments: 0,
     keepBreaks: false
 };
-var REG_URL = /url\(['"]?(.*?)['"]?\)/ig;
+var REG_URL = /url\(['"]?(.*?)['"]?\)([;\s\b])/ig;
 var REG_HTTP = /^https?:/i;
 
 
@@ -49,27 +49,27 @@ module.exports = function (file, code, resVersionMap, callback) {
     function _cssUrlVersion() {
         var fileDir = path.dirname(file);
 
-        return code.replace(REG_URL, function ($0, $1) {
+        return code.replace(REG_URL, function ($0, $1, $2) {
             // 以下情况忽略添加版本号：
             // abc.png?v=123
             // abc.eot#123
-            // /path/to/abc/.png
-            // //path/to/abc/.png
-            // http://path/to/abc/.png
-            // https://path/to/abc/.png
+            // /path/to/abc.png
+            // //path/to/abc.png
+            // http://path/to/abc.png
+            // https://path/to/abc.png
             if (
                 $1.indexOf('?') > -1 ||
                 $1.indexOf('#') > -1 ||
                 $1.indexOf('/') === 0 ||
                 REG_HTTP.test($1)
             ) {
-                return 'url(' + $1 + ')';
+                return 'url(' + $1 + ')' + $2;
             }
 
             var absFile = path.join(fileDir, $1);
             var version = resVersionMap[absFile] || '';
 
-            return 'url(' + $1 + (version ? '?v=' + version : '') + ')';
+            return 'url(' + $1 + (version ? '?v=' + version : '') + ')' + $2;
         });
     }
 };

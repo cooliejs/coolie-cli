@@ -1,1 +1,1 @@
-coolie.config({base:"./app/",version:{"index.js":"d5964d13","jquery.js":"74be1697","user/index.js":"020eb29b"}}).use();
+coolie.config({base:"./app/",version:{"index.js":"3ef42d1353b256c8","jquery.js":"74be16979710d4c4","user/index.js":"020eb29b524d7ba6"}}).use();
