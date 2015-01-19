@@ -20,7 +20,7 @@ var REG_COMMENTS = /<!--[\s\S]*?-->/g;
  */
 module.exports = function (file, code, callback) {
     code = code
-        .replace(REG_LINES, '')
+        .replace(REG_LINES, ' ')
         .replace(REG_COMMENTS, '')
         .replace(REG_SPACES, ' ');
 
