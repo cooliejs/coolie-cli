@@ -57,7 +57,7 @@ npm install -g coolie
 
 
 # Version
-- 0.9.1
+- 0.9.2
 	- 支持构建样式中引用资源的版本号
 - 0.8.2
 	- 修正生成 version 不正确的BUG
