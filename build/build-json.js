@@ -100,13 +100,13 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.dest = _getVal(data, '../dest/', false);
 
-        log("8/10", "请输入`coolie.js`的路径，默认为“./static/js/coolie.js”：" +
+        log("8/10", "请输入`coolie.js`的路径，默认为“./static/js/coolie.min.js”：" +
         "\n`coolie.js`是模块加载器的主文件。", "success");
     });
 
     // coolie.js
     steps.push(function (data) {
-        json['coolie.js'] = _getVal(data, './static/js/coolie.js', false);
+        json['coolie.js'] = _getVal(data, './static/js/coolie.min.js', false);
 
         log("9/10", "请输入`coolie-config.js`的路径，默认为“./static/js/coolie-config.js”：" +
         "\n`coolie-config.js`是模块入口及版本号的配置文件。", "success");
