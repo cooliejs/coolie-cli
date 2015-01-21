@@ -62,8 +62,8 @@
       <file leaf-file-name="build-json.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build/build-json.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.47804877" vertical-offset="1848" max-vertical-offset="3381">
-              <caret line="106" column="16" selection-start-line="106" selection-start-column="16" selection-end-line="106" selection-end-column="16" />
+            <state vertical-scroll-proportion="0.27317074" vertical-offset="1848" max-vertical-offset="3381">
+              <caret line="100" column="27" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -427,7 +427,13 @@
       <option name="project" value="LOCAL" />
       <updated>1421806617994</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="coolie.js">
+      <created>1421806631283</created>
+      <option name="number" value="00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1421806631283</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -901,8 +907,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build/build-json.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47804877" vertical-offset="1848" max-vertical-offset="3381">
-          <caret line="106" column="16" selection-start-line="106" selection-start-column="16" selection-end-line="106" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.27317074" vertical-offset="1848" max-vertical-offset="3381">
+          <caret line="100" column="27" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="27" />
           <folding />
         </state>
       </provider>
