@@ -8,7 +8,6 @@
                 ]
             }
         ],
-        "js": [],
         "main": "static/js/app/index.js",
         "deps": [
             "static/js/libs/lib.js",
@@ -27,7 +26,6 @@
                 ]
             }
         ],
-        "js": [],
         "main": "static/js/app/user/index.js",
         "deps": [
             "static/js/libs/all.js"
