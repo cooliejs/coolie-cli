@@ -21,13 +21,12 @@ var cssminify = require('../libs/cssminify.js');
  * @param cssPath {String} css 路径
  * @param cssHost {String} css 根目录
  * @param jsBase {String} coolie 配置的 base 目录
- * @param jsHost {String} js 根目录
  * @param srcPath {String} 构建源路径
  * @param destPath {String} 构建目标路径
  * @param resVersionMap {Object} 资源文件版本号
  * @param callback {Function} 回调
  */
-module.exports = function (file, cssPath, cssHost, jsBase, jsHost, srcPath, destPath, resVersionMap, callback) {
+module.exports = function (file, cssPath, cssHost, jsBase, srcPath, destPath, resVersionMap, callback) {
     var cssLength = 0;
     var depCSS = [];
 

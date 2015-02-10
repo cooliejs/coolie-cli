@@ -207,7 +207,7 @@ module.exports = function (buildPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, config.css.host, jsBase, config.js.host, srcPath, destPath, resVersionMap, function (err, _cssLength, depCSS, depJS, mainJS) {
+                    buildHTML(file, cssPath, config.css.host, jsBase, srcPath, destPath, resVersionMap, function (err, _cssLength, depCSS, depJS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = dato.toURLPath(htmlRelative);
 
