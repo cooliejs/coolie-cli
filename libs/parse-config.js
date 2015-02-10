@@ -46,44 +46,25 @@ module.exports = function (relative) {
 
 
     // 检查 js 路径
-    // js: {
-    //    main: ,
-    //    host: ,
-    // }
+    // js: []
     check.js = function () {
-        if (typeis(config.js) !== "object") {
-            log("parse config", "`js` property must be a object", "error");
+        var jsType = typeis(config.js);
+
+        if (jsType !== "string" && jsType !== "array") {
+            log("parse config", "`js` property must be a string path or an array object", "error");
             process.exit();
         }
 
-        // js.main
-        var jsMainType = typeis(config.js.main);
-
-        if (jsMainType !== "string" && jsMainType !== "array") {
-            log("parse config", "`js.main` property must be a string path or an array object", "error");
-            process.exit();
-        }
-
-        if (jsMainType === "array") {
-            config.js.main.forEach(function (mn, index) {
+        if (jsType === "array") {
+            config.js.forEach(function (mn, index) {
                 if (typeis(mn) !== "string") {
-                    log("parse config", "`js.main` property[" + index + "] must be a string", "error");
+                    log("parse config", "`js` property[" + index + "] must be a string", "error");
                     process.exit();
                 }
             });
         } else {
-            config.js.main = [config.js.main];
+            config.js = [config.js];
         }
-
-        // js.host
-        //if (typeis(config.js.host) !== 'string') {
-        //    log("parse config", "`js.host` must be a string", "error");
-        //    process.exit();
-        //}
-        //
-        //if (config.js.host.slice(-1) !== '/') {
-        //    config.js.host += '/';
-        //}
     };
 
 
