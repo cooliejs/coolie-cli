@@ -19,10 +19,10 @@ var REG_COMMENTS = /<!--[\s\S]*?-->/g;
  * @param [callback]
  */
 module.exports = function (file, code, callback) {
-    code = code
-        .replace(REG_LINES, ' ')
-        .replace(REG_COMMENTS, '')
-        .replace(REG_SPACES, ' ');
+    //code = code
+    //    .replace(REG_LINES, ' ')
+    //    .replace(REG_COMMENTS, '')
+    //    .replace(REG_SPACES, ' ');
 
     if (callback) {
         callback(null, code);

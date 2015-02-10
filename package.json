@@ -44,6 +44,8 @@
     "fs-extra": "^0.11.1",
     "glob": "^4.0.5",
     "howdo": "^1.1.4",
+    "html-minifier": "^0.7.0",
+    "html-minify": "^0.3.1",
     "open": "0.0.5",
     "uglify-js": "^2.4.15",
     "ydr-util": "^1.11.9"
