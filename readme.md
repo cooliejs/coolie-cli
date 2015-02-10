@@ -57,6 +57,8 @@ npm install -g coolie
 
 
 # Version
+- 0.10.0
+    - 删除了`js host`配置
 - 0.9.3
 	- 支持构建样式中引用资源的版本号
 - 0.8.2

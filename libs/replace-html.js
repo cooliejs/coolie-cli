@@ -13,10 +13,11 @@ var log = require('./log.js');
 var htmlminify = require('./htmlminify.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
-var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/g;
-var REG_SCRIPT = /<script\b([^>]*?)\bsrc\b\s*?=\s*?['"](.*?)['"]([^>]*?)><\/script>/gi;
+var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"].*?>/g;
+var REG_SCRIPT = /<script\b([^>]*?)\bsrc\b\s*?=\s*?['"](.*?)['"](.*?)><\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
 var REG_ABSOLUTE = /^\//;
+//var REG_HTTP = /^(https?:)?\/\//;
 var REG_MAIN = /\bdata-main\b\s*?=\s*?['"](.*?)['"]/;
 // 相同的组合只产生出一个文件
 var concatMap = {};
@@ -33,7 +34,7 @@ var concatMap = {};
  * @param jsHost {String} JS 根目录
  * @returns {{concat: Array, data: *}}
  */
-module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase, jsHost) {
+module.exports = function (file, data, srcPath, cssPath, cssHost, jsMain, jsHost) {
     var matches = data.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
@@ -42,29 +43,32 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase, jsHost
     var depJS = [];
     var mainJS = '';
 
-    // 直接进行脚本路径替换，不需要额外操作
-    data = data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
-        var file;
+    // 只对 <script> 进行解析而不替换。
+    data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
+        //var file;
         var main = _getMain($1, $3);
+        //var fixSrc;
 
         if (main) {
-            main = path.join(jsBase, main);
+            main = path.join(jsMain, main);
             main = path.relative(srcPath, main);
             mainJS = dato.toURLPath(main);
         }
 
-        if (REG_ABSOLUTE.test($2)) {
-            file = path.join(srcPath, $2);
-        } else {
-            file = path.join(dirname, $2);
-        }
-
-        var relative = path.relative(srcPath, file);
-
-        relative = dato.toURLPath(relative);
-        depJS.push(relative);
-
-        return '<script' + $1 + 'src="' + jsHost + relative + '"' + $3 + '></script>';
+        //if(REG_HTTP.test($2)){
+        //    fixSrc = $2;
+        //}else if (REG_ABSOLUTE.test($2)) {
+        //    file = path.join(srcPath, $2);
+        //} else {
+        //    file = path.join(dirname, $2);
+        //}
+        //
+        //var relative = path.relative(srcPath, file);
+        //
+        //relative = dato.toURLPath(relative);
+        //depJS.push(relative);
+        //
+        //return '<script' + $1 + 'src="' + jsHost + relative + '"' + $3 + '></script>';
     });
 
     // 循环匹配 <!--coolie-->(matched)<!--/coolie-->

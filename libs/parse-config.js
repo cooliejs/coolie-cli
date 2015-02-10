@@ -56,7 +56,6 @@ module.exports = function (relative) {
             process.exit();
         }
 
-
         // js.main
         var jsMainType = typeis(config.js.main);
 
@@ -77,14 +76,14 @@ module.exports = function (relative) {
         }
 
         // js.host
-        if (typeis(config.js.host) !== 'string') {
-            log("parse config", "`js.host` must be a string", "error");
-            process.exit();
-        }
-
-        if (config.js.host.slice(-1) !== '/') {
-            config.js.host += '/';
-        }
+        //if (typeis(config.js.host) !== 'string') {
+        //    log("parse config", "`js.host` must be a string", "error");
+        //    process.exit();
+        //}
+        //
+        //if (config.js.host.slice(-1) !== '/') {
+        //    config.js.host += '/';
+        //}
     };
 
 
