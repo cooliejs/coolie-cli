@@ -37,7 +37,7 @@ module.exports = function (file, cssPath, cssHost, jsBase, srcPath, destPath, re
             process.exit();
         }
 
-        var ret = replaceHtml(file, data, srcPath, cssPath, cssHost, jsBase, jsHost);
+        var ret = replaceHtml(file, data, srcPath, cssPath, cssHost, jsBase);
 
         log('build html', ydrUtil.dato.fixPath(file), 'warning');
 

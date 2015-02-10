@@ -30,11 +30,10 @@ var concatMap = {};
  * @param srcPath {String} 源路径
  * @param cssPath {String} 生成CSS文件路径
  * @param cssHost {String} CSS 根目录
- * @param jsMain {String} JS 入口目录
- * @param jsHost {String} JS 根目录
+ * @param jsBase {String} coolie 配置的 base 目录
  * @returns {{concat: Array, data: *}}
  */
-module.exports = function (file, data, srcPath, cssPath, cssHost, jsMain, jsHost) {
+module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase) {
     var matches = data.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
@@ -50,7 +49,7 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsMain, jsHost
         //var fixSrc;
 
         if (main) {
-            main = path.join(jsMain, main);
+            main = path.join(jsBase, main);
             main = path.relative(srcPath, main);
             mainJS = dato.toURLPath(main);
         }
