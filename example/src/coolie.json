@@ -1,8 +1,5 @@
 {
-  "js": {
-    "main": "./static/js/app/**/*.js",
-    "host": "http://s.ydr.me/testdomain/"
-  },
+  "js":  "./static/js/app/**/*.js",
   "html": "./html/**/*.html",
   "css": {
     "path": "./static/css/",

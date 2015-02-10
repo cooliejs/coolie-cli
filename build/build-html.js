@@ -118,7 +118,7 @@ module.exports = function (file, cssPath, cssHost, jsBase, srcPath, destPath, re
             })
             // 并行
             .together(function () {
-                callback(null, cssLength, depCSS, ret.depJS, ret.mainJS);
+                callback(null, cssLength, depCSS, ret.mainJS);
             });
     });
 };

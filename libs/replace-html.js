@@ -38,8 +38,6 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase) {
     var concat = [];
     var replaceIndex = 0;
     var dirname = path.dirname(file);
-    // HTML 中依赖的 JS 文件
-    var depJS = [];
     var mainJS = '';
 
     // 只对 <script> 进行解析而不替换。
@@ -146,7 +144,6 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase) {
     return {
         concat: concat,
         data: htmlminify(file, data),
-        depJS: depJS,
         mainJS: mainJS
     };
 };

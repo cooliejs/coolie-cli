@@ -1,4 +1,4 @@
-/*coolie 1423556499338*/
+/*coolie 1423556922763*/
 define("0",["1","2","3","4","5"],function(o){"use strict";o("1"),o("2");{var e=o("3"),n=o("4");o("5")}console.log("app/index.js"),console.log(e),console.log(n)});
 define("1",["2"],function(i){"use strict";i("2"),console.log("libs/lib.js")});
 define("2",[],function(){"use strict";console.log("libs/all.js")});

@@ -21,6 +21,16 @@ var buildHTML = require('./build-html.js');
 var REG_END = /(\.[^.]*)$/;
 
 module.exports = function (buildPath) {
+    /**
+     * @prototype js
+     * @prototype css
+     * @prototype html
+     * @prototype dest
+     * @prototype copy
+     * @prototype coolie.js
+     * @prototype coolie-config.js
+     * @type {object}
+     */
     var config = parseConfig(buildPath);
     var srcPath = buildPath;
     var destPath = path.join(buildPath, config.dest);
@@ -83,7 +93,7 @@ module.exports = function (buildPath) {
             log('2/6', 'build main', 'task');
             next();
         })
-        .each(config.js.main, function (i, main, nextMain) {
+        .each(config.js, function (i, main, nextMain) {
             // 构建入口模块
             var gbPath = path.join(buildPath, main);
 
@@ -104,11 +114,9 @@ module.exports = function (buildPath) {
                             return;
                         }
 
-                        var depNames = deepDeps.map(function (dep) {
+                        MainRelationshipMap[dato.toURLPath(relative)] = deepDeps.map(function (dep) {
                             return dato.toURLPath(path.relative(srcPath, dep));
                         });
-
-                        MainRelationshipMap[dato.toURLPath(relative)] = depNames;
 
                         var md5Version = crypto.md5(md5List).slice(0, 16);
                         var destFile = path.join(destPath, relative);
@@ -207,13 +215,12 @@ module.exports = function (buildPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, config.css.host, jsBase, srcPath, destPath, resVersionMap, function (err, _cssLength, depCSS, depJS, mainJS) {
+                    buildHTML(file, cssPath, config.css.host, jsBase, srcPath, destPath, resVersionMap, function (err, _cssLength, depCSS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = dato.toURLPath(htmlRelative);
 
                         htmlJsCssRelationshipMap[url] = {
                             css: depCSS,
-                            js: depJS,
                             main: mainJS
                         };
                         cssLength += _cssLength;
