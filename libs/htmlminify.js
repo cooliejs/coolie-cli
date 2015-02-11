@@ -26,26 +26,25 @@ module.exports = function (file, code, callback) {
     var preMap = {};
     code = code.replace(REG_PRES, function ($0) {
         var key = _generateKey();
-        
+
         preMap[key] = $0;
-        
+
         return key;
     });
 
-    
+
     code = code
         .replace(REG_LINES, '')
         .replace(REG_SPACES, ' ');
 
 
-    
     dato.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
 
-    
+
     //console.log(code);
-    
+
     if (callback) {
         callback(null, code);
     } else {
@@ -54,11 +53,16 @@ module.exports = function (file, code, callback) {
 };
 
 
+/**
+ * 生成随机 42 位的 KEY
+ * @returns {string}
+ * @private
+ */
 function _generateKey() {
     return ':' + random.string(40, 'aA0') + ':';
 }
 
 
-///////////////////////////////
-var html = '<!--\n\n\ncomment\n\n\n-->\n\n\n      <pre>a\n\n\n</pre>\n\n\n<!--\n\n\ncomment\n\n\n-->\n\n\n      <pre>a\n\n\n</pre>';
-module.exports('', html);
+/////////////////////////////////
+//var html = '<!--\n\n\ncomment\n\n\n-->\n\n\n      <pre>a\n\n\n</pre>\n\n\n<!--\n\n\ncomment\n\n\n-->\n\n\n      <pre>a\n\n\n</pre>';
+//module.exports('', html);
