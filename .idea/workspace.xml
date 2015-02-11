@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.48561ed4e00b7e93.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/a319023f0b777f1c.css" afterPath="$PROJECT_DIR$/example/dest/static/css/a319023f0b777f1c.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/htmlminify.js" afterPath="$PROJECT_DIR$/libs/htmlminify.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.3ef42d1353b256c8.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.3ef42d1353b256c8.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/html/index.html" afterPath="$PROJECT_DIR$/example/dest/html/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/html/user/index.html" afterPath="$PROJECT_DIR$/example/dest/html/user/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/readme.md" afterPath="$PROJECT_DIR$/readme.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -37,17 +32,30 @@
       <file leaf-file-name="package.json" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-18.73077" vertical-offset="414" max-vertical-offset="1003">
-              <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
+            <state vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="1003">
+              <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="htmlminify.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="readme.md" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/readme.md">
+          <provider editor-type-id="MarkdownPreviewEditor">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.43589744" vertical-offset="697" max-vertical-offset="1717">
+              <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="htmlminify.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/libs/htmlminify.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.33170733" vertical-offset="17" max-vertical-offset="1122">
+            <state vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="1122">
               <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
               <folding />
             </state>
@@ -79,11 +87,11 @@
         <option value="$PROJECT_DIR$/libs/replace-html.js" />
         <option value="$PROJECT_DIR$/build/build-html.js" />
         <option value="$PROJECT_DIR$/build/build-modules.js" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/readme.md" />
         <option value="$PROJECT_DIR$/example/src/html/index.html" />
         <option value="$PROJECT_DIR$/example/dest/html/index.html" />
         <option value="$PROJECT_DIR$/libs/htmlminify.js" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/readme.md" />
       </list>
     </option>
   </component>
@@ -555,7 +563,7 @@
       <option name="number" value="Default" />
       <updated>1421303439570</updated>
       <workItem from="1423554935739" duration="2363000" />
-      <workItem from="1423564788217" duration="5158000" />
+      <workItem from="1423564788217" duration="5256000" />
     </task>
     <task id="LOCAL-00001" summary="version length to 16">
       <created>1421303986954</created>
@@ -767,11 +775,17 @@
       <option name="project" value="LOCAL" />
       <updated>1423566574421</updated>
     </task>
-    <option name="localTasksCounter" value="36" />
+    <task id="LOCAL-00036" summary="html 文件的压缩策略">
+      <created>1423633153484</created>
+      <option name="number" value="00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1423633153484</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7521000" />
+    <option name="totallyTimeSpent" value="7619000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="735" extended-state="6" />
@@ -849,7 +863,8 @@
     <MESSAGE value="htmlminify" />
     <MESSAGE value="coolie.js" />
     <MESSAGE value="remove js.host" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove js.host" />
+    <MESSAGE value="html 文件的压缩策略" />
+    <option name="LAST_COMMIT_MESSAGE" value="html 文件的压缩策略" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1181,17 +1196,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/readme.md">
-      <provider editor-type-id="MarkdownPreviewEditor">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1003" max-vertical-offset="1700">
-          <caret line="59" column="8" selection-start-line="59" selection-start-column="8" selection-end-line="59" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libs/replace-html.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.3512195" vertical-offset="1324" max-vertical-offset="3060">
@@ -1220,14 +1224,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-18.73077" vertical-offset="414" max-vertical-offset="1003">
-          <caret line="53" column="0" selection-start-line="53" selection-start-column="0" selection-end-line="53" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/dest/html/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1969112" vertical-offset="0" max-vertical-offset="259">
@@ -1238,8 +1234,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/htmlminify.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33170733" vertical-offset="17" max-vertical-offset="1122">
+        <state vertical-scroll-proportion="0.0" vertical-offset="323" max-vertical-offset="1122">
           <caret line="17" column="3" selection-start-line="17" selection-start-column="3" selection-end-line="17" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="1003">
+          <caret line="2" column="20" selection-start-line="2" selection-start-column="20" selection-end-line="2" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/readme.md">
+      <provider editor-type-id="MarkdownPreviewEditor">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.43589744" vertical-offset="697" max-vertical-offset="1717">
+          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
           <folding />
         </state>
       </provider>
