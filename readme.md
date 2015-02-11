@@ -57,7 +57,7 @@ npm install -g coolie
 
 
 # Version
-- 0.10.2
+- 0.10.3
     - 删除了`js host`配置
     - html 文件的压缩策略
 - 0.9.3
