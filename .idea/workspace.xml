@@ -31,8 +31,8 @@
       <file leaf-file-name="readme.md" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/readme.md">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.24444444" vertical-offset="1013" max-vertical-offset="1751">
-              <caret line="68" column="23" selection-start-line="68" selection-start-column="23" selection-end-line="68" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.44786325" vertical-offset="809" max-vertical-offset="1751">
+              <caret line="63" column="21" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -435,7 +435,7 @@
       <workItem from="1423554935739" duration="2363000" />
       <workItem from="1423564788217" duration="5448000" />
       <workItem from="1423633687396" duration="658000" />
-      <workItem from="1425275983727" duration="1821000" />
+      <workItem from="1425275983727" duration="1844000" />
     </task>
     <task id="LOCAL-00001" summary="version length to 16">
       <created>1421303986954</created>
@@ -683,11 +683,17 @@
       <option name="project" value="LOCAL" />
       <updated>1425277783725</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="html 文件的压缩策略">
+      <created>1425277940868</created>
+      <option name="number" value="00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1425277940868</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10290000" />
+    <option name="totallyTimeSpent" value="10313000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="735" extended-state="6" />
@@ -1154,8 +1160,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/readme.md">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24444444" vertical-offset="1013" max-vertical-offset="1751">
-          <caret line="68" column="23" selection-start-line="68" selection-start-column="23" selection-end-line="68" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.44786325" vertical-offset="809" max-vertical-offset="1751">
+          <caret line="63" column="21" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="21" />
           <folding />
         </state>
       </provider>

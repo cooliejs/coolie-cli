@@ -66,7 +66,7 @@ npm install -g coolie
 	- 修正生成 version 不正确的BUG
 	- 重构 HTML 压缩
 - 0.7.3
-	- 新增命令`coolie pull`
+	- 新增命令`coolie pull`拉取最新的`coolie.js`
 - 0.6.1
 	- 更为科学的构建过程
 	- 生成更为科学的`relationship-map.json`
