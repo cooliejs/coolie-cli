@@ -11,7 +11,15 @@ var dato = require('ydr-util').dato;
 var random = require('ydr-util').random;
 var REG_LINES = /[\n\r\t]/g;
 var REG_SPACES = /\s{2,}/g;
-//var REG_COMMENTS = /<!--[\s\S]*?-->/g;
+// 单行注释
+var REG_LINE_COMMENTS = /<!--.*?-->/g;
+// yui注释
+//<!--
+// - app1.html
+// - @author ydr.me
+// - @create 2014-09-25 19:20
+// -->
+var REG_YUI_COMMENTS = /<!--\n(\s-.*?)*-->/g;
 var REG_PRES = /<pre\b.*?>[\s\S]*?<\/pre>/ig;
 
 
@@ -34,6 +42,8 @@ module.exports = function (file, code, callback) {
 
 
     code = code
+        .replace(REG_LINE_COMMENTS, '')
+        .replace(REG_YUI_COMMENTS, '')
         .replace(REG_LINES, '')
         .replace(REG_SPACES, ' ');
 
@@ -42,8 +52,7 @@ module.exports = function (file, code, callback) {
         code = code.replace(key, val);
     });
 
-
-    //console.log(code);
+    console.log(code);
 
     if (callback) {
         callback(null, code);
@@ -59,10 +68,15 @@ module.exports = function (file, code, callback) {
  * @private
  */
 function _generateKey() {
-    return ':' + random.string(40, 'aA0') + ':';
+    return '`' + random.string(40, 'aA0') + '`';
 }
 
 
 /////////////////////////////////
-//var html = '<!--\n\n\ncomment\n\n\n-->\n\n\n      <pre>a\n\n\n</pre>\n\n\n<!--\n\n\ncomment\n\n\n-->\n\n\n      <pre>a\n\n\n</pre>';
+//var html = '<!--\n -会被删除\n-会被删除-->' +
+//    '\n<!--\n不会被删除\n换行了-->' +
+//    '<!--会被删除-->' +
+//    '<div data-a="<!--" \ndata-b="不要删除" data-c="-->"></div>' +
+//    '\n\n\n      <pre>a\n\n\n</pre>\n\n\n' +
+//    '\n\n\n      <pre>a\n\n\n</pre>';
 //module.exports('', html);

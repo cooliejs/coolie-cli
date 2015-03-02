@@ -25,7 +25,7 @@ module.exports = function (basedir) {
     var jsonString = '';
     var continueStep = function () {
         json.js = {};
-        log("1/9", "请输入 JS 入口模块的目录，支持通配符，多个目录使用空格分开，默认为空。", "success");
+        log("1/9", "请输入 JS 入口模块的目录，支持通配符，多个目录使用空格分开，默认为“./static/js/**/*.js”。", "success");
     };
 
     // 0
@@ -54,9 +54,9 @@ module.exports = function (basedir) {
 
     // js.main
     steps.push(function (data) {
-        json.js.main = _getVal(data, '', true);
+        json.js = _getVal(data, './static/js/**/*.js', true);
 
-        log("2/9", "请输入生成 CSS 文件的存放目录。", "success");
+        log("2/9", "请输入生成 CSS 文件的存放目录。默认为“./static/css/”", "success");
     });
 
     // css path
@@ -64,27 +64,27 @@ module.exports = function (basedir) {
         json.css = {};
         json.css.path = _getVal(data, './static/css/', false);
 
-        log("3/9", "请输入发布后 CSS 文件所在的域，通常发布线上的 CDN 环境，默认为空。", "success");
+        log("3/9", "请输入发布后 CSS 文件所在的域，如“http://s.ydr.me/a/b”。默认为空。", "success");
     });
 
     // css host
     steps.push(function (data) {
         json.css.host = _getVal(data, '', false);
 
-        log("4/9", "请输入 HTML 文件的目录，支持通配符，多个文件使用空格分开。", "success");
+        log("4/9", "请输入 HTML 文件的目录，支持通配符，多个文件使用空格分开。默认为“./views/**/*.html”。", "success");
 
     });
 
     // html
     steps.push(function (data) {
-        json.html = _getVal(data, '', true);
+        json.html = _getVal(data, './views/**/*.html', true);
 
-        log("5/9", "请输入 resource 文件的目录，支持通配符，多个文件使用空格分开。", "success");
+        log("5/9", "请输入 resource 文件的目录，支持通配符，多个文件使用空格分开，默认为“./static/img/**/*.*”。", "success");
     });
 
-    // html
+    // res
     steps.push(function (data) {
-        json.res = _getVal(data, '', true);
+        json.res = _getVal(data, './static/img/**/*.*', true);
 
         log("6/9", "请输入构建的目标目录，默认为“../dest/”。", "success");
     });

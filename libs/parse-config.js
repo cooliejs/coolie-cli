@@ -11,6 +11,9 @@ var path = require("path");
 var fs = require("fs-extra");
 var log = require("./log.js");
 var typeis = require("ydr-util").typeis;
+// //path/to/coolie.js
+// /path/to/coolie.js
+var REG_URL = /^\/\//;
 
 
 /**
