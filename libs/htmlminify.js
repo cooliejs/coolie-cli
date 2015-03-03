@@ -19,7 +19,7 @@ var REG_LINE_COMMENTS = /<!--.*?-->/g;
 // - @author ydr.me
 // - @create 2014-09-25 19:20
 // -->
-var REG_YUI_COMMENTS = /<!--\n(\s-.*?)*-->/g;
+var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
 var REG_PRES = /<pre\b.*?>[\s\S]*?<\/pre>/ig;
 
 
@@ -42,8 +42,8 @@ module.exports = function (file, code, callback) {
 
 
     code = code
-        .replace(REG_LINE_COMMENTS, '')
         .replace(REG_YUI_COMMENTS, '')
+        .replace(REG_LINE_COMMENTS, '')
         .replace(REG_LINES, '')
         .replace(REG_SPACES, ' ');
 
@@ -52,7 +52,7 @@ module.exports = function (file, code, callback) {
         code = code.replace(key, val);
     });
 
-    console.log(code);
+    //console.log(code);
 
     if (callback) {
         callback(null, code);
@@ -73,10 +73,11 @@ function _generateKey() {
 
 
 /////////////////////////////////
-//var html = '<!--\n -会被删除\n-会被删除-->' +
+//var html = '<!--\n -会被删除\n-会被删除\n-->' +
+//    '<!--\n - app1.html\n - @author abc\n -->' +
 //    '\n<!--\n不会被删除\n换行了-->' +
 //    '<!--会被删除-->' +
 //    '<div data-a="<!--" \ndata-b="不要删除" data-c="-->"></div>' +
-//    '\n\n\n      <pre>a\n\n\n</pre>\n\n\n' +
-//    '\n\n\n      <pre>a\n\n\n</pre>';
+//    '\n\n\n      <pre>\n\ttab</pre>\n\n\n' +
+//    '\n\n\n      <pre>\n\ttab</pre>';
 //module.exports('', html);
