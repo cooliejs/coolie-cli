@@ -60,7 +60,7 @@ module.exports = function (buildPath) {
 
             log('copy files', dato.fixPath(gbPath));
 
-            glob(gbPath, function (err, files) {
+            glob(gbPath, {dot: false, nodir: true}, function (err, files) {
                 if (err) {
                     log('glob', dato.fixPath(gbPath), 'error');
                     log('glob', err.message, 'error');
@@ -99,7 +99,7 @@ module.exports = function (buildPath) {
 
             log('build js', dato.fixPath(gbPath));
 
-            glob(gbPath, function (err, files) {
+            glob(gbPath, {dot: false, nodir: true}, function (err, files) {
                 if (err) {
                     log('glob', dato.fixPath(gbPath), 'error');
                     log('glob', err.message, 'error');
@@ -176,7 +176,7 @@ module.exports = function (buildPath) {
 
             log('build files', dato.fixPath(gbPath));
 
-            glob(gbPath, function (err, files) {
+            glob(gbPath, {dot: false, nodir: true}, function (err, files) {
                 if (err) {
                     log('glob', dato.fixPath(gbPath), 'error');
                     log('glob', err.message, 'error');
@@ -205,7 +205,7 @@ module.exports = function (buildPath) {
 
             log('html files', dato.fixPath(gbPath));
 
-            glob(gbPath, function (err, htmls) {
+            glob(gbPath, {dot: false, nodir: true}, function (err, htmls) {
                 if (err) {
                     log('glob', dato.fixPath(gbPath), 'error');
                     log('glob', err.message, 'error');
