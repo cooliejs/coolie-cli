@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.10.8",
+  "version": "0.10.9",
   "description": "A builder for front-end development.",
   "preferGlobal": true,
   "bin": {
@@ -28,7 +28,7 @@
     "url": "http://ydr.me"
   },
   "homepage": "https://github.com/cloudcome/nodejs-coolie",
-  "wiki": "https://github.com/cloudcome/coolie/wiki",
+  "wiki": "http://frontenddev.org/column/introduce-coolie/",
   "coolie": "https://raw.githubusercontent.com/cloudcome/coolie/master/coolie.min.js",
   "repository": {
     "type": "git",
