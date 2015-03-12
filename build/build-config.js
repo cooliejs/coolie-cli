@@ -107,7 +107,7 @@ function _getVal(data, dft, isArray) {
 function _config(json) {
     var code = JSON.stringify(json, null, 4);
 
-    return 'coolie.config(' + code + ');';
+    return 'coolie.config(' + code + ').use();';
 }
 
 
