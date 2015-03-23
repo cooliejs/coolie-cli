@@ -30,7 +30,7 @@ var map = {
     bgYellow: 'bgYellow',
     bgBlue: 'bgBlue',
     bgMagenta: 'bgMagenta',
-    task: 'bgCyan',
+    task: 'white',
     bgWhite: 'bgWhite'
 };
 
@@ -73,8 +73,11 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
     type = type || 'muted';
     message = message || 'empty message';
 
-    var color = map[type] || "white";
+    if (type === 'task') {
+        console.log();
+    }
 
+    var color = map[type] || "white";
 
     console.log(colors.yellow(event), colors.cyan('=>'), _splitColors(color, message));
 };

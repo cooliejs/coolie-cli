@@ -58,8 +58,6 @@ module.exports = function (buildPath) {
             // copy files
             var gbPath = path.join(buildPath, copyFile);
 
-            log('copy files', dato.fixPath(gbPath));
-
             glob(gbPath, {dot: false, nodir: true}, function (err, files) {
                 if (err) {
                     log('glob', dato.fixPath(gbPath), 'error');
@@ -79,11 +77,12 @@ module.exports = function (buildPath) {
                             process.exit();
                         }
 
-                        log('copy write', dato.fixPath(destFile), 'success');
+                        //log('copy write', dato.fixPath(destFile), 'success');
                         copyLength++;
                         nextFile();
                     });
                 }).follow(function () {
+                    log('copy files', dato.fixPath(gbPath), 'success');
                     nextCopy();
                 });
             });
@@ -97,7 +96,7 @@ module.exports = function (buildPath) {
             // 构建入口模块
             var gbPath = path.join(buildPath, main);
 
-            log('build js', dato.fixPath(gbPath));
+            //log('build js', dato.fixPath(gbPath));
 
             glob(gbPath, {dot: false, nodir: true}, function (err, files) {
                 if (err) {
@@ -131,7 +130,7 @@ module.exports = function (buildPath) {
                                 process.exit();
                             }
 
-                            log('write js', dato.fixPath(destFile), 'success');
+                            //log('write js', dato.fixPath(destFile), 'success');
                             mainLength++;
                             nextFile();
                         });
@@ -174,8 +173,6 @@ module.exports = function (buildPath) {
             // res files
             var gbPath = path.join(buildPath, resFile);
 
-            log('build files', dato.fixPath(gbPath));
-
             glob(gbPath, {dot: false, nodir: true}, function (err, files) {
                 if (err) {
                     log('glob', dato.fixPath(gbPath), 'error');
@@ -188,6 +185,7 @@ module.exports = function (buildPath) {
                     resLength++;
                     nextFile();
                 }).follow(function () {
+                    log('build files', dato.fixPath(gbPath), 'success');
                     nextRes();
                 });
             });
@@ -201,9 +199,6 @@ module.exports = function (buildPath) {
         .each(config.html, function (i, htmlFile, nextGlob) {
             // html files
             var gbPath = path.join(buildPath, htmlFile);
-
-
-            log('html files', dato.fixPath(gbPath));
 
             glob(gbPath, {dot: false, nodir: true}, function (err, htmls) {
                 if (err) {
@@ -227,6 +222,8 @@ module.exports = function (buildPath) {
                         nextHTML(err);
                     });
                 }).follow(function () {
+                    log('html files', dato.fixPath(gbPath), 'success');
+
                     nextGlob();
                 });
             });

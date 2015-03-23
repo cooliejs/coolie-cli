@@ -39,7 +39,7 @@ module.exports = function (file, cssPath, cssHost, jsBase, srcPath, destPath, re
 
         var ret = replaceHtml(file, data, srcPath, cssPath, cssHost, jsBase);
 
-        log('build html', ydrUtil.dato.fixPath(file), 'warning');
+        //log('build html', ydrUtil.dato.fixPath(file), 'warning');
 
         howdo
             // 生成 HTML 文件
@@ -54,7 +54,7 @@ module.exports = function (file, cssPath, cssHost, jsBase, srcPath, destPath, re
                         process.exit();
                     }
 
-                    log('write html', ydrUtil.dato.fixPath(destFile), 'success');
+                    //log('write html', ydrUtil.dato.fixPath(destFile), 'success');
                     doneHTML();
                 });
             })
@@ -90,7 +90,7 @@ module.exports = function (file, cssPath, cssHost, jsBase, srcPath, destPath, re
 
                             cssminify(file, data, resVersionMap, function (err, data) {
                                 bufferList.push(new Buffer('\n' + data, 'utf8'));
-                                log('require', ydrUtil.dato.fixPath(file));
+                                //log('require', ydrUtil.dato.fixPath(file));
                                 doneConcat();
                             });
                         });
@@ -108,7 +108,7 @@ module.exports = function (file, cssPath, cssHost, jsBase, srcPath, destPath, re
                                 process.exit();
                             }
 
-                            log('write css', ydrUtil.dato.fixPath(destFile), 'success');
+                            //log('write css', ydrUtil.dato.fixPath(destFile), 'success');
                             nextCSSFile();
                         });
                     });
