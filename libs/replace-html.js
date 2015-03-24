@@ -14,7 +14,7 @@ var htmlminify = require('./htmlminify.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"].*?>/g;
-var REG_SCRIPT = /<script\b([^>]*?)\bsrc\b\s*?=\s*?['"](.*?)['"](.*?)><\/script>/gi;
+var REG_SCRIPT = /<script\b([^>]*?)\bsrc\b\s*?=\s*?['"]([^>]*?)['"]([^>]*?)>[^>]*?<\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
 var REG_ABSOLUTE = /^\//;
 //var REG_HTTP = /^(https?:)?\/\//;
@@ -42,6 +42,9 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase) {
 
     // 只对 <script> 进行解析而不替换。
     data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
+        console.log($1);
+        console.log($2);
+        console.log($3);
         //var file;
         var main = _getMain($1, $3);
         //var fixSrc;
