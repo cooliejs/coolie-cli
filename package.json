@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.10.11",
+  "version": "0.10.12",
   "description": "A builder for front-end development.",
   "preferGlobal": true,
   "bin": {
@@ -20,7 +20,11 @@
     "package",
     "module",
     "coolie",
-    "builder"
+    "builder",
+    "webpack",
+    "nodejs",
+    "node",
+    "browerify"
   ],
   "author": {
     "name": "cloudcome",
