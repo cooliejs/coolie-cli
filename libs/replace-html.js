@@ -42,9 +42,6 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase) {
 
     // 只对 <script> 进行解析而不替换。
     data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
-        console.log($1);
-        console.log($2);
-        console.log($3);
         //var file;
         var main = _getMain($1, $3);
         //var fixSrc;
