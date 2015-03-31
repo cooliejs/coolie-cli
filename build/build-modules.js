@@ -32,6 +32,9 @@ module.exports = function (buildPath) {
      * @type {object}
      */
     var config = parseConfig(buildPath);
+
+    console.log(config);
+    return;
     var srcPath = buildPath;
     var destPath = path.join(buildPath, config.dest);
     var cssPath = path.join(buildPath, config.css.path);
@@ -196,7 +199,7 @@ module.exports = function (buildPath) {
             log('5/6', 'build html css', 'task');
             next();
         })
-        .each(config.html, function (i, htmlFile, nextGlob) {
+        .each(config.html.path, function (i, htmlFile, nextGlob) {
             // html files
             var gbPath = path.join(buildPath, htmlFile);
 
@@ -210,7 +213,7 @@ module.exports = function (buildPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, config.css.host, jsBase, srcPath, destPath, resVersionMap, function (err, _cssLength, depCSS, mainJS) {
+                    buildHTML(file, cssPath, config, jsBase, srcPath, destPath, resVersionMap, function (err, _cssLength, depCSS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = dato.toURLPath(htmlRelative);
 

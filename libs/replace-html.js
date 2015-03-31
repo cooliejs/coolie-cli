@@ -29,16 +29,17 @@ var concatMap = {};
  * @param data {String} HTML 文件内容
  * @param srcPath {String} 源路径
  * @param cssPath {String} 生成CSS文件路径
- * @param cssHost {String} CSS 根目录
+ * @param config {Object} 构建配置
  * @param jsBase {String} coolie 配置的 base 目录
  * @returns {{concat: Array, data: *}}
  */
-module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase) {
+module.exports = function (file, data, srcPath, cssPath, config, jsBase) {
     var matches = data.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
     var dirname = path.dirname(file);
     var mainJS = '';
+    var cssHost = config.css.host;
 
     // 只对 <script> 进行解析而不替换。
     data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
@@ -143,7 +144,7 @@ module.exports = function (file, data, srcPath, cssPath, cssHost, jsBase) {
 
     return {
         concat: concat,
-        data: htmlminify(file, data),
+        data: config.html.minify ? htmlminify(file, data): data,
         mainJS: mainJS
     };
 };
