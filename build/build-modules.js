@@ -32,9 +32,6 @@ module.exports = function (buildPath) {
      * @type {object}
      */
     var config = parseConfig(buildPath);
-
-    console.log(config);
-    return;
     var srcPath = buildPath;
     var destPath = path.join(buildPath, config.dest);
     var cssPath = path.join(buildPath, config.css.path);
