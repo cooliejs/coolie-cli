@@ -2,7 +2,7 @@
   "js": "./static/js/app/**/*.js",
   "html": {
     "path": "./html/**/*.html",
-    "minify": true
+    "minify": false
   },
   "css": {
     "path": "./static/css/",
