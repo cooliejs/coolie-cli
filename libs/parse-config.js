@@ -107,28 +107,42 @@ module.exports = function (relative) {
     };
 
 
-    // 检查 html 路径
+    // 检查 html
     check.html = function () {
-        if (config.html) {
-            var htmlType = typeis(config.html);
+        if (typeis(config.html) !== "object") {
+            log("parse config", "`html` property must be a object", "error");
+            process.exit();
+        }
 
-            if (htmlType !== "string" && htmlType !== "array") {
-                log("parse config", "`html` property must be a string path or an array object", "error");
+        // html.path
+        if (config.html.path) {
+            var htmlPathType = typeis(config.html.path);
+
+            if (htmlPathType !== "string" && htmlPathType !== "array") {
+                log("parse config", "`html.path` property must be a string path or an array object", "error");
                 process.exit();
             }
 
-            if (htmlType === "array") {
+            if (htmlPathType === "array") {
                 config.html.forEach(function (mn, index) {
                     if (typeis(mn) !== "string") {
-                        log("parse config", "`html` property[" + index + "] must be a string", "error");
+                        log("parse config", "`html.path` property[" + index + "] must be a string", "error");
                         process.exit();
                     }
                 });
             } else {
-                config.html = [config.html];
+                config.html.path = [config.html];
             }
         } else {
-            config.html = [];
+            config.html.path = [];
+        }
+
+        // html.minify
+        var htmlMinifyType = typeis(config.html.minify);
+
+        if (htmlMinifyType !== 'boolean') {
+            log("parse config", "`html.minify` property must be a boolean", "error");
+            process.exit();
         }
     };
 

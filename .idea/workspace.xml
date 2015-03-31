@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-json.js" afterPath="$PROJECT_DIR$/build/build-json.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/coolie.json" afterPath="$PROJECT_DIR$/example/dest/coolie.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/src/coolie.json" afterPath="$PROJECT_DIR$/example/src/coolie.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.3ef42d1353b256c8.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.3ef42d1353b256c8.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/html/index.html" afterPath="$PROJECT_DIR$/example/dest/html/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/html/user/index.html" afterPath="$PROJECT_DIR$/example/dest/html/user/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/parse-config.js" afterPath="$PROJECT_DIR$/libs/parse-config.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -28,7 +33,28 @@
     <favorites_list name="nodejs-coolie" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="parse-config.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/libs/parse-config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8245033" vertical-offset="1763" max-vertical-offset="4692">
+              <caret line="137" column="9" selection-start-line="137" selection-start-column="9" selection-end-line="137" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="coolie.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/example/src/coolie.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.6153846" vertical-offset="0" max-vertical-offset="357">
+              <caret line="4" column="11" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,8 +71,6 @@
         <option value="$PROJECT_DIR$/libs/wrap-define.js" />
         <option value="$PROJECT_DIR$/example/dest/html/user/index.html" />
         <option value="$PROJECT_DIR$/example/dest/coolie.json" />
-        <option value="$PROJECT_DIR$/libs/parse-config.js" />
-        <option value="$PROJECT_DIR$/example/src/coolie.json" />
         <option value="$PROJECT_DIR$/libs/htmlminify.js" />
         <option value="$PROJECT_DIR$/example/src/html/index.html" />
         <option value="$PROJECT_DIR$/example/dest/html/index.html" />
@@ -60,6 +84,8 @@
         <option value="$PROJECT_DIR$/libs/replace-html.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/build/build-json.js" />
+        <option value="$PROJECT_DIR$/example/src/coolie.json" />
+        <option value="$PROJECT_DIR$/libs/parse-config.js" />
       </list>
     </option>
   </component>
@@ -127,6 +153,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="libs" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nodejs-coolie" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nodejs-coolie" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="example" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nodejs-coolie" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nodejs-coolie" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="example" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -264,13 +322,7 @@
       <workItem from="1427014757522" duration="4700000" />
       <workItem from="1427191352293" duration="2221000" />
       <workItem from="1427212110500" duration="200000" />
-      <workItem from="1427811311655" duration="584000" />
-    </task>
-    <task id="LOCAL-00009" summary="build res">
-      <created>1421313801003</created>
-      <option name="number" value="00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1421313801003</updated>
+      <workItem from="1427811311655" duration="906000" />
     </task>
     <task id="LOCAL-00010" summary="build res">
       <created>1421313878829</created>
@@ -560,15 +612,21 @@
       <option name="project" value="LOCAL" />
       <updated>1427811430131</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="全新配置">
+      <created>1427811898315</created>
+      <option name="number" value="00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1427811898315</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26800000" />
+    <option name="totallyTimeSpent" value="27122000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="737" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -587,7 +645,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24232633" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24232633" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -861,20 +919,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/coolie.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34634975" vertical-offset="0" max-vertical-offset="589">
-          <caret line="12" column="1" selection-start-line="12" selection-start-column="1" selection-end-line="12" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/parse-config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35934958" vertical-offset="782" max-vertical-offset="4454">
-          <caret line="63" column="15" selection-start-line="63" selection-start-column="15" selection-end-line="63" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/dest/html/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.46023688" vertical-offset="0" max-vertical-offset="591">
@@ -955,13 +999,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/build-config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3295639" vertical-offset="877" max-vertical-offset="1955">
-          <caret line="104" column="11" selection-start-line="104" selection-start-column="11" selection-end-line="104" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/check-update.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.46688208" vertical-offset="68" max-vertical-offset="714">
@@ -1034,6 +1071,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.42218542" vertical-offset="1241" max-vertical-offset="2890">
           <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/build-config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.5737438" vertical-offset="112" max-vertical-offset="1955">
+          <caret line="104" column="11" selection-start-line="104" selection-start-column="11" selection-end-line="104" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/src/coolie.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6153846" vertical-offset="0" max-vertical-offset="357">
+          <caret line="4" column="11" selection-start-line="4" selection-start-column="5" selection-end-line="4" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/parse-config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8245033" vertical-offset="1763" max-vertical-offset="4692">
+          <caret line="137" column="9" selection-start-line="137" selection-start-column="9" selection-end-line="137" selection-end-column="9" />
           <folding />
         </state>
       </provider>
