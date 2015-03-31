@@ -79,12 +79,12 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.html = _getVal(data, './views/**/*.html', true);
 
-        log("5/9", "请输入 resource 文件的目录，支持通配符，多个文件使用空格分开，默认为“./static/img/**/*.*”。", "success");
+        log("5/9", "请输入图片文件的目录，支持通配符，多个文件使用空格分开，默认为“./static/img/**/*.*”。", "success");
     });
 
     // res
     steps.push(function (data) {
-        json.res = _getVal(data, './static/img/**/*.*', true);
+        json.img = _getVal(data, './static/img/**/*.*', true);
 
         log("6/9", "请输入构建的目标目录，默认为“../dest/”。", "success");
     });
