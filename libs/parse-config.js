@@ -124,14 +124,14 @@ module.exports = function (relative) {
             }
 
             if (htmlPathType === "array") {
-                config.html.forEach(function (mn, index) {
+                config.html.path.forEach(function (mn, index) {
                     if (typeis(mn) !== "string") {
                         log("parse config", "`html.path` property[" + index + "] must be a string", "error");
                         process.exit();
                     }
                 });
             } else {
-                config.html.path = [config.html];
+                config.html.path = [config.html.path];
             }
         } else {
             config.html.path = [];
