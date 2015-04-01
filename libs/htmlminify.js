@@ -21,6 +21,7 @@ var REG_LINE_COMMENTS = /<!--.*?-->/g;
 // -->
 var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
 var REG_PRES = /<pre\b.*?>[\s\S]*?<\/pre>/ig;
+var REG_SCRIPTS = /<script\b.*?>[\s\S]*?<\/script>/ig;
 
 
 /**
@@ -33,6 +34,14 @@ module.exports = function (file, code, callback) {
     // 保存 <pre>
     var preMap = {};
     code = code.replace(REG_PRES, function ($0) {
+        var key = _generateKey();
+
+        preMap[key] = $0;
+
+        return key;
+    });
+
+    code = code.replace(REG_SCRIPTS, function ($0) {
         var key = _generateKey();
 
         preMap[key] = $0;
