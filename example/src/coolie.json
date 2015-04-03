@@ -5,8 +5,8 @@
     "minify": false
   },
   "css": {
-    "path": "./static/css/",
-    "host": "http://s.ydr.me/testdomain/"
+    "path": "./static/css/app/",
+    "host": ""
   },
   "res": "./static/img/**/*.*",
   "coolie.js": "./static/js/coolie.js",

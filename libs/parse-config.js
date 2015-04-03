@@ -88,12 +88,12 @@ module.exports = function (relative) {
             process.exit();
         }
 
-        var cssPath = path.join(relative, config.css.path);
-
-        if (!typeis.directory(cssPath)) {
-            log("parse config", "`" + cssPath + "` is NOT a directory", "error");
-            process.exit();
-        }
+        //var cssPath = path.join(relative, config.css.path);
+        //
+        //if (!typeis.directory(cssPath)) {
+        //    log("parse config", "`" + cssPath + "` is NOT a directory", "error");
+        //    process.exit();
+        //}
 
         // css.host
         if (typeis(config.css.host) !== 'string') {
