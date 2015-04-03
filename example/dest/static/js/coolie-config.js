@@ -1,1 +1,3 @@
-coolie.config({base:"./app/",version:{"index.js":"48561ed4e00b7e93","user/index.js":"020eb29b524d7ba6"}}).use();
+coolie.config({
+    base: './app/'
+}).use();

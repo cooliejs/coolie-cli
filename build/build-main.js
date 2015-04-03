@@ -30,6 +30,9 @@ module.exports = function (mainFile, callback) {
     var deepDeps = [];
 
     var _deepBuld = function (name, file) {
+        console.log(name);
+        console.log(file);
+
         buildModule(name, file, increase, depIdsMap, function (err, meta) {
             if (err) {
                 log("build", ydrUtil.dato.fixPath(file), "error");
