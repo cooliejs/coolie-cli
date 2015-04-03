@@ -77,6 +77,9 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
                         return nextCSSFile();
                     }
 
+                    var relative = path.relative(srcPath, cssPath);
+                    var destFile = path.join(destPath, relative, matched.name);
+
                     // 合并多个文件
                     howdo.each(matched.files, function (index, file, doneConcat) {
                         cssLength++;
@@ -88,7 +91,7 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
                                 process.exit();
                             }
 
-                            cssminify(file, data, resVersionMap, function (err, data) {
+                            cssminify(file, data, resVersionMap, destFile, function (err, data) {
                                 bufferList.push(new Buffer('\n' + data, 'utf8'));
                                 //log('require', ydrUtil.dato.fixPath(file));
                                 doneConcat();
@@ -96,8 +99,8 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
                         });
                     }).follow(function () {
                         var data = Buffer.concat(bufferList).toString();
-                        var relative = path.relative(srcPath, cssPath);
-                        var destFile = path.join(destPath, relative, matched.name);
+
+
 
                         data = '/*coolie ' + Date.now() + '*/' + data;
 

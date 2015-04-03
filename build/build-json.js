@@ -26,7 +26,7 @@ module.exports = function (basedir) {
     var jsonString = '';
     var continueStep = function () {
         json.js = {};
-        log("1/10", "请输入 JS 入口模块的目录，支持通配符，多个目录使用空格分开，默认为“./static/js/**/*.js”。", "success");
+        log("1/10", "请输入 JS 入口模块的目录，支持通配符，多个目录使用空格分开，默认为“./static/js/app/**/*.js”。", "success");
     };
 
     // 0
@@ -55,15 +55,15 @@ module.exports = function (basedir) {
 
     // js.main
     steps.push(function (data) {
-        json.js = _getVal(data, './static/js/**/*.js', true);
+        json.js = _getVal(data, './static/js/app/**/*.js', true);
 
-        log("2/10", "请输入生成 CSS 文件的存放目录。默认为“./static/css/”", "success");
+        log("2/10", "请输入生成 CSS 文件的存放目录。默认为“./static/css/app/”", "success");
     });
 
     // css path
     steps.push(function (data) {
         json.css = {};
-        json.css.path = _getVal(data, './static/css/', false);
+        json.css.path = _getVal(data, './static/css/app/', false);
 
         log("3/10", "请输入发布后 CSS 文件所在的域，如“http://s.ydr.me/a/b”。默认为空。", "success");
     });
@@ -93,7 +93,7 @@ module.exports = function (basedir) {
 
     // res
     steps.push(function (data) {
-        json.img = _getVal(data, './static/img/**/*.*', true);
+        json.res = _getVal(data, './static/img/**/*.*', true);
 
         log("7/10", "请输入构建的目标目录，默认为“../dest/”。", "success");
     });

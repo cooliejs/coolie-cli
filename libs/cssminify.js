@@ -24,12 +24,13 @@ var REG_HTTP = /^https?:/i;
  * @param file
  * @param code
  * @param resVersionMap
+ * @param destFile
  * @param [callback]
  */
-module.exports = function (file, code, resVersionMap, callback) {
+module.exports = function (file, code, resVersionMap, destFile, callback) {
     try {
         code = new minifyCSS(options).minify(code);
-        code = _cssUrlVersion();
+        code = _cssUrlVersion(file, code, resVersionMap, destFile);
 
         if (callback) {
             callback(null, code);
@@ -43,8 +44,11 @@ module.exports = function (file, code, resVersionMap, callback) {
     }
 
 
+
     /**
-     * 替换版本
+     * CSS 引用资源路径替换
+     * @returns {string}
+     * @private
      */
     function _cssUrlVersion() {
         var fileDir = path.dirname(file);
@@ -73,5 +77,6 @@ module.exports = function (file, code, resVersionMap, callback) {
         });
     }
 };
+
 
 
