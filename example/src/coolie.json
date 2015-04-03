@@ -1,7 +1,7 @@
 {
   "js": "./static/js/app/**/*.js",
   "html": {
-    "path": "./html/**/index.html",
+    "path": "./html/**/*.html",
     "minify": false
   },
   "css": {

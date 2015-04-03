@@ -24,10 +24,12 @@ var REG_HTTP = /^https?:/i;
  * @param file
  * @param code
  * @param resVersionMap
+ * @param srcPath
+ * @param destPath
  * @param destFile
  * @param [callback]
  */
-module.exports = function (file, code, resVersionMap, destFile, callback) {
+module.exports = function (file, code, resVersionMap, srcPath, destPath, destFile, callback) {
     try {
         code = new minifyCSS(options).minify(code);
         code = _cssUrlVersion(file, code, resVersionMap, destFile);
@@ -72,8 +74,20 @@ module.exports = function (file, code, resVersionMap, destFile, callback) {
 
             var absFile = path.join(fileDir, $1);
             var version = resVersionMap[absFile] || '';
+            var relative = path.relative(srcPath, absFile);
+            var vitFile = path.join(destPath, relative);
+            var url = path.relative(destFile, vitFile);
 
-            return 'url(' + $1 + (version ? '?v=' + version : '') + ')' + $2;
+            //console.log(file);
+            //console.log(absFile);
+            //console.log(relative);
+            //console.log(destPath);
+            //console.log(vitFile);
+            //console.log(url);
+            //console.log('');
+            //console.log('');
+
+            return 'url(' + url + (version ? '?v=' + version : '') + ')' + $2;
         });
     }
 };

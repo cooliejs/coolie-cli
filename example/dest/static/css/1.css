@@ -4,7 +4,7 @@ body{
 
 
 .body{
-    background: #ccc url(../img/100x100.png);
+    background: #ccc url(/static/img/100x100.png);
 }
 
 .f-loading {
