@@ -2,9 +2,10 @@
     "html/index.html": {
         "css": [
             {
-                "static/css/a319023f0b777f1c.css": [
+                "static/css/d1a1cf84790d6bc3.css": [
                     "static/css/1.css",
-                    "static/css/2.css"
+                    "static/css/2.css",
+                    "static/css/path1/path2/3.css"
                 ]
             }
         ],
