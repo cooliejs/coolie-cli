@@ -10,7 +10,8 @@
 var path = require('path');
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
-var ydrUtil = require('ydr-util');
+var dato = require('ydr-util').dato;
+var crypto = require('ydr-util').crypto;
 var Increase = require('../libs/Increase.js');
 var buildModule = require('./build-module.js');
 
@@ -30,12 +31,9 @@ module.exports = function (mainFile, callback) {
     var deepDeps = [];
 
     var _deepBuld = function (name, file) {
-        console.log(name);
-        console.log(file);
-
         buildModule(name, file, increase, depIdsMap, function (err, meta) {
             if (err) {
-                log("build", ydrUtil.dato.fixPath(file), "error");
+                log("build", dato.fixPath(file), "error");
                 log('build', err.message, 'error');
                 process.exit();
             }
@@ -46,7 +44,7 @@ module.exports = function (mainFile, callback) {
             var output;
 
             // 采用内容 MD5
-            md5List += ydrUtil.crypto.etag(code);
+            md5List += crypto.etag(code);
             depsCache[mainFile] = true;
             bufferList.push(new Buffer("\n" + code, "utf8"));
             depsRelationship[file] = {};
@@ -60,13 +58,13 @@ module.exports = function (mainFile, callback) {
                     }
 
                     if (depsRelationship[depId] && depsRelationship[depId][file]) {
-                        log('depend cycle', ydrUtil.dato.fixPath(file) + '\n' + ydrUtil.dato.fixPath(depId), 'error');
+                        log('depend cycle', dato.fixPath(file) + '\n' + dato.fixPath(depId), 'error');
                         process.exit();
                     }
 
                     if (!depsCache[depId]) {
                         depsCache[depId] = true;
-                        //log("require", ydrUtil.dato.fixPath(depId));
+                        //log("require", dato.fixPath(depId));
                         _deepBuld(depNameList[index], depId);
                         depsLength++;
                     }
@@ -83,6 +81,6 @@ module.exports = function (mainFile, callback) {
 
     // 第一个 define 模块为入口模块，不必指定其 name
     depIdsMap[mainFile] = '0';
-    log("build main", ydrUtil.dato.fixPath(mainFile), "success");
+    log("build main", dato.fixPath(mainFile), "success");
     _deepBuld(mainName, mainFile);
 };
