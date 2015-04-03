@@ -76,14 +76,10 @@ module.exports = function (file, code, resVersionMap, srcPath, destPath, destFil
             var version = resVersionMap[absFile] || '';
             var relative = path.relative(srcPath, absFile);
             var vitFile = path.join(destPath, relative);
-            var url = path.relative(destFile, vitFile);
+            var url = path.relative(path.dirname(destFile), vitFile);
 
-            //console.log(file);
-            //console.log(absFile);
-            //console.log(relative);
-            //console.log(destPath);
+            //console.log(destFile);
             //console.log(vitFile);
-            //console.log(url);
             //console.log('');
             //console.log('');
 
