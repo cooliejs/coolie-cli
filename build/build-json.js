@@ -34,7 +34,7 @@ module.exports = function (basedir) {
     steps.push(function () {
         log("coolie", "coolie 苦力 builder", "help");
         log("tips", "以下操作留空回车表示同意默认配置。", "warning");
-        log("write file", dato.fixPath(writeFile), "error");
+        log("file path", dato.fixPath(writeFile), "task");
         log("warning", "如果上述目录不正确，请按`ctrl+C`退出后重新指定。", "warning");
 
         if (isExist) {

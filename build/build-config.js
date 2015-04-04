@@ -24,8 +24,8 @@ module.exports = function (basedir) {
     var isExist = ydrUtil.typeis.file(writeFile);
     var continueStep = function () {
         log("1/2", "请输入`base`值，默认为“./”：" +
-        "\n`base`路径是相对于页面`coolie.js`所在的目录；" +
-        "\n`base`即为入口模块的相对路径。", "success");
+        "\n`base`路径是相对于 coolie 模块加载器所在的目录；" +
+        "\n`base`即为入口模块的基准路径。", "success");
     };
     var json = {};
     var jsonString = '';
@@ -34,7 +34,7 @@ module.exports = function (basedir) {
     steps.push(function () {
         log("coolie", "coolie 苦力 builder", "help");
         log("tips", "以下操作留空回车表示同意默认配置。", "warning");
-        log("write file", ydrUtil.dato.fixPath(writeFile), "error");
+        log("file path", ydrUtil.dato.fixPath(writeFile), "task");
         log("warning", "如果上述目录不正确，请按`ctrl+C`退出后重新指定。", "warning");
 
         if (isExist) {
