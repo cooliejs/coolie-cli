@@ -125,7 +125,7 @@ module.exports = function (basedir) {
     // copy
     steps.push(function (data) {
         json.copy = _getVal(data, './**/*.*', true);
-        jsonString = JSON.stringify(json, null, 4);
+        jsonString = JSON.stringify(json, null, 2);
 
         log("confirm", "文件内容为：", "success");
         log('coolie.json', jsonString, 'success');
