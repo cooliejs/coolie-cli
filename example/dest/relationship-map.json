@@ -1,0 +1,39 @@
+{
+    "html/index.html": {
+        "css": [
+            {
+                "static/css/2ad76922b15e8192.css": [
+                    "static/css/path1/path2/3.css",
+                    "static/css/bootstrap.css"
+                ]
+            }
+        ],
+        "main": "static/js/app/index.js",
+        "deps": [
+            "static/js/libs/lib.js",
+            "static/js/libs/all.js",
+            "static/js/libs/path1/path2/abc.js",
+            "static/js/libs/path1/path2/def.js",
+            "static/js/libs/path1/path2/1.js",
+            "static/js/libs/path1/path2/2.js",
+            "static/js/libs/path1/path2/3.js",
+            "static/js/libs/some.txt",
+            "static/js/libs/some.css",
+            "static/js/libs/some.html"
+        ]
+    },
+    "html/user/index.html": {
+        "css": [
+            {
+                "static/css/7ce373f0d4131a78.css": [
+                    "static/css/1.css",
+                    "static/css/2.css"
+                ]
+            }
+        ],
+        "main": "static/js/app/user/index.js",
+        "deps": [
+            "static/js/libs/all.js"
+        ]
+    }
+}
