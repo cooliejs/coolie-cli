@@ -20,7 +20,7 @@ var buildMain = require('./build-main.js');
 var buildHTML = require('./build-html.js');
 var REG_END = /(\.[^.]*)$/;
 
-module.exports = function (buildPath) {
+module.exports = function (srcPath) {
     /**
      * @prototype js
      * @prototype css
@@ -31,12 +31,15 @@ module.exports = function (buildPath) {
      * @prototype coolie-config.js
      * @type {object}
      */
-    var config = parseConfig(buildPath);
-    var srcPath = buildPath;
-    var destPath = path.join(buildPath, config.dest);
-    var cssPath = path.join(buildPath, config.css.path);
-    var coolieJSPath = path.join(buildPath, config['coolie.js']);
-    var coolieConfigJSPath = path.join(buildPath, config['coolie-config.js']);
+    var config = parseConfig(srcPath);
+
+    console.log(config);
+
+    return;
+    var destPath = path.join(srcPath, config.dest);
+    var cssPath = path.join(srcPath, config.css.path);
+    var coolieJSPath = path.join(srcPath, config['coolie.js']);
+    var coolieConfigJSPath = path.join(srcPath, config['coolie-config.js']);
     var time = Date.now();
     var copyLength = 0;
     var mainLength = 0;
@@ -56,7 +59,7 @@ module.exports = function (buildPath) {
         })
         .each(config.copy, function (i, copyFile, nextCopy) {
             // copy files
-            var gbPath = path.join(buildPath, copyFile);
+            var gbPath = path.join(srcPath, copyFile);
 
             glob(gbPath, {dot: false, nodir: true}, function (err, files) {
                 if (err) {
@@ -94,7 +97,7 @@ module.exports = function (buildPath) {
         })
         .each(config.js, function (i, main, nextMain) {
             // 构建入口模块
-            var gbPath = path.join(buildPath, main);
+            var gbPath = path.join(srcPath, main);
 
             //log('build js', dato.fixPath(gbPath));
 
@@ -169,9 +172,9 @@ module.exports = function (buildPath) {
             log('4/6', 'build resource version', 'task');
             next();
         })
-        .each(config.res, function (i, resFile, nextRes) {
+        .each(config.resource, function (i, resFile, nextRes) {
             // res files
-            var gbPath = path.join(buildPath, resFile);
+            var gbPath = path.join(srcPath, resFile);
 
             glob(gbPath, {dot: false, nodir: true}, function (err, files) {
                 if (err) {
@@ -185,7 +188,7 @@ module.exports = function (buildPath) {
                     resLength++;
                     nextFile();
                 }).follow(function () {
-                    log('build files', dato.fixPath(gbPath), 'success');
+                    log('build resource version', dato.fixPath(gbPath), 'success');
                     nextRes();
                 });
             });
@@ -198,7 +201,7 @@ module.exports = function (buildPath) {
         })
         .each(config.html.path, function (i, htmlFile, nextGlob) {
             // html files
-            var gbPath = path.join(buildPath, htmlFile);
+            var gbPath = path.join(srcPath, htmlFile);
 
             glob(gbPath, {dot: false, nodir: true}, function (err, htmls) {
                 if (err) {

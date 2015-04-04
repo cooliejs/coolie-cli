@@ -88,12 +88,13 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.html.minify = !!dato.parseInt(_getVal(data, 1, false), 1);
 
-        log("6/10", "请输入资源文件目录，支持通配符，多个文件使用空格分开，默认为“./static/img/**/*.*”。", "success");
+        log("6/10", "请输入资源文件目录，通常为样式引用的图片，会在构建之后版本化。" +
+        "\n支持通配符，多个文件使用空格分开，默认为“./static/img/**/*.*”。", "success");
     });
 
-    // res
+    // resource
     steps.push(function (data) {
-        json.res = _getVal(data, './static/img/**/*.*', true);
+        json.resource = _getVal(data, './static/img/**/*.*', true);
 
         log("7/10", "请输入构建的目标目录，默认为“../dest/”。", "success");
     });
