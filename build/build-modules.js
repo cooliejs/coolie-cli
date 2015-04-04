@@ -189,7 +189,7 @@ module.exports = function (srcPath) {
                 }
 
                 howdo.each(files, function (j, file, nextFile) {
-                    resVersionMap[file] = crypto.etag(file).slice(0, 16);
+                    resVersionMap[file] = crypto.etag(file);
                     resLength++;
                     nextFile();
                 }).follow(function () {

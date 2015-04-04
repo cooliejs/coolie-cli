@@ -7,6 +7,7 @@
 
 "use strict";
 
+var fs = require('fs-extra');
 var minifyCSS = require("clean-css");
 var log = require('./log.js');
 var dato = require('ydr-util').dato;
@@ -17,7 +18,9 @@ var options = {
     keepBreaks: false
 };
 var REG_URL = /url\(['"]?(.*?)['"]?\)([;\s\b])/ig;
-var REG_HTTP = /^https?:/i;
+var REG_REMOTE = /^(https?:)?\/\//i;
+var REG_SUFFIX = /(\?.*|#.*)$/;
+var REG_VERSION = /\.([^.]*)$/;
 var buildMap = {};
 
 
@@ -67,24 +70,45 @@ module.exports = function (file, code, resVersionMap, srcPath, destPath, destFil
 
         return code.replace(REG_URL, function ($0, $1, $2) {
             // 以下情况忽略添加版本号：
-            // /path/to/abc.png
             // //path/to/abc.png
             // http://path/to/abc.png
             // https://path/to/abc.png
-            if ($1.indexOf('/') === 0 || REG_HTTP.test($1)) {
+            if (REG_REMOTE.test($1)) {
                 return 'url(' + $1 + ')' + $2;
             }
 
             var absFile = path.join(fileDir, $1);
+            var basename = path.basename(absFile);
+            var srcName = basename.replace(REG_SUFFIX, '');
+            var suffix = (basename.match(REG_SUFFIX) || [''])[0];
+
+            absFile = absFile.replace(REG_SUFFIX, '');
+
             var url = buildMap[absFile];
+            var version = resVersionMap[absFile] || '';
 
             // 未进行版本构建
             if (!url) {
-                var version = resVersionMap[absFile] || '';
-                var relative = path.relative(srcPath, absFile);
-                var vitFile = path.join(destPath, relative);
+                //var relative = path.relative(srcPath, absFile);
+                var extname = path.extname(srcName);
+                //var resName = srcName.replace(REG_VERSION, '.' + version + '.$1');
+                var resName = version + extname;
+                //var vitFile = path.join(destPath, relative);
+                var resFile = path.join(destPath, config.resource.dest, resName);
 
-                buildMap[absFile] = url = path.relative(path.dirname(destFile), vitFile);
+                try {
+                    fs.copySync(absFile, resFile);
+                } catch (err) {
+                    log('copy from', dato.fixPath(absFile), 'error');
+                    log('copy to', dato.fixPath(resFile), 'error');
+                    log('copy file', err.message, 'error');
+                }
+
+                console.log(extname);
+                //console.log(destName);
+                //console.log(suffix||'空');
+                //console.log('=============================');
+                buildMap[absFile] = url = path.relative(path.dirname(destFile), resFile);
             }
 
             //console.log(destFile);
@@ -92,7 +116,7 @@ module.exports = function (file, code, resVersionMap, srcPath, destPath, destFil
             //console.log('');
             //console.log('');
 
-            return 'url(' + url + (version ? '?v=' + version : '') + ')' + $2;
+            return 'url(' + url + suffix + ')' + $2;
         });
     }
 };
