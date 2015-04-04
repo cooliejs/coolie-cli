@@ -268,6 +268,7 @@ module.exports = function (relative) {
             config.copy = [];
         }
 
+        config.copy.push(config.js['coolie.js']);
     };
 
 

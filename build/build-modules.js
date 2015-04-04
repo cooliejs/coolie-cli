@@ -23,23 +23,27 @@ var REG_END = /(\.[^.]*)$/;
 module.exports = function (srcPath) {
     /**
      * @prototype js
+     * @prototype js.src
+     * @prototype js["coolie.js"]
+     * @prototype js["coolie-config.js"]
      * @prototype css
+     * @prototype css.src
+     * @prototype css.host
      * @prototype html
+     * @prototype html.src
+     * @prototype html.minify
+     * @prototype resource
+     * @prototype resource.src
+     * @prototype resource.dest
      * @prototype dest
      * @prototype copy
-     * @prototype coolie.js
-     * @prototype coolie-config.js
      * @type {object}
      */
     var config = parseConfig(srcPath);
-
-    console.log(config);
-
-    return;
     var destPath = path.join(srcPath, config.dest);
-    var cssPath = path.join(srcPath, config.css.path);
-    var coolieJSPath = path.join(srcPath, config['coolie.js']);
-    var coolieConfigJSPath = path.join(srcPath, config['coolie-config.js']);
+    var cssPath = path.join(srcPath, config.css.dest);
+    var coolieJSPath = path.join(srcPath, config.js['coolie.js']);
+    var coolieConfigJSPath = path.join(srcPath, config.js['coolie-config.js']);
     var time = Date.now();
     var copyLength = 0;
     var mainLength = 0;
@@ -95,7 +99,7 @@ module.exports = function (srcPath) {
             log('2/6', 'build main', 'task');
             next();
         })
-        .each(config.js, function (i, main, nextMain) {
+        .each(config.js.src, function (i, main, nextMain) {
             // 构建入口模块
             var gbPath = path.join(srcPath, main);
 
@@ -172,7 +176,7 @@ module.exports = function (srcPath) {
             log('4/6', 'build resource version', 'task');
             next();
         })
-        .each(config.resource, function (i, resFile, nextRes) {
+        .each(config.resource.src, function (i, resFile, nextRes) {
             // res files
             var gbPath = path.join(srcPath, resFile);
 
@@ -199,7 +203,7 @@ module.exports = function (srcPath) {
             log('5/6', 'build html css', 'task');
             next();
         })
-        .each(config.html.path, function (i, htmlFile, nextGlob) {
+        .each(config.html.src, function (i, htmlFile, nextGlob) {
             // html files
             var gbPath = path.join(srcPath, htmlFile);
 
