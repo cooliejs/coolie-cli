@@ -39,8 +39,6 @@ module.exports = function (file, code, resVersionMap, srcPath, destPath, destFil
         hasResVersionMap = false;
     }
 
-
-
     try {
         code = new minifyCSS(options).minify(code);
         code = hasResVersionMap ? _cssUrlVersion() : code;
