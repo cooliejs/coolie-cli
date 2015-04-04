@@ -11,16 +11,16 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    //require('../libs/lib.js');
-    //require('../libs/lib.js');
-    //require('../libs/path1/path2/abc.js');
+    require('../libs/lib.js');
+    require('../libs/lib.js');
+    require('../libs/path1/path2/abc.js');
 
-    //require('../libs/path1/path2/1.js');
-    //require('../libs/path1/path2/2.js');
-    //require('../libs/path1/path2/3.js');
-    //require('../libs/path1/path2/3.js');
-    //require('../libs/path1/path2/3.js');
-    //require('../libs/path1/path2/3.js');
+    require('../libs/path1/path2/1.js');
+    require('../libs/path1/path2/2.js');
+    require('../libs/path1/path2/3.js');
+    require('../libs/path1/path2/3.js');
+    require('../libs/path1/path2/3.js');
+    require('../libs/path1/path2/3.js');
 
     require('text!../libs/some.txt');
     require('css!../libs/some.css');

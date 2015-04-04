@@ -10,8 +10,7 @@
 var path = require('path');
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
-var dato = require('ydr-util').dato;
-var crypto = require('ydr-util').crypto;
+var ydrUtil = require('ydr-util');
 var Increase = require('../libs/Increase.js');
 var buildModule = require('./build-module.js');
 
@@ -29,13 +28,11 @@ module.exports = function (mainFile, callback) {
     var depsRelationship = {};
     var md5List = '';
     var deepDeps = [];
-    var times = 0;
 
     var _deepBuld = function (name, file) {
-        times++;
         buildModule(name, file, increase, depIdsMap, function (err, meta) {
             if (err) {
-                log("build", dato.fixPath(file), "error");
+                log("build", ydrUtil.dato.fixPath(file), "error");
                 log('build', err.message, 'error');
                 process.exit();
             }
@@ -46,10 +43,10 @@ module.exports = function (mainFile, callback) {
             var output;
 
             // 采用内容 MD5
-            md5List += crypto.etag(code);
+            md5List += ydrUtil.crypto.etag(code);
             depsCache[mainFile] = true;
-            depsRelationship[file] = {};
             bufferList.push(new Buffer("\n" + code, "utf8"));
+            depsRelationship[file] = {};
 
             if (depIdList.length) {
                 depIdList.forEach(function (depId, index) {
@@ -60,23 +57,18 @@ module.exports = function (mainFile, callback) {
                     }
 
                     if (depsRelationship[depId] && depsRelationship[depId][file]) {
-                        log('depend cycle', dato.fixPath(file) + '\n' + dato.fixPath(depId), 'error');
+                        log('depend cycle', ydrUtil.dato.fixPath(file) + '\n' + ydrUtil.dato.fixPath(depId), 'error');
                         process.exit();
                     }
 
                     if (!depsCache[depId]) {
                         depsCache[depId] = true;
-                        //log("require", dato.fixPath(depId));
+                        //log("require", ydrUtil.dato.fixPath(depId));
                         _deepBuld(depNameList[index], depId);
+                        depsLength++;
                     }
                 });
             }
-
-
-            depsLength++;
-            //console.log(depsLength);
-            //console.log(bufferList.length);
-            //console.log(times);
 
             if (depsLength === bufferList.length) {
                 output = '/*coolie ' + Date.now() + '*/';
@@ -88,6 +80,6 @@ module.exports = function (mainFile, callback) {
 
     // 第一个 define 模块为入口模块，不必指定其 name
     depIdsMap[mainFile] = '0';
-    log("√", dato.fixPath(mainFile), "success");
+    log("build main", ydrUtil.dato.fixPath(mainFile), "success");
     _deepBuld(mainName, mainFile);
 };
