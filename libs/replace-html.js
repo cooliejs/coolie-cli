@@ -7,7 +7,7 @@
 'use strict';
 
 var path = require('path');
-var ydrUtil = require('ydr-util');
+var crypto = require('ydr-util').crypto;
 var dato = require('ydr-util').dato;
 var log = require('./log.js');
 var htmlminify = require('./htmlminify.js');
@@ -95,7 +95,7 @@ module.exports = function (file, data, srcPath, cssPath, config, jsBase) {
                 }
 
                 files.push(file);
-                md5List += ydrUtil.crypto.etag(file);
+                md5List += crypto.etag(file);
             }
         }
 
@@ -122,7 +122,7 @@ module.exports = function (file, data, srcPath, cssPath, config, jsBase) {
             concat.push(findMath);
         } else {
             if (files.length) {
-                fileName = ydrUtil.crypto.md5(md5List).slice(0, 16) + '.css';
+                fileName = crypto.md5(md5List).slice(0, 16) + '.css';
                 filePath = path.join(cssPath, fileName);
                 filePath = path.relative(srcPath, filePath);
                 fileURL = cssHost + dato.toURLPath(filePath);

@@ -149,122 +149,122 @@ module.exports = function (srcPath) {
             });
         })
 
-        //.task(function (next) {
-        //    log('3/6', 'overwrite config', 'task');
-        //    next();
-        //})
-        //.task(function (next) {
-        //    // 覆盖生成 coolie-config.js
-        //    var code = fs.readFileSync(coolieConfigJSPath, 'utf8');
-        //    var relative = path.relative(srcPath, coolieConfigJSPath);
-        //    var destFile = path.join(destPath, relative);
-        //    var coolieInfo = replaceConfig(srcPath, coolieJSPath, coolieConfigJSPath, code, versionMap);
-        //
-        //    jsBase = path.join(srcPath, path.dirname(config.js['coolie.js']), coolieInfo.config.base);
-        //    fs.outputFile(destFile, coolieInfo.code, function (err) {
-        //        if (err) {
-        //            log('overwrite config', dato.fixPath(destFile), 'error');
-        //            log('overwrite config', err.message, 'error');
-        //            process.exit();
-        //        }
-        //
-        //        log('√', dato.fixPath(destFile), 'success');
-        //        next();
-        //    });
-        //})
-        //
-        //.task(function (next) {
-        //    log('4/6', 'build resource version', 'task');
-        //    next();
-        //})
-        //.each(config.resource.src, function (i, resFile, nextRes) {
-        //    // res files
-        //    var gbPath = path.join(srcPath, resFile);
-        //
-        //    glob(gbPath, {dot: false, nodir: true}, function (err, files) {
-        //        if (err) {
-        //            log('glob', dato.fixPath(gbPath), 'error');
-        //            log('glob', err.message, 'error');
-        //            process.exit();
-        //        }
-        //
-        //        howdo.each(files, function (j, file, nextFile) {
-        //            resVersionMap[file] = crypto.etag(file);
-        //            resLength++;
-        //            nextFile();
-        //        }).follow(function () {
-        //            log('√', dato.fixPath(gbPath), 'success');
-        //            nextRes();
-        //        });
-        //    });
-        //})
-        //
-        //
-        //.task(function (next) {
-        //    log('5/6', 'build html css', 'task');
-        //    next();
-        //})
-        //.each(config.html.src, function (i, htmlFile, nextGlob) {
-        //    // html files
-        //    var gbPath = path.join(srcPath, htmlFile);
-        //
-        //    glob(gbPath, {dot: false, nodir: true}, function (err, htmls) {
-        //        if (err) {
-        //            log('glob', dato.fixPath(gbPath), 'error');
-        //            log('glob', err.message, 'error');
-        //            process.exit();
-        //        }
-        //
-        //        howdo.each(htmls, function (j, file, nextHTML) {
-        //            htmlLength++;
-        //
-        //            buildHTML(file, cssPath, config, jsBase, srcPath, destPath, resVersionMap, function (err, _cssLength, depCSS, mainJS) {
-        //                var htmlRelative = path.relative(srcPath, file);
-        //                var url = dato.toURLPath(htmlRelative);
-        //
-        //                htmlJsCssRelationshipMap[url] = {
-        //                    css: depCSS,
-        //                    main: mainJS
-        //                };
-        //                cssLength += _cssLength;
-        //                nextHTML(err);
-        //            });
-        //        }).follow(function () {
-        //            log('√', dato.fixPath(gbPath), 'success');
-        //
-        //            nextGlob();
-        //        });
-        //    });
-        //})
-        //
-        //.task(function (next) {
-        //    log('6/6', 'generator relationship map', 'task');
-        //    next();
-        //})
-        //.task(function (next) {
-        //    dato.each(htmlJsCssRelationshipMap, function (key, item) {
-        //        if (MainRelationshipMap[item.main]) {
-        //            item.deps = MainRelationshipMap[item.main];
-        //        } else if (item.main) {
-        //            log('miss main', item.main, 'error');
-        //            item.deps = [];
-        //        }
-        //    });
-        //
-        //    var mapFile = path.join(destPath, './relationship-map.json');
-        //    var data = JSON.stringify(htmlJsCssRelationshipMap, null, 4);
-        //
-        //    fs.outputFile(mapFile, data, function (err) {
-        //        if (err) {
-        //            log('write file', dato.fixPath(mapFile), 'error');
-        //            log('write file', err.message, 'error');
-        //            return process.exit();
-        //        }
-        //
-        //        log('√', dato.fixPath(mapFile), 'success');
-        //        next();
-        //    });
-        //})
+        .task(function (next) {
+            log('3/6', 'overwrite config', 'task');
+            next();
+        })
+        .task(function (next) {
+            // 覆盖生成 coolie-config.js
+            var code = fs.readFileSync(coolieConfigJSPath, 'utf8');
+            var relative = path.relative(srcPath, coolieConfigJSPath);
+            var destFile = path.join(destPath, relative);
+            var coolieInfo = replaceConfig(srcPath, coolieJSPath, coolieConfigJSPath, code, versionMap);
+
+            jsBase = path.join(srcPath, path.dirname(config.js['coolie.js']), coolieInfo.config.base);
+            fs.outputFile(destFile, coolieInfo.code, function (err) {
+                if (err) {
+                    log('overwrite config', dato.fixPath(destFile), 'error');
+                    log('overwrite config', err.message, 'error');
+                    process.exit();
+                }
+
+                log('√', dato.fixPath(destFile), 'success');
+                next();
+            });
+        })
+
+        .task(function (next) {
+            log('4/6', 'build resource version', 'task');
+            next();
+        })
+        .each(config.resource.src, function (i, resFile, nextRes) {
+            // res files
+            var gbPath = path.join(srcPath, resFile);
+
+            glob(gbPath, {dot: false, nodir: true}, function (err, files) {
+                if (err) {
+                    log('glob', dato.fixPath(gbPath), 'error');
+                    log('glob', err.message, 'error');
+                    process.exit();
+                }
+
+                howdo.each(files, function (j, file, nextFile) {
+                    resVersionMap[file] = crypto.etag(file);
+                    resLength++;
+                    nextFile();
+                }).follow(function () {
+                    log('√', dato.fixPath(gbPath), 'success');
+                    nextRes();
+                });
+            });
+        })
+
+
+        .task(function (next) {
+            log('5/6', 'build html css', 'task');
+            next();
+        })
+        .each(config.html.src, function (i, htmlFile, nextGlob) {
+            // html files
+            var gbPath = path.join(srcPath, htmlFile);
+
+            glob(gbPath, {dot: false, nodir: true}, function (err, htmls) {
+                if (err) {
+                    log('glob', dato.fixPath(gbPath), 'error');
+                    log('glob', err.message, 'error');
+                    process.exit();
+                }
+
+                howdo.each(htmls, function (j, file, nextHTML) {
+                    htmlLength++;
+
+                    buildHTML(file, cssPath, config, jsBase, srcPath, destPath, resVersionMap, function (err, _cssLength, depCSS, mainJS) {
+                        var htmlRelative = path.relative(srcPath, file);
+                        var url = dato.toURLPath(htmlRelative);
+
+                        htmlJsCssRelationshipMap[url] = {
+                            css: depCSS,
+                            main: mainJS
+                        };
+                        cssLength += _cssLength;
+                        nextHTML(err);
+                    });
+                }).follow(function () {
+                    log('√', dato.fixPath(gbPath), 'success');
+
+                    nextGlob();
+                });
+            });
+        })
+
+        .task(function (next) {
+            log('6/6', 'generator relationship map', 'task');
+            next();
+        })
+        .task(function (next) {
+            dato.each(htmlJsCssRelationshipMap, function (key, item) {
+                if (MainRelationshipMap[item.main]) {
+                    item.deps = MainRelationshipMap[item.main];
+                } else if (item.main) {
+                    log('miss main', item.main, 'error');
+                    item.deps = [];
+                }
+            });
+
+            var mapFile = path.join(destPath, './relationship-map.json');
+            var data = JSON.stringify(htmlJsCssRelationshipMap, null, 4);
+
+            fs.outputFile(mapFile, data, function (err) {
+                if (err) {
+                    log('write file', dato.fixPath(mapFile), 'error');
+                    log('write file', err.message, 'error');
+                    return process.exit();
+                }
+
+                log('√', dato.fixPath(mapFile), 'success');
+                next();
+            });
+        })
 
         // 异步串行结束
         .follow(function (err) {
