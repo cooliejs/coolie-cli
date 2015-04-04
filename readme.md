@@ -1,16 +1,20 @@
 # Coolie 苦力 [![coolie](https://img.shields.io/npm/v/coolie.svg?style=flat)](https://www.npmjs.org/package/coolie)
 
-__A builder for front-end developments.__
+__The front-end development builder.__
 
-__前端发布工具。__
+__前端开发构建工具。__
+
+
 
 # 功能
-- js 模块的合并、压缩、依赖分析、构建，【[coolie 模块加载器](https://github.com/cloudcome/coolie)】。
-- css 模块的合并、压缩、构建。
-- html 样式依赖分析、压缩、构建，资源地址替换。
+- js 模块的合并、压缩、依赖分析、构建。
+- css 模块的合并、压缩、构建、引用分析。
+- html 样式依赖分析、压缩、构建，资源地址管理。
+- 静态引用资源版本管理。
 - 生成资源引用关系地图（relationship-map.json）。
 - 命令生成`coolie-config.js`。
 - 命令生成`coolie.json`。
+- 等等。
 
 
 # 特点
@@ -55,43 +59,5 @@ npm install -g coolie
 ![coolie](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20141116220221094451640234.jpg)
 
 
-
 # Version
-- 0.10.6
-    - 删除了`js host`配置
-    - html 文件的压缩策略
-- 0.9.3
-	- 支持构建样式中引用资源的版本号
-- 0.8.2
-	- 修正生成 version 不正确的BUG
-	- 重构 HTML 压缩
-- 0.7.3
-	- 新增命令`coolie pull`拉取最新的`coolie.js`
-- 0.6.1
-	- 更为科学的构建过程
-	- 生成更为科学的`relationship-map.json`
-- 0.5.0
-    - 适配了[coolie.js@0.5.0](https://github.com/cloudcome/coolie)
-	- 最新的 css 构建方式，统一为绝对路径
-- 0.4.0
-    - 适配了[coolie.js@0.4.0](https://github.com/cloudcome/coolie)
-    - 支持绝对路径
-	- 完善 css 配置
-- 0.3.1
-	- 适配了[coolie.js@0.3.0](https://github.com/cloudcome/coolie)
-	- 支持依赖省略
-	- 生成模块依赖MAP
-- 0.2.1
-	- 适配了[coolie.js@0.2.0](https://github.com/cloudcome/coolie)
-	- 生成完整的模块版本MAP
-- 0.1.8
-	- 修正 css 引用构建顺序
-	- 优化了 css 文件重复引用
-	- 支持 html 文件的构建
-	- 支持 css 引用的合并替换
-	- 新增命令打开帮助页面
-- 0.0.17
-	- 优化构建配置
-	- build 的时候支持压缩 css、html 模块
-	- 入口模块简化为0
-	- 一个模块占用一行
+[版本日志](./version.md)

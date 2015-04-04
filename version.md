@@ -1,0 +1,45 @@
+# 0.x.x
+- 0.12.0
+	- 全新的构建配置，更加合理
+	- 更为全面的资源版本管理
+	- 修正部分 BUG
+- 0.11.0
+	- 修正部分 BUG
+- 0.10.6
+    - 删除了`js host`配置
+    - html 文件的压缩策略
+- 0.9.3
+	- 支持构建样式中引用资源的版本号
+- 0.8.2
+	- 修正生成 version 不正确的BUG
+	- 重构 HTML 压缩
+- 0.7.3
+	- 新增命令`coolie pull`拉取最新的`coolie.js`
+- 0.6.1
+	- 更为科学的构建过程
+	- 生成更为科学的`relationship-map.json`
+- 0.5.0
+    - 适配了[coolie.js@0.5.0](https://github.com/cloudcome/coolie)
+	- 最新的 css 构建方式，统一为绝对路径
+- 0.4.0
+    - 适配了[coolie.js@0.4.0](https://github.com/cloudcome/coolie)
+    - 支持绝对路径
+	- 完善 css 配置
+- 0.3.1
+	- 适配了[coolie.js@0.3.0](https://github.com/cloudcome/coolie)
+	- 支持依赖省略
+	- 生成模块依赖MAP
+- 0.2.1
+	- 适配了[coolie.js@0.2.0](https://github.com/cloudcome/coolie)
+	- 生成完整的模块版本MAP
+- 0.1.8
+	- 修正 css 引用构建顺序
+	- 优化了 css 文件重复引用
+	- 支持 html 文件的构建
+	- 支持 css 引用的合并替换
+	- 新增命令打开帮助页面
+- 0.0.17
+	- 优化构建配置
+	- build 的时候支持压缩 css、html 模块
+	- 入口模块简化为0
+	- 一个模块占用一行
