@@ -130,13 +130,13 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.dest = _getVal(data, '../dest/', false);
 
-        log("11/11", "请输入构建时需要原样复制的文件路径，默认为复制所有非点文件。" +
+        log("11/11", "请输入构建时需要原样复制的文件路径，默认为空。" +
         "\n支持通配符，多个文件路径使用空格分开。", "success");
     });
 
     // copy
     steps.push(function (data) {
-        json.copy = _getVal(data, './**/*.*', true);
+        json.copy = _getVal(data, '', true);
         jsonString = JSON.stringify(json, null, 2);
 
         log("confirm", "文件内容为：", "success");

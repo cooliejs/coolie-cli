@@ -20,7 +20,7 @@ var options = {
 var REG_URL = /url\(['"]?(.*?)['"]?\)([;\s\b])/ig;
 var REG_REMOTE = /^(https?:)?\/\//i;
 var REG_SUFFIX = /(\?.*|#.*)$/;
-var REG_VERSION = /\.([^.]*)$/;
+var REG_ABSPATH = /^\//;
 var buildMap = {};
 
 
@@ -77,7 +77,7 @@ module.exports = function (file, code, resVersionMap, srcPath, destPath, destFil
                 return 'url(' + $1 + ')' + $2;
             }
 
-            var absFile = path.join(fileDir, $1);
+            var absFile = path.join(REG_ABSPATH.test($1) ? srcPath : fileDir, $1);
             var basename = path.basename(absFile);
             var srcName = basename.replace(REG_SUFFIX, '');
             var suffix = (basename.match(REG_SUFFIX) || [''])[0];
@@ -89,11 +89,8 @@ module.exports = function (file, code, resVersionMap, srcPath, destPath, destFil
 
             // 未进行版本构建
             if (!url) {
-                //var relative = path.relative(srcPath, absFile);
                 var extname = path.extname(srcName);
-                //var resName = srcName.replace(REG_VERSION, '.' + version + '.$1');
                 var resName = version + extname;
-                //var vitFile = path.join(destPath, relative);
                 var resFile = path.join(destPath, config.resource.dest, resName);
 
                 try {
@@ -102,19 +99,11 @@ module.exports = function (file, code, resVersionMap, srcPath, destPath, destFil
                     log('copy from', dato.fixPath(absFile), 'error');
                     log('copy to', dato.fixPath(resFile), 'error');
                     log('copy file', err.message, 'error');
+                    process.exit();
                 }
 
-                console.log(extname);
-                //console.log(destName);
-                //console.log(suffix||'空');
-                //console.log('=============================');
                 buildMap[absFile] = url = path.relative(path.dirname(destFile), resFile);
             }
-
-            //console.log(destFile);
-            //console.log(vitFile);
-            //console.log('');
-            //console.log('');
 
             return 'url(' + url + suffix + ')' + $2;
         });

@@ -8,7 +8,7 @@
   },
   "html": {
     "src": [
-      "./html/index.html"
+      "./html/**/*.html"
     ],
     "minify": false
   },
@@ -23,8 +23,6 @@
     ],
     "dest": "./static/res/"
   },
-  "copy": [
-    "./**/*.*"
-  ],
+  "copy": [],
   "dest": "../dest/"
 }
