@@ -55,7 +55,7 @@ module.exports = function (relative) {
     // }
     check.js = function () {
         if (typeis(config.js) !== "object") {
-            log("parse config", "`css` property must be a object", "error");
+            log("parse config", "`css` property must be an object", "error");
             process.exit();
         }
 
@@ -64,7 +64,7 @@ module.exports = function (relative) {
             var htmlPathType = typeis(config.js.src);
 
             if (htmlPathType !== "string" && htmlPathType !== "array") {
-                log("parse config", "`js.src` property must be a string path or an array object", "error");
+                log("parse config", "`js.src` property must be a string path or an array", "error");
                 process.exit();
             }
 
@@ -120,8 +120,6 @@ module.exports = function (relative) {
     };
 
 
-
-
     // 检查 html
     //html: {
     //    src: [],
@@ -129,23 +127,23 @@ module.exports = function (relative) {
     //}
     check.html = function () {
         if (typeis(config.html) !== "object") {
-            log("parse config", "`html` property must be a object", "error");
+            log("parse config", "`html` property must be an object", "error");
             process.exit();
         }
 
-        // html.path
+        // html.src
         if (config.html.src) {
-            var htmlPathType = typeis(config.html.src);
+            var htmSrcType = typeis(config.html.src);
 
-            if (htmlPathType !== "string" && htmlPathType !== "array") {
-                log("parse config", "`html.src` property must be a string path or an array object", "error");
+            if (htmSrcType !== "string" && htmSrcType !== "array") {
+                log("parse config", "`html.src` property must be a string path or an array", "error");
                 process.exit();
             }
 
-            if (htmlPathType === "array") {
+            if (htmSrcType === "array") {
                 config.html.src.forEach(function (mn, index) {
                     if (typeis(mn) !== "string") {
-                        log("parse config", "`html.src[" + index + "]` must be a string", "error");
+                        log("parse config", "`html.src[" + index + "]` must be a string path", "error");
                         process.exit();
                     }
                 });
@@ -166,7 +164,6 @@ module.exports = function (relative) {
     };
 
 
-
     // 检查 css 配置
     // css: {
     //    dest: "",
@@ -174,7 +171,7 @@ module.exports = function (relative) {
     // }
     check.css = function () {
         if (typeis(config.css) !== "object") {
-            log("parse config", "`css` property must be a object", "error");
+            log("parse config", "`css` property must be an object", "error");
             process.exit();
         }
 
@@ -184,16 +181,9 @@ module.exports = function (relative) {
             process.exit();
         }
 
-        //var cssPath = path.join(relative, config.css.path);
-        //
-        //if (!typeis.directory(cssPath)) {
-        //    log("parse config", "`" + cssPath + "` is NOT a directory", "error");
-        //    process.exit();
-        //}
-
         // css.host
         if (typeis(config.css.host) !== 'string') {
-            log("parse config", "`css.host` must be a string", "error");
+            log("parse config", "`css.host` must be a string host", "error");
             process.exit();
         }
 
@@ -204,27 +194,38 @@ module.exports = function (relative) {
 
 
     // 检查 resource 路径
+    // resource: {
+    //     src: [],
+    //     dest: ""
+    // }
     check.resource = function () {
         if (config.resource) {
-            var resType = typeis(config.resource);
-
-            if (resType !== "string" && resType !== "array") {
-                log("parse config", "`res` property must be a string path or an array object", "error");
+            if (typeis(config.resource) !== "object") {
+                log("parse config", "`resource` property must be an object", "error");
                 process.exit();
             }
 
-            if (resType === "array") {
-                config.resource.forEach(function (mn, index) {
+            var resourceSrcType = typeis(config.resource.src);
+
+            if (resourceSrcType !== "string" && resourceSrcType !== "array") {
+                log("parse config", "`resource.src` property must be a string path or an array path", "error");
+                process.exit();
+            }
+
+            if (resourceSrcType === "array") {
+                config.resource.src.forEach(function (mn, index) {
                     if (typeis(mn) !== "string") {
-                        log("parse config", "`res` property[" + index + "] must be a string", "error");
+                        log("parse config", "`resource.src[" + index + "]` must be a string path", "error");
                         process.exit();
                     }
                 });
             } else {
-                config.resource = [config.resource];
+                config.resource.src = [config.resource.src];
             }
         } else {
-            config.resource = [];
+            config.resource = {
+                src: []
+            };
         }
     };
 
@@ -243,62 +244,20 @@ module.exports = function (relative) {
     };
 
 
-    // 检查 coolie.js
-    check.coolie = function () {
-        if (!config["coolie.js"]) {
-            log("parse config", "coolie.json require `coolie.js` property", "error");
-            process.exit();
-        }
-
-        if (typeis(config["coolie.js"]) !== "string") {
-            log("parse config", "`coolie.js` property must be a string", "error");
-            process.exit();
-        }
-
-        var coolieConfigJS = path.join(relative, config["coolie.js"]);
-
-        if (!typeis.file(coolieConfigJS)) {
-            log("parse config", coolieConfigJS + " is NOT a file", "error");
-            process.exit();
-        }
-    };
-
-
-    // 检查 coolie-config.js
-    check.coolieConfig = function () {
-        if (!config["coolie-config.js"]) {
-            log("parse config", "coolie.json require `coolie-config.js` property", "error");
-            process.exit();
-        }
-
-        if (typeis(config["coolie-config.js"]) !== "string") {
-            log("parse config", "`coolie-config.js` property must be a string", "error");
-            process.exit();
-        }
-
-        var coolieConfigJS = path.join(relative, config["coolie-config.js"]);
-
-        if (!typeis.file(coolieConfigJS)) {
-            log("parse config", coolieConfigJS + " is NOT a file", "error");
-            process.exit();
-        }
-    };
-
-
     // 检查复制
     check.copy = function () {
         if (config.copy) {
             var copyFilesType = typeis(config.copy);
 
             if (copyFilesType !== "string" && copyFilesType !== "array") {
-                log("parse config", "`copy` property must be a string or an array object", "error");
+                log("parse config", "`copy` property must be a string path or an array path", "error");
                 process.exit();
             }
 
             if (copyFilesType === "array") {
                 config.copy.forEach(function (cp, index) {
                     if (typeis(cp) !== "string") {
-                        log("parse config", "`copy` property[" + index + "] must be a string", "error");
+                        log("parse config", "`copy` property[" + index + "] must be a string path", "error");
                         process.exit();
                     }
                 });
