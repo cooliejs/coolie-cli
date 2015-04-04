@@ -107,13 +107,13 @@ module.exports = function (basedir) {
         json.html.minify = !!dato.parseInt(_getVal(data, 1, false), 1);
 
         log("8/11", "请输入资源文件路径，通常为样式引用的图片、字体等，会在构建之后版本化。" +
-        "\n支持通配符，多个路径使用空格分开，默认为“./static/img/**/*.*”。", "success");
+        "\n支持通配符，多个路径使用空格分开，默认为“./static/img/**/*.*”和“./static/fonts/**/*.*”。", "success");
     });
 
     // resource.src
     steps.push(function (data) {
         json.resource = {};
-        json.resource.src = _getVal(data, './static/img/**/*.*', true);
+        json.resource.src = _getVal(data, './static/img/**/*.* ./static/fonts/**/*.*', true);
 
         log("9/11", "请输入资源保存目录，默认为“./static/res/”。", "success");
     });

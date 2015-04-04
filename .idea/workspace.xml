@@ -2,19 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/src/static/fonts/glyphicons-halflings-regular.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/src/static/fonts/glyphicons-halflings-regular.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/src/static/fonts/glyphicons-halflings-regular.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/src/static/fonts/glyphicons-halflings-regular.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/src/static/css/bootstrap.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/src/static/fonts/glyphicons-halflings-regular.svg" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-json.js" afterPath="$PROJECT_DIR$/build/build-json.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/src/coolie.json" afterPath="$PROJECT_DIR$/example/src/coolie.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/cssminify.js" afterPath="$PROJECT_DIR$/libs/cssminify.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.020eb29b524d7ba6.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.020eb29b524d7ba6.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.0910eb5c7b2f40e3.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.0910eb5c7b2f40e3.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.ac9c542684f271e7.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.ac9c542684f271e7.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -37,21 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="cssminify.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cssminify.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/libs/cssminify.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="0.4764992">
               <caret line="81" column="18" selection-start-line="81" selection-start-column="18" selection-end-line="81" selection-end-column="18" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build-json.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/build/build-json.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6337115">
-              <caret line="110" column="7" selection-start-line="110" selection-start-column="7" selection-end-line="110" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -98,9 +76,9 @@
         <option value="$PROJECT_DIR$/readme.md" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/build/build-config.js" />
-        <option value="$PROJECT_DIR$/build/build-json.js" />
         <option value="$PROJECT_DIR$/libs/cssminify.js" />
         <option value="$PROJECT_DIR$/example/src/coolie.json" />
+        <option value="$PROJECT_DIR$/build/build-json.js" />
       </list>
     </option>
   </component>
@@ -370,12 +348,6 @@
       <workItem from="1427191352293" duration="2221000" />
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
-    </task>
-    <task id="LOCAL-00041" summary="html 文件的压缩策略">
-      <created>1425277783725</created>
-      <option name="number" value="00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1425277783725</updated>
     </task>
     <task id="LOCAL-00042" summary="html 文件的压缩策略">
       <created>1425277940868</created>
@@ -665,7 +637,13 @@
       <option name="project" value="LOCAL" />
       <updated>1428134351576</updated>
     </task>
-    <option name="localTasksCounter" value="90" />
+    <task id="LOCAL-00090" summary="新的构建配置">
+      <created>1428134834426</created>
+      <option name="number" value="00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1428134834426</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1154,18 +1132,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libs/cssminify.js">
+    <entry file="file://$PROJECT_DIR$/build/build-json.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="81" column="18" selection-start-line="81" selection-start-column="18" selection-end-line="81" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.4489465">
+          <caret line="110" column="7" selection-start-line="110" selection-start-column="7" selection-end-line="110" selection-end-column="7" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/build-json.js">
+    <entry file="file://$PROJECT_DIR$/libs/cssminify.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6337115">
-          <caret line="110" column="7" selection-start-line="110" selection-start-column="7" selection-end-line="110" selection-end-column="7" />
+        <state vertical-scroll-proportion="0.4764992">
+          <caret line="81" column="18" selection-start-line="81" selection-start-column="18" selection-end-line="81" selection-end-column="18" />
           <folding />
         </state>
       </provider>
