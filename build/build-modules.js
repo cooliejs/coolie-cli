@@ -85,7 +85,7 @@ module.exports = function (srcPath) {
                             process.exit();
                         }
 
-                        //log('copy write', dato.fixPath(destFile), 'success');
+                        //log('√', dato.fixPath(destFile), 'success');
                         copyLength++;
                         nextFile();
                     });
@@ -138,7 +138,7 @@ module.exports = function (srcPath) {
                                 process.exit();
                             }
 
-                            //log('write js', dato.fixPath(destFile), 'success');
+                            //log('√', dato.fixPath(destFile), 'success');
                             mainLength++;
                             nextFile();
                         });
@@ -168,7 +168,7 @@ module.exports = function (srcPath) {
                     process.exit();
                 }
 
-                log('overwrite config', dato.fixPath(destFile), 'success');
+                log('√', dato.fixPath(destFile), 'success');
                 next();
             });
         })
@@ -193,7 +193,7 @@ module.exports = function (srcPath) {
                     resLength++;
                     nextFile();
                 }).follow(function () {
-                    log('build resource version', dato.fixPath(gbPath), 'success');
+                    log('√', dato.fixPath(gbPath), 'success');
                     nextRes();
                 });
             });
@@ -230,7 +230,7 @@ module.exports = function (srcPath) {
                         nextHTML(err);
                     });
                 }).follow(function () {
-                    log('build html(s)', dato.fixPath(gbPath), 'success');
+                    log('√', dato.fixPath(gbPath), 'success');
 
                     nextGlob();
                 });
@@ -256,12 +256,12 @@ module.exports = function (srcPath) {
 
             fs.outputFile(mapFile, data, function (err) {
                 if (err) {
-                    log('write relationship map', dato.fixPath(mapFile), 'error');
-                    log('write relationship map', err.message, 'error');
+                    log('×', dato.fixPath(mapFile), 'error');
+                    log('×', err.message, 'error');
                     return process.exit();
                 }
 
-                log('write relationship map', dato.fixPath(mapFile), 'success');
+                log('√', dato.fixPath(mapFile), 'success');
                 next();
             });
         })
@@ -269,18 +269,19 @@ module.exports = function (srcPath) {
         // 异步串行结束
         .follow(function (err) {
             if (err) {
-                log('unknow error', err.message, 'error');
+                log('×', err.message, 'error');
                 return process.exit();
             }
 
             var past = Date.now() - time;
 
+            console.log('');
             log('build success',
                 'copy ' + copyLength + ' file(s), ' +
-                'build ' + mainLength + ' js file(s), ' +
-                'build ' + htmlLength + ' html file(s), ' +
-                'build ' + cssLength + ' css file(s), ' +
-                'build ' + resLength + ' res file(s), ' +
-                'past ' + past + ' ms', 'success');
+                '\nbuild ' + mainLength + ' js file(s), ' +
+                '\nbuild ' + htmlLength + ' html file(s), ' +
+                '\nbuild ' + cssLength + ' css file(s), ' +
+                '\nbuild ' + resLength + ' res file(s), ' +
+                '\npast ' + past + ' ms', 'success');
         });
 };

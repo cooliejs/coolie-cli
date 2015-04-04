@@ -54,7 +54,7 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
                         process.exit();
                     }
 
-                    //log('write html', ydrUtil.dato.fixPath(destFile), 'success');
+                    //log('√', ydrUtil.dato.fixPath(destFile), 'success');
                     doneHTML();
                 });
             })
@@ -110,7 +110,7 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
                                 process.exit();
                             }
 
-                            //log('write css', ydrUtil.dato.fixPath(destFile), 'success');
+                            //log('√', ydrUtil.dato.fixPath(destFile), 'success');
                             nextCSSFile();
                         });
                     });

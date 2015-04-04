@@ -72,7 +72,7 @@ module.exports = function (basedir) {
                     return process.exit();
                 }
 
-                log("write", ydrUtil.dato.fixPath(writeFile), "success");
+                log("√", ydrUtil.dato.fixPath(writeFile), "success");
                 process.exit();
             });
         } else {

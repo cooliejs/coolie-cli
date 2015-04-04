@@ -141,7 +141,7 @@ module.exports = function (basedir) {
                     return process.exit();
                 }
 
-                log("write", dato.fixPath(writeFile), "success");
+                log("√", dato.fixPath(writeFile), "success");
                 process.exit();
             });
         } else {
