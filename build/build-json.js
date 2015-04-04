@@ -106,7 +106,7 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.html.minify = !!dato.parseInt(_getVal(data, 1, false), 1);
 
-        log("8/11", "请输入资源文件路径，通常为样式引用的图片，会在构建之后版本化。" +
+        log("8/11", "请输入资源文件路径，通常为样式引用的图片、字体等，会在构建之后版本化。" +
         "\n支持通配符，多个路径使用空格分开，默认为“./static/img/**/*.*”。", "success");
     });
 

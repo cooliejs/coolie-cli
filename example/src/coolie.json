@@ -18,7 +18,8 @@
   },
   "resource": {
     "src": [
-      "./static/img/**/*.*"
+      "./static/img/**/*.*",
+      "./static/fonts/**/*.*"
     ],
     "dest": "./static/res/"
   },
