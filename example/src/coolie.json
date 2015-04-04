@@ -1,21 +1,29 @@
 {
   "js": {
-    "src": "./static/js/app/**/*.js",
+    "src": [
+      "./static/js/app/**/*.js"
+    ],
     "coolie.js": "./static/js/coolie.js",
     "coolie-config.js": "./static/js/coolie-config.js"
   },
   "html": {
-    "src": "./html/**/*.html",
+    "src": [
+      "./html/**/*.html"
+    ],
     "minify": false
   },
   "css": {
-    "dest": "./static/css/app/",
+    "dest": "./static/css/",
     "host": ""
   },
   "resource": {
-    "src": "./static/img/**/*.*",
+    "src": [
+      "./static/img/**/*.*"
+    ],
     "dest": "./static/res/"
   },
-  "copy": "./**/*.*",
+  "copy": [
+    "./**/*.*"
+  ],
   "dest": "../dest/"
 }
