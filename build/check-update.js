@@ -6,31 +6,60 @@
 
 'use strict';
 
-var http = require('../libs/http.js');
+var request = require('ydr-util').request;
 var log = require('../libs/log.js');
 var pkg = require('../package.json');
+var howdo = require('howdo');
 var currentVersion = pkg.version;
-var url = 'http://registry.npmjs.org/coolie';
+var url1 = 'http://registry.npmjs.com/coolie';
+var url2 = 'https://raw.githubusercontent.com/cloudcome/coolie/master/package.json';
 
 module.exports = function(){
     log('local version', currentVersion, 'success');
     log('check update', 'wait a moment...');
 
-    http(url, function (err, data) {
-        if(err){
-            log('check update', 'connect npmjs.org error', 'error');
-            process.exit();
-        }
+    howdo
+        // 检查 coolie cli 版本
+        .task(function () {
+            request.get(url1, function (err, data) {
+                if(err){
+                    log('check update', 'connect npmjs.com error', 'error');
+                    process.exit();
+                }
 
-        var json = {};
+                var json = {};
 
-        try{
-            json = JSON.parse(data);
-        }catch(err){
-            log('check update', 'parse json string error', 'error');
-            process.exit();
-        }
+                try{
+                    json = JSON.parse(data);
+                }catch(err){
+                    log('check update', 'parse json string error', 'error');
+                    process.exit();
+                }
 
-        log('online version', json['dist-tags'].latest, 'success');
-    });
+                log('coolie cli', json['dist-tags'].latest, 'success');
+            });
+        })
+        // 检查 coolie.js 版本
+        .task(function () {
+            request.get(url2, function (err, data) {
+                if(err){
+                    log('check update', 'connect github.com error', 'error');
+                    process.exit();
+                }
+
+                var json = {};
+
+                try{
+                    json = JSON.parse(data);
+                }catch(err){
+                    log('check update', 'parse json string error', 'error');
+                    process.exit();
+                }
+
+                log('coolie.js', json.version, 'success');
+            });
+        })
+        .together(function () {
+            //
+        });
 };
