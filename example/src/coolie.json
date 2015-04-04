@@ -1,5 +1,5 @@
 {
-  "js": "./static/js/app/index.js",
+  "js": "./static/js/app/**/*.js",
   "html": {
     "path": "./html/**/*.html",
     "minify": false
