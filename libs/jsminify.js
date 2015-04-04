@@ -59,6 +59,7 @@ var ydrUtil = require('ydr-util');
 
 /**
  * 脚本压缩
+ * @param file
  * @param code
  * @param callback
  */

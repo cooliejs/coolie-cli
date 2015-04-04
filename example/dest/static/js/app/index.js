@@ -11,11 +11,23 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require('../libs/lib.js');
-    require('../libs/all.js');
-    var txt = require('text!../libs/some.txt');
-    var style = require('css!../libs/some.css');
-    //var html = require('html!../libs/some.html');
+    //require('../libs/lib.js');
+    //require('../libs/lib.js');
+    //require('../libs/path1/path2/abc.js');
+
+    //require('../libs/path1/path2/1.js');
+    //require('../libs/path1/path2/2.js');
+    //require('../libs/path1/path2/3.js');
+    //require('../libs/path1/path2/3.js');
+    //require('../libs/path1/path2/3.js');
+    //require('../libs/path1/path2/3.js');
+
+    require('text!../libs/some.txt');
+    require('css!../libs/some.css');
+    require('html!../libs/some.html');
+    require('html!../libs/some.html');
+    require('html!../libs/some.html');
+    require('html!../libs/some.html');
     //
     //console.log('app/index.js');
     //console.log(txt);

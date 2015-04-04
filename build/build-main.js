@@ -29,8 +29,10 @@ module.exports = function (mainFile, callback) {
     var depsRelationship = {};
     var md5List = '';
     var deepDeps = [];
+    var times = 0;
 
     var _deepBuld = function (name, file) {
+        times++;
         buildModule(name, file, increase, depIdsMap, function (err, meta) {
             if (err) {
                 log("build", dato.fixPath(file), "error");
@@ -46,8 +48,8 @@ module.exports = function (mainFile, callback) {
             // 采用内容 MD5
             md5List += crypto.etag(code);
             depsCache[mainFile] = true;
-            bufferList.push(new Buffer("\n" + code, "utf8"));
             depsRelationship[file] = {};
+            bufferList.push(new Buffer("\n" + code, "utf8"));
 
             if (depIdList.length) {
                 depIdList.forEach(function (depId, index) {
@@ -64,12 +66,17 @@ module.exports = function (mainFile, callback) {
 
                     if (!depsCache[depId]) {
                         depsCache[depId] = true;
-                        //log("require", dato.fixPath(depId));
+                        log("require", dato.fixPath(depId));
                         _deepBuld(depNameList[index], depId);
-                        depsLength++;
                     }
                 });
             }
+
+
+            depsLength++;
+            //console.log(depsLength);
+            //console.log(bufferList.length);
+            //console.log(times);
 
             if (depsLength === bufferList.length) {
                 output = '/*coolie ' + Date.now() + '*/';

@@ -10,6 +10,7 @@
 var minifyCSS = require("clean-css");
 var log = require('./log.js');
 var dato = require('ydr-util').dato;
+var typeis = require('ydr-util').typeis;
 var path = require('path');
 var options = {
     keepSpecialComments: 0,
@@ -30,9 +31,19 @@ var REG_HTTP = /^https?:/i;
  * @param [callback]
  */
 module.exports = function (file, code, resVersionMap, srcPath, destPath, destFile, callback) {
+    var args = arguments;
+    var hasResVersionMap= true;
+
+    if(typeis.function(args[2])){
+        callback = args[2];
+        hasResVersionMap = false;
+    }
+
+
+
     try {
         code = new minifyCSS(options).minify(code);
-        code = _cssUrlVersion(file, code, resVersionMap, destFile);
+        code = hasResVersionMap ? _cssUrlVersion() : code;
 
         if (callback) {
             callback(null, code);

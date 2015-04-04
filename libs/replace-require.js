@@ -7,7 +7,7 @@
 
 "use strict";
 
-var ydrUtil = require("ydr-util");
+var dato = require("ydr-util").dato;
 var log = require("./log.js");
 var REG_DEFINE = /\bdefine\b\s*?\b\(\s*?function\b[^(]*\(([^,)]*)/;
 
@@ -32,7 +32,7 @@ module.exports = function (file, code, depNameList, depName2IdMap) {
         var id = depName2IdMap[depName];
 
         if (!id) {
-            log("replace require", ydrUtil.dato.fixPath(file), "error");
+            log("replace require", dato.fixPath(file), "error");
             log("replace require", "can not found `" + depName + "` map", "error");
             process.exit();
         }
@@ -56,12 +56,13 @@ function _getRequireVar(str) {
 
 /**
  * 生成正则
+ * @param requireVar
  * @param dep
  * @returns {RegExp}
  * @private
  */
 function _buildReg(requireVar, dep) {
-    dep = ydrUtil.dato.fixRegExp(dep).trim();
+    dep = dato.fixRegExp(dep).trim();
 
-    return new RegExp("\\b" + ydrUtil.dato.fixRegExp(requireVar) + "\\(['\"]" + dep + "['\"]\\)");
+    return new RegExp("\\b" + dato.fixRegExp(requireVar) + "\\(['\"]" + dep + "['\"]\\)", 'g');
 }

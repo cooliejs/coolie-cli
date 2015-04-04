@@ -120,6 +120,7 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
 
         .follow(function (err, code) {
             callback(err, {
+                isText: isText,
                 code: code,
                 depNameList: depNameList,
                 depIdList: depIdList
