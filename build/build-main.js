@@ -80,6 +80,6 @@ module.exports = function (mainFile, callback) {
 
     // 第一个 define 模块为入口模块，不必指定其 name
     depIdsMap[mainFile] = '0';
-    log("build main", ydrUtil.dato.fixPath(mainFile), "success");
+    log("√", ydrUtil.dato.fixPath(mainFile), "success");
     _deepBuld(mainName, mainFile);
 };

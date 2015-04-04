@@ -10,7 +10,7 @@ var fs = require('fs-extra');
 var path = require('path');
 var howdo = require('howdo');
 var log = require('../libs/log.js');
-var ydrUtil = require('ydr-util');
+var dato = require('ydr-util').dato;
 var replaceHtml = require('../libs/replace-html.js');
 var cssminify = require('../libs/cssminify.js');
 
@@ -32,14 +32,14 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
 
     fs.readFile(file, 'utf8', function (err, data) {
         if (err) {
-            log("read file", ydrUtil.dato.fixPath(file), "error");
+            log("read file", dato.fixPath(file), "error");
             log('read file', err.message, 'error');
             process.exit();
         }
 
         var ret = replaceHtml(file, data, srcPath, cssPath, config, jsBase);
 
-        //log('build html', ydrUtil.dato.fixPath(file), 'warning');
+        //log('build html', dato.fixPath(file), 'warning');
 
         howdo
             // 生成 HTML 文件
@@ -49,12 +49,12 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
 
                 fs.outputFile(destFile, ret.data, function (err) {
                     if (err) {
-                        log("write file", ydrUtil.dato.fixPath(destFile), "error");
+                        log("write file", dato.fixPath(destFile), "error");
                         log('write file', err.message, 'error');
                         process.exit();
                     }
 
-                    //log('√', ydrUtil.dato.fixPath(destFile), 'success');
+                    //log('√', dato.fixPath(destFile), 'success');
                     doneHTML();
                 });
             })
@@ -65,9 +65,9 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
                     var bufferList = [];
                     var map = {};
                     var depURLs = matched.files.map(function (file) {
-                        return ydrUtil.dato.toURLPath(path.relative(srcPath, file));
+                        return dato.toURLPath(path.relative(srcPath, file));
                     });
-                    var url = ydrUtil.dato.toURLPath(matched.file);
+                    var url = dato.toURLPath(matched.file);
 
                     map[url] = depURLs;
                     depCSS.push(map);
@@ -86,14 +86,14 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
 
                         fs.readFile(file, 'utf8', function (err, data) {
                             if (err) {
-                                log("read file", ydrUtil.dato.fixPath(file), "error");
+                                log("read file", dato.fixPath(file), "error");
                                 log('read file', err.message, 'error');
                                 process.exit();
                             }
 
                             cssminify(file, data, resVersionMap, srcPath, destPath, destFile, config, function (err, data) {
                                 bufferList.push(new Buffer('\n' + data, 'utf8'));
-                                //log('require', ydrUtil.dato.fixPath(file));
+                                //log('require', dato.fixPath(file));
                                 doneConcat();
                             });
                         });
@@ -105,12 +105,12 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
 
                         fs.outputFile(destFile, data, function (err) {
                             if (err) {
-                                log("write file", ydrUtil.dato.fixPath(destFile), "error");
+                                log("write file", dato.fixPath(destFile), "error");
                                 log('write file', err.message, 'error');
                                 process.exit();
                             }
 
-                            //log('√', ydrUtil.dato.fixPath(destFile), 'success');
+                            log('√', dato.fixPath(destFile), 'success');
                             nextCSSFile();
                         });
                     });

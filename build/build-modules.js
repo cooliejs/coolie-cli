@@ -281,7 +281,7 @@ module.exports = function (srcPath) {
                 '\nbuild ' + mainLength + ' js file(s), ' +
                 '\nbuild ' + htmlLength + ' html file(s), ' +
                 '\nbuild ' + cssLength + ' css file(s), ' +
-                '\nbuild ' + resLength + ' res file(s), ' +
+                '\nbuild ' + resLength + ' resource file(s), ' +
                 '\npast ' + past + ' ms', 'success');
         });
 };
