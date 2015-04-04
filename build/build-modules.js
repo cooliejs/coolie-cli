@@ -40,7 +40,7 @@ module.exports = function (srcPath) {
      * @type {object}
      */
     var config = parseConfig(srcPath);
-    console.log(JSON.stringify(config, null, 2));
+    //console.log(JSON.stringify(config, null, 2));
     var destPath = path.join(srcPath, config.dest);
     var cssPath = path.join(srcPath, config.css.dest);
     var coolieJSPath = path.join(srcPath, config.js['coolie.js']);
@@ -90,7 +90,7 @@ module.exports = function (srcPath) {
                         nextFile();
                     });
                 }).follow(function () {
-                    log('copy files', dato.fixPath(gbPath), 'success');
+                    log('√', dato.fixPath(gbPath), 'success');
                     nextCopy();
                 });
             });
@@ -160,7 +160,7 @@ module.exports = function (srcPath) {
             var destFile = path.join(destPath, relative);
             var coolieInfo = replaceConfig(srcPath, coolieJSPath, coolieConfigJSPath, code, versionMap);
 
-            jsBase = path.join(srcPath, path.dirname(config['coolie.js']), coolieInfo.config.base);
+            jsBase = path.join(srcPath, path.dirname(config.js['coolie.js']), coolieInfo.config.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {
                     log('overwrite config', dato.fixPath(destFile), 'error');
@@ -230,7 +230,7 @@ module.exports = function (srcPath) {
                         nextHTML(err);
                     });
                 }).follow(function () {
-                    log('html files', dato.fixPath(gbPath), 'success');
+                    log('build html(s)', dato.fixPath(gbPath), 'success');
 
                     nextGlob();
                 });

@@ -66,7 +66,7 @@ module.exports = function (mainFile, callback) {
 
                     if (!depsCache[depId]) {
                         depsCache[depId] = true;
-                        log("require", dato.fixPath(depId));
+                        //log("require", dato.fixPath(depId));
                         _deepBuld(depNameList[index], depId);
                     }
                 });
@@ -88,6 +88,6 @@ module.exports = function (mainFile, callback) {
 
     // 第一个 define 模块为入口模块，不必指定其 name
     depIdsMap[mainFile] = '0';
-    log("build main", dato.fixPath(mainFile), "success");
+    log("√", dato.fixPath(mainFile), "success");
     _deepBuld(mainName, mainFile);
 };

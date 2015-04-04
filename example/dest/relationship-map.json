@@ -7,8 +7,12 @@
                 ]
             }
         ],
-        "main": "app/index.js",
-        "deps": []
+        "main": "static/js/app/index.js",
+        "deps": [
+            "static/js/libs/some.txt",
+            "static/js/libs/some.css",
+            "static/js/libs/some.html"
+        ]
     },
     "html/user/index.html": {
         "css": [
@@ -19,7 +23,9 @@
                 ]
             }
         ],
-        "main": "app/user/index.js",
-        "deps": []
+        "main": "static/js/app/user/index.js",
+        "deps": [
+            "static/js/libs/all.js"
+        ]
     }
 }
