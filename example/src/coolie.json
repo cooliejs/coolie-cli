@@ -14,7 +14,7 @@
   },
   "resource": {
     "src": "./static/img/**/*.*",
-    "dest": "./static/img/"
+    "dest": "./static/res/"
   },
   "copy": "./**/*.*",
   "dest": "../dest/"

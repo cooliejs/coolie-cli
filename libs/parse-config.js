@@ -187,7 +187,7 @@ module.exports = function (relative) {
             process.exit();
         }
 
-        if (config.css.host.slice(-1) !== '/') {
+        if (config.css.host && config.css.host.slice(-1) !== '/') {
             config.css.host += '/';
         }
     };
