@@ -26,7 +26,8 @@ module.exports = function (basedir) {
     var jsonString = '';
     var continueStep = function () {
         json.js = {};
-        log("1/10", "请输入 JS 入口模块的目录，支持通配符，多个目录使用空格分开，默认为“./static/js/app/**/*.js”。", "success");
+        log("1/11", "请输入 JS 入口模块的路径。" +
+        "\n支持通配符，多个路径使用空格分开，默认为“./static/js/app/**/*.js”。", "success");
     };
 
     // 0
@@ -53,73 +54,84 @@ module.exports = function (basedir) {
         });
     }
 
-    // js.main
+    // js.src
     steps.push(function (data) {
-        json.js = _getVal(data, './static/js/app/**/*.js', true);
+        json.js = {};
+        json.js.src = _getVal(data, './static/js/app/**/*.js', true);
 
-        log("2/10", "请输入生成 CSS 文件的存放目录。默认为“./static/css/app/”", "success");
+
+        log("2/11", "请输入 coolie 模块加载器所在的路径，默认为“./static/js/coolie.min.js”：" +
+        "\n`coolie.js`是模块加载器的主文件。", "success");
     });
 
-    // css path
+    // js[coolie.js]
+    steps.push(function (data) {
+        json['coolie.js'] = _getVal(data, './static/js/coolie.min.js', false);
+
+        log("3/11", "请输入 coolie 模块加载器配置文件所在的路径，默认为“./static/js/coolie-config.js”。", "success");
+    });
+
+    // js[coolie-config.js]
+    steps.push(function (data) {
+        json['coolie-config.js'] = _getVal(data, './static/js/coolie-config.js', false);
+
+        log("4/11", "请输入生成 CSS 文件的存放目录。默认为“./static/css/”", "success");
+    });
+
+    // css.dest
     steps.push(function (data) {
         json.css = {};
-        json.css.path = _getVal(data, './static/css/app/', false);
+        json.css.dest = _getVal(data, './static/css/', false);
 
-        log("3/10", "请输入发布后 CSS 文件所在的域，如“http://s.ydr.me/a/b”。默认为空。", "success");
+        log("5/11", "请输入发布后 CSS 文件所在的域，如“http://s.ydr.me/a/b”。默认为空。", "success");
     });
 
     // css host
     steps.push(function (data) {
         json.css.host = _getVal(data, '', false);
 
-        log("4/10", "请输入 HTML 文件的目录，支持通配符，多个文件使用空格分开。默认为“./views/**/*.html”。", "success");
-
+        log("6/11", "请输入 HTML 文件所在的路径。" +
+        "\n支持通配符，多个路径使用空格分开。默认为“./views/**/*.html”。", "success");
     });
 
-    // html.path
+    // html.src
     steps.push(function (data) {
         json.html = {};
-        json.html.path = _getVal(data, './views/**/*.html', true);
+        json.html.src = _getVal(data, './views/**/*.html', true);
 
-        log("5/10", "是否压缩 HTML 文件，默认为“1”（true）。", "success");
+        log("7/11", "是否压缩 HTML 文件，默认为“1”（true）。", "success");
     });
 
     // html.minify
     steps.push(function (data) {
         json.html.minify = !!dato.parseInt(_getVal(data, 1, false), 1);
 
-        log("6/10", "请输入资源文件目录，通常为样式引用的图片，会在构建之后版本化。" +
-        "\n支持通配符，多个文件使用空格分开，默认为“./static/img/**/*.*”。", "success");
+        log("8/11", "请输入资源文件路径，通常为样式引用的图片，会在构建之后版本化。" +
+        "\n支持通配符，多个路径使用空格分开，默认为“./static/img/**/*.*”。", "success");
     });
 
-    // resource
+    // resource.src
     steps.push(function (data) {
-        json.resource = _getVal(data, './static/img/**/*.*', true);
+        json.resource = {};
+        json.resource.src = _getVal(data, './static/img/**/*.*', true);
 
-        log("7/10", "请输入构建的目标目录，默认为“../dest/”。", "success");
+        log("9/11", "请输入资源保存目录，默认为“./static/res/”。", "success");
+    });
+
+
+    // resource.src
+    steps.push(function (data) {
+        json.resource.dest = _getVal(data, './static/res/', false);
+
+        log("10/11", "请输入构建的目标目录，默认为“../dest/”。", "success");
     });
 
     // dest
     steps.push(function (data) {
         json.dest = _getVal(data, '../dest/', false);
 
-        log("8/10", "请输入`coolie.js`的路径，默认为“./static/js/coolie.min.js”：" +
-        "\n`coolie.js`是模块加载器的主文件。", "success");
-    });
-
-    // coolie.js
-    steps.push(function (data) {
-        json['coolie.js'] = _getVal(data, './static/js/coolie.min.js', false);
-
-        log("9/10", "请输入`coolie-config.js`的路径，默认为“./static/js/coolie-config.js”：" +
-        "\n`coolie-config.js`是模块入口及版本号的配置文件。", "success");
-    });
-
-    // coolie-config.js
-    steps.push(function (data) {
-        json['coolie-config.js'] = _getVal(data, './static/js/coolie-config.js', false);
-
-        log("10/10", "请输入构建时需要原样复制的文件目录，支持通配符，多个入口使用空格分开，默认为复制所有文件。", "success");
+        log("11/11", "请输入构建时需要原样复制的文件路径，默认为复制所有非点文件。" +
+        "\n支持通配符，多个文件路径使用空格分开。", "success");
     });
 
     // copy
