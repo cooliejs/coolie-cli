@@ -18,7 +18,7 @@ var options = {
 };
 var REG_URL = /url\(['"]?(.*?)['"]?\)([;\s\b])/ig;
 var REG_HTTP = /^https?:/i;
-var num = 1;
+var buildMap = {};
 
 
 /**
@@ -29,9 +29,10 @@ var num = 1;
  * @param srcPath
  * @param destPath
  * @param destFile
+ * @param config
  * @param [callback]
  */
-module.exports = function (file, code, resVersionMap, srcPath, destPath, destFile, callback) {
+module.exports = function (file, code, resVersionMap, srcPath, destPath, destFile, config, callback) {
     var args = arguments;
     var hasResVersionMap = true;
 
@@ -75,13 +76,16 @@ module.exports = function (file, code, resVersionMap, srcPath, destPath, destFil
             }
 
             var absFile = path.join(fileDir, $1);
-            var version = resVersionMap[absFile] || '';
-            var relative = path.relative(srcPath, absFile);
-            var vitFile = path.join(destPath, relative);
-            var url = path.relative(path.dirname(destFile), vitFile);
-            num++;
+            var url = buildMap[absFile];
 
-            console.log(num);
+            // 未进行版本构建
+            if (!url) {
+                var version = resVersionMap[absFile] || '';
+                var relative = path.relative(srcPath, absFile);
+                var vitFile = path.join(destPath, relative);
+
+                buildMap[absFile] = url = path.relative(path.dirname(destFile), vitFile);
+            }
 
             //console.log(destFile);
             //console.log(vitFile);

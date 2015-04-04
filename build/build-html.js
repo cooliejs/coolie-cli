@@ -91,7 +91,7 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
                                 process.exit();
                             }
 
-                            cssminify(file, data, resVersionMap, srcPath, destPath, destFile, function (err, data) {
+                            cssminify(file, data, resVersionMap, srcPath, destPath, destFile, config, function (err, data) {
                                 bufferList.push(new Buffer('\n' + data, 'utf8'));
                                 //log('require', ydrUtil.dato.fixPath(file));
                                 doneConcat();
