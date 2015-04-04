@@ -256,8 +256,8 @@ module.exports = function (srcPath) {
 
             fs.outputFile(mapFile, data, function (err) {
                 if (err) {
-                    log('×', dato.fixPath(mapFile), 'error');
-                    log('×', err.message, 'error');
+                    log('write file', dato.fixPath(mapFile), 'error');
+                    log('write file', err.message, 'error');
                     return process.exit();
                 }
 
@@ -269,7 +269,7 @@ module.exports = function (srcPath) {
         // 异步串行结束
         .follow(function (err) {
             if (err) {
-                log('×', err.message, 'error');
+                log('build error', err.message, 'error');
                 return process.exit();
             }
 

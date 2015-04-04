@@ -66,7 +66,9 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
         isTextAlignLeft = false;
     }
 
-    while (30 - ydrUtil.dato.bytes(event, 2) > 0) {
+    var isSuccess = event.indexOf('√') > -1;
+
+    while (20 - ydrUtil.dato.bytes(event, 2) > 0) {
         event = isTextAlignLeft ? event + ' ' : ' ' + event;
     }
 
@@ -79,7 +81,7 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
 
     var color = map[type] || "white";
 
-    console.log(colors.yellow(event), colors.cyan('=>'), _splitColors(color, message));
+    console.log(colors.yellow(event), colors.cyan((isSuccess ? ' ' : '') + '=>'), _splitColors(color, message));
 };
 
 
@@ -99,7 +101,7 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
 var REG_BREAK_LINE = /[\n\r]/g;
 function _splitColors(color, message) {
     var newMessage = '';
-    var space = '\n                                  ';
+    var space = '\n                        ';
     var messageList = message.split(REG_BREAK_LINE);
 
     messageList.forEach(function (msg, index) {

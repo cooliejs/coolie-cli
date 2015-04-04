@@ -62,10 +62,10 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
             versionMap2[relative] = ver;
         });
 
-        var version = JSON.stringify(versionMap2);
+        version = JSON.stringify(versionMap2);
 
-        log('coolie config', 'base: "' + config.base + '"', 'success');
-        log('coolie config', 'version: "' + JSON.stringify(versionMap2, null, 4) + '"', 'success');
+        log('√', 'base: "' + config.base + '"', 'success');
+        log('√', 'version: "' + JSON.stringify(versionMap2, null, 4) + '"', 'success');
         return {
             config: config,
             code: 'coolie.config({base:"' + config.base + '",version:' + version + '}).use();'

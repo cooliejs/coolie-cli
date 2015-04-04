@@ -3,15 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/app/7ce373f0d4131a78.css" afterPath="$PROJECT_DIR$/example/dest/static/css/app/7ce373f0d4131a78.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-config.js" afterPath="$PROJECT_DIR$/build/build-config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-html.js" afterPath="$PROJECT_DIR$/build/build-html.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-json.js" afterPath="$PROJECT_DIR$/build/build-json.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-modules.js" afterPath="$PROJECT_DIR$/build/build-modules.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/app/c5891ea2a30a9833.css" afterPath="$PROJECT_DIR$/example/dest/static/css/app/c5891ea2a30a9833.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.020eb29b524d7ba6.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.020eb29b524d7ba6.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.0910eb5c7b2f40e3.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.0910eb5c7b2f40e3.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.ac9c542684f271e7.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.ac9c542684f271e7.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/log.js" afterPath="$PROJECT_DIR$/libs/log.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/replace-config.js" afterPath="$PROJECT_DIR$/libs/replace-config.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -33,7 +32,28 @@
     <favorites_list name="nodejs-coolie" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="build-modules.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build/build-modules.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.4489465">
+              <caret line="273" column="13" selection-start-line="273" selection-start-column="13" selection-end-line="273" selection-end-column="13" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="replace-config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libs/replace-config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -49,7 +69,6 @@
         <option value="$PROJECT_DIR$/example/dest/html/index.html" />
         <option value="$PROJECT_DIR$/readme.md" />
         <option value="$PROJECT_DIR$/build/index.js" />
-        <option value="$PROJECT_DIR$/libs/log.js" />
         <option value="$PROJECT_DIR$/libs/replace-html.js" />
         <option value="$PROJECT_DIR$/libs/htmlminify.js" />
         <option value="$PROJECT_DIR$/example/src/static/css/path1/path2/3.css" />
@@ -72,9 +91,11 @@
         <option value="$PROJECT_DIR$/libs/parse-config.js" />
         <option value="$PROJECT_DIR$/build/build-main.js" />
         <option value="$PROJECT_DIR$/build/build-html.js" />
-        <option value="$PROJECT_DIR$/build/build-modules.js" />
         <option value="$PROJECT_DIR$/build/build-config.js" />
         <option value="$PROJECT_DIR$/build/build-json.js" />
+        <option value="$PROJECT_DIR$/libs/log.js" />
+        <option value="$PROJECT_DIR$/libs/replace-config.js" />
+        <option value="$PROJECT_DIR$/build/build-modules.js" />
       </list>
     </option>
   </component>
@@ -302,12 +323,6 @@
       <workItem from="1427191352293" duration="2221000" />
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
-    </task>
-    <task id="LOCAL-00034" summary="remove js.host">
-      <created>1423557286305</created>
-      <option name="number" value="00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1423557286305</updated>
     </task>
     <task id="LOCAL-00035" summary="remove js.host">
       <created>1423566574421</created>
@@ -597,7 +612,13 @@
       <option name="project" value="LOCAL" />
       <updated>1428131334482</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="新的构建配置">
+      <created>1428131774211</created>
+      <option name="number" value="00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1428131774211</updated>
+    </task>
+    <option name="localTasksCounter" value="84" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -605,7 +626,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="737" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25271317" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -780,27 +801,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libs/log.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="76" column="22" selection-start-line="76" selection-start-column="22" selection-end-line="76" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.110210694">
           <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/replace-config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1098,18 +1102,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/build-modules.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="284" column="42" selection-start-line="284" selection-start-column="42" selection-end-line="284" selection-end-column="42" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/check-update.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2560778">
           <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/log.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3306321">
+          <caret line="73" column="0" selection-start-line="73" selection-start-column="0" selection-end-line="73" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/replace-config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/build-modules.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4489465">
+          <caret line="273" column="13" selection-start-line="273" selection-start-column="13" selection-end-line="273" selection-end-column="13" />
           <folding />
         </state>
       </provider>
