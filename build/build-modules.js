@@ -40,6 +40,7 @@ module.exports = function (srcPath) {
      * @type {object}
      */
     var config = parseConfig(srcPath);
+    console.log(JSON.stringify(config, null, 2));
     var destPath = path.join(srcPath, config.dest);
     var cssPath = path.join(srcPath, config.css.dest);
     var coolieJSPath = path.join(srcPath, config.js['coolie.js']);
