@@ -1,4 +1,7 @@
 # 0.x.x
+- 0.12.2
+    - 适配了[coolie.js@0.7.0](https://github.com/cloudcome/coolie)
+    - 修正部分 BUG
 - 0.12.0
 	- 全新的构建配置，更加合理
 	- 更为全面的资源版本管理
