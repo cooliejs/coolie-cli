@@ -61,7 +61,7 @@ var ydrUtil = require('ydr-util');
  * 脚本压缩
  * @param file
  * @param code
- * @param callback
+ * @param [callback]
  */
 module.exports = function (file, code, callback) {
     var ret;
@@ -95,7 +95,11 @@ module.exports = function (file, code, callback) {
             compress: true
         });
 
-        callback(null, ret.code);
+        if (callback) {
+            callback(null, ret.code);
+        } else {
+            return ret.code;
+        }
     } catch (err) {
         log('jsminify', ydrUtil.dato.fixPath(file), 'error');
         log('jsminify', err.message, 'error');

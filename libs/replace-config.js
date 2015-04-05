@@ -9,9 +9,11 @@
 var dato = require('ydr-util').dato;
 var path = require('path');
 var log = require('./log.js');
+var jsminify = require('./jsminify.js');
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /\}$/;
 var config = {};
+var callbacks = [];
 var coolieFn = function () {
     var coolie = {
         config: function (cnf) {
@@ -19,11 +21,19 @@ var coolieFn = function () {
 
             config.base = cnf.base || '';
             config.version = cnf.version || '';
+            config.host = cnf.host || '';
 
-            return this;
+            return coolie;
         },
         use: function () {
-            return this;
+            return coolie;
+        },
+        callback: function (fn) {
+            if (typeof(fn) === 'function') {
+                callbacks.push(fn);
+            }
+
+            return coolie;
         }
     };
 };
@@ -31,8 +41,8 @@ var coolieFn = function () {
 
 /**
  * 构建配置文件
- * @param coolieJS {String} srcPath 源路径
- * @param coolieJS {String} coolieJS 路径
+ * @param srcPath {String} srcPath 源路径
+ * @param coolieJSPath {String} coolieJS 路径
  * @param file {String} 文件地址
  * @param code {String} 文件内容
  * @param versionMap {Object} 版本 MAP
@@ -43,12 +53,13 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
         .replace(REG_FUNCTION_START, '')
         .replace(REG_FUNCTION_END, '');
 
-    var fn = new Function('config', coolieString + code);
+
+    var fn = new Function('config, callbacks', coolieString + code);
     var base;
     var version = JSON.stringify(versionMap);
 
     try {
-        fn(config);
+        fn(config, callbacks);
 
         var basePath = path.join(path.dirname(coolieJSPath), config.base);
         var versionMap2 = {};
@@ -65,13 +76,28 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
         version = JSON.stringify(versionMap2);
 
         log('√', 'base: "' + config.base + '"', 'success');
-        log('√', 'version: "' + JSON.stringify(versionMap2, null, 4) + '"', 'success');
+        log('√', 'host: "' + config.host + '"', 'success');
+        log('√', 'version: "' + JSON.stringify(versionMap2, null, 2) + '"', 'success');
+        log('√', 'callbacks: ' + callbacks.length, 'success');
+
+        var code2 = 'coolie.config({' +
+            'base:"' + config.base + '",' +
+            'host:"' + config.host + '",' +
+            'version:' + version + '})' +
+            '.use()';
+
+        dato.each(callbacks, function (index, callback) {
+            code2 += '.callback(' + callback.toString() + ')';
+        });
+
+        code2 += ';';
+
         return {
             config: config,
-            code: 'coolie.config({base:"' + config.base + '",version:' + version + '}).use();'
+            code: jsminify(file ,code2)
         };
     } catch (err) {
-        log('replace config', dato.fixPath(file), 'error');
-        log('replace config', err.message, 'error');
+        log('coolie-config.js', dato.fixPath(file), 'error');
+        log('coolie-config.js', err.message, 'error');
     }
 };
