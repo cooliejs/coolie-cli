@@ -5,11 +5,8 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" afterPath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" afterPath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/coolie-config.js" afterPath="$PROJECT_DIR$/example/dest/static/js/coolie-config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/src/static/js/coolie-config.js" afterPath="$PROJECT_DIR$/example/src/static/js/coolie-config.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.6b9abd4a3d58543d.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.6b9abd4a3d58543d.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/jsminify.js" afterPath="$PROJECT_DIR$/libs/jsminify.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/replace-config.js" afterPath="$PROJECT_DIR$/libs/replace-config.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -31,18 +28,7 @@
     <favorites_list name="nodejs-coolie" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="replace-config.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/libs/replace-config.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4394184">
-              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -434,12 +420,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00054" summary="&lt;script&gt; 提取 main">
-      <created>1427196522467</created>
-      <option name="number" value="00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1427196522467</updated>
-    </task>
     <task id="LOCAL-00055" summary="去除额外日志">
       <created>1427212172675</created>
       <option name="number" value="00055" />
@@ -728,7 +708,13 @@
       <option name="project" value="LOCAL" />
       <updated>1428141590183</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="适配 coolie.js 配置">
+      <created>1428240197805</created>
+      <option name="number" value="00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1428240197805</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -736,13 +722,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="737" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2883721" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29785544" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.29785544" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -761,7 +748,6 @@
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32713178" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -829,7 +815,8 @@
     <MESSAGE value="修正上一版本的 BUG" />
     <MESSAGE value="修正构建之后的样式路径" />
     <MESSAGE value="新的构建配置" />
-    <option name="LAST_COMMIT_MESSAGE" value="新的构建配置" />
+    <MESSAGE value="适配 coolie.js 配置" />
+    <option name="LAST_COMMIT_MESSAGE" value="适配 coolie.js 配置" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1207,14 +1194,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/dest/static/js/coolie-config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.1098546">
-          <caret line="4" column="3" selection-start-line="4" selection-start-column="3" selection-end-line="4" selection-end-column="3" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libs/jsminify.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.450727">
@@ -1223,10 +1202,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/example/dest/static/js/coolie-config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/libs/replace-config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4394184">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.50405186">
+          <caret line="91" column="0" selection-start-line="91" selection-start-column="0" selection-end-line="91" selection-end-column="0" />
           <folding />
         </state>
       </provider>
