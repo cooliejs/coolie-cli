@@ -195,37 +195,18 @@ module.exports = function (relative) {
 
     // 检查 resource 路径
     // resource: {
-    //     src: [],
-    //     dest: ""
+    //     dest: "",
     // }
     check.resource = function () {
-        if (config.resource) {
-            if (typeis(config.resource) !== "object") {
-                log("parse config", "`resource` property must be an object", "error");
-                process.exit();
-            }
+        if (typeis(config.resource) !== "object") {
+            log("parse config", "`resource` property must be an object", "error");
+            process.exit();
+        }
 
-            var resourceSrcType = typeis(config.resource.src);
-
-            if (resourceSrcType !== "string" && resourceSrcType !== "array") {
-                log("parse config", "`resource.src` property must be a string path or an array path", "error");
-                process.exit();
-            }
-
-            if (resourceSrcType === "array") {
-                config.resource.src.forEach(function (mn, index) {
-                    if (typeis(mn) !== "string") {
-                        log("parse config", "`resource.src[" + index + "]` must be a string path", "error");
-                        process.exit();
-                    }
-                });
-            } else {
-                config.resource.src = [config.resource.src];
-            }
-        } else {
-            config.resource = {
-                src: []
-            };
+        // resource.dest
+        if (typeis(config.css.dest) !== 'string') {
+            log("parse config", "`css.dest` property must be a string path", "error");
+            process.exit();
         }
     };
 

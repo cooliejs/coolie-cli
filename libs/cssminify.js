@@ -12,6 +12,7 @@ var minifyCSS = require("clean-css");
 var log = require('./log.js');
 var dato = require('ydr-util').dato;
 var typeis = require('ydr-util').typeis;
+var crypto = require('ydr-util').crypto;
 var path = require('path');
 var options = {
     keepSpecialComments: 0,
@@ -87,9 +88,16 @@ module.exports = function (file, code, srcPath, destPath, destFile, config, call
             var url = buildMap[absFile];
             var version = resVerMap[absFile];
 
-            if(!version){
-
+            if (!version) {
+                version = crypto.etag(absFile);
             }
+
+            if (!version) {
+                log('read file', dato.fixPath(absFile), 'error');
+                process.exit();
+            }
+
+            resVerMap[absFile] = version;
 
             // 未进行版本构建
             if (!url) {
