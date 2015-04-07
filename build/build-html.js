@@ -23,10 +23,9 @@ var cssminify = require('../libs/cssminify.js');
  * @param jsBase {String} coolie 配置的 base 目录
  * @param srcPath {String} 构建源路径
  * @param destPath {String} 构建目标路径
- * @param resVersionMap {Object} 资源文件版本号
  * @param callback {Function} 回调
  */
-module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, resVersionMap, callback) {
+module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, callback) {
     var cssLength = 0;
     var depCSS = [];
 
@@ -91,7 +90,7 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, res
                                 process.exit();
                             }
 
-                            cssminify(file, data, resVersionMap, srcPath, destPath, destFile, config, function (err, data) {
+                            cssminify(file, data, srcPath, destPath, destFile, config, function (err, data) {
                                 bufferList.push(new Buffer('\n' + data, 'utf8'));
                                 //log('require', dato.fixPath(file));
                                 doneConcat();

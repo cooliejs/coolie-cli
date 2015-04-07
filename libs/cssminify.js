@@ -22,20 +22,20 @@ var REG_REMOTE = /^(https?:)?\/\//i;
 var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_ABSPATH = /^\//;
 var buildMap = {};
+var resVerMap = {};
 
 
 /**
  * 样式压缩
  * @param file
  * @param code
- * @param resVersionMap
  * @param srcPath
  * @param destPath
  * @param destFile
  * @param config
  * @param [callback]
  */
-module.exports = function (file, code, resVersionMap, srcPath, destPath, destFile, config, callback) {
+module.exports = function (file, code, srcPath, destPath, destFile, config, callback) {
     var args = arguments;
     var hasResVersionMap = true;
 
@@ -85,7 +85,11 @@ module.exports = function (file, code, resVersionMap, srcPath, destPath, destFil
             absFile = absFile.replace(REG_SUFFIX, '');
 
             var url = buildMap[absFile];
-            var version = resVersionMap[absFile] || '';
+            var version = resVerMap[absFile];
+
+            if(!version){
+
+            }
 
             // 未进行版本构建
             if (!url) {

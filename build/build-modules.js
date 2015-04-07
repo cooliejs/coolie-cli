@@ -59,7 +59,7 @@ module.exports = function (srcPath) {
 
     howdo
         .task(function (next) {
-            log('1/6', 'copy files', 'task');
+            log('1/5', 'copy files', 'task');
             next();
         })
         .each(config.copy, function (i, copyFile, nextCopy) {
@@ -97,7 +97,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('2/6', 'build main', 'task');
+            log('2/5', 'build main', 'task');
             next();
         })
         .each(config.js.src, function (i, main, nextMain) {
@@ -150,7 +150,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('3/6', 'overwrite config', 'task');
+            log('3/5', 'overwrite config', 'task');
             next();
         })
         .task(function (next) {
@@ -174,34 +174,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('4/6', 'build resource version', 'task');
-            next();
-        })
-        .each(config.resource.src, function (i, resFile, nextRes) {
-            // res files
-            var gbPath = path.join(srcPath, resFile);
-
-            glob(gbPath, {dot: false, nodir: true}, function (err, files) {
-                if (err) {
-                    log('glob', dato.fixPath(gbPath), 'error');
-                    log('glob', err.message, 'error');
-                    process.exit();
-                }
-
-                howdo.each(files, function (j, file, nextFile) {
-                    resVersionMap[file] = crypto.etag(file);
-                    resLength++;
-                    nextFile();
-                }).follow(function () {
-                    log('√', dato.fixPath(gbPath), 'success');
-                    nextRes();
-                });
-            });
-        })
-
-
-        .task(function (next) {
-            log('5/6', 'build html css', 'task');
+            log('4/5', 'build html css', 'task');
             next();
         })
         .each(config.html.src, function (i, htmlFile, nextGlob) {
@@ -218,7 +191,7 @@ module.exports = function (srcPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, config, jsBase, srcPath, destPath, resVersionMap, function (err, _cssLength, depCSS, mainJS) {
+                    buildHTML(file, cssPath, config, jsBase, srcPath, destPath, function (err, _cssLength, depCSS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = dato.toURLPath(htmlRelative);
 
@@ -238,7 +211,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('6/6', 'generator relationship map', 'task');
+            log('5/5', 'generator relationship map', 'task');
             next();
         })
         .task(function (next) {
