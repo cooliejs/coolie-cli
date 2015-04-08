@@ -13,6 +13,8 @@ var log = require('../libs/log.js');
 var dato = require('ydr-util').dato;
 var replaceHtml = require('../libs/replace-html.js');
 var cssminify = require('../libs/cssminify.js');
+var cssLength = 0;
+var resLength = 0;
 
 
 /**
@@ -26,8 +28,6 @@ var cssminify = require('../libs/cssminify.js');
  * @param callback {Function} 回调
  */
 module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, callback) {
-    var cssLength = 0;
-    var resLength = 0;
     var depCSS = [];
 
     fs.readFile(file, 'utf8', function (err, data) {

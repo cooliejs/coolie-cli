@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-html.js" afterPath="$PROJECT_DIR$/build/build-html.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-modules.js" afterPath="$PROJECT_DIR$/build/build-modules.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/cssminify.js" afterPath="$PROJECT_DIR$/libs/cssminify.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -30,28 +28,28 @@
       <file leaf-file-name="cssminify.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/libs/cssminify.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="52" column="42" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="42" />
+            <state vertical-scroll-proportion="-4.111111">
+              <caret line="99" column="21" selection-start-line="99" selection-start-column="12" selection-end-line="99" selection-end-column="21" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build-modules.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="build-modules.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build/build-modules.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.60940033">
-              <caret line="203" column="23" selection-start-line="203" selection-start-column="23" selection-end-line="203" selection-end-column="23" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="192" column="117" selection-start-line="192" selection-start-column="117" selection-end-line="192" selection-end-column="117" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build-html.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="build-html.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build/build-html.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="123" column="51" selection-start-line="123" selection-start-column="42" selection-end-line="123" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.64181525">
+              <caret line="119" column="19" selection-start-line="119" selection-start-column="19" selection-end-line="119" selection-end-column="19" />
               <folding />
             </state>
           </provider>
@@ -104,9 +102,9 @@
         <option value="$PROJECT_DIR$/build/build-json.js" />
         <option value="$PROJECT_DIR$/build/build-config.js" />
         <option value="$PROJECT_DIR$/version.md" />
+        <option value="$PROJECT_DIR$/build/build-modules.js" />
         <option value="$PROJECT_DIR$/libs/cssminify.js" />
         <option value="$PROJECT_DIR$/build/build-html.js" />
-        <option value="$PROJECT_DIR$/build/build-modules.js" />
       </list>
     </option>
   </component>
@@ -316,12 +314,6 @@
       <workItem from="1427191352293" duration="2221000" />
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
-    </task>
-    <task id="LOCAL-00061" summary="全新配置">
-      <created>1427812781805</created>
-      <option name="number" value="00061" />
-      <option name="project" value="LOCAL" />
-      <updated>1427812781805</updated>
     </task>
     <task id="LOCAL-00062" summary="全新配置">
       <created>1427812792029</created>
@@ -611,7 +603,13 @@
       <option name="project" value="LOCAL" />
       <updated>1428469768151</updated>
     </task>
-    <option name="localTasksCounter" value="110" />
+    <task id="LOCAL-00110" summary="更简化的构建">
+      <created>1428472681104</created>
+      <option name="number" value="00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1428472681104</updated>
+    </task>
+    <option name="localTasksCounter" value="111" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1085,26 +1083,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libs/cssminify.js">
+    <entry file="file://$PROJECT_DIR$/build/build-modules.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="52" column="42" selection-start-line="52" selection-start-column="33" selection-end-line="52" selection-end-column="42" />
+          <caret line="192" column="117" selection-start-line="192" selection-start-column="117" selection-end-line="192" selection-end-column="117" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/cssminify.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.111111">
+          <caret line="99" column="21" selection-start-line="99" selection-start-column="12" selection-end-line="99" selection-end-column="21" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build/build-html.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="123" column="51" selection-start-line="123" selection-start-column="42" selection-end-line="123" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/build-modules.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60940033">
-          <caret line="203" column="23" selection-start-line="203" selection-start-column="23" selection-end-line="203" selection-end-column="23" />
+        <state vertical-scroll-proportion="0.64181525">
+          <caret line="119" column="19" selection-start-line="119" selection-start-column="19" selection-end-line="119" selection-end-column="19" />
           <folding />
         </state>
       </provider>
