@@ -26,7 +26,7 @@ module.exports = function (basedir) {
     var jsonString = '';
     var continueStep = function () {
         json.js = {};
-        log("1/11", "请输入 JS 入口模块的路径。" +
+        log("1/10", "请输入 JS 入口模块的路径。" +
         "\n支持通配符，多个路径使用空格分开，默认为“./static/js/app/**/*.js”。", "success");
     };
 
@@ -60,22 +60,22 @@ module.exports = function (basedir) {
         json.js.src = _getVal(data, './static/js/app/**/*.js', true);
 
 
-        log("2/11", "请输入 coolie 模块加载器所在的路径，默认为“./static/js/coolie.min.js”：" +
+        log("2/10", "请输入 coolie 模块加载器所在的路径，默认为“./static/js/coolie.min.js”：" +
         "\n`coolie.js`是模块加载器的主文件。", "success");
     });
 
     // js[coolie.js]
     steps.push(function (data) {
-        json['coolie.js'] = _getVal(data, './static/js/coolie.min.js', false);
+        json.js['coolie.js'] = _getVal(data, './static/js/coolie.min.js', false);
 
-        log("3/11", "请输入 coolie 模块加载器配置文件所在的路径，默认为“./static/js/coolie-config.js”。", "success");
+        log("3/10", "请输入 coolie 模块加载器配置文件所在的路径，默认为“./static/js/coolie-config.js”。", "success");
     });
 
     // js[coolie-config.js]
     steps.push(function (data) {
-        json['coolie-config.js'] = _getVal(data, './static/js/coolie-config.js', false);
+        json.js['coolie-config.js'] = _getVal(data, './static/js/coolie-config.js', false);
 
-        log("4/11", "请输入生成 CSS 文件的存放目录。默认为“./static/css/”", "success");
+        log("4/10", "请输入生成 CSS 文件的存放目录。默认为“./static/css/”", "success");
     });
 
     // css.dest
@@ -83,14 +83,14 @@ module.exports = function (basedir) {
         json.css = {};
         json.css.dest = _getVal(data, './static/css/', false);
 
-        log("5/11", "请输入发布后 CSS 文件所在的域，如“http://s.ydr.me/a/b”。默认为空。", "success");
+        log("5/10", "请输入发布后 CSS 文件所在的域，如“http://s.ydr.me/a/b”。默认为空。", "success");
     });
 
     // css host
     steps.push(function (data) {
         json.css.host = _getVal(data, '', false);
 
-        log("6/11", "请输入 HTML 文件所在的路径。" +
+        log("6/10", "请输入 HTML 文件所在的路径。" +
         "\n支持通配符，多个路径使用空格分开。默认为“./views/**/*.html”。", "success");
     });
 
@@ -99,38 +99,30 @@ module.exports = function (basedir) {
         json.html = {};
         json.html.src = _getVal(data, './views/**/*.html', true);
 
-        log("7/11", "是否压缩 HTML 文件，默认为“1”（true）。", "success");
+        log("7/10", "是否压缩 HTML 文件，默认为“1”（true）。", "success");
     });
 
     // html.minify
     steps.push(function (data) {
         json.html.minify = !!dato.parseInt(_getVal(data, 1, false), 1);
 
-        log("8/11", "请输入资源文件路径，通常为样式引用的图片、字体等，会在构建之后版本化。" +
-        "\n支持通配符，多个路径使用空格分开，默认为“./static/img/**/*.*”和“./static/fonts/**/*.*”。", "success");
+        log("8/10", "请输入资源保存目录，默认为“./static/res/”。", "success");
     });
 
-    // resource.src
+
+    // resource.dest
     steps.push(function (data) {
         json.resource = {};
-        json.resource.src = _getVal(data, './static/img/**/*.* ./static/fonts/**/*.*', true);
-
-        log("9/11", "请输入资源保存目录，默认为“./static/res/”。", "success");
-    });
-
-
-    // resource.src
-    steps.push(function (data) {
         json.resource.dest = _getVal(data, './static/res/', false);
 
-        log("10/11", "请输入构建的目标目录，默认为“../dest/”。", "success");
+        log("9/10", "请输入构建的目标目录，默认为“../dest/”。", "success");
     });
 
     // dest
     steps.push(function (data) {
         json.dest = _getVal(data, '../dest/', false);
 
-        log("11/11", "请输入构建时需要原样复制的文件路径，默认为空。" +
+        log("10/10", "请输入构建时需要原样复制的文件路径，默认为空。" +
         "\n支持通配符，多个文件路径使用空格分开。", "success");
     });
 
