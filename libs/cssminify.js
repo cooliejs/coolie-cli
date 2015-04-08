@@ -50,7 +50,7 @@ module.exports = function (file, code, srcPath, destPath, destFile, config, call
         code = hasResVersionMap ? _cssUrlVersion() : code;
 
         if (callback) {
-            callback(null, code);
+            callback(null, code, resVerMap);
         } else {
             return code;
         }

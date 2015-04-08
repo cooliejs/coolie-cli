@@ -52,7 +52,6 @@ module.exports = function (srcPath) {
     var resLength = 0;
     var cssLength = 0;
     var versionMap = {};
-    var resVersionMap = {};
     var MainRelationshipMap = {};
     var htmlJsCssRelationshipMap = {};
     var jsBase;
@@ -191,7 +190,7 @@ module.exports = function (srcPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, config, jsBase, srcPath, destPath, function (err, _cssLength, depCSS, mainJS) {
+                    buildHTML(file, cssPath, config, jsBase, srcPath, destPath, function (err, _cssLength, _resLength, depCSS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = dato.toURLPath(htmlRelative);
 
@@ -200,6 +199,7 @@ module.exports = function (srcPath) {
                             main: mainJS
                         };
                         cssLength += _cssLength;
+                        resLength = _resLength;
                         nextHTML(err);
                     });
                 }).follow(function () {

@@ -27,6 +27,7 @@ var cssminify = require('../libs/cssminify.js');
  */
 module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, callback) {
     var cssLength = 0;
+    var resLength = 0;
     var depCSS = [];
 
     fs.readFile(file, 'utf8', function (err, data) {
@@ -90,8 +91,9 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, cal
                                 process.exit();
                             }
 
-                            cssminify(file, data, srcPath, destPath, destFile, config, function (err, data) {
-                                bufferList.push(new Buffer('\n' + data, 'utf8'));
+                            cssminify(file, data, srcPath, destPath, destFile, config, function (err, code, resVerMap) {
+                                bufferList.push(new Buffer('\n' + code, 'utf8'));
+                                resLength = Object.keys(resVerMap).length;
                                 //log('require', dato.fixPath(file));
                                 doneConcat();
                             });
@@ -119,7 +121,7 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, cal
             })
             // 并行
             .together(function () {
-                callback(null, cssLength, depCSS, ret.mainJS);
+                callback(null, cssLength, resLength, depCSS, ret.mainJS);
             });
     });
 };
