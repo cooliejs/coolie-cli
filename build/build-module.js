@@ -87,6 +87,7 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
         })
 
 
+
         // 3. 替换 require
         .task(function (next, code) {
             if (!isText) {
@@ -95,6 +96,7 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
 
             next(null, code);
         })
+
 
 
         // 4. 压缩

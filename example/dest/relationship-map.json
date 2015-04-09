@@ -10,16 +10,7 @@
         ],
         "main": "static/js/app/index.js",
         "deps": [
-            "static/js/libs/lib.js",
-            "static/js/libs/all.js",
-            "static/js/libs/path1/path2/abc.js",
-            "static/js/libs/path1/path2/def.js",
-            "static/js/libs/path1/path2/1.js",
-            "static/js/libs/path1/path2/2.js",
-            "static/js/libs/path1/path2/3.js",
-            "static/js/libs/some.txt",
-            "static/js/libs/some.css",
-            "static/js/libs/some.html"
+            "static/js/libs/path1/vue.js"
         ]
     },
     "html/user/index.html": {
@@ -32,8 +23,6 @@
             }
         ],
         "main": "static/js/app/user/index.js",
-        "deps": [
-            "static/js/libs/all.js"
-        ]
+        "deps": []
     }
 }
