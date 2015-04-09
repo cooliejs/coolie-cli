@@ -15,7 +15,7 @@ var REG_DEFINE = /\bdefine\b\s*?\b\(\s*?function\b[^(]*\(([^,)]*)/;
 /**
  * 替换 require
  * @param file {String} 文件路径
- * @param code {String} 代码必须先进行压缩过后的，保证没有其他注释干扰
+ * @param code {String} 代码
  * @param depNameList {Array} 依赖数组
  * @param depName2IdMap {Object} 依赖对应表
  */

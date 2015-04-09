@@ -5,11 +5,16 @@
  */
 
 
-"use strict";
+'use strict';
 
-var log = require("./log.js");
-var ydrUtil = require("ydr-util");
-var REG_DEFINE = /\bdefine\s*?\(.*?function/;
+var log = require('./log.js');
+var dato = require('ydr-util').dato;
+// define&&define.amd?define(e)
+// define(e)
+// define&&define.amd?define(function(
+// define(function(
+var REG_DEFINE_1 = /\bdefine\(([^)]*?)\)/;
+var REG_DEFINE_2 = /\bdefine\(function\(/;
 
 
 /**
@@ -21,26 +26,28 @@ var REG_DEFINE = /\bdefine\s*?\(.*?function/;
  * @returns {string}
  */
 module.exports = function (file, code, deps, depIdsMap) {
-    var depsCode = "";
+    var depsCode = '';
     var id = depIdsMap[file];
 
     if (!id) {
-        log("replace define", "the module ID is undefined in " + ydrUtil.dato.fixPath(file), "error");
+        log('replace define', 'the module ID is undefined in ' + dato.fixPath(file), 'error');
         process.exit();
     }
 
     deps.forEach(function (dep) {
         if (depIdsMap[dep]) {
             if (depsCode) {
-                depsCode += ",";
+                depsCode += ',';
             }
 
-            depsCode += "\"" + depIdsMap[dep] + "\"";
+            depsCode += '"' + depIdsMap[dep] + '"';
         } else {
-            log("replace define", "can not find " + dep + " map", "error");
+            log('replace define', 'can not find ' + dep + ' map', 'error');
             process.exit();
         }
     });
 
-    return code.replace(REG_DEFINE, "define(\"" + id + "\",[" + depsCode + "],function");
+    return code
+        .replace(REG_DEFINE_1, 'define("' + id + '",[' + depsCode + '],$1)')
+        .replace(REG_DEFINE_2, 'define("' + id + '",[' + depsCode + '],function');
 };
