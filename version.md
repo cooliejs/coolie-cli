@@ -1,5 +1,5 @@
 # 0.x.x
-- 0.12.7
+- 0.12.9
     - 适配了[coolie.js@0.7.0](https://github.com/cloudcome/coolie)
     - 修正部分 BUG
 - 0.12.0
