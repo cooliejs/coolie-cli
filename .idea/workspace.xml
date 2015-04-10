@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-modules.js" afterPath="$PROJECT_DIR$/build/build-modules.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-main.js" afterPath="$PROJECT_DIR$/build/build-main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -55,12 +55,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build-modules.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="build-modules.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build/build-modules.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.28688523">
+            <state vertical-scroll-proportion="0.0">
               <caret line="125" column="0" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build-main.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build/build-main.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.38251367">
+              <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -133,7 +145,6 @@
         <option value="$PROJECT_DIR$/example/src/static/css/bootstrap.css" />
         <option value="$PROJECT_DIR$/example/dest/html/index.html" />
         <option value="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" />
-        <option value="$PROJECT_DIR$/build/build-main.js" />
         <option value="$PROJECT_DIR$/build/check-update.js" />
         <option value="$PROJECT_DIR$/example/dest/static/js/coolie-config.js" />
         <option value="$PROJECT_DIR$/libs/replace-config.js" />
@@ -160,6 +171,7 @@
         <option value="$PROJECT_DIR$/libs/cssminify.js" />
         <option value="$PROJECT_DIR$/libs/replace-html.js" />
         <option value="$PROJECT_DIR$/build/build-modules.js" />
+        <option value="$PROJECT_DIR$/build/build-main.js" />
       </list>
     </option>
   </component>
@@ -370,12 +382,6 @@
       <workItem from="1427191352293" duration="2221000" />
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
-    </task>
-    <task id="LOCAL-00078" summary="新的构建配置">
-      <created>1428130174276</created>
-      <option name="number" value="00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1428130174276</updated>
     </task>
     <task id="LOCAL-00079" summary="新的构建配置">
       <created>1428130297546</created>
@@ -665,7 +671,13 @@
       <option name="project" value="LOCAL" />
       <updated>1428677582550</updated>
     </task>
-    <option name="localTasksCounter" value="127" />
+    <task id="LOCAL-00127" summary="ydr-util =&gt; ydr-utils">
+      <created>1428677602851</created>
+      <option name="number" value="00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1428677602851</updated>
+    </task>
+    <option name="localTasksCounter" value="128" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1046,14 +1058,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/build-main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libs/htmlminify.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1138,9 +1142,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build/build-modules.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28688523">
+        <state vertical-scroll-proportion="0.0">
           <caret line="125" column="0" selection-start-line="125" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/build-main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38251367">
+          <caret line="12" column="0" selection-start-line="12" selection-start-column="0" selection-end-line="12" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
