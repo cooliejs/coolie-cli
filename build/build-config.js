@@ -10,7 +10,8 @@
 var fs = require("fs-extra");
 var path = require("path");
 var log = require("../libs/log.js");
-var ydrUtil = require('ydr-utils');
+var typeis = require('ydr-utils').typeis;
+var dato = require('ydr-utils').dato;
 var nextStep = require("../libs/next-step.js");
 var RE_CLEAN = /[\r\n\t\v""]/g;
 var RE_SPACE = /\s+/g;
@@ -21,7 +22,7 @@ require("colors");
 module.exports = function (basedir) {
     var steps = [];
     var writeFile = path.join(basedir, "./coolie-config.js");
-    var isExist = ydrUtil.typeis.file(writeFile);
+    var isExist = typeis.file(writeFile);
     var continueStep = function () {
         log("1/3", "请输入`base`值，默认为“./static/app/”：" +
         "\n`base`路径是相对于 coolie 模块加载器所在的目录；" +
@@ -34,7 +35,7 @@ module.exports = function (basedir) {
     steps.push(function () {
         log("coolie", "coolie 苦力 builder", "help");
         log("tips", "以下操作留空回车表示同意默认配置。", "warning");
-        log("file path", ydrUtil.dato.fixPath(writeFile), "task");
+        log("file path", dato.fixPath(writeFile), "task");
         log("warning", "如果上述目录不正确，请按`ctrl+C`退出后重新指定。", "warning");
 
         if (isExist) {
@@ -75,11 +76,11 @@ module.exports = function (basedir) {
         if (data.trim().toLocaleLowerCase().indexOf("n") === -1) {
             fs.outputFile(writeFile, jsonString, "utf-8", function (err) {
                 if (err) {
-                    log("write", ydrUtil.dato.fixPath(writeFile), "error");
+                    log("write", dato.fixPath(writeFile), "error");
                     return process.exit();
                 }
 
-                log("√", ydrUtil.dato.fixPath(writeFile), "success");
+                log("√", dato.fixPath(writeFile), "success");
                 process.exit();
             });
         } else {
