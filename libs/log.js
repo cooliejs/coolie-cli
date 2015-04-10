@@ -7,7 +7,7 @@
 'use strict';
 
 var colors = require('colors/safe.js');
-var ydrUtil = require('ydr-util');
+var ydrUtil = require('ydr-utils');
 
 // set theme
 var map = {

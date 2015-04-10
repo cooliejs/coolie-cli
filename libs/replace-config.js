@@ -6,7 +6,7 @@
 
 "use strict";
 
-var dato = require('ydr-util').dato;
+var dato = require('ydr-utils').dato;
 var path = require('path');
 var log = require('./log.js');
 var jsminify = require('./jsminify.js');

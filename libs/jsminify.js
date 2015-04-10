@@ -8,7 +8,7 @@
 
 var uglifyJS = require("uglify-js");
 var log = require('./log.js');
-var ydrUtil = require('ydr-util');
+var ydrUtil = require('ydr-utils');
 //var compressorOptions = {
 //    // 连续单语句，逗号分开
 //    // 如： alert(1);alert(2); => alert(1),alert(2)

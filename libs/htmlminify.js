@@ -7,8 +7,8 @@
 'use strict';
 
 var log = require('./log.js');
-var dato = require('ydr-util').dato;
-var random = require('ydr-util').random;
+var dato = require('ydr-utils').dato;
+var random = require('ydr-utils').random;
 var REG_LINES = /[\n\r\t]/g;
 var REG_SPACES = /\s{2,}/g;
 // 单行注释

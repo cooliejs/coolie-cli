@@ -8,8 +8,8 @@
 
 var fs = require('fs-extra');
 var path = require('path');
-var crypto = require('ydr-util').crypto;
-var dato = require('ydr-util').dato;
+var crypto = require('ydr-utils').crypto;
+var dato = require('ydr-utils').dato;
 var log = require('./log.js');
 var htmlminify = require('./htmlminify.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;

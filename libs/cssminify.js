@@ -10,9 +10,9 @@
 var fs = require('fs-extra');
 var minifyCSS = require("clean-css");
 var log = require('./log.js');
-var dato = require('ydr-util').dato;
-var typeis = require('ydr-util').typeis;
-var crypto = require('ydr-util').crypto;
+var dato = require('ydr-utils').dato;
+var typeis = require('ydr-utils').typeis;
+var crypto = require('ydr-utils').crypto;
 var path = require('path');
 var options = {
     keepSpecialComments: 0,

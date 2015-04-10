@@ -8,7 +8,7 @@
 'use strict';
 
 var log = require('./log.js');
-var dato = require('ydr-util').dato;
+var dato = require('ydr-utils').dato;
 // define&&define.amd?define(e)
 // define(e)
 // define&&define.amd?define(function(
