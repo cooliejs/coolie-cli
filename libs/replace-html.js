@@ -185,7 +185,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, config, jsBas
             buildMap[absFile] = url = '/' + path.relative(destPath, resFile);
         }
 
-        return '<img' + $1 + 'src="' + url + '"' + $3 + '>';
+        return '<img' + $1 + 'src="' + url + suffix + '"' + $3 + '>';
     });
 
     return {
