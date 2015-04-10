@@ -8,7 +8,7 @@
 
 var fs = require('fs-extra');
 var path = require('path');
-var crypto = require('ydr-utils').crypto;
+var encryption = require('ydr-utils').encryption;
 var dato = require('ydr-utils').dato;
 var log = require('./log.js');
 var htmlminify = require('./htmlminify.js');
@@ -86,7 +86,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, config, jsBas
                 }
 
                 files.push(file);
-                md5List += crypto.etag(file);
+                md5List += encryption.etag(file);
             }
         }
 
@@ -113,7 +113,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, config, jsBas
             concat.push(findMath);
         } else {
             if (files.length) {
-                fileName = crypto.md5(md5List).slice(0, 16) + '.css';
+                fileName = encryption.md5(md5List).slice(0, 16) + '.css';
                 filePath = path.join(cssPath, fileName);
                 filePath = path.relative(srcPath, filePath);
                 fileURL = cssHost + dato.toURLPath(filePath);
@@ -149,7 +149,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, config, jsBas
         var version = config._resVerMap[absFile];
 
         if (!version) {
-            version = crypto.etag(absFile);
+            version = encryption.etag(absFile);
         }
 
         if (!version) {

@@ -12,7 +12,7 @@ var minifyCSS = require("clean-css");
 var log = require('./log.js');
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
-var crypto = require('ydr-utils').crypto;
+var encryption = require('ydr-utils').encryption;
 var path = require('path');
 var options = {
     keepSpecialComments: 0,
@@ -88,7 +88,7 @@ module.exports = function (file, code, srcPath, destPath, destFile, config, call
             var version = config._resVerMap[absFile];
 
             if (!version) {
-                version = crypto.etag(absFile);
+                version = encryption.etag(absFile);
             }
 
             if (!version) {
