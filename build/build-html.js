@@ -14,7 +14,6 @@ var dato = require('ydr-util').dato;
 var replaceHtml = require('../libs/replace-html.js');
 var cssminify = require('../libs/cssminify.js');
 var cssLength = 0;
-var resLength = 0;
 
 
 /**
@@ -91,9 +90,8 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, cal
                                 process.exit();
                             }
 
-                            cssminify(file, data, srcPath, destPath, destFile, config, function (err, code, resVerMap) {
+                            cssminify(file, data, srcPath, destPath, destFile, config, function (err, code) {
                                 bufferList.push(new Buffer('\n' + code, 'utf8'));
-                                resLength = Object.keys(resVerMap).length;
                                 //log('require', dato.fixPath(file));
                                 doneConcat();
                             });
@@ -121,7 +119,7 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, cal
             })
             // 并行
             .together(function () {
-                callback(null, cssLength, resLength, depCSS, ret.mainJS);
+                callback(null, cssLength, depCSS, ret.mainJS);
             });
     });
 };

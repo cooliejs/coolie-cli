@@ -13,8 +13,8 @@ var log = require('./log.js');
 var htmlminify = require('./htmlminify.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
-var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"].*?>/gi;
-var REG_IMG = /<img\b[^>]*?\bsrc\b\s*?=\s*?['"](.*?)['"].*?>/gi;
+var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/gi;
+var REG_IMG = /<img\b([^>]*?)\bsrc\b\s*?=\s*?['"](.*?)['"]([^>]*?)>/gi;
 var REG_SCRIPT = /<script\b([^>]*?)\bsrc\b\s*?=\s*?['"]([^>]*?)['"]([^>]*?)>[^>]*?<\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
 var REG_ABSOLUTE = /^\//;
@@ -143,9 +143,15 @@ module.exports = function (file, data, srcPath, cssPath, config, jsBase) {
         return $1 ? '<link rel="stylesheet" href="' + concat[replaceIndex++].url + '"/>' : $0;
     });
 
+    data = data.replace(REG_IMG, function ($0, $1, $2, $3) {
+        var absFile = path.join(srcPath, $2);
+
+        return '<img' + $1 + 'src="' + $2 + '"' + $3 + '>';
+    });
+
     return {
         concat: concat,
-        data: config.html.minify ? htmlminify(file, data, config): data,
+        data: config.html.minify ? htmlminify(file, data) : data,
         mainJS: mainJS
     };
 };

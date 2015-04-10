@@ -28,10 +28,9 @@ var REG_SCRIPTS = /<script\b.*?>[\s\S]*?<\/script>/ig;
  * html minify
  * @param file
  * @param code
- * @param config
  * @param [callback]
  */
-module.exports = function (file, code, config, callback) {
+module.exports = function (file, code, callback) {
     // 保存 <pre>
     var preMap = {};
     code = code.replace(REG_PRES, function ($0) {
