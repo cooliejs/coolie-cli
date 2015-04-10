@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/next-step.js" afterPath="$PROJECT_DIR$/libs/next-step.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/parse-config.js" afterPath="$PROJECT_DIR$/libs/parse-config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/replace-require.js" afterPath="$PROJECT_DIR$/libs/replace-require.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-config.js" afterPath="$PROJECT_DIR$/build/build-config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-json.js" afterPath="$PROJECT_DIR$/build/build-json.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -37,11 +36,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="next-step.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="next-step.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/libs/next-step.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.35818475">
+            <state vertical-scroll-proportion="0.0">
               <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build-config.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build/build-config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.38573745">
+              <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -111,7 +120,6 @@
         <option value="$PROJECT_DIR$/libs/replace-config.js" />
         <option value="$PROJECT_DIR$/libs/jsminify.js" />
         <option value="$PROJECT_DIR$/build/build-json.js" />
-        <option value="$PROJECT_DIR$/build/build-config.js" />
         <option value="$PROJECT_DIR$/example/src/static/js/app/index.js" />
         <option value="$PROJECT_DIR$/example/src/static/js/coolie-config.js" />
         <option value="$PROJECT_DIR$/example/dest/static/js/app/index.020eb29b524d7ba6.js" />
@@ -132,6 +140,7 @@
         <option value="$PROJECT_DIR$/build/build-html.js" />
         <option value="$PROJECT_DIR$/libs/cssminify.js" />
         <option value="$PROJECT_DIR$/libs/next-step.js" />
+        <option value="$PROJECT_DIR$/build/build-config.js" />
       </list>
     </option>
   </component>
@@ -497,12 +506,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00075" summary="修正构建之后的样式路径">
-      <created>1428127906060</created>
-      <option name="number" value="00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1428127906060</updated>
-    </task>
     <task id="LOCAL-00076" summary="新的构建配置">
       <created>1428129266034</created>
       <option name="number" value="00076" />
@@ -791,7 +794,13 @@
       <option name="project" value="LOCAL" />
       <updated>1428677477897</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="ydr-util =&gt; ydr-utils">
+      <created>1428677496737</created>
+      <option name="number" value="00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1428677496737</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -807,7 +816,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3255814" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2406672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2406672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1061,14 +1070,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/build-config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.273906">
-          <caret line="60" column="27" selection-start-line="60" selection-start-column="27" selection-end-line="60" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/build-json.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39384118">
@@ -1264,8 +1265,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/next-step.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35818475">
+        <state vertical-scroll-proportion="0.0">
           <caret line="17" column="5" selection-start-line="17" selection-start-column="5" selection-end-line="17" selection-end-column="5" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/build-config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38573745">
+          <caret line="18" column="18" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
           <folding />
         </state>
       </provider>
