@@ -4,6 +4,8 @@ __The front-end development builder.__
 
 __前端开发构建工具。__
 
+详细介绍点这里：<http://frontenddev.org/column/introduce-coolie/>
+
 
 
 # 功能

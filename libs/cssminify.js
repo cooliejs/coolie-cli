@@ -23,7 +23,6 @@ var REG_REMOTE = /^(https?:)?\/\//i;
 var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_ABSPATH = /^\//;
 var buildMap = {};
-var resVerMap = {};
 
 
 /**
@@ -50,7 +49,7 @@ module.exports = function (file, code, srcPath, destPath, destFile, config, call
         code = hasResVersionMap ? _cssUrlVersion() : code;
 
         if (callback) {
-            callback(null, code, resVerMap);
+            callback(null, code);
         } else {
             return code;
         }
@@ -86,7 +85,7 @@ module.exports = function (file, code, srcPath, destPath, destFile, config, call
             absFile = absFile.replace(REG_SUFFIX, '');
 
             var url = buildMap[absFile];
-            var version = resVerMap[absFile];
+            var version = config._resVerMap[absFile];
 
             if (!version) {
                 version = crypto.etag(absFile);
@@ -97,7 +96,7 @@ module.exports = function (file, code, srcPath, destPath, destFile, config, call
                 process.exit();
             }
 
-            resVerMap[absFile] = version;
+            config._resVerMap[absFile] = version;
 
             // 未进行版本构建
             if (!url) {
