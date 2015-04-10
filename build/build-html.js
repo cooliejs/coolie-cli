@@ -36,7 +36,7 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, cal
             process.exit();
         }
 
-        var ret = replaceHtml(file, data, srcPath, cssPath, config, jsBase);
+        var ret = replaceHtml(file, data, srcPath, destPath, cssPath, config, jsBase);
 
         //log('build html', dato.fixPath(file), 'warning');
 

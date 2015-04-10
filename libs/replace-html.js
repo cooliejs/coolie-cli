@@ -6,6 +6,7 @@
 
 'use strict';
 
+var fs = require('fs-extra');
 var path = require('path');
 var crypto = require('ydr-util').crypto;
 var dato = require('ydr-util').dato;
@@ -22,6 +23,8 @@ var REG_ABSOLUTE = /^\//;
 var REG_MAIN = /\bdata-main\b\s*?=\s*?['"](.*?)['"]/;
 // 相同的组合只产生出一个文件
 var concatMap = {};
+var buildMap = {};
+var REG_SUFFIX = /(\?.*|#.*)$/;
 
 
 /**
@@ -29,12 +32,13 @@ var concatMap = {};
  * @param file {String} HTML 文件路径
  * @param data {String} HTML 文件内容
  * @param srcPath {String} 源路径
+ * @param destPath {String} 目的路径
  * @param cssPath {String} 生成CSS文件路径
  * @param config {Object} 构建配置
  * @param jsBase {String} coolie 配置的 base 目录
  * @returns {{concat: Array, data: *}}
  */
-module.exports = function (file, data, srcPath, cssPath, config, jsBase) {
+module.exports = function (file, data, srcPath, destPath, cssPath, config, jsBase) {
     var matches = data.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
@@ -145,8 +149,43 @@ module.exports = function (file, data, srcPath, cssPath, config, jsBase) {
 
     data = data.replace(REG_IMG, function ($0, $1, $2, $3) {
         var absFile = path.join(srcPath, $2);
+        var basename = path.basename(absFile);
+        var srcName = basename.replace(REG_SUFFIX, '');
+        var suffix = (basename.match(REG_SUFFIX) || [''])[0];
 
-        return '<img' + $1 + 'src="' + $2 + '"' + $3 + '>';
+        absFile = absFile.replace(REG_SUFFIX, '');
+
+        var url = buildMap[absFile];
+        var version = config._resVerMap[absFile];
+
+        if (!version) {
+            version = crypto.etag(absFile);
+        }
+
+        if (!version) {
+            log('read file', dato.fixPath(absFile), 'error');
+            process.exit();
+        }
+
+        // 未进行版本构建
+        if (!url) {
+            var extname = path.extname(srcName);
+            var resName = version + extname;
+            var resFile = path.join(destPath, config.resource.dest, resName);
+
+            try {
+                fs.copySync(absFile, resFile);
+            } catch (err) {
+                log('copy from', dato.fixPath(absFile), 'error');
+                log('copy to', dato.fixPath(resFile), 'error');
+                log('copy file', err.message, 'error');
+                process.exit();
+            }
+
+            buildMap[absFile] = url = '/' + path.relative(destPath, resFile);
+        }
+
+        return '<img' + $1 + 'src="' + url + '"' + $3 + '>';
     });
 
     return {
