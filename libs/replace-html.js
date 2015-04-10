@@ -25,6 +25,7 @@ var REG_MAIN = /\bdata-main\b\s*?=\s*?['"](.*?)['"]/;
 var concatMap = {};
 var buildMap = {};
 var REG_SUFFIX = /(\?.*|#.*)$/;
+var REG_IGNORE = /\bcoolieignore\b/i;
 
 
 /**
@@ -57,21 +58,6 @@ module.exports = function (file, data, srcPath, destPath, cssPath, config, jsBas
             main = path.relative(srcPath, main);
             mainJS = dato.toURLPath(main);
         }
-
-        //if(REG_HTTP.test($2)){
-        //    fixSrc = $2;
-        //}else if (REG_ABSOLUTE.test($2)) {
-        //    file = path.join(srcPath, $2);
-        //} else {
-        //    file = path.join(dirname, $2);
-        //}
-        //
-        //var relative = path.relative(srcPath, file);
-        //
-        //relative = dato.toURLPath(relative);
-        //depJS.push(relative);
-        //
-        //return '<script' + $1 + 'src="' + jsHost + relative + '"' + $3 + '></script>';
     });
 
     // 循环匹配 <!--coolie-->(matched)<!--/coolie-->
@@ -148,6 +134,10 @@ module.exports = function (file, data, srcPath, destPath, cssPath, config, jsBas
     });
 
     data = data.replace(REG_IMG, function ($0, $1, $2, $3) {
+        if (REG_IGNORE.test($0)) {
+            return $0.replace(REG_IGNORE, '');
+        }
+
         var absFile = path.join(srcPath, $2);
         var basename = path.basename(absFile);
         var srcName = basename.replace(REG_SUFFIX, '');
