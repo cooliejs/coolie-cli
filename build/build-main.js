@@ -10,7 +10,7 @@
 var path = require('path');
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
-var ydrUtil = require('ydr-util');
+var ydrUtil = require('ydr-utils');
 var Increase = require('../libs/Increase.js');
 var buildModule = require('./build-module.js');
 

@@ -6,7 +6,7 @@
 
 'use strict';
 
-var request = require('ydr-util').request;
+var request = require('ydr-utils').request;
 var log = require('../libs/log.js');
 var pkg = require('../package.json');
 var howdo = require('howdo');

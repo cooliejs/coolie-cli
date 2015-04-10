@@ -8,7 +8,7 @@
 
 var path = require('path');
 var fs = require('fs');
-var request = require('ydr-util').request;
+var request = require('ydr-utils').request;
 var pkg = require('../package.json');
 var log = require('../libs/log.js');
 

@@ -10,7 +10,7 @@
     "src": [
       "./html/**/*.html"
     ],
-    "minify": false
+    "minify": true
   },
   "css": {
     "dest": "./static/css/",
