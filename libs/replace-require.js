@@ -7,7 +7,7 @@
 
 "use strict";
 
-var dato = require("ydr-util").dato;
+var dato = require('ydr-utils').dato;
 var log = require("./log.js");
 var REG_DEFINE = /\bdefine\b\s*?\b\(\s*?function\b[^(]*\(([^,)]*)/;
 

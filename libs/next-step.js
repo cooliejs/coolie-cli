@@ -6,7 +6,7 @@
 
 "use strict";
 
-var ydrUtil = require("ydr-util");
+var ydrUtil = require('ydr-utils');
 
 module.exports = function (steps) {
     if (ydrUtil.typeis(steps) !== "array") {
