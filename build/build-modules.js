@@ -13,7 +13,7 @@ var path = require('path');
 var glob = require('glob');
 var log = require('../libs/log.js');
 var dato = require('ydr-utils').dato;
-var crypto = require('ydr-utils').crypto;
+var encryption = require('ydr-utils').encryption;
 var replaceConfig = require('../libs/replace-config.js');
 var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
@@ -124,7 +124,7 @@ module.exports = function (srcPath) {
                             return dato.toURLPath(path.relative(srcPath, dep));
                         });
 
-                        var md5Version = crypto.md5(md5List).slice(0, 16);
+                        var md5Version = encryption.md5(md5List).slice(0, 16);
                         var destFile = path.join(destPath, relative);
 
                         destFile = destFile.replace(REG_END, '.' + md5Version + '$1');
