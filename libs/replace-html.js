@@ -19,7 +19,7 @@ var REG_IMG = /<img\b([^>]*?)\bsrc\b\s*?=\s*?['"](.*?)['"]([^>]*?)>/gi;
 var REG_SCRIPT = /<script\b([^>]*?)\bsrc\b\s*?=\s*?['"]([^>]*?)['"]([^>]*?)>[^>]*?<\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
 var REG_ABSOLUTE = /^\//;
-//var REG_HTTP = /^(https?:)?\/\//;
+var REG_HTTP = /^(https?:)?\/\//;
 var REG_MAIN = /\bdata-main\b\s*?=\s*?['"](.*?)['"]/;
 // 相同的组合只产生出一个文件
 var concatMap = {};
@@ -136,6 +136,10 @@ module.exports = function (file, data, srcPath, destPath, cssPath, config, jsBas
     data = data.replace(REG_IMG, function ($0, $1, $2, $3) {
         if (REG_IGNORE.test($0)) {
             return $0.replace(REG_IGNORE, '');
+        }
+
+        if (REG_HTTP.test($0)) {
+            return $0;
         }
 
         var absFile = path.join(srcPath, $2);
