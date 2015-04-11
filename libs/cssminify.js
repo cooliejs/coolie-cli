@@ -107,6 +107,7 @@ module.exports = function (file, code, srcPath, destPath, destFile, config, call
                 try {
                     fs.copySync(absFile, resFile);
                 } catch (err) {
+                    log('css file', dato.fixPath(file), 'error');
                     log('copy from', dato.fixPath(absFile), 'error');
                     log('copy to', dato.fixPath(resFile), 'error');
                     log('copy file', err.message, 'error');

@@ -166,6 +166,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, config, jsBas
             try {
                 fs.copySync(absFile, resFile);
             } catch (err) {
+                log('html file', dato.fixPath(file), 'error');
                 log('copy from', dato.fixPath(absFile), 'error');
                 log('copy to', dato.fixPath(resFile), 'error');
                 log('copy file', err.message, 'error');
