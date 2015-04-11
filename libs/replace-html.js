@@ -138,7 +138,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, config, jsBas
             return $0.replace(REG_IGNORE, '');
         }
 
-        if (REG_HTTP.test($0)) {
+        if (REG_HTTP.test($2)) {
             return $0;
         }
 
