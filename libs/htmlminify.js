@@ -7,6 +7,8 @@
 'use strict';
 
 var log = require('./log.js');
+var cssminify = require('./cssminify.js');
+var jsminify = require('./jsminify.js');
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
 var REG_LINES = /[\n\r\t]/g;
@@ -20,9 +22,11 @@ var REG_LINE_COMMENTS = /<!--.*?-->/g;
 // - @create 2014-09-25 19:20
 // -->
 var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
-var REG_PRES = /<pre\b.*?>[\s\S]*?<\/pre>/ig;
-var REG_SCRIPTS = /<script\b.*?>[\s\S]*?<\/script>/ig;
-
+var REG_PRES = /(<pre\b[\s\S]*?>)([\s\S]*?)<\/pre>/ig;
+var REG_STYLES = /(<style\b[\s\S]*?>)([\s\S]*?)<\/style>/ig;
+var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
+//<!--[if IE 6]><![endif]-->
+var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
 
 /**
  * html minify
@@ -31,17 +35,40 @@ var REG_SCRIPTS = /<script\b.*?>[\s\S]*?<\/script>/ig;
  * @param [callback]
  */
 module.exports = function (file, code, callback) {
-    // 保存 <pre>
     var preMap = {};
-    code = code.replace(REG_PRES, function ($0) {
+
+    // 保存 <pre>
+    code = code.replace(REG_PRES, function ($0, $1, $2) {
         var key = _generateKey();
 
-        preMap[key] = $0;
+        preMap[key] = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ') + $2 + '</pre>';
 
         return key;
     });
 
-    code = code.replace(REG_SCRIPTS, function ($0) {
+
+    // 保存 <style>
+    code = code.replace(REG_STYLES, function ($0, $1, $2) {
+        var key = _generateKey();
+
+        preMap[key] = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ') + cssminify(file, $2) + '</style>';
+
+        return key;
+    });
+
+
+    // 保存 <script>
+    code = code.replace(REG_SCRIPTS, function ($0, $1, $2) {
+        var key = _generateKey();
+
+        preMap[key] = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ') + jsminify(file, $2) + '</script>';
+
+        return key;
+    });
+
+
+    // 保存条件注释
+    code = code.replace(REG_CONDITIONS_COMMENTS, function ($0) {
         var key = _generateKey();
 
         preMap[key] = $0;
@@ -60,8 +87,6 @@ module.exports = function (file, code, callback) {
     dato.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
-
-    //console.log(code);
 
     if (callback) {
         callback(null, code);

@@ -29,17 +29,19 @@ var buildMap = {};
  * 样式压缩
  * @param file
  * @param code
- * @param srcPath
- * @param destPath
- * @param destFile
- * @param config
+ * @param [srcPath]
+ * @param [destPath]
+ * @param [destFile]
+ * @param [config]
  * @param [callback]
  */
 module.exports = function (file, code, srcPath, destPath, destFile, config, callback) {
     var args = arguments;
     var hasResVersionMap = true;
 
-    if (typeis.function(args[2])) {
+    // cssminify(file, code)
+    // cssminify(file, code, callabck)
+    if (typeis.function(args[2]) || typeis.undefined(args[2])) {
         callback = args[2];
         hasResVersionMap = false;
     }

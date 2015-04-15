@@ -27,6 +27,45 @@
 <body>
 
 
+<!--[if IE 6]>
+Special instructions for IE 6 here
+<![endif]-->
+
+
+<p class="accent">
+    <!--[if IE]>
+    According to the conditional comment this is IE<br />
+    <![endif]-->
+    <!--[if IE 6]>
+    According to the conditional comment this is IE 6<br />
+    <![endif]-->
+    <!--[if IE 7]>
+    According to the conditional comment this is IE 7<br />
+    <![endif]-->
+    <!--[if IE 8]>
+    According to the conditional comment this is IE 8<br />
+    <![endif]-->
+    <!--[if IE 9]>
+    According to the conditional comment this is IE 9<br />
+    <![endif]-->
+    <!--[if gte IE 8]>
+    According to the conditional comment this is IE 8 or higher<br />
+    <![endif]-->
+    <!--[if lt IE 9]>
+    According to the conditional comment this is IE lower than 9<br />
+    <![endif]-->
+    <!--[if lte IE 7]>
+    According to the conditional comment this is IE lower or equal to 7<br />
+    <![endif]-->
+    <!--[if gt IE 6]>
+    According to the conditional comment this is IE greater than 6<br />
+    <![endif]-->
+    <!--[if !IE]> -->
+    According to the conditional comment this is not IE 5-9<br />
+    <!-- <![endif]-->
+</p>
+
+
 <b data-a="abc<!--"></b><b
         data-b="abc-->"></b>
 
@@ -38,10 +77,27 @@
 <img src="/static/img/loading{{abcdef}}.gif?ddd#def" alt="loading" coolieignore/>
 <img v-attr="src: abc" alt="loading"/>
 
-<pre>
+<pre id="abdc"
+     class="dqw"
+     data-main="dqw">
 var a = 1;
 var b = 2;
 </pre>
+
+<style id="abcd"
+       class="abc">
+    body{
+        width: auto;
+    }
+</style>
+
+<script id="abc"
+        class="abc">
+    var aaaaaaaaaaaaa = 1;
+    var bbbbbbbbbbbbbbbbb = 1;
+
+    window.b = bbbbbbbbbbbbbbbbb;
+</script>
 
 <script src="../static/js/coolie.min.js" data-main="./index.js"></script>
 <script src="../static/js/coolie-config.js"></script>
