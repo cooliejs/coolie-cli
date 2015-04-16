@@ -39,12 +39,13 @@ module.exports = function (srcPath) {
      * @prototype copy
      * @type {object}
      */
-    var config = parseConfig(srcPath);
-    //console.log(JSON.stringify(config, null, 2));
-    var destPath = path.join(srcPath, config.dest);
-    var cssPath = path.join(srcPath, config.css.dest);
-    var coolieJSPath = path.join(srcPath, config.js['coolie.js']);
-    var coolieConfigJSPath = path.join(srcPath, config.js['coolie-config.js']);
+    var configs = parseConfig(srcPath);
+    global.configs = configs;
+    //console.log(JSON.stringify(configs, null, 2));
+    var destPath = path.join(srcPath, configs.dest);
+    var cssPath = path.join(srcPath, configs.css.dest);
+    var coolieJSPath = path.join(srcPath, configs.js['coolie.js']);
+    var coolieConfigJSPath = path.join(srcPath, configs.js['coolie-config.js']);
     var time = Date.now();
     var copyLength = 0;
     var mainLength = 0;
@@ -61,7 +62,7 @@ module.exports = function (srcPath) {
             log('1/5', 'copy files', 'task');
             next();
         })
-        .each(config.copy, function (i, copyFile, nextCopy) {
+        .each(configs.copy, function (i, copyFile, nextCopy) {
             // copy files
             var gbPath = path.join(srcPath, copyFile);
 
@@ -99,7 +100,7 @@ module.exports = function (srcPath) {
             log('2/5', 'build main', 'task');
             next();
         })
-        .each(config.js.src, function (i, main, nextMain) {
+        .each(configs.js.src, function (i, main, nextMain) {
             // 构建入口模块
             var gbPath = path.join(srcPath, main);
 
@@ -159,7 +160,7 @@ module.exports = function (srcPath) {
             var destFile = path.join(destPath, relative);
             var coolieInfo = replaceConfig(srcPath, coolieJSPath, coolieConfigJSPath, code, versionMap);
 
-            jsBase = path.join(srcPath, path.dirname(config.js['coolie.js']), coolieInfo.config.base);
+            jsBase = path.join(srcPath, path.dirname(configs.js['coolie.js']), coolieInfo.configs.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {
                     log('overwrite config', dato.fixPath(destFile), 'error');
@@ -176,7 +177,7 @@ module.exports = function (srcPath) {
             log('4/5', 'build html css', 'task');
             next();
         })
-        .each(config.html.src, function (i, htmlFile, nextGlob) {
+        .each(configs.html.src, function (i, htmlFile, nextGlob) {
             // html files
             var gbPath = path.join(srcPath, htmlFile);
 
@@ -190,7 +191,7 @@ module.exports = function (srcPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, config, jsBase, srcPath, destPath, function (err, _cssLength, depCSS, mainJS) {
+                    buildHTML(file, cssPath, jsBase, srcPath, destPath, function (err, _cssLength, depCSS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = dato.toURLPath(htmlRelative);
 
@@ -253,7 +254,7 @@ module.exports = function (srcPath) {
                 '\nbuild ' + mainLength + ' js file(s), ' +
                 '\nbuild ' + htmlLength + ' html file(s), ' +
                 '\nbuild ' + cssLength + ' css file(s), ' +
-                '\nbuild ' + Object.keys(config._resVerMap).length + ' resource file(s), ' +
+                '\nbuild ' + Object.keys(configs._resVerMap).length + ' resource file(s), ' +
                 '\npast ' + past + ' ms', 'success');
         });
 };

@@ -8,7 +8,7 @@
 "use strict";
 
 var fs = require('fs-extra');
-var minifyCSS = require("clean-css");
+var CleanCSS = require("clean-css");
 var log = require('./log.js');
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
@@ -16,7 +16,12 @@ var encryption = require('ydr-utils').encryption;
 var path = require('path');
 var options = {
     keepSpecialComments: 0,
-    keepBreaks: false
+    keepBreaks: false,
+    debug: true
+};
+var cleancss = new CleanCSS(options);
+var cssminify = function(code){
+    return cleancss.minify.call(cleancss, code);
 };
 var REG_URL = /url\(['"]?(.*?)['"]?\)([;\s\b])/ig;
 var REG_REMOTE = /^(https?:)?\/\//i;
@@ -27,27 +32,27 @@ var buildMap = {};
 
 /**
  * 样式压缩
+ * @param config
  * @param file
  * @param code
  * @param [srcPath]
  * @param [destPath]
  * @param [destFile]
- * @param [config]
  * @param [callback]
  */
-module.exports = function (file, code, srcPath, destPath, destFile, config, callback) {
+module.exports = function (config, file, code, srcPath, destPath, destFile, callback) {
     var args = arguments;
     var hasResVersionMap = true;
 
-    // cssminify(file, code)
-    // cssminify(file, code, callabck)
-    if (typeis.function(args[2]) || typeis.undefined(args[2])) {
-        callback = args[2];
+    // cssminify(config, file, code)
+    // cssminify(config, file, code, callabck)
+    if (typeis.function(args[3]) || typeis.undefined(args[3])) {
+        callback = args[3];
         hasResVersionMap = false;
     }
 
     try {
-        code = new minifyCSS(options).minify(code);
+        code = cssminify(code);
         code = hasResVersionMap ? _cssUrlVersion() : code;
 
         if (callback) {
@@ -126,3 +131,8 @@ module.exports = function (file, code, srcPath, destPath, destFile, config, call
 
 
 
+/////////////////////
+var source = 'a{_font-weight:bold;}';
+var minified = cssminify(source).styles;
+
+console.log(minified);

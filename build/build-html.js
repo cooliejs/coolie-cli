@@ -20,13 +20,12 @@ var cssLength = 0;
  * 构建一个 HTML 文件
  * @param file {String} 源文件
  * @param cssPath {String} css 路径
- * @param config {Object} 构建配置
  * @param jsBase {String} coolie 配置的 base 目录
  * @param srcPath {String} 构建源路径
  * @param destPath {String} 构建目标路径
  * @param callback {Function} 回调
  */
-module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, callback) {
+module.exports = function (file, cssPath, jsBase, srcPath, destPath, callback) {
     var depCSS = [];
 
     fs.readFile(file, 'utf8', function (err, data) {
@@ -36,7 +35,7 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, cal
             process.exit();
         }
 
-        var ret = replaceHtml(file, data, srcPath, destPath, cssPath, config, jsBase);
+        var ret = replaceHtml(file, data, srcPath, destPath, cssPath, jsBase);
 
         //log('build html', dato.fixPath(file), 'warning');
 
@@ -90,7 +89,7 @@ module.exports = function (file, cssPath, config, jsBase, srcPath, destPath, cal
                                 process.exit();
                             }
 
-                            cssminify(file, data, srcPath, destPath, destFile, config, function (err, code) {
+                            cssminify(file, data, srcPath, destPath, destFile, function (err, code) {
                                 bufferList.push(new Buffer('\n' + code, 'utf8'));
                                 //log('require', dato.fixPath(file));
                                 doneConcat();

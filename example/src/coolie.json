@@ -14,7 +14,10 @@
   },
   "css": {
     "dest": "./static/css/",
-    "host": ""
+    "host": "",
+    "minify": {
+      "advanced": false
+    }
   },
   "resource": {
     "src": [

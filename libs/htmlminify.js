@@ -32,11 +32,12 @@ var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
 
 /**
  * html minify
+ * @param config
  * @param file
  * @param code
  * @param [callback]
  */
-module.exports = function (file, code, callback) {
+module.exports = function (config, file, code, callback) {
     var preMap = {};
 
     // 保存 <textarea>
@@ -62,7 +63,7 @@ module.exports = function (file, code, callback) {
     code = code.replace(REG_STYLES, function ($0, $1, $2) {
         var key = _generateKey();
 
-        preMap[key] = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ') + cssminify(file, $2) + '</style>';
+        preMap[key] = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ') + cssminify(config, file, $2) + '</style>';
 
         return key;
     });
