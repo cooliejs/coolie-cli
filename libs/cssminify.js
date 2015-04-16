@@ -14,15 +14,27 @@ var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var encryption = require('ydr-utils').encryption;
 var path = require('path');
-var options = {
-    keepSpecialComments: 0,
+var defaults = {
+    // 高级优化
+    advanced: false,
+    // 属性合并
+    aggressiveMerging: false,
+    // 兼容性，“ie7”、“ie8”、“*”（ie9+）
+    compatibility: '*',
+    // 调试信息
+    debug: false,
+    // 断行
     keepBreaks: false,
-    debug: true
+    // 注释
+    keepSpecialComments: 0,
+    // 媒体查询合并
+    mediaMerging: true,
+    // url 检查
+    rebase: false,
+    // 资源地图
+    sourceMap: false
 };
-var cleancss = new CleanCSS(options);
-var cssminify = function(code){
-    return cleancss.minify.call(cleancss, code);
-};
+var cssminify = null;
 var REG_URL = /url\(['"]?(.*?)['"]?\)([;\s\b])/ig;
 var REG_REMOTE = /^(https?:)?\/\//i;
 var REG_SUFFIX = /(\?.*|#.*)$/;
@@ -44,12 +56,20 @@ module.exports = function (file, code, srcPath, destPath, destFile, callback) {
     var hasResVersionMap = true;
     var configs= global.configs;
 
+    if(!cssminify){
+        var cleancss = new CleanCSS(dato.extend(defaults, configs));
+        cssminify = function(code){
+            return cleancss.minify.call(cleancss, code).styles;
+        };
+    }
+
     // cssminify(file, code)
     // cssminify(file, code, callabck)
     if (typeis.function(args[2]) || typeis.undefined(args[2])) {
         callback = args[2];
         hasResVersionMap = false;
     }
+
 
     try {
         code = cssminify(file, code);
@@ -130,9 +150,3 @@ module.exports = function (file, code, srcPath, destPath, destFile, callback) {
 };
 
 
-
-/////////////////////
-//var source = 'a{_font-weight:bold;}';
-//var minified = cssminify(source).styles;
-//
-//console.log(minified);
