@@ -160,7 +160,7 @@ module.exports = function (srcPath) {
             var destFile = path.join(destPath, relative);
             var coolieInfo = replaceConfig(srcPath, coolieJSPath, coolieConfigJSPath, code, versionMap);
 
-            jsBase = path.join(srcPath, path.dirname(configs.js['coolie.js']), coolieInfo.configs.base);
+            jsBase = path.join(srcPath, path.dirname(configs.js['coolie.js']), coolieInfo.config.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {
                     log('overwrite config', dato.fixPath(destFile), 'error');

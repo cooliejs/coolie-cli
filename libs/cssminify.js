@@ -44,15 +44,15 @@ module.exports = function (file, code, srcPath, destPath, destFile, callback) {
     var hasResVersionMap = true;
     var configs= global.configs;
 
-    // cssminify(configs, file, code)
-    // cssminify(configs, file, code, callabck)
-    if (typeis.function(args[3]) || typeis.undefined(args[3])) {
-        callback = args[3];
+    // cssminify(file, code)
+    // cssminify(file, code, callabck)
+    if (typeis.function(args[2]) || typeis.undefined(args[2])) {
+        callback = args[2];
         hasResVersionMap = false;
     }
 
     try {
-        code = cssminify(code);
+        code = cssminify(file, code);
         code = hasResVersionMap ? _cssUrlVersion() : code;
 
         if (callback) {
@@ -132,7 +132,7 @@ module.exports = function (file, code, srcPath, destPath, destFile, callback) {
 
 
 /////////////////////
-var source = 'a{_font-weight:bold;}';
-var minified = cssminify(source).styles;
-
-console.log(minified);
+//var source = 'a{_font-weight:bold;}';
+//var minified = cssminify(source).styles;
+//
+//console.log(minified);

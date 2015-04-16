@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/replace-html.js" afterPath="$PROJECT_DIR$/libs/replace-html.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-modules.js" afterPath="$PROJECT_DIR$/build/build-modules.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/cssminify.js" afterPath="$PROJECT_DIR$/libs/cssminify.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/wrap-define.js" afterPath="$PROJECT_DIR$/libs/wrap-define.js" />
     </list>
     <ignored path="nodejs-coolie.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -26,11 +26,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="cssminify.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="cssminify.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/libs/cssminify.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="0.4732577">
               <caret line="44" column="32" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="build-modules.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/build/build-modules.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -56,11 +66,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wrap-define.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="wrap-define.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/libs/wrap-define.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.09076175">
-              <caret line="32" column="10" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="33" column="36" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -133,14 +143,14 @@
         <option value="$PROJECT_DIR$/example/src/html/index.html" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/example/src/coolie.json" />
-        <option value="$PROJECT_DIR$/build/build-modules.js" />
         <option value="$PROJECT_DIR$/build/build-html.js" />
         <option value="$PROJECT_DIR$/build/build-module.js" />
-        <option value="$PROJECT_DIR$/libs/cssminify.js" />
         <option value="$PROJECT_DIR$/libs/htmlminify.js" />
         <option value="$PROJECT_DIR$/libs/replace-config.js" />
         <option value="$PROJECT_DIR$/libs/replace-html.js" />
         <option value="$PROJECT_DIR$/libs/wrap-define.js" />
+        <option value="$PROJECT_DIR$/build/build-modules.js" />
+        <option value="$PROJECT_DIR$/libs/cssminify.js" />
       </list>
     </option>
   </component>
@@ -446,12 +456,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00097" summary="新的构建配置">
-      <created>1428139868541</created>
-      <option name="number" value="00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1428139868541</updated>
-    </task>
     <task id="LOCAL-00098" summary="新的构建配置">
       <created>1428139878429</created>
       <option name="number" value="00098" />
@@ -740,7 +744,13 @@
       <option name="project" value="LOCAL" />
       <updated>1429165024685</updated>
     </task>
-    <option name="localTasksCounter" value="146" />
+    <task id="LOCAL-00146" summary="global.configs">
+      <created>1429165118648</created>
+      <option name="number" value="00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1429165118648</updated>
+    </task>
+    <option name="localTasksCounter" value="147" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1177,14 +1187,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/build-modules.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33387357">
-          <caret line="192" column="0" selection-start-line="192" selection-start-column="0" selection-end-line="192" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/build-html.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-4.185185">
@@ -1197,14 +1199,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="141" column="14" selection-start-line="141" selection-start-column="14" selection-end-line="141" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/cssminify.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="32" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -1237,8 +1231,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/wrap-define.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09076175">
-          <caret line="32" column="10" selection-start-line="32" selection-start-column="10" selection-end-line="32" selection-end-column="10" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="33" column="36" selection-start-line="33" selection-start-column="36" selection-end-line="33" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/build-modules.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="161" column="0" selection-start-line="161" selection-start-column="0" selection-end-line="161" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/cssminify.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4732577">
+          <caret line="44" column="32" selection-start-line="44" selection-start-column="32" selection-end-line="44" selection-end-column="32" />
           <folding />
         </state>
       </provider>
