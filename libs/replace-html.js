@@ -39,12 +39,13 @@ var REG_IGNORE = /\bcoolieignore\b/i;
  * @returns {{concat: Array, data: *}}
  */
 module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
+    var configs = global.configs;
     var matches = data.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
     var dirname = path.dirname(file);
     var mainJS = '';
-    var cssHost = config.css.host;
+    var cssHost = configs.css.host;
 
     // 只对 <script> 进行解析而不替换。
     data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
@@ -149,7 +150,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
         absFile = absFile.replace(REG_SUFFIX, '');
 
         var url = buildMap[absFile];
-        var version = config._resVerMap[absFile];
+        var version = configs._resVerMap[absFile];
 
         if (!version) {
             version = encryption.etag(absFile);
@@ -164,7 +165,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
         if (!url) {
             var extname = path.extname(srcName);
             var resName = version + extname;
-            var resFile = path.join(destPath, config.resource.dest, resName);
+            var resFile = path.join(destPath, configs.resource.dest, resName);
 
             try {
                 fs.copySync(absFile, resFile);
@@ -184,7 +185,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
 
     return {
         concat: concat,
-        data: config.html.minify ? htmlminify(file, data) : data,
+        data: configs.html.minify ? htmlminify(file, data) : data,
         mainJS: mainJS
     };
 };

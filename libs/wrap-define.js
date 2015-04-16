@@ -21,7 +21,8 @@ var htmlminify = require('./htmlminify.js');
  * @param textType
  * @param callback
  */
-module.exports = function wrapDefine(config, file, code, depIdsMap, textType, callback) {
+module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) {
+    var configs = global.configs;
     var next = function(err, code){
         if(err){
             return;
@@ -43,11 +44,11 @@ module.exports = function wrapDefine(config, file, code, depIdsMap, textType, ca
 
     switch (textType){
         case 'css':
-            cssminify(config, file, code, next);
+            cssminify(file, code, next);
             break;
 
         case 'html':
-            htmlminify(config, file, code, next);
+            htmlminify(file, code, next);
             break;
 
         default :
