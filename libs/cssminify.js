@@ -32,7 +32,6 @@ var buildMap = {};
 
 /**
  * 样式压缩
- * @param config
  * @param file
  * @param code
  * @param [srcPath]
@@ -40,12 +39,13 @@ var buildMap = {};
  * @param [destFile]
  * @param [callback]
  */
-module.exports = function (config, file, code, srcPath, destPath, destFile, callback) {
+module.exports = function (file, code, srcPath, destPath, destFile, callback) {
     var args = arguments;
     var hasResVersionMap = true;
+    var configs= global.configs;
 
-    // cssminify(config, file, code)
-    // cssminify(config, file, code, callabck)
+    // cssminify(configs, file, code)
+    // cssminify(configs, file, code, callabck)
     if (typeis.function(args[3]) || typeis.undefined(args[3])) {
         callback = args[3];
         hasResVersionMap = false;
@@ -92,7 +92,7 @@ module.exports = function (config, file, code, srcPath, destPath, destFile, call
             absFile = absFile.replace(REG_SUFFIX, '');
 
             var url = buildMap[absFile];
-            var version = config._resVerMap[absFile];
+            var version = configs._resVerMap[absFile];
 
             if (!version) {
                 version = encryption.etag(absFile);
@@ -103,13 +103,13 @@ module.exports = function (config, file, code, srcPath, destPath, destFile, call
                 process.exit();
             }
 
-            config._resVerMap[absFile] = version;
+            configs._resVerMap[absFile] = version;
 
             // 未进行版本构建
             if (!url) {
                 var extname = path.extname(srcName);
                 var resName = version + extname;
-                var resFile = path.join(destPath, config.resource.dest, resName);
+                var resFile = path.join(destPath, configs.resource.dest, resName);
 
                 try {
                     fs.copySync(absFile, resFile);

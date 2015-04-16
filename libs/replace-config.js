@@ -12,7 +12,7 @@ var log = require('./log.js');
 var jsminify = require('./jsminify.js');
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /\}$/;
-var config = {};
+var coolieConfig = {};
 var callbacks = [];
 var coolieFn = function () {
     var coolie = {
@@ -59,9 +59,9 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
     var version = JSON.stringify(versionMap);
 
     try {
-        fn(config, callbacks);
+        fn(coolieConfig, callbacks);
 
-        var basePath = path.join(path.dirname(coolieJSPath), config.base);
+        var basePath = path.join(path.dirname(coolieJSPath), coolieConfig.base);
         var versionMap2 = {};
 
         dato.each(versionMap, function (file, ver) {
@@ -75,14 +75,14 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
 
         version = JSON.stringify(versionMap2);
 
-        log('√', 'base: "' + config.base + '"', 'success');
-        log('√', 'host: "' + config.host + '"', 'success');
+        log('√', 'base: "' + coolieConfig.base + '"', 'success');
+        log('√', 'host: "' + coolieConfig.host + '"', 'success');
         log('√', 'version: "' + JSON.stringify(versionMap2, null, 2) + '"', 'success');
         log('√', 'callbacks: ' + callbacks.length, 'success');
 
         var code2 = 'coolie.config({' +
-            'base:"' + config.base + '",' +
-            'host:"' + config.host + '",' +
+            'base:"' + coolieConfig.base + '",' +
+            'host:"' + coolieConfig.host + '",' +
             'version:' + version + '})' +
             '.use()';
 
@@ -93,7 +93,7 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
         code2 += ';';
 
         return {
-            config: config,
+            config: coolieConfig,
             code: jsminify(file ,code2)
         };
     } catch (err) {

@@ -35,11 +35,10 @@ var REG_IGNORE = /\bcoolieignore\b/i;
  * @param srcPath {String} 源路径
  * @param destPath {String} 目的路径
  * @param cssPath {String} 生成CSS文件路径
- * @param config {Object} 构建配置
  * @param jsBase {String} coolie 配置的 base 目录
  * @returns {{concat: Array, data: *}}
  */
-module.exports = function (file, data, srcPath, destPath, cssPath, config, jsBase) {
+module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
     var matches = data.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
