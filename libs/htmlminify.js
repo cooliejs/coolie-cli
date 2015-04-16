@@ -111,12 +111,12 @@ module.exports = function (file, code, callback) {
 
 
 /**
- * 生成随机 42 位的 KEY
+ * 生成随机唯一 KEY
  * @returns {string}
  * @private
  */
 function _generateKey() {
-    return '`' + random.string(40, 'aA0') + '`';
+    return 'å' + random.string(10, 'aA0') + random.guid() + 'å';
 }
 
 
