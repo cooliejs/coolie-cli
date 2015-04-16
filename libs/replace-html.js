@@ -185,7 +185,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
 
     return {
         concat: concat,
-        data: configs.html.minify ? htmlminify(file, data) : data,
+        data: htmlminify(file, data),
         mainJS: mainJS
     };
 };

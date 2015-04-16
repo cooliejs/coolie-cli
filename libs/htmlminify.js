@@ -40,6 +40,14 @@ module.exports = function (file, code, callback) {
     var preMap = {};
     var configs = global.configs;
 
+    if (configs.html.minify === false) {
+        if (callback) {
+            return callback(null, code);
+        } else {
+            return code;
+        }
+    }
+
     // 保存 <textarea>
     code = code.replace(REG_TEXTAREAS, function ($0, $1, $2) {
         var key = _generateKey();
