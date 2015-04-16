@@ -2,23 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/res/00d36d0d4a62c9ab821487b98bdf7223.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/res/48e4dcae8117f42f46d4b51c05c0d2e8.woff2" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/res/5eabbeda64c1e4ba7d8dbf876ed3c7dc.woff" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/res/c5d6cb7cce1c593723c2cb5c3fedf6f6.gif" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/res/db3c1a8baaa5e4ca0c3bfb9da883796c.ttf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/res/e92edce0250cbcdf61b4c53cff0cc59d.eot" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/res/89889688147bd7575d6327160d64e760.svg" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/coolie-config.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/coolie.min.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.020eb29b524d7ba6.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/html/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/html/user/index.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/relationship-map.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css" afterPath="$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" afterPath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" afterPath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.020eb29b524d7ba6.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.020eb29b524d7ba6.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -523,12 +511,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00101" summary="新的构建配置">
-      <created>1428141449840</created>
-      <option name="number" value="00101" />
-      <option name="project" value="LOCAL" />
-      <updated>1428141449840</updated>
-    </task>
     <task id="LOCAL-00102" summary="新的构建配置">
       <created>1428141590183</created>
       <option name="number" value="00102" />
@@ -817,7 +799,13 @@
       <option name="project" value="LOCAL" />
       <updated>1429167535988</updated>
     </task>
-    <option name="localTasksCounter" value="150" />
+    <task id="LOCAL-00150" summary="global.configs">
+      <created>1429167545574</created>
+      <option name="number" value="00150" />
+      <option name="project" value="LOCAL" />
+      <updated>1429167545574</updated>
+    </task>
+    <option name="localTasksCounter" value="151" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1262,14 +1250,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/src/static/css/1.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22042139">
@@ -1301,10 +1281,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.28764805">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49594814">
-          <caret line="18" column="17" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.055105347">
+          <caret line="2" column="28" selection-start-line="2" selection-start-column="28" selection-end-line="2" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -1317,10 +1305,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
+    <entry file="file://$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28764805">
-          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
