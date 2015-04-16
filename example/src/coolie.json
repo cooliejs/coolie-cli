@@ -16,7 +16,7 @@
     "dest": "./static/css/",
     "host": "",
     "minify": {
-      "advanced": false
+      "compatibility": "ie7"
     }
   },
   "resource": {

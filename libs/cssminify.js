@@ -20,7 +20,7 @@ var defaults = {
     // 属性合并
     aggressiveMerging: false,
     // 兼容性，“ie7”、“ie8”、“*”（ie9+）
-    compatibility: '*',
+    compatibility: 'ie7',
     // 调试信息
     debug: false,
     // 断行
@@ -35,10 +35,11 @@ var defaults = {
     sourceMap: false
 };
 var cssminify = null;
-var REG_URL = /url\(['"]?(.*?)['"]?\)([;\s\b])/ig;
+var REG_URL = /url\s*?\((.*?)\)/ig;
 var REG_REMOTE = /^(https?:)?\/\//i;
 var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_ABSPATH = /^\//;
+var REG_QUOTE = /^["']|['"]$/g;
 var buildMap = {};
 
 
@@ -54,13 +55,20 @@ var buildMap = {};
 module.exports = function (file, code, srcPath, destPath, destFile, callback) {
     var args = arguments;
     var hasResVersionMap = true;
-    var configs= global.configs;
+    var configs = global.configs;
 
-    if(!cssminify){
-        var cleancss = new CleanCSS(dato.extend(defaults, configs));
-        cssminify = function(code){
-            return cleancss.minify.call(cleancss, code).styles;
-        };
+    if (!cssminify) {
+        if (configs.css.minify === false) {
+            cssminify = function (file, code) {
+                return code;
+            };
+        } else {
+            var cleancss = new CleanCSS(dato.extend({}, defaults, configs.css.minify));
+
+            cssminify = function (file, code) {
+                return cleancss.minify.call(cleancss, code).styles;
+            };
+        }
     }
 
     // cssminify(file, code)
@@ -95,13 +103,14 @@ module.exports = function (file, code, srcPath, destPath, destFile, callback) {
     function _cssUrlVersion() {
         var fileDir = path.dirname(file);
 
-        return code.replace(REG_URL, function ($0, $1, $2) {
+        return code.replace(REG_URL, function ($0, $1) {
+            $1 = $1.replace(REG_QUOTE, '');
             // 以下情况忽略添加版本号：
             // //path/to/abc.png
             // http://path/to/abc.png
             // https://path/to/abc.png
             if (REG_REMOTE.test($1)) {
-                return 'url(' + $1 + ')' + $2;
+                return 'url(' + $1 + ')';
             }
 
             var absFile = path.join(REG_ABSPATH.test($1) ? srcPath : fileDir, $1);
@@ -144,7 +153,7 @@ module.exports = function (file, code, srcPath, destPath, destFile, callback) {
                 buildMap[absFile] = url = path.relative(path.dirname(destFile), resFile);
             }
 
-            return 'url(' + url + suffix + ')' + $2;
+            return 'url(' + url + suffix + ')';
         });
     }
 };
