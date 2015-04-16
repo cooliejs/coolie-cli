@@ -22,9 +22,11 @@ var REG_LINE_COMMENTS = /<!--.*?-->/g;
 // - @create 2014-09-25 19:20
 // -->
 var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
+var REG_TEXTAREAS = /(<textarea\b[\s\S]*?>)([\s\S]*?)<\/textarea>/ig;
 var REG_PRES = /(<pre\b[\s\S]*?>)([\s\S]*?)<\/pre>/ig;
 var REG_STYLES = /(<style\b[\s\S]*?>)([\s\S]*?)<\/style>/ig;
 var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
+var REG_TYPE = /\btype\s*?=\s*?['"]([^"']*?)['"]/i;
 //<!--[if IE 6]><![endif]-->
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
 
@@ -36,6 +38,15 @@ var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
  */
 module.exports = function (file, code, callback) {
     var preMap = {};
+
+    // 保存 <textarea>
+    code = code.replace(REG_TEXTAREAS, function ($0, $1, $2) {
+        var key = _generateKey();
+
+        preMap[key] = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ') + $2 + '</textarea>';
+
+        return key;
+    });
 
     // 保存 <pre>
     code = code.replace(REG_PRES, function ($0, $1, $2) {
@@ -60,8 +71,11 @@ module.exports = function (file, code, callback) {
     // 保存 <script>
     code = code.replace(REG_SCRIPTS, function ($0, $1, $2) {
         var key = _generateKey();
+        var tag = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ');
+        var type = (tag.match(REG_TYPE) || ['', ''])[1].toLowerCase();
+        var code2 = type === '' || type.indexOf('javascript') > -1 ? jsminify(file, $2) : $2;
 
-        preMap[key] = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ') + jsminify(file, $2) + '</script>';
+        preMap[key] = tag + code2 + '</script>';
 
         return key;
     });
