@@ -29,6 +29,8 @@ var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
 var REG_TYPE = /\btype\s*?=\s*?['"]([^"']*?)['"]/i;
 //<!--[if IE 6]><![endif]-->
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
+var REG_IGNORE = /\bcoolieignore\b/i;
+
 
 /**
  * html minify
@@ -70,8 +72,11 @@ module.exports = function (file, code, callback) {
     // 保存 <style>
     code = code.replace(REG_STYLES, function ($0, $1, $2) {
         var key = _generateKey();
+        var tag = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ');
+        var isIgnore = REG_IGNORE.test(tag);
+        var code2 = isIgnore ? $2 : cssminify(file, $2);
 
-        preMap[key] = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ') + cssminify(file, $2) + '</style>';
+        preMap[key] = tag + code2 + '</style>';
 
         return key;
     });
@@ -82,7 +87,12 @@ module.exports = function (file, code, callback) {
         var key = _generateKey();
         var tag = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ');
         var type = (tag.match(REG_TYPE) || ['', ''])[1].toLowerCase();
-        var code2 = type === '' || type.indexOf('javascript') > -1 ? jsminify(file, $2) : $2;
+        var isIgnore = REG_IGNORE.test(tag);
+        var code2 = $2;
+
+        if (!isIgnore && (type === '' || type.indexOf('javascript') > -1)) {
+            code2 = jsminify(file, $2);
+        }
 
         preMap[key] = tag + code2 + '</script>';
 
