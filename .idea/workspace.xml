@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="global.configs">
+    <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css" afterPath="$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" afterPath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" afterPath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/htmlminify.js" afterPath="$PROJECT_DIR$/libs/htmlminify.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.020eb29b524d7ba6.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.020eb29b524d7ba6.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" afterPath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/html/index.html" afterPath="$PROJECT_DIR$/example/dest/html/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/src/html/index.html" afterPath="$PROJECT_DIR$/example/src/html/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -28,8 +35,18 @@
       <file leaf-file-name="htmlminify.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/libs/htmlminify.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.273906">
-              <caret line="86" column="24" selection-start-line="86" selection-start-column="24" selection-end-line="86" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.33873582">
+              <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/example/src/html/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.346154">
+              <caret line="103" column="33" selection-start-line="103" selection-start-column="33" selection-end-line="103" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -105,11 +122,11 @@
         <option value="$PROJECT_DIR$/libs/wrap-define.js" />
         <option value="$PROJECT_DIR$/build/build-modules.js" />
         <option value="$PROJECT_DIR$/build/build-html.js" />
-        <option value="$PROJECT_DIR$/example/src/html/index.html" />
         <option value="$PROJECT_DIR$/example/src/coolie.json" />
         <option value="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" />
         <option value="$PROJECT_DIR$/libs/cssminify.js" />
         <option value="$PROJECT_DIR$/libs/replace-html.js" />
+        <option value="$PROJECT_DIR$/example/src/html/index.html" />
         <option value="$PROJECT_DIR$/libs/htmlminify.js" />
       </list>
     </option>
@@ -538,12 +555,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00104" summary="适配 coolie.js 配置">
-      <created>1428240239251</created>
-      <option name="number" value="00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1428240239251</updated>
-    </task>
     <task id="LOCAL-00105" summary="适配 coolie.js 配置">
       <created>1428240360841</created>
       <option name="number" value="00105" />
@@ -832,7 +843,13 @@
       <option name="project" value="LOCAL" />
       <updated>1429167728816</updated>
     </task>
-    <option name="localTasksCounter" value="153" />
+    <task id="LOCAL-00153" summary="0.12.26 coolieignore">
+      <created>1429335880489</created>
+      <option name="number" value="00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1429335880489</updated>
+    </task>
+    <option name="localTasksCounter" value="154" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -842,6 +859,7 @@
     <frame x="0" y="23" width="1280" height="737" extended-state="6" />
     <editor active="true" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.36899224" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38914728" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -865,7 +883,6 @@
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -914,7 +931,6 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
-    <MESSAGE value="glob" />
     <MESSAGE value="coolie config" />
     <MESSAGE value="coolie wiki" />
     <MESSAGE value="省去了不必要的日志信息，加快构建速度" />
@@ -939,7 +955,8 @@
     <MESSAGE value="html minify textarea" />
     <MESSAGE value="update module" />
     <MESSAGE value="global.configs" />
-    <option name="LAST_COMMIT_MESSAGE" value="global.configs" />
+    <MESSAGE value="0.12.26 coolieignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="0.12.26 coolieignore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1202,20 +1219,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/dest/html/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.60954064">
-          <caret line="5" column="12" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/html/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4247039">
-          <caret line="105" column="29" selection-start-line="105" selection-start-column="29" selection-end-line="105" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/src/static/css/1.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22042139">
@@ -1311,10 +1314,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/example/dest/html/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.48939928">
+          <caret line="5" column="129" selection-start-line="5" selection-start-column="129" selection-end-line="5" selection-end-column="129" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/src/html/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.346154">
+          <caret line="103" column="33" selection-start-line="103" selection-start-column="33" selection-end-line="103" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/libs/htmlminify.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.273906">
-          <caret line="86" column="24" selection-start-line="86" selection-start-column="24" selection-end-line="86" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.33873582">
+          <caret line="83" column="0" selection-start-line="83" selection-start-column="0" selection-end-line="83" selection-end-column="0" />
           <folding />
         </state>
       </provider>

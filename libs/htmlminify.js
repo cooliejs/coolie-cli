@@ -76,6 +76,7 @@ module.exports = function (file, code, callback) {
         var isIgnore = REG_IGNORE.test(tag);
         var code2 = isIgnore ? $2 : cssminify(file, $2);
 
+        tag = tag.replace(REG_IGNORE, '');
         preMap[key] = tag + code2 + '</style>';
 
         return key;
@@ -94,6 +95,7 @@ module.exports = function (file, code, callback) {
             code2 = jsminify(file, $2);
         }
 
+        tag = tag.replace(REG_IGNORE, '');
         preMap[key] = tag + code2 + '</script>';
 
         return key;
