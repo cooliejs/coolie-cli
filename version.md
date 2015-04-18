@@ -1,4 +1,6 @@
 # 0.x.x
+- 0.12.26
+	- 更为详细的构建配置
 - 0.12.9
     - 适配了[coolie.js@0.7.0](https://github.com/cloudcome/coolie)
     - 修正部分 BUG
