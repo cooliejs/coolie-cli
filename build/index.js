@@ -13,6 +13,7 @@ var buildModules = require("./build-modules.js");
 var checkUpdate = require("./check-update.js");
 var openWiki = require("./open-wiki.js");
 var pullCoolie = require("./pull-coolie.js");
+var downloadAlien = require("./download-alien.js");
 var path = require("path");
 var CWD = process.cwd();
 var cmdArgs = process.argv.slice(2);
@@ -33,6 +34,10 @@ switch ((cmdArg0 || "").toLowerCase()) {
         pullCoolie(buildPath);
         break;
 
+    case "alien":
+        downloadAlien(buildPath);
+        break;
+
     case "config":
         buildConfig(buildPath);
         break;
@@ -49,6 +54,7 @@ switch ((cmdArg0 || "").toLowerCase()) {
         log(true, "coolie wiki", "打开 WIKI 页面", "success");
         log(true, "coolie version", "输出版本号", "success");
         log(true, "coolie pull [path]", "下载 coolie.min.js 到指定目录", "success");
+        log(true, "coolie alien [path]", "下载 alien/ 到指定目录", "success");
         log(true, "coolie config [path]", "在指定目录生成`coolie-config.js`", "success");
         log(true, "coolie json [path]", "在指定目录生成`coolie.json`", "success");
         log(true, "coolie build [path]", "在指定目录根据`coolie.json`配置文件执行构建HTML/JS/CSS", "success");

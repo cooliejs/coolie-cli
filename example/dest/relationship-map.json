@@ -18,6 +18,10 @@
             "static/js/libs/path1/vue.js"
         ]
     },
+    "html/test.html": {
+        "css": [],
+        "main": ""
+    },
     "html/user/index.html": {
         "css": [
             {

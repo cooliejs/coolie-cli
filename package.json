@@ -34,6 +34,7 @@
   "homepage": "https://github.com/cloudcome/nodejs-coolie",
   "wiki": "http://frontenddev.org/column/introduce-coolie/",
   "coolie": "https://raw.githubusercontent.com/cloudcome/coolie/master/coolie.min.js",
+  "alien": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/alien.zip",
   "repository": {
     "type": "git",
     "url": "https://github.com/cloudcome/nodejs-coolie"
@@ -50,6 +51,7 @@
     "howdo": "^1.1.4",
     "open": "0.0.5",
     "uglify-js": "^2.4.20",
-    "ydr-utils": "^16.7.0"
+    "unzip": "^0.1.11",
+    "ydr-utils": "^17.37.0"
   }
 }
