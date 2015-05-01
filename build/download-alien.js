@@ -18,7 +18,7 @@ var AdmZip = require('adm-zip');
 
 module.exports = function (basedir) {
     var url = pkg.alien;
-    var tempFile = path.join(basedir, 'alien-'+random.guid() + '.zip');
+    var tempFile = path.join(process.pwd(), 'alien-'+random.guid() + '.zip');
     var tempStream = fs.createWriteStream(tempFile);
     var unzipPath = path.join(basedir, './alien');
 
