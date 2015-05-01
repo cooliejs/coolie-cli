@@ -18,7 +18,7 @@ var AdmZip = require('adm-zip');
 
 module.exports = function (basedir) {
     var url = pkg.alien;
-    var tempFile = path.join(process.pwd(), 'alien-'+random.guid() + '.zip');
+    var tempFile = path.join(process.cwd(), 'alien-' + random.guid() + '.zip');
     var tempStream = fs.createWriteStream(tempFile);
     var unzipPath = path.join(basedir, './alien');
 
@@ -35,25 +35,42 @@ module.exports = function (basedir) {
             return process.exit();
         }
 
-        if(res.statusCode !== 200){
+        if (res.statusCode !== 200) {
             log('download alien', url, 'error');
             log('download alien', 'response statusCode is ' + res.statusCode, 'error');
             return process.exit();
         }
 
-        //stream.pipe(tempStream).on('error', function (err) {
-        //    log('download alien', url, 'error');
-        //    log('download alien', err.message, 'error');
-        //    process.exit();
-        //}).on('close', function () {
-        //    log('download alien', url, 'success');
-        //    log('unzip alien', tempFile);
-        //
-        //    //var zip = new AdmZip(tempFile);
-        //    //
-        //    //zip.extractAllTo(unzipPath, true);
-        //    //log('unzip alien', unzipPath, 'success');
-        //});
+        stream.pipe(tempStream).on('error', function (err) {
+            log('download alien', url, 'error');
+            log('download alien', err.message, 'error');
+            process.exit();
+        }).on('close', function () {
+            log('download alien', url, 'success');
+            log('unzip alien', tempFile);
+
+            var zip = new AdmZip(tempFile);
+            var unzipError = null;
+
+            try {
+                zip.extractAllTo(unzipPath, true);
+            } catch (err) {
+                unzipError = err;
+                log('unzip alien', tempFile, 'error');
+                log('unzip alien', err.message, 'error');
+            }
+
+            try {
+                fs.unlinkSync(tempFile);
+            } catch (err) {
+                log('remove tempfile', tempFile, 'error');
+                log('remove tempfile', err.message, 'error');
+            }
+
+            if (!unzipError) {
+                log('unzip alien', unzipPath, 'success');
+            }
+        });
 
 
         //
