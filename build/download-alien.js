@@ -8,25 +8,26 @@
 'use strict';
 
 var path = require('path');
-var fs = require('fs-extra');
+var fs = require('fs');
+var fse = require('fs-extra');
 var request = require('ydr-utils').request;
 var random = require('ydr-utils').random;
 var pkg = require('../package.json');
 var log = require('../libs/log.js');
-var unzip = require('unzip');
-
+var AdmZip = require('adm-zip');
 
 module.exports = function (basedir) {
     var url = pkg.alien;
-    var unzipPath = path.join(__dirname, random.guid());
-    var destPath = path.join(basedir, './alien');
+    var tempFile = path.join(basedir, 'alien-'+random.guid() + '.zip');
+    var tempStream = fs.createWriteStream(tempFile);
+    var unzipPath = path.join(basedir, './alien');
 
-    console.log(unzipPath);
     log('download alien', url);
     request.down({
         url: url,
-        // 100 秒
-        timeout: 100000
+        query: {
+            _: Date.now()
+        }
     }, function (err, stream, res) {
         if (err) {
             log('download alien', url, 'error');
@@ -40,22 +41,31 @@ module.exports = function (basedir) {
             return process.exit();
         }
 
-        stream.pipe(unzip.Extract({
-            path: unzipPath
-        })).on('error', function (err) {
-            log('unzip alien', url, 'error');
-            log('unzip alien', err.message, 'error');
-            process.exit();
-        }).on('close', function () {
-            fs.move(unzipPath, destPath, function (err) {
-                if (err) {
-                    log('move alien', unzipPath, 'success');
-                    return process.exit();
-                }
+        //stream.pipe(tempStream).on('error', function (err) {
+        //    log('download alien', url, 'error');
+        //    log('download alien', err.message, 'error');
+        //    process.exit();
+        //}).on('close', function () {
+        //    log('download alien', url, 'success');
+        //    log('unzip alien', tempFile);
+        //
+        //    //var zip = new AdmZip(tempFile);
+        //    //
+        //    //zip.extractAllTo(unzipPath, true);
+        //    //log('unzip alien', unzipPath, 'success');
+        //});
 
-                log('download alien', unzipPath, 'success');
-                process.exit();
-            });
-        });
+
+        //
+        //stream.pipe(unzip.Extract({
+        //    path: unzipPath
+        //})).on('error', function (err) {
+        //    log('unzip alien', url, 'error');
+        //    log('unzip alien', err.message, 'error');
+        //    process.exit();
+        //}).on('close', function () {
+        //    log('download alien', unzipPath, 'success');
+        //    process.exit();
+        //});
     });
 };
