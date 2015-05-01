@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/download-alien.js" afterPath="$PROJECT_DIR$/build/download-alien.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/pull-coolie.js" afterPath="$PROJECT_DIR$/build/pull-coolie.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -29,8 +28,8 @@
       <file leaf-file-name="download-alien.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build/download-alien.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.48267326">
-              <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.5767327">
+              <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -103,8 +102,8 @@
         <option value="$PROJECT_DIR$/example/dest/html/test.html" />
         <option value="$PROJECT_DIR$/build/index.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/build/download-alien.js" />
         <option value="$PROJECT_DIR$/build/pull-coolie.js" />
+        <option value="$PROJECT_DIR$/build/download-alien.js" />
       </list>
     </option>
   </component>
@@ -316,12 +315,6 @@
       <workItem from="1427191352293" duration="2221000" />
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
-    </task>
-    <task id="LOCAL-00109" summary="更简化的构建">
-      <created>1428469768151</created>
-      <option name="number" value="00109" />
-      <option name="project" value="LOCAL" />
-      <updated>1428469768151</updated>
     </task>
     <task id="LOCAL-00110" summary="更简化的构建">
       <created>1428472681104</created>
@@ -611,7 +604,13 @@
       <option name="project" value="LOCAL" />
       <updated>1430462687102</updated>
     </task>
-    <option name="localTasksCounter" value="158" />
+    <task id="LOCAL-00158" summary="0.13.0 + coolie alien">
+      <created>1430463422627</created>
+      <option name="number" value="00158" />
+      <option name="project" value="LOCAL" />
+      <updated>1430463422627</updated>
+    </task>
+    <option name="localTasksCounter" value="159" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1096,8 +1095,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build/download-alien.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.48267326">
-          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.5767327">
+          <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

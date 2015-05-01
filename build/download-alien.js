@@ -28,15 +28,15 @@ module.exports = function (basedir) {
         // 100 秒
         timeout: 100000
     }, function (err, stream, res) {
-        if(res.statusCode !== 200){
-            log('download alien', url, 'error');
-            log('download alien', 'response statusCode is ' + res.statusCode, 'error');
-            return process.exit();
-        }
-
         if (err) {
             log('download alien', url, 'error');
             log('download alien', err.message, 'error');
+            return process.exit();
+        }
+
+        if(res.statusCode !== 200){
+            log('download alien', url, 'error');
+            log('download alien', 'response statusCode is ' + res.statusCode, 'error');
             return process.exit();
         }
 
