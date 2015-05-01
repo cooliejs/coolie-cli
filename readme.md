@@ -48,6 +48,10 @@ npm install -g coolie
 下载`coolie.min.js`到指定目录。
 
 
+## `coolie alien [path]`
+下载`alien` 发布版到指定目录。
+
+
 ## `coolie config [path]`
 在指定目录（默认为当前工作目录）生成`coolie-config.js`，即`coolie.js`模块加载的配置文件。
 
