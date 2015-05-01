@@ -18,11 +18,17 @@ module.exports = function (basedir) {
     var url = pkg.coolie;
 
     log('pull coolie.min.js', url);
-    request.down(pkg.coolie, function (err, stream) {
+    request.down(pkg.coolie, function (err, stream, res) {
         if (err) {
             log('pull coolie.min.js', url, 'error');
             log('pull coolie.min.js', err.message, 'error');
             process.exit();
+        }
+
+        if (res.statusCode !== 200) {
+            log('download alien', url, 'error');
+            log('download alien', 'response statusCode is ' + res.statusCode, 'error');
+            return process.exit();
         }
 
         stream.pipe(writeStream).on('error', function (err) {
