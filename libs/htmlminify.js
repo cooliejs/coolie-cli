@@ -9,6 +9,7 @@
 var log = require('./log.js');
 var cssminify = require('./cssminify.js');
 var jsminify = require('./jsminify.js');
+var sign = require('./sign.js');
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
 var REG_LINES = /[\n\r\t]/g;
@@ -122,6 +123,8 @@ module.exports = function (file, code, callback) {
     dato.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
+
+    code += sign('html');
 
     if (callback) {
         callback(null, code);

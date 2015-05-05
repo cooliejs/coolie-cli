@@ -11,7 +11,6 @@ var howdo = require('howdo');
 var path = require('path');
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
-var ydrUtil = require('ydr-utils');
 var dato = require('ydr-utils').dato;
 var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');

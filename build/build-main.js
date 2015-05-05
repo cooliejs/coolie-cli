@@ -10,6 +10,7 @@
 var path = require('path');
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
+var sign = require('../libs/sign.js');
 var dato = require('ydr-utils').dato;
 var encryption = require('ydr-utils').encryption;
 var Increase = require('../libs/Increase.js');
@@ -72,7 +73,7 @@ module.exports = function (mainFile, callback) {
             }
 
             if (depsLength === bufferList.length) {
-                output = '/*coolie ' + Date.now() + '*/';
+                output = sign('js');
                 output += Buffer.concat(bufferList).toString();
                 callback(null, output, md5List, deepDeps);
             }

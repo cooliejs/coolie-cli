@@ -10,6 +10,7 @@ var fs = require('fs-extra');
 var path = require('path');
 var howdo = require('howdo');
 var log = require('../libs/log.js');
+var sign = require('../libs/sign.js');
 var dato = require('ydr-utils').dato;
 var replaceHtml = require('../libs/replace-html.js');
 var cssminify = require('../libs/cssminify.js');
@@ -99,7 +100,7 @@ module.exports = function (file, cssPath, jsBase, srcPath, destPath, callback) {
                         var data = Buffer.concat(bufferList).toString();
 
 
-                        data = '/*coolie ' + Date.now() + '*/' + data;
+                        data = sign('css') + data;
 
                         fs.outputFile(destFile, data, function (err) {
                             if (err) {
