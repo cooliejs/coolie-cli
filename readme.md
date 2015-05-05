@@ -7,12 +7,14 @@ __前端开发构建工具。__
 详细介绍点这里：<http://frontenddev.org/column/introduce-coolie/>
 
 
+![](http://s.ydr.me/f/i/20150505183542392874181823)
+
 
 # 功能
 - js 模块的合并、压缩、依赖分析、构建。
 - css 模块的合并、压缩、构建、引用分析。
 - html 样式依赖分析、压缩、构建，资源地址管理。
-- 静态引用资源版本管理。
+- 静态引用资源（图片、字体）版本管理。
 - 生成资源引用关系地图（relationship-map.json）。
 - 命令生成`coolie-config.js`。
 - 命令生成`coolie.json`。
@@ -62,7 +64,6 @@ npm install -g coolie
 
 ## `coolie build [path]`
 在指定目录（默认为当前工作目录），根据`coolie.json`配置来执行构建操作。
-![coolie](http://ydrimg.oss-cn-hangzhou.aliyuncs.com/20141116220221094451640234.jpg)
 
 
 # Version

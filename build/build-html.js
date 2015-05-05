@@ -15,6 +15,7 @@ var dato = require('ydr-utils').dato;
 var replaceHtml = require('../libs/replace-html.js');
 var cssminify = require('../libs/cssminify.js');
 var cssLength = 0;
+var buildMap = {};
 
 
 /**
@@ -71,10 +72,12 @@ module.exports = function (file, cssPath, jsBase, srcPath, destPath, callback) {
                     map[url] = depURLs;
                     depCSS.push(map);
 
-                    // 重复的css文件依赖
-                    if (matched.isRepeat) {
+                    // 重复的css文件依赖 || 重复构建
+                    if (matched.isRepeat || buildMap[matched.name]) {
                         return nextCSSFile();
                     }
+
+                    buildMap[matched.name] = true;
 
                     var relative = path.relative(srcPath, cssPath);
                     var destFile = path.join(destPath, relative, matched.name);
