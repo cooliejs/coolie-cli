@@ -41,7 +41,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
     // 依赖名称与 ID 对应关系
     var depName2IdMap = {};
     var singleMatched = name.match(REG_SINGLE) || type;
-    var isSingle = !!singleMatched;
+    var isSingle = singleMatched !== 'js';
     var singleType = (singleMatched || ['', ''])[1];
     // 相对目录
     var relativeDir = path.dirname(file);
@@ -78,7 +78,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
                         });
                         depIdMap[depId] = true;
                         depNameList.push(depName);
-                        
+
                         if (!depIdsMap[depId]) {
                             depIdsMap[depId] = increase.add();
                         }

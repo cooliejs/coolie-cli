@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-main.js" afterPath="$PROJECT_DIR$/build/build-main.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-module.js" afterPath="$PROJECT_DIR$/build/build-module.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/src/static/js/app/index.js" afterPath="$PROJECT_DIR$/example/src/static/js/app/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -57,16 +55,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build-module.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/build/build-module.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4414003">
-              <caret line="80" column="24" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="replace-require.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/libs/replace-require.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -79,11 +67,21 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="build-module.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/build/build-module.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.1978691">
+              <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="build-main.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build/build-main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.296296">
-              <caret line="73" column="21" selection-start-line="73" selection-start-column="21" selection-end-line="73" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="42" column="27" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -154,8 +152,8 @@
         <option value="$PROJECT_DIR$/libs/base64.js" />
         <option value="$PROJECT_DIR$/libs/parse-deps.js" />
         <option value="$PROJECT_DIR$/build/build-main.js" />
-        <option value="$PROJECT_DIR$/build/build-module.js" />
         <option value="$PROJECT_DIR$/example/src/static/js/app/index.js" />
+        <option value="$PROJECT_DIR$/build/build-module.js" />
       </list>
     </option>
   </component>
@@ -478,12 +476,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00128" summary="ydr-util =&gt; ydr-utils">
-      <created>1428677713768</created>
-      <option name="number" value="00128" />
-      <option name="project" value="LOCAL" />
-      <updated>1428677713768</updated>
-    </task>
     <task id="LOCAL-00129" summary="ydr-util =&gt; ydr-utils">
       <created>1428677788376</created>
       <option name="number" value="00129" />
@@ -772,7 +764,13 @@
       <option name="project" value="LOCAL" />
       <updated>1431068060088</updated>
     </task>
-    <option name="localTasksCounter" value="177" />
+    <task id="LOCAL-00177" summary="base64">
+      <created>1431068543595</created>
+      <option name="number" value="00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1431068543595</updated>
+    </task>
+    <option name="localTasksCounter" value="178" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1258,16 +1256,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/build/build-main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.296296">
-          <caret line="73" column="21" selection-start-line="73" selection-start-column="21" selection-end-line="73" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="42" column="27" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/build/build-module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4414003">
-          <caret line="80" column="24" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.1978691">
+          <caret line="39" column="25" selection-start-line="39" selection-start-column="25" selection-end-line="39" selection-end-column="25" />
           <folding />
         </state>
       </provider>
