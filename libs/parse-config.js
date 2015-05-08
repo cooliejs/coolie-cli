@@ -12,7 +12,8 @@ var fs = require("fs-extra");
 var log = require("./log.js");
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
-var coolieConfigJS;
+var coolieJSFile;
+var coolieConfigJSFile;
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /}$/;
 var coolieConfig = {};
@@ -118,10 +119,10 @@ module.exports = function (srcPath) {
             process.exit();
         }
 
-        var coolieJS = path.join(srcPath, config.js["coolie.js"]);
+        coolieJSFile = path.join(srcPath, config.js["coolie.js"]);
 
-        if (!typeis.file(coolieJS)) {
-            log("parse config", coolieJS + " is NOT a file", "error");
+        if (!typeis.file(coolieJSFile)) {
+            log("parse config", coolieJSFile + " is NOT a file", "error");
             process.exit();
         }
 
@@ -136,10 +137,10 @@ module.exports = function (srcPath) {
             process.exit();
         }
 
-        coolieConfigJS = path.join(srcPath, config.js["coolie-config.js"]);
+        coolieConfigJSFile = path.join(srcPath, config.js["coolie-config.js"]);
 
-        if (!typeis.file(coolieConfigJS)) {
-            log("parse config", coolieConfigJS + " is NOT a file", "error");
+        if (!typeis.file(coolieConfigJSFile)) {
+            log("parse config", coolieConfigJSFile + " is NOT a file", "error");
             process.exit();
         }
     };
@@ -151,9 +152,9 @@ module.exports = function (srcPath) {
         var code;
 
         try {
-            code = fs.readFileSync(coolieConfigJS, 'utf8');
+            code = fs.readFileSync(coolieConfigJSFile, 'utf8');
         } catch (err) {
-            log("read file", dato.fixPath(coolieConfigJS), "error");
+            log("read file", dato.fixPath(coolieConfigJSFile), "error");
             log("read file", err.message, "error");
             process.exit();
         }
@@ -162,15 +163,20 @@ module.exports = function (srcPath) {
             .replace(REG_FUNCTION_START, '')
             .replace(REG_FUNCTION_END, '');
         var fn = new Function('config, callbacks', coolieString + code);
+        var basePath;
 
         try {
             fn(coolieConfig, callbacks);
-
-            var basePath = path.join(path.dirname(config.js['coolie.js']), coolieConfig.base);
+            basePath = coolieConfig.base;
+            //basePath = path.join(path.dirname(config.js['coolie.js']), coolieConfig.base);
         } catch (err) {
             log("parse file", dato.fixPath(file), "error");
             log("parse file", err.message, "error");
         }
+
+        //basePath = path.join(path.dirname(coolieJSFile), basePath);
+
+        basePath = path.join(path.dirname(coolieJSFile), basePath);
 
         var toBase = path.relative(srcPath, basePath);
 

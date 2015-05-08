@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/parse-config.js" afterPath="$PROJECT_DIR$/libs/parse-config.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/replace-config.js" afterPath="$PROJECT_DIR$/libs/replace-config.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -39,8 +38,8 @@
       <file leaf-file-name="parse-config.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/libs/parse-config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3348554">
-              <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.3607306">
+              <caret line="165" column="21" selection-start-line="165" selection-start-column="21" selection-end-line="165" selection-end-column="21" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -473,12 +472,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00141" summary="html minify textarea">
-      <created>1429152966397</created>
-      <option name="number" value="00141" />
-      <option name="project" value="LOCAL" />
-      <updated>1429152966397</updated>
-    </task>
     <task id="LOCAL-00142" summary="html minify textarea">
       <created>1429153182439</created>
       <option name="number" value="00142" />
@@ -767,7 +760,13 @@
       <option name="project" value="LOCAL" />
       <updated>1431073734026</updated>
     </task>
-    <option name="localTasksCounter" value="190" />
+    <task id="LOCAL-00190" summary="base64">
+      <created>1431074362973</created>
+      <option name="number" value="00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1431074362973</updated>
+    </task>
+    <option name="localTasksCounter" value="191" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1242,8 +1241,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/parse-config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3348554">
-          <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.3607306">
+          <caret line="165" column="21" selection-start-line="165" selection-start-column="21" selection-end-line="165" selection-end-column="21" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
