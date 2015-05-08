@@ -100,24 +100,24 @@ var cleanURL = function (url, isSingleURL) {
 
 /**
  * 解析依赖类型
- * @param id
+ * @param name
  * @returns {Object}
  */
-var parseIDType = function (id) {
-    if (REG_TEXT_MODULE.test(id)) {
+var parseNameType = function (name) {
+    if (REG_TEXT_MODULE.test(name)) {
         return {
-            id: cleanURL(id.replace(REG_TEXT_MODULE, ''), true),
+            name: cleanURL(name.replace(REG_TEXT_MODULE, ''), true),
             type: 'text'
         };
-    } else if (REG_IMAGE_MODULE.test(id)) {
+    } else if (REG_IMAGE_MODULE.test(name)) {
         return {
-            id: cleanURL(id.replace(REG_IMAGE_MODULE, ''), true),
+            name: cleanURL(name.replace(REG_IMAGE_MODULE, ''), true),
             type: 'image'
         };
     }
 
     return {
-        id: cleanURL(id),
+        name: cleanURL(name),
         type: 'js'
     };
 };
@@ -139,13 +139,13 @@ module.exports = function (file, code) {
             // require('abc', 'image');
             if (matches[2]) {
                 dep = {
-                    id: cleanURL(matches[1], true),
+                    name: cleanURL(matches[1], true),
                     type: moduleTypeMap[matches[2].toLowerCase()]
                 };
             }
             // require('abc');
             else {
-                dep = parseIDType(matches[1]);
+                dep = parseNameType(matches[1]);
             }
 
             requires.push(dep);

@@ -58,21 +58,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="parse-deps.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="parse-deps.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/libs/parse-deps.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41400304">
-              <caret line="131" column="22" selection-start-line="131" selection-start-column="22" selection-end-line="131" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="107" column="16" selection-start-line="107" selection-start-column="16" selection-end-line="107" selection-end-column="16" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build-module.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="build-module.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/build/build-module.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.30898023">
+              <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -143,8 +143,8 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/libs/base64.js" />
         <option value="$PROJECT_DIR$/example/src/static/js/app/index.js" />
-        <option value="$PROJECT_DIR$/build/build-module.js" />
         <option value="$PROJECT_DIR$/libs/parse-deps.js" />
+        <option value="$PROJECT_DIR$/build/build-module.js" />
       </list>
     </option>
   </component>
@@ -356,12 +356,6 @@
       <workItem from="1427191352293" duration="2221000" />
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
-    </task>
-    <task id="LOCAL-00126" summary="ydr-util =&gt; ydr-utils">
-      <created>1428677582550</created>
-      <option name="number" value="00126" />
-      <option name="project" value="LOCAL" />
-      <updated>1428677582550</updated>
     </task>
     <task id="LOCAL-00127" summary="ydr-util =&gt; ydr-utils">
       <created>1428677602851</created>
@@ -651,7 +645,13 @@
       <option name="project" value="LOCAL" />
       <updated>1431067340081</updated>
     </task>
-    <option name="localTasksCounter" value="175" />
+    <task id="LOCAL-00175" summary="base64">
+      <created>1431067540846</created>
+      <option name="number" value="00175" />
+      <option name="project" value="LOCAL" />
+      <updated>1431067540847</updated>
+    </task>
+    <option name="localTasksCounter" value="176" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1133,18 +1133,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/build-module.js">
+    <entry file="file://$PROJECT_DIR$/libs/parse-deps.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="72" column="0" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
+          <caret line="107" column="16" selection-start-line="107" selection-start-column="16" selection-end-line="107" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libs/parse-deps.js">
+    <entry file="file://$PROJECT_DIR$/build/build-module.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41400304">
-          <caret line="131" column="22" selection-start-line="131" selection-start-column="22" selection-end-line="131" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.30898023">
+          <caret line="28" column="27" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
           <folding />
         </state>
       </provider>

@@ -17,14 +17,13 @@ var jsminify = require('../libs/jsminify.js');
 var replaceRequire = require('../libs/replace-require.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
-var REG_TEXT = /^(css|html|text)!/i;
-var REG_JS = /\.js$/i;
-var REG_SEARCH_HASH = /[?#].*$/;
+var REG_SINGLE = /^(css|html|text|image)!/i;
 
 
 /**
  * 构建一个模块
  * @param name 文件名称
+ * @param type 依赖类型
  * @param file 文件路径
  * @param increase 自增对象
  * @param depIdsMap 依赖ID对应表
@@ -33,7 +32,7 @@ var REG_SEARCH_HASH = /[?#].*$/;
  * @arguments[1].deps 文件依赖的文件列表
  * @arguments[1].depIdsMap 文件依赖的文件列表
  */
-module.exports = function (name, file, increase, depIdsMap, callback) {
+module.exports = function (name, type, file, increase, depIdsMap, callback) {
     // 依赖 ID 列表
     var depIdList = [];
     // 依赖名称列表
@@ -41,9 +40,9 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
     // 依赖名称与 ID 对应关系
     var depName2IdMap = {};
     // 当前文件的目录
-    var textMatched = name.match(REG_TEXT);
-    var isText = !!textMatched;
-    var textType = (textMatched || ['', ''])[1];
+    var singleMatched = name.match(REG_SINGLE);
+    var isSingle = !!singleMatched;
+    var singleType = (singleMatched || ['', ''])[1];
     // 相对目录
     var relativeDir = path.dirname(file);
 
@@ -66,10 +65,10 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
 
         // 2. 读取依赖
         .task(function (next, code) {
-            if (!isText) {
+            if (!isSingle) {
                 parseDeps(file, code).forEach(function (dep) {
                     var depName = dep.name;
-                    var depId = path.join(relativeDir, _fixPath(depName));
+                    var depId = path.join(relativeDir, depName);
 
                     if (depIdList.indexOf(depId) === -1) {
                         depIdList.push(depId);
@@ -90,7 +89,7 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
 
         // 3. 替换 require
         .task(function (next, code) {
-            if (!isText) {
+            if (!isSingle) {
                 code = replaceRequire(file, code, depNameList, depName2IdMap);
             }
 
@@ -100,7 +99,7 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
 
         // 4. 压缩
         .task(function (next, code) {
-            if (isText) {
+            if (isSingle) {
                 next(null, code);
             } else {
                 jsminify(file, code, next);
@@ -110,8 +109,8 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
 
         // 5. 替换 define
         .task(function (next, code) {
-            if (isText) {
-                wrapDefine(file, code, depIdsMap, textType, next);
+            if (isSingle) {
+                wrapDefine(file, code, depIdsMap, singleType, next);
             } else {
                 code = replaceDefine(file, code, depIdList, depIdsMap);
                 next(null, code);
@@ -121,53 +120,10 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
 
         .follow(function (err, code) {
             callback(err, {
-                isText: isText,
+                isSingle: isSingle,
                 code: code,
                 depNameList: depNameList,
                 depIdList: depIdList
             });
         });
 };
-
-
-/**
- * 修正路径
- * @param path {String}
- * @private
- *
- * @example
- * "text!path/to/a.css" => "path/to/a.css"
- * "text!path/to/a.css?abc123" => "path/to/a.css"
- * "text!path/to/a.css#abc123" => "path/to/a.css"
- * "text!path/to/a.css?abc123#abc123" => "path/to/a.css"
- * "path/to/a.min.js?abc123" => "path/to/a.min.js"
- * "path/to/a" => "path/to/a.js"
- * "path/to/a.php#" => "path/to/a.php"
- * "path/to/a/" => "path/to/a/index.js"
- * "path/to/a.js" => "path/to/a.js"
- */
-function _fixPath(path) {
-    // 文本路径
-    if (REG_TEXT.test(path)) {
-        return path.replace(REG_SEARCH_HASH, '').replace(REG_TEXT, '');
-    }
-
-    var index;
-
-    if ((index = path.indexOf('?')) > -1) {
-        return path.slice(0, index);
-    }
-
-    var lastChar = path.slice(-1);
-
-    switch (lastChar) {
-        case '#':
-            return path.slice(0, -1);
-
-        case '/':
-            return path + 'index.js';
-
-        default :
-            return REG_JS.test(path) ? path : path + '.js';
-    }
-}
