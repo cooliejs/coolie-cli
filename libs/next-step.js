@@ -24,7 +24,7 @@ module.exports = function (steps) {
         var chunk = process.stdin.read();
 
         if (typeis(steps[step]) !== "function") {
-            throw new Error("steps[" + step + "] must be a function");
+            process.exit();
         }
 
         steps[step](chunk);
