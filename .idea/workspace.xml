@@ -2,13 +2,27 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/libs/path1/path2/1.74be16979710d4c4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/libs/path1/path2/2.74be16979710d4c4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/libs/path1/path2/3.74be16979710d4c4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/libs/path1/path2/abc.020eb29b524d7ba6.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/libs/all.74be16979710d4c4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/coolie-config.74be16979710d4c4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/coolie.min.74be16979710d4c4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/libs/path1/path2/def.74be16979710d4c4.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/app/index.ac9c542684f271e7.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/html/index2.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/libs/lib.020eb29b524d7ba6.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/example/dest/static/js/libs/path1/vue.74be16979710d4c4.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css" afterPath="$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" afterPath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" afterPath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/base64.js" afterPath="$PROJECT_DIR$/libs/base64.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/js/coolie-config.js" afterPath="$PROJECT_DIR$/example/dest/static/js/coolie-config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/src/coolie.json" afterPath="$PROJECT_DIR$/example/src/coolie.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/html/index.html" afterPath="$PROJECT_DIR$/example/dest/html/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/html/user/index.html" afterPath="$PROJECT_DIR$/example/dest/html/user/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/relationship-map.json" afterPath="$PROJECT_DIR$/example/dest/relationship-map.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -90,13 +104,13 @@
         <option value="$PROJECT_DIR$/libs/parse-deps.js" />
         <option value="$PROJECT_DIR$/libs/replace-define.js" />
         <option value="$PROJECT_DIR$/libs/replace-require.js" />
-        <option value="$PROJECT_DIR$/example/src/coolie.json" />
         <option value="$PROJECT_DIR$/example/src/static/js/app/index.js" />
         <option value="$PROJECT_DIR$/libs/jsminify.js" />
         <option value="$PROJECT_DIR$/build/build-main.js" />
         <option value="$PROJECT_DIR$/build/build-module.js" />
         <option value="$PROJECT_DIR$/libs/base64.js" />
         <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/example/src/coolie.json" />
       </list>
     </option>
   </component>
@@ -527,12 +541,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00136" summary="html replace img src ignore http">
-      <created>1428719317982</created>
-      <option name="number" value="00136" />
-      <option name="project" value="LOCAL" />
-      <updated>1428719317983</updated>
-    </task>
     <task id="LOCAL-00137" summary="html replace img src ignore http">
       <created>1428719403111</created>
       <option name="number" value="00137" />
@@ -821,7 +829,13 @@
       <option name="project" value="LOCAL" />
       <updated>1431071432469</updated>
     </task>
-    <option name="localTasksCounter" value="185" />
+    <task id="LOCAL-00185" summary="base64">
+      <created>1431071959336</created>
+      <option name="number" value="00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1431071959336</updated>
+    </task>
+    <option name="localTasksCounter" value="186" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1266,18 +1280,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/coolie.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29635498">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libs/jsminify.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27549466">
           <caret line="103" column="22" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/src/coolie.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.24247226">
+          <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
           <folding />
         </state>
       </provider>
