@@ -1,4 +1,6 @@
 # 0.x.x
+- 0.14.0
+    - 适配了[coolie.js@0.8.0](https://github.com/cloudcome/coolie)
 - 0.13.0
 	- 新增`coolie alien`命令，用来下载最新 alien 发布版
 - 0.12.26
