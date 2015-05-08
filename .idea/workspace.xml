@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-modules.js" afterPath="$PROJECT_DIR$/build/build-modules.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/parse-config.js" afterPath="$PROJECT_DIR$/libs/parse-config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/replace-config.js" afterPath="$PROJECT_DIR$/libs/replace-config.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -39,11 +39,21 @@
       <file leaf-file-name="parse-config.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/libs/parse-config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.46423134">
-              <caret line="139" column="8" selection-start-line="139" selection-start-column="8" selection-end-line="139" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.3348554">
+              <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="replace-config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libs/replace-config.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="56" column="66" selection-start-line="56" selection-start-column="62" selection-end-line="56" selection-end-column="66" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -84,7 +94,6 @@
         <option value="$PROJECT_DIR$/build/build-config.js" />
         <option value="$PROJECT_DIR$/libs/log.js" />
         <option value="$PROJECT_DIR$/example/dest/html/index.html" />
-        <option value="$PROJECT_DIR$/libs/replace-config.js" />
         <option value="$PROJECT_DIR$/libs/wrap-define.js" />
         <option value="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" />
         <option value="$PROJECT_DIR$/libs/cssminify.js" />
@@ -114,6 +123,7 @@
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/libs/next-step.js" />
         <option value="$PROJECT_DIR$/build/build-modules.js" />
+        <option value="$PROJECT_DIR$/libs/replace-config.js" />
         <option value="$PROJECT_DIR$/libs/parse-config.js" />
       </list>
     </option>
@@ -463,12 +473,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00140" summary="html minify script style">
-      <created>1429104120636</created>
-      <option name="number" value="00140" />
-      <option name="project" value="LOCAL" />
-      <updated>1429104120636</updated>
-    </task>
     <task id="LOCAL-00141" summary="html minify textarea">
       <created>1429152966397</created>
       <option name="number" value="00141" />
@@ -757,7 +761,13 @@
       <option name="project" value="LOCAL" />
       <updated>1431072953764</updated>
     </task>
-    <option name="localTasksCounter" value="189" />
+    <task id="LOCAL-00189" summary="base64">
+      <created>1431073734026</created>
+      <option name="number" value="00189" />
+      <option name="project" value="LOCAL" />
+      <updated>1431073734026</updated>
+    </task>
+    <option name="localTasksCounter" value="190" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1077,13 +1087,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libs/replace-config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.522831">
-          <caret line="98" column="19" selection-start-line="98" selection-start-column="19" selection-end-line="98" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/download-alien.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1229,10 +1232,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/libs/replace-config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="56" column="66" selection-start-line="56" selection-start-column="62" selection-end-line="56" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/libs/parse-config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.46423134">
-          <caret line="139" column="8" selection-start-line="139" selection-start-column="8" selection-end-line="139" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.3348554">
+          <caret line="151" column="0" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>

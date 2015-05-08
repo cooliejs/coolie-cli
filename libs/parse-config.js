@@ -12,18 +12,42 @@ var fs = require("fs-extra");
 var log = require("./log.js");
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
-// //path/to/coolie.js
-// /path/to/coolie.js
-//var REG_URL = /^\/\//;
+var coolieConfigJS;
+var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
+var REG_FUNCTION_END = /}$/;
+var coolieConfig = {};
+var callbacks = [];
+var coolieFn = function () {
+    var coolie = {
+        config: function (cnf) {
+            cnf = cnf || {};
 
+            config.base = cnf.base || '';
+            config.version = cnf.version || '';
+            config.host = cnf.host || '';
+
+            return coolie;
+        },
+        use: function () {
+            return coolie;
+        },
+        callback: function (fn) {
+            if (typeof(fn) === 'function') {
+                callbacks.push(fn);
+            }
+
+            return coolie;
+        }
+    };
+};
 
 /**
  * 解析 config
- * @param relative 起始目录
+ * @param srcPath 起始目录
  * @returns {Object}
  */
-module.exports = function (relative) {
-    var file = path.join(relative, "./coolie.json");
+module.exports = function (srcPath) {
+    var file = path.join(srcPath, "./coolie.json");
     var config = {};
     var check = {};
 
@@ -94,7 +118,7 @@ module.exports = function (relative) {
             process.exit();
         }
 
-        var coolieJS = path.join(relative, config.js["coolie.js"]);
+        var coolieJS = path.join(srcPath, config.js["coolie.js"]);
 
         if (!typeis.file(coolieJS)) {
             log("parse config", coolieJS + " is NOT a file", "error");
@@ -112,7 +136,7 @@ module.exports = function (relative) {
             process.exit();
         }
 
-        var coolieConfigJS = path.join(relative, config.js["coolie-config.js"]);
+        coolieConfigJS = path.join(srcPath, config.js["coolie-config.js"]);
 
         if (!typeis.file(coolieConfigJS)) {
             log("parse config", coolieConfigJS + " is NOT a file", "error");
@@ -123,21 +147,37 @@ module.exports = function (relative) {
 
     // 检查 coolie-config.js 内的 base 路径
     // base 路径必须在根目录以内，否则在构建之后的 main 会指向错误
-    // 如：
-    // /abc/def/coolie.js
-    // def 是根目录
     check.coolieConfigJS = function () {
-        var file = config.js["coolie-config.js"];
-        var data;
+        var code;
 
         try {
-            data = fs.readFileSync(file, 'utf8');
+            code = fs.readFileSync(coolieConfigJS, 'utf8');
         } catch (err) {
-            log("read file", dato.fixPath(file), "error");
+            log("read file", dato.fixPath(coolieConfigJS), "error");
             log("read file", err.message, "error");
+            process.exit();
         }
 
+        var coolieString = coolieFn.toString()
+            .replace(REG_FUNCTION_START, '')
+            .replace(REG_FUNCTION_END, '');
+        var fn = new Function('config, callbacks', coolieString + code);
 
+        try {
+            fn(coolieConfig, callbacks);
+
+            var basePath = path.join(path.dirname(config.js['coolie.js']), coolieConfig.base);
+        } catch (err) {
+            log("parse file", dato.fixPath(file), "error");
+            log("parse file", err.message, "error");
+        }
+
+        var toBase = path.relative(srcPath, basePath);
+
+        if (toBase.indexOf('../') > -1) {
+            log('coolie base', 'coolie base path must be under ' + srcPath, 'error');
+            process.exit();
+        }
     };
 
 
