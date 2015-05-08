@@ -22,9 +22,9 @@ var REG_DEFINE = /\bdefine\b\s*?\b\(\s*?function\b[^(]*\(([^,)]*)/;
 module.exports = function (file, code, depNameList, depName2IdMap) {
     var requireVar = _getRequireVar(code);
 
-    //console.log(requireVar);
-    //console.log(depNameList);
-    //console.log(depName2IdMap);
+    console.log(requireVar);
+    console.log(depNameList);
+    console.log(depName2IdMap);
 
 
     if (!requireVar && depNameList.length) {

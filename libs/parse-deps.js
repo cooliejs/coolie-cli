@@ -107,17 +107,20 @@ var cleanURL = function (url, isSingleURL) {
 var parseNameType = function (name) {
     if (REG_TEXT_MODULE.test(name)) {
         return {
+            raw: name,
             name: cleanURL(name.replace(REG_TEXT_MODULE, ''), true),
             type: 'text'
         };
     } else if (REG_IMAGE_MODULE.test(name)) {
         return {
+            raw: name,
             name: cleanURL(name.replace(REG_IMAGE_MODULE, ''), true),
             type: 'image'
         };
     }
 
     return {
+        raw: name,
         name: cleanURL(name),
         type: 'js'
     };
