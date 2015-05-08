@@ -174,8 +174,6 @@ module.exports = function (srcPath) {
             log("parse file", err.message, "error");
         }
 
-        //basePath = path.join(path.dirname(coolieJSFile), basePath);
-
         basePath = path.join(path.dirname(coolieJSFile), basePath);
 
         var toBase = path.relative(srcPath, basePath);

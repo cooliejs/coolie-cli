@@ -83,6 +83,7 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
         var code2 = 'coolie.config({' +
             'base:"' + coolieConfig.base + '",' +
             'host:"' + coolieConfig.host + '",' +
+            'debug:false,' +
             'version:' + version + '})' +
             '.use()';
 
@@ -94,7 +95,7 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
 
         return {
             config: coolieConfig,
-            code: jsminify(file ,code2)
+            code: jsminify(file, code2)
         };
     } catch (err) {
         log('coolie-config.js', dato.fixPath(file), 'error');
