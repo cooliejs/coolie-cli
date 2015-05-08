@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-main.js" afterPath="$PROJECT_DIR$/build/build-main.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/src/coolie.json" afterPath="$PROJECT_DIR$/example/src/coolie.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/src/static/js/app/index.js" afterPath="$PROJECT_DIR$/example/src/static/js/app/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/jsminify.js" afterPath="$PROJECT_DIR$/libs/jsminify.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/replace-require.js" afterPath="$PROJECT_DIR$/libs/replace-require.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -49,20 +53,8 @@
         <entry file="file://$PROJECT_DIR$/libs/parse-deps.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="107" column="16" selection-start-line="107" selection-start-column="16" selection-end-line="107" selection-end-column="16" />
+              <caret line="124" column="3" selection-start-line="124" selection-start-column="3" selection-end-line="124" selection-end-column="3" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="replace-require.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/libs/replace-require.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4307458">
-              <caret line="61" column="3" selection-start-line="61" selection-start-column="3" selection-end-line="61" selection-end-column="3" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -71,7 +63,7 @@
         <entry file="file://$PROJECT_DIR$/build/build-module.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
+              <caret line="98" column="13" selection-start-line="98" selection-start-column="13" selection-end-line="98" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -81,7 +73,27 @@
         <entry file="file://$PROJECT_DIR$/build/build-main.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
+              <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="coolie.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/example/src/coolie.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.1923075">
+              <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="jsminify.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/libs/jsminify.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.27549466">
+              <caret line="95" column="7" selection-start-line="95" selection-start-column="7" selection-end-line="95" selection-end-column="7" />
               <folding />
             </state>
           </provider>
@@ -123,7 +135,6 @@
         <option value="$PROJECT_DIR$/libs/parse-config.js" />
         <option value="$PROJECT_DIR$/example/src/html/user/index.html" />
         <option value="$PROJECT_DIR$/build/build-config.js" />
-        <option value="$PROJECT_DIR$/libs/jsminify.js" />
         <option value="$PROJECT_DIR$/libs/next-step.js" />
         <option value="$PROJECT_DIR$/libs/log.js" />
         <option value="$PROJECT_DIR$/example/dest/html/index.html" />
@@ -134,7 +145,6 @@
         <option value="$PROJECT_DIR$/libs/cssminify.js" />
         <option value="$PROJECT_DIR$/example/src/html/index.html" />
         <option value="$PROJECT_DIR$/example/src/html/test.html" />
-        <option value="$PROJECT_DIR$/example/src/coolie.json" />
         <option value="$PROJECT_DIR$/example/dest/html/test.html" />
         <option value="$PROJECT_DIR$/build/index.js" />
         <option value="$PROJECT_DIR$/build/pull-coolie.js" />
@@ -149,11 +159,13 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/libs/base64.js" />
         <option value="$PROJECT_DIR$/libs/parse-deps.js" />
-        <option value="$PROJECT_DIR$/build/build-main.js" />
-        <option value="$PROJECT_DIR$/build/build-module.js" />
         <option value="$PROJECT_DIR$/libs/replace-define.js" />
-        <option value="$PROJECT_DIR$/example/src/static/js/app/index.js" />
+        <option value="$PROJECT_DIR$/build/build-main.js" />
         <option value="$PROJECT_DIR$/libs/replace-require.js" />
+        <option value="$PROJECT_DIR$/example/src/coolie.json" />
+        <option value="$PROJECT_DIR$/build/build-module.js" />
+        <option value="$PROJECT_DIR$/example/src/static/js/app/index.js" />
+        <option value="$PROJECT_DIR$/libs/jsminify.js" />
       </list>
     </option>
   </component>
@@ -502,12 +514,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00132" summary="ydr-util =&gt; ydr-utils">
-      <created>1428678064232</created>
-      <option name="number" value="00132" />
-      <option name="project" value="LOCAL" />
-      <updated>1428678064232</updated>
-    </task>
     <task id="LOCAL-00133" summary="ydr-util =&gt; ydr-utils">
       <created>1428678069793</created>
       <option name="number" value="00133" />
@@ -796,7 +802,13 @@
       <option name="project" value="LOCAL" />
       <updated>1431069343375</updated>
     </task>
-    <option name="localTasksCounter" value="181" />
+    <task id="LOCAL-00181" summary="base64">
+      <created>1431069509076</created>
+      <option name="number" value="00181" />
+      <option name="project" value="LOCAL" />
+      <updated>1431069509076</updated>
+    </task>
+    <option name="localTasksCounter" value="182" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -960,20 +972,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5191257">
           <caret line="54" column="29" selection-start-line="54" selection-start-column="29" selection-end-line="54" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/jsminify.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07617504">
-          <caret line="65" column="47" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/coolie.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33227345">
-          <caret line="12" column="18" selection-start-line="12" selection-start-column="14" selection-end-line="12" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -1239,14 +1237,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libs/parse-deps.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="107" column="16" selection-start-line="107" selection-start-column="16" selection-end-line="107" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/src/html/index2.html">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.9230769">
@@ -1265,18 +1255,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/build-module.js">
+    <entry file="file://$PROJECT_DIR$/libs/parse-deps.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="16" column="43" selection-start-line="16" selection-start-column="43" selection-end-line="16" selection-end-column="43" />
+          <caret line="124" column="3" selection-start-line="124" selection-start-column="3" selection-end-line="124" selection-end-column="3" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/static/js/app/index.js">
+    <entry file="file://$PROJECT_DIR$/libs/replace-require.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.02587519">
-          <caret line="1" column="46" selection-start-line="1" selection-start-column="46" selection-end-line="1" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.30136988">
+          <caret line="25" column="31" selection-start-line="25" selection-start-column="31" selection-end-line="25" selection-end-column="31" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/src/coolie.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.1923075">
+          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/build-module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="98" column="13" selection-start-line="98" selection-start-column="13" selection-end-line="98" selection-end-column="13" />
           <folding />
         </state>
       </provider>
@@ -1284,18 +1292,24 @@
     <entry file="file://$PROJECT_DIR$/build/build-main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="30" selection-start-line="41" selection-start-column="30" selection-end-line="41" selection-end-column="30" />
+          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libs/replace-require.js">
+    <entry file="file://$PROJECT_DIR$/example/src/static/js/app/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4307458">
-          <caret line="61" column="3" selection-start-line="61" selection-start-column="3" selection-end-line="61" selection-end-column="3" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.07762557">
+          <caret line="3" column="3" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/jsminify.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27549466">
+          <caret line="95" column="7" selection-start-line="95" selection-start-column="7" selection-end-line="95" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>

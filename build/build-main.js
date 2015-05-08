@@ -39,8 +39,8 @@ module.exports = function (mainFile, callback) {
                 process.exit();
             }
 
-            console.log(meta);
-            process.exit();
+            //console.log(meta);
+            //process.exit();
 
             var code = meta.code;
             var depIdList = meta.depIdList;

@@ -57,6 +57,19 @@ var dato = require('ydr-utils').dato;
 //};
 
 
+
+var testCode = 'define(function (require, exports, module) {\n' +
+    'require("1");\n'+
+    'require("2");\n'+
+    '});';
+
+var testRet = uglifyJS.minify(testCode, {
+    fromString: true,
+    warnings: false,
+    mangle: true,
+    compress: true
+});
+
 /**
  * 脚本压缩
  * @param file
