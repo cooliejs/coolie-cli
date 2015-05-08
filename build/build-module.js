@@ -56,8 +56,8 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
                 code = fs.readFileSync(file, 'utf8');
                 next(null, code);
             } catch (err) {
-                log('read', dato.fixPath(file), 'error');
-                log('read', err.message, 'error');
+                log('read file', dato.fixPath(file), 'error');
+                log('read file', err.message, 'error');
                 process.exit();
             }
         })

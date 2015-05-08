@@ -39,12 +39,8 @@ module.exports = function (mainFile, callback) {
                 process.exit();
             }
 
-            //console.log(meta);
-            //process.exit();
-
             var code = meta.code;
-            var depIdList = meta.depIdList;
-            var depNameList = meta.depNameList;
+            var depList = meta.depList;
             var output;
 
             // 采用内容 MD5
@@ -53,8 +49,10 @@ module.exports = function (mainFile, callback) {
             bufferList.push(new Buffer("\n" + code, "utf8"));
             depsRelationship[file] = {};
 
-            if (depIdList.length) {
-                depIdList.forEach(function (depId, index) {
+            if (depList.length) {
+                depList.forEach(function (dep, index) {
+                    var depId = dep.id;
+
                     depsRelationship[file][depId] = true;
 
                     if (deepDeps.indexOf(depId) === -1) {
@@ -69,7 +67,7 @@ module.exports = function (mainFile, callback) {
                     if (!depsCache[depId]) {
                         depsCache[depId] = true;
                         //log("require", dato.fixPath(depId));
-                        _deepBuld(depNameList[index], depId);
+                        _deepBuld(dep.name, dep.type, depId);
                         depsLength++;
                     }
                 });

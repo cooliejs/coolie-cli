@@ -15,7 +15,8 @@
         ],
         "main": "static/js/app/index.js",
         "deps": [
-            "static/js/libs/path1/vue.js"
+            "static/img/100x100.png",
+            "static/img/loading.gif"
         ]
     },
     "html/index2.html": {
@@ -34,7 +35,8 @@
         ],
         "main": "static/js/app/index.js",
         "deps": [
-            "static/js/libs/path1/vue.js"
+            "static/img/100x100.png",
+            "static/img/loading.gif"
         ]
     },
     "html/user/index.html": {
@@ -47,8 +49,6 @@
             }
         ],
         "main": "static/js/app/user/index.js",
-        "deps": [
-            "static/js/libs/all.js"
-        ]
+        "deps": []
     }
 }
