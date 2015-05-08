@@ -2,25 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/html/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/html/user/index.html" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/relationship-map.json" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/js/app/index.020eb29b524d7ba6.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/js/app/user/index.020eb29b524d7ba6.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/js/coolie-config.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/js/coolie.min.js" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/res/00d36d0d4a62c9ab821487b98bdf7223.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/res/48e4dcae8117f42f46d4b51c05c0d2e8.woff2" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/res/5eabbeda64c1e4ba7d8dbf876ed3c7dc.woff" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/res/89889688147bd7575d6327160d64e760.svg" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/res/c5d6cb7cce1c593723c2cb5c3fedf6f6.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/res/db3c1a8baaa5e4ca0c3bfb9da883796c.ttf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/example/dest/static/res/e92edce0250cbcdf61b4c53cff0cc59d.eot" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css" afterPath="$PROJECT_DIR$/example/dest/static/css/0caf51b26ddc9d51.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" afterPath="$PROJECT_DIR$/example/dest/static/css/2ad76922b15e8192.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" afterPath="$PROJECT_DIR$/example/dest/static/css/7ce373f0d4131a78.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/base64.js" afterPath="$PROJECT_DIR$/libs/base64.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/build-module.js" afterPath="$PROJECT_DIR$/build/build-module.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/html/index.html" afterPath="$PROJECT_DIR$/example/dest/html/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/dest/html/user/index.html" afterPath="$PROJECT_DIR$/example/dest/html/user/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="nodejs-coolie.iws" />
@@ -42,78 +30,7 @@
     <favorites_list name="nodejs-coolie" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="index2.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/src/html/index2.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.9230769">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base64.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/libs/base64.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.63774735">
-              <caret line="35" column="38" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="parse-deps.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libs/parse-deps.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="124" column="3" selection-start-line="124" selection-start-column="3" selection-end-line="124" selection-end-column="3" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build-module.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build/build-module.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build-main.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build/build-main.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="73" column="13" selection-start-line="73" selection-start-column="13" selection-end-line="73" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="coolie.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/example/src/coolie.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.1923075">
-              <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="jsminify.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libs/jsminify.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="103" column="22" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -170,7 +87,6 @@
         <option value="$PROJECT_DIR$/libs/sign.js" />
         <option value="$PROJECT_DIR$/build/build-html.js" />
         <option value="$PROJECT_DIR$/readme.md" />
-        <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/libs/parse-deps.js" />
         <option value="$PROJECT_DIR$/libs/replace-define.js" />
         <option value="$PROJECT_DIR$/libs/replace-require.js" />
@@ -178,8 +94,9 @@
         <option value="$PROJECT_DIR$/example/src/static/js/app/index.js" />
         <option value="$PROJECT_DIR$/libs/jsminify.js" />
         <option value="$PROJECT_DIR$/build/build-main.js" />
-        <option value="$PROJECT_DIR$/libs/base64.js" />
         <option value="$PROJECT_DIR$/build/build-module.js" />
+        <option value="$PROJECT_DIR$/libs/base64.js" />
+        <option value="$PROJECT_DIR$/package.json" />
       </list>
     </option>
   </component>
@@ -610,12 +527,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00135" summary="html replace img src ignore http">
-      <created>1428719306231</created>
-      <option name="number" value="00135" />
-      <option name="project" value="LOCAL" />
-      <updated>1428719306231</updated>
-    </task>
     <task id="LOCAL-00136" summary="html replace img src ignore http">
       <created>1428719317982</created>
       <option name="number" value="00136" />
@@ -904,7 +815,13 @@
       <option name="project" value="LOCAL" />
       <updated>1431070808164</updated>
     </task>
-    <option name="localTasksCounter" value="184" />
+    <task id="LOCAL-00184" summary="base64">
+      <created>1431071432468</created>
+      <option name="number" value="00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1431071432469</updated>
+    </task>
+    <option name="localTasksCounter" value="185" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -912,7 +829,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1276" height="777" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32262772" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -920,7 +837,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38832116" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24063745" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24063745" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -1210,13 +1127,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5074627">
-          <caret line="8" column="21" selection-start-line="8" selection-start-column="21" selection-end-line="8" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libs/cssminify.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.65981734">
@@ -1272,14 +1182,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/html/index2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.9230769">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/libs/replace-define.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.23287672">
@@ -1287,14 +1189,6 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libs/parse-deps.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="124" column="3" selection-start-line="124" selection-start-column="3" selection-end-line="124" selection-end-column="3" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1308,14 +1202,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/example/src/coolie.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.1923075">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/src/static/js/app/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.07762557">
@@ -1324,42 +1210,74 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libs/jsminify.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="103" column="22" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/build-main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="73" column="13" selection-start-line="73" selection-start-column="13" selection-end-line="73" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/example/dest/static/js/app/index.ac9c542684f271e7.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21518987">
+        <state vertical-scroll-proportion="0.18829113">
           <caret line="3" column="32" selection-start-line="3" selection-start-column="32" selection-end-line="3" selection-end-column="32" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build/build-module.js">
+    <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.18858954">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/base64.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.63774735">
-          <caret line="35" column="38" selection-start-line="35" selection-start-column="38" selection-end-line="35" selection-end-column="38" />
+        <state vertical-scroll-proportion="0.36225265">
+          <caret line="18" column="14" selection-start-line="18" selection-start-column="14" selection-end-line="18" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/src/html/index2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.70047545">
+          <caret line="26" column="6" selection-start-line="26" selection-start-column="6" selection-end-line="26" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/parse-deps.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.079147644">
+          <caret line="124" column="3" selection-start-line="124" selection-start-column="3" selection-end-line="124" selection-end-column="3" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/build-module.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.46575344">
+          <caret line="51" column="0" selection-start-line="51" selection-start-column="0" selection-end-line="51" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/build-main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.3881278">
+          <caret line="73" column="13" selection-start-line="73" selection-start-column="13" selection-end-line="73" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/example/src/coolie.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.29635498">
+          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libs/jsminify.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27549466">
+          <caret line="103" column="22" selection-start-line="103" selection-start-column="8" selection-end-line="103" selection-end-column="22" />
           <folding />
         </state>
       </provider>

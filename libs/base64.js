@@ -8,8 +8,10 @@
 'use strict';
 
 var fs = require('fs');
+var path = require('path');
 var log = require('./log.js');
 var dato = require('ydr-utils').dato;
+var mime = require('ydr-utils').mime;
 
 
 /**
@@ -20,6 +22,9 @@ var dato = require('ydr-utils').dato;
  */
 module.exports = function (file, callback) {
     var binary;
+    var extname = path.extname(file);
+    // data:image/png;base64,
+    var prefix = 'data:' + mime.get(extname) + ';base64,';
 
     try {
         binary = fs.readFileSync(file, 'binary');
@@ -38,9 +43,9 @@ module.exports = function (file, callback) {
     }
 
     if (callback) {
-        callback(base64);
+        callback(null, prefix + base64);
     } else {
-        return base64;
+        return prefix + base64;
     }
 };
 
