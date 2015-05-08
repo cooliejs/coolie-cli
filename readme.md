@@ -1,4 +1,5 @@
-# coolie.cli 苦力 [![coolie](https://img.shields.io/npm/v/coolie.svg?style=flat)](https://www.npmjs.org/package/coolie)
+# coolie.cli
+[![coolie](https://img.shields.io/npm/v/coolie.svg?style=flat)](https://www.npmjs.org/package/coolie)
 
 __The front-end development builder.__
 
@@ -7,7 +8,7 @@ __前端开发构建工具。__
 详细介绍点这里：<http://frontenddev.org/column/introduce-coolie/>
 
 
-![](http://s.ydr.me/f/i/20150505183542392874181823)
+![.](http://s.ydr.me/f/i/20150505183542392874181823)
 
 
 # 功能
