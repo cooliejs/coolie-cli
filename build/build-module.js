@@ -26,7 +26,7 @@ var REG_SINGLE = /^(css|html|text|image)!/i;
  * @param type 依赖类型
  * @param file 文件路径
  * @param increase 自增对象
- * @param depIdsMap 依赖ID对应表
+ * @param depIdsMap 模块绝对路径 <=> ID 对应表
  * @param callback 回调，返回包括
  * @arguments[1].code 压缩替换后的代码
  * @arguments[1].deps 文件依赖的文件列表

@@ -21,11 +21,11 @@ var REG_DEFINE_2 = /\bdefine\(function\(/;
  * 替换 define
  * @param file 模块绝对路径
  * @param code 模块压缩后的代码
- * @param deps 模块依赖
+ * @param depList 模块依赖
  * @param depIdsMap 依赖对应表
  * @returns {string}
  */
-module.exports = function (file, code, deps, depIdsMap) {
+module.exports = function (file, code, depList, depIdsMap) {
     var depsCode = '';
     var id = depIdsMap[file];
 
@@ -34,15 +34,17 @@ module.exports = function (file, code, deps, depIdsMap) {
         process.exit();
     }
 
-    deps.forEach(function (dep) {
-        if (depIdsMap[dep]) {
+    depList.forEach(function (dep) {
+        var depId = dep.id;
+
+        if (depIdsMap[depId]) {
             if (depsCode) {
                 depsCode += ',';
             }
 
-            depsCode += '"' + depIdsMap[dep] + '"';
+            depsCode += '"' + depIdsMap[depId] + '"';
         } else {
-            log('replace define', 'can not find ' + dep + ' map', 'error');
+            log('replace define', 'can not find ' + depIdsMap + ' map', 'error');
             process.exit();
         }
     });
