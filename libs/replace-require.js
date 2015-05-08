@@ -26,6 +26,7 @@ module.exports = function (file, code, depNameList, depName2IdMap) {
     //console.log(depNameList);
     //console.log(depName2IdMap);
 
+
     if (!requireVar && depNameList.length) {
         log('replace require', 'can not found `require` variable, but used', 'error');
         process.exit();
@@ -66,7 +67,10 @@ function _getRequireVar(str) {
  * @private
  */
 function _buildReg(requireVar, dep) {
-    dep = dato.fixRegExp(dep).trim();
+    dep = dato.fixRegExp(dep);
 
-    return new RegExp("\\b" + dato.fixRegExp(requireVar) + "\\(['\"]" + dep + "['\"]\\)", 'g');
+    // require("...");
+    // require("...", "...");
+    return new RegExp("\\b" + dato.fixRegExp(requireVar) + "\\(['\"]" + dep + "['\"]" +
+        "(?:\\s*?,\\s*?['\"][^'\"]*?['\"])?\\)", 'g');
 }
