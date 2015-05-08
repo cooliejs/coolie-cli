@@ -11,13 +11,13 @@ var howdo = require('howdo');
 var path = require('path');
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
+var base64 = require('../libs/base64.js');
 var dato = require('ydr-utils').dato;
 var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');
 var replaceRequire = require('../libs/replace-require.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
-var REG_SINGLE = /^(css|html|text|image)!/i;
 
 
 /**
@@ -40,9 +40,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
     var depNameList = [];
     // 依赖名称与 ID 对应关系
     var depName2IdMap = {};
-    var singleMatched = name.match(REG_SINGLE) || type;
-    var isSingle = singleMatched !== 'js';
-    var singleType = (singleMatched || ['', ''])[1];
+    var isSingle =type !== 'js';
     // 相对目录
     var relativeDir = path.dirname(file);
 
@@ -53,7 +51,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
             var code = "";
 
             try {
-                code = fs.readFileSync(file, 'utf8');
+                code = type === 'image' ? base64(file) : fs.readFileSync(file, 'utf8');
                 next(null, code);
             } catch (err) {
                 log('read file', dato.fixPath(file), 'error');
@@ -115,7 +113,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
         // 5. 替换 define
         .task(function (next, code) {
             if (isSingle) {
-                wrapDefine(file, code, depIdsMap, singleType, next);
+                wrapDefine(file, code, depIdsMap, type, next);
             } else {
                 code = replaceDefine(file, code, depList, depIdsMap);
                 next(null, code);

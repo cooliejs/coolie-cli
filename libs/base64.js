@@ -12,7 +12,13 @@ var log = require('./log.js');
 var dato = require('ydr-utils').dato;
 
 
-module.exports = function(file){
+/**
+ * 文件 base64 编码
+ * @param file
+ * @param [callback]
+ * @returns {*}
+ */
+module.exports = function (file, callback) {
     var binary;
 
     try {
@@ -31,7 +37,11 @@ module.exports = function(file){
         log('base64 file', err.message, 'error');
     }
 
-    return base64;
+    if (callback) {
+        callback(base64);
+    } else {
+        return base64;
+    }
 };
 
 
