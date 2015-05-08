@@ -67,7 +67,8 @@ module.exports = function (name, file, increase, depIdsMap, callback) {
         // 2. 读取依赖
         .task(function (next, code) {
             if (!isText) {
-                parseDeps(file, code).forEach(function (depName) {
+                parseDeps(file, code).forEach(function (dep) {
+                    var depName = dep.name;
                     var depId = path.join(relativeDir, _fixPath(depName));
 
                     if (depIdList.indexOf(depId) === -1) {

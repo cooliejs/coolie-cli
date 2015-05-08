@@ -53,6 +53,31 @@ var REG_JS = /\.js($|\?)/i;
 
 
 /**
+ * 文本模块
+ * @type {RegExp}
+ */
+var REG_TEXT_MODULE = /^(css|html|text)!/i;
+
+
+/**
+ * 图片模块
+ * @type {RegExp}
+ */
+var REG_IMAGE_MODULE = /^(image)!/i;
+
+
+/**
+ * 模块类型别名
+ * @type {{image: string, text: string, html: string, css: string}}
+ */
+var moduleTypeMap = {
+    image: 'image',
+    text: 'text',
+    html: 'text',
+    css: 'text'
+};
+
+/**
  * 清理 url
  * @param url {String} 原始 URL
  * @param [isSingleURL=false] 是否为独立 URL
@@ -72,15 +97,29 @@ var cleanURL = function (url, isSingleURL) {
     return url + (REG_JS.test(url) ? '' : '.js');
 };
 
+
 /**
- * 模块类型别名
- * @type {{image: string, text: string, html: string, css: string}}
+ * 解析依赖类型
+ * @param id
+ * @returns {Object}
  */
-var moduleTypeMap = {
-    image: 'image',
-    text: 'text',
-    html: 'text',
-    css: 'text'
+var parseIDType = function (id) {
+    if (REG_TEXT_MODULE.test(id)) {
+        return {
+            id: cleanURL(id.replace(REG_TEXT_MODULE, ''), true),
+            type: 'text'
+        };
+    } else if (REG_IMAGE_MODULE.test(id)) {
+        return {
+            id: cleanURL(id.replace(REG_IMAGE_MODULE, ''), true),
+            type: 'image'
+        };
+    }
+
+    return {
+        id: cleanURL(id),
+        type: 'js'
+    };
 };
 
 /**
@@ -92,9 +131,9 @@ var moduleTypeMap = {
 module.exports = function (file, code) {
     var requires = [];
 
-    code.replace(REG_SLASH, '').replace(REG_REQUIRE, function (m, m1, m2) {
-        if (m2) {
-            var matches = m2.match(REG_REQUIRE_TYPE);
+    code.replace(REG_SLASH, '').replace(REG_REQUIRE, function ($0, $1, $2) {
+        if ($2) {
+            var matches = $2.match(REG_REQUIRE_TYPE);
             var dep;
 
             // require('abc', 'image');
