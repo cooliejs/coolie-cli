@@ -15,8 +15,7 @@
         ],
         "main": "static/js/app/index.js",
         "deps": [
-            "static/img/100x100.png",
-            "static/img/loading.gif"
+            "static/js/libs/path1/path2/index.js"
         ]
     },
     "html/index2.html": {
@@ -35,8 +34,7 @@
         ],
         "main": "static/js/app/index.js",
         "deps": [
-            "static/img/100x100.png",
-            "static/img/loading.gif"
+            "static/js/libs/path1/path2/index.js"
         ]
     },
     "html/user/index.html": {
