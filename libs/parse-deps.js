@@ -36,7 +36,8 @@ var REG_REQUIRE_TYPE = /([^"']+)(?:['"]\s*?,\s*?['"]([^'"]*))?/;
  * 路径结尾
  * @type {RegExp}
  */
-var REG_PATH_END = /\/[^/]+?\/$/;
+var REG_PATH_END = /(\/[^/]+?)?\/$/;
+
 
 /**
  * 文件后缀
