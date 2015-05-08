@@ -20,6 +20,7 @@ var buildMain = require('./build-main.js');
 var buildHTML = require('./build-html.js');
 var REG_END = /(\.[^.]*)$/;
 
+
 module.exports = function (srcPath) {
     /**
      * @prototype js
@@ -76,6 +77,10 @@ module.exports = function (srcPath) {
                 howdo.each(files, function (j, file, nextFile) {
                     var relative = path.relative(srcPath, file);
                     var destFile = path.join(destPath, relative);
+
+                    if (!path.relative(file, destFile)) {
+                        return nextFile();
+                    }
 
                     fs.copy(file, destFile, function (err) {
                         if (err) {

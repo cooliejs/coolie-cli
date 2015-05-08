@@ -10,6 +10,7 @@
 var path = require("path");
 var fs = require("fs-extra");
 var log = require("./log.js");
+var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 // //path/to/coolie.js
 // /path/to/coolie.js
@@ -117,6 +118,26 @@ module.exports = function (relative) {
             log("parse config", coolieConfigJS + " is NOT a file", "error");
             process.exit();
         }
+    };
+
+
+    // 检查 coolie-config.js 内的 base 路径
+    // base 路径必须在根目录以内，否则在构建之后的 main 会指向错误
+    // 如：
+    // /abc/def/coolie.js
+    // def 是根目录
+    check.coolieConfigJS = function () {
+        var file = config.js["coolie-config.js"];
+        var data;
+
+        try {
+            data = fs.readFileSync(file, 'utf8');
+        } catch (err) {
+            log("read file", dato.fixPath(file), "error");
+            log("read file", err.message, "error");
+        }
+
+
     };
 
 
@@ -255,6 +276,7 @@ module.exports = function (relative) {
 
     check.file();
     check.js();
+    check.coolieConfigJS();
     check.html();
     check.css();
     check.resource();
