@@ -29,7 +29,9 @@ define(function (require, exports, module) {
     //require('html!../libs/some.html');
     //require('html!../libs/some.html');
 
-    require('../libs/path1/vue.js');
+    //require('../libs/path1/vue.js');
+
+    require('../../img/100x100.png', 'image');
 
     //
     //console.log('app/index.js');
