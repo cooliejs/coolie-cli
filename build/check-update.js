@@ -36,7 +36,7 @@ module.exports = function(){
                     process.exit();
                 }
 
-                log('coolie cli', json['dist-tags'].latest, 'success');
+                log('coolie.cli', json['dist-tags'].latest, 'success');
             });
         })
         // 检查 coolie.js 版本
