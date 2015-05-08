@@ -34,13 +34,13 @@ var REG_SINGLE = /^(css|html|text|image)!/i;
  */
 module.exports = function (name, type, file, increase, depIdsMap, callback) {
     // 依赖 ID 列表
-    var depIdList = [];
+    var depList = [];
+    var depIdMap = {};
     // 依赖名称列表
     var depNameList = [];
     // 依赖名称与 ID 对应关系
     var depName2IdMap = {};
-    // 当前文件的目录
-    var singleMatched = name.match(REG_SINGLE);
+    var singleMatched = name.match(REG_SINGLE) || type;
     var isSingle = !!singleMatched;
     var singleType = (singleMatched || ['', ''])[1];
     // 相对目录
@@ -70,10 +70,15 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
                     var depName = dep.name;
                     var depId = path.join(relativeDir, depName);
 
-                    if (depIdList.indexOf(depId) === -1) {
-                        depIdList.push(depId);
+                    if (!depIdMap[depId]) {
+                        depList.push({
+                            name: dep.name,
+                            id: depId,
+                            type: dep.type
+                        });
+                        depIdMap[depId] = true;
                         depNameList.push(depName);
-
+                        
                         if (!depIdsMap[depId]) {
                             depIdsMap[depId] = increase.add();
                         }
@@ -112,7 +117,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
             if (isSingle) {
                 wrapDefine(file, code, depIdsMap, singleType, next);
             } else {
-                code = replaceDefine(file, code, depIdList, depIdsMap);
+                code = replaceDefine(file, code, depList, depIdsMap);
                 next(null, code);
             }
         })
@@ -122,8 +127,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
             callback(err, {
                 isSingle: isSingle,
                 code: code,
-                depNameList: depNameList,
-                depIdList: depIdList
+                depList: depList
             });
         });
 };

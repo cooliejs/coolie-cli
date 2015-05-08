@@ -31,13 +31,16 @@ module.exports = function (mainFile, callback) {
     var md5List = '';
     var deepDeps = [];
 
-    var _deepBuld = function (name, file) {
-        buildModule(name, file, increase, depIdsMap, function (err, meta) {
+    var _deepBuld = function (name, type, file) {
+        buildModule(name, type, file, increase, depIdsMap, function (err, meta) {
             if (err) {
                 log("build", dato.fixPath(file), "error");
                 log('build', err.message, 'error');
                 process.exit();
             }
+
+            console.log(meta);
+            process.exit();
 
             var code = meta.code;
             var depIdList = meta.depIdList;
@@ -83,5 +86,5 @@ module.exports = function (mainFile, callback) {
     // 第一个 define 模块为入口模块，不必指定其 name
     depIdsMap[mainFile] = '0';
     log("√", dato.fixPath(mainFile), "success");
-    _deepBuld(mainName, mainFile);
+    _deepBuld(mainName, 'js', mainFile);
 };
