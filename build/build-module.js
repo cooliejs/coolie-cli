@@ -75,13 +75,13 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
                             type: dep.type
                         });
                         depIdMap[depId] = true;
-                        depNameList.push(depName);
+                        depNameList.push(dep.raw);
 
                         if (!depIdsMap[depId]) {
                             depIdsMap[depId] = increase.add();
                         }
 
-                        depName2IdMap[depName] = depIdsMap[depId];
+                        depName2IdMap[dep.raw] = depIdsMap[depId];
                     }
                 });
             }
