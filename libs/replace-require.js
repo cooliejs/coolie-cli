@@ -23,8 +23,8 @@ module.exports = function (file, code, depNameList, depName2IdMap) {
     var requireVar = _getRequireVar(code);
 
     //console.log(requireVar);
-    //console.log(depNameList);
-    //console.log(depName2IdMap);
+    console.log(depNameList);
+    console.log(depName2IdMap);
 
 
     if (!requireVar && depNameList.length) {
@@ -70,7 +70,8 @@ function _buildReg(requireVar, dep) {
     dep = dato.fixRegExp(dep);
 
     // require("...");
+    // require("some!...");
     // require("...", "...");
-    return new RegExp("\\b" + dato.fixRegExp(requireVar) + "\\(['\"]" + dep + "['\"]" +
+    return new RegExp("\\b" + dato.fixRegExp(requireVar) + "\\(['\"](?:[^'\"]*!)?" + dep + "['\"]" +
         "(?:\\s*?,\\s*?['\"][^'\"]*?['\"])?\\)", 'g');
 }

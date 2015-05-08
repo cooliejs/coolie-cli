@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f36a8e01-5ac4-49f4-8bc0-32a811999864" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/example/src/static/js/app/index.js" afterPath="$PROJECT_DIR$/example/src/static/js/app/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libs/replace-require.js" afterPath="$PROJECT_DIR$/libs/replace-require.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -59,8 +58,8 @@
       <file leaf-file-name="replace-require.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/libs/replace-require.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6636225">
-              <caret line="64" column="13" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.4307458">
+              <caret line="61" column="3" selection-start-line="61" selection-start-column="3" selection-end-line="61" selection-end-column="3" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
               </folding>
@@ -153,8 +152,8 @@
         <option value="$PROJECT_DIR$/build/build-main.js" />
         <option value="$PROJECT_DIR$/build/build-module.js" />
         <option value="$PROJECT_DIR$/libs/replace-define.js" />
-        <option value="$PROJECT_DIR$/libs/replace-require.js" />
         <option value="$PROJECT_DIR$/example/src/static/js/app/index.js" />
+        <option value="$PROJECT_DIR$/libs/replace-require.js" />
       </list>
     </option>
   </component>
@@ -503,12 +502,6 @@
       <workItem from="1427212110500" duration="200000" />
       <workItem from="1427811311655" duration="5842000" />
     </task>
-    <task id="LOCAL-00131" summary="ydr-util =&gt; ydr-utils">
-      <created>1428677965255</created>
-      <option name="number" value="00131" />
-      <option name="project" value="LOCAL" />
-      <updated>1428677965255</updated>
-    </task>
     <task id="LOCAL-00132" summary="ydr-util =&gt; ydr-utils">
       <created>1428678064232</created>
       <option name="number" value="00132" />
@@ -797,7 +790,13 @@
       <option name="project" value="LOCAL" />
       <updated>1431068925984</updated>
     </task>
-    <option name="localTasksCounter" value="180" />
+    <task id="LOCAL-00180" summary="base64">
+      <created>1431069343375</created>
+      <option name="number" value="00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1431069343375</updated>
+    </task>
+    <option name="localTasksCounter" value="181" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -1292,8 +1291,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/libs/replace-require.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6636225">
-          <caret line="64" column="13" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.4307458">
+          <caret line="61" column="3" selection-start-line="61" selection-start-column="3" selection-end-line="61" selection-end-column="3" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
