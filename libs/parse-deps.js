@@ -143,6 +143,7 @@ module.exports = function (file, code) {
             // require('abc', 'image');
             if (matches[2]) {
                 dep = {
+                    raw: matches[1],
                     name: cleanURL(matches[1], true),
                     type: moduleTypeMap[matches[2].toLowerCase()]
                 };
