@@ -11,6 +11,7 @@ var path = require('path');
 var encryption = require('ydr-utils').encryption;
 var dato = require('ydr-utils').dato;
 var log = require('./log.js');
+var pathURI = require('./path-uri.js');
 var htmlminify = require('./htmlminify.js');
 var replaceVersion = require('./replace-version.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
@@ -166,7 +167,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
         }
 
         if (!version) {
-            log('read file', dato.fixPath(absFile), 'error');
+            log('read file', pathURI.toSystemPath(absFile), 'error');
             process.exit();
         }
 
@@ -179,9 +180,9 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
             try {
                 fs.copySync(absFile, resFile);
             } catch (err) {
-                log('html file', dato.fixPath(file), 'error');
-                log('copy from', dato.fixPath(absFile), 'error');
-                log('copy to', dato.fixPath(resFile), 'error');
+                log('html file', pathURI.toSystemPath(file), 'error');
+                log('copy from', pathURI.toSystemPath(absFile), 'error');
+                log('copy to', pathURI.toSystemPath(resFile), 'error');
                 log('copy file', err.message, 'error');
                 process.exit();
             }

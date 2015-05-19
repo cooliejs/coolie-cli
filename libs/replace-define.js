@@ -8,6 +8,7 @@
 'use strict';
 
 var log = require('./log.js');
+var pathURI = require('./path-uri.js');
 var dato = require('ydr-utils').dato;
 // define&&define.amd?define(e)
 // define(e)
@@ -30,7 +31,7 @@ module.exports = function (file, code, depList, depIdsMap) {
     var id = depIdsMap[file];
 
     if (!id) {
-        log('replace define', 'the module ID is undefined in ' + dato.fixPath(file), 'error');
+        log('replace define', 'the module ID is undefined in ' + pathURI.toSystemPath(file), 'error');
         process.exit();
     }
 

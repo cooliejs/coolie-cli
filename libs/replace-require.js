@@ -10,6 +10,7 @@
 var string = require('ydr-utils').string;
 var dato = require('ydr-utils').dato;
 var log = require("./log.js");
+var pathURI = require("./path-uri.js");
 var REG_DEFINE = /\bdefine\b\s*?\b\(\s*?function\b[^(]*\(([^,)]*)/;
 
 
@@ -39,7 +40,7 @@ module.exports = function (file, code, depNameList, depName2IdMap) {
         var id = depName2IdMap[depName];
 
         if (!id) {
-            log("replace require", dato.fixPath(file), "error");
+            log("replace require", pathURI.toSystemPath(file), "error");
             log("replace require", "can not found `" + depName + "` map", "error");
             process.exit();
         }

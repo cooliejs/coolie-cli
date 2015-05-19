@@ -78,7 +78,7 @@ module.exports = function (file, code, callback) {
     //    code = ast.print_to_string();
     //    callback(null, code);
     //} catch (err) {
-    //    log('jsminify', dato.fixPath(file), 'error');
+    //    log('jsminify', pathURI.toSystemPath(file), 'error');
     //    log('jsminify', err.message, 'error');
     //    process.exit();
     //}
@@ -115,7 +115,7 @@ module.exports = function (file, code, callback) {
     //    'preserve-semi': true
     //}, function (err, code, extra) {
     //    if (err) {
-    //        log('jsminify', dato.fixPath(file), 'error');
+    //        log('jsminify', pathURI.toSystemPath(file), 'error');
     //        log('jsminify', err.message, 'error');
     //        log('jsminify', extra, 'error');
     //        process.exit();
