@@ -63,15 +63,10 @@ module.exports = function (file, code) {
             dataMain = path.join(jsBase, dataMain);
             dataMain = path.relative(srcPath, dataMain);
             mainJS = pathURI.toURIPath(dataMain);
-
             $0 = htmlAttr.remove($0, 'coolie');
 
-            if (configs.html['coolie.js']) {
-                $0 = htmlAttr.set($0, 'src', configs.html['coolie.js']);
-            }
-
-            if (configs.html['coolie-config.js']) {
-                $0 = htmlAttr.set($0, 'data-config', replaceVersion(configs.html['coolie-config.js'], configs._coolieConfigVersion));
+            if (configs.dest.host) {
+                $0 = htmlAttr.set($0, 'data-config', configs.dest.host + replaceVersion(configs._coolieConfigJSURI, configs._coolieConfigVersion));
             } else {
                 $0 = htmlAttr.set($0, 'data-config', replaceVersion(dataConfig, configs._coolieConfigVersion));
             }

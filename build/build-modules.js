@@ -50,6 +50,7 @@ module.exports = function (srcPath) {
     configs._destPath = destPath;
     configs._cssPath = cssPath;
     configs._coolieConfigJSPath = coolieConfigJSPath;
+    configs._coolieConfigJSURI = path.relative(srcPath, coolieConfigJSPath);
     global.configs = configs;
 
     //return console.log(JSON.stringify(configs, null, 2));
