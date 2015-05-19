@@ -19,8 +19,10 @@ var REG_IMG = /<img\b([^>]*?)\bsrc\b\s*?=\s*?['"](.*?)['"]([^>]*?)>/gi;
 var REG_SCRIPT = /<script\b([^>]*?)\bsrc\b\s*?=\s*?['"]([^>]*?)['"]([^>]*?)>[^>]*?<\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
 var REG_ABSOLUTE = /^\//;
-var REG_HTTP = /^(https?:)?\/\//;
-var REG_MAIN = /\bdata-main\b\s*?=\s*?['"](.*?)['"]/;
+var REG_HTTP = /^(https?:)?\/\//i;
+var REG_SCRIPT_MAIN = /\bdata-main\b\s*?=\s*?['"](.*?)['"]/i;
+var REG_SCRIPT_CONFIG = /\bdata-config\b\s*?=\s*?['"](.*?)['"]/i;
+var REG_SCRIPT_COOLIE = /\bcoolie\b/i;
 // 相同的组合只产生出一个文件
 var concatMap = {};
 var buildMap = {};
@@ -194,22 +196,63 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////
-
 /**
  * 提取 data-main 值
- * @param $1 {String} 前
- * @param $3 {String} 后
+ * @param part1 {String} 前
+ * @param part2 {String} 后
  * @returns {String|null}
  * @private
  */
-function _getMain($1, $3) {
-    var matches = $1.match(REG_MAIN);
+function _getMain(part1, part2) {
+    return _getAttr(part1, part2, REG_SCRIPT_MAIN);
+}
+
+
+/**
+ * 提取 data-config 值
+ * @param part1 {String} 前
+ * @param part2 {String} 后
+ * @returns {String|null}
+ * @private
+ */
+function _getConfig(part1, part2) {
+    return _getAttr(part1, part2, REG_SCRIPT_CONFIG);
+}
+
+
+/**
+ * 判断是否含有 coolie 属性
+ * @param part1
+ * @param part2
+ * @returns {*}
+ * @private
+ */
+function _hasCoolie(part1, part2) {
+    return !!_getAttr(part1, part2, REG_SCRIPT_COOLIE, true);
+}
+
+
+/**
+ * 提取 attribute
+ * @param part1
+ * @param part2
+ * @param reg
+ * @param [isTest]
+ * @returns {*}
+ * @private
+ */
+function _getAttr(part1, part2, reg, isTest) {
+    if (isTest) {
+        return reg.test(part1) || reg.test(part2) || false;
+    }
+
+    var matches = part1.match(reg);
 
     if (matches) {
         return matches[1];
     }
 
-    matches = $3.match(REG_MAIN);
+    matches = part2.match(reg);
 
     if (matches) {
         return matches[1];
