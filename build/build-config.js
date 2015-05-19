@@ -6,7 +6,7 @@
 
 "use strict";
 
-
+var pkg = require('../package.json');
 var fs = require("fs-extra");
 var path = require("path");
 var log = require("../libs/log.js");
@@ -25,15 +25,15 @@ module.exports = function (basedir) {
     var isExist = typeis.file(writeFile);
     var continueStep = function () {
         log("1/2", "请输入`base`值，默认为“./static/app/”：" +
-        "\n`base`路径是相对于 coolie 模块加载器所在的目录；" +
-        "\n`base`即为入口模块的基准路径。", "success");
+            "\n`base`路径是相对于 coolie 模块加载器所在的目录；" +
+            "\n`base`即为入口模块的基准路径。", "success");
     };
     var json = {};
     var jsonString = '';
 
     // 0
     steps.push(function () {
-        log("coolie", "coolie 苦力 builder", "help");
+        log("coolie", pkg.description, "help");
         log("tips", "以下操作留空回车表示同意默认配置。", "warning");
         log("file path", dato.fixPath(writeFile), "task");
         log("warning", "如果上述目录不正确，请按`ctrl+C`退出后重新指定。", "warning");
