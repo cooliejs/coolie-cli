@@ -51,6 +51,7 @@ module.exports = function (srcPath) {
     configs._destPath = destPath;
     configs._coolieJSPath = coolieJSPath;
     configs._coolieConfigJSPath = coolieConfigJSPath;
+    configs._coolieConfigJSURI = path.relative(path.dirname(coolieJSPath), coolieConfigJSPath);
     global.configs = configs;
 
     var time = Date.now();

@@ -28,6 +28,7 @@ var concatMap = {};
 var buildMap = {};
 var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_IGNORE = /\bcoolieignore\b/i;
+var REG_EXTNAME = /\.([^.]+)$/;
 
 
 /**
@@ -49,26 +50,22 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
     var mainJS = '';
     var cssHost = configs.css.host;
 
-    // 只对 <script> 进行解析而不替换。
-    data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
+    // 对 <script> 进行解析并且替换。
+    data = data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
         //var file;
         var main = _getMain($1, $3);
         var config = _getConfig($1, $3);
         var hasCoolie = _hasCoolie($1, $3);
-        //var fixSrc;
-
-        console.log(main);
-        console.log(config);
-        console.log(hasCoolie);
-        //console.log(configs._coolieConfigVersion);
-        console.log(configs);
-        //script.replace(REG_SCRIPT_CONFIG, 'data-config="' + replace + '"');
 
         if (main && config && hasCoolie) {
             main = path.join(jsBase, main);
             main = path.relative(srcPath, main);
             mainJS = dato.toURLPath(main);
         }
+
+        return $0.replace(REG_SCRIPT_CONFIG, function ($0, $1) {
+            return 'data-config="' + $1.replace(REG_EXTNAME, '.' + configs._coolieConfigVersion + '.$1') + '"';
+        });
     });
 
     // 循环匹配 <!--coolie-->(matched)<!--/coolie-->
@@ -227,7 +224,6 @@ function _getMain(part1, part2) {
 function _getConfig(part1, part2) {
     return _getAttr(part1, part2, REG_SCRIPT_CONFIG);
 }
-
 
 
 /**
