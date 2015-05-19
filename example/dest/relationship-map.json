@@ -14,9 +14,7 @@
             }
         ],
         "main": "static/js/app/index.js",
-        "deps": [
-            "static/js/libs/path1/path2/index.js"
-        ]
+        "deps": []
     },
     "html/index2.html": {
         "css": [
@@ -33,9 +31,7 @@
             }
         ],
         "main": "static/js/app/index.js",
-        "deps": [
-            "static/js/libs/path1/path2/index.js"
-        ]
+        "deps": []
     },
     "html/user/index.html": {
         "css": [
@@ -47,8 +43,6 @@
             }
         ],
         "main": "static/js/app/user/index.js",
-        "deps": [
-            "static/js/libs/all.js"
-        ]
+        "deps": []
     }
 }

@@ -224,34 +224,34 @@ module.exports = function (srcPath) {
             });
         })
 
-        //.task(function (next) {
-        //    log('5/5', 'generator relationship map', 'task');
-        //    next();
-        //})
-        //.task(function (next) {
-        //    dato.each(htmlJsCssRelationshipMap, function (key, item) {
-        //        if (MainRelationshipMap[item.main]) {
-        //            item.deps = MainRelationshipMap[item.main];
-        //        } else if (item.main) {
-        //            log('miss main', item.main, 'error');
-        //            item.deps = [];
-        //        }
-        //    });
-        //
-        //    var mapFile = path.join(destPath, './relationship-map.json');
-        //    var data = JSON.stringify(htmlJsCssRelationshipMap, null, 4);
-        //
-        //    fs.outputFile(mapFile, data, function (err) {
-        //        if (err) {
-        //            log('write file', dato.fixPath(mapFile), 'error');
-        //            log('write file', err.message, 'error');
-        //            return process.exit();
-        //        }
-        //
-        //        log('√', dato.fixPath(mapFile), 'success');
-        //        next();
-        //    });
-        //})
+        .task(function (next) {
+            log('5/5', 'generator relationship map', 'task');
+            next();
+        })
+        .task(function (next) {
+            dato.each(htmlJsCssRelationshipMap, function (key, item) {
+                if (MainRelationshipMap[item.main]) {
+                    item.deps = MainRelationshipMap[item.main];
+                } else if (item.main) {
+                    log('miss main', item.main, 'error');
+                    item.deps = [];
+                }
+            });
+
+            var mapFile = path.join(destPath, './relationship-map.json');
+            var data = JSON.stringify(htmlJsCssRelationshipMap, null, 4);
+
+            fs.outputFile(mapFile, data, function (err) {
+                if (err) {
+                    log('write file', dato.fixPath(mapFile), 'error');
+                    log('write file', err.message, 'error');
+                    return process.exit();
+                }
+
+                log('√', dato.fixPath(mapFile), 'success');
+                next();
+            });
+        })
 
         // 异步串行结束
         .follow(function (err) {
