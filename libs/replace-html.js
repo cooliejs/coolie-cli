@@ -199,10 +199,10 @@ module.exports = function (file, code) {
                 process.exit();
             }
 
-            buildMap[absFile] = url = '/' + path.relative(destPath, resFile);
+            buildMap[absFile] = url = (configs.dest.host ? '' : '/') + path.relative(destPath, resFile);
         }
 
-        return htmlAttr.set($0, 'src', url + suffix);
+        return htmlAttr.set($0, 'src', configs.dest.host + url + suffix);
     });
 
     return {
