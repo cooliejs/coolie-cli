@@ -40,8 +40,6 @@ exports.set = function (html, attrName, attrVal) {
     var reg = buildRegExp(attrName);
     var to = attrName + '="' + attrVal + '"';
 
-    console.log(reg);
-    console.log(reg.test(html));
     return reg.test(html) ?
         html.replace(reg, to) :
         html.replace(REG_TAGNAME, '$& ' + to);
