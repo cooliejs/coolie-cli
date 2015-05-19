@@ -12,6 +12,7 @@ var encryption = require('ydr-utils').encryption;
 var dato = require('ydr-utils').dato;
 var log = require('./log.js');
 var htmlminify = require('./htmlminify.js');
+var replaceVersion = require('./replace-version.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/gi;
@@ -64,7 +65,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
         }
 
         return $0.replace(REG_SCRIPT_COOLIE, '').replace(REG_SCRIPT_CONFIG, function ($0, $1) {
-            return 'data-config="' + $1.replace(REG_EXTNAME, '.' + configs._coolieConfigVersion + '.$1') + '"';
+            return 'data-config="' + replaceVersion($1, configs._coolieConfigVersion) + '"';
         });
     });
 
