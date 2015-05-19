@@ -81,7 +81,7 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
         log('√', 'version: "' + JSON.stringify(versionMap2, null, 2) + '"', 'success');
         log('√', 'callbacks: ' + callbacks.length, 'success');
 
-        var code2 = sign('js') + 'coolie.config({' +
+        var code2 = 'coolie.config({' +
             'base:"' + coolieConfig.base + '",' +
             'host:"' + coolieConfig.host + '",' +
             'debug:false,' +
@@ -96,7 +96,7 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
 
         return {
             config: coolieConfig,
-            code: jsminify(file, code2),
+            code: sign('js') + jsminify(file, code2),
             version: encryption.md5(code2).slice(0, 16)
         };
     } catch (err) {
