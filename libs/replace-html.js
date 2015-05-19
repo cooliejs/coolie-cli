@@ -62,7 +62,7 @@ module.exports = function (file, code) {
         if (main && config && hasCoolie) {
             main = path.join(jsBase, main);
             main = path.relative(srcPath, main);
-            mainJS = dato.toURLPath(main);
+            mainJS = pathURI.toURLPath(main);
         }
 
         return $0.replace(REG_SCRIPT_COOLIE, '').replace(REG_SCRIPT_CONFIG, function ($0, $1) {
@@ -117,7 +117,7 @@ module.exports = function (file, code) {
         if (findMath) {
             filePath = path.join(cssPath, findMath.name);
             filePath = path.relative(srcPath, filePath);
-            fileURL = cssHost + dato.toURLPath(filePath);
+            fileURL = cssHost + pathURI.toURLPath(filePath);
             findMath.url = fileURL;
             findMath.isRepeat = true;
             concat.push(findMath);
@@ -126,7 +126,7 @@ module.exports = function (file, code) {
                 fileName = encryption.md5(md5List).slice(0, 16) + '.css';
                 filePath = path.join(cssPath, fileName);
                 filePath = path.relative(srcPath, filePath);
-                fileURL = cssHost + dato.toURLPath(filePath);
+                fileURL = cssHost + pathURI.toURLPath(filePath);
 
                 concat.push({
                     name: fileName,
