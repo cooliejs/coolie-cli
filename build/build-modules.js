@@ -133,14 +133,14 @@ module.exports = function (srcPath) {
                         }
 
                         mainRelationshipMap[pathURI.toURIPath(relative)] = deepDeps.map(function (dep) {
-                            return pathURI.toURLPath(path.relative(srcPath, dep));
+                            return pathURI.toURIPath(path.relative(srcPath, dep));
                         });
 
                         var md5Version = encryption.md5(md5List).slice(0, 16);
                         var destFile = path.join(destPath, relative);
 
                         destFile = replaceVersion(destFile, md5Version);
-                        versionMap[pathURI.toURLPath(relative)] = md5Version;
+                        versionMap[pathURI.toURIPath(relative)] = md5Version;
 
                         fs.outputFile(destFile, code, function (err) {
                             if (err) {
@@ -205,7 +205,7 @@ module.exports = function (srcPath) {
 
                     buildHTML(file, function (err, _cssLength, depCSS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
-                        var url = pathURI.toURLPath(htmlRelative);
+                        var url = pathURI.toURIPath(htmlRelative);
 
                         htmlJsCssRelationshipMap[url] = {
                             css: depCSS,
@@ -227,6 +227,9 @@ module.exports = function (srcPath) {
             next();
         })
         .task(function (next) {
+            console.log(htmlJsCssRelationshipMap);
+            console.log(mainRelationshipMap);
+
             dato.each(htmlJsCssRelationshipMap, function (key, item) {
                 if (mainRelationshipMap[item.main]) {
                     item.deps = mainRelationshipMap[item.main];

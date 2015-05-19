@@ -67,9 +67,9 @@ module.exports = function (file, callback) {
                     var bufferList = [];
                     var map = {};
                     var depURLs = matched.files.map(function (file) {
-                        return pathURI.toURLPath(path.relative(srcPath, file));
+                        return pathURI.toURIPath(path.relative(srcPath, file));
                     });
-                    var url = pathURI.toURLPath(matched.file);
+                    var url = pathURI.toURIPath(matched.file);
 
                     map[url] = depURLs;
                     depCSS.push(map);
