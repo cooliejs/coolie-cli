@@ -62,7 +62,6 @@ module.exports = function (srcPath) {
     var versionMap = {};
     var mainRelationshipMap = {};
     var htmlJsCssRelationshipMap = {};
-    var jsBase;
 
     howdo
         .task(function (next) {
@@ -173,7 +172,7 @@ module.exports = function (srcPath) {
 
             destFile = replaceVersion(destFile, coolieInfo.version);
             configs._coolieConfigVersion = coolieInfo.version;
-            configs._jsBase = jsBase = path.join(srcPath, path.dirname(configs.js['coolie.js']), coolieInfo.config.base);
+            configs._jsBase = path.join(srcPath, path.dirname(configs.js['coolie-config.js']), coolieInfo.config.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {
                     log('overwrite config', dato.fixPath(destFile), 'error');

@@ -61,11 +61,8 @@ module.exports = function (file, code) {
 
         if (main && config && hasCoolie) {
             main = path.join(jsBase, main);
-            console.log(jsBase);
-            //console.log(main);
             main = path.relative(srcPath, main);
             mainJS = pathURI.toURIPath(main);
-            //console.log(mainJS);
         }
 
         return $0.replace(REG_SCRIPT_COOLIE, '').replace(REG_SCRIPT_CONFIG, function ($0, $1) {
