@@ -101,12 +101,10 @@ module.exports = function (file, callback) {
                             });
                         });
                     }).follow(function () {
-                        var data = Buffer.concat(bufferList).toString();
+                        var code = Buffer.concat(bufferList).toString();
 
-
-                        data = sign('css') + data;
-
-                        fs.outputFile(destFile, data, function (err) {
+                        code = sign('css') + code;
+                        fs.outputFile(destFile, code, function (err) {
                             if (err) {
                                 log("write file", dato.fixPath(destFile), "error");
                                 log('write file', err.message, 'error');
