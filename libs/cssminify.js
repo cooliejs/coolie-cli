@@ -48,15 +48,15 @@ var buildMap = {};
  * 样式压缩
  * @param file
  * @param code
- * @param [srcPath]
- * @param [destPath]
  * @param [destFile]
  * @param [callback]
  */
-module.exports = function (file, code, srcPath, destPath, destFile, callback) {
+module.exports = function (file, code, destFile, callback) {
     var args = arguments;
     var hasResVersionMap = true;
     var configs = global.configs;
+    var srcPath= configs._srcPath;
+    var destPath= configs._destPath;
 
     if (!cssminify) {
         if (configs.css.minify === false) {

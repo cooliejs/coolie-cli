@@ -87,14 +87,14 @@ module.exports = function (file, callback) {
                     howdo.each(matched.files, function (index, file, doneConcat) {
                         cssLength++;
 
-                        fs.readFile(file, 'utf8', function (err, data) {
+                        fs.readFile(file, 'utf8', function (err, code) {
                             if (err) {
                                 log("read file", dato.fixPath(file), "error");
                                 log('read file', err.message, 'error');
                                 process.exit();
                             }
 
-                            cssminify(file, data, srcPath, destPath, destFile, function (err, code) {
+                            cssminify(file, code, destFile, function (err, code) {
                                 bufferList.push(new Buffer('\n' + code, 'utf8'));
                                 //log('require', dato.fixPath(file));
                                 doneConcat();
