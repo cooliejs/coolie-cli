@@ -109,23 +109,23 @@ module.exports = function (srcPath) {
             config.js.src = [];
         }
 
-        // js.coolie.js
-        if (!config.js["coolie.js"]) {
-            log("parse config", 'js must have `coolie.js` property', "error");
-            process.exit();
-        }
-
-        if (typeis(config.js["coolie.js"]) !== "string") {
-            log("parse config", "`js[coolie.js]` property must be a string", "error");
-            process.exit();
-        }
-
-        coolieJSFile = path.join(srcPath, config.js["coolie.js"]);
-
-        if (!typeis.file(coolieJSFile)) {
-            log("parse config", coolieJSFile + " is NOT a file", "error");
-            process.exit();
-        }
+        //// js.coolie.js
+        //if (!config.js["coolie.js"]) {
+        //    log("parse config", 'js must have `coolie.js` property', "error");
+        //    process.exit();
+        //}
+        //
+        //if (typeis(config.js["coolie.js"]) !== "string") {
+        //    log("parse config", "`js[coolie.js]` property must be a string", "error");
+        //    process.exit();
+        //}
+        //
+        //coolieJSFile = path.join(srcPath, config.js["coolie.js"]);
+        //
+        //if (!typeis.file(coolieJSFile)) {
+        //    log("parse config", coolieJSFile + " is NOT a file", "error");
+        //    process.exit();
+        //}
 
         // js[coolie-config.js]
         if (!config.js["coolie-config.js"]) {
@@ -148,7 +148,7 @@ module.exports = function (srcPath) {
 
 
     // 检查 coolie-config.js 内的 base 路径
-    // base 路径必须在根目录以内，否则在构建之后的 main 会指向错误
+    // base 路径必须在 coolie-config.js 以内，否则在构建之后的 main 会指向错误
     check.coolieConfigJS = function () {
         var code;
 
@@ -175,12 +175,13 @@ module.exports = function (srcPath) {
             log("parse file", err.message, "error");
         }
 
-        basePath = path.join(path.dirname(coolieJSFile), basePath);
+        basePath = path.join(path.dirname(coolieConfigJSFile), basePath);
 
         var toBase = path.relative(srcPath, basePath);
 
         if (toBase.indexOf('../') > -1) {
-            log('coolie base', 'coolie base path must be under ' + srcPath, 'error');
+            log('coolie base', 'coolie base path must be under ' + srcPath +
+                '\nbut now is ' + basePath, 'error');
             process.exit();
         }
     };

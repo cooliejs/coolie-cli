@@ -3,7 +3,6 @@
     "src": [
       "./static/js/app/**/*.js"
     ],
-    "coolie.js": "./static/js/coolie.min.js",
     "coolie-config.js": "./static/js/coolie-config.js"
   },
   "html": {
