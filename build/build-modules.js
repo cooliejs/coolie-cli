@@ -41,13 +41,15 @@ module.exports = function (srcPath) {
      * @type {object}
      */
     var configs = parseConfig(srcPath);
-    global.configs = configs;
-    global.destPath = path.join(srcPath, configs.dest);
-    global.cssPath = path.join(srcPath, configs.css.dest);
-    global.coolieJSPath = path.join(srcPath, configs.js['coolie.js']);
-    global.coolieConfigJSPath = path.join(srcPath, configs.js['coolie-config.js']);
-
     //console.log(JSON.stringify(configs, null, 2));
+    var destPath = path.join(srcPath, configs.dest);
+    var cssPath = path.join(srcPath, configs.css.dest);
+    var coolieJSPath = path.join(srcPath, configs.js['coolie.js']);
+    var coolieConfigJSPath = path.join(srcPath, configs.js['coolie-config.js']);
+
+    configs._srcPath = srcPath;
+    configs._destPath = destPath;
+    global.configs = configs;
 
     var time = Date.now();
     var copyLength = 0;
@@ -167,6 +169,7 @@ module.exports = function (srcPath) {
             var destFile = path.join(destPath, relative);
             var coolieInfo = replaceConfig(srcPath, coolieJSPath, coolieConfigJSPath, code, versionMap);
 
+            configs._coolieConfigVersion = encryption.md5(coolieInfo.code);
             jsBase = path.join(srcPath, path.dirname(configs.js['coolie.js']), coolieInfo.config.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {

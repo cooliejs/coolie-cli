@@ -60,6 +60,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
         console.log(main);
         console.log(config);
         console.log(hasCoolie);
+        console.log(configs._coolieConfigVersion);
 
         if (main && config && hasCoolie) {
             main = path.join(jsBase, main);
