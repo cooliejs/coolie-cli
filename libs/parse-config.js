@@ -77,8 +77,7 @@ module.exports = function (srcPath) {
     // 检查 js 路径
     // js: {
     //    src: [],
-    //    coolie.js: "",
-    //    coolie-config.js: "",
+    //    coolie-config.js: ""
     // }
     check.js = function () {
         if (typeis(config.js) !== "object") {
@@ -172,9 +171,7 @@ module.exports = function (srcPath) {
     // 检查 html
     // html: {
     //     src: [],
-    //     minify: true,
-    //     coolie-js: "",
-    //     coolie-configs.js: ""
+    //     minify: true
     // }
     check.html = function () {
         if (typeis(config.html) !== "object") {
@@ -218,7 +215,7 @@ module.exports = function (srcPath) {
     // 检查 css 配置
     // css: {
     //    dest: "",
-    //    host: "",
+    //    minify: {}
     // }
     check.css = function () {
         if (typeis(config.css) !== "object") {
@@ -232,15 +229,12 @@ module.exports = function (srcPath) {
             process.exit();
         }
 
-        // css.host
-        if (typeis(config.css.host) !== 'string') {
-            log("parse config", "`css.host` must be a string host", "error");
+        // css.minify
+        if (!typeis.undefined(config.css.minify) && !typeis.object(config.css.minify)) {
+            log("parse config", "`css.host` must be an object", "error");
             process.exit();
         }
 
-        if (config.css.host.slice(-1) !== '/') {
-            config.css.host += '/';
-        }
     };
 
 
@@ -249,29 +243,44 @@ module.exports = function (srcPath) {
     //     dest: "",
     // }
     check.resource = function () {
-        if (typeis(config.resource) !== "object") {
+        if (!typeis.object(config.resource)) {
             log("parse config", "`resource` property must be an object", "error");
             process.exit();
         }
 
         // resource.dest
-        if (typeis(config.css.dest) !== 'string') {
-            log("parse config", "`css.dest` property must be a string path", "error");
+        if (!typeis.string(config.resource.dest)) {
+            log("parse config", "`resource.dest` property must be a string path", "error");
             process.exit();
         }
     };
 
 
     // 检查 dest 路径
+    // dest: {
+    //     dirname: "",
+    //     host: ""
+    // }
     check.dest = function () {
-        if (!config.dest) {
-            log("parse config", "coolie.json require `dest` property", "error");
+        if (!typeis.object(config.dest)) {
+            log("parse config", "`dest` property must be an object", "error");
             process.exit();
         }
 
-        if (typeis(config.dest) !== "string") {
-            log("parse config", "`dest` property must be a string path", "error");
+        if (!typeis.string(config.dest.dirname)) {
+            log("parse config", "`dest.dirname` property must be a direction name", "error");
             process.exit();
+        }
+
+        config.dest.host = config.dest.host || '';
+
+        if (!typeis.string(config.dest.host)) {
+            log("parse config", "`dest.host` property must be an URL", "error");
+            process.exit();
+        }
+
+        if (config.dest.host.slice(-1) !== '/') {
+            config.dest.host += '/';
         }
     };
 

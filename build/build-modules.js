@@ -42,7 +42,7 @@ module.exports = function (srcPath) {
      * @type {object}
      */
     var configs = parseConfig(srcPath);
-    var destPath = path.join(srcPath, configs.dest);
+    var destPath = path.join(srcPath, configs.dest.dirname);
     var cssPath = path.join(srcPath, configs.css.dest);
     var coolieConfigJSPath = path.join(srcPath, configs.js['coolie-config.js']);
 
@@ -52,7 +52,7 @@ module.exports = function (srcPath) {
     configs._coolieConfigJSPath = coolieConfigJSPath;
     global.configs = configs;
 
-    return console.log(JSON.stringify(configs, null, 2));
+    //return console.log(JSON.stringify(configs, null, 2));
 
     var time = Date.now();
     var copyLength = 0;

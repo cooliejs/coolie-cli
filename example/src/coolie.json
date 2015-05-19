@@ -18,10 +18,6 @@
     }
   },
   "resource": {
-    "src": [
-      "./static/img/**/*.*",
-      "./static/fonts/**/*.*"
-    ],
     "dest": "./static/res/"
   },
   "copy": [],
