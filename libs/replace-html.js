@@ -18,7 +18,7 @@ var replaceVersion = require('./replace-version.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/gi;
-var REG_IMG = /<img\b([^>]*?)\bsrc\b\s*?=\s*?['"](.*?)['"]([^>]*?)>/gi;
+var REG_IMG = /<img\b[\s\S]*?>/gi;
 var REG_SCRIPT = /<script[^>]*?>[\s\S]*?<\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
 var REG_ABSOLUTE = /^\//;
@@ -153,16 +153,18 @@ module.exports = function (file, code) {
         return $1 ? '<link rel="stylesheet" href="' + concat[replaceIndex++].url + '"/>' : $0;
     });
 
-    code = code.replace(REG_IMG, function ($0, $1, $2, $3) {
-        if (REG_IGNORE.test($0)) {
-            return $0.replace(REG_IGNORE, '');
+    code = code.replace(REG_IMG, function ($0) {
+        if (htmlAttr.get($0, 'coolieignore')) {
+            return htmlAttr.remove($0, 'coolieignore');
         }
 
-        if (REG_HTTP.test($2)) {
+        var imgSrc = htmlAttr.get($0, 'src');
+
+        if (REG_HTTP.test(imgSrc) || !imgSrc) {
             return $0;
         }
 
-        var absFile = path.join(srcPath, $2);
+        var absFile = path.join(srcPath, imgSrc);
         var basename = path.basename(absFile);
         var srcName = basename.replace(REG_SUFFIX, '');
         var suffix = (basename.match(REG_SUFFIX) || [''])[0];
@@ -200,7 +202,7 @@ module.exports = function (file, code) {
             buildMap[absFile] = url = '/' + path.relative(destPath, resFile);
         }
 
-        return '<img' + $1 + 'src="' + url + suffix + '"' + $3 + '>';
+        return htmlAttr.set($0, 'src', url + suffix);
     });
 
     return {
