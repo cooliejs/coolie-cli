@@ -14,7 +14,11 @@
             }
         ],
         "main": "static/js/app/index.js",
-        "deps": []
+        "deps": [
+            "static/img/100x100.png",
+            "static/img/loading.gif",
+            "static/js/libs/path1/path2/index.js"
+        ]
     },
     "html/index2.html": {
         "css": [
@@ -31,7 +35,11 @@
             }
         ],
         "main": "static/js/app/index.js",
-        "deps": []
+        "deps": [
+            "static/img/100x100.png",
+            "static/img/loading.gif",
+            "static/js/libs/path1/path2/index.js"
+        ]
     },
     "html/user/index.html": {
         "css": [
