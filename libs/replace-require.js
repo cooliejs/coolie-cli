@@ -74,6 +74,6 @@ function _buildReg(requireVar, dep) {
     // require("...");
     // require("some!...");
     // require("...", "...");
-    return new RegExp("\\b" + dato.fixRegExp(requireVar) + "\\(['\"](?:[^'\"]*!)?" + dep + "['\"]" +
+    return new RegExp("\\b" + string.escapeRegExp(requireVar) + "\\(['\"](?:[^'\"]*!)?" + dep + "['\"]" +
         "(?:\\s*?,\\s*?['\"][^'\"]*?['\"])?\\)", 'g');
 }
