@@ -52,8 +52,7 @@ var coolieFn = function () {
 module.exports = function (code, versionMap) {
     var configs = global.configs;
     var srcPath = configs._srcPath;
-    var coolieJSPath = configs._coolieJSPath;
-    var file = configs._coolieConfigJSPath;
+    var coolieConfigJSPath = configs._coolieConfigJSPath;
     var coolieString = coolieFn.toString()
         .replace(REG_FUNCTION_START, '')
         .replace(REG_FUNCTION_END, '');
@@ -64,7 +63,10 @@ module.exports = function (code, versionMap) {
     try {
         fn(coolieConfig, callbacks);
 
-        var basePath = path.join(path.dirname(coolieJSPath), coolieConfig.base);
+        /**
+         * adapt to coolie@0.9.0
+         */
+        var basePath = path.join(path.dirname(coolieConfigJSPath), coolieConfig.base);
         var versionMap2 = {};
 
         dato.each(versionMap, function (file, ver) {
@@ -98,11 +100,11 @@ module.exports = function (code, versionMap) {
 
         return {
             config: coolieConfig,
-            code: sign('js') + jsminify(file, code2),
+            code: sign('js') + jsminify(coolieConfigJSPath, code2),
             version: encryption.md5(code2).slice(0, 16)
         };
     } catch (err) {
-        log('coolie-config.js', pathURI.toSystemPath(file), 'error');
+        log('coolie-config.js', pathURI.toSystemPath(coolieConfigJSPath), 'error');
         log('coolie-config.js', err.message, 'error');
     }
 };
