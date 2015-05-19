@@ -24,8 +24,8 @@ var cmdArg1 = cmdArgs[1];
 var buildPath = cmdArg1 ? path.join(CWD, cmdArg1) : CWD;
 
 console.log(colors.cyan('╔═══════════════════════════════════════════════════════╗'));
-console.log(colors.cyan('║         ', pkg.description, '          ║'));
 console.log(colors.cyan('║         ', 'coolie.cli@' + pkg.version, '                           ║'));
+console.log(colors.cyan('║         ', pkg.description, '          ║'));
 console.log(colors.cyan('╚═══════════════════════════════════════════════════════╝'));
 
 switch ((cmdArg0 || "").toLowerCase()) {
@@ -33,6 +33,7 @@ switch ((cmdArg0 || "").toLowerCase()) {
         openWiki();
         break;
 
+    case "-v":
     case "version":
         checkUpdate();
         break;
