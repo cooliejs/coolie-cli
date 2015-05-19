@@ -75,7 +75,7 @@ module.exports = function (code, versionMap) {
 
             var relative = path.relative(basePath, file);
 
-            relative = pathURI.toURLPath(relative);
+            relative = pathURI.toURIPath(relative);
             versionMap2[relative] = ver;
         });
 
