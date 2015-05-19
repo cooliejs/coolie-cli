@@ -18,6 +18,7 @@ var replaceConfig = require('../libs/replace-config.js');
 var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
 var buildHTML = require('./build-html.js');
+var replaceVersion = require('../libs/replace-version.js');
 var REG_END = /(\.[^.]*)$/;
 
 
@@ -169,9 +170,10 @@ module.exports = function (srcPath) {
             // 覆盖生成 coolie-config.js
             var code = fs.readFileSync(coolieConfigJSPath, 'utf8');
             var relative = path.relative(srcPath, coolieConfigJSPath);
-            var destFile = path.join(destPath, relative);
             var coolieInfo = replaceConfig(srcPath, coolieJSPath, coolieConfigJSPath, code, versionMap);
+            var destFile = path.join(destPath, relative);
 
+            destFile = replaceVersion(destFile, coolieInfo.version);
             configs._coolieConfigVersion = coolieInfo.version;
             jsBase = path.join(srcPath, path.dirname(configs.js['coolie.js']), coolieInfo.config.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {

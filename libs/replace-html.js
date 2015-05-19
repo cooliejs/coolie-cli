@@ -63,7 +63,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
             mainJS = dato.toURLPath(main);
         }
 
-        return $0.replace(REG_SCRIPT_CONFIG, function ($0, $1) {
+        return $0.replace(REG_SCRIPT_COOLIE, '').replace(REG_SCRIPT_CONFIG, function ($0, $1) {
             return 'data-config="' + $1.replace(REG_EXTNAME, '.' + configs._coolieConfigVersion + '.$1') + '"';
         });
     });
