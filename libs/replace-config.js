@@ -7,12 +7,15 @@
 "use strict";
 
 var dato = require('ydr-utils').dato;
+var encryption = require('ydr-utils').encryption;
 var path = require('path');
 var log = require('./log.js');
+var sign = require('./sign.js');
 var jsminify = require('./jsminify.js');
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /}$/;
 var coolieConfig = {};
+var config = {};
 var callbacks = [];
 var coolieFn = function () {
     var coolie = {
@@ -52,8 +55,6 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
     var coolieString = coolieFn.toString()
         .replace(REG_FUNCTION_START, '')
         .replace(REG_FUNCTION_END, '');
-
-
     var fn = new Function('config, callbacks', coolieString + code);
     var base;
     var version = JSON.stringify(versionMap);
@@ -80,7 +81,7 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
         log('√', 'version: "' + JSON.stringify(versionMap2, null, 2) + '"', 'success');
         log('√', 'callbacks: ' + callbacks.length, 'success');
 
-        var code2 = 'coolie.config({' +
+        var code2 = sign('js') + 'coolie.config({' +
             'base:"' + coolieConfig.base + '",' +
             'host:"' + coolieConfig.host + '",' +
             'debug:false,' +
@@ -95,7 +96,8 @@ module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
 
         return {
             config: coolieConfig,
-            code: jsminify(file, code2)
+            code: jsminify(file, code2),
+            version: encryption.md5(code2).slice(0, 16)
         };
     } catch (err) {
         log('coolie-config.js', dato.fixPath(file), 'error');

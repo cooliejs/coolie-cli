@@ -169,7 +169,7 @@ module.exports = function (srcPath) {
             var destFile = path.join(destPath, relative);
             var coolieInfo = replaceConfig(srcPath, coolieJSPath, coolieConfigJSPath, code, versionMap);
 
-            configs._coolieConfigVersion = encryption.md5(coolieInfo.code);
+            configs._coolieConfigVersion = coolieInfo.version;
             jsBase = path.join(srcPath, path.dirname(configs.js['coolie.js']), coolieInfo.config.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {
