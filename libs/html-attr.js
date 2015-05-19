@@ -53,5 +53,5 @@ exports.set = function (html, attrName, attrVal) {
  * @returns {string|XML|void}
  */
 exports.remove = function (html, attrName) {
-    return html.replace(buildRegExp(attrName), '');
+    return html.replace(buildRegExp(attrName), ' ');
 };
