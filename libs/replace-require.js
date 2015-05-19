@@ -7,6 +7,7 @@
 
 "use strict";
 
+var string = require('ydr-utils').string;
 var dato = require('ydr-utils').dato;
 var log = require("./log.js");
 var REG_DEFINE = /\bdefine\b\s*?\b\(\s*?function\b[^(]*\(([^,)]*)/;
@@ -68,7 +69,7 @@ function _getRequireVar(str) {
  * @private
  */
 function _buildReg(requireVar, dep) {
-    dep = dato.fixRegExp(dep);
+    dep = string.escapeRegExp(dep);
 
     // require("...");
     // require("some!...");
