@@ -38,11 +38,11 @@ exports.get = function (html, attrName) {
  */
 exports.set = function (html, attrName, attrVal) {
     var reg = buildRegExp(attrName);
-    var to = attrName + '="' + attrVal + '"';
+    var to = ' '+attrName + '="' + attrVal + '" ';
 
     return reg.test(html) ?
         html.replace(reg, to) :
-        html.replace(REG_TAGNAME, '$& ' + to);
+        html.replace(REG_TAGNAME, '$&' + to);
 };
 
 
