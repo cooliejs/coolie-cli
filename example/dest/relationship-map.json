@@ -47,6 +47,8 @@
             }
         ],
         "main": "static/js/app/user/index.js",
-        "deps": []
+        "deps": [
+            "static/js/libs/all.js"
+        ]
     }
 }
