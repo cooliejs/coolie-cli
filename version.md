@@ -1,4 +1,6 @@
 # 0.x.x
+- 0.15.0
+    - 支持构建`coolie-config.js`的版本号。
 - 0.14.0
     - 适配了[coolie.js@0.8.0](https://github.com/cloudcome/coolie)
 - 0.13.0
