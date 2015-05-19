@@ -14,6 +14,7 @@ var sign = require('../libs/sign.js');
 var dato = require('ydr-utils').dato;
 var replaceHtml = require('../libs/replace-html.js');
 var cssminify = require('../libs/cssminify.js');
+var pathURI = require('../libs/path-uri.js');
 var cssLength = 0;
 var buildMap = {};
 
@@ -66,9 +67,9 @@ module.exports = function (file, callback) {
                     var bufferList = [];
                     var map = {};
                     var depURLs = matched.files.map(function (file) {
-                        return dato.toURLPath(path.relative(srcPath, file));
+                        return pathURI.toURLPath(path.relative(srcPath, file));
                     });
-                    var url = dato.toURLPath(matched.file);
+                    var url = pathURI.toURLPath(matched.file);
 
                     map[url] = depURLs;
                     depCSS.push(map);
