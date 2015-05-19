@@ -11,8 +11,8 @@ var pkg = require('../package.json');
 var log = require('../libs/log.js');
 
 module.exports = function () {
-    open(pkg.wiki, function(err){
-        if(err){
+    open(pkg.wiki + '?coolie.cli@' + pkg.version, function (err) {
+        if (err) {
             log('open wiki', pkg.wiki, 'error');
             log('open wiki', err.message, 'error');
             process.exit();
