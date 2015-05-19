@@ -51,7 +51,6 @@ module.exports = function (file, code) {
     var replaceIndex = 0;
     var dirname = path.dirname(file);
     var mainJS = '';
-    var cssHost = configs.css.host;
 
     // 对 <script> 进行解析并且替换。
     code = code.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
@@ -128,7 +127,7 @@ module.exports = function (file, code) {
         if (findMath) {
             filePath = path.join(cssPath, findMath.name);
             filePath = path.relative(srcPath, filePath);
-            fileURL = cssHost + pathURI.toURIPath(filePath);
+            fileURL = configs.dest.host + pathURI.toURIPath(filePath);
             findMath.url = fileURL;
             findMath.isRepeat = true;
             concat.push(findMath);
@@ -137,7 +136,7 @@ module.exports = function (file, code) {
                 fileName = encryption.md5(md5List).slice(0, 16) + '.css';
                 filePath = path.join(cssPath, fileName);
                 filePath = path.relative(srcPath, filePath);
-                fileURL = cssHost + pathURI.toURIPath(filePath);
+                fileURL = configs.dest.host + pathURI.toURIPath(filePath);
 
                 concat.push({
                     name: fileName,
