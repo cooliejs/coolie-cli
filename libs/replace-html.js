@@ -36,16 +36,16 @@ var REG_EXTNAME = /\.([^.]+)$/;
 /**
  * 提取 CSS 依赖并合并依赖
  * @param file {String} HTML 文件路径
- * @param data {String} HTML 文件内容
- * @param srcPath {String} 源路径
- * @param destPath {String} 目的路径
- * @param cssPath {String} 生成CSS文件路径
- * @param jsBase {String} coolie 配置的 base 目录
- * @returns {{concat: Array, data: *}}
+ * @param code {String} HTML 文件内容
+ * @returns {{concat: Array, code: *, mainJS: String}}
  */
-module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
+module.exports = function (file, code) {
     var configs = global.configs;
-    var matches = data.split(REG_BEGIN);
+    var srcPath = configs._srcPath;
+    var destPath = configs._destPath;
+    var cssPath = configs._cssPath;
+    var jsBase = configs._jsBase;
+    var matches = code.split(REG_BEGIN);
     var concat = [];
     var replaceIndex = 0;
     var dirname = path.dirname(file);
@@ -53,7 +53,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
     var cssHost = configs.css.host;
 
     // 对 <script> 进行解析并且替换。
-    data = data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
+    code = code.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
         //var file;
         var main = _getMain($1, $3);
         var config = _getConfig($1, $3);
@@ -139,11 +139,11 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
         }
     });
 
-    data = data.replace(REG_COOLIE, function ($0, $1) {
+    code = code.replace(REG_COOLIE, function ($0, $1) {
         return $1 ? '<link rel="stylesheet" href="' + concat[replaceIndex++].url + '"/>' : $0;
     });
 
-    data = data.replace(REG_IMG, function ($0, $1, $2, $3) {
+    code = code.replace(REG_IMG, function ($0, $1, $2, $3) {
         if (REG_IGNORE.test($0)) {
             return $0.replace(REG_IGNORE, '');
         }
@@ -195,7 +195,7 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
 
     return {
         concat: concat,
-        data: htmlminify(file, data),
+        code: htmlminify(file, code),
         mainJS: mainJS
     };
 };
