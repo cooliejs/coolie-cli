@@ -52,7 +52,7 @@ module.exports = function (srcPath) {
     configs._coolieConfigJSPath = coolieConfigJSPath;
     global.configs = configs;
 
-    //return console.log(JSON.stringify(configs, null, 2));
+    return console.log(JSON.stringify(configs, null, 2));
 
     var time = Date.now();
     var copyLength = 0;
