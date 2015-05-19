@@ -17,6 +17,7 @@ var encryption = require('ydr-utils').encryption;
 var replaceConfig = require('../libs/replace-config.js');
 var replaceVersion = require('../libs/replace-version.js');
 var parseConfig = require('../libs/parse-config.js');
+var pathURI = require('../libs/path-uri.js');
 var buildMain = require('./build-main.js');
 var buildHTML = require('./build-html.js');
 
@@ -59,7 +60,7 @@ module.exports = function (srcPath) {
     var htmlLength = 0;
     var cssLength = 0;
     var versionMap = {};
-    var MainRelationshipMap = {};
+    var mainRelationshipMap = {};
     var htmlJsCssRelationshipMap = {};
     var jsBase;
 
@@ -131,15 +132,15 @@ module.exports = function (srcPath) {
                             return;
                         }
 
-                        MainRelationshipMap[dato.toURLPath(relative)] = deepDeps.map(function (dep) {
-                            return dato.toURLPath(path.relative(srcPath, dep));
+                        mainRelationshipMap[pathURI.toURIPath(relative)] = deepDeps.map(function (dep) {
+                            return pathURI.toURLPath(path.relative(srcPath, dep));
                         });
 
                         var md5Version = encryption.md5(md5List).slice(0, 16);
                         var destFile = path.join(destPath, relative);
 
                         destFile = replaceVersion(destFile, md5Version);
-                        versionMap[dato.toURLPath(relative)] = md5Version;
+                        versionMap[pathURI.toURLPath(relative)] = md5Version;
 
                         fs.outputFile(destFile, code, function (err) {
                             if (err) {
@@ -204,7 +205,7 @@ module.exports = function (srcPath) {
 
                     buildHTML(file, function (err, _cssLength, depCSS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
-                        var url = dato.toURLPath(htmlRelative);
+                        var url = pathURI.toURLPath(htmlRelative);
 
                         htmlJsCssRelationshipMap[url] = {
                             css: depCSS,
@@ -227,8 +228,8 @@ module.exports = function (srcPath) {
         })
         .task(function (next) {
             dato.each(htmlJsCssRelationshipMap, function (key, item) {
-                if (MainRelationshipMap[item.main]) {
-                    item.deps = MainRelationshipMap[item.main];
+                if (mainRelationshipMap[item.main]) {
+                    item.deps = mainRelationshipMap[item.main];
                 } else if (item.main) {
                     log('miss main', item.main, 'error');
                     item.deps = [];
