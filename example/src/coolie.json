@@ -10,8 +10,8 @@
       "./html/**/*.html"
     ],
     "minify": true,
-    "coolie.js": "http://7xj5sa.com1.z0.glb.clouddn.com/@/p/j/coolie/0.9.0/coolie.min.js",
-    "coolie-config.js": "http://localhost:19093/static/js/coolie-config.js"
+    "coolie.js": "https://dn-fed.qbox.me/@/p/j/coolie/0.9.0/coolie.min.js",
+    "coolie-config.js": "https://dn-fed.qbox.me/@/test/js/coolie-config.js"
   },
   "css": {
     "dest": "./static/css/",
