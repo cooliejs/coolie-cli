@@ -53,9 +53,15 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
     data.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
         //var file;
         var main = _getMain($1, $3);
+        var config = _getConfig($1, $3);
+        var hasCoolie = _hasCoolie($1, $3);
         //var fixSrc;
 
-        if (main) {
+        console.log(main);
+        console.log(config);
+        console.log(hasCoolie);
+
+        if (main && config && hasCoolie) {
             main = path.join(jsBase, main);
             main = path.relative(srcPath, main);
             mainJS = dato.toURLPath(main);

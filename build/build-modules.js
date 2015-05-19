@@ -42,11 +42,13 @@ module.exports = function (srcPath) {
      */
     var configs = parseConfig(srcPath);
     global.configs = configs;
+    global.destPath = path.join(srcPath, configs.dest);
+    global.cssPath = path.join(srcPath, configs.css.dest);
+    global.coolieJSPath = path.join(srcPath, configs.js['coolie.js']);
+    global.coolieConfigJSPath = path.join(srcPath, configs.js['coolie-config.js']);
+
     //console.log(JSON.stringify(configs, null, 2));
-    var destPath = path.join(srcPath, configs.dest);
-    var cssPath = path.join(srcPath, configs.css.dest);
-    var coolieJSPath = path.join(srcPath, configs.js['coolie.js']);
-    var coolieConfigJSPath = path.join(srcPath, configs.js['coolie-config.js']);
+
     var time = Date.now();
     var copyLength = 0;
     var mainLength = 0;
