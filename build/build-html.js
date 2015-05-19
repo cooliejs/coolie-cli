@@ -31,14 +31,14 @@ module.exports = function (file, callback) {
     var destPath = configs._destPath;
     var depCSS = [];
 
-    fs.readFile(file, 'utf8', function (err, data) {
+    fs.readFile(file, 'utf8', function (err, code) {
         if (err) {
             log("read file", dato.fixPath(file), "error");
             log('read file', err.message, 'error');
             process.exit();
         }
 
-        var ret = replaceHtml(file, data, srcPath, destPath, cssPath, jsBase);
+        var ret = replaceHtml(file, code);
 
         //log('build html', dato.fixPath(file), 'warning');
 
