@@ -24,7 +24,7 @@ module.exports = function (basedir) {
     var writeFile = path.join(basedir, "./coolie-config.js");
     var isExist = typeis.file(writeFile);
     var continueStep = function () {
-        log("1/3", "请输入`base`值，默认为“./static/app/”：" +
+        log("1/2", "请输入`base`值，默认为“./static/app/”：" +
         "\n`base`路径是相对于 coolie 模块加载器所在的目录；" +
         "\n`base`即为入口模块的基准路径。", "success");
     };
@@ -58,14 +58,7 @@ module.exports = function (basedir) {
     // base
     steps.push(function (data) {
         json.base = _getVal(data, './static/app/', false);
-        log("3/3", "请输入 JS 所在的 HOST，通常为发布到线上的 CDN HOST，如“http://s.ydr.me”。" +
-        "\n默认为空。", 'success');
-    });
-
-    // host
-    steps.push(function (data) {
-        json.host = _getVal(data, '', false);
-        log("3/3", "文件内容为：", "success");
+        log("2/2", "文件内容为：", "success");
         jsonString = _config(json);
         log('coolie-config.js', jsonString, 'success');
         log("confirm", "确认文件内容正确并生成文件？（[y]/n）", "warning");
