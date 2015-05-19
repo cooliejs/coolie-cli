@@ -109,24 +109,6 @@ module.exports = function (srcPath) {
             config.js.src = [];
         }
 
-        //// js.coolie.js
-        //if (!config.js["coolie.js"]) {
-        //    log("parse config", 'js must have `coolie.js` property', "error");
-        //    process.exit();
-        //}
-        //
-        //if (typeis(config.js["coolie.js"]) !== "string") {
-        //    log("parse config", "`js[coolie.js]` property must be a string", "error");
-        //    process.exit();
-        //}
-        //
-        //coolieJSFile = path.join(srcPath, config.js["coolie.js"]);
-        //
-        //if (!typeis.file(coolieJSFile)) {
-        //    log("parse config", coolieJSFile + " is NOT a file", "error");
-        //    process.exit();
-        //}
-
         // js[coolie-config.js]
         if (!config.js["coolie-config.js"]) {
             log("parse config", 'js must have `coolie-config.js` property', "error");
@@ -188,10 +170,12 @@ module.exports = function (srcPath) {
 
 
     // 检查 html
-    //html: {
-    //    src: [],
-    //    minify: true
-    //}
+    // html: {
+    //     src: [],
+    //     minify: true,
+    //     coolie-js: "",
+    //     coolie-configs.js: ""
+    // }
     check.html = function () {
         if (typeis(config.html) !== "object") {
             log("parse config", "`html` property must be an object", "error");
