@@ -21,13 +21,14 @@ var buildMap = {};
 /**
  * 构建一个 HTML 文件
  * @param file {String} 源文件
- * @param cssPath {String} css 路径
- * @param jsBase {String} coolie 配置的 base 目录
- * @param srcPath {String} 构建源路径
- * @param destPath {String} 构建目标路径
  * @param callback {Function} 回调
  */
-module.exports = function (file, cssPath, jsBase, srcPath, destPath, callback) {
+module.exports = function (file, callback) {
+    var configs = global.configs;
+    var cssPath = configs._cssPath;
+    var jsBase = configs._jsBase;
+    var srcPath = configs._srcPath;
+    var destPath = configs._destPath;
     var depCSS = [];
 
     fs.readFile(file, 'utf8', function (err, data) {

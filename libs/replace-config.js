@@ -45,14 +45,15 @@ var coolieFn = function () {
 
 /**
  * 构建配置文件
- * @param srcPath {String} srcPath 源路径
- * @param coolieJSPath {String} coolieJS 路径
- * @param file {String} 文件地址
  * @param code {String} 文件内容
  * @param versionMap {Object} 版本 MAP
  * @returns {Object}
  */
-module.exports = function (srcPath, coolieJSPath, file, code, versionMap) {
+module.exports = function (code, versionMap) {
+    var configs = global.configs;
+    var srcPath = configs._srcPath;
+    var coolieJSPath = configs._coolieJSPath;
+    var file = configs._coolieConfigJSPath;
     var coolieString = coolieFn.toString()
         .replace(REG_FUNCTION_START, '')
         .replace(REG_FUNCTION_END, '');

@@ -49,6 +49,7 @@ module.exports = function (srcPath) {
 
     configs._srcPath = srcPath;
     configs._destPath = destPath;
+    configs._cssPath = cssPath;
     configs._coolieJSPath = coolieJSPath;
     configs._coolieConfigJSPath = coolieConfigJSPath;
     configs._coolieConfigJSURI = path.relative(path.dirname(coolieJSPath), coolieConfigJSPath);
@@ -169,12 +170,12 @@ module.exports = function (srcPath) {
             // 覆盖生成 coolie-config.js
             var code = fs.readFileSync(coolieConfigJSPath, 'utf8');
             var relative = path.relative(srcPath, coolieConfigJSPath);
-            var coolieInfo = replaceConfig(srcPath, coolieJSPath, coolieConfigJSPath, code, versionMap);
+            var coolieInfo = replaceConfig(code, versionMap);
             var destFile = path.join(destPath, relative);
 
             destFile = replaceVersion(destFile, coolieInfo.version);
             configs._coolieConfigVersion = coolieInfo.version;
-            jsBase = path.join(srcPath, path.dirname(configs.js['coolie.js']), coolieInfo.config.base);
+            configs._jsBase = jsBase = path.join(srcPath, path.dirname(configs.js['coolie.js']), coolieInfo.config.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {
                     log('overwrite config', dato.fixPath(destFile), 'error');
@@ -192,7 +193,6 @@ module.exports = function (srcPath) {
             next();
         })
         .each(configs.html.src, function (i, htmlFile, nextGlob) {
-            // html files
             var gbPath = path.join(srcPath, htmlFile);
 
             glob(gbPath, {dot: false, nodir: true}, function (err, htmls) {
@@ -205,7 +205,7 @@ module.exports = function (srcPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, cssPath, jsBase, srcPath, destPath, function (err, _cssLength, depCSS, mainJS) {
+                    buildHTML(file, function (err, _cssLength, depCSS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = dato.toURLPath(htmlRelative);
 
@@ -224,34 +224,34 @@ module.exports = function (srcPath) {
             });
         })
 
-        .task(function (next) {
-            log('5/5', 'generator relationship map', 'task');
-            next();
-        })
-        .task(function (next) {
-            dato.each(htmlJsCssRelationshipMap, function (key, item) {
-                if (MainRelationshipMap[item.main]) {
-                    item.deps = MainRelationshipMap[item.main];
-                } else if (item.main) {
-                    log('miss main', item.main, 'error');
-                    item.deps = [];
-                }
-            });
-
-            var mapFile = path.join(destPath, './relationship-map.json');
-            var data = JSON.stringify(htmlJsCssRelationshipMap, null, 4);
-
-            fs.outputFile(mapFile, data, function (err) {
-                if (err) {
-                    log('write file', dato.fixPath(mapFile), 'error');
-                    log('write file', err.message, 'error');
-                    return process.exit();
-                }
-
-                log('√', dato.fixPath(mapFile), 'success');
-                next();
-            });
-        })
+        //.task(function (next) {
+        //    log('5/5', 'generator relationship map', 'task');
+        //    next();
+        //})
+        //.task(function (next) {
+        //    dato.each(htmlJsCssRelationshipMap, function (key, item) {
+        //        if (MainRelationshipMap[item.main]) {
+        //            item.deps = MainRelationshipMap[item.main];
+        //        } else if (item.main) {
+        //            log('miss main', item.main, 'error');
+        //            item.deps = [];
+        //        }
+        //    });
+        //
+        //    var mapFile = path.join(destPath, './relationship-map.json');
+        //    var data = JSON.stringify(htmlJsCssRelationshipMap, null, 4);
+        //
+        //    fs.outputFile(mapFile, data, function (err) {
+        //        if (err) {
+        //            log('write file', dato.fixPath(mapFile), 'error');
+        //            log('write file', err.message, 'error');
+        //            return process.exit();
+        //        }
+        //
+        //        log('√', dato.fixPath(mapFile), 'success');
+        //        next();
+        //    });
+        //})
 
         // 异步串行结束
         .follow(function (err) {
