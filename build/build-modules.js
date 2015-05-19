@@ -227,9 +227,6 @@ module.exports = function (srcPath) {
             next();
         })
         .task(function (next) {
-            console.log(htmlJsCssRelationshipMap);
-            console.log(mainRelationshipMap);
-
             dato.each(htmlJsCssRelationshipMap, function (key, item) {
                 if (mainRelationshipMap[item.main]) {
                     item.deps = mainRelationshipMap[item.main];
