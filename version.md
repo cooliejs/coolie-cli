@@ -1,6 +1,9 @@
 @todo 传参简化
 
 # 0.x.x
+- 0.16.0
+    - 适配了[coolie.js@0.9.0](https://github.com/cloudcome/coolie)
+    - 支持构建跨站JS、CSS。
 - 0.15.0
     - 支持构建`coolie-config.js`的版本号。
 - 0.14.0
