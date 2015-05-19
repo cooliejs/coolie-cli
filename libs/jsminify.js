@@ -8,6 +8,7 @@
 
 var uglifyJS = require("uglify-js");
 var log = require('./log.js');
+var pathURI = require('./path-uri.js');
 var dato = require('ydr-utils').dato;
 //var compressorOptions = {
 //    // 连续单语句，逗号分开
@@ -101,7 +102,7 @@ module.exports = function (file, code, callback) {
             return ret.code;
         }
     } catch (err) {
-        log('jsminify', dato.fixPath(file), 'error');
+        log('jsminify', pathURI.toSystemPath(file), 'error');
         log('jsminify', err.message, 'error');
         process.exit();
     }

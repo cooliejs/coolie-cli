@@ -10,6 +10,7 @@
 var fs = require('fs-extra');
 var CleanCSS = require("clean-css");
 var log = require('./log.js');
+var pathURI = require('./path-uri.js');
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var encryption = require('ydr-utils').encryption;
@@ -89,7 +90,7 @@ module.exports = function (file, code, srcPath, destPath, destFile, callback) {
             return code;
         }
     } catch (err) {
-        log('cssminify', dato.fixPath(file), 'error');
+        log('cssminify', pathURI.toSystemPath(file), 'error');
         log('cssminify', err.message, 'error');
         process.exit();
     }
@@ -128,7 +129,7 @@ module.exports = function (file, code, srcPath, destPath, destFile, callback) {
             }
 
             if (!version) {
-                log('read file', dato.fixPath(absFile), 'error');
+                log('read file', pathURI.toSystemPath(absFile), 'error');
                 process.exit();
             }
 
@@ -143,9 +144,9 @@ module.exports = function (file, code, srcPath, destPath, destFile, callback) {
                 try {
                     fs.copySync(absFile, resFile);
                 } catch (err) {
-                    log('css file', dato.fixPath(file), 'error');
-                    log('copy from', dato.fixPath(absFile), 'error');
-                    log('copy to', dato.fixPath(resFile), 'error');
+                    log('css file', pathURI.toSystemPath(file), 'error');
+                    log('copy from', pathURI.toSystemPath(absFile), 'error');
+                    log('copy to', pathURI.toSystemPath(resFile), 'error');
                     log('copy file', err.message, 'error');
                     process.exit();
                 }

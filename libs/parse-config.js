@@ -10,6 +10,7 @@
 var path = require("path");
 var fs = require("fs-extra");
 var log = require("./log.js");
+var pathURI = require("./path-uri.js");
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var coolieJSFile;
@@ -154,7 +155,7 @@ module.exports = function (srcPath) {
         try {
             code = fs.readFileSync(coolieConfigJSFile, 'utf8');
         } catch (err) {
-            log("read file", dato.fixPath(coolieConfigJSFile), "error");
+            log("read file", pathURI.toSystemPath(coolieConfigJSFile), "error");
             log("read file", err.message, "error");
             process.exit();
         }
@@ -170,7 +171,7 @@ module.exports = function (srcPath) {
             basePath = coolieConfig.base;
             //basePath = path.join(path.dirname(config.js['coolie.js']), coolieConfig.base);
         } catch (err) {
-            log("parse file", dato.fixPath(file), "error");
+            log("parse file", pathURI.toSystemPath(file), "error");
             log("parse file", err.message, "error");
         }
 

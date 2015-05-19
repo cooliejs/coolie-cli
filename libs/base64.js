@@ -10,6 +10,7 @@
 var fs = require('fs');
 var path = require('path');
 var log = require('./log.js');
+var pathURI = require('./path-uri.js');
 var dato = require('ydr-utils').dato;
 var mime = require('ydr-utils').mime;
 
@@ -29,7 +30,7 @@ module.exports = function (file, callback) {
     try {
         binary = fs.readFileSync(file, 'binary');
     } catch (err) {
-        log('read file', dato.fixPath(file), 'error');
+        log('read file', pathURI.toSystemPath(file), 'error');
         log('read file', err.message, 'error');
     }
 
@@ -38,7 +39,7 @@ module.exports = function (file, callback) {
     try {
         base64 = new Buffer(binary, 'binary').toString('base64');
     } catch (err) {
-        log('base64 file', dato.fixPath(file), 'error');
+        log('base64 file', pathURI.toSystemPath(file), 'error');
         log('base64 file', err.message, 'error');
     }
 
