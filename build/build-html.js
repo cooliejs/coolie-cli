@@ -48,7 +48,7 @@ module.exports = function (file, callback) {
                 var relative = path.relative(srcPath, file);
                 var destFile = path.join(destPath, relative);
 
-                fs.outputFile(destFile, ret.data, function (err) {
+                fs.outputFile(destFile, ret.code, function (err) {
                     if (err) {
                         log("write file", dato.fixPath(destFile), "error");
                         log('write file', err.message, 'error');
