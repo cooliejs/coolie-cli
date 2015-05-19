@@ -6,6 +6,7 @@
 
 "use strict";
 
+var pkg = require('../package.json');
 var log = require("../libs/log.js");
 var buildConfig = require("./build-config.js");
 var buildJSON = require("./build-json.js");
@@ -15,11 +16,16 @@ var openWiki = require("./open-wiki.js");
 var pullCoolie = require("./pull-coolie.js");
 var downloadAlien = require("./download-alien.js");
 var path = require("path");
+var colors = require('colors/safe.js');
 var CWD = process.cwd();
 var cmdArgs = process.argv.slice(2);
 var cmdArg0 = cmdArgs[0];
 var cmdArg1 = cmdArgs[1];
 var buildPath = cmdArg1 ? path.join(CWD, cmdArg1) : CWD;
+
+console.log(colors.cyan('####################################'));
+console.log('####################################');
+console.log('####################################');
 
 switch ((cmdArg0 || "").toLowerCase()) {
     case "wiki":
