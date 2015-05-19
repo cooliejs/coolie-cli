@@ -15,11 +15,10 @@ var log = require('../libs/log.js');
 var dato = require('ydr-utils').dato;
 var encryption = require('ydr-utils').encryption;
 var replaceConfig = require('../libs/replace-config.js');
+var replaceVersion = require('../libs/replace-version.js');
 var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
 var buildHTML = require('./build-html.js');
-var replaceVersion = require('../libs/replace-version.js');
-var REG_END = /(\.[^.]*)$/;
 
 
 module.exports = function (srcPath) {
@@ -141,7 +140,7 @@ module.exports = function (srcPath) {
                         var md5Version = encryption.md5(md5List).slice(0, 16);
                         var destFile = path.join(destPath, relative);
 
-                        destFile = destFile.replace(REG_END, '.' + md5Version + '$1');
+                        destFile = replaceVersion(destFile, md5Version);
                         versionMap[dato.toURLPath(relative)] = md5Version;
 
                         fs.outputFile(destFile, code, function (err) {
