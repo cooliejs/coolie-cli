@@ -10,12 +10,10 @@
       "./html/**/*.html"
     ],
     "minify": true,
-    "coolie.js": "https://dn-fed.qbox.me/@/p/j/coolie/0.9.0/coolie.min.js",
-    "coolie-config.js": "https://dn-fed.qbox.me/@/test/js/coolie-config.js"
+    "coolie.js": "https://dn-fed.qbox.me/@/p/j/coolie/0.9.0/coolie.min.js"
   },
   "css": {
     "dest": "./static/css/",
-    "host": "",
     "minify": {
       "compatibility": "ie7"
     }
@@ -28,5 +26,8 @@
     "dest": "./static/res/"
   },
   "copy": [],
-  "dest": "../dest/"
+  "dest": {
+    "dirnam": "../dest/",
+    "host": "https://dn-fed.qbox.me/@/example"
+  }
 }
