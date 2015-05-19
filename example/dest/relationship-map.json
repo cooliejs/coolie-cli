@@ -13,7 +13,7 @@
                 ]
             }
         ],
-        "main": "static/js/app/index.js",
+        "main": "app/index.js",
         "deps": []
     },
     "html/index2.html": {
@@ -30,7 +30,7 @@
                 ]
             }
         ],
-        "main": "static/js/app/index.js",
+        "main": "app/index.js",
         "deps": []
     },
     "html/user/index.html": {
@@ -42,9 +42,7 @@
                 ]
             }
         ],
-        "main": "static/js/app/user/index.js",
-        "deps": [
-            "static/js/libs/all.js"
-        ]
+        "main": "app/user/index.js",
+        "deps": []
     }
 }

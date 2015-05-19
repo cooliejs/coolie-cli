@@ -315,8 +315,6 @@ module.exports = function (srcPath) {
         } else {
             config.copy = [];
         }
-
-        config.copy.push(config.js['coolie.js']);
     };
 
 
