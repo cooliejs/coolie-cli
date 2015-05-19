@@ -1,1 +1,0 @@
-/*coolie@0.15.0 1432040976077*/coolie.config({base:"./app/",host:"",debug:!1,version:{"index.js":"74be16979710d4c4"}}).use().callback(function(){alert(123)}).callback(function(){alert(456)});
