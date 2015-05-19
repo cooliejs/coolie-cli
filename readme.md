@@ -48,7 +48,7 @@ npm install -g coolie
 
 
 ## `coolie alien [path]`
-下载`alien` 发布版到指定目录。
+下载`alien`发布版到指定目录。
 
 
 ## `coolie config [path]`
