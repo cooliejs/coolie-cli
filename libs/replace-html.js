@@ -60,7 +60,9 @@ module.exports = function (file, data, srcPath, destPath, cssPath, jsBase) {
         console.log(main);
         console.log(config);
         console.log(hasCoolie);
-        console.log(configs._coolieConfigVersion);
+        //console.log(configs._coolieConfigVersion);
+        console.log(configs);
+        //script.replace(REG_SCRIPT_CONFIG, 'data-config="' + replace + '"');
 
         if (main && config && hasCoolie) {
             main = path.join(jsBase, main);
@@ -227,6 +229,7 @@ function _getConfig(part1, part2) {
 }
 
 
+
 /**
  * 判断是否含有 coolie 属性
  * @param part1
@@ -267,4 +270,3 @@ function _getAttr(part1, part2, reg, isTest) {
 
     return null;
 }
-
