@@ -59,8 +59,26 @@ module.exports = function (file, code) {
         var dataConfig = htmlAttr.get($0, 'data-config');
         var hasCoolie = htmlAttr.get($0, 'coolie');
 
+        if (hasCoolie && !dataConfig) {
+            log('warning', pathURI.toSystemPath(file), 'error');
+            log('warning', 'coolie.js script `data-config` attribute is EMPTY.', 'error');
+        }
+
+        if (hasCoolie && !dataMain) {
+            log('warning', pathURI.toSystemPath(file), 'error');
+            log('warning', 'coolie.js script `data-main` attribute is EMPTY.', 'error');
+        }
+
         if (dataMain && dataConfig && hasCoolie) {
-            dataMain = path.join(jsBase, dataMain);
+            try {
+                dataMain = path.join(jsBase, dataMain);
+            } catch (err) {
+                log('html file', pathURI.toSystemPath(file), 'error');
+                log('replace html', err.message, 'error');
+                log('data-main', dataMain ? dataMain : '<EMPTY>', 'error');
+                process.exit();
+            }
+
             dataMain = path.relative(srcPath, dataMain);
             mainJS = pathURI.toURIPath(dataMain);
             $0 = htmlAttr.remove($0, 'coolie');
@@ -159,7 +177,17 @@ module.exports = function (file, code) {
             return $0;
         }
 
-        var absFile = path.join(srcPath, imgSrc);
+        var absFile;
+
+        try {
+            absFile = path.join(srcPath, imgSrc);
+        } catch (err) {
+            log('html file', pathURI.toSystemPath(file), 'error');
+            log('replace html', err.message, 'error');
+            log('img src', imgSrc ? imgSrc : '<EMPTY>', 'error');
+            process.exit();
+        }
+
         var basename = path.basename(absFile);
         var srcName = basename.replace(REG_SUFFIX, '');
         var suffix = (basename.match(REG_SUFFIX) || [''])[0];
