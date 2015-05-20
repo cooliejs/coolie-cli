@@ -93,7 +93,7 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.html.minify = !!number.parseInt(_getVal(data, 1, false), 1);
 
-        log("6/9", "请输入资源保存目录，默认为“./static/res/”。", "success");
+        log("6/9", "请输入静态资源（如：图片、字体）保存目录，默认为“./static/res/”。", "success");
     });
 
 
@@ -102,7 +102,15 @@ module.exports = function (basedir) {
         json.resource = {};
         json.resource.dest = _getVal(data, './static/res/', false);
 
-        log("7/9", "请输入构建的目标目录，默认为“../dest/”。", "success");
+        log("7/9", "请输入构建时需要原样复制的文件路径，默认为空。" +
+            "\n支持通配符，多个文件路径使用空格分开。", "success");
+    });
+
+    // copy
+    steps.push(function (data) {
+        json.copy = _getVal(data, '', true);
+
+        log("8/9", "请输入构建的目标目录，默认为“../dest/”。", "success");
     });
 
     // dest.dirname
@@ -110,22 +118,14 @@ module.exports = function (basedir) {
         json.dest = {};
         json.dest.dirname = _getVal(data, '../dest/', false);
 
-        log("8/9", "请输入需要构建后的 host，默认为空。", "success");
+        log("9/9", "请输入构建的目标 host，如“http://s.a.com/s/”，默认为空。", "success");
     });
 
     // dest.host
     steps.push(function (data) {
         json.dest.host = _getVal(data, '', false);
 
-        log("9/9", "请输入构建时需要原样复制的文件路径，默认为空。" +
-        "\n支持通配符，多个文件路径使用空格分开。", "success");
-    });
-
-    // copy
-    steps.push(function (data) {
-        json.copy = _getVal(data, '', true);
         jsonString = JSON.stringify(json, null, 2);
-
         log("confirm", "文件内容为：", "success");
         log('coolie.json', jsonString, 'success');
         log("confirm", "确认文件内容正确并生成文件？（[y]/n）", "warning");
