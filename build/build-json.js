@@ -30,7 +30,7 @@ module.exports = function (basedir) {
     var jsonString = '';
     var continueStep = function () {
         json.js = {};
-        log("1/7", "请输入 JS 入口模块的路径。" +
+        log("1/6", "请输入 JS 入口模块的路径。" +
         "\n支持通配符，多个路径使用空格分开，默认为“./static/js/app/**/*.js”。", "success");
     };
 
@@ -62,14 +62,14 @@ module.exports = function (basedir) {
         json.js = {};
         json.js.src = _getVal(data, './static/js/app/**/*.js', true);
 
-        log("2/7", "请输入 coolie 模块加载器配置文件所在的路径，默认为“./static/js/coolie-config.js”。", "success");
+        log("2/6", "请输入 coolie.js 配置文件所在的路径，默认为“./static/js/coolie-config.js”。", "success");
     });
 
     // js[coolie-config.js]
     steps.push(function (data) {
         json.js['coolie-config.js'] = _getVal(data, './static/js/coolie-config.js', false);
 
-        log("3/7", "请输入生成 CSS 文件的存放目录。默认为“./static/css/”", "success");
+        log("3/6", "请输入生成 CSS 文件的存放目录。默认为“./static/css/”", "success");
     });
 
     // css.dest
@@ -80,7 +80,7 @@ module.exports = function (basedir) {
             compatibility: 'ie7'
         };
 
-        log("4/7", "请输入 HTML 文件所在的路径。" +
+        log("4/6", "请输入 HTML 文件所在的路径。" +
         "\n支持通配符，多个路径使用空格分开。默认为“./views/**/*.html”。", "success");
     });
 
@@ -90,23 +90,16 @@ module.exports = function (basedir) {
         json.html.src = _getVal(data, './views/**/*.html', true);
         json.html.minify = true;
 
-        log("6/7", "请输入静态资源（如：图片、字体）保存目录，默认为“./static/res/”。", "success");
+        log("5/6", "请输入静态资源（如：图片、字体）保存目录，默认为“./static/res/”。", "success");
     });
 
     // resource.dest
     steps.push(function (data) {
         json.resource = {};
         json.resource.dest = _getVal(data, './static/res/', false);
+        json.copy = [];
 
-        log("7/7", "请输入构建时需要原样复制的文件路径，默认为空。" +
-            "\n支持通配符，多个文件路径使用空格分开。", "success");
-    });
-
-    // copy
-    steps.push(function (data) {
-        json.copy = _getVal(data, '', true);
-
-        log("8/7", "请输入构建的目标目录，默认为“../dest/”。", "success");
+        log("6/6", "请输入构建的目标目录，默认为“../dest/”。", "success");
     });
 
     // dest.dirname
