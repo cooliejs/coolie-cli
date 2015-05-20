@@ -74,7 +74,6 @@ module.exports = function (file, code) {
                 dataMain = path.join(jsBase, dataMain);
             } catch (err) {
                 log('html file', pathURI.toSystemPath(file), 'error');
-                log('replace html', err.message, 'error');
                 log('data-main', dataMain ? dataMain : '<EMPTY>', 'error');
                 process.exit();
             }
@@ -183,8 +182,7 @@ module.exports = function (file, code) {
             absFile = path.join(srcPath, imgSrc);
         } catch (err) {
             log('html file', pathURI.toSystemPath(file), 'error');
-            log('replace html', err.message, 'error');
-            log('img src', imgSrc ? imgSrc : '<EMPTY>', 'error');
+            log('img src', imgSrc === true ? '<EMPTY>' : imgSrc, 'error');
             process.exit();
         }
 

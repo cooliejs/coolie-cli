@@ -103,7 +103,7 @@ var REG_BREAK_LINE = /[\n\r]/g;
 function _splitColors(color, message) {
     var newMessage = '';
     var space = '\n                        ';
-    var messageList = message.split(REG_BREAK_LINE);
+    var messageList = String(message).split(REG_BREAK_LINE);
 
     messageList.forEach(function (msg, index) {
         if (index) {
