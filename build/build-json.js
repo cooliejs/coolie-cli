@@ -69,7 +69,7 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.js['coolie-config.js'] = _getVal(data, './static/js/coolie-config.js', false);
 
-        log("3/6", "请输入生成 CSS 文件的存放目录。默认为“./static/css/”", "success");
+        log("3/6", "请输入生成的 CSS 文件的保存目录。默认为“./static/css/”", "success");
     });
 
     // css.dest
@@ -90,7 +90,7 @@ module.exports = function (basedir) {
         json.html.src = _getVal(data, './views/**/*.html', true);
         json.html.minify = true;
 
-        log("5/6", "请输入静态资源（如：图片、字体）保存目录，默认为“./static/res/”。", "success");
+        log("5/6", "请输入生成的静态资源（如：图片、字体）保存目录，默认为“./static/res/”。", "success");
     });
 
     // resource.dest
