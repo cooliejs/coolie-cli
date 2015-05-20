@@ -182,6 +182,7 @@ module.exports = function (file, code) {
             absFile = path.join(srcPath, imgSrc);
         } catch (err) {
             log('html file', pathURI.toSystemPath(file), 'error');
+            log('img', $0, 'error');
             log('img src', imgSrc === true ? '<EMPTY>' : imgSrc, 'error');
             process.exit();
         }
