@@ -13,6 +13,7 @@ var path = require('path');
 var glob = require('glob');
 var log = require('../libs/log.js');
 var dato = require('ydr-utils').dato;
+var pathURI = require("../libs/path-uri.js");
 var encryption = require('ydr-utils').encryption;
 var replaceConfig = require('../libs/replace-config.js');
 var replaceVersion = require('../libs/replace-version.js');
@@ -75,7 +76,7 @@ module.exports = function (srcPath) {
 
             glob(gbPath, {dot: false, nodir: true}, function (err, files) {
                 if (err) {
-                    log('glob', dato.fixPath(gbPath), 'error');
+                    log('glob', pathURI.toSystemPath(gbPath), 'error');
                     log('glob', err.message, 'error');
                     process.exit();
                 }
@@ -90,18 +91,18 @@ module.exports = function (srcPath) {
 
                     fs.copy(file, destFile, function (err) {
                         if (err) {
-                            log('copy from', dato.fixPath(file), 'error');
-                            log('copy to', dato.fixPath(destFile), 'error');
+                            log('copy from', pathURI.toSystemPath(file), 'error');
+                            log('copy to', pathURI.toSystemPath(destFile), 'error');
                             log('copy error', err.message, 'error');
                             process.exit();
                         }
 
-                        //log('√', dato.fixPath(destFile), 'success');
+                        //log('√', pathURI.toSystemPath(destFile), 'success');
                         copyLength++;
                         nextFile();
                     });
                 }).follow(function () {
-                    log('√', dato.fixPath(gbPath), 'success');
+                    log('√', pathURI.toSystemPath(gbPath), 'success');
                     nextCopy();
                 });
             });
@@ -115,11 +116,11 @@ module.exports = function (srcPath) {
             // 构建入口模块
             var gbPath = path.join(srcPath, main);
 
-            //log('build js', dato.fixPath(gbPath));
+            //log('build js', pathURI.toSystemPath(gbPath));
 
             glob(gbPath, {dot: false, nodir: true}, function (err, files) {
                 if (err) {
-                    log('glob', dato.fixPath(gbPath), 'error');
+                    log('glob', pathURI.toSystemPath(gbPath), 'error');
                     log('glob', err.message, 'error');
                     process.exit();
                 }
@@ -144,12 +145,12 @@ module.exports = function (srcPath) {
 
                         fs.outputFile(destFile, code, function (err) {
                             if (err) {
-                                log('write file', dato.fixPath(destFile), 'error');
+                                log('write file', pathURI.toSystemPath(destFile), 'error');
                                 log('write file', err.message, 'error');
                                 process.exit();
                             }
 
-                            //log('√', dato.fixPath(destFile), 'success');
+                            //log('√', pathURI.toSystemPath(destFile), 'success');
                             mainLength++;
                             nextFile();
                         });
@@ -176,12 +177,12 @@ module.exports = function (srcPath) {
             configs._jsBase = path.join(srcPath, path.dirname(configs.js['coolie-config.js']), coolieInfo.config.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {
-                    log('overwrite config', dato.fixPath(destFile), 'error');
+                    log('overwrite config', pathURI.toSystemPath(destFile), 'error');
                     log('overwrite config', err.message, 'error');
                     process.exit();
                 }
 
-                log('√', dato.fixPath(destFile), 'success');
+                log('√', pathURI.toSystemPath(destFile), 'success');
                 next();
             });
         })
@@ -195,7 +196,7 @@ module.exports = function (srcPath) {
 
             glob(gbPath, {dot: false, nodir: true}, function (err, htmls) {
                 if (err) {
-                    log('glob', dato.fixPath(gbPath), 'error');
+                    log('glob', pathURI.toSystemPath(gbPath), 'error');
                     log('glob', err.message, 'error');
                     process.exit();
                 }
@@ -215,7 +216,7 @@ module.exports = function (srcPath) {
                         nextHTML(err);
                     });
                 }).follow(function () {
-                    log('√', dato.fixPath(gbPath), 'success');
+                    log('√', pathURI.toSystemPath(gbPath), 'success');
 
                     nextGlob();
                 });
@@ -241,12 +242,12 @@ module.exports = function (srcPath) {
 
             fs.outputFile(mapFile, data, function (err) {
                 if (err) {
-                    log('write file', dato.fixPath(mapFile), 'error');
+                    log('write file', pathURI.toSystemPath(mapFile), 'error');
                     log('write file', err.message, 'error');
                     return process.exit();
                 }
 
-                log('√', dato.fixPath(mapFile), 'success');
+                log('√', pathURI.toSystemPath(mapFile), 'success');
                 next();
             });
         })

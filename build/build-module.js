@@ -13,6 +13,7 @@ var fs = require('fs-extra');
 var log = require('../libs/log.js');
 var base64 = require('../libs/base64.js');
 var dato = require('ydr-utils').dato;
+var pathURI = require("../libs/path-uri.js");
 var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');
 var replaceRequire = require('../libs/replace-require.js');
@@ -54,7 +55,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
                 code = type === 'image' ? base64(file) : fs.readFileSync(file, 'utf8');
                 next(null, code);
             } catch (err) {
-                log('read file', dato.fixPath(file), 'error');
+                log('read file', pathURI.toSystemPath(file), 'error');
                 log('read file', err.message, 'error');
                 process.exit();
             }

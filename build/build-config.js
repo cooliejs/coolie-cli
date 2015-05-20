@@ -10,6 +10,7 @@ var pkg = require('../package.json');
 var fs = require("fs-extra");
 var path = require("path");
 var log = require("../libs/log.js");
+var pathURI = require("../libs/path-uri.js");
 var typeis = require('ydr-utils').typeis;
 var dato = require('ydr-utils').dato;
 var nextStep = require("../libs/next-step.js");
@@ -34,7 +35,7 @@ module.exports = function (basedir) {
     // 0
     steps.push(function () {
         log("tips", "以下操作留空回车表示同意默认配置。", "warning");
-        log("file path", dato.fixPath(writeFile), "task");
+        log("file path", pathURI.toSystemPath(writeFile), "task");
         log("warning", "如果上述目录不正确，请按`ctrl+C`退出后重新指定。", "warning");
 
         if (isExist) {
@@ -68,11 +69,11 @@ module.exports = function (basedir) {
         if (data.trim().toLocaleLowerCase().indexOf("n") === -1) {
             fs.outputFile(writeFile, jsonString, "utf-8", function (err) {
                 if (err) {
-                    log("write", dato.fixPath(writeFile), "error");
+                    log("write", pathURI.toSystemPath(writeFile), "error");
                     return process.exit();
                 }
 
-                log("√", dato.fixPath(writeFile), "success");
+                log("√", pathURI.toSystemPath(writeFile), "success");
                 process.exit();
             });
         } else {

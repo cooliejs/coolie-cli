@@ -34,14 +34,14 @@ module.exports = function (file, callback) {
 
     fs.readFile(file, 'utf8', function (err, code) {
         if (err) {
-            log("read file", dato.fixPath(file), "error");
+            log("read file", pathURI.toSystemPath(file), "error");
             log('read file', err.message, 'error');
             process.exit();
         }
 
         var ret = replaceHtml(file, code);
 
-        //log('build html', dato.fixPath(file), 'warning');
+        //log('build html', pathURI.toSystemPath(file), 'warning');
 
         howdo
             // 生成 HTML 文件
@@ -51,12 +51,12 @@ module.exports = function (file, callback) {
 
                 fs.outputFile(destFile, ret.code, function (err) {
                     if (err) {
-                        log("write file", dato.fixPath(destFile), "error");
+                        log("write file", pathURI.toSystemPath(destFile), "error");
                         log('write file', err.message, 'error');
                         process.exit();
                     }
 
-                    //log('√', dato.fixPath(destFile), 'success');
+                    //log('√', pathURI.toSystemPath(destFile), 'success');
                     doneHTML();
                 });
             })
@@ -90,14 +90,14 @@ module.exports = function (file, callback) {
 
                         fs.readFile(file, 'utf8', function (err, code) {
                             if (err) {
-                                log("read file", dato.fixPath(file), "error");
+                                log("read file", pathURI.toSystemPath(file), "error");
                                 log('read file', err.message, 'error');
                                 process.exit();
                             }
 
                             cssminify(file, code, destFile, function (err, code) {
                                 bufferList.push(new Buffer('\n' + code, 'utf8'));
-                                //log('require', dato.fixPath(file));
+                                //log('require', pathURI.toSystemPath(file));
                                 doneConcat();
                             });
                         });
@@ -107,12 +107,12 @@ module.exports = function (file, callback) {
                         code = sign('css') + code;
                         fs.outputFile(destFile, code, function (err) {
                             if (err) {
-                                log("write file", dato.fixPath(destFile), "error");
+                                log("write file", pathURI.toSystemPath(destFile), "error");
                                 log('write file', err.message, 'error');
                                 process.exit();
                             }
 
-                            log('√', dato.fixPath(destFile), 'success');
+                            log('√', pathURI.toSystemPath(destFile), 'success');
                             nextCSSFile();
                         });
                     });

@@ -12,6 +12,7 @@ var fs = require('fs-extra');
 var log = require('../libs/log.js');
 var sign = require('../libs/sign.js');
 var dato = require('ydr-utils').dato;
+var pathURI = require("../libs/path-uri.js");
 var encryption = require('ydr-utils').encryption;
 var Increase = require('../libs/Increase.js');
 var buildModule = require('./build-module.js');
@@ -34,7 +35,7 @@ module.exports = function (mainFile, callback) {
     var _deepBuld = function (name, type, file) {
         buildModule(name, type, file, increase, depIdsMap, function (err, meta) {
             if (err) {
-                log("build", dato.fixPath(file), "error");
+                log("build", pathURI.toSystemPath(file), "error");
                 log('build', err.message, 'error');
                 process.exit();
             }
@@ -60,13 +61,13 @@ module.exports = function (mainFile, callback) {
                     }
 
                     if (depsRelationship[depId] && depsRelationship[depId][file]) {
-                        log('depend cycle', dato.fixPath(file) + '\n' + dato.fixPath(depId), 'error');
+                        log('depend cycle', pathURI.toSystemPath(file) + '\n' + pathURI.toSystemPath(depId), 'error');
                         process.exit();
                     }
 
                     if (!depsCache[depId]) {
                         depsCache[depId] = true;
-                        //log("require", dato.fixPath(depId));
+                        //log("require", pathURI.toSystemPath(depId));
                         _deepBuld(dep.name, dep.type, depId);
                         depsLength++;
                     }
@@ -83,6 +84,6 @@ module.exports = function (mainFile, callback) {
 
     // 第一个 define 模块为入口模块，不必指定其 name
     depIdsMap[mainFile] = '0';
-    log("√", dato.fixPath(mainFile), "success");
+    log("√", pathURI.toSystemPath(mainFile), "success");
     _deepBuld(mainName, 'js', mainFile);
 };
