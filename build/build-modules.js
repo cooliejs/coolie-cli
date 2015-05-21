@@ -18,7 +18,6 @@ var encryption = require('ydr-utils').encryption;
 var replaceConfig = require('../libs/replace-config.js');
 var replaceVersion = require('../libs/replace-version.js');
 var parseConfig = require('../libs/parse-config.js');
-var pathURI = require('../libs/path-uri.js');
 var buildMain = require('./build-main.js');
 var buildHTML = require('./build-html.js');
 

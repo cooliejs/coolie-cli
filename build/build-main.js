@@ -45,7 +45,7 @@ module.exports = function (mainFile, callback) {
             var output;
 
             // 采用内容 MD5
-            md5List += encryption.etag(code);
+            md5List += encryption.md5(code);
             depsCache[mainFile] = true;
             bufferList.push(new Buffer("\n" + code, "utf8"));
             depsRelationship[file] = {};
