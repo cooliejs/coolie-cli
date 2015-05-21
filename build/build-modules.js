@@ -137,7 +137,7 @@ module.exports = function (srcPath) {
                             return pathURI.toURIPath(path.relative(srcPath, dep));
                         });
 
-                        var md5Version = encryption.md5(md5List).slice(0, 16);
+                        var md5Version = encryption.md5(md5List);
                         var destFile = path.join(destPath, relative);
 
                         destFile = replaceVersion(destFile, md5Version);

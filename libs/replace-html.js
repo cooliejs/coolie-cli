@@ -145,7 +145,7 @@ module.exports = function (file, code) {
             concat.push(findMath);
         } else {
             if (files.length) {
-                fileName = encryption.md5(md5List).slice(0, 16) + '.css';
+                fileName = encryption.md5(md5List) + '.css';
                 filePath = path.join(cssPath, fileName);
                 filePath = path.relative(srcPath, filePath);
                 fileURL = configs.dest.host + pathURI.toURIPath(filePath);
