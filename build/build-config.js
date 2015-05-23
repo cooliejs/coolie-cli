@@ -26,7 +26,8 @@ module.exports = function (basedir) {
     var isExist = typeis.file(writeFile);
     var continueStep = function () {
         log("1/2", "请输入`base`值，默认为“./static/app/”：" +
-            "\n`base`路径是相对于 coolie 模块加载器所在的目录；" +
+            "\n`base`路径是相对于`coolie-config.js`所在的目录，即当前目录：" +
+            "\n" + basedir +
             "\n`base`即为入口模块的基准路径。", "success");
     };
     var json = {};
