@@ -193,10 +193,6 @@ module.exports = function (file, code) {
 
     // <img src=".*">
     code = code.replace(REG_IMG, function ($0) {
-        if (htmlAttr.get($0, 'coolieignore')) {
-            return htmlAttr.remove($0, 'coolieignore');
-        }
-
         return _buildResVersion(file, $0, 'src');
     });
 
@@ -217,6 +213,10 @@ module.exports = function (file, code) {
  * @private
  */
 function _buildResVersion(file, html, attrKey) {
+    if (htmlAttr.get(html, 'coolieignore')) {
+        return htmlAttr.remove(html, 'coolieignore');
+    }
+
     var value = htmlAttr.get(html, attrKey);
 
     if (REG_HTTP.test(value) || !value) {
