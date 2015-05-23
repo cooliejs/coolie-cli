@@ -23,16 +23,10 @@ var REG_SCRIPT = /<script[^>]*?>[\s\S]*?<\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
 var REG_ABSOLUTE = /^\//;
 var REG_HTTP = /^(https?:)?\/\//i;
-var REG_SCRIPT_MAIN = /\bdata-main\b\s*?=\s*?['"](.*?)['"]/i;
-var REG_SCRIPT_CONFIG = /\bdata-config\b\s*?=\s*?['"](.*?)['"]/i;
-var REG_SCRIPT_COOLIE = /\bcoolie\b/i;
 // 相同的组合只产生出一个文件
 var concatMap = {};
 var buildMap = {};
 var REG_SUFFIX = /(\?.*|#.*)$/;
-var REG_IGNORE = /\bcoolieignore\b/i;
-var REG_EXTNAME = /\.([^.]+)$/;
-var REG_IMAGE_ICON = /icon/;
 
 
 /**
@@ -178,92 +172,15 @@ module.exports = function (file, code) {
         }
 
         return $0;
-
-        //if (REG_HTTP.test(href) || !href) {
-        //    return $0;
-        //}
-        //
-        //var absFile;
-        //
-        //try {
-        //    absFile = path.join(srcPath, href);
-        //} catch (err) {
-        //    log('html file', pathURI.toSystemPath(file), 'error');
-        //    log('img', $0, 'error');
-        //    log('img src', href === true ? '<EMPTY>' : href, 'error');
-        //    process.exit();
-        //}
-        //
-        //var basename = path.basename(absFile);
-        //var srcName = basename.replace(REG_SUFFIX, '');
-        //var url = buildMap[absFile];
-        //var version = configs._resVerMap[absFile];
-        //
-
     });
 
+    // <img src=".*">
     code = code.replace(REG_IMG, function ($0) {
         if (htmlAttr.get($0, 'coolieignore')) {
             return htmlAttr.remove($0, 'coolieignore');
         }
 
-        //var imgSrc = htmlAttr.get($0, 'src');
-
         return _buildResVersion(file, $0, 'src');
-
-        //if (REG_HTTP.test(imgSrc) || !imgSrc) {
-        //    return $0;
-        //}
-        //
-        //var absFile;
-        //
-        //try {
-        //    absFile = path.join(srcPath, imgSrc);
-        //} catch (err) {
-        //    log('html file', pathURI.toSystemPath(file), 'error');
-        //    log('img', $0, 'error');
-        //    log('img src', imgSrc === true ? '<EMPTY>' : imgSrc, 'error');
-        //    process.exit();
-        //}
-        //
-        //var basename = path.basename(absFile);
-        //var srcName = basename.replace(REG_SUFFIX, '');
-        //var suffix = (basename.match(REG_SUFFIX) || [''])[0];
-        //
-        //absFile = absFile.replace(REG_SUFFIX, '');
-        //
-        //var url = buildMap[absFile];
-        //var version = configs._resVerMap[absFile];
-        //
-        //if (!version) {
-        //    version = encryption.etag(absFile);
-        //}
-        //
-        //if (!version) {
-        //    log('read file', pathURI.toSystemPath(absFile), 'error');
-        //    process.exit();
-        //}
-        //
-        //// 未进行版本构建
-        //if (!url) {
-        //    var extname = path.extname(srcName);
-        //    var resName = version + extname;
-        //    var resFile = path.join(destPath, configs.resource.dest, resName);
-        //
-        //    try {
-        //        fs.copySync(absFile, resFile);
-        //    } catch (err) {
-        //        log('html file', pathURI.toSystemPath(file), 'error');
-        //        log('copy from', pathURI.toSystemPath(absFile), 'error');
-        //        log('copy to', pathURI.toSystemPath(resFile), 'error');
-        //        log('copy file', err.message, 'error');
-        //        process.exit();
-        //    }
-        //
-        //    buildMap[absFile] = url = (configs.dest.host ? '' : '/') + path.relative(destPath, resFile);
-        //}
-        //
-        //return htmlAttr.set($0, 'src', configs.dest.host + url + suffix);
     });
 
     return {
