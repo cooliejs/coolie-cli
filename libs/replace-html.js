@@ -27,6 +27,15 @@ var REG_HTTP = /^(https?:)?\/\//i;
 var concatMap = {};
 var buildMap = {};
 var REG_SUFFIX = /(\?.*|#.*)$/;
+var FAVICON_RELS = [
+    'apple-touch-icon',
+    'apple-touch-icon-precomposed',
+    'apple-touch-startup-image',
+    'icon',
+    'shortcut icon',
+    'og:image',
+    'msapplication-TileImage'
+];
 
 
 /**
@@ -166,8 +175,16 @@ module.exports = function (file, code) {
         var rel = htmlAttr.get($0, 'rel');
         var type = htmlAttr.get($0, 'type');
         var href = htmlAttr.get($0, 'href');
+        var find = false;
 
-        if (rel === 'shortcut icon' || rel === 'apple-touch-icon' || type === 'image/x-icon') {
+        dato.each(FAVICON_RELS, function (index, _rel) {
+            if (rel === _rel) {
+                find = true;
+                return false;
+            }
+        });
+
+        if (find) {
             return _buildResVersion(file, $0, 'href');
         }
 
