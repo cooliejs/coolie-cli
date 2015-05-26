@@ -11,13 +11,13 @@ var pkg = require('../package.json');
 var log = require('../libs/log.js');
 
 module.exports = function () {
-    open(pkg.wiki + '?from=coolie.cli@' + pkg.version, function (err) {
+    open(pkg.book + '?from=coolie.cli@' + pkg.version, function (err) {
         if (err) {
-            log('open wiki', pkg.wiki, 'error');
-            log('open wiki', err.message, 'error');
+            log('coolie book', pkg.book, 'error');
+            log('coolie book', err.message, 'error');
             process.exit();
         }
 
-        log('open wiki', pkg.wiki, 'success');
+        log('coolie book', pkg.book, 'success');
     });
 };

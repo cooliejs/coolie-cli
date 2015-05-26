@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.16.12",
+  "version": "0.16.13",
   "description": "The front-end development builder.",
   "preferGlobal": true,
   "bin": {
@@ -33,7 +33,7 @@
     "url": "http://ydr.me"
   },
   "homepage": "https://github.com/cloudcome/nodejs-coolie",
-  "wiki": "http://coolie.ydr.me/",
+  "book": "http://coolie.ydr.me/",
   "coolie": "https://raw.githubusercontent.com/cloudcome/coolie/master/coolie.min.js",
   "alien": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/alien.zip",
   "repository": {

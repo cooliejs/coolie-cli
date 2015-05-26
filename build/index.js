@@ -12,7 +12,7 @@ var buildConfig = require("./build-config.js");
 var buildJSON = require("./build-json.js");
 var buildModules = require("./build-modules.js");
 var checkUpdate = require("./check-update.js");
-var openWiki = require("./open-wiki.js");
+var openBook = require("./open-book.js");
 var pullCoolie = require("./pull-coolie.js");
 var downloadAlien = require("./download-alien.js");
 var path = require("path");
@@ -31,8 +31,8 @@ console.log(colors.cyan('            ╚═════════════�
 console.log('');
 
 switch ((cmdArg0 || "").toLowerCase()) {
-    case "wiki":
-        openWiki();
+    case "book":
+        openBook();
         break;
 
     case "-v":
@@ -61,7 +61,7 @@ switch ((cmdArg0 || "").toLowerCase()) {
         break;
 
     default:
-        log(true, "coolie wiki", "打开 WIKI 页面", "success");
+        log(true, "coolie book", "打开 coolie book", "success");
         log(true, "coolie version", "输出版本号", "success");
         log(true, "coolie pull [path]", "下载 coolie.min.js 到指定目录", "success");
         log(true, "coolie alien [path]", "下载 alien/ 到指定目录", "success");
