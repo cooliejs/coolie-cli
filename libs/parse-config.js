@@ -220,6 +220,7 @@ module.exports = function (srcPath) {
 
         if (htmlMinifyType === 'undefined') {
             config.html.minify = true;
+            htmlMinifyType = 'boolean';
         }
 
         if (htmlMinifyType !== 'boolean') {
