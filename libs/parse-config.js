@@ -218,6 +218,10 @@ module.exports = function (srcPath) {
         // html.minify
         var htmlMinifyType = typeis(config.html.minify);
 
+        if (htmlMinifyType === 'undefined') {
+            config.html.minify = true;
+        }
+
         if (htmlMinifyType !== 'boolean') {
             log("parse config", "`html.minify` property must be a boolean", "error");
             process.exit();
