@@ -166,7 +166,6 @@ module.exports = function (srcPath) {
         })
         .task(function (next) {
             if (!coolieConfigJSPath) {
-                log('√', 'no JS file, continue', 'success');
                 return next();
             }
 

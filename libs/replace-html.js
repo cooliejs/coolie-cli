@@ -74,23 +74,26 @@ module.exports = function (file, code) {
         }
 
         if (dataMain && dataConfig && hasCoolie) {
-            try {
-                dataMain = path.join(jsBase, dataMain);
-            } catch (err) {
-                log('html file', pathURI.toSystemPath(file), 'error');
-                log('data-main', dataMain ? dataMain : '<EMPTY>', 'error');
-                process.exit();
+            if (jsBase) {
+                try {
+                    dataMain = path.join(jsBase, dataMain);
+                } catch (err) {
+                    log('html file', pathURI.toSystemPath(file), 'error');
+                    log('data-main', dataMain ? dataMain : '<EMPTY>', 'error');
+                    process.exit();
+                }
+
+                dataMain = path.relative(srcPath, dataMain);
+                mainJS = pathURI.toURIPath(dataMain);
+
+                if (configs.dest.host) {
+                    $0 = htmlAttr.set($0, 'data-config', configs.dest.host + replaceVersion(configs._coolieConfigJSURI, configs._coolieConfigVersion));
+                } else {
+                    $0 = htmlAttr.set($0, 'data-config', replaceVersion(dataConfig, configs._coolieConfigVersion));
+                }
             }
 
-            dataMain = path.relative(srcPath, dataMain);
-            mainJS = pathURI.toURIPath(dataMain);
             $0 = htmlAttr.remove($0, 'coolie');
-
-            if (configs.dest.host) {
-                $0 = htmlAttr.set($0, 'data-config', configs.dest.host + replaceVersion(configs._coolieConfigJSURI, configs._coolieConfigVersion));
-            } else {
-                $0 = htmlAttr.set($0, 'data-config', replaceVersion(dataConfig, configs._coolieConfigVersion));
-            }
         }
 
         return $0;
