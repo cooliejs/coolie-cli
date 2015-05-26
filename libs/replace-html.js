@@ -86,7 +86,8 @@ module.exports = function (file, code) {
                 dataMain = path.relative(srcPath, dataMain);
                 mainJS = pathURI.toURIPath(dataMain);
 
-                if (configs.dest.host) {
+                //不是本地根目录
+                if (configs.dest.host !== '/') {
                     $0 = htmlAttr.set($0, 'data-config', configs.dest.host + replaceVersion(configs._coolieConfigJSURI, configs._coolieConfigVersion));
                 } else {
                     $0 = htmlAttr.set($0, 'data-config', replaceVersion(dataConfig, configs._coolieConfigVersion));
