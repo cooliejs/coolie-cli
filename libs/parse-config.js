@@ -140,6 +140,10 @@ module.exports = function (srcPath) {
     check.coolieConfigJS = function () {
         var code;
 
+        if (config._noJS) {
+            return;
+        }
+
         try {
             code = fs.readFileSync(coolieConfigJSFile, 'utf8');
         } catch (err) {
