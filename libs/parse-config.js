@@ -80,9 +80,16 @@ module.exports = function (srcPath) {
     //    coolie-config.js: ""
     // }
     check.js = function () {
-        if (typeis(config.js) !== "object") {
+        if (typeis(config.js) !== "object" && typeis(config.js) !== 'undefined') {
             log("parse config", "`css` property must be an object", "error");
             process.exit();
+        }
+
+        if (typeis.undefined(config.js)) {
+            config._noJS = true;
+            config.js = {};
+
+            return;
         }
 
         // js.src
