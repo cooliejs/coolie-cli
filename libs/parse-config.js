@@ -275,12 +275,16 @@ module.exports = function (srcPath) {
         config.dest.host = config.dest.host || '';
 
         if (!typeis.string(config.dest.host)) {
-            log("parse config", "`dest.host` property must be an URL", "error");
+            log("parse config", "`dest.host` property must be an URL string", "error");
             process.exit();
         }
 
         if (config.dest.host.slice(-1) !== '/') {
             config.dest.host += '/';
+        }
+
+        if (config.dest.host === '/') {
+            config.dest.host = '';
         }
     };
 
