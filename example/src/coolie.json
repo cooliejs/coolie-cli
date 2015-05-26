@@ -1,4 +1,10 @@
 {
+  "js": {
+    "src": [
+      "./static/js/app/**/*.js"
+    ],
+    "coolie-config.js": "./static/js/coolie-config.js"
+  },
   "html": {
     "src": [
       "./html/**/*.html"
