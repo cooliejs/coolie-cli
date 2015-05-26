@@ -295,10 +295,6 @@ module.exports = function (srcPath) {
         if (config.dest.host.slice(-1) !== '/') {
             config.dest.host += '/';
         }
-
-        if (config.dest.host === '/') {
-            config.dest.host = '';
-        }
     };
 
 
