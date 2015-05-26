@@ -23,6 +23,6 @@
   "copy": [],
   "dest": {
     "dirname": "../dest/",
-    "host": "https://dn-fed.qbox.me/@/example"
+    "host": ""
   }
 }
