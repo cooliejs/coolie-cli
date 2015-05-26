@@ -86,6 +86,8 @@ module.exports = function (file, code) {
             mainJS = pathURI.toURIPath(dataMain);
             $0 = htmlAttr.remove($0, 'coolie');
 
+            console.log('configs.dest.host', configs.dest.host);
+            console.log('dataConfig', dataConfig);
             if (configs.dest.host) {
                 $0 = htmlAttr.set($0, 'data-config', configs.dest.host + replaceVersion(configs._coolieConfigJSURI, configs._coolieConfigVersion));
             } else {
