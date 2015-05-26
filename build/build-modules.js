@@ -165,6 +165,11 @@ module.exports = function (srcPath) {
             next();
         })
         .task(function (next) {
+            if (!coolieConfigJSPath) {
+                log('√', 'no JS file, continue', 'success');
+                return next();
+            }
+
             // 覆盖生成 coolie-config.js
             var code = fs.readFileSync(coolieConfigJSPath, 'utf8');
             var relative = path.relative(srcPath, coolieConfigJSPath);
