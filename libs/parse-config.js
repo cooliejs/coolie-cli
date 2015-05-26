@@ -87,7 +87,9 @@ module.exports = function (srcPath) {
 
         if (typeis.undefined(config.js)) {
             config._noJS = true;
-            config.js = {};
+            config.js = {
+                src: []
+            };
 
             return;
         }

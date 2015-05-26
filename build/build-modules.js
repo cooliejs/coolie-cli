@@ -44,13 +44,13 @@ module.exports = function (srcPath) {
     var configs = parseConfig(srcPath);
     var destPath = path.join(srcPath, configs.dest.dirname);
     var cssPath = path.join(srcPath, configs.css.dest);
-    var coolieConfigJSPath = path.join(srcPath, configs.js['coolie-config.js']);
+    var coolieConfigJSPath = configs._noJS ? null : path.join(srcPath, configs.js['coolie-config.js']);
 
     configs._srcPath = srcPath;
     configs._destPath = destPath;
     configs._cssPath = cssPath;
     configs._coolieConfigJSPath = coolieConfigJSPath;
-    configs._coolieConfigJSURI = pathURI.toURIPath(path.relative(srcPath, coolieConfigJSPath));
+    configs._coolieConfigJSURI = configs._noJS ? null : pathURI.toURIPath(path.relative(srcPath, coolieConfigJSPath));
     global.configs = configs;
 
     //return console.log(JSON.stringify(configs, null, 2));
