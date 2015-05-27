@@ -41,7 +41,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
     var depNameList = [];
     // 依赖名称与 ID 对应关系
     var depName2IdMap = {};
-    var isSingle =type !== 'js';
+    var isSingle = type !== 'js';
     // 相对目录
     var relativeDir = path.dirname(file);
 
