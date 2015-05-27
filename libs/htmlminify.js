@@ -6,10 +6,12 @@
 
 'use strict';
 
+var path = require('path');
 var log = require('./log.js');
 var cssminify = require('./cssminify.js');
 var jsminify = require('./jsminify.js');
 var htmlAttr = require('./html-attr.js');
+var base64 = require('./base64.js');
 var sign = require('./sign.js');
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
@@ -30,7 +32,9 @@ var REG_STYLES = /(<style\b[\s\S]*?>)([\s\S]*?)<\/style>/ig;
 var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
 //<!--[if IE 6]><![endif]-->
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
-var REG_IGNORE = /\bcoolieignore\b/i;
+var REG_IMG = /<img\b[\s\S]*?>/gi;
+var REG_HTTP = /^(https?:)?\/\//i;
+var REG_ABSOLUTE = /^\//;
 var JS_TYPES = [
     'javascript',
     'text/javascript',
@@ -40,6 +44,7 @@ var JS_TYPES = [
     'application/javascript',
     'application/ecmascript'
 ];
+var coolieIgnore = 'coolieignore';
 
 
 /**
@@ -51,9 +56,8 @@ var JS_TYPES = [
 module.exports = function (file, code, callback) {
     var preMap = {};
     var configs = global.configs;
-    console.log(file);
 
-    if (configs.html.minify === false) {
+    if (configs.html.minify === false && configs._buildStep === 4) {
         if (callback) {
             return callback(null, code);
         } else {
@@ -84,10 +88,10 @@ module.exports = function (file, code, callback) {
     code = code.replace(REG_STYLES, function ($0, $1, $2) {
         var key = _generateKey();
         var tag = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ');
-        var isIgnore = htmlAttr.get(tag, 'coolieignore');
+        var isIgnore = htmlAttr.get(tag, coolieIgnore);
         var code2 = isIgnore ? $2 : cssminify(file, $2);
 
-        tag = htmlAttr.remove(tag, 'coolieignore');
+        tag = htmlAttr.remove(tag, coolieIgnore);
         preMap[key] = tag + code2 + '</style>';
 
         return key;
@@ -116,18 +120,39 @@ module.exports = function (file, code, callback) {
         var key = _generateKey();
         var tag = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ');
         var type = htmlAttr.get(tag, 'type');
-        var isIgnore = htmlAttr.get(tag, 'coolieignore');
+        var isIgnore = htmlAttr.get(tag, coolieIgnore);
         var code2 = $2;
 
         if (!isIgnore && (type === false || JS_TYPES.indexOf(type) > -1)) {
             code2 = jsminify(file, $2);
         }
 
-        tag = htmlAttr.remove(tag, 'coolieignore');
+        tag = htmlAttr.remove(tag, coolieIgnore);
         preMap[key] = tag + code2 + '</script>';
 
         return key;
     });
+
+
+    // 构建第二步：JS 模块里的 html 文件
+    if (configs._buildStep === 2) {
+        // <img>
+        code = code.replace(REG_IMG, function (html) {
+            var src = htmlAttr.get(html, 'src');
+            var isIgnore = htmlAttr.get(html, coolieIgnore);
+
+            // 不是 http 地址 && 不是忽略属性
+            if(!REG_HTTP.test(src) && !isIgnore){
+                var dir = REG_ABSOLUTE.test(src) ? configs._srcPath : path.dirname(file);
+                var absFile = path.join(dir, src);
+
+            }
+
+            html = htmlAttr.remove(html, coolieIgnore);
+
+            return html;
+        });
+    }
 
 
     dato.each(preMap, function (key, val) {
@@ -152,14 +177,3 @@ module.exports = function (file, code, callback) {
 function _generateKey() {
     return 'å' + random.string(10, 'aA0') + random.guid() + 'å';
 }
-
-
-/////////////////////////////////
-//var html = '<!--\n -会被删除\n-会被删除\n-->' +
-//    '<!--\n - app1.html\n - @author abc\n -->' +
-//    '\n<!--\n不会被删除\n换行了-->' +
-//    '<!--会被删除-->' +
-//    '<div data-a="<!--" \ndata-b="不要删除" data-c="-->"></div>' +
-//    '\n\n\n      <pre>\n\ttab</pre>\n\n\n' +
-//    '\n\n\n      <pre>\n\ttab</pre>';
-//module.exports('', html);

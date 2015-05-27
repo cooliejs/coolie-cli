@@ -13,17 +13,31 @@ var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var dato = require('ydr-utils').dato;
 var mime = require('ydr-utils').mime;
+var typeis = require('ydr-utils').typeis;
 
 
 /**
  * 文件 base64 编码
  * @param file
+ * @param [extname]
  * @param [callback]
  * @returns {*}
  */
-module.exports = function (file, callback) {
+module.exports = function (file, extname, callback) {
+    var args = arguments;
+
+    if (args.length === 2) {
+        // file, callback
+        if (typeis.function(args[1])) {
+            callback = args[1];
+            extname = null;
+        } else {
+            callback = null;
+        }
+    }
+
     var binary;
-    var extname = path.extname(file);
+    extname = extname || path.extname(file);
     // data:image/png;base64,
     var prefix = 'data:' + mime.get(extname) + ';base64,';
 

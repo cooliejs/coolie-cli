@@ -51,6 +51,7 @@ module.exports = function (srcPath) {
     configs._cssPath = cssPath;
     configs._coolieConfigJSPath = coolieConfigJSPath;
     configs._coolieConfigJSURI = configs._noJS ? null : pathURI.toURIPath(path.relative(srcPath, coolieConfigJSPath));
+    configs._buildStep = 0;
     global.configs = configs;
 
     //return console.log(JSON.stringify(configs, null, 2));
@@ -67,6 +68,7 @@ module.exports = function (srcPath) {
     howdo
         .task(function (next) {
             log('1/5', 'copy files', 'task');
+            configs._buildStep = 1;
             next();
         })
         .each(configs.copy, function (i, copyFile, nextCopy) {
@@ -109,6 +111,7 @@ module.exports = function (srcPath) {
 
         .task(function (next) {
             log('2/5', 'build main', 'task');
+            configs._buildStep = 2;
             next();
         })
         .each(configs.js.src, function (i, main, nextMain) {
@@ -162,6 +165,7 @@ module.exports = function (srcPath) {
 
         .task(function (next) {
             log('3/5', 'overwrite config', 'task');
+            configs._buildStep = 3;
             next();
         })
         .task(function (next) {
@@ -192,6 +196,7 @@ module.exports = function (srcPath) {
 
         .task(function (next) {
             log('4/5', 'build html css', 'task');
+            configs._buildStep = 4;
             next();
         })
         .each(configs.html.src, function (i, htmlFile, nextGlob) {
@@ -228,6 +233,7 @@ module.exports = function (srcPath) {
 
         .task(function (next) {
             log('5/5', 'generator relationship map', 'task');
+            configs._buildStep = 5;
             next();
         })
         .task(function (next) {

@@ -42,8 +42,6 @@ module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) 
         callback(null, code);
     };
 
-    console.log(textType);
-
     switch (textType){
         case 'css':
             cssminify(file, code, next);

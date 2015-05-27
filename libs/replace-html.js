@@ -217,8 +217,8 @@ module.exports = function (file, code) {
  * @private
  */
 function _buildResVersion(file, html, attrKey) {
-    if (htmlAttr.get(html, 'coolieignore')) {
-        return htmlAttr.remove(html, 'coolieignore');
+    if (htmlAttr.get(html, 'coolieIgnore')) {
+        return htmlAttr.remove(html, 'coolieIgnore');
     }
 
     var value = htmlAttr.get(html, attrKey);
