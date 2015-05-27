@@ -12,4 +12,7 @@ define(function (require) {
     'use strict';
 
     console.log('libs/all.js');
+    require('some.html', 'html');
+    require('some.css', 'css');
+    require('some.txt', 'text');
 });
