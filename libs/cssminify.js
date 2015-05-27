@@ -53,7 +53,7 @@ var buildMap = {};
  */
 module.exports = function (file, code, destFile, callback) {
     var args = arguments;
-    var hasResVersionMap = true;
+    var isBuildVersion = true;
     var configs = global.configs;
     var srcPath = configs._srcPath;
     var destPath = configs._destPath;
@@ -70,13 +70,13 @@ module.exports = function (file, code, destFile, callback) {
     // cssminify(file, code, callabck)
     if (typeis.function(args[2]) || typeis.undefined(args[2])) {
         callback = args[2];
-        hasResVersionMap = false;
+        isBuildVersion = false;
     }
 
 
     try {
         code = cssminify(file, code);
-        code = hasResVersionMap ? _cssUrlVersion() : _cssUrlBase64();
+        code = _cssURLReplace();
 
         if (callback) {
             callback(null, code);
@@ -95,7 +95,7 @@ module.exports = function (file, code, destFile, callback) {
      * @returns {string}
      * @private
      */
-    function _cssUrlVersion() {
+    function _cssURLReplace() {
         var fileDir = path.dirname(file);
 
         return code.replace(REG_URL, function ($0, $1) {
@@ -112,41 +112,44 @@ module.exports = function (file, code, destFile, callback) {
             var basename = path.basename(absFile);
             var srcName = basename.replace(REG_SUFFIX, '');
             var suffix = (basename.match(REG_SUFFIX) || [''])[0];
+            var url = '';
 
             absFile = absFile.replace(REG_SUFFIX, '');
 
-            var url = buildMap[absFile];
-            var version = configs._resVerMap[absFile];
+            if(isBuildVersion){
+                url = buildMap[absFile];
 
-            if (!version) {
-                version = encryption.md5(absFile);
-            }
+                var version = configs._resVerMap[absFile];
 
-            if (!version) {
-                log('read file', pathURI.toSystemPath(absFile), 'error');
-                process.exit();
-            }
-
-            configs._resVerMap[absFile] = version;
-
-            // 未进行版本构建
-            if (!url) {
-                var extname = path.extname(srcName);
-                var resName = version + extname;
-                var resFile = path.join(destPath, configs.resource.dest, resName);
-
-                try {
-                    fs.copySync(absFile, resFile);
-                } catch (err) {
-                    log('css file', pathURI.toSystemPath(file), 'error');
-                    log('copy from', pathURI.toSystemPath(absFile), 'error');
-                    log('copy to', pathURI.toSystemPath(resFile), 'error');
-                    log('copy file', err.message, 'error');
-                    process.exit();
+                if (!version) {
+                    version = encryption.md5(absFile);
                 }
 
-                buildMap[absFile] = url = path.relative(path.dirname(destFile), resFile);
+                configs._resVerMap[absFile] = version;
+
+                // 未进行版本构建
+                if (!url) {
+                    var extname = path.extname(srcName);
+                    var resName = version + extname;
+                    var resFile = path.join(destPath, configs.resource.dest, resName);
+
+                    try {
+                        fs.copySync(absFile, resFile);
+                    } catch (err) {
+                        log('css file', pathURI.toSystemPath(file), 'error');
+                        log('copy from', pathURI.toSystemPath(absFile), 'error');
+                        log('copy to', pathURI.toSystemPath(resFile), 'error');
+                        log('copy file', err.message, 'error');
+                        process.exit();
+                    }
+
+                    buildMap[absFile] = url = path.relative(path.dirname(destFile), resFile);
+                }
+
+            }else{
+
             }
+
 
             return 'url(' + url + suffix + ')';
         });
