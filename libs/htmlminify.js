@@ -161,7 +161,9 @@ module.exports = function (file, code, callback) {
         code = code.replace(key, val);
     });
 
-    code += sign('html');
+    if (configs._buildStep === 4) {
+        code += sign('html');
+    }
 
     if (callback) {
         callback(null, code);

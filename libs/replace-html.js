@@ -36,6 +36,7 @@ var FAVICON_RELS = [
     'og:image',
     'msapplication-TileImage'
 ];
+var configs = global.configs;
 
 
 /**
