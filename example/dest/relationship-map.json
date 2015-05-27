@@ -52,7 +52,10 @@
         ],
         "main": "static/js/app/user/index.js",
         "deps": [
-            "static/js/libs/all.js"
+            "static/js/libs/all.js",
+            "static/js/libs/some.html",
+            "static/js/libs/some.css",
+            "static/js/libs/some.txt"
         ]
     }
 }

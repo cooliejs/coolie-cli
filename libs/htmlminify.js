@@ -43,6 +43,8 @@ module.exports = function (file, code, callback) {
     var preMap = {};
     var configs = global.configs;
 
+    console.log(code);
+
     if (configs.html.minify === false) {
         if (callback) {
             return callback(null, code);
@@ -84,6 +86,23 @@ module.exports = function (file, code, callback) {
     });
 
 
+    // 保存条件注释
+    code = code.replace(REG_CONDITIONS_COMMENTS, function ($0) {
+        var key = _generateKey();
+
+        preMap[key] = $0;
+
+        return key;
+    });
+
+
+    code = code
+        .replace(REG_YUI_COMMENTS, '')
+        .replace(REG_LINE_COMMENTS, '')
+        .replace(REG_LINES, '')
+        .replace(REG_SPACES, ' ');
+
+
     // 保存 <script>
     code = code.replace(REG_SCRIPTS, function ($0, $1, $2) {
         var key = _generateKey();
@@ -101,23 +120,6 @@ module.exports = function (file, code, callback) {
 
         return key;
     });
-
-
-    // 保存条件注释
-    code = code.replace(REG_CONDITIONS_COMMENTS, function ($0) {
-        var key = _generateKey();
-
-        preMap[key] = $0;
-
-        return key;
-    });
-
-
-    code = code
-        .replace(REG_YUI_COMMENTS, '')
-        .replace(REG_LINE_COMMENTS, '')
-        .replace(REG_LINES, '')
-        .replace(REG_SPACES, ' ');
 
 
     dato.each(preMap, function (key, val) {
