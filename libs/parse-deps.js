@@ -68,17 +68,6 @@ var REG_IMAGE_MODULE = /^(image)!/i;
 
 
 /**
- * 模块类型别名
- * @type {{image: string, text: string, html: string, css: string}}
- */
-var moduleTypeMap = {
-    image: 'image',
-    text: 'text',
-    html: 'text',
-    css: 'text'
-};
-
-/**
  * 清理 url
  * @param url {String} 原始 URL
  * @param [isSingleURL=false] 是否为独立 URL
@@ -145,7 +134,7 @@ module.exports = function (file, code) {
                 dep = {
                     raw: matches[1],
                     name: cleanURL(matches[1], true),
-                    type: moduleTypeMap[matches[2].toLowerCase()]
+                    type: matches[2].toLowerCase()
                 };
             }
             // require('abc');
