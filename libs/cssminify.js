@@ -76,7 +76,7 @@ module.exports = function (file, code, destFile, callback) {
 
     try {
         code = cssminify(file, code);
-        code = hasResVersionMap ? _cssUrlVersion() : code;
+        code = hasResVersionMap ? _cssUrlVersion() : _cssUrlBase64();
 
         if (callback) {
             callback(null, code);
@@ -150,6 +150,11 @@ module.exports = function (file, code, destFile, callback) {
 
             return 'url(' + url + suffix + ')';
         });
+    }
+
+    // 引用资源 base64
+    function _cssUrlBase64(){
+
     }
 };
 

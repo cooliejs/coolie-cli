@@ -52,6 +52,8 @@ module.exports = function (srcPath) {
     configs._coolieConfigJSPath = coolieConfigJSPath;
     configs._coolieConfigJSURI = configs._noJS ? null : pathURI.toURIPath(path.relative(srcPath, coolieConfigJSPath));
     configs._buildStep = 0;
+    configs._resVerMap = {};
+    configs._resBase64Map = {};
     global.configs = configs;
 
     //return console.log(JSON.stringify(configs, null, 2));

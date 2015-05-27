@@ -338,11 +338,5 @@ module.exports = function (srcPath) {
     check.dest();
     check.copy();
 
-    /**
-     * 被引用资源的版本号
-     * @type {{}}
-     * @private
-     */
-    config._resVerMap = {};
     return config;
 };
