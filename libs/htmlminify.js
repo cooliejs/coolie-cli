@@ -51,6 +51,7 @@ var JS_TYPES = [
 module.exports = function (file, code, callback) {
     var preMap = {};
     var configs = global.configs;
+    console.log(file);
 
     if (configs.html.minify === false) {
         if (callback) {
