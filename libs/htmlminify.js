@@ -9,6 +9,7 @@
 var log = require('./log.js');
 var cssminify = require('./cssminify.js');
 var jsminify = require('./jsminify.js');
+var htmlAttr = require('./html-attr.js');
 var sign = require('./sign.js');
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
@@ -27,10 +28,18 @@ var REG_TEXTAREAS = /(<textarea\b[\s\S]*?>)([\s\S]*?)<\/textarea>/ig;
 var REG_PRES = /(<pre\b[\s\S]*?>)([\s\S]*?)<\/pre>/ig;
 var REG_STYLES = /(<style\b[\s\S]*?>)([\s\S]*?)<\/style>/ig;
 var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
-var REG_TYPE = /\btype\s*?=\s*?['"]([^"']*?)['"]/i;
 //<!--[if IE 6]><![endif]-->
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
 var REG_IGNORE = /\bcoolieignore\b/i;
+var JS_TYPES = [
+    'javascript',
+    'text/javascript',
+    'text/ecmascript',
+    'text/ecmascript-6',
+    'text/jsx',
+    'application/javascript',
+    'application/ecmascript'
+];
 
 
 /**
@@ -42,8 +51,6 @@ var REG_IGNORE = /\bcoolieignore\b/i;
 module.exports = function (file, code, callback) {
     var preMap = {};
     var configs = global.configs;
-
-    console.log(code);
 
     if (configs.html.minify === false) {
         if (callback) {
@@ -76,10 +83,10 @@ module.exports = function (file, code, callback) {
     code = code.replace(REG_STYLES, function ($0, $1, $2) {
         var key = _generateKey();
         var tag = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ');
-        var isIgnore = REG_IGNORE.test(tag);
+        var isIgnore = htmlAttr.get(tag, 'coolieignore');
         var code2 = isIgnore ? $2 : cssminify(file, $2);
 
-        tag = tag.replace(REG_IGNORE, '');
+        tag = htmlAttr.remove(tag, 'coolieignore');
         preMap[key] = tag + code2 + '</style>';
 
         return key;
@@ -107,15 +114,15 @@ module.exports = function (file, code, callback) {
     code = code.replace(REG_SCRIPTS, function ($0, $1, $2) {
         var key = _generateKey();
         var tag = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ');
-        var type = (tag.match(REG_TYPE) || ['', ''])[1].toLowerCase();
-        var isIgnore = REG_IGNORE.test(tag);
+        var type = htmlAttr.get(tag, 'type');
+        var isIgnore = htmlAttr.get(tag, 'coolieignore');
         var code2 = $2;
 
-        if (!isIgnore && (type === '' || type.indexOf('javascript') > -1)) {
+        if (!isIgnore && (type === false || JS_TYPES.indexOf(type) > -1)) {
             code2 = jsminify(file, $2);
         }
 
-        tag = tag.replace(REG_IGNORE, '');
+        tag = htmlAttr.remove(tag, 'coolieignore');
         preMap[key] = tag + code2 + '</script>';
 
         return key;
