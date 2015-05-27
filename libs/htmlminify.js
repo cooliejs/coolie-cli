@@ -141,11 +141,13 @@ module.exports = function (file, code, callback) {
             var src = htmlAttr.get(html, 'src');
             var isIgnore = htmlAttr.get(html, coolieIgnore);
 
+
             // 不是 http 地址 && 不是忽略属性
-            if(!REG_HTTP.test(src) && !isIgnore){
+            if (!REG_HTTP.test(src) && !isIgnore) {
                 var dir = REG_ABSOLUTE.test(src) ? configs._srcPath : path.dirname(file);
                 var absFile = path.join(dir, src);
 
+                html = htmlAttr.set(html, 'src', base64(absFile));
             }
 
             html = htmlAttr.remove(html, coolieIgnore);
