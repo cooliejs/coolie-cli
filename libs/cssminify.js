@@ -35,14 +35,17 @@ var defaults = {
     // 资源地图
     sourceMap: false
 };
-var cssminify = null;
 var REG_URL = /url\s*?\((.*?)\)/ig;
 var REG_REMOTE = /^(https?:)?\/\//i;
 var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_ABSPATH = /^\//;
 var REG_QUOTE = /^["']|['"]$/g;
 var buildMap = {};
-
+var configs = global.configs;
+var cleancss = new CleanCSS(dato.extend({}, defaults, configs.css.minify));
+var cssminify = function (file, code) {
+    return cleancss.minify.call(cleancss, code).styles;
+};
 
 /**
  * 样式压缩
@@ -58,19 +61,6 @@ module.exports = function (file, code, destFile, callback) {
     var srcPath= configs._srcPath;
     var destPath= configs._destPath;
 
-    if (!cssminify) {
-        if (configs.css.minify === false) {
-            cssminify = function (file, code) {
-                return code;
-            };
-        } else {
-            var cleancss = new CleanCSS(dato.extend({}, defaults, configs.css.minify));
-
-            cssminify = function (file, code) {
-                return cleancss.minify.call(cleancss, code).styles;
-            };
-        }
-    }
 
     // cssminify(file, code)
     // cssminify(file, code, callabck)
