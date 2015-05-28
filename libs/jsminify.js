@@ -102,7 +102,6 @@ module.exports = function (file, code, callback) {
             return ret.code;
         }
     } catch (err) {
-        console.log(code);
         log('jsminify', pathURI.toSystemPath(file), 'error');
         log('jsminify', err.message, 'error');
         process.exit();
