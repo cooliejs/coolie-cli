@@ -13,6 +13,7 @@ var htmlAttr = require('./html-attr.js');
 var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
+var replaceVersion = require('./replace-version.js');
 var REG_HTTP = /^(https?:)?\/\//i;
 var REG_ABSOLUTE = /^\//;
 var REG_SUFFIX = /(\?.*|#.*)$/;
@@ -63,19 +64,29 @@ module.exports = function (file, css, isReplaceToBase64WhenRelativeToFile) {
             return 'url(' + b64 + ')';
         }
 
-        var url = '';
-        var resFile = path.join(configs._destPath, configs.resource.dest, resName);
+        var version = configs._resVerMap[absFile];
+        var destFile = configs._resDestMap[absFile];
 
-        try {
-            fs.copySync(absFile, resFile);
-        } catch (err) {
-            log('css file', pathURI.toSystemPath(file), 'error');
-            log('copy from', pathURI.toSystemPath(absFile), 'error');
-            log('copy to', pathURI.toSystemPath(resFile), 'error');
-            log('copy file', err.message, 'error');
-            process.exit();
+        if(!version){
+            var resName = replaceVersion(srcName, version);
+            var resFile = path.join(configs._destPath, configs.resource.dest, resName);
+
+            try {
+                fs.copySync(absFile, resFile);
+            } catch (err) {
+                log('css file', pathURI.toSystemPath(file), 'error');
+                log('copy from', pathURI.toSystemPath(absFile), 'error');
+                log('copy to', pathURI.toSystemPath(resFile), 'error');
+                log('copy file', err.message, 'error');
+                process.exit();
+            }
+
+            configs._resDestMap[absFile]  = resFile;
         }
 
+        var relativeURI = path.relative();
+
+        var url = '';
     });
 };
 

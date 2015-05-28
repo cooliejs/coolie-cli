@@ -60,11 +60,10 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
 
     absFile = absFile.replace(REG_SUFFIX, '');
 
+    var b64 = configs._resBase64Map[absFile];
 
     // 相对当前文件 && 替换为 base64
     if (isRelativeToFile && isReplaceToBase64WhenRelativeToFile) {
-        var b64 = configs._resBase64Map[absFile];
-
         if (!b64) {
             configs._resBase64Map[absFile] = b64 = base64(file);
         }

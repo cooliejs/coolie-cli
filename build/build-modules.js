@@ -51,26 +51,11 @@ module.exports = function (srcPath) {
     configs._cssPath = cssPath;
     configs._coolieConfigJSPath = coolieConfigJSPath;
     configs._coolieConfigJSURI = configs._noJS ? null : pathURI.toURIPath(path.relative(srcPath, coolieConfigJSPath));
-    /**
-     * 构建步骤
-     * @type {number}
-     */
     configs._buildStep = 0;
-    /**
-     * 静态资源版本 map
-     * @type {{}}
-     */
     configs._resVerMap = {};
-    /**
-     * 静态资源 URI map
-     * @type {{}}
-     */
     configs._resURIMap = {};
-    /**
-     * 静态资源 base64 map
-     * @type {{}}
-     */
     configs._resBase64Map = {};
+    configs._resDestMap = {};
     global.configs = configs;
 
     //return console.log(JSON.stringify(configs, null, 2));
