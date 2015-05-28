@@ -92,12 +92,16 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
 
         var url = '';
 
+        // 有目标文件
         if (destCSSFile) {
             url = path.relative(path.dirname(destCSSFile), destFile);
         } else {
-            url = path.relative(configs._destPath, destFile);
+            url = '/' + path.relative(configs._destPath, destFile);
         }
 
+        url = pathURI.toURIPath(url) + suffix;
+
+        return 'url(' + url + ')';
     });
 };
 
