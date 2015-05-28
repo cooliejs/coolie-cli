@@ -14,6 +14,7 @@ var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
 var replaceVersion = require('./replace-version.js');
+var encryption = require('ydr-utils').encryption;
 var REG_HTTP = /^(https?:)?\/\//i;
 var REG_ABSOLUTE = /^\//;
 var REG_SUFFIX = /(\?.*|#.*)$/;
@@ -25,10 +26,11 @@ var REG_QUOTE = /^["']|['"]$/g;
  * 构建资源版本
  * @param file {String} 待替换的文件
  * @param css {String} 待替换的 CSS 文件
+ * @param destCSSFile {String} CSS 文件的保存路径
  * @param [isReplaceToBase64WhenRelativeToFile=false] {Boolean} 是否替换为 base64 编码，当资源相对于当前文件时
  * @returns {String}
  */
-module.exports = function (file, css, isReplaceToBase64WhenRelativeToFile) {
+module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelativeToFile) {
     var configs = global.configs;
 
     return css.replace(REG_URL, function ($0, $1) {
@@ -67,26 +69,35 @@ module.exports = function (file, css, isReplaceToBase64WhenRelativeToFile) {
         var version = configs._resVerMap[absFile];
         var destFile = configs._resDestMap[absFile];
 
-        if(!version){
-            var resName = replaceVersion(srcName, version);
-            var resFile = path.join(configs._destPath, configs.resource.dest, resName);
+        if (!version) {
+            version = encryption.md5(absFile);
+
+            var destName = replaceVersion(srcName, version);
+
+            destFile = path.join(configs._destPath, configs.resource.dest, destName);
 
             try {
-                fs.copySync(absFile, resFile);
+                fs.copySync(absFile, destFile);
             } catch (err) {
-                log('css file', pathURI.toSystemPath(file), 'error');
+                log('copy file', pathURI.toSystemPath(file), 'error');
                 log('copy from', pathURI.toSystemPath(absFile), 'error');
-                log('copy to', pathURI.toSystemPath(resFile), 'error');
+                log('copy to', pathURI.toSystemPath(destFile), 'error');
                 log('copy file', err.message, 'error');
                 process.exit();
             }
 
-            configs._resDestMap[absFile]  = resFile;
+            configs._resVerMap[absFile] = version;
+            configs._resDestMap[absFile] = destFile;
         }
 
-        var relativeURI = path.relative();
-
         var url = '';
+
+        if (destCSSFile) {
+            url = path.relative(path.dirname(destCSSFile), destFile);
+        } else {
+            url = path.relative(configs._destPath, destFile);
+        }
+
     });
 };
 
