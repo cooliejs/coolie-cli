@@ -94,11 +94,13 @@ var cleanURL = function (url, isSingleURL) {
  * @returns {Object}
  */
 var parseNameType = function (name) {
-    if (REG_TEXT_MODULE.test(name)) {
+    var matches;
+
+    if ((matches = name.match(REG_TEXT_MODULE))) {
         return {
             raw: name,
             name: cleanURL(name.replace(REG_TEXT_MODULE, ''), true),
-            type: 'text'
+            type: matches[1]
         };
     } else if (REG_IMAGE_MODULE.test(name)) {
         return {
