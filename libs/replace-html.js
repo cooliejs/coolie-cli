@@ -15,7 +15,7 @@ var htmlAttr = require('./html-attr.js');
 var pathURI = require('./path-uri.js');
 var htmlminify = require('./htmlminify.js');
 var replaceVersion = require('./replace-version.js');
-var replaceResource = require('./replace-resource.js');
+var replaceHTMLResource = require('./replace-html-resource.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/gi;
@@ -186,7 +186,7 @@ module.exports = function (file, code) {
         });
 
         if (find) {
-            return replaceResource(file, $0, 'href');
+            return replaceHTMLResource(file, $0, 'href');
         }
 
         return $0;
@@ -194,7 +194,7 @@ module.exports = function (file, code) {
 
     // <img src=".*">
     code = code.replace(REG_IMG, function ($0) {
-        return replaceResource(file, $0, 'src');
+        return replaceHTMLResource(file, $0, 'src');
     });
 
     return {

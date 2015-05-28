@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * 替换 HTML 文件里的资源路径
  * @author ydr.me
  * @create 2015-05-28 10:03
  */
@@ -30,8 +30,8 @@ var REG_SUFFIX = /(\?.*|#.*)$/;
 module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToFile) {
     var configs = global.configs;
 
-    if (htmlAttr.get(html, 'coolieIgnore')) {
-        return htmlAttr.remove(html, 'coolieIgnore');
+    if (htmlAttr.get(html, 'coolieignore')) {
+        return htmlAttr.remove(html, 'coolieignore');
     }
 
     var value = htmlAttr.get(html, attrKey);

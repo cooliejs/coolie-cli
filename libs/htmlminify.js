@@ -11,8 +11,8 @@ var log = require('./log.js');
 var cssminify = require('./cssminify.js');
 var jsminify = require('./jsminify.js');
 var htmlAttr = require('./html-attr.js');
-var base64 = require('./base64.js');
 var sign = require('./sign.js');
+var replaceHTMLResource = require('./replace-html-resource.js');
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
 var REG_LINES = /[\n\r\t]/g;
@@ -138,25 +138,7 @@ module.exports = function (file, code, callback) {
     if (configs._buildStep === 2) {
         // <img>
         code = code.replace(REG_IMG, function (html) {
-            var src = htmlAttr.get(html, 'src');
-            var isIgnore = htmlAttr.get(html, coolieIgnore);
-
-            // 不是 http 地址 && 不是忽略属性
-            if (!REG_HTTP.test(src) && !isIgnore) {
-                var dir = REG_ABSOLUTE.test(src) ? configs._srcPath : path.dirname(file);
-                var absFile = path.join(dir, src);
-                var b = configs._resBase64Map[absFile];
-
-                if (!b) {
-                    b = configs._resBase64Map[absFile] = base64(absFile);
-                }
-
-                html = htmlAttr.set(html, 'src', b);
-            }
-
-            html = htmlAttr.remove(html, coolieIgnore);
-
-            return html;
+            return replaceHTMLResource(file, html, 'src', true);
         });
     }
 
