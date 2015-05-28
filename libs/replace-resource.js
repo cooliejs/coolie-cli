@@ -13,21 +13,21 @@ var encryption = require('ydr-utils').encryption;
 var htmlAttr = require('./html-attr.js');
 var log = require('./log.js');
 var pathURI = require('./path-uri.js');
+var base64 = require('./base64.js');
 var REG_HTTP = /^(https?:)?\/\//i;
 var REG_ABSOLUTE = /^\//;
 var REG_SUFFIX = /(\?.*|#.*)$/;
 
 
-
 /**
  * 构建资源版本
- * @param file
- * @param html
- * @param attrKey
+ * @param file {String} 待替换的文件
+ * @param html {String} 待替换的标签
+ * @param attrKey {String} 资源标签属性
+ * @param [isReplaceToBase64WhenRelativeToFile=false] {Boolean} 是否替换为 base64 编码，当资源相对于当前文件时
  * @returns {String}
- * @private
  */
-module.exports = function (file, html, attrKey) {
+module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToFile) {
     var configs = global.configs;
 
     if (htmlAttr.get(html, 'coolieIgnore')) {
@@ -40,16 +40,17 @@ module.exports = function (file, html, attrKey) {
         return html;
     }
 
+    var isRelativeToFile = !REG_ABSOLUTE.test(value);
+    // 绝对目录
+    var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
     var absFile;
 
-    //console.log(configs);
-
     try {
-        absFile = path.join(configs._srcPath, value);
+        absFile = path.join(absDir, value);
     } catch (err) {
-        log('replace html', pathURI.toSystemPath(file), 'error');
-        log('replace html', html, 'error');
-        log('replace html', err.message, 'error');
+        log('replace resource', pathURI.toSystemPath(file), 'error');
+        log('replace resource', html, 'error');
+        log('replace resource', err.message, 'error');
         log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
         process.exit();
     }
@@ -60,11 +61,22 @@ module.exports = function (file, html, attrKey) {
 
     absFile = absFile.replace(REG_SUFFIX, '');
 
-    var url = configs._resURIMap[absFile];
+    var b64 = configs._resBase64Map[absFile];
+
+    // 相对当前文件 && 替换为 base64
+    if (isRelativeToFile && isReplaceToBase64WhenRelativeToFile) {
+        if (!b64) {
+            configs._resBase64Map[absFile] = b64 = base64(file);
+        }
+
+        return htmlAttr.set(html, attrKey, b64);
+    }
+
     var version = configs._resVerMap[absFile];
+    var url = configs._resURIMap[absFile];
 
     if (!version) {
-        version = encryption.etag(absFile);
+        version = encryption.md5(absFile);
     }
 
     // 未进行版本构建

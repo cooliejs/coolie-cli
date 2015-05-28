@@ -15,6 +15,7 @@ var htmlAttr = require('./html-attr.js');
 var pathURI = require('./path-uri.js');
 var htmlminify = require('./htmlminify.js');
 var replaceVersion = require('./replace-version.js');
+var replaceResource = require('./replace-resource.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/gi;
