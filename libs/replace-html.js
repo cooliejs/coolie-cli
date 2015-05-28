@@ -36,7 +36,6 @@ var FAVICON_RELS = [
     'og:image',
     'msapplication-TileImage'
 ];
-var configs = global.configs;
 
 
 /**
@@ -218,6 +217,8 @@ module.exports = function (file, code) {
  * @private
  */
 function _buildResVersion(file, html, attrKey) {
+    var configs = global.configs;
+
     if (htmlAttr.get(html, 'coolieIgnore')) {
         return htmlAttr.remove(html, 'coolieIgnore');
     }
@@ -230,12 +231,15 @@ function _buildResVersion(file, html, attrKey) {
 
     var absFile;
 
+    //console.log(configs);
+
     try {
         absFile = path.join(configs._srcPath, value);
     } catch (err) {
-        log('html file', pathURI.toSystemPath(file), 'error');
-        log('img', html, 'error');
-        log('img src', value === true ? '<EMPTY>' : value, 'error');
+        log('replace html', pathURI.toSystemPath(file), 'error');
+        log('replace html', html, 'error');
+        log('replace html', err.message, 'error');
+        log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
         process.exit();
     }
 

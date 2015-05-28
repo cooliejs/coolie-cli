@@ -147,7 +147,7 @@ module.exports = function (file, code, destFile, callback) {
                 }
 
             }else{
-
+                console.log('============ cssminify build css js');
             }
 
 
