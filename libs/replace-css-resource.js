@@ -12,7 +12,6 @@ var fs = require('fs-extra');
 var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
-var replaceVersion = require('./replace-version.js');
 var encryption = require('ydr-utils').encryption;
 var REG_HTTP = /^(https?:)?\/\//i;
 var REG_ABSOLUTE = /^\//;
@@ -42,6 +41,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
         var suffix = ($1.match(REG_SUFFIX) || [''])[0];
         $1 = $1.replace(REG_SUFFIX, '');
         var srcName = path.basename($1);
+        var extname = path.extname($1);
         var isRelativeToFile = !REG_ABSOLUTE.test($1);
         var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
         var absFile;
@@ -72,7 +72,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
         if (!version) {
             version = encryption.md5(absFile);
 
-            var destName = replaceVersion(srcName, version);
+            var destName = version + extname;
 
             destFile = path.join(configs._destPath, configs.resource.dest, destName);
 

@@ -56,8 +56,6 @@ module.exports = function (file, code, destFile, callback) {
     var args = arguments;
     var isBuildVersion = true;
     var configs = global.configs;
-    var srcPath = configs._srcPath;
-    var destPath = configs._destPath;
 
     if (!cssminify) {
         var cleancss = new CleanCSS(dato.extend({}, defaults, configs.css.minify));
@@ -77,7 +75,12 @@ module.exports = function (file, code, destFile, callback) {
 
     try {
         code = cssminify(file, code);
-        code = replaceCSSResource(file, code, destFile, !isBuildVersion);
+
+        if (isBuildVersion) {
+            code = replaceCSSResource(file, code, destFile, false);
+        } else {
+            code = replaceCSSResource(file, code, null, true);
+        }
 
         if (callback) {
             callback(null, code);
@@ -88,77 +91,6 @@ module.exports = function (file, code, destFile, callback) {
         log('cssminify', pathURI.toSystemPath(file), 'error');
         log('cssminify', err.message, 'error');
         process.exit();
-    }
-
-
-    /**
-     * CSS 引用资源路径替换
-     * @returns {string}
-     * @private
-     */
-    function _cssURLReplace() {
-        var fileDir = path.dirname(file);
-
-        return code.replace(REG_URL, function ($0, $1) {
-            $1 = $1.replace(REG_QUOTE, '');
-            // 以下情况忽略添加版本号：
-            // //path/to/abc.png
-            // http://path/to/abc.png
-            // https://path/to/abc.png
-            if (REG_REMOTE.test($1)) {
-                return 'url(' + $1 + ')';
-            }
-
-            var absFile = path.join(REG_ABSPATH.test($1) ? srcPath : fileDir, $1);
-            var basename = path.basename(absFile);
-            var srcName = basename.replace(REG_SUFFIX, '');
-            var suffix = (basename.match(REG_SUFFIX) || [''])[0];
-            var url = '';
-
-            absFile = absFile.replace(REG_SUFFIX, '');
-
-            if(isBuildVersion){
-                url = buildMap[absFile];
-
-                var version = configs._resVerMap[absFile];
-
-                if (!version) {
-                    version = encryption.md5(absFile);
-                }
-
-                configs._resVerMap[absFile] = version;
-
-                // 未进行版本构建
-                if (!url) {
-                    var extname = path.extname(srcName);
-                    var resName = version + extname;
-                    var resFile = path.join(destPath, configs.resource.dest, resName);
-
-                    try {
-                        fs.copySync(absFile, resFile);
-                    } catch (err) {
-                        log('css file', pathURI.toSystemPath(file), 'error');
-                        log('copy from', pathURI.toSystemPath(absFile), 'error');
-                        log('copy to', pathURI.toSystemPath(resFile), 'error');
-                        log('copy file', err.message, 'error');
-                        process.exit();
-                    }
-
-                    buildMap[absFile] = url = path.relative(path.dirname(destFile), resFile);
-                }
-
-            }else{
-                console.log('============ cssminify build css js');
-            }
-
-
-            return 'url(' + url + suffix + ')';
-        });
-    }
-
-    // 引用资源 base64
-    function _cssUrlBase64(){
-
     }
 };
 

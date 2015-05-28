@@ -1,3 +1,7 @@
 body{
     background: url("./girl.jpg");
 }
+
+.div{
+    background: url("/static/img/girl.jpg");
+}
