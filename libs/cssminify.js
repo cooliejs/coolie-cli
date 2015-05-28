@@ -11,6 +11,7 @@ var fs = require('fs-extra');
 var CleanCSS = require("clean-css");
 var log = require('./log.js');
 var pathURI = require('./path-uri.js');
+var replaceCSSResource = require('./replace-css-resource.js');
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var encryption = require('ydr-utils').encryption;
@@ -76,7 +77,7 @@ module.exports = function (file, code, destFile, callback) {
 
     try {
         code = cssminify(file, code);
-        code = _cssURLReplace();
+        code = replaceCSSResource(file, code, destFile, !isBuildVersion);
 
         if (callback) {
             callback(null, code);

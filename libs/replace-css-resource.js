@@ -9,7 +9,6 @@
 
 var path = require('path');
 var fs = require('fs-extra');
-var htmlAttr = require('./html-attr.js');
 var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
@@ -60,6 +59,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             var b64 = configs._resBase64Map[absFile];
 
             if (!b64) {
+                console.log('base64', absFile);
                 configs._resBase64Map[absFile] = b64 = base64(absFile);
             }
 

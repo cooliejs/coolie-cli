@@ -65,7 +65,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
     // 相对当前文件 && 替换为 base64
     if (isRelativeToFile && isReplaceToBase64WhenRelativeToFile) {
         if (!b64) {
-            configs._resBase64Map[absFile] = b64 = base64(file);
+            configs._resBase64Map[absFile] = b64 = base64(absFile);
         }
 
         return htmlAttr.set(html, attrKey, b64);
