@@ -41,7 +41,6 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
     }
 
     var isRelativeToFile = !REG_ABSOLUTE.test(value);
-    // 绝对目录
     var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
     var absFile;
 

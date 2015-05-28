@@ -14,6 +14,8 @@ var base64 = require('./base64.js');
 var REG_HTTP = /^(https?:)?\/\//i;
 var REG_ABSOLUTE = /^\//;
 var REG_SUFFIX = /(\?.*|#.*)$/;
+var REG_URL = /url\s*?\((.*?)\)/ig;
+var REG_QUOTE = /^["']|['"]$/g;
 
 
 /**
@@ -26,19 +28,26 @@ var REG_SUFFIX = /(\?.*|#.*)$/;
 module.exports = function (file, css, isReplaceToBase64WhenRelativeToFile) {
     var configs = global.configs;
 
+    return css.replace(REG_URL, function ($0, $1) {
+        $1 = $1.replace(REG_QUOTE, '');
 
-    // 绝对目录
-    var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
-    var absFile;
+        if(REG_HTTP.test($1)){
+            return $0;
+        }
 
-    try {
-        absFile = path.join(absDir, value);
-    } catch (err) {
-        log('replace resource', pathURI.toSystemPath(file), 'error');
-        log('replace resource', html, 'error');
-        log('replace resource', err.message, 'error');
-        log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
-        process.exit();
-    }
+        var isRelativeToFile = !REG_ABSOLUTE.test(value);
+        var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
+        var absFile;
+
+        try {
+            absFile = path.join(absDir, value);
+        } catch (err) {
+            log('replace resource', pathURI.toSystemPath(file), 'error');
+            log('replace resource', html, 'error');
+            log('replace resource', err.message, 'error');
+            log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
+            process.exit();
+        }
+    });
 };
 
