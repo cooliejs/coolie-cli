@@ -23,11 +23,8 @@ var REG_IMG = /<img\b[\s\S]*?>/gi;
 var REG_SCRIPT = /<script[^>]*?>[\s\S]*?<\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
 var REG_ABSOLUTE = /^\//;
-var REG_HTTP = /^(https?:)?\/\//i;
 // 相同的组合只产生出一个文件
 var concatMap = {};
-var buildMap = {};
-var REG_SUFFIX = /(\?.*|#.*)$/;
 var FAVICON_RELS = [
     'apple-touch-icon',
     'apple-touch-icon-precomposed',
@@ -48,7 +45,6 @@ var FAVICON_RELS = [
 module.exports = function (file, code) {
     var configs = global.configs;
     var srcPath = configs._srcPath;
-    var destPath = configs._destPath;
     var cssPath = configs._cssPath;
     var jsBase = configs._jsBase;
     var matches = code.split(REG_BEGIN);
@@ -190,7 +186,7 @@ module.exports = function (file, code) {
         });
 
         if (find) {
-            return _buildResVersion(file, $0, 'href');
+            return replaceResource(file, $0, 'href');
         }
 
         return $0;
@@ -198,7 +194,7 @@ module.exports = function (file, code) {
 
     // <img src=".*">
     code = code.replace(REG_IMG, function ($0) {
-        return _buildResVersion(file, $0, 'src');
+        return replaceResource(file, $0, 'src');
     });
 
     return {
@@ -207,74 +203,3 @@ module.exports = function (file, code) {
         mainJS: mainJS
     };
 };
-
-
-/**
- * 构建资源版本
- * @param file
- * @param html
- * @param attrKey
- * @returns {String}
- * @private
- */
-function _buildResVersion(file, html, attrKey) {
-    var configs = global.configs;
-
-    if (htmlAttr.get(html, 'coolieIgnore')) {
-        return htmlAttr.remove(html, 'coolieIgnore');
-    }
-
-    var value = htmlAttr.get(html, attrKey);
-
-    if (REG_HTTP.test(value) || !value) {
-        return html;
-    }
-
-    var absFile;
-
-    //console.log(configs);
-
-    try {
-        absFile = path.join(configs._srcPath, value);
-    } catch (err) {
-        log('replace html', pathURI.toSystemPath(file), 'error');
-        log('replace html', html, 'error');
-        log('replace html', err.message, 'error');
-        log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
-        process.exit();
-    }
-
-    var basename = path.basename(absFile);
-    var srcName = basename.replace(REG_SUFFIX, '');
-    var suffix = (basename.match(REG_SUFFIX) || [''])[0];
-
-    absFile = absFile.replace(REG_SUFFIX, '');
-
-    var url = buildMap[absFile];
-    var version = configs._resVerMap[absFile];
-
-    if (!version) {
-        version = encryption.etag(absFile);
-    }
-
-    // 未进行版本构建
-    if (!url) {
-        var extname = path.extname(srcName);
-        var resName = version + extname;
-        var resFile = path.join(configs._destPath, configs.resource.dest, resName);
-
-        try {
-            fs.copySync(absFile, resFile);
-        } catch (err) {
-            log('html file', pathURI.toSystemPath(file), 'error');
-            log('copy from', pathURI.toSystemPath(absFile), 'error');
-            log('copy to', pathURI.toSystemPath(resFile), 'error');
-            log('copy file', err.message, 'error');
-            process.exit();
-        }
-
-        buildMap[absFile] = url = (configs.dest.host ? '' : '/') + path.relative(configs._destPath, resFile);
-    }
-
-    return htmlAttr.set(html, attrKey, configs.dest.host + url + suffix);
-}
