@@ -54,25 +54,21 @@ module.exports = function (srcPath) {
     /**
      * 构建步骤
      * @type {number}
-     * @private
      */
     configs._buildStep = 0;
     /**
      * 静态资源版本 map
      * @type {{}}
-     * @private
      */
     configs._resVerMap = {};
     /**
      * 静态资源 URI map
      * @type {{}}
-     * @private
      */
     configs._resURIMap = {};
     /**
      * 静态资源 base64 map
      * @type {{}}
-     * @private
      */
     configs._resBase64Map = {};
     global.configs = configs;

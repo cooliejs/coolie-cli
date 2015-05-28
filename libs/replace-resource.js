@@ -60,7 +60,7 @@ module.exports = function (file, html, attrKey) {
 
     absFile = absFile.replace(REG_SUFFIX, '');
 
-    var url = buildMap[absFile];
+    var url = configs._resURIMap[absFile];
     var version = configs._resVerMap[absFile];
 
     if (!version) {
@@ -83,7 +83,7 @@ module.exports = function (file, html, attrKey) {
             process.exit();
         }
 
-        buildMap[absFile] = url = (configs.dest.host ? '' : '/') + path.relative(configs._destPath, resFile);
+        configs._resURIMap[absFile] = url = (configs.dest.host ? '' : '/') + path.relative(configs._destPath, resFile);
     }
 
     return htmlAttr.set(html, attrKey, configs.dest.host + url + suffix);
