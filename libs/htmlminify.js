@@ -108,11 +108,10 @@ module.exports = function (file, code, callback) {
     });
 
 
+    // 先删除 html 注释
     code = code
         .replace(REG_YUI_COMMENTS, '')
-        .replace(REG_LINE_COMMENTS, '')
-        .replace(REG_LINES, '')
-        .replace(REG_SPACES, ' ');
+        .replace(REG_LINE_COMMENTS, '');
 
 
     // 保存 <script>
@@ -142,7 +141,11 @@ module.exports = function (file, code, callback) {
         });
     }
 
+    // 再删除多余空白
+    code = code.replace(REG_LINES, '')
+        .replace(REG_SPACES, ' ');
 
+    // 恢复保留格式
     dato.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
