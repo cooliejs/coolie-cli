@@ -82,13 +82,11 @@ module.exports = function (code, versionMap) {
         version = JSON.stringify(versionMap2);
 
         log('√', 'base: "' + coolieConfig.base + '"', 'success');
-        log('√', 'host: "' + coolieConfig.host + '"', 'success');
         log('√', 'version: "' + JSON.stringify(versionMap2, null, 2) + '"', 'success');
         log('√', 'callbacks: ' + callbacks.length, 'success');
 
         var code2 = 'coolie.config({' +
             'base:"' + coolieConfig.base + '",' +
-            'host:"' + coolieConfig.host + '",' +
             'debug:false,' +
             'version:' + version + '})' +
             '.use()';
