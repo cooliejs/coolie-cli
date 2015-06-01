@@ -52,7 +52,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             log('replace resource', pathURI.toSystemPath(file), 'error');
             log('replace resource', $0, 'error');
             log('replace resource', err.message, 'error');
-            process.exit();
+            process.exit(-1);
         }
 
         if (isRelativeToFile && isReplaceToBase64WhenRelativeToFile) {
@@ -83,7 +83,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
                 log('copy from', pathURI.toSystemPath(absFile), 'error');
                 log('copy to', pathURI.toSystemPath(destFile), 'error');
                 log('copy file', err.message, 'error');
-                process.exit();
+                process.exit(-1);
             }
 
             configs._resVerMap[absFile] = version;
