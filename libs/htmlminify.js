@@ -89,7 +89,15 @@ module.exports = function (file, code, callback) {
         var key = _generateKey();
         var tag = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ');
         var isIgnore = htmlAttr.get(tag, coolieIgnore);
-        var code2 = isIgnore ? $2 : cssminify(file, $2);
+        var type = htmlAttr.get(tag, 'type');
+        var code2 = '';
+
+        // 忽略 || 非样式内容
+        if (isIgnore || type && type !== 'text/css') {
+            code2 = $2;
+        } else {
+            code2 = cssminify(file, $2);
+        }
 
         tag = htmlAttr.remove(tag, coolieIgnore);
         preMap[key] = tag + code2 + '</style>';
