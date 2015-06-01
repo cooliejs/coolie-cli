@@ -25,7 +25,7 @@ module.exports = function (basedir) {
     var writeFile = path.join(basedir, "./coolie-config.js");
     var isExist = typeis.file(writeFile);
     var continueStep = function () {
-        log("1/2", "请输入`base`值，默认为“./static/app/”：" +
+        log("1/2", "请输入`base`值，默认为“./app/”：" +
             "\n`base`路径是相对于`coolie-config.js`所在的目录，即当前目录：" +
             "\n" + basedir +
             "\n`base`即为入口模块的基准路径。", "success");
@@ -58,7 +58,7 @@ module.exports = function (basedir) {
 
     // base
     steps.push(function (data) {
-        json.base = _getVal(data, './static/app/', false);
+        json.base = _getVal(data, './app/', false);
         log("2/2", "文件内容为：", "success");
         jsonString = _config(json);
         log('coolie-config.js', jsonString, 'success');
