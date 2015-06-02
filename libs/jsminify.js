@@ -65,27 +65,6 @@ var compressorOptions = {
 module.exports = function (file, code, callback) {
     var ret;
 
-    //try {
-    //    ast = uglifyJS.parse(code);
-    //    ast.figure_out_scope();
-    //    compressor = uglifyJS.Compressor(compressorOptions);
-    //    ast = ast.transform(compressor);
-    //    ast.figure_out_scope();
-    //    ast.compute_char_frequency();
-    //    ast.mangle_names();
-    //    code = ast.print_to_string();
-    //    callback(null, code);
-    //} catch (err) {
-    //    log('jsminify', pathURI.toSystemPath(file), 'error');
-    //    log('jsminify', err.message, 'error');
-    //    process.exit();
-    //}
-
-    // - warnings (default false) — pass true to display compressor warnings.
-    // - fromString (default false) — if you pass true then you can pass JavaScript source code, rather than file names.
-    // - mangle — pass false to skip mangling names.
-    // - output (default null) — pass an object if you wish to specify additional [output options][codegen]. The defaults are optimized for best compression.
-    // - compress (default {}) — pass false to skip compressing entirely. Pass an object to specify custom [compressor options][compressor].
     try {
         ret = uglifyJS.minify(code, {
             fromString: true,
@@ -107,21 +86,4 @@ module.exports = function (file, code, callback) {
         log('jsminify', err.message, 'error');
         process.exit();
     }
-
-    //yuicompressor.compress(code, {
-    //    charset: 'utf8',
-    //    type: 'js',
-    //    nomunge: true,
-    //    'line-break': -1,
-    //    'preserve-semi': true
-    //}, function (err, code, extra) {
-    //    if (err) {
-    //        log('jsminify', pathURI.toSystemPath(file), 'error');
-    //        log('jsminify', err.message, 'error');
-    //        log('jsminify', extra, 'error');
-    //        process.exit();
-    //    }
-    //
-    //    callback(null, code);
-    //});
 };
