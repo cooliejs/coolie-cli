@@ -3,6 +3,8 @@
 # 0.x.x
 - 0.16.x
     - 适配了[coolie.js@0.9.0](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@0.10.0](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@0.11.0](https://github.com/cloudcome/coolie)
     - 支持构建跨站JS、CSS。
     - 支持构建静态网站，不需要 coolie.js
     - 修正了 windows 下的部分 bug
@@ -57,6 +59,7 @@
 	- 支持 css 引用的合并替换
 	- 新增命令打开帮助页面
 - 0.0.17
+	- 适配了[coolie.js@0.1.0](https://github.com/cloudcome/coolie)
 	- 优化构建配置
 	- build 的时候支持压缩 css、html 模块
 	- 入口模块简化为0
