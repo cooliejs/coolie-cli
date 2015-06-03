@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.16.24",
+  "version": "0.16.25",
   "description": "The front-end development builder.",
   "preferGlobal": true,
   "bin": {
@@ -53,6 +53,6 @@
     "howdo": "^1.1.4",
     "open": "0.0.5",
     "uglify-js": "^2.4.23",
-    "ydr-utils": "^22.14.0"
+    "ydr-utils": "^22.18.0"
   }
 }
