@@ -57,6 +57,7 @@ module.exports = function (srcPath) {
     configs._resURIMap = {};
     configs._resBase64Map = {};
     configs._resDestMap = {};
+    configs._copyFilesMap = {};
     global.configs = configs;
 
     //return console.log(JSON.stringify(configs, null, 2));

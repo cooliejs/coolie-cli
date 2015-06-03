@@ -16,6 +16,7 @@ var pathURI = require('./path-uri.js');
 var htmlminify = require('./htmlminify.js');
 var replaceVersion = require('./replace-version.js');
 var replaceHTMLResource = require('./replace-html-resource.js');
+var copy = require('./copy.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/gi;
@@ -72,7 +73,7 @@ module.exports = function (file, code) {
         }
 
         if (hasCoolie) {
-            $0 = replaceHTMLResource(file, $0, 'src', false);
+            copy(src);
         }
 
         if (dataMain && dataConfig && hasCoolie) {
