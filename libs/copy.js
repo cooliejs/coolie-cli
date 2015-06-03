@@ -37,7 +37,7 @@ module.exports = function (from, options) {
     }
 
     if (configs._copyFilesMap[fromFile]) {
-        log('copy ignore', fromFile);
+        //log('copy ignore', fromFile);
         return;
     }
 
