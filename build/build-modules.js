@@ -13,6 +13,7 @@ var path = require('path');
 var glob = require('glob');
 var log = require('../libs/log.js');
 var dato = require('ydr-utils').dato;
+var typeis = require('ydr-utils').typeis;
 var pathURI = require("../libs/path-uri.js");
 var encryption = require('ydr-utils').encryption;
 var replaceConfig = require('../libs/replace-config.js');
@@ -92,6 +93,12 @@ module.exports = function (srcPath) {
 
                     if (!path.relative(file, destFile)) {
                         return nextFile();
+                    }
+
+                    if (!typeis.file(file)) {
+                        log('copy file', pathURI.toSystemPath(file) +
+                            '\nis NOT a file.', 'error');
+                        process.exit();
                     }
 
                     fs.copy(file, destFile, function (err) {

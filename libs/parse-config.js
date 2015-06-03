@@ -131,7 +131,8 @@ module.exports = function (srcPath) {
         coolieConfigJSFile = path.join(srcPath, config.js["coolie-config.js"]);
 
         if (!typeis.file(coolieConfigJSFile)) {
-            log("parse config", coolieConfigJSFile + " is NOT a file", "error");
+            log("parse config", coolieConfigJSFile +
+                "\nis NOT a file", "error");
             process.exit();
         }
     };
