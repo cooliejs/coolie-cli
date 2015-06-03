@@ -13,7 +13,6 @@ var path = require('path');
 var glob = require('glob');
 var log = require('../libs/log.js');
 var dato = require('ydr-utils').dato;
-var typeis = require('ydr-utils').typeis;
 var pathURI = require("../libs/path-uri.js");
 var encryption = require('ydr-utils').encryption;
 var replaceConfig = require('../libs/replace-config.js');
@@ -91,27 +90,9 @@ module.exports = function (srcPath) {
 
                 howdo.each(files, function (j, file, nextFile) {
                     var relative = path.relative(srcPath, file);
-                    //var destFile = path.join(destPath, relative);
-                    //
-                    //if (!path.relative(file, destFile)) {
-                    //    return nextFile();
-                    //}
 
                     copy(relative);
                     nextFile();
-
-                    //fs.copy(file, destFile, function (err) {
-                    //    if (err) {
-                    //        log('copy from', pathURI.toSystemPath(file), 'error');
-                    //        log('copy to', pathURI.toSystemPath(destFile), 'error');
-                    //        log('copy error', err.message, 'error');
-                    //        process.exit();
-                    //    }
-                    //
-                    //    //log('√', pathURI.toSystemPath(destFile), 'success');
-                    //    copyLength++;
-                    //    nextFile();
-                    //});
                 }).follow(function () {
                     log('√', pathURI.toSystemPath(gbPath), 'success');
                     nextCopy();
