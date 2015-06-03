@@ -71,9 +71,8 @@ module.exports = function (file, code) {
             log('warning', 'coolie.js script `data-main` attribute is EMPTY.', 'error');
         }
 
-        if (hasCoolie && pathURI.isRelatived(src) && !configs._copyCoolie) {
-            configs._copyCoolie = true;
-            configs.copy.push(src);
+        if (hasCoolie) {
+            $0 = replaceHTMLResource(file, $0, 'src', false);
         }
 
         if (dataMain && dataConfig && hasCoolie) {

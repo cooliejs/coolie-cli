@@ -52,7 +52,7 @@ module.exports = function (srcPath) {
     configs._cssPath = cssPath;
     configs._coolieConfigJSPath = coolieConfigJSPath;
     configs._coolieConfigJSURI = configs._noJS ? null : pathURI.toURIPath(path.relative(srcPath, coolieConfigJSPath));
-    configs._buildStep = 'ready';
+    configs._buildStep = 0;
     configs._resVerMap = {};
     configs._resURIMap = {};
     configs._resBase64Map = {};
@@ -72,8 +72,51 @@ module.exports = function (srcPath) {
 
     howdo
         .task(function (next) {
+            log('1/5', 'copy files', 'task');
+            configs._buildStep = 1;
+            next();
+        })
+        .each(configs.copy, function (i, copyFile, nextCopy) {
+            // copy files
+            var gbPath = path.join(srcPath, copyFile);
+
+            glob(gbPath, {dot: false, nodir: true}, function (err, files) {
+                if (err) {
+                    log('glob', pathURI.toSystemPath(gbPath), 'error');
+                    log('glob', err.message, 'error');
+                    process.exit();
+                }
+
+                howdo.each(files, function (j, file, nextFile) {
+                    var relative = path.relative(srcPath, file);
+                    var destFile = path.join(destPath, relative);
+
+                    if (!path.relative(file, destFile)) {
+                        return nextFile();
+                    }
+
+                    fs.copy(file, destFile, function (err) {
+                        if (err) {
+                            log('copy from', pathURI.toSystemPath(file), 'error');
+                            log('copy to', pathURI.toSystemPath(destFile), 'error');
+                            log('copy error', err.message, 'error');
+                            process.exit();
+                        }
+
+                        //log('√', pathURI.toSystemPath(destFile), 'success');
+                        copyLength++;
+                        nextFile();
+                    });
+                }).follow(function () {
+                    log('√', pathURI.toSystemPath(gbPath), 'success');
+                    nextCopy();
+                });
+            });
+        })
+
+        .task(function (next) {
             log('2/5', 'build main', 'task');
-            configs._buildStep = 'main';
+            configs._buildStep = 2;
             next();
         })
         .each(configs.js.src, function (i, main, nextMain) {
@@ -127,7 +170,7 @@ module.exports = function (srcPath) {
 
         .task(function (next) {
             log('3/5', 'overwrite config', 'task');
-            configs._buildStep = 'config';
+            configs._buildStep = 3;
             next();
         })
         .task(function (next) {
@@ -159,7 +202,7 @@ module.exports = function (srcPath) {
 
         .task(function (next) {
             log('4/5', 'build html css', 'task');
-            configs._buildStep = 'html';
+            configs._buildStep = 4;
             next();
         })
         .each(configs.html.src, function (i, htmlFile, nextGlob) {
@@ -195,53 +238,8 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('1/5', 'copy files', 'task');
-            configs._buildStep = 'copy';
-            console.log('configs.copy',configs.copy);
-            next();
-        })
-        .each(configs.copy, function (i, copyFile, nextCopy) {
-            // copy files
-            var gbPath = path.join(srcPath, copyFile);
-
-            console.log('gbPath', gbPath);
-            glob(gbPath, {dot: false, nodir: true}, function (err, files) {
-                if (err) {
-                    log('glob', pathURI.toSystemPath(gbPath), 'error');
-                    log('glob', err.message, 'error');
-                    process.exit();
-                }
-
-                howdo.each(files, function (j, file, nextFile) {
-                    var relative = path.relative(srcPath, file);
-                    var destFile = path.join(destPath, relative);
-
-                    if (!path.relative(file, destFile)) {
-                        return nextFile();
-                    }
-
-                    fs.copy(file, destFile, function (err) {
-                        if (err) {
-                            log('copy from', pathURI.toSystemPath(file), 'error');
-                            log('copy to', pathURI.toSystemPath(destFile), 'error');
-                            log('copy error', err.message, 'error');
-                            process.exit();
-                        }
-
-                        //log('√', pathURI.toSystemPath(destFile), 'success');
-                        copyLength++;
-                        nextFile();
-                    });
-                }).follow(function () {
-                    log('√', pathURI.toSystemPath(gbPath), 'success');
-                    nextCopy();
-                });
-            });
-        })
-
-        .task(function (next) {
-            log('5/5', 'generate relationship map', 'task');
-            configs._buildStep = 'map';
+            log('5/5', 'generator relationship map', 'task');
+            configs._buildStep = 5;
             next();
         })
         .task(function (next) {

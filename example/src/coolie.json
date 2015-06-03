@@ -20,7 +20,9 @@
   "resource": {
     "dest": "./static/res/"
   },
-  "copy": [],
+  "copy": [
+    "./abc.js"
+  ],
   "dest": {
     "dirname": "../dest/",
     "host": ""
