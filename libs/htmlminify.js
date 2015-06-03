@@ -57,7 +57,7 @@ module.exports = function (file, code, callback) {
     var preMap = {};
     var configs = global.configs;
 
-    if (configs.html.minify === false && configs._buildStep === 4) {
+    if (configs.html.minify === false && configs._buildStep === 'html') {
         if (callback) {
             return callback(null, code);
         } else {
@@ -142,7 +142,7 @@ module.exports = function (file, code, callback) {
 
 
     // 构建第二步：JS 模块里的 html 文件
-    if (configs._buildStep === 2) {
+    if (configs._buildStep === 'main') {
         // <img>
         code = code.replace(REG_IMG, function (html) {
             return replaceHTMLResource(file, html, 'src', true);
@@ -158,7 +158,7 @@ module.exports = function (file, code, callback) {
         code = code.replace(key, val);
     });
 
-    if (configs._buildStep === 4) {
+    if (configs._buildStep === 'html') {
         code += sign('html');
     }
 

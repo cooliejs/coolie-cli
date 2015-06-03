@@ -52,7 +52,7 @@ module.exports = function (srcPath) {
     configs._cssPath = cssPath;
     configs._coolieConfigJSPath = coolieConfigJSPath;
     configs._coolieConfigJSURI = configs._noJS ? null : pathURI.toURIPath(path.relative(srcPath, coolieConfigJSPath));
-    configs._buildStep = 0;
+    configs._buildStep = 'ready';
     configs._resVerMap = {};
     configs._resURIMap = {};
     configs._resBase64Map = {};
@@ -73,7 +73,7 @@ module.exports = function (srcPath) {
     howdo
         .task(function (next) {
             log('2/5', 'build main', 'task');
-            configs._buildStep = 2;
+            configs._buildStep = 'main';
             next();
         })
         .each(configs.js.src, function (i, main, nextMain) {
@@ -127,7 +127,7 @@ module.exports = function (srcPath) {
 
         .task(function (next) {
             log('3/5', 'overwrite config', 'task');
-            configs._buildStep = 3;
+            configs._buildStep = 'config';
             next();
         })
         .task(function (next) {
@@ -159,7 +159,7 @@ module.exports = function (srcPath) {
 
         .task(function (next) {
             log('4/5', 'build html css', 'task');
-            configs._buildStep = 4;
+            configs._buildStep = 'html';
             next();
         })
         .each(configs.html.src, function (i, htmlFile, nextGlob) {
@@ -196,13 +196,15 @@ module.exports = function (srcPath) {
 
         .task(function (next) {
             log('1/5', 'copy files', 'task');
-            configs._buildStep = 1;
+            configs._buildStep = 'copy';
+            console.log('configs.copy',configs.copy);
             next();
         })
         .each(configs.copy, function (i, copyFile, nextCopy) {
             // copy files
             var gbPath = path.join(srcPath, copyFile);
 
+            console.log('gbPath', gbPath);
             glob(gbPath, {dot: false, nodir: true}, function (err, files) {
                 if (err) {
                     log('glob', pathURI.toSystemPath(gbPath), 'error');
@@ -238,8 +240,8 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('5/5', 'generator relationship map', 'task');
-            configs._buildStep = 5;
+            log('5/5', 'generate relationship map', 'task');
+            configs._buildStep = 'map';
             next();
         })
         .task(function (next) {
