@@ -72,49 +72,6 @@ module.exports = function (srcPath) {
 
     howdo
         .task(function (next) {
-            log('1/5', 'copy files', 'task');
-            configs._buildStep = 1;
-            next();
-        })
-        .each(configs.copy, function (i, copyFile, nextCopy) {
-            // copy files
-            var gbPath = path.join(srcPath, copyFile);
-
-            glob(gbPath, {dot: false, nodir: true}, function (err, files) {
-                if (err) {
-                    log('glob', pathURI.toSystemPath(gbPath), 'error');
-                    log('glob', err.message, 'error');
-                    process.exit();
-                }
-
-                howdo.each(files, function (j, file, nextFile) {
-                    var relative = path.relative(srcPath, file);
-                    var destFile = path.join(destPath, relative);
-
-                    if (!path.relative(file, destFile)) {
-                        return nextFile();
-                    }
-
-                    fs.copy(file, destFile, function (err) {
-                        if (err) {
-                            log('copy from', pathURI.toSystemPath(file), 'error');
-                            log('copy to', pathURI.toSystemPath(destFile), 'error');
-                            log('copy error', err.message, 'error');
-                            process.exit();
-                        }
-
-                        //log('√', pathURI.toSystemPath(destFile), 'success');
-                        copyLength++;
-                        nextFile();
-                    });
-                }).follow(function () {
-                    log('√', pathURI.toSystemPath(gbPath), 'success');
-                    nextCopy();
-                });
-            });
-        })
-
-        .task(function (next) {
             log('2/5', 'build main', 'task');
             configs._buildStep = 2;
             next();
@@ -233,6 +190,49 @@ module.exports = function (srcPath) {
                     log('√', pathURI.toSystemPath(gbPath), 'success');
 
                     nextGlob();
+                });
+            });
+        })
+
+        .task(function (next) {
+            log('1/5', 'copy files', 'task');
+            configs._buildStep = 1;
+            next();
+        })
+        .each(configs.copy, function (i, copyFile, nextCopy) {
+            // copy files
+            var gbPath = path.join(srcPath, copyFile);
+
+            glob(gbPath, {dot: false, nodir: true}, function (err, files) {
+                if (err) {
+                    log('glob', pathURI.toSystemPath(gbPath), 'error');
+                    log('glob', err.message, 'error');
+                    process.exit();
+                }
+
+                howdo.each(files, function (j, file, nextFile) {
+                    var relative = path.relative(srcPath, file);
+                    var destFile = path.join(destPath, relative);
+
+                    if (!path.relative(file, destFile)) {
+                        return nextFile();
+                    }
+
+                    fs.copy(file, destFile, function (err) {
+                        if (err) {
+                            log('copy from', pathURI.toSystemPath(file), 'error');
+                            log('copy to', pathURI.toSystemPath(destFile), 'error');
+                            log('copy error', err.message, 'error');
+                            process.exit();
+                        }
+
+                        //log('√', pathURI.toSystemPath(destFile), 'success');
+                        copyLength++;
+                        nextFile();
+                    });
+                }).follow(function () {
+                    log('√', pathURI.toSystemPath(gbPath), 'success');
+                    nextCopy();
                 });
             });
         })

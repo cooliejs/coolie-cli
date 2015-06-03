@@ -11,6 +11,7 @@
 var path = require('path');
 var REG_PATH = path.sep === '/' ? /\\/ : /\//g;
 var REG_URL = /\\/g;
+var REG_ABSOLUTE = /^((http|ftp)s?|\/\/)/i;
 
 
 /**
@@ -30,5 +31,15 @@ exports.toSystemPath = function (p) {
  */
 exports.toURIPath = function (p) {
     return String(p).replace(REG_URL, '/');
+};
+
+
+/**
+ * 是否为相对路径
+ * @param p
+ * @returns {boolean}
+ */
+exports.isRelatived = function (p) {
+    return !REG_ABSOLUTE.test(p);
 };
 

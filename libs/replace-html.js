@@ -56,6 +56,7 @@ module.exports = function (file, code) {
     // 对 <script> 进行解析并且替换。
     code = code.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
         //var file;
+        var src = htmlAttr.get($0, 'src');
         var dataMain = htmlAttr.get($0, 'data-main');
         var dataConfig = htmlAttr.get($0, 'data-config');
         var hasCoolie = htmlAttr.get($0, 'coolie');
@@ -68,6 +69,10 @@ module.exports = function (file, code) {
         if (hasCoolie && !dataMain) {
             log('warning', pathURI.toSystemPath(file), 'error');
             log('warning', 'coolie.js script `data-main` attribute is EMPTY.', 'error');
+        }
+
+        if(hasCoolie && configs.copy){
+            configs.copy.push(src);
         }
 
         if (dataMain && dataConfig && hasCoolie) {
