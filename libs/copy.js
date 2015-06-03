@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * 复制文件
  * @author ydr.me
  * @create 2015-06-03 11:51
  */
@@ -13,16 +13,17 @@ var pathURI = require('./path-uri.js');
 var log = require('./log.js');
 var path = require('path');
 var fse = require('fs-extra');
-
+var defaults = {};
 
 /**
  * 复制单个文件
  * @param from {String} 起始地址
- * @param to {String} 目标地址
  * @param [options] {Object} 配置
  */
-module.exports = function (from, to, options) {
-    var configs = {};
+module.exports = function (from, options) {
+    options = dato.extend({}, defaults, options);
+
+    var configs = global.configs;
     var fromFile = path.join(configs._srcPath, from);
 
     if (!pathURI.isRelatived(from)) {
@@ -35,10 +36,18 @@ module.exports = function (from, to, options) {
         process.exit();
     }
 
+    if (configs._copyFilesMap[fromFile]) {
+        log('copy ignore', fromFile);
+        return;
+    }
+
     var toFile = path.join(configs._destPath, from);
 
     try {
         fse.copySync(fromFile, toFile);
+        configs._copyFilesMap[fromFile] = true;
+        configs._copyLength++;
+        log('√', pathURI.toSystemPath(toFile), 'success');
     } catch (err) {
         log('copy from', pathURI.toSystemPath(fromFile), 'error');
         log('copy to', pathURI.toSystemPath(toFile), 'error');

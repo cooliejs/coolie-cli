@@ -21,6 +21,7 @@ var replaceVersion = require('../libs/replace-version.js');
 var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
 var buildHTML = require('./build-html.js');
+var copy = require('../libs/copy.js');
 
 
 module.exports = function (srcPath) {
@@ -58,12 +59,12 @@ module.exports = function (srcPath) {
     configs._resBase64Map = {};
     configs._resDestMap = {};
     configs._copyFilesMap = {};
+    configs._copyLength = 0;
     global.configs = configs;
 
     //return console.log(JSON.stringify(configs, null, 2));
 
     var time = Date.now();
-    var copyLength = 0;
     var mainLength = 0;
     var htmlLength = 0;
     var cssLength = 0;
@@ -90,24 +91,27 @@ module.exports = function (srcPath) {
 
                 howdo.each(files, function (j, file, nextFile) {
                     var relative = path.relative(srcPath, file);
-                    var destFile = path.join(destPath, relative);
+                    //var destFile = path.join(destPath, relative);
+                    //
+                    //if (!path.relative(file, destFile)) {
+                    //    return nextFile();
+                    //}
 
-                    if (!path.relative(file, destFile)) {
-                        return nextFile();
-                    }
+                    copy(relative);
+                    nextFile();
 
-                    fs.copy(file, destFile, function (err) {
-                        if (err) {
-                            log('copy from', pathURI.toSystemPath(file), 'error');
-                            log('copy to', pathURI.toSystemPath(destFile), 'error');
-                            log('copy error', err.message, 'error');
-                            process.exit();
-                        }
-
-                        //log('√', pathURI.toSystemPath(destFile), 'success');
-                        copyLength++;
-                        nextFile();
-                    });
+                    //fs.copy(file, destFile, function (err) {
+                    //    if (err) {
+                    //        log('copy from', pathURI.toSystemPath(file), 'error');
+                    //        log('copy to', pathURI.toSystemPath(destFile), 'error');
+                    //        log('copy error', err.message, 'error');
+                    //        process.exit();
+                    //    }
+                    //
+                    //    //log('√', pathURI.toSystemPath(destFile), 'success');
+                    //    copyLength++;
+                    //    nextFile();
+                    //});
                 }).follow(function () {
                     log('√', pathURI.toSystemPath(gbPath), 'success');
                     nextCopy();
@@ -279,7 +283,7 @@ module.exports = function (srcPath) {
 
             console.log('');
             log('build success',
-                'copy ' + copyLength + ' file(s), ' +
+                'copy ' + configs._copyLength + ' file(s), ' +
                 '\nbuild ' + mainLength + ' js file(s), ' +
                 '\nbuild ' + htmlLength + ' html file(s), ' +
                 '\nbuild ' + cssLength + ' css file(s), ' +
