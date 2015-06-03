@@ -95,12 +95,6 @@ module.exports = function (srcPath) {
                         return nextFile();
                     }
 
-                    if (!typeis.file(file)) {
-                        log('copy file', pathURI.toSystemPath(file) +
-                            '\nis NOT a file.', 'error');
-                        process.exit();
-                    }
-
                     fs.copy(file, destFile, function (err) {
                         if (err) {
                             log('copy from', pathURI.toSystemPath(file), 'error');
