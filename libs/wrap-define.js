@@ -12,6 +12,7 @@ var REG_HUA_END = /}$/;
 var log = require('./log.js');
 var cssminify = require('./cssminify.js');
 var htmlminify = require('./htmlminify.js');
+var jsonminify = require('./jsonminify.js');
 
 /**
  * 包裹一层 define
@@ -22,9 +23,8 @@ var htmlminify = require('./htmlminify.js');
  * @param callback
  */
 module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) {
-    var configs = global.configs;
-    var next = function(err, code){
-        if(err){
+    var next = function (err, code) {
+        if (err) {
             return;
         }
 
@@ -42,7 +42,11 @@ module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) 
         callback(null, code);
     };
 
-    switch (textType){
+    switch (textType) {
+        case 'json':
+            jsonminify(file, code, next);
+            break;
+
         case 'css':
             cssminify(file, code, next);
             break;
