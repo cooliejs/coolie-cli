@@ -1,4 +1,6 @@
 # 0.x.x
+- 0.17.x
+    - 适配了[coolie.js@0.12.0](https://github.com/cloudcome/coolie)
 - 0.16.x
     - 适配了[coolie.js@0.9.0](https://github.com/cloudcome/coolie)
     - 适配了[coolie.js@0.10.0](https://github.com/cloudcome/coolie)
