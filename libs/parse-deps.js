@@ -53,19 +53,6 @@ var REG_SUFFIX = /[\?#].*?$/;
 var REG_JS = /\.js($|\?)/i;
 
 
-/**
- * 文本模块
- * @type {RegExp}
- */
-var REG_TEXT_MODULE = /^(css|html|text)!/i;
-
-
-/**
- * 图片模块
- * @type {RegExp}
- */
-var REG_IMAGE_MODULE = /^(image)!/i;
-
 
 /**
  * 清理 url
@@ -89,35 +76,6 @@ var cleanURL = function (url, isSingleURL) {
 
 
 /**
- * 解析依赖类型
- * @param name
- * @returns {Object}
- */
-var parseNameType = function (name) {
-    var matches;
-
-    if ((matches = name.match(REG_TEXT_MODULE))) {
-        return {
-            raw: name,
-            name: cleanURL(name.replace(REG_TEXT_MODULE, ''), true),
-            type: matches[1]
-        };
-    } else if (REG_IMAGE_MODULE.test(name)) {
-        return {
-            raw: name,
-            name: cleanURL(name.replace(REG_IMAGE_MODULE, ''), true),
-            type: 'image'
-        };
-    }
-
-    return {
-        raw: name,
-        name: cleanURL(name),
-        type: 'js'
-    };
-};
-
-/**
  * 解析依赖，返回数组
  * @param file
  * @param code
@@ -129,8 +87,8 @@ module.exports = function (file, code) {
     code.replace(REG_SLASH, '').replace(REG_REQUIRE, function ($0, $1, $2) {
         if ($2) {
             var matches = $2.match(REG_REQUIRE_TYPE);
-            // require('1.js', 'js');
             var dep = {
+                raw: matches[1],
                 name: cleanURL(matches[1], !!matches[2]),
                 type: matches[2] ? matches[2].toLowerCase() : 'js'
             };
