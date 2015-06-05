@@ -1,0 +1,58 @@
+{
+  "name": "coolie",
+  "version": "0.16.27",
+  "description": "The front-end development builder.",
+  "preferGlobal": true,
+  "bin": {
+    "coolie": "./bin/coolie"
+  },
+  "main": "index.js",
+  "keywords": [
+    "cloudcome",
+    "ydr.me",
+    "javascript",
+    "alien",
+    "seajs",
+    "Common JS",
+    "CMD",
+    "CMDJS",
+    "AMD",
+    "AMDJS",
+    "package",
+    "module",
+    "coolie",
+    "builder",
+    "webpack",
+    "nodejs",
+    "node",
+    "browerify"
+  ],
+  "author": {
+    "name": "cloudcome",
+    "email": "cloudcome@163.com",
+    "url": "http://ydr.me"
+  },
+  "homepage": "https://github.com/cloudcome/nodejs-coolie",
+  "book": "http://coolie.ydr.me/",
+  "coolie": "https://raw.githubusercontent.com/cloudcome/coolie/master/coolie.min.js",
+  "alien": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/alien.zip",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cloudcome/nodejs-coolie"
+  },
+  "bugs": {
+    "url": "https://github.com/cloudcome/nodejs-coolie/issues"
+  },
+  "licenses": "MIT",
+  "dependencies": {
+    "adm-zip": "^0.4.7",
+    "clean-css": "^3.1.9",
+    "colors": "^1.0.3",
+    "fs-extra": "^0.11.1",
+    "glob": "^5.0.1",
+    "howdo": "^1.1.4",
+    "open": "0.0.5",
+    "uglify-js": "^2.4.23",
+    "ydr-utils": "^22.20.0"
+  }
+}
