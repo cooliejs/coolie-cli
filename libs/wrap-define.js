@@ -40,7 +40,7 @@ module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) 
         }
 
         code = 'define("' + depIdsMap[file] + '",[],function(y,d,r){' +
-            'r.exports=' + text + ';' +
+            'r.exports=' + text + '' +
             '});';
 
         callback(null, code);
