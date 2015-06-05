@@ -129,20 +129,11 @@ module.exports = function (file, code) {
     code.replace(REG_SLASH, '').replace(REG_REQUIRE, function ($0, $1, $2) {
         if ($2) {
             var matches = $2.match(REG_REQUIRE_TYPE);
-            var dep;
-
-            // require('abc', 'image');
-            if (matches[2]) {
-                dep = {
-                    raw: matches[1],
-                    name: cleanURL(matches[1], true),
-                    type: matches[2].toLowerCase()
-                };
-            }
-            // require('abc');
-            else {
-                dep = parseNameType(matches[1]);
-            }
+            // require('1.js', 'js');
+            var dep = {
+                name: cleanURL(matches[1], !!matches[2]),
+                type: matches[2] ? matches[2].toLowerCase() : 'js'
+            };
 
             requires.push(dep);
         }
