@@ -50,7 +50,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
         // 1. 读取文件内容
         .task(function (next) {
             // 文件内容
-            var code = "";
+            var code = '';
 
             try {
                 code = type === 'image' ? base64(file) : fs.readFileSync(file, 'utf8');

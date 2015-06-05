@@ -59,7 +59,6 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             var b64 = configs._resBase64Map[absFile];
 
             if (!b64) {
-                console.log('base64', absFile);
                 configs._resBase64Map[absFile] = b64 = base64(absFile);
             }
 

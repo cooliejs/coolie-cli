@@ -28,12 +28,16 @@ module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) 
             return;
         }
 
-        var o = {
-            o: code
-        };
-        var text = JSON.stringify(o)
-            .replace(REG_HUA_START, '')
-            .replace(REG_HUA_END, '');
+        var text = code;
+
+        if (textType !== 'json') {
+            var o = {
+                o: code
+            };
+            text = JSON.stringify(o)
+                .replace(REG_HUA_START, '')
+                .replace(REG_HUA_END, '');
+        }
 
         code = 'define("' + depIdsMap[file] + '",[],function(y,d,r){' +
             'r.exports=' + text + ';' +
@@ -44,7 +48,7 @@ module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) 
 
     switch (textType) {
         case 'json':
-            jsonminify(file, code, next);
+            next(null, jsonminify(file, code));
             break;
 
         case 'css':
