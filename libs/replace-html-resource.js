@@ -94,7 +94,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
             process.exit(-1);
         }
 
-        configs._resURIMap[absFile] = url = (configs.dest.host ? '' : '/') + path.relative(configs._destPath, resFile);
+        configs._resURIMap[absFile] = url = (configs.dest.host ? '' : '/') + pathURI.toURIPath(path.relative(configs._destPath, resFile));
     }
 
     return htmlAttr.set(html, attrKey, configs.dest.host + url + suffix);
