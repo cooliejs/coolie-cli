@@ -5,7 +5,6 @@
     - 适配了[coolie.js@0.9.0](https://github.com/cloudcome/coolie)
     - 适配了[coolie.js@0.10.0](https://github.com/cloudcome/coolie)
     - 适配了[coolie.js@0.11.0](https://github.com/cloudcome/coolie)
-    - 适配了[coolie.js@0.12.0](https://github.com/cloudcome/coolie)
     - 支持构建跨站JS、CSS。
     - 支持构建静态网站，不需要 coolie.js。
     - 修正了 windows 下的部分 bug。
