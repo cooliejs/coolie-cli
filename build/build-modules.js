@@ -270,5 +270,6 @@ module.exports = function (srcPath) {
                 '\nbuild ' + cssLength + ' css file(s), ' +
                 '\nbuild ' + Object.keys(configs._resVerMap).length + ' resource file(s), ' +
                 '\npast ' + past + ' ms', 'success');
+            console.log('');
         });
 };
