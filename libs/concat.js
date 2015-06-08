@@ -67,10 +67,12 @@ module.exports = function (file, html, options) {
 
     var srcName = encryption.md5(md5List) + '.' + options.type;
     var srcPath = path.join(configs._jsPath, srcName);
-    var url = configs.dest.host + pathURI.toURIPath(path.relative(configs._srcPath, srcPath));
-    var destPath = path.join(configs._destPath, srcPath);
+    var srcRelative = path.relative(configs._srcPath, srcPath);
+    var url = configs.dest.host + pathURI.toURIPath(srcRelative);
+    var destPath = path.join(configs._destPath, srcRelative);
 
     matchedMap[md5List] = map[srcName] = {
+        //html: html,
         srcName: srcName,
         srcPath: srcPath,
         destPath: destPath,
@@ -79,6 +81,10 @@ module.exports = function (file, html, options) {
         type: options.type,
         files: files
     };
+
+    files.forEach(function (file) {
+
+    });
 
     return map;
 };
