@@ -13,7 +13,6 @@ var log = require("./log.js");
 var pathURI = require("./path-uri.js");
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
-var coolieJSFile;
 var coolieConfigJSFile;
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /}$/;
@@ -168,9 +167,18 @@ module.exports = function (srcPath) {
         } catch (err) {
             log("parse config", pathURI.toSystemPath(file), "error");
             log("parse config", err.message, "error");
+            process.exit();
         }
 
-        basePath = path.join(path.dirname(coolieConfigJSFile), basePath);
+        try {
+            console.log(coolieConfigJSFile);
+            console.log(basePath);
+            basePath = path.join(path.dirname(coolieConfigJSFile), basePath);
+        } catch (err) {
+            log("parse config", pathURI.toSystemPath(file), "error");
+            log("parse config", err.message, "error");
+            process.exit();
+        }
 
         var toBase = path.relative(srcPath, basePath);
 
