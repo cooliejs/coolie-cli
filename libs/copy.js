@@ -54,4 +54,6 @@ module.exports = function (from, options) {
         log('copy file', err.message, 'error');
         process.exit();
     }
+
+    return from;
 };

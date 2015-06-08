@@ -73,7 +73,11 @@ module.exports = function (file, code) {
         }
 
         if (hasCoolie) {
-            copy(src);
+            var copySrc = copy(src);
+
+            if (copySrc) {
+                $0 = htmlAttr.set($0, 'src', pathURI.toURIPath(path.join(configs.dest.host, copySrc)));
+            }
         }
 
         if (dataMain && dataConfig && hasCoolie) {
