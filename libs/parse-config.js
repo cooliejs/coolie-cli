@@ -157,6 +157,7 @@ module.exports = function (srcPath) {
         var coolieString = coolieFn.toString()
             .replace(REG_FUNCTION_START, '')
             .replace(REG_FUNCTION_END, '');
+        /* jshint evil: true */
         var fn = new Function('config, callbacks', coolieString + code);
         var basePath;
 
