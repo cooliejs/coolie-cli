@@ -76,7 +76,8 @@ module.exports = function (srcPath) {
     // 检查 js 路径
     // js: {
     //    src: [],
-    //    coolie-config.js: ""
+    //    coolie-config.js: "",
+    //    dest: ""
     // }
     check.js = function () {
         if (typeis(config.js) !== "object" && typeis(config.js) !== 'undefined') {
@@ -132,6 +133,12 @@ module.exports = function (srcPath) {
         if (!typeis.file(coolieConfigJSFile)) {
             log("parse config", coolieConfigJSFile +
                 "\nis NOT a file", "error");
+            process.exit();
+        }
+
+        // js.dest
+        if (typeis(config.js.dest) !== 'string') {
+            log("parse config", "`js.dest` property must be a string path", "error");
             process.exit();
         }
     };

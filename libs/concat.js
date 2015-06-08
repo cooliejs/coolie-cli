@@ -65,6 +65,7 @@ module.exports = function (file, html, options) {
     }
 
     var fileName = encryption.md5(md5List);
+    var url = '';
 
     matchedMap[md5List] = map['filename'] = {
         name: fileName,
