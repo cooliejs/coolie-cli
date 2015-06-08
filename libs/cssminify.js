@@ -47,9 +47,9 @@ var buildMap = {};
 
 /**
  * 样式压缩
- * @param file
- * @param code
- * @param [destFile]
+ * @param file {String} 当前的样式文件
+ * @param code {String} 样式文件的代码
+ * @param [destFile] {String} 保存的样式文件，如果与 file 相同，则不需要给出
  * @param [callback]
  */
 module.exports = function (file, code, destFile, callback) {
