@@ -54,59 +54,6 @@ module.exports = function (file, code) {
     var dirname = path.dirname(file);
     var mainJS = '';
 
-    // 对 <script> 进行解析并且替换。
-    code = code.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
-        //var file;
-        var src = htmlAttr.get($0, 'src');
-        var dataMain = htmlAttr.get($0, 'data-main');
-        var dataConfig = htmlAttr.get($0, 'data-config');
-        var hasCoolie = htmlAttr.get($0, 'coolie');
-
-        if (hasCoolie && !dataConfig) {
-            log('warning', pathURI.toSystemPath(file), 'error');
-            log('warning', 'coolie.js script `data-config` attribute is EMPTY.', 'error');
-        }
-
-        if (hasCoolie && !dataMain) {
-            log('warning', pathURI.toSystemPath(file), 'error');
-            log('warning', 'coolie.js script `data-main` attribute is EMPTY.', 'error');
-        }
-
-        if (hasCoolie) {
-            var copySrc = copy(src, file);
-
-            if (copySrc) {
-                $0 = htmlAttr.set($0, 'src', pathURI.toURIPath(path.join(configs.dest.host, copySrc)));
-            }
-        }
-
-        if (dataMain && dataConfig && hasCoolie) {
-            if (jsBase) {
-                try {
-                    dataMain = path.join(jsBase, dataMain);
-                } catch (err) {
-                    log('html file', pathURI.toSystemPath(file), 'error');
-                    log('data-main', dataMain ? dataMain : '<EMPTY>', 'error');
-                    process.exit();
-                }
-
-                dataMain = path.relative(srcPath, dataMain);
-                mainJS = pathURI.toURIPath(dataMain);
-
-                //不是本地根目录
-                if (configs.dest.host !== '/') {
-                    $0 = htmlAttr.set($0, 'data-config', configs.dest.host + replaceVersion(configs._coolieConfigJSURI, configs._coolieConfigVersion));
-                } else {
-                    $0 = htmlAttr.set($0, 'data-config', replaceVersion(dataConfig, configs._coolieConfigVersion));
-                }
-            }
-
-            $0 = htmlAttr.remove($0, 'coolie');
-        }
-
-        return $0;
-    });
-
     // 循环匹配 <!--coolie-->(matched)<!--/coolie-->
     matches.forEach(function (matched) {
         var array = matched.split(REG_END);
@@ -197,6 +144,59 @@ module.exports = function (file, code) {
 
         if (find) {
             return replaceHTMLResource(file, $0, 'href');
+        }
+
+        return $0;
+    });
+
+    // 对 <script> 进行解析并且替换。
+    code = code.replace(REG_SCRIPT, function ($0, $1, $2, $3) {
+        //var file;
+        var src = htmlAttr.get($0, 'src');
+        var dataMain = htmlAttr.get($0, 'data-main');
+        var dataConfig = htmlAttr.get($0, 'data-config');
+        var hasCoolie = htmlAttr.get($0, 'coolie');
+
+        if (hasCoolie && !dataConfig) {
+            log('warning', pathURI.toSystemPath(file), 'error');
+            log('warning', 'coolie.js script `data-config` attribute is EMPTY.', 'error');
+        }
+
+        if (hasCoolie && !dataMain) {
+            log('warning', pathURI.toSystemPath(file), 'error');
+            log('warning', 'coolie.js script `data-main` attribute is EMPTY.', 'error');
+        }
+
+        if (hasCoolie) {
+            var copySrc = copy(src, file);
+
+            if (copySrc) {
+                $0 = htmlAttr.set($0, 'src', pathURI.toURIPath(path.join(configs.dest.host, copySrc)));
+            }
+        }
+
+        if (dataMain && dataConfig && hasCoolie) {
+            if (jsBase) {
+                try {
+                    dataMain = path.join(jsBase, dataMain);
+                } catch (err) {
+                    log('html file', pathURI.toSystemPath(file), 'error');
+                    log('data-main', dataMain ? dataMain : '<EMPTY>', 'error');
+                    process.exit();
+                }
+
+                dataMain = path.relative(srcPath, dataMain);
+                mainJS = pathURI.toURIPath(dataMain);
+
+                //不是本地根目录
+                if (configs.dest.host !== '/') {
+                    $0 = htmlAttr.set($0, 'data-config', configs.dest.host + replaceVersion(configs._coolieConfigJSURI, configs._coolieConfigVersion));
+                } else {
+                    $0 = htmlAttr.set($0, 'data-config', replaceVersion(dataConfig, configs._coolieConfigVersion));
+                }
+            }
+
+            $0 = htmlAttr.remove($0, 'coolie');
         }
 
         return $0;

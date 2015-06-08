@@ -12,7 +12,7 @@ var path = require('path');
 var REG_PATH = path.sep === '/' ? /\\/ : /\//g;
 var REG_URL = /\\/g;
 var REG_ABSOLUTE = /^((http|ftp)s?|\/\/)/i;
-var REG_RELATIVE = /^(\.\/|[^\/])/;
+var REG_RELATIVE_ROOT = /^\//;
 
 /**
  * 修正 path 路径为系统分隔符
@@ -44,13 +44,22 @@ exports.isRelatived = function (p) {
 };
 
 
-
 /**
- * 是否为相对于当前
+ * 是否为相对于当前文件
  * @param p
  * @returns {boolean}
  */
-exports.isRelativeThis = function (p) {
-    return !REG_ABSOLUTE.test(p) && REG_RELATIVE.test(p);
+exports.isRelativeFile = function (p) {
+    return !REG_ABSOLUTE.test(p) && !REG_RELATIVE_ROOT.test(p);
+};
+
+
+/**
+ * 是否为相对于根目录
+ * @param p
+ * @returns {boolean}
+ */
+exports.isRelativeRoot = function (p) {
+    return !REG_ABSOLUTE.test(p) && REG_RELATIVE_ROOT.test(p);
 };
 

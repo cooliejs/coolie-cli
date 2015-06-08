@@ -36,7 +36,7 @@ module.exports = function (from, relativeFile, options) {
     if (relativeFile) {
         relativeDir = path.dirname(relativeFile);
 
-        if (pathURI.isRelativeThis(from)) {
+        if (pathURI.isRelativeFile(from)) {
             fromFile = path.join(relativeDir, from);
             from = path.relative(configs._srcPath, fromFile);
         }
