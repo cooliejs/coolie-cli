@@ -34,7 +34,6 @@ var ruleMap = {
         //}
     }
 };
-var matchedMap = {};
 
 
 /**
@@ -46,7 +45,6 @@ var matchedMap = {};
 module.exports = function (file, html) {
     var type = ruleMap.css.reg.test(html) ? 'css' : 'js';
     var configs = global.configs;
-    var map = {};
     var rule = ruleMap[type];
     var fileDirname = path.dirname(file);
     var hrefMatches;
@@ -68,8 +66,8 @@ module.exports = function (file, html) {
         md5List += encryption.etag(matchFile);
     }
 
-    if (matchedMap[md5List]) {
-        return matchedMap[md5List];
+    if (configs._concatMap[md5List]) {
+        return configs._concatMap[md5List];
     }
 
     var srcName = encryption.md5(md5List) + '.' + type;
@@ -112,7 +110,7 @@ module.exports = function (file, html) {
 
     log('√', pathURI.toSystemPath(destPath), 'success');
 
-    matchedMap[md5List] = map[srcName] = {
+    return configs._concatMap[md5List] = {
         //html: html,
         srcName: srcName,
         srcPath: srcPath,
@@ -120,9 +118,10 @@ module.exports = function (file, html) {
         url: url,
         file: file,
         type: type,
-        files: files
+        files: files,
+        replace: type === 'css'
+            ? '<link rel="stylesheet" href="' + url + '">'
+            : '<script src="' + url + '"></script>'
     };
-
-    return map;
 };
 

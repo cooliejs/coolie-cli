@@ -61,6 +61,7 @@ module.exports = function (srcPath) {
     configs._resDestMap = {};
     configs._copyFilesMap = {};
     configs._copyLength = 0;
+    configs._concatMap = {};
     global.configs = configs;
 
     //return console.log(JSON.stringify(configs, null, 2));

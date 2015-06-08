@@ -23,7 +23,7 @@ var REG_END = /<!--\s*?\/coolie\s*?-->/i;
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/gi;
 var REG_IMG = /<img\b[\s\S]*?>/gi;
 var REG_SCRIPT = /<script[^>]*?>[\s\S]*?<\/script>/gi;
-var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
+var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/i;
 var REG_ABSOLUTE = /^\//;
 // 相同的组合只产生出一个文件
 var concatMap = {};
@@ -47,18 +47,15 @@ var FAVICON_RELS = [
 module.exports = function (file, code) {
     var configs = global.configs;
     var srcPath = configs._srcPath;
-    var cssPath = configs._cssPath;
     var jsBase = configs._jsBase;
-    var matches = code.split(REG_BEGIN);
-    var replaceIndex = 0;
-    var dirname = path.dirname(file);
     var mainJS = '';
 
     // 循环匹配 <!--coolie-->(matched)<!--/coolie-->
     var matchedCoolie;
 
-    while((matchedCoolie =REG_COOLIE.exec(code))){
-        concat(file, matchedCoolie[1]);
+    while ((matchedCoolie = code.match(REG_COOLIE))) {
+        var ret = concat(file, matchedCoolie[1]);
+        code = code.replace(REG_COOLIE, ret.replace);
     }
 
     // <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
