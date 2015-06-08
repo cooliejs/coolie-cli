@@ -14,7 +14,6 @@ var pathURI = require('./path-uri.js');
 var replaceCSSResource = require('./replace-css-resource.js');
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
-var encryption = require('ydr-utils').encryption;
 var path = require('path');
 var defaults = {
     // 高级优化
@@ -37,12 +36,6 @@ var defaults = {
     sourceMap: false
 };
 var cssminify = null;
-var REG_URL = /url\s*?\((.*?)\)/ig;
-var REG_REMOTE = /^(https?:)?\/\//i;
-var REG_SUFFIX = /(\?.*|#.*)$/;
-var REG_ABSPATH = /^\//;
-var REG_QUOTE = /^["']|['"]$/g;
-var buildMap = {};
 
 
 /**
