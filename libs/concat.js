@@ -14,6 +14,7 @@ var htmlAttr = require('./html-attr.js');
 var cssminify = require('./cssminify.js');
 var jsminify = require('./jsminify.js');
 var sign = require('./sign.js');
+var log = require('./log.js');
 var dato = require('ydr-utils').dato;
 var encryption = require('ydr-utils').encryption;
 var ruleMap = {
@@ -73,21 +74,7 @@ module.exports = function (file, html, options) {
     var srcRelative = path.relative(configs._srcPath, srcPath);
     var url = configs.dest.host + pathURI.toURIPath(srcRelative);
     var destPath = path.join(configs._destPath, srcRelative);
-
-    matchedMap[md5List] = map[srcName] = {
-        //html: html,
-        srcName: srcName,
-        srcPath: srcPath,
-        destPath: destPath,
-        url: url,
-        file: file,
-        type: options.type,
-        files: files
-    };
-
     var bufferList = [];
-
-    bufferList.push(new Buffer(sign(options.type), 'utf8'));
 
     files.forEach(function (f) {
         var code;
@@ -109,6 +96,29 @@ module.exports = function (file, html, options) {
 
         bufferList.push(new Buffer('\n' + code, 'utf8'));
     });
+
+    var newCode = sign(options.type) + Buffer.concat(bufferList).toString();
+
+    try {
+        fse.outputFileSync(destPath, newCode);
+    } catch (err) {
+        log("write file", pathURI.toSystemPath(destPath), "error");
+        log('write file', err.message, 'error');
+        process.exit();
+    }
+
+    log('√', pathURI.toSystemPath(destPath), 'success');
+
+    matchedMap[md5List] = map[srcName] = {
+        //html: html,
+        srcName: srcName,
+        srcPath: srcPath,
+        destPath: destPath,
+        url: url,
+        file: file,
+        type: options.type,
+        files: files
+    };
 
     return map;
 };

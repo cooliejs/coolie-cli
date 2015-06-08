@@ -73,7 +73,7 @@ module.exports = function (file, code, destFile, callback) {
     }
 
 
-    try {
+    //try {
         code = cssminify(file, code);
 
         if (isBuildVersion) {
@@ -87,11 +87,11 @@ module.exports = function (file, code, destFile, callback) {
         } else {
             return code;
         }
-    } catch (err) {
-        log('cssminify', pathURI.toSystemPath(file), 'error');
-        log('cssminify', err.message, 'error');
-        process.exit();
-    }
+    //} catch (err) {
+    //    log('cssminify', pathURI.toSystemPath(file), 'error');
+    //    log('cssminify', err.message, 'error');
+    //    process.exit();
+    //}
 };
 
 

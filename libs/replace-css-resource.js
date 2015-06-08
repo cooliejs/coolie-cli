@@ -13,8 +13,6 @@ var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
 var encryption = require('ydr-utils').encryption;
-var REG_HTTP = /^(https?:)?\/\//i;
-var REG_ABSOLUTE = /^\//;
 var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_URL = /url\s*?\((.*?)\)/ig;
 var REG_QUOTE = /^["']|['"]$/g;
@@ -34,16 +32,14 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
     return css.replace(REG_URL, function ($0, $1) {
         $1 = $1.replace(REG_QUOTE, '');
 
-        if (REG_HTTP.test($1)) {
+        if (!pathURI.isRelatived($1)) {
             return $0;
         }
 
         var suffix = ($1.match(REG_SUFFIX) || [''])[0];
         $1 = $1.replace(REG_SUFFIX, '');
-        var srcName = path.basename($1);
         var extname = path.extname($1);
-        var isRelativeToFile = !REG_ABSOLUTE.test($1);
-        var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
+        var absDir = pathURI.isRelativeFile($1) ? path.dirname(file) : configs._srcPath;
         var absFile;
 
         try {
@@ -55,7 +51,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             process.exit(-1);
         }
 
-        if (isRelativeToFile && isReplaceToBase64WhenRelativeToFile) {
+        if (pathURI.isRelativeFile($1) && isReplaceToBase64WhenRelativeToFile) {
             var b64 = configs._resBase64Map[absFile];
 
             if (!b64) {
