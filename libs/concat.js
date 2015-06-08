@@ -11,6 +11,9 @@ var fse = require('fs-extra');
 var path = require('path');
 var pathURI = require('./path-uri.js');
 var htmlAttr = require('./html-attr.js');
+var cssminify = require('./cssminify.js');
+var jsminify = require('./jsminify.js');
+var sign = require('./sign.js');
 var dato = require('ydr-utils').dato;
 var encryption = require('ydr-utils').encryption;
 var ruleMap = {
@@ -82,8 +85,29 @@ module.exports = function (file, html, options) {
         files: files
     };
 
-    files.forEach(function (file) {
+    var bufferList = [];
 
+    bufferList.push(new Buffer(sign(options.type), 'utf8'));
+
+    files.forEach(function (f) {
+        var code;
+
+        try {
+            code = fse.readFileSync(f, 'utf8')
+        } catch (err) {
+            log("concat", pathURI.toSystemPath(file), "error");
+            log("read file", pathURI.toSystemPath(f), "error");
+            log('read file', err.message, 'error');
+            process.exit();
+        }
+
+        if (options.type === 'css') {
+            code = cssminify(file, code, destPath);
+        } else {
+            code = jsminify(file, code);
+        }
+
+        bufferList.push(new Buffer('\n' + code, 'utf8'));
     });
 
     return map;
