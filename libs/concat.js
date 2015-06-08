@@ -49,26 +49,31 @@ module.exports = function (file, html, options) {
     while ((hrefMatches = rule.reg.exec(html))) {
         var tag = hrefMatches[0];
         var source = htmlAttr.get(tag, rule.attr);
+        var matchFile;
 
         if (pathURI.isRelativeRoot(source)) {
-            file = path.join(configs._srcPath, source);
+            matchFile = path.join(configs._srcPath, source);
         } else {
-            file = path.join(fileDirname, source);
+            matchFile = path.join(fileDirname, source);
         }
 
-        files.push(file);
-        md5List += encryption.etag(file);
+        files.push(matchFile);
+        md5List += encryption.etag(matchFile);
     }
 
     if (matchedMap[md5List]) {
         return matchedMap[md5List];
     }
 
-    var fileName = encryption.md5(md5List);
-    var url = '';
+    var srcName = encryption.md5(md5List) + '.' + options.type;
+    var srcPath = path.join(configs._jsPath, srcName);
+    var url = configs.dest.host + pathURI.toURIPath(path.relative(configs._srcPath, srcPath));
+    var destPath = path.join(configs._destPath, srcPath);
 
-    matchedMap[md5List] = map['filename'] = {
-        name: fileName,
+    matchedMap[md5List] = map[srcName] = {
+        srcName: srcName,
+        srcPath: srcPath,
+        destPath: destPath,
         url: url,
         file: file,
         type: options.type,

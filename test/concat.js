@@ -13,7 +13,11 @@ var concat = require('../libs/concat.js');
 
 global.configs = {
     _srcPath: path.join(__dirname, '../example/src/'),
-    _jsPath: path.join(__dirname, '../example/src/static/js/')
+    _destPath: path.join(__dirname, '../example/dest/'),
+    _jsPath: path.join(__dirname, '../example/src/static/js/'),
+    dest: {
+        host: '/'
+    }
 };
 
 var ret = concat(file, '<script src="../static/js/index3-1.js"></script>\
