@@ -18,9 +18,10 @@ var defaults = {};
 /**
  * 复制单个文件
  * @param from {String} 起始地址
+ * @param [relativeFile] {String} 相对文件
  * @param [options] {Object} 配置
  */
-module.exports = function (from, options) {
+module.exports = function (from, relativeFile, options) {
     options = dato.extend({}, defaults, options);
 
     var configs = global.configs;
@@ -28,6 +29,17 @@ module.exports = function (from, options) {
 
     if (!pathURI.isRelatived(from)) {
         return;
+    }
+
+    var relativeDir;
+
+    if (relativeFile) {
+        relativeDir = path.dirname(relativeFile);
+
+        if (pathURI.isRelativeThis(from)) {
+            fromFile = path.join(relativeDir, from);
+            from = path.relative(configs._srcPath, fromFile);
+        }
     }
 
     if (!typeis.file(fromFile)) {
@@ -38,7 +50,7 @@ module.exports = function (from, options) {
 
     if (configs._copyFilesMap[fromFile]) {
         //log('copy ignore', fromFile);
-        return;
+        return from;
     }
 
     var toFile = path.join(configs._destPath, from);

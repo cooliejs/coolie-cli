@@ -73,7 +73,7 @@ module.exports = function (file, code) {
         }
 
         if (hasCoolie) {
-            var copySrc = copy(src);
+            var copySrc = copy(src, file);
 
             if (copySrc) {
                 $0 = htmlAttr.set($0, 'src', pathURI.toURIPath(path.join(configs.dest.host, copySrc)));

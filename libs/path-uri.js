@@ -12,7 +12,7 @@ var path = require('path');
 var REG_PATH = path.sep === '/' ? /\\/ : /\//g;
 var REG_URL = /\\/g;
 var REG_ABSOLUTE = /^((http|ftp)s?|\/\/)/i;
-
+var REG_RELATIVE = /^(\.\/|[^\/])/;
 
 /**
  * 修正 path 路径为系统分隔符
@@ -41,5 +41,16 @@ exports.toURIPath = function (p) {
  */
 exports.isRelatived = function (p) {
     return !REG_ABSOLUTE.test(p);
+};
+
+
+
+/**
+ * 是否为相对于当前
+ * @param p
+ * @returns {boolean}
+ */
+exports.isRelativeThis = function (p) {
+    return !REG_ABSOLUTE.test(p) && REG_RELATIVE.test(p);
 };
 
