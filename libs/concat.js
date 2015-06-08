@@ -89,10 +89,9 @@ module.exports = function (file, html, options) {
         }
 
         if (options.type === 'css') {
-            console.log(destPath);
-            code = cssminify(file, code, destPath);
+            code = cssminify(f, code, destPath);
         } else {
-            code = jsminify(file, code);
+            code = jsminify(f, code);
         }
 
         bufferList.push(new Buffer('\n' + code, 'utf8'));
