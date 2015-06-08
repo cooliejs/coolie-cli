@@ -88,6 +88,7 @@ module.exports = function (code, versionMap) {
         var code2 = 'coolie.config({' +
             'base:"' + coolieConfig.base + '",' +
             'debug:false,' +
+            'cache:true,' +
             'version:' + version + '})' +
             '.use()';
 
