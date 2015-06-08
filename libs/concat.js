@@ -70,7 +70,7 @@ module.exports = function (file, html, options) {
     }
 
     var srcName = encryption.md5(md5List) + '.' + options.type;
-    var srcPath = path.join(configs._jsPath, srcName);
+    var srcPath = path.join(options.type === 'css' ? configs._cssPath : configs._jsPath, srcName);
     var srcRelative = path.relative(configs._srcPath, srcPath);
     var url = configs.dest.host + pathURI.toURIPath(srcRelative);
     var destPath = path.join(configs._destPath, srcRelative);
@@ -89,6 +89,7 @@ module.exports = function (file, html, options) {
         }
 
         if (options.type === 'css') {
+            console.log(destPath);
             code = cssminify(file, code, destPath);
         } else {
             code = jsminify(file, code);
