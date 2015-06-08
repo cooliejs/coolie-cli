@@ -7,7 +7,7 @@
   },
   "html": {
     "src": [
-      "./html/**/*.html"
+      "./html/index3.html"
     ],
     "minify": true
   },

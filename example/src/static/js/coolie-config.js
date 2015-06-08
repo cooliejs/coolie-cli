@@ -1,4 +1,5 @@
 coolie.config({
+    cache: window.abc ? true: false,
     base: './app/',
     host: ''
 }).callback(function () {

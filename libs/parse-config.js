@@ -166,8 +166,8 @@ module.exports = function (srcPath) {
             basePath = coolieConfig.base;
             //basePath = path.join(path.dirname(config.js['coolie.js']), coolieConfig.base);
         } catch (err) {
-            log("parse file", pathURI.toSystemPath(file), "error");
-            log("parse file", err.message, "error");
+            log("parse config", pathURI.toSystemPath(file), "error");
+            log("parse config", err.message, "error");
         }
 
         basePath = path.join(path.dirname(coolieConfigJSFile), basePath);
