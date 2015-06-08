@@ -87,13 +87,13 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
 
         var url = '';
 
-        // 有目标文件，资源相对于文件本身
+        // 有目标文件，css 里的资源相对于 css 文件本身
         if (destCSSFile) {
             url = path.relative(path.dirname(destCSSFile), destFile);
         }
-        // 否则，择业相对于根目录
+        // 否则，css 里的资源相对于根目录
         else {
-            url = configs.dest.host + '/' + path.relative(configs._destPath, destFile);
+            url = configs.dest.host + path.relative(configs._destPath, destFile);
         }
 
         url = pathURI.toURIPath(url) + suffix;
