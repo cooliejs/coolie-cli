@@ -37,14 +37,17 @@ var ruleMap = {
 var matchedMap = {};
 
 
-module.exports = function (file, html, options) {
-    var defaults = {
-        type: 'css'
-    };
-    options = dato.extend(defaults, options);
+/**
+ * 合并 css、js
+ * @param file {String} 文件地址
+ * @param html {String} html 片段
+ * @returns {*}
+ */
+module.exports = function (file, html) {
+    var type = ruleMap.css.reg.test(html) ? 'css' : 'js';
     var configs = global.configs;
     var map = {};
-    var rule = ruleMap[options.type];
+    var rule = ruleMap[type];
     var fileDirname = path.dirname(file);
     var hrefMatches;
     var files = [];
@@ -69,8 +72,8 @@ module.exports = function (file, html, options) {
         return matchedMap[md5List];
     }
 
-    var srcName = encryption.md5(md5List) + '.' + options.type;
-    var srcPath = path.join(options.type === 'css' ? configs._cssPath : configs._jsPath, srcName);
+    var srcName = encryption.md5(md5List) + '.' + type;
+    var srcPath = path.join(type === 'css' ? configs._cssPath : configs._jsPath, srcName);
     var srcRelative = path.relative(configs._srcPath, srcPath);
     var url = configs.dest.host + pathURI.toURIPath(srcRelative);
     var destPath = path.join(configs._destPath, srcRelative);
@@ -88,7 +91,7 @@ module.exports = function (file, html, options) {
             process.exit();
         }
 
-        if (options.type === 'css') {
+        if (type === 'css') {
             code = cssminify(f, code, destPath);
         } else {
             code = jsminify(f, code);
@@ -97,7 +100,7 @@ module.exports = function (file, html, options) {
         bufferList.push(new Buffer('\n' + code, 'utf8'));
     });
 
-    var newCode = sign(options.type) + Buffer.concat(bufferList).toString();
+    var newCode = sign(type) + Buffer.concat(bufferList).toString();
 
     try {
         fse.outputFileSync(destPath, newCode);
@@ -116,7 +119,7 @@ module.exports = function (file, html, options) {
         destPath: destPath,
         url: url,
         file: file,
-        type: options.type,
+        type: type,
         files: files
     };
 

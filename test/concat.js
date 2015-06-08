@@ -29,11 +29,11 @@ global.configs = {
     }
 };
 
-//var ret1 = concat(file, '<script src="../static/js/index3-1.js"></script>\
-//    <script src="../static/js/index3-2.js"></script>', {
-//    type: 'js'
-//});
-//console.log(ret1);
+var ret1 = concat(file, '<script src="../static/js/index3-1.js"></script>\
+    <script src="../static/js/index3-2.js"></script>', {
+    type: 'js'
+});
+console.log(ret1);
 
 
 var ret2 = concat(file, ' <link rel="stylesheet" href="../static/css/1.css"/>\

@@ -16,6 +16,7 @@ var pathURI = require('./path-uri.js');
 var htmlminify = require('./htmlminify.js');
 var replaceVersion = require('./replace-version.js');
 var replaceHTMLResource = require('./replace-html-resource.js');
+var concat = require('./concat.js');
 var copy = require('./copy.js');
 var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
 var REG_END = /<!--\s*?\/coolie\s*?-->/i;
@@ -49,83 +50,16 @@ module.exports = function (file, code) {
     var cssPath = configs._cssPath;
     var jsBase = configs._jsBase;
     var matches = code.split(REG_BEGIN);
-    var concat = [];
     var replaceIndex = 0;
     var dirname = path.dirname(file);
     var mainJS = '';
 
     // 循环匹配 <!--coolie-->(matched)<!--/coolie-->
-    matches.forEach(function (matched) {
-        var array = matched.split(REG_END);
-        var link = array[0];
-        var hrefMatches;
-        var files = [];
-        var md5List = '';
-        var fileName;
-        var filePath;
-        var fileURL;
-        var findMath = null;
-        var file;
-        var href;
+    var matchedCoolie;
 
-        if (array.length === 2) {
-            // <link href=".*">
-            while ((hrefMatches = REG_LINK.exec(link))) {
-                href = hrefMatches[1];
-
-                if (REG_ABSOLUTE.test(href)) {
-                    file = path.join(srcPath, href);
-                } else {
-                    file = path.join(dirname, href);
-                }
-
-                files.push(file);
-                md5List += encryption.etag(file);
-            }
-        }
-
-        dato.each(concatMap, function (name, matched) {
-            if (matched.files.length !== files.length) {
-                return false;
-            }
-
-            var compare = dato.compare(matched.files, files);
-
-            // 完全匹配
-            if (compare && compare.different.length === 0) {
-                findMath = dato.extend(true, {}, matched);
-                return false;
-            }
-        });
-
-        if (findMath) {
-            filePath = path.join(cssPath, findMath.name);
-            filePath = path.relative(srcPath, filePath);
-            fileURL = configs.dest.host + pathURI.toURIPath(filePath);
-            findMath.url = fileURL;
-            findMath.isRepeat = true;
-            concat.push(findMath);
-        } else {
-            if (files.length) {
-                fileName = encryption.md5(md5List) + '.css';
-                filePath = path.join(cssPath, fileName);
-                filePath = path.relative(srcPath, filePath);
-                fileURL = configs.dest.host + pathURI.toURIPath(filePath);
-
-                concat.push({
-                    name: fileName,
-                    url: fileURL,
-                    file: filePath,
-                    files: files
-                });
-                concatMap[fileName] = concat[concat.length - 1];
-            }
-        }
-    });
-
-    code = code.replace(REG_COOLIE, function ($0, $1) {
-        return $1 ? '<link rel="stylesheet" href="' + concat[replaceIndex++].url + '"/>' : $0;
-    });
+    while((matchedCoolie =REG_COOLIE.exec(code))){
+        concat(file, matchedCoolie[1]);
+    }
 
     // <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
     // <link rel="apple-touch-icon" href="/apple-touch-icon-72.png" />
@@ -208,7 +142,7 @@ module.exports = function (file, code) {
     });
 
     return {
-        concat: concat,
+        concat: [],
         code: htmlminify(file, code),
         mainJS: mainJS
     };
