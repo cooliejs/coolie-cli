@@ -9,7 +9,7 @@
 
 var optimage = require('optimage');
 var path = require('path');
-var fs = require('fs');
+var fse = require('fs-extra');
 var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var tempDir = '__temp__' + Date.now();
@@ -22,10 +22,11 @@ var tempDir = '__temp__' + Date.now();
  */
 module.exports = function (inputFile, callback) {
     var configs = global.configs;
-    var originalSize = fs.statSync(inputFile).size;
+    //var originalSize = fse.statSync(inputFile).size;
     var relative = path.relative(configs._srcPath, inputFile);
     var outputFile = path.join(configs._destPath, relative);
 
+    fse.ensureFileSync(outputFile);
     optimage({
         inputFile: inputFile,
         outputFile: outputFile

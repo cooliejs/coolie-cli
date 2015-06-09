@@ -87,7 +87,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
 
         if (configs.resource.minify !== false && isImage) {
             if (!configs._resImageMap[absFile]) {
-                configs._resImageMap[absFile] = 1;
+                configs._resImageMap[absFile] = resFile;
                 configs._resImageList.push(absFile);
             }
         } else if (configs.resource.minify === false || !isImage) {
