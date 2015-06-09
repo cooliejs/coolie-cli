@@ -12,7 +12,7 @@ var path = require('path');
 var fs = require('fs');
 var log = require('../libs/log.js');
 var pathURI = require('../libs/path-uri.js');
-var pngFile = path.join(__dirname, '../example/src/static/img/logo_03.png');
+var pngFile = path.join(__dirname, '../example/src/static/img/100x100.png');
 var jpgFile = path.join(__dirname, '../example/src/static/img/girl.jpg');
 var gifFile = path.join(__dirname, '../example/src/static/img/loading.gif');
 //var imagemin = require('image-min');
@@ -27,8 +27,8 @@ var gifFile = path.join(__dirname, '../example/src/static/img/loading.gif');
 var optimage = require('optimage');
 
 optimage({
-    inputFile: '/Users/zhangyunlai/development/github/nodejs-coolie/example/src/static/img/100x100.png',
-    outputFile: '/Users/zhangyunlai/development/github/nodejs-coolie/100x100.png'
+    inputFile: gifFile,
+    outputFile: './test.gif'
 }, function(err, res){
     // res.inputFile
     // res.outputFile
