@@ -26,7 +26,7 @@ var optimage = require('optimage');
 
 //optimage({
 //    inputFile: pngFile,
-//    outputFile: "test.min.png"
+//    outputFile: path.join(__dirname, 'min.png')
 //}, function(err, res){
 //    // res.inputFile
 //    // res.outputFile

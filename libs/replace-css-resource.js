@@ -69,21 +69,24 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             version = encryption.md5(absFile);
 
             var destName = version + extname;
+            var isImage = pathURI.isImage(extname);
 
             destFile = path.join(configs._destPath, configs.resource.dest, destName);
 
-            if (pathURI.isImage(extname)) {
-                configs._resImageList.push(destFile);
+            if (isImage) {
+                configs._resImageList.push(absFile);
             }
 
-            try {
-                fs.copySync(absFile, destFile);
-            } catch (err) {
-                log('copy file', pathURI.toSystemPath(file), 'error');
-                log('copy from', pathURI.toSystemPath(absFile), 'error');
-                log('copy to', pathURI.toSystemPath(destFile), 'error');
-                log('copy file', err.message, 'error');
-                process.exit(-1);
+            if(configs.resource.minify !== false && isImage){
+                try {
+                    fs.copySync(absFile, destFile);
+                } catch (err) {
+                    log('copy file', pathURI.toSystemPath(file), 'error');
+                    log('copy from', pathURI.toSystemPath(absFile), 'error');
+                    log('copy to', pathURI.toSystemPath(destFile), 'error');
+                    log('copy file', err.message, 'error');
+                    process.exit(-1);
+                }
             }
 
             configs._resVerMap[absFile] = version;

@@ -85,17 +85,19 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         var resFile = path.join(configs._destPath, configs.resource.dest, resName);
 
         if (pathURI.isImage(extname)) {
-            configs._resImageList.push(resFile);
+            configs._resImageList.push(absFile);
         }
 
-        try {
-            fs.copySync(absFile, resFile);
-        } catch (err) {
-            log('html file', pathURI.toSystemPath(file), 'error');
-            log('copy from', pathURI.toSystemPath(absFile), 'error');
-            log('copy to', pathURI.toSystemPath(resFile), 'error');
-            log('copy file', err.message, 'error');
-            process.exit(-1);
+        if(configs.resource.minify !== false){
+            try {
+                fs.copySync(absFile, resFile);
+            } catch (err) {
+                log('html file', pathURI.toSystemPath(file), 'error');
+                log('copy from', pathURI.toSystemPath(absFile), 'error');
+                log('copy to', pathURI.toSystemPath(resFile), 'error');
+                log('copy file', err.message, 'error');
+                process.exit(-1);
+            }
         }
 
         configs._resURIMap[absFile] = url = (configs.dest.host ? '' : '/') + pathURI.toURIPath(path.relative(configs._destPath, resFile));

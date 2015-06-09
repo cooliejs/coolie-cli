@@ -78,7 +78,7 @@ module.exports = function (srcPath) {
 
     howdo
         .task(function (next) {
-            log('1/5', 'copy files', 'task');
+            log('1/6','copy files', 'task');
             configs._buildStep = 1;
             next();
         })
@@ -106,7 +106,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('2/5', 'build main', 'task');
+            log('2/6','build main', 'task');
             configs._buildStep = 2;
             next();
         })
@@ -160,7 +160,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('3/5', 'overwrite config', 'task');
+            log('3/6','overwrite config', 'task');
             configs._buildStep = 3;
             next();
         })
@@ -192,7 +192,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('4/5', 'build html css', 'task');
+            log('4/6','build html css', 'task');
             configs._buildStep = 4;
             next();
         })
@@ -240,12 +240,18 @@ module.exports = function (srcPath) {
             }
 
             var allSaved = 0;
+            var allOriginalSize = 0;
 
             howdo.each(configs._resImageList, function (index, image, done) {
                 imageminify(image, function (err, saved, originalSize) {
-
+                    allSaved += saved;
+                    allOriginalSize += originalSize;
                 });
-            }).together(next);
+            }).together(function () {
+                log('imageminify', 'saved size: ' + allSaved + 'B');
+                log('imageminify', 'orginal size: ' + allOriginalSize + 'B');
+                next();
+            });
         })
 
 
