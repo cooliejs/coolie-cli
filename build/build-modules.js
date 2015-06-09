@@ -239,19 +239,9 @@ module.exports = function (srcPath) {
                 return next();
             }
 
-            var allSaved = 0;
-            var allOriginalSize = 0;
-
             howdo.each(configs._resImageList, function (index, image, done) {
-                imageminify(image, function (err, saved, originalSize) {
-                    allSaved += saved;
-                    allOriginalSize += originalSize;
-                });
-            }).together(function () {
-                log('imageminify', 'saved size: ' + allSaved + 'B');
-                log('imageminify', 'orginal size: ' + allOriginalSize + 'B');
-                next();
-            });
+                imageminify(image, done);
+            }).together(next);
         })
 
 

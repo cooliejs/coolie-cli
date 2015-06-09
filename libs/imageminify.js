@@ -17,27 +17,25 @@ var tempDir = '__temp__' + Date.now();
 
 /**
  * 图片压缩
- * @param file {String} 图片文件
+ * @param inputFile {String} 图片文件
  * @param callback {Function} 异步回调
  */
-module.exports = function (file, callback) {
+module.exports = function (inputFile, callback) {
     var configs = global.configs;
-    var originalSize = fs.statSync(file).size;
-    var relative = path.relative(configs._destPath, file);
-    var tempFile = path.join(configs._destPath, tempDir, relative);
-    var extname = path.extname(file);
+    var originalSize = fs.statSync(inputFile).size;
+    var relative = path.relative(configs._srcPath, inputFile);
+    var outputFile = path.join(configs._destPath, relative);
 
-    console.log(file);
     optimage({
-        inputFile: file,
-        outputFile: tempFile
+        inputFile: inputFile,
+        outputFile: outputFile
     }, function (err, res) {
-        if (err) {
-            log('imageminify', pathURI.toSystemPath(file), 'error');
-            log('imageminify', err.message, 'error');
-            return process.exit(-1);
-        }
+        //if (err) {
+        //    log('imageminify', pathURI.toSystemPath(inputFile), 'error');
+        //    log('imageminify', err.message, 'error');
+        //    return process.exit(-1);
+        //}
 
-        callback(null, res.saved, originalSize);
+        callback(null);
     });
 };

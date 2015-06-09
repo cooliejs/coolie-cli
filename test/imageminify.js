@@ -10,6 +10,8 @@
 
 var path = require('path');
 var fs = require('fs');
+var log = require('../libs/log.js');
+var pathURI = require('../libs/path-uri.js');
 var pngFile = path.join(__dirname, '../example/src/static/img/logo_03.png');
 var jpgFile = path.join(__dirname, '../example/src/static/img/girl.jpg');
 var gifFile = path.join(__dirname, '../example/src/static/img/loading.gif');
@@ -23,6 +25,24 @@ var gifFile = path.join(__dirname, '../example/src/static/img/loading.gif');
 //    .pipe(fs.createWriteStream('img-minified' + ext));
 
 var optimage = require('optimage');
+
+optimage({
+    inputFile: '/Users/zhangyunlai/development/github/nodejs-coolie/example/src/static/img/100x100.png',
+    outputFile: '/Users/zhangyunlai/development/github/nodejs-coolie/100x100.png'
+}, function(err, res){
+    // res.inputFile
+    // res.outputFile
+    // res.saved();
+
+    //if (err) {
+    //    log('imageminify', pathURI.toSystemPath(''), 'error');
+    //    log('imageminify', err.message, 'error');
+    //    return process.exit(-1);
+    //}
+
+    console.log(err);
+    console.log(res);
+});
 
 //optimage({
 //    inputFile: pngFile,
