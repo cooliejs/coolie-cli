@@ -87,7 +87,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
 
         if (configs.resource.minify !== false && isImage) {
             configs._resImageList.push(absFile);
-        } else if(configs.resource.minify === false || !isImage){
+        } else if (configs.resource.minify === false || !isImage) {
             try {
                 fs.copySync(absFile, resFile);
             } catch (err) {
