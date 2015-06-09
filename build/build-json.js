@@ -74,7 +74,7 @@ module.exports = function (basedir) {
 
     // js.dest
     steps.push(function (data) {
-        json.js['coolie-config.js'] = _getVal(data, './static/js/coolie-config.js', false);
+        json.js.dest = _getVal(data, './static/js/', false);
 
         log('4/7', '请输入生成的 CSS 文件的保存目录。默认为“./static/css/”', 'success');
     });
