@@ -105,6 +105,7 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.resource = {};
         json.resource.dest = _getVal(data, './static/res/', false);
+        json.resource.minify = true;
         json.copy = [];
 
         log('7/7', '请输入构建的目标目录，默认为“../dest/”。', 'success');

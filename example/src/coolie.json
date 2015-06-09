@@ -19,7 +19,8 @@
     }
   },
   "resource": {
-    "dest": "./static/res/"
+    "dest": "./static/res/",
+    "minify": true
   },
   "copy": [
     "./abc.js"
