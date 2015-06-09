@@ -21,17 +21,10 @@ var ruleMap = {
     css: {
         reg: /<link\b[^>]*>/gi,
         attr: 'href'
-        //extras: {
-        //    rel: ['stylesheet']
-        //}
     },
     js: {
         reg: /<script\b[^>]*>[\s\S]*?<\/script>/gi,
         attr: 'src'
-        //extras: {
-        //    type: [false, 'javascript', 'text/javascript', 'text/ecmascript', 'text/ecmascript-6',
-        //        'application/javascript', 'application/ecmascript']
-        //}
     }
 };
 
@@ -111,7 +104,6 @@ module.exports = function (file, html) {
     log('√', pathURI.toSystemPath(destPath), 'success');
 
     return configs._concatMap[md5List] = {
-        //html: html,
         srcName: srcName,
         srcPath: srcPath,
         destPath: destPath,

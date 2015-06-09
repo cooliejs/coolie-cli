@@ -43,86 +43,21 @@ module.exports = function (file, callback) {
 
         //log('build html', pathURI.toSystemPath(file), 'warning');
 
-        howdo
-            // 生成 HTML 文件
-            .task(function (doneHTML) {
-                var relative = path.relative(srcPath, file);
-                var destFile = path.join(destPath, relative);
 
-                fs.outputFile(destFile, ret.code, function (err) {
-                    if (err) {
-                        log("write file", pathURI.toSystemPath(destFile), "error");
-                        log('write file', err.message, 'error');
-                        process.exit();
-                    }
+        var relative = path.relative(srcPath, file);
+        var destFile = path.join(destPath, relative);
 
-                    //log('√', pathURI.toSystemPath(destFile), 'success');
-                    doneHTML();
-                });
-            })
-            // 生成 css 文件
-            .task(function (doneCSS) {
-                // 读取多个替换
-                howdo.each(ret.concat, function (index, matched, nextCSSFile) {
-                    var bufferList = [];
-                    var map = {};
-                    var depURLs = matched.files.map(function (file) {
-                        return pathURI.toURIPath(path.relative(srcPath, file));
-                    });
-                    var url = pathURI.toURIPath(matched.file);
+        fs.outputFile(destFile, ret.code, function (err) {
+            if (err) {
+                log("write file", pathURI.toSystemPath(destFile), "error");
+                log('write file', err.message, 'error');
+                process.exit();
+            }
 
-                    map[url] = depURLs;
-                    depCSS.push(map);
+            //log('√', pathURI.toSystemPath(destFile), 'success');
 
-                    // 重复的css文件依赖 || 重复构建
-                    if (matched.isRepeat || buildMap[matched.name]) {
-                        return nextCSSFile();
-                    }
+            callback(null, cssLength, depCSS, ret.mainJS);
+        });
 
-                    buildMap[matched.name] = true;
-
-                    var relative = path.relative(srcPath, cssPath);
-                    var destFile = path.join(destPath, relative, matched.name);
-
-                    // 合并多个文件
-                    howdo.each(matched.files, function (index, file, doneConcat) {
-                        cssLength++;
-
-                        fs.readFile(file, 'utf8', function (err, code) {
-                            if (err) {
-                                log("read file", pathURI.toSystemPath(file), "error");
-                                log('read file', err.message, 'error');
-                                process.exit();
-                            }
-
-                            cssminify(file, code, destFile, function (err, code) {
-                                bufferList.push(new Buffer('\n' + code, 'utf8'));
-                                //log('require', pathURI.toSystemPath(file));
-                                doneConcat();
-                            });
-                        });
-                    }).follow(function () {
-                        var code = Buffer.concat(bufferList).toString();
-
-                        code = sign('css') + code;
-                        fs.outputFile(destFile, code, function (err) {
-                            if (err) {
-                                log("write file", pathURI.toSystemPath(destFile), "error");
-                                log('write file', err.message, 'error');
-                                process.exit();
-                            }
-
-                            log('√', pathURI.toSystemPath(destFile), 'success');
-                            nextCSSFile();
-                        });
-                    });
-                }).follow(function () {
-                    doneCSS();
-                });
-            })
-            // 并行
-            .together(function () {
-                callback(null, cssLength, depCSS, ret.mainJS);
-            });
     });
 };
