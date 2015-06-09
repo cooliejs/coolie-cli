@@ -228,8 +228,21 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('5/5', 'generator relationship map', 'task');
+            log('5/6', 'optimize image files', 'task');
             configs._buildStep = 5;
+            next();
+        })
+        .task(function (next) {
+            if (configs.resource.minify === false) {
+                log('ignore', 'optimize image files');
+                return next();
+            }
+        })
+
+
+        .task(function (next) {
+            log('6/6', 'generator relationship map', 'task');
+            configs._buildStep = 6;
             next();
         })
         .task(function (next) {
@@ -257,6 +270,7 @@ module.exports = function (srcPath) {
             });
         })
 
+
         // 异步串行结束
         .follow(function (err) {
             if (err) {
@@ -272,8 +286,10 @@ module.exports = function (srcPath) {
                 '\nbuild ' + mainLength + ' js file(s), ' +
                 '\nbuild ' + htmlLength + ' html file(s), ' +
                 '\nbuild ' + cssLength + ' css file(s), ' +
+                '\nbuild ' + configs._resImageList.length + ' image file(s), ' +
                 '\nbuild ' + Object.keys(configs._resVerMap).length + ' resource file(s), ' +
                 '\npast ' + past + ' ms', 'success');
+            console.log('');
             console.log('');
         });
 };
