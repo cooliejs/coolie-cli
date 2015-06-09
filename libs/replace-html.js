@@ -49,7 +49,7 @@ module.exports = function (file, code) {
     var srcPath = configs._srcPath;
     var jsBase = configs._jsBase;
     var mainJS = '';
-    var deepCSS = {};
+    var depCSS = {};
 
     // 循环匹配 <!--coolie-->(matched)<!--/coolie-->
     var matchedCoolie;
@@ -58,7 +58,7 @@ module.exports = function (file, code) {
         var ret = concat(file, matchedCoolie[1]);
 
         code = code.replace(REG_COOLIE, ret.replace);
-        deepCSS[ret.url] = ret.urls;
+        depCSS[ret.url] = ret.urls;
     }
 
     // <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
@@ -142,7 +142,7 @@ module.exports = function (file, code) {
     });
 
     return {
-        deepCSS: deepCSS,
+        depCSS: depCSS,
         code: htmlminify(file, code),
         mainJS: mainJS
     };

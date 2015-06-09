@@ -19,11 +19,11 @@ var dato = require('ydr-utils').dato;
 var encryption = require('ydr-utils').encryption;
 var ruleMap = {
     css: {
-        reg: /<link\b[^>]*>/gi,
+        reg: /<link\b[^>]*?>/gi,
         attr: 'href'
     },
     js: {
-        reg: /<script\b[^>]*>[\s\S]*?<\/script>/gi,
+        reg: /<script\b[^>]*?>[\s\S]*?<\/script>/gi,
         attr: 'src'
     }
 };
@@ -40,13 +40,17 @@ module.exports = function (file, html) {
     var configs = global.configs;
     var rule = ruleMap[type];
     var fileDirname = path.dirname(file);
-    var hrefMatches;
+    var htmlMatches = html.match(rule.reg);
     var files = [];
     var md5List = '';
 
-    while ((hrefMatches = rule.reg.exec(html))) {
-        var tag = hrefMatches[0];
+    dato.each(htmlMatches, function (index, tag) {
         var source = htmlAttr.get(tag, rule.attr);
+
+        if (source === true || source === false) {
+            return;
+        }
+
         var matchFile;
 
         if (pathURI.isRelativeRoot(source)) {
@@ -57,7 +61,7 @@ module.exports = function (file, html) {
 
         files.push(matchFile);
         md5List += encryption.etag(matchFile);
-    }
+    });
 
     if (configs._concatMap[md5List]) {
         return configs._concatMap[md5List];
@@ -66,7 +70,7 @@ module.exports = function (file, html) {
     var srcName = encryption.md5(md5List) + '.' + type;
     var srcPath = path.join(type === 'css' ? configs._cssPath : configs._jsPath, srcName);
     var srcRelative = path.relative(configs._srcPath, srcPath);
-    var url = configs.dest.host + pathURI.toURIPath(srcRelative);
+    var url = pathURI.toURIPath(srcRelative);
     var destPath = path.join(configs._destPath, srcRelative);
     var bufferList = [];
     var urls = [];
@@ -93,7 +97,7 @@ module.exports = function (file, html) {
 
         var relative = path.relative(configs._srcPath, file);
 
-        urls.push(configs.dest.host + pathURI.toURIPath(relative));
+        urls.push(pathURI.toURIPath(relative));
     });
 
     var newCode = sign(type) + Buffer.concat(bufferList).toString();
@@ -108,7 +112,7 @@ module.exports = function (file, html) {
 
     log('√', pathURI.toSystemPath(destPath), 'success');
 
-    return configs._concatMap[md5List] = {
+    return configs._concatMap[md5List] ={
         srcName: srcName,
         srcPath: srcPath,
         destPath: destPath,
@@ -118,8 +122,8 @@ module.exports = function (file, html) {
         type: type,
         files: files,
         replace: type === 'css'
-            ? '<link rel="stylesheet" href="' + url + '">'
-            : '<script src="' + url + '"></script>'
+            ? '<link rel="stylesheet" href="' + configs.dest.host + url + '">'
+            : '<script src="' + configs.dest.host + url + '"></script>'
     };
 };
 
