@@ -58,6 +58,7 @@ module.exports = function (srcPath) {
     configs._resVerMap = {};
     configs._resURIMap = {};
     configs._resBase64Map = {};
+    configs._resImageList = [];
     configs._resDestMap = {};
     configs._copyFilesMap = {};
     configs._copyLength = 0;

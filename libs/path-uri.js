@@ -63,3 +63,15 @@ exports.isRelativeRoot = function (p) {
     return !REG_ABSOLUTE.test(p) && REG_RELATIVE_ROOT.test(p);
 };
 
+
+/**
+ * 判断路径后缀是否为图片
+ * @param extname
+ * @returns {boolean}
+ */
+exports.isImage = function (extname) {
+    extname = extname.toLowerCase();
+
+    return ['.png', '.gif', '.jpg', '.jpeg'].indexOf(extname) > -1;
+};
+

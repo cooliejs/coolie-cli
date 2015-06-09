@@ -84,6 +84,10 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         var resName = version + extname;
         var resFile = path.join(configs._destPath, configs.resource.dest, resName);
 
+        if (pathURI.isImage(extname)) {
+            configs._resImageList.push(resFile);
+        }
+
         try {
             fs.copySync(absFile, resFile);
         } catch (err) {

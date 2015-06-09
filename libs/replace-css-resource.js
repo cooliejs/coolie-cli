@@ -38,6 +38,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
 
         var suffix = ($1.match(REG_SUFFIX) || [''])[0];
         $1 = $1.replace(REG_SUFFIX, '');
+
         var extname = path.extname($1);
         var absDir = pathURI.isRelativeFile($1) ? path.dirname(file) : configs._srcPath;
         var absFile;
@@ -70,6 +71,10 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             var destName = version + extname;
 
             destFile = path.join(configs._destPath, configs.resource.dest, destName);
+
+            if (pathURI.isImage(extname)) {
+                configs._resImageList.push(destFile);
+            }
 
             try {
                 fs.copySync(absFile, destFile);
