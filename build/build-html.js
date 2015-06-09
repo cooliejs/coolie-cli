@@ -26,11 +26,8 @@ var buildMap = {};
  */
 module.exports = function (file, callback) {
     var configs = global.configs;
-    var cssPath = configs._cssPath;
-    var jsBase = configs._jsBase;
     var srcPath = configs._srcPath;
     var destPath = configs._destPath;
-    var depCSS = [];
 
     fs.readFile(file, 'utf8', function (err, code) {
         if (err) {
@@ -43,7 +40,6 @@ module.exports = function (file, callback) {
 
         //log('build html', pathURI.toSystemPath(file), 'warning');
 
-
         var relative = path.relative(srcPath, file);
         var destFile = path.join(destPath, relative);
 
@@ -55,6 +51,6 @@ module.exports = function (file, callback) {
             process.exit();
         }
 
-        callback(null, cssLength, depCSS, ret.mainJS);
+        callback(null, cssLength, ret.depCSS, ret.mainJS);
     });
 };

@@ -17,6 +17,7 @@ var encryption = require('ydr-utils').encryption;
 var Increase = require('../libs/Increase.js');
 var buildModule = require('./build-module.js');
 
+
 module.exports = function (mainFile, callback) {
     var bufferList = [];
     // 入口模块名称

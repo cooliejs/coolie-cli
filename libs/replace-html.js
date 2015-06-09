@@ -42,20 +42,23 @@ var FAVICON_RELS = [
  * 提取 CSS 依赖并合并依赖
  * @param file {String} HTML 文件路径
  * @param code {String} HTML 文件内容
- * @returns {{concat: Array, code: *, mainJS: String}}
+ * @returns {{deepCSS: Object, code: String, mainJS: String}}
  */
 module.exports = function (file, code) {
     var configs = global.configs;
     var srcPath = configs._srcPath;
     var jsBase = configs._jsBase;
     var mainJS = '';
+    var deepCSS = {};
 
     // 循环匹配 <!--coolie-->(matched)<!--/coolie-->
     var matchedCoolie;
 
     while ((matchedCoolie = code.match(REG_COOLIE))) {
         var ret = concat(file, matchedCoolie[1]);
+
         code = code.replace(REG_COOLIE, ret.replace);
+        deepCSS[ret.url] = ret.urls;
     }
 
     // <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
@@ -139,6 +142,7 @@ module.exports = function (file, code) {
     });
 
     return {
+        deepCSS: deepCSS,
         code: htmlminify(file, code),
         mainJS: mainJS
     };

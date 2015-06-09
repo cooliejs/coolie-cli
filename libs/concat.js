@@ -69,6 +69,7 @@ module.exports = function (file, html) {
     var url = configs.dest.host + pathURI.toURIPath(srcRelative);
     var destPath = path.join(configs._destPath, srcRelative);
     var bufferList = [];
+    var urls = [];
 
     files.forEach(function (f) {
         var code;
@@ -89,6 +90,10 @@ module.exports = function (file, html) {
         }
 
         bufferList.push(new Buffer('\n' + code, 'utf8'));
+
+        var relative = path.relative(configs._srcPath, file);
+
+        urls.push(configs.dest.host + pathURI.toURIPath(relative));
     });
 
     var newCode = sign(type) + Buffer.concat(bufferList).toString();
@@ -108,6 +113,7 @@ module.exports = function (file, html) {
         srcPath: srcPath,
         destPath: destPath,
         url: url,
+        urls: urls,
         file: file,
         type: type,
         files: files,
