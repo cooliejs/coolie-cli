@@ -5,10 +5,9 @@ __The front-end development builder.__
 
 __前端开发构建工具。__
 
-详细介绍点这里：<http://frontenddev.org/column/introduce-coolie/>
 
-
-![.](http://s.ydr.me/f/i/20150505183542392874181823)
+- gitbook <http://coolie.ydr.me/>
+- 社区 <http://FrontEndDev.org/>
 
 
 # 功能

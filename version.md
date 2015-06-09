@@ -1,4 +1,6 @@
 # 0.x.x
+- 0.18.x
+    - 支持了构建非模块化的 JS 文件
 - 0.17.x
     - 适配了[coolie.js@0.12.0](https://github.com/cloudcome/coolie)
 - 0.16.x
