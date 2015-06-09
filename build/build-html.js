@@ -47,17 +47,14 @@ module.exports = function (file, callback) {
         var relative = path.relative(srcPath, file);
         var destFile = path.join(destPath, relative);
 
-        fs.outputFile(destFile, ret.code, function (err) {
-            if (err) {
-                log("write file", pathURI.toSystemPath(destFile), "error");
-                log('write file', err.message, 'error');
-                process.exit();
-            }
+        try {
+            fs.outputFileSync(destFile, ret.code, 'utf8');
+        } catch (err) {
+            log("write file", pathURI.toSystemPath(destFile), "error");
+            log('write file', err.message, 'error');
+            process.exit();
+        }
 
-            //log('√', pathURI.toSystemPath(destFile), 'success');
-
-            callback(null, cssLength, depCSS, ret.mainJS);
-        });
-
+        callback(null, cssLength, depCSS, ret.mainJS);
     });
 };

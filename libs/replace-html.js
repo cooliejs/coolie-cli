@@ -139,7 +139,6 @@ module.exports = function (file, code) {
     });
 
     return {
-        concat: [],
         code: htmlminify(file, code),
         mainJS: mainJS
     };
