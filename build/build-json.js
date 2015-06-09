@@ -4,44 +4,44 @@
  * @create 2014-10-23 19:36
  */
 
-"use strict";
+'use strict';
 
 
 var pkg = require('../package.json');
-var fs = require("fs-extra");
-var path = require("path");
-var log = require("../libs/log.js");
-var pathURI = require("../libs/path-uri.js");
+var fs = require('fs-extra');
+var path = require('path');
+var log = require('../libs/log.js');
+var pathURI = require('../libs/path-uri.js');
 var dato = require('ydr-utils').dato;
-var pathURI = require("../libs/path-uri.js");
+var pathURI = require('../libs/path-uri.js');
 var typeis = require('ydr-utils').typeis;
 var number = require('ydr-utils').number;
-var nextStep = require("../libs/next-step.js");
-var RE_CLEAN = /[\r\n\t\v"']/g;
+var nextStep = require('../libs/next-step.js');
+var RE_CLEAN = /[\r\n\t\v'']/g;
 var RE_SPACE = /\s+/g;
 
-require("colors");
+require('colors');
 
 module.exports = function (basedir) {
     var steps = [];
-    var writeFile = path.join(basedir, "./coolie.json");
+    var writeFile = path.join(basedir, './coolie.json');
     var isExist = typeis.file(writeFile);
     var json = {};
     var jsonString = '';
     var continueStep = function () {
         json.js = {};
-        log("1/6", "请输入 JS 入口模块的路径。" +
-        "\n支持通配符，多个路径使用空格分开，默认为“./static/js/app/**/*.js”。", "success");
+        log('1/7', '请输入 JS 入口模块的路径。' +
+        '\n支持通配符，多个路径使用空格分开，默认为“./static/js/app/**/*.js”。', 'success');
     };
 
     // 0
     steps.push(function () {
-        log("tips", "以下操作留空回车表示同意默认配置。", "warning");
-        log("file path", pathURI.toSystemPath(writeFile), "task");
-        log("warning", "如果上述目录不正确，请按`ctrl+C`退出后重新指定。", "warning");
+        log('tips', '以下操作留空回车表示同意默认配置。', 'warning');
+        log('file path', pathURI.toSystemPath(writeFile), 'task');
+        log('warning', '如果上述目录不正确，请按`ctrl+C`退出后重新指定。', 'warning');
 
         if (isExist) {
-            log("warning", "该文件已存在，是否覆盖？（y/[n]）", "warning");
+            log('warning', '该文件已存在，是否覆盖？（y/[n]）', 'warning');
         } else {
             continueStep();
         }
@@ -49,7 +49,7 @@ module.exports = function (basedir) {
 
     if (isExist) {
         steps.push(function (data) {
-            if (data.toLowerCase().indexOf("y") === -1) {
+            if (data.toLowerCase().indexOf('y') === -1) {
                 process.exit();
             } else {
                 continueStep();
@@ -62,14 +62,14 @@ module.exports = function (basedir) {
         json.js = {};
         json.js.src = _getVal(data, './static/js/app/**/*.js', true);
 
-        log("2/6", "请输入 coolie.js 配置文件所在的路径，默认为“./static/js/coolie-config.js”。", "success");
+        log('2/7', '请输入 coolie.js 配置文件所在的路径，默认为“./static/js/coolie-config.js”。', 'success');
     });
 
     // js[coolie-config.js]
     steps.push(function (data) {
         json.js['coolie-config.js'] = _getVal(data, './static/js/coolie-config.js', false);
 
-        log("3/6", "请输入生成的 CSS 文件的保存目录。默认为“./static/css/”", "success");
+        log('3/7', '请输入生成的 CSS 文件的保存目录。默认为“./static/css/”', 'success');
     });
 
     // css.dest
@@ -80,8 +80,8 @@ module.exports = function (basedir) {
             compatibility: 'ie7'
         };
 
-        log("4/6", "请输入 HTML 文件所在的路径。" +
-        "\n支持通配符，多个路径使用空格分开。默认为“./views/**/*.html”。", "success");
+        log('4/7', '请输入 HTML 文件所在的路径。' +
+        '\n支持通配符，多个路径使用空格分开。默认为“./views/**/*.html”。', 'success');
     });
 
     // html.src
@@ -90,7 +90,7 @@ module.exports = function (basedir) {
         json.html.src = _getVal(data, './views/**/*.html', true);
         json.html.minify = true;
 
-        log("5/6", "请输入生成的静态资源（如：图片、字体）保存目录，默认为“./static/res/”。", "success");
+        log('5/7', '请输入生成的静态资源（如：图片、字体）保存目录，默认为“./static/res/”。', 'success');
     });
 
     // resource.dest
@@ -99,7 +99,7 @@ module.exports = function (basedir) {
         json.resource.dest = _getVal(data, './static/res/', false);
         json.copy = [];
 
-        log("6/6", "请输入构建的目标目录，默认为“../dest/”。", "success");
+        log('6/7', '请输入构建的目标目录，默认为“../dest/”。', 'success');
     });
 
     // dest.dirname
@@ -109,21 +109,21 @@ module.exports = function (basedir) {
         json.dest.host = '';
         jsonString = JSON.stringify(json, null, 2);
         
-        log("confirm", "文件内容为：", "success");
+        log('confirm', '文件内容为：', 'success');
         log('coolie.json', jsonString, 'success');
-        log("confirm", "确认文件内容正确并生成文件？（[y]/n）", "warning");
+        log('confirm', '确认文件内容正确并生成文件？（[y]/n）', 'warning');
     });
 
     // write
     steps.push(function (data) {
-        if (data.trim().toLocaleLowerCase().indexOf("n") === -1) {
-            fs.outputFile(writeFile, jsonString, "utf-8", function (err) {
+        if (data.trim().toLocaleLowerCase().indexOf('n') === -1) {
+            fs.outputFile(writeFile, jsonString, 'utf-8', function (err) {
                 if (err) {
-                    log("write", pathURI.toSystemPath(writeFile), "error");
+                    log('write', pathURI.toSystemPath(writeFile), 'error');
                     return process.exit();
                 }
 
-                log("√", pathURI.toSystemPath(writeFile), "success");
+                log('√', pathURI.toSystemPath(writeFile), 'success');
                 process.exit();
             });
         } else {
@@ -144,7 +144,7 @@ module.exports = function (basedir) {
  * @private
  */
 function _getVal(data, dft, isArray) {
-    var input = data.replace(RE_CLEAN, "").trim() || dft;
+    var input = data.replace(RE_CLEAN, '').trim() || dft;
 
     return isArray ? input.split(RE_SPACE) : input;
 }
