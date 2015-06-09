@@ -51,6 +51,10 @@ module.exports = function (file, callback) {
             process.exit();
         }
 
+        dato.each(ret.depCSS, function (name, dep) {
+            cssLength += dep.length;
+        });
+
         callback(null, cssLength, ret.depCSS, ret.mainJS);
     });
 };

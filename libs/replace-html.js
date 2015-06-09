@@ -42,7 +42,7 @@ var FAVICON_RELS = [
  * 提取 CSS 依赖并合并依赖
  * @param file {String} HTML 文件路径
  * @param code {String} HTML 文件内容
- * @returns {{deepCSS: Object, code: String, mainJS: String}}
+ * @returns {{depCSS: Object, code: String, mainJS: String}}
  */
 module.exports = function (file, code) {
     var configs = global.configs;
