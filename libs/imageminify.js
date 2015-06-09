@@ -30,11 +30,10 @@ module.exports = function (inputFile, callback) {
         inputFile: inputFile,
         outputFile: outputFile
     }, function (err, res) {
-        //if (err) {
-        //    log('imageminify', pathURI.toSystemPath(inputFile), 'error');
-        //    log('imageminify', err.message, 'error');
-        //    return process.exit(-1);
-        //}
+        if (err) {
+            log('imageminify', pathURI.toSystemPath(inputFile), 'error');
+            log('imageminify', err.message, 'error');
+        }
 
         callback(null);
     });
