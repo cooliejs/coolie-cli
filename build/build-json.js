@@ -69,14 +69,15 @@ module.exports = function (basedir) {
     steps.push(function (data) {
         json.js['coolie-config.js'] = _getVal(data, './static/js/coolie-config.js', false);
 
-        log('3/7', '请输入生成的 JS 文件的保存目录。默认为“./static/js/”', 'success');
+        log('3/7', '请输入合并压缩后的非模块化 JS 文件的保存目录。默认为“./static/js/”。' +
+            '\n不建议与 JS 入口模块的目录一样', 'success');
     });
 
     // js.dest
     steps.push(function (data) {
         json.js.dest = _getVal(data, './static/js/', false);
 
-        log('4/7', '请输入生成的 CSS 文件的保存目录。默认为“./static/css/”', 'success');
+        log('4/7', '请输入合并压缩后的 CSS 文件的保存目录。默认为“./static/css/”。', 'success');
     });
 
     // css.dest
@@ -97,7 +98,7 @@ module.exports = function (basedir) {
         json.html.src = _getVal(data, './views/**/*.html', true);
         json.html.minify = true;
 
-        log('6/7', '请输入生成的静态资源（如：图片、字体）保存目录，默认为“./static/res/”。', 'success');
+        log('6/7', '请输入构建之后的静态资源（如：图片、字体）的目录，默认为“./static/res/”。', 'success');
     });
 
     // resource.dest
