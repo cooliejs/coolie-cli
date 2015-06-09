@@ -22,11 +22,11 @@ var pathURI = require('./path-uri.js');
 module.exports = function (file, callback) {
     //var configs = global.configs;
 
-    var size = fs.statSync(file).size;
+    var originalSize = fs.statSync(file).size;
 
     optimage({
         inputFile: file,
-        outputFile: "test.min.png"
+        outputFile: file
     }, function (err, res) {
         if (err) {
             log('imageminify', pathURI.toSystemPath(file), 'error');
@@ -34,6 +34,6 @@ module.exports = function (file, callback) {
             return process.exit(-1);
         }
 
-        callback(null, res.saved, size);
+        callback(null, res.saved, originalSize);
     });
 };

@@ -21,6 +21,7 @@ var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
 var buildHTML = require('./build-html.js');
 var copy = require('../libs/copy.js');
+var imageminify = require('../libs/imageminify.js');
 
 
 module.exports = function (srcPath) {
@@ -237,6 +238,14 @@ module.exports = function (srcPath) {
                 log('ignore', 'optimize image files');
                 return next();
             }
+
+            var allSaved = 0;
+
+            howdo.each(configs._resImageList, function (index, image, done) {
+                imageminify(image, function (err, saved, originalSize) {
+
+                });
+            }).together(next);
         })
 
 
