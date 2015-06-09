@@ -74,7 +74,10 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             destFile = path.join(configs._destPath, configs.resource.dest, destName);
 
             if (configs.resource.minify !== false && isImage) {
-                configs._resImageList.push(absFile);
+                if (!configs._resImageMap[absFile]) {
+                    configs._resImageMap[absFile] = 1;
+                    configs._resImageList.push(absFile);
+                }
             } else if (configs.resource.minify === false || !isImage) {
                 try {
                     fs.copySync(absFile, destFile);

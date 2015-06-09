@@ -86,7 +86,10 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         var isImage = pathURI.isImage(extname);
 
         if (configs.resource.minify !== false && isImage) {
-            configs._resImageList.push(absFile);
+            if (!configs._resImageMap[absFile]) {
+                configs._resImageMap[absFile] = 1;
+                configs._resImageList.push(absFile);
+            }
         } else if (configs.resource.minify === false || !isImage) {
             try {
                 fs.copySync(absFile, resFile);
