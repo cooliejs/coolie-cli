@@ -79,7 +79,7 @@ module.exports = function (file, html) {
         var code;
 
         try {
-            code = fse.readFileSync(f, 'utf8')
+            code = fse.readFileSync(f, 'utf8');
         } catch (err) {
             log("concat", pathURI.toSystemPath(file), "error");
             log("read file", pathURI.toSystemPath(f), "error");
@@ -95,7 +95,7 @@ module.exports = function (file, html) {
 
         bufferList.push(new Buffer('\n' + code, 'utf8'));
 
-        var relative = path.relative(configs._srcPath, file);
+        var relative = path.relative(configs._srcPath, f);
 
         urls.push(pathURI.toURIPath(relative));
     });
