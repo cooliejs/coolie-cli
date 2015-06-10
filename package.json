@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.19.0",
+  "version": "0.19.1",
   "description": "The front-end development builder.",
   "preferGlobal": true,
   "bin": {
@@ -51,8 +51,6 @@
     "fs-extra": "^0.11.1",
     "glob": "^5.0.1",
     "howdo": "^1.1.4",
-    "image-min": "^0.3.2",
-    "imagemin": "^3.2.0",
     "open": "0.0.5",
     "optimage": "^0.2.0",
     "uglify-js": "^2.4.23",
