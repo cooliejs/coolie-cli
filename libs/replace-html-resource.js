@@ -85,12 +85,12 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         var resFile = path.join(configs._destPath, configs.resource.dest, resName);
         var isImage = pathURI.isImage(extname);
 
-        if (configs.resource.minify !== false && isImage) {
-            if (!configs._resImageMap[absFile]) {
-                configs._resImageMap[absFile] = resFile;
-                configs._resImageList.push(absFile);
-            }
-        } else if (configs.resource.minify === false || !isImage) {
+        //if (configs.resource.minify !== false && isImage) {
+        //    if (!configs._resImageMap[absFile]) {
+        //        configs._resImageMap[absFile] = resFile;
+        //        configs._resImageList.push(absFile);
+        //    }
+        //} else if (configs.resource.minify === false || !isImage) {
             try {
                 fs.copySync(absFile, resFile);
             } catch (err) {
@@ -100,7 +100,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
                 log('copy file', err.message, 'error');
                 process.exit(-1);
             }
-        }
+        //}
 
         configs._resURIMap[absFile] = url = (configs.dest.host ? '' : '/') + pathURI.toURIPath(path.relative(configs._destPath, resFile));
     }

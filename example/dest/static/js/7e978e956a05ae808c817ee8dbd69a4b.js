@@ -1,3 +1,3 @@
-/*coolie@0.19.1*/
+/*coolie@0.20.0*/
 !function(){var a=1;alert(a)}();
 !function(){var a=2;alert(a)}();

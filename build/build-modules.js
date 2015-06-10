@@ -235,7 +235,7 @@ module.exports = function (srcPath) {
             next();
         })
         .task(function (next) {
-            if (configs.resource.minify === false) {
+            if (!configs._resImageList.length || configs.resource.minify === false) {
                 log('ignore', 'optimize image files');
                 return next();
             }
@@ -252,7 +252,7 @@ module.exports = function (srcPath) {
             }).together(function () {
                 log('√', 'orginal size: ' + allOriginalSize + ' B', 'success');
                 log('√', 'actual size: ' + allActualSize + ' B, saved ' +
-                    (100 - allActualSize * 100 / allOriginalSize).toFixed(2) + '%', 'success');
+                    (allOriginalSize ? 100 - allActualSize * 100 / allOriginalSize : 0).toFixed(2) + '%', 'success');
                 next();
             });
         })

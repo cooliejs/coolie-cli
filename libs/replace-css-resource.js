@@ -73,12 +73,12 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
 
             destFile = path.join(configs._destPath, configs.resource.dest, destName);
 
-            if (configs.resource.minify !== false && isImage) {
-                if (!configs._resImageMap[absFile]) {
-                    configs._resImageMap[absFile] = destFile;
-                    configs._resImageList.push(absFile);
-                }
-            } else if (configs.resource.minify === false || !isImage) {
+            //if (configs.resource.minify !== false && isImage) {
+            //    if (!configs._resImageMap[absFile]) {
+            //        configs._resImageMap[absFile] = destFile;
+            //        configs._resImageList.push(absFile);
+            //    }
+            //} else if (configs.resource.minify === false || !isImage) {
                 try {
                     fs.copySync(absFile, destFile);
                 } catch (err) {
@@ -88,7 +88,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
                     log('copy file', err.message, 'error');
                     process.exit(-1);
                 }
-            }
+            //}
 
             configs._resVerMap[absFile] = version;
             configs._resDestMap[absFile] = destFile;
