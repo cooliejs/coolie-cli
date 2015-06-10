@@ -19,7 +19,8 @@ var dato = require('ydr-utils').dato;
 var encryption = require('ydr-utils').encryption;
 var ruleMap = {
     css: {
-        reg: /<link\b[^>]*?>/gi,
+        reg: /<link\b[^>]*/gi,
+        test: /<link\b/i,
         attr: 'href'
     },
     js: {
@@ -36,7 +37,7 @@ var ruleMap = {
  * @returns {*}
  */
 module.exports = function (file, html) {
-    var type = ruleMap.css.reg.test(html) ? 'css' : 'js';
+    var type = ruleMap.css.test.test(html) ? 'css' : 'js';
     var configs = global.configs;
     var rule = ruleMap[type];
     var fileDirname = path.dirname(file);
