@@ -262,12 +262,17 @@ module.exports = function (srcPath) {
             process.exit();
         }
 
-        // css.minify
-        if (!typeis.undefined(config.css.minify) && !typeis.object(config.css.minify)) {
-            log("parse config", "`css.host` must be an object", "error");
-            process.exit();
+        if(typeis.undefined(config.css.minify) === true){
+            config.css.minify = {
+                compatibility: 'ie7'
+            };
         }
 
+        // css.minify
+        if (!typeis.undefined(config.css.minify) && !typeis.object(config.css.minify)) {
+            log("parse config", "`css.minify` must be an object or a boolean value", "error");
+            process.exit();
+        }
     };
 
 
