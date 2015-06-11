@@ -124,7 +124,7 @@ module.exports = function (file, code) {
 
                 //不是本地根目录
                 if (configs.dest.host !== '/') {
-                    $0 = htmlAttr.set($0, 'data-config', configs.dest.host + replaceVersion(configs._coolieConfigJSURI, configs._coolieConfigVersion));
+                    $0 = htmlAttr.set($0, 'data-config', pathURI.joinURI(configs.dest.host, replaceVersion(configs._coolieConfigJSURI, configs._coolieConfigVersion)));
                 } else {
                     $0 = htmlAttr.set($0, 'data-config', replaceVersion(dataConfig, configs._coolieConfigVersion));
                 }
