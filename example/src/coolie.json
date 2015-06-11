@@ -27,6 +27,6 @@
   ],
   "dest": {
     "dirname": "../dest/",
-    "host": "/test/"
+    "host": ""
   }
 }

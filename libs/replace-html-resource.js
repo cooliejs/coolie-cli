@@ -102,8 +102,8 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         }
         //}
 
-        configs._resURIMap[absFile] = url = (configs.dest.host ? '' : '/') + pathURI.toURIPath(path.relative(configs._destPath, resFile));
+        configs._resURIMap[absFile] = url = configs.dest.host + pathURI.toURIPath(path.relative(configs._destPath, resFile));
     }
 
-    return htmlAttr.set(html, attrKey, configs.dest.host + url + suffix);
+    return htmlAttr.set(html, attrKey, url + suffix);
 };

@@ -7,24 +7,25 @@
 - 0.18.x
     - 支持了构建非模块化的 JS 文件
 - 0.17.x
-    - 适配了[coolie.js@0.12.0](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@0.12.x](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@0.13.x](https://github.com/cloudcome/coolie)
 - 0.16.x
-    - 适配了[coolie.js@0.9.0](https://github.com/cloudcome/coolie)
-    - 适配了[coolie.js@0.10.0](https://github.com/cloudcome/coolie)
-    - 适配了[coolie.js@0.11.0](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@0.9.x](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@0.10.x](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@0.11.x](https://github.com/cloudcome/coolie)
     - 支持构建跨站JS、CSS。
     - 支持构建静态网站，不需要 coolie.js。
     - 修正了 windows 下的部分 bug。
 - 0.15.0
     - 支持构建`coolie-config.js`的版本号。
 - 0.14.0
-    - 适配了[coolie.js@0.8.0](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@0.8.x](https://github.com/cloudcome/coolie)
 - 0.13.0
 	- 新增`coolie alien`命令，用来下载最新 alien 发布版
 - 0.12.26
 	- 更为详细的构建配置
 - 0.12.9
-    - 适配了[coolie.js@0.7.0](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@0.7.x](https://github.com/cloudcome/coolie)
     - 修正部分 BUG
 - 0.12.0
 	- 全新的构建配置，更加合理
@@ -46,18 +47,18 @@
 	- 更为科学的构建过程
 	- 生成更为科学的`relationship-map.json`
 - 0.5.0
-    - 适配了[coolie.js@0.5.0](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@0.5.x](https://github.com/cloudcome/coolie)
 	- 最新的 css 构建方式，统一为绝对路径
 - 0.4.0
-    - 适配了[coolie.js@0.4.0](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@0.4.x](https://github.com/cloudcome/coolie)
     - 支持绝对路径
 	- 完善 css 配置
 - 0.3.1
-	- 适配了[coolie.js@0.3.0](https://github.com/cloudcome/coolie)
+	- 适配了[coolie.js@0.3.x](https://github.com/cloudcome/coolie)
 	- 支持依赖省略
 	- 生成模块依赖MAP
 - 0.2.1
-	- 适配了[coolie.js@0.2.0](https://github.com/cloudcome/coolie)
+	- 适配了[coolie.js@0.2.x](https://github.com/cloudcome/coolie)
 	- 生成完整的模块版本MAP
 - 0.1.8
 	- 修正 css 引用构建顺序
@@ -66,7 +67,7 @@
 	- 支持 css 引用的合并替换
 	- 新增命令打开帮助页面
 - 0.0.17
-	- 适配了[coolie.js@0.1.0](https://github.com/cloudcome/coolie)
+	- 适配了[coolie.js@0.1.x](https://github.com/cloudcome/coolie)
 	- 优化构建配置
 	- build 的时候支持压缩 css、html 模块
 	- 入口模块简化为0
