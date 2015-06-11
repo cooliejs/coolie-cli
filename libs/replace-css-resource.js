@@ -69,7 +69,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             version = encryption.md5(absFile);
 
             var destName = version + extname;
-            var isImage = pathURI.isImage(extname);
+            //var isImage = pathURI.isImage(extname);
 
             destFile = path.join(configs._destPath, configs.resource.dest, destName);
 

@@ -36,7 +36,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
 
     var value = htmlAttr.get(html, attrKey);
 
-    if (REG_HTTP.test(value) || !value || pathURI.isBase64($1)) {
+    if (REG_HTTP.test(value) || !value || pathURI.isBase64(value)) {
         return html;
     }
 
@@ -83,7 +83,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         var extname = path.extname(srcName);
         var resName = version + extname;
         var resFile = path.join(configs._destPath, configs.resource.dest, resName);
-        var isImage = pathURI.isImage(extname);
+        //var isImage = pathURI.isImage(extname);
 
         //if (configs.resource.minify !== false && isImage) {
         //    if (!configs._resImageMap[absFile]) {
