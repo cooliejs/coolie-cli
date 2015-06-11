@@ -47,14 +47,14 @@ module.exports = function (srcPath) {
     var destPath = path.join(srcPath, configs.dest.dirname);
     var jsPath = path.join(srcPath, configs.js.dest);
     var cssPath = path.join(srcPath, configs.css.dest);
-    var coolieConfigJSPath = configs._noJS ? null : path.join(srcPath, configs.js['coolie-config.js']);
+    var coolieConfigJSPath = configs._noCoolieJS ? null : path.join(srcPath, configs.js['coolie-config.js']);
 
     configs._srcPath = srcPath;
     configs._destPath = destPath;
     configs._jsPath = jsPath;
     configs._cssPath = cssPath;
     configs._coolieConfigJSPath = coolieConfigJSPath;
-    configs._coolieConfigJSURI = configs._noJS ? null : pathURI.toURIPath(path.relative(srcPath, coolieConfigJSPath));
+    configs._coolieConfigJSURI = configs._noCoolieJS ? null : pathURI.toURIPath(path.relative(srcPath, coolieConfigJSPath));
     configs._buildStep = 0;
     configs._resVerMap = {};
     configs._resURIMap = {};

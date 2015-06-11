@@ -1,5 +1,5 @@
 {
-  "js": {
+  "j1s": {
     "src": [
       "./static/js/app/**/*.js"
     ],

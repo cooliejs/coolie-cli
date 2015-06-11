@@ -61,7 +61,7 @@ module.exports = function (srcPath) {
                 try {
                     config = JSON.parse(config);
                 } catch (err) {
-                    log("parse config", "coolie.json JSON parse error", "error");
+                    log("parse config", "`coolie.json` JSON 格式可能不正确，请检查", "error");
                     console.log(err);
                     process.exit();
                 }
@@ -80,13 +80,13 @@ module.exports = function (srcPath) {
     //    dest: ""
     // }
     check.js = function () {
-        if (typeis(config.js) !== "object" && typeis(config.js) !== 'undefined') {
-            log("parse config", "`css` property must be an object", "error");
+        if (typeis(config.js) !== "object") {
+            log("parse config", "`js`属性必须是一个对象", "error");
             process.exit();
         }
 
         if (typeis.undefined(config.js)) {
-            config._noJS = true;
+            config._noCoolieJS = true;
             config.js = {
                 src: []
             };
@@ -149,7 +149,7 @@ module.exports = function (srcPath) {
     check.coolieConfigJS = function () {
         var code;
 
-        if (config._noJS) {
+        if (config._noCoolieJS) {
             return;
         }
 
