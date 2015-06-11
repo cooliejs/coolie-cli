@@ -14,6 +14,8 @@ var REG_URL = /\\/g;
 var REG_ABSOLUTE = /^((http|ftp)s?|\/\/)/i;
 var REG_RELATIVE_ROOT = /^\//;
 var REG_BASE_64 = /^data:.*?base64,/i;
+var REG_FIRST = /^\//;
+var REG_LAST = /\/$/;
 
 
 /**
@@ -78,7 +80,6 @@ exports.isImage = function (extname) {
 };
 
 
-
 /**
  * 判断路径是否为 base64
  * @param uri
@@ -88,3 +89,15 @@ exports.isBase64 = function (uri) {
     return REG_BASE_64.test(uri);
 };
 
+
+/**
+ * URI 合并
+ * @param p1
+ * @param p2
+ */
+exports.joinURI = function (p1, p2) {
+    p1 = exports.toURIPath(p1);
+    p2 = exports.toURIPath(p2);
+
+    return p1.replace(REG_LAST, '') + '/' + p2.replace(REG_FIRST, '');
+};
