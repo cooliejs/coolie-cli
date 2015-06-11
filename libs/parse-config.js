@@ -231,16 +231,8 @@ module.exports = function (srcPath) {
         }
 
         // html.minify
-        var htmlMinifyType = typeis(config.html.minify);
-
-        if (htmlMinifyType === 'undefined') {
+        if (typeis.undefined(config.html.minify) !== false) {
             config.html.minify = true;
-            htmlMinifyType = 'boolean';
-        }
-
-        if (htmlMinifyType !== 'boolean') {
-            log("parse config", "`html.minify` property must be a boolean", "error");
-            process.exit();
         }
     };
 

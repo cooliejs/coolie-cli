@@ -67,7 +67,7 @@ module.exports = function (srcPath) {
     configs._concatMap = {};
     global.configs = configs;
 
-    //return console.log(JSON.stringify(configs, null, 2));
+    return console.log(JSON.stringify(configs, null, 2));
 
     var time = Date.now();
     var mainLength = 0;
