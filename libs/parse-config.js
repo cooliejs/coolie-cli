@@ -262,7 +262,7 @@ module.exports = function (srcPath) {
             process.exit();
         }
 
-        if(typeis.undefined(config.css.minify) === true){
+        if (typeis.undefined(config.css.minify) === true) {
             config.css.minify = {
                 compatibility: 'ie7'
             };
@@ -279,6 +279,7 @@ module.exports = function (srcPath) {
     // 检查 resource 路径
     // resource: {
     //     dest: "",
+    //     minify: true
     // }
     check.resource = function () {
         if (!typeis.object(config.resource)) {
@@ -290,6 +291,10 @@ module.exports = function (srcPath) {
         if (!typeis.string(config.resource.dest)) {
             log("parse config", "`resource.dest` property must be a string path", "error");
             process.exit();
+        }
+
+        if (typeis.undefined(config.resource.minify) !== false) {
+            config.resource.minify = true;
         }
     };
 
