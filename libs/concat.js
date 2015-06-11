@@ -113,7 +113,7 @@ module.exports = function (file, html) {
 
     log('√', pathURI.toSystemPath(destPath), 'success');
 
-    return configs._concatMap[md5List] ={
+    return configs._concatMap[md5List] = {
         srcName: srcName,
         srcPath: srcPath,
         destPath: destPath,
@@ -123,8 +123,8 @@ module.exports = function (file, html) {
         type: type,
         files: files,
         replace: type === 'css'
-            ? '<link rel="stylesheet" href="' + configs.dest.host + url + '">'
-            : '<script src="' + configs.dest.host + url + '"></script>'
+            ? '<link rel="stylesheet" href="' + pathURI.joinURI(configs.dest.host, url) + '">'
+            : '<script src="' + pathURI.joinURI(configs.dest.host, url) + '"></script>'
     };
 };
 
