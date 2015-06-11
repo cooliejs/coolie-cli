@@ -67,7 +67,7 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
         isTextAlignLeft = false;
     }
 
-    var isSuccess = event.indexOf('√') > -1;
+    var isDouble = event === '×' || event === '√';
 
     while (20 - string.bytes(event, 2) > 0) {
         event = isTextAlignLeft ? event + ' ' : ' ' + event;
@@ -82,7 +82,7 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
 
     var color = map[type] || "white";
 
-    console.log(colors.yellow(event), colors.cyan((isSuccess ? ' ' : '') + '=>'), _splitColors(color, message));
+    console.log(colors.yellow(event), colors.cyan((isDouble ? ' ' : '') + '=>'), _splitColors(color, message));
 };
 
 

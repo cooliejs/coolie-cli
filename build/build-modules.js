@@ -236,7 +236,7 @@ module.exports = function (srcPath) {
         })
         .task(function (next) {
             if (!configs._resImageList.length || configs.resource.minify === false) {
-                log('ignore', 'optimize image files');
+                log('×', 'optimize image files');
                 return next();
             }
 
