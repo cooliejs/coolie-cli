@@ -79,15 +79,15 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             //        configs._resImageList.push(absFile);
             //    }
             //} else if (configs.resource.minify === false || !isImage) {
-                try {
-                    fs.copySync(absFile, destFile);
-                } catch (err) {
-                    log('copy file', pathURI.toSystemPath(file), 'error');
-                    log('copy from', pathURI.toSystemPath(absFile), 'error');
-                    log('copy to', pathURI.toSystemPath(destFile), 'error');
-                    log('copy file', err.message, 'error');
-                    process.exit(-1);
-                }
+            try {
+                fs.copySync(absFile, destFile);
+            } catch (err) {
+                log('copy file', pathURI.toSystemPath(file), 'error');
+                log('copy from', pathURI.toSystemPath(absFile), 'error');
+                log('copy to', pathURI.toSystemPath(destFile), 'error');
+                log('copy file', err.message, 'error');
+                process.exit(-1);
+            }
             //}
 
             configs._resVerMap[absFile] = version;
@@ -102,7 +102,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
         }
         // 否则，css 里的资源相对于根目录
         else {
-            url = configs.dest.host + path.relative(configs._destPath, destFile);
+            url = pathURI.joinURI(configs.dest.host, path.relative(configs._destPath, destFile));
         }
 
         url = pathURI.toURIPath(url) + suffix;
@@ -116,7 +116,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
  * 为 bas64 资源添加引号
  * @param pice
  */
-function addBase64Quote(pice){
+function addBase64Quote(pice) {
 
 }
 
