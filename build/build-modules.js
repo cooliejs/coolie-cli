@@ -109,9 +109,17 @@ module.exports = function (srcPath) {
         .task(function (next) {
             log('2/5', 'build main', 'task');
             configs._buildStep = 2;
+
+            if(configs._noCoolieJS){
+                log('×', 'NO coolie.js files');
+                return next();
+            }
+
             next();
         })
         .each(configs.js.src, function (i, main, nextMain) {
+
+
             // 构建入口模块
             var gbPath = path.join(srcPath, main);
 

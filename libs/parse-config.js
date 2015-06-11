@@ -61,12 +61,12 @@ module.exports = function (srcPath) {
                 try {
                     config = JSON.parse(config);
                 } catch (err) {
-                    log("parse config", "`coolie.json` JSON 格式可能不正确，请检查", "error");
-                    console.log(err);
+                    log("parse coolie.json", "`coolie.json` parse error", "error");
+                    log("parse coolie.json", err.message, "error");
                     process.exit();
                 }
             } catch (err) {
-                log("read config", err.message, "error");
+                log("read coolie.json", err.message, "error");
                 process.exit();
             }
         }
@@ -81,7 +81,7 @@ module.exports = function (srcPath) {
     // }
     check.js = function () {
         if (typeis(config.js) !== "object") {
-            log("parse config", "`js`属性必须是一个对象", "error");
+            log("parse config", "`js` property must be an object", "error");
             process.exit();
         }
 
