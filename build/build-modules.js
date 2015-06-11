@@ -79,7 +79,7 @@ module.exports = function (srcPath) {
 
     howdo
         .task(function (next) {
-            log('1/6', 'copy files', 'task');
+            log('1/5', 'copy files', 'task');
             configs._buildStep = 1;
             next();
         })
@@ -107,7 +107,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('2/6', 'build main', 'task');
+            log('2/5', 'build main', 'task');
             configs._buildStep = 2;
             next();
         })
@@ -161,7 +161,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('3/6', 'overwrite config', 'task');
+            log('3/5', 'overwrite config', 'task');
             configs._buildStep = 3;
             next();
         })
@@ -193,7 +193,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            log('4/6', 'build html css', 'task');
+            log('4/5', 'build html css', 'task');
             configs._buildStep = 4;
             next();
         })
@@ -229,37 +229,36 @@ module.exports = function (srcPath) {
             });
         })
 
+        //.task(function (next) {
+        //    log('5/5', 'optimize image files', 'task');
+        //    configs._buildStep = 5;
+        //    next();
+        //})
+        //.task(function (next) {
+        //    if (!configs._resImageList.length || configs.resource.minify === false) {
+        //        log('×', 'optimize image files');
+        //        return next();
+        //    }
+        //
+        //    var allActualSize = 0;
+        //    var allOriginalSize = 0;
+        //
+        //    howdo.each(configs._resImageList, function (index, image, done) {
+        //        imageminify(image, function (err, actualSize, originalSize) {
+        //            allActualSize += actualSize;
+        //            allOriginalSize += originalSize;
+        //            done();
+        //        });
+        //    }).together(function () {
+        //        log('√', 'orginal size: ' + allOriginalSize + ' B', 'success');
+        //        log('√', 'actual size: ' + allActualSize + ' B, saved ' +
+        //            (allOriginalSize ? 100 - allActualSize * 100 / allOriginalSize : 0).toFixed(2) + '%', 'success');
+        //        next();
+        //    });
+        //})
+
         .task(function (next) {
-            log('5/6', 'optimize image files', 'task');
-            configs._buildStep = 5;
-            next();
-        })
-        .task(function (next) {
-            if (!configs._resImageList.length || configs.resource.minify === false) {
-                log('×', 'optimize image files');
-                return next();
-            }
-
-            var allActualSize = 0;
-            var allOriginalSize = 0;
-
-            howdo.each(configs._resImageList, function (index, image, done) {
-                imageminify(image, function (err, actualSize, originalSize) {
-                    allActualSize += actualSize;
-                    allOriginalSize += originalSize;
-                    done();
-                });
-            }).together(function () {
-                log('√', 'orginal size: ' + allOriginalSize + ' B', 'success');
-                log('√', 'actual size: ' + allActualSize + ' B, saved ' +
-                    (allOriginalSize ? 100 - allActualSize * 100 / allOriginalSize : 0).toFixed(2) + '%', 'success');
-                next();
-            });
-        })
-
-
-        .task(function (next) {
-            log('6/6', 'generator relationship map', 'task');
+            log('5/5', 'generator relationship map', 'task');
             configs._buildStep = 6;
             next();
         })
@@ -304,7 +303,7 @@ module.exports = function (srcPath) {
                 '\nbuild ' + mainLength + ' js file(s), ' +
                 '\nbuild ' + htmlLength + ' html file(s), ' +
                 '\nbuild ' + cssLength + ' css file(s), ' +
-                '\nbuild ' + configs._resImageList.length + ' image file(s), ' +
+                //'\nbuild ' + configs._resImageList.length + ' image file(s), ' +
                 '\nbuild ' + Object.keys(configs._resVerMap).length + ' resource file(s), ' +
                 '\npast ' + past + ' ms', 'success');
             console.log('');
