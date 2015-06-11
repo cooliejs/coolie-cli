@@ -33,6 +33,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
         $1 = $1.replace(REG_QUOTE, '');
 
         if (!pathURI.isRelatived($1) || pathURI.isBase64($1)) {
+            console.log($0);
             return $0;
         }
 
@@ -110,4 +111,13 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
         return 'url(' + url + ')';
     });
 };
+
+
+/**
+ * 为 bas64 资源添加引号
+ * @param pice
+ */
+function addBase64Quote(pice){
+
+}
 
