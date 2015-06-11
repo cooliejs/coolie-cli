@@ -24,7 +24,7 @@ module.exports = function (steps) {
         var chunk = process.stdin.read();
 
         if (typeis(steps[step]) !== "function") {
-            process.exit();
+            process.exit(1);
         }
 
         steps[step](chunk);

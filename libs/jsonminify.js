@@ -17,7 +17,7 @@ module.exports = function (file, code) {
     } catch (err) {
         log('jsonminify', pathURI.toSystemPath(file), 'error');
         log('jsonminify', err.message, 'error');
-        process.exit();
+        process.exit(1);
     }
 
     return JSON.stringify(json);

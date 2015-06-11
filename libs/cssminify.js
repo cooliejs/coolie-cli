@@ -83,7 +83,7 @@ module.exports = function (file, code, destFile, callback) {
     } catch (err) {
         log('cssminify', pathURI.toSystemPath(file), 'error');
         log('cssminify', err.message, 'error');
-        process.exit();
+        process.exit(1);
     }
 };
 

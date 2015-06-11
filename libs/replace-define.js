@@ -32,7 +32,7 @@ module.exports = function (file, code, depList, depIdsMap) {
 
     if (!id) {
         log('replace define', 'the module ID is undefined in ' + pathURI.toSystemPath(file), 'error');
-        process.exit();
+        process.exit(1);
     }
 
     depList.forEach(function (dep) {
@@ -46,7 +46,7 @@ module.exports = function (file, code, depList, depIdsMap) {
             depsCode += '"' + depIdsMap[depId] + '"';
         } else {
             log('replace define', 'can not find ' + depIdsMap + ' map', 'error');
-            process.exit();
+            process.exit(1);
         }
     });
 

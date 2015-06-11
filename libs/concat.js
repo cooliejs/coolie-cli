@@ -85,7 +85,7 @@ module.exports = function (file, html) {
             log("concat", pathURI.toSystemPath(file), "error");
             log("read file", pathURI.toSystemPath(f), "error");
             log('read file', err.message, 'error');
-            process.exit();
+            process.exit(1);
         }
 
         if (type === 'css') {
@@ -108,7 +108,7 @@ module.exports = function (file, html) {
     } catch (err) {
         log("write file", pathURI.toSystemPath(destPath), "error");
         log('write file', err.message, 'error');
-        process.exit();
+        process.exit(1);
     }
 
     log('√', pathURI.toSystemPath(destPath), 'success');

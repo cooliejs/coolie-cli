@@ -63,11 +63,11 @@ module.exports = function (srcPath) {
                 } catch (err) {
                     log("parse coolie.json", "`coolie.json` parse error", "error");
                     log("parse coolie.json", err.message, "error");
-                    process.exit();
+                    process.exit(1);
                 }
             } catch (err) {
                 log("read coolie.json", err.message, "error");
-                process.exit();
+                process.exit(1);
             }
         }
     };
@@ -82,7 +82,7 @@ module.exports = function (srcPath) {
     check.js = function () {
         if (typeis(config.js) !== "object") {
             log("parse config", "`js` property must be an object", "error");
-            process.exit();
+            process.exit(1);
         }
 
         if (typeis.undefined(config.js)) {
@@ -100,14 +100,14 @@ module.exports = function (srcPath) {
 
             if (htmlPathType !== "string" && htmlPathType !== "array") {
                 log("parse config", "`js.src` property must be a string path or an array", "error");
-                process.exit();
+                process.exit(1);
             }
 
             if (htmlPathType === "array") {
                 config.js.src.forEach(function (mn, index) {
                     if (typeis(mn) !== "string") {
                         log("parse config", "`js.src[" + index + "]` must be a string", "error");
-                        process.exit();
+                        process.exit(1);
                     }
                 });
             } else {
@@ -120,12 +120,12 @@ module.exports = function (srcPath) {
         // js[coolie-config.js]
         if (!config.js["coolie-config.js"]) {
             log("parse config", 'js must have `coolie-config.js` property', "error");
-            process.exit();
+            process.exit(1);
         }
 
         if (typeis(config.js["coolie-config.js"]) !== "string") {
             log("parse config", "`js[coolie-config.js]` property must be a string", "error");
-            process.exit();
+            process.exit(1);
         }
 
         coolieConfigJSFile = path.join(srcPath, config.js["coolie-config.js"]);
@@ -133,13 +133,13 @@ module.exports = function (srcPath) {
         if (!typeis.file(coolieConfigJSFile)) {
             log("parse config", coolieConfigJSFile +
                 "\nis NOT a file", "error");
-            process.exit();
+            process.exit(1);
         }
 
         // js.dest
         if (typeis(config.js.dest) !== 'string') {
             log("parse config", "`js.dest` property must be a string path", "error");
-            process.exit();
+            process.exit(1);
         }
     };
 
@@ -158,7 +158,7 @@ module.exports = function (srcPath) {
         } catch (err) {
             log("read file", pathURI.toSystemPath(coolieConfigJSFile), "error");
             log("read file", err.message, "error");
-            process.exit();
+            process.exit(1);
         }
 
         var coolieString = coolieFn.toString()
@@ -175,7 +175,7 @@ module.exports = function (srcPath) {
         } catch (err) {
             log("parse config", pathURI.toSystemPath(file), "error");
             log("parse config", err.message, "error");
-            process.exit();
+            process.exit(1);
         }
 
         try {
@@ -183,7 +183,7 @@ module.exports = function (srcPath) {
         } catch (err) {
             log("parse config", pathURI.toSystemPath(file), "error");
             log("parse config", err.message, "error");
-            process.exit();
+            process.exit(1);
         }
 
         var toBase = path.relative(srcPath, basePath);
@@ -191,7 +191,7 @@ module.exports = function (srcPath) {
         if (toBase.indexOf('../') > -1) {
             log('coolie base', 'coolie base path must be under ' + srcPath +
                 '\nbut now is ' + basePath, 'error');
-            process.exit();
+            process.exit(1);
         }
     };
 
@@ -204,7 +204,7 @@ module.exports = function (srcPath) {
     check.html = function () {
         if (typeis(config.html) !== "object") {
             log("parse config", "`html` property must be an object", "error");
-            process.exit();
+            process.exit(1);
         }
 
         // html.src
@@ -213,14 +213,14 @@ module.exports = function (srcPath) {
 
             if (htmSrcType !== "string" && htmSrcType !== "array") {
                 log("parse config", "`html.src` property must be a string path or an array", "error");
-                process.exit();
+                process.exit(1);
             }
 
             if (htmSrcType === "array") {
                 config.html.src.forEach(function (mn, index) {
                     if (typeis(mn) !== "string") {
                         log("parse config", "`html.src[" + index + "]` must be a string path", "error");
-                        process.exit();
+                        process.exit(1);
                     }
                 });
             } else {
@@ -245,13 +245,13 @@ module.exports = function (srcPath) {
     check.css = function () {
         if (typeis(config.css) !== "object") {
             log("parse config", "`css` property must be an object", "error");
-            process.exit();
+            process.exit(1);
         }
 
         // css.dest
         if (typeis(config.css.dest) !== 'string') {
             log("parse config", "`css.dest` property must be a string path", "error");
-            process.exit();
+            process.exit(1);
         }
 
         if (typeis.undefined(config.css.minify) === true) {
@@ -263,7 +263,7 @@ module.exports = function (srcPath) {
         // css.minify
         if (!typeis.undefined(config.css.minify) && !typeis.object(config.css.minify)) {
             log("parse config", "`css.minify` must be an object or a boolean value", "error");
-            process.exit();
+            process.exit(1);
         }
     };
 
@@ -276,13 +276,13 @@ module.exports = function (srcPath) {
     check.resource = function () {
         if (!typeis.object(config.resource)) {
             log("parse config", "`resource` property must be an object", "error");
-            process.exit();
+            process.exit(1);
         }
 
         // resource.dest
         if (!typeis.string(config.resource.dest)) {
             log("parse config", "`resource.dest` property must be a string path", "error");
-            process.exit();
+            process.exit(1);
         }
 
         if (typeis.undefined(config.resource.minify) !== false) {
@@ -299,19 +299,19 @@ module.exports = function (srcPath) {
     check.dest = function () {
         if (!typeis.object(config.dest)) {
             log("parse config", "`dest` property must be an object", "error");
-            process.exit();
+            process.exit(1);
         }
 
         if (!typeis.string(config.dest.dirname)) {
             log("parse config", "`dest.dirname` property must be a direction name", "error");
-            process.exit();
+            process.exit(1);
         }
 
         config.dest.host = config.dest.host || '';
 
         if (!typeis.string(config.dest.host)) {
             log("parse config", "`dest.host` property must be an URL string", "error");
-            process.exit();
+            process.exit(1);
         }
 
         if (config.dest.host.slice(-1) !== '/') {
@@ -327,14 +327,14 @@ module.exports = function (srcPath) {
 
             if (copyFilesType !== "string" && copyFilesType !== "array") {
                 log("parse config", "`copy` property must be a string path or an array path", "error");
-                process.exit();
+                process.exit(1);
             }
 
             if (copyFilesType === "array") {
                 config.copy.forEach(function (cp, index) {
                     if (typeis(cp) !== "string") {
                         log("parse config", "`copy` property[" + index + "] must be a string path", "error");
-                        process.exit();
+                        process.exit(1);
                     }
                 });
             } else {

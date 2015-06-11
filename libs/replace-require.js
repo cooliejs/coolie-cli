@@ -32,7 +32,7 @@ module.exports = function (file, code, depNameList, depName2IdMap) {
 
     if (!requireVar && depNameList.length) {
         log('replace require', 'can not found `require` variable, but used', 'error');
-        process.exit();
+        process.exit(1);
     }
 
     depNameList.forEach(function (depName) {
@@ -42,7 +42,7 @@ module.exports = function (file, code, depNameList, depName2IdMap) {
         if (!id) {
             log("replace require", pathURI.toSystemPath(file), "error");
             log("replace require", "can not found `" + depName + "` map", "error");
-            process.exit();
+            process.exit(1);
         }
 
         code = code.replace(reg, requireVar + "(\"" + depName2IdMap[depName] + "\")");

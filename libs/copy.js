@@ -45,7 +45,7 @@ module.exports = function (from, relativeFile, options) {
     if (!typeis.file(fromFile)) {
         log('file', pathURI.toSystemPath(fromFile) +
             '\n is NOT a file', 'error');
-        process.exit();
+        process.exit(1);
     }
 
     if (configs._copyFilesMap[fromFile]) {
@@ -64,7 +64,7 @@ module.exports = function (from, relativeFile, options) {
         log('copy from', pathURI.toSystemPath(fromFile), 'error');
         log('copy to', pathURI.toSystemPath(toFile), 'error');
         log('copy file', err.message, 'error');
-        process.exit();
+        process.exit(1);
     }
 
     return from;

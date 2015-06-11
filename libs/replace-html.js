@@ -116,7 +116,7 @@ module.exports = function (file, code) {
                 } catch (err) {
                     log('html file', pathURI.toSystemPath(file), 'error');
                     log('data-main', dataMain ? dataMain : '<EMPTY>', 'error');
-                    process.exit();
+                    process.exit(1);
                 }
 
                 dataMain = path.relative(srcPath, dataMain);
