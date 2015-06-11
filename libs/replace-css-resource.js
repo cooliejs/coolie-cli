@@ -32,7 +32,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
     return css.replace(REG_URL, function ($0, $1) {
         $1 = $1.replace(REG_QUOTE, '');
 
-        if (!pathURI.isRelatived($1)) {
+        if (!pathURI.isRelatived($1) || pathURI.isBase64($1)) {
             return $0;
         }
 

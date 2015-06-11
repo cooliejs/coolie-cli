@@ -13,6 +13,8 @@ var REG_PATH = path.sep === '/' ? /\\/ : /\//g;
 var REG_URL = /\\/g;
 var REG_ABSOLUTE = /^((http|ftp)s?|\/\/)/i;
 var REG_RELATIVE_ROOT = /^\//;
+var REG_BASE_64 = /^data:.*?base64,/i;
+
 
 /**
  * 修正 path 路径为系统分隔符
@@ -73,5 +75,16 @@ exports.isImage = function (extname) {
     extname = extname.toLowerCase();
 
     return ['.png', '.gif', '.jpg', '.jpeg'].indexOf(extname) > -1;
+};
+
+
+
+/**
+ * 判断路径是否为 base64
+ * @param uri
+ * @returns {boolean}
+ */
+exports.isBase64 = function (uri) {
+    return REG_BASE_64.test(uri);
 };
 

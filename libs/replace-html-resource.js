@@ -36,7 +36,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
 
     var value = htmlAttr.get(html, attrKey);
 
-    if (REG_HTTP.test(value) || !value) {
+    if (REG_HTTP.test(value) || !value || pathURI.isBase64($1)) {
         return html;
     }
 
@@ -91,15 +91,15 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         //        configs._resImageList.push(absFile);
         //    }
         //} else if (configs.resource.minify === false || !isImage) {
-            try {
-                fs.copySync(absFile, resFile);
-            } catch (err) {
-                log('html file', pathURI.toSystemPath(file), 'error');
-                log('copy from', pathURI.toSystemPath(absFile), 'error');
-                log('copy to', pathURI.toSystemPath(resFile), 'error');
-                log('copy file', err.message, 'error');
-                process.exit(-1);
-            }
+        try {
+            fs.copySync(absFile, resFile);
+        } catch (err) {
+            log('html file', pathURI.toSystemPath(file), 'error');
+            log('copy from', pathURI.toSystemPath(absFile), 'error');
+            log('copy to', pathURI.toSystemPath(resFile), 'error');
+            log('copy file', err.message, 'error');
+            process.exit(-1);
+        }
         //}
 
         configs._resURIMap[absFile] = url = (configs.dest.host ? '' : '/') + pathURI.toURIPath(path.relative(configs._destPath, resFile));
