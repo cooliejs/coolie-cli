@@ -51,7 +51,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         log('replace resource', html, 'error');
         log('replace resource', err.message, 'error');
         log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
-        process.exit(-1);
+        process.exit(1);
     }
 
     var basename = path.basename(absFile);
@@ -98,7 +98,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
             log('copy from', pathURI.toSystemPath(absFile), 'error');
             log('copy to', pathURI.toSystemPath(resFile), 'error');
             log('copy file', err.message, 'error');
-            process.exit(-1);
+            process.exit(1);
         }
         //}
 

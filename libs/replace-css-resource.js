@@ -49,7 +49,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             log('replace resource', pathURI.toSystemPath(file), 'error');
             log('replace resource', $0, 'error');
             log('replace resource', err.message, 'error');
-            process.exit(-1);
+            process.exit(1);
         }
 
         if (pathURI.isRelativeFile($1) && isReplaceToBase64WhenRelativeToFile) {
@@ -86,7 +86,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
                 log('copy from', pathURI.toSystemPath(absFile), 'error');
                 log('copy to', pathURI.toSystemPath(destFile), 'error');
                 log('copy file', err.message, 'error');
-                process.exit(-1);
+                process.exit(1);
             }
             //}
 
