@@ -49,7 +49,7 @@ module.exports = function (basedir) {
     if (isExist) {
         steps.push(function (data) {
             if (data.toLowerCase().indexOf("y") === -1) {
-                process.exit();
+                process.exit(1);
             } else {
                 continueStep();
             }
@@ -71,14 +71,14 @@ module.exports = function (basedir) {
             fs.outputFile(writeFile, jsonString, "utf-8", function (err) {
                 if (err) {
                     log("write", pathURI.toSystemPath(writeFile), "error");
-                    return process.exit();
+                    return process.exit(1);
                 }
 
                 log("√", pathURI.toSystemPath(writeFile), "success");
-                process.exit();
+                process.exit(1);
             });
         } else {
-            process.exit();
+            process.exit(1);
         }
     });
 

@@ -38,7 +38,7 @@ module.exports = function (mainFile, callback) {
             if (err) {
                 log("build", pathURI.toSystemPath(file), "error");
                 log('build', err.message, 'error');
-                process.exit();
+                process.exit(1);
             }
 
             var code = meta.code;
@@ -63,7 +63,7 @@ module.exports = function (mainFile, callback) {
 
                     if (depsRelationship[depId] && depsRelationship[depId][file]) {
                         log('depend cycle', pathURI.toSystemPath(file) + '\n' + pathURI.toSystemPath(depId), 'error');
-                        process.exit();
+                        process.exit(1);
                     }
 
                     if (!depsCache[depId]) {

@@ -91,7 +91,7 @@ module.exports = function (srcPath) {
                 if (err) {
                     log('glob', pathURI.toSystemPath(gbPath), 'error');
                     log('glob', err.message, 'error');
-                    process.exit();
+                    process.exit(1);
                 }
 
                 howdo.each(files, function (j, file, nextFile) {
@@ -129,7 +129,7 @@ module.exports = function (srcPath) {
                 if (err) {
                     log('glob', pathURI.toSystemPath(gbPath), 'error');
                     log('glob', err.message, 'error');
-                    process.exit();
+                    process.exit(1);
                 }
 
                 howdo.each(files, function (j, file, nextFile) {
@@ -154,7 +154,7 @@ module.exports = function (srcPath) {
                             if (err) {
                                 log('write file', pathURI.toSystemPath(destFile), 'error');
                                 log('write file', err.message, 'error');
-                                process.exit();
+                                process.exit(1);
                             }
 
                             //log('√', pathURI.toSystemPath(destFile), 'success');
@@ -192,7 +192,7 @@ module.exports = function (srcPath) {
                 if (err) {
                     log('overwrite config', pathURI.toSystemPath(destFile), 'error');
                     log('overwrite config', err.message, 'error');
-                    process.exit();
+                    process.exit(1);
                 }
 
                 log('√', pathURI.toSystemPath(destFile), 'success');
@@ -212,7 +212,7 @@ module.exports = function (srcPath) {
                 if (err) {
                     log('glob', pathURI.toSystemPath(gbPath), 'error');
                     log('glob', err.message, 'error');
-                    process.exit();
+                    process.exit(1);
                 }
 
                 howdo.each(htmls, function (j, file, nextHTML) {
@@ -287,7 +287,7 @@ module.exports = function (srcPath) {
                 if (err) {
                     log('write file', pathURI.toSystemPath(mapFile), 'error');
                     log('write file', err.message, 'error');
-                    return process.exit();
+                    return process.exit(1);
                 }
 
                 log('√', pathURI.toSystemPath(mapFile), 'success');
@@ -300,7 +300,7 @@ module.exports = function (srcPath) {
         .follow(function (err) {
             if (err) {
                 log('build error', err.message, 'error');
-                return process.exit();
+                return process.exit(1);
             }
 
             var past = Date.now() - time;

@@ -15,7 +15,7 @@ module.exports = function () {
         if (err) {
             log('coolie book', pkg.book, 'error');
             log('coolie book', err.message, 'error');
-            process.exit();
+            process.exit(1);
         }
 
         log('coolie book', pkg.book, 'success');

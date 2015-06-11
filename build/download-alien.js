@@ -31,19 +31,19 @@ module.exports = function (basedir) {
         if (err) {
             log('download alien', url, 'error');
             log('download alien', err.message, 'error');
-            return process.exit();
+            return process.exit(1);
         }
 
         if (res.statusCode !== 200) {
             log('download alien', url, 'error');
             log('download alien', 'response statusCode is ' + res.statusCode, 'error');
-            return process.exit();
+            return process.exit(1);
         }
 
         stream.pipe(tempStream).on('error', function (err) {
             log('download alien', url, 'error');
             log('download alien', err.message, 'error');
-            process.exit();
+            process.exit(1);
         }).on('close', function () {
             log('download alien', url, 'success');
             log('unzip alien', tempFile);

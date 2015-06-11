@@ -33,7 +33,7 @@ module.exports = function (file, callback) {
         if (err) {
             log("read file", pathURI.toSystemPath(file), "error");
             log('read file', err.message, 'error');
-            process.exit();
+            process.exit(1);
         }
 
         var ret = replaceHtml(file, code);
@@ -48,7 +48,7 @@ module.exports = function (file, callback) {
         } catch (err) {
             log("write file", pathURI.toSystemPath(destFile), "error");
             log('write file', err.message, 'error');
-            process.exit();
+            process.exit(1);
         }
 
         dato.each(ret.depCSS, function (name, dep) {

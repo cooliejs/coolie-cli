@@ -58,7 +58,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
             } catch (err) {
                 log('read file', pathURI.toSystemPath(file), 'error');
                 log('read file', err.message, 'error');
-                process.exit();
+                process.exit(1);
             }
         })
 

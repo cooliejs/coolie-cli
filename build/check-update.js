@@ -24,7 +24,7 @@ module.exports = function(){
             request.get(url1, function (err, data) {
                 if(err){
                     log('check update', 'connect npmjs.com error', 'error');
-                    process.exit();
+                    process.exit(1);
                 }
 
                 var json = {};
@@ -33,7 +33,7 @@ module.exports = function(){
                     json = JSON.parse(data);
                 }catch(err){
                     log('check update', 'parse json string error', 'error');
-                    process.exit();
+                    process.exit(1);
                 }
 
                 log('coolie.cli', json['dist-tags'].latest, 'success');
@@ -44,7 +44,7 @@ module.exports = function(){
             request.get(url2, function (err, data) {
                 if(err){
                     log('check update', 'connect github.com error', 'error');
-                    process.exit();
+                    process.exit(1);
                 }
 
                 var json = {};
@@ -53,7 +53,7 @@ module.exports = function(){
                     json = JSON.parse(data);
                 }catch(err){
                     log('check update', 'parse json string error', 'error');
-                    process.exit();
+                    process.exit(1);
                 }
 
                 log('coolie.js', json.version, 'success');
