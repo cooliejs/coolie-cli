@@ -1,0 +1,67 @@
+{
+    "html/index.html": {
+        "css": {
+            "static/css/2ad76922b15e819253082e9dd624b9fb.css": [
+                "static/css/path1/path2/3.css",
+                "static/css/bootstrap.css"
+            ],
+            "static/css/0caf51b26ddc9d51ca9d87da0988ec10.css": [
+                "static/css/3.css"
+            ]
+        },
+        "main": "static/js/app/index.js",
+        "deps": [
+            "static/img/100x100.png",
+            "static/img/loading.gif",
+            "static/js/libs/path1/path2/index.js"
+        ]
+    },
+    "html/index2.html": {
+        "css": {
+            "static/css/2ad76922b15e819253082e9dd624b9fb.css": [
+                "static/css/path1/path2/3.css",
+                "static/css/bootstrap.css"
+            ],
+            "static/css/0caf51b26ddc9d51ca9d87da0988ec10.css": [
+                "static/css/3.css"
+            ]
+        },
+        "main": "static/js/app/index.js",
+        "deps": [
+            "static/img/100x100.png",
+            "static/img/loading.gif",
+            "static/js/libs/path1/path2/index.js"
+        ]
+    },
+    "html/index3.html": {
+        "css": {
+            "static/css/66a94f8a840222715ad812608a752576.css": [
+                "static/css/1.css",
+                "static/css/2.css"
+            ],
+            "static/js/263088e6549a84cc6cd46a01e81de79e.js": [
+                "static/js/index3-1.js"
+            ],
+            "static/js/d4de39b04ad49a4f2b6b53b5dbad7d92.js": [
+                "static/js/index3-2.js"
+            ]
+        },
+        "main": ""
+    },
+    "html/user/index.html": {
+        "css": {
+            "static/css/66a94f8a840222715ad812608a752576.css": [
+                "static/css/1.css",
+                "static/css/2.css"
+            ]
+        },
+        "main": "static/js/app/user/index.js",
+        "deps": [
+            "static/js/libs/all.js",
+            "static/js/libs/some.html",
+            "static/js/libs/some.css",
+            "static/js/libs/some.txt",
+            "static/js/libs/some.json"
+        ]
+    }
+}
