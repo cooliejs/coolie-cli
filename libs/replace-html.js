@@ -105,7 +105,7 @@ module.exports = function (file, code) {
             var copySrc = copy(src, file);
 
             if (copySrc) {
-                $0 = htmlAttr.set($0, 'src', configs.dest.host + pathURI.toURIPath(copySrc));
+                $0 = htmlAttr.set($0, 'src', pathURI.joinURI(configs.dest.host, copySrc));
             }
         }
 
