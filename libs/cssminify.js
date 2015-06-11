@@ -75,8 +75,6 @@ module.exports = function (file, code, destFile, callback) {
             code = replaceCSSResource(file, code, null, true);
         }
 
-        console.log(code);
-
         if (callback) {
             callback(null, code);
         } else {

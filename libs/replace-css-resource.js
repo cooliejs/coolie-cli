@@ -33,7 +33,6 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
         $1 = $1.replace(REG_QUOTE, '');
 
         if (!pathURI.isRelatived($1) || pathURI.isBase64($1)) {
-            console.log($0);
             return $0;
         }
 
