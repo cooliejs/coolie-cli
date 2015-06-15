@@ -32,19 +32,21 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
     return css.replace(REG_URL, function ($0, $1) {
         $1 = $1.replace(REG_QUOTE, '');
 
-        if (!pathURI.isRelatived($1) || pathURI.isBase64($1)) {
+        var pathRet = pathURI.parseURI2Path($1);
+
+        if (!pathURI.isRelatived(pathRet.path) || pathURI.isBase64(pathRet.original)) {
             return $0;
         }
 
-        var suffix = ($1.match(REG_SUFFIX) || [''])[0];
-        $1 = $1.replace(REG_SUFFIX, '');
+        //var suffix = ($1.match(REG_SUFFIX) || [''])[0];
+        //$1 = $1.replace(REG_SUFFIX, '');
 
-        var extname = path.extname($1);
-        var absDir = pathURI.isRelativeFile($1) ? path.dirname(file) : configs._srcPath;
+        //var extname = path.extname($1);
+        var absDir = pathURI.isRelativeFile(pathRet.path) ? path.dirname(file) : configs._srcPath;
         var absFile;
 
         try {
-            absFile = path.join(absDir, $1);
+            absFile = path.join(absDir, pathRet.path);
         } catch (err) {
             log('replace resource', pathURI.toSystemPath(file), 'error');
             log('replace resource', $0, 'error');
@@ -52,7 +54,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             process.exit(1);
         }
 
-        if (pathURI.isRelativeFile($1) && isReplaceToBase64WhenRelativeToFile) {
+        if (pathURI.isRelativeFile(pathRet.path) && isReplaceToBase64WhenRelativeToFile) {
             var b64 = configs._resBase64Map[absFile];
 
             if (!b64) {
@@ -68,10 +70,9 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
         if (!version) {
             version = encryption.md5(absFile);
 
-            var destName = version + extname;
             //var isImage = pathURI.isImage(extname);
 
-            destFile = path.join(configs._destPath, configs.resource.dest, destName);
+            destFile = path.join(configs._destPath, configs.resource.dest, version + pathRet.extname);
 
             //if (configs.resource.minify !== false && isImage) {
             //    if (!configs._resImageMap[absFile]) {
@@ -105,18 +106,8 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             url = pathURI.joinURI(configs.dest.host, path.relative(configs._destPath, destFile));
         }
 
-        url = pathURI.toURIPath(url) + suffix;
+        url = pathURI.toURIPath(url) + pathRet.suffix;
 
         return 'url(' + url + ')';
     });
 };
-
-
-/**
- * 为 bas64 资源添加引号
- * @param pice
- */
-function addBase64Quote(pice) {
-
-}
-
