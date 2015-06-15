@@ -76,10 +76,9 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
 
     // 未进行版本构建
     if (!url) {
-        var resName = pathURI.replaceVersion(pathRet.basename, version);
-        var resFile = path.join(configs._destPath, configs.resource.dest, 1);
+        var resFile = path.join(configs._destPath, configs.resource.dest, version + pathRet.extname);
 
-        //var isImage = pathURI.isImage(extname);
+        //var isImage = pathURI.isImage(pathRet.extname);
 
         //if (configs.resource.minify !== false && isImage) {
         //    if (!configs._resImageMap[absFile]) {
@@ -98,8 +97,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         }
         //}
 
-        configs._resURIMap[absFile] = url = pathURI.joinURI(configs.dest.host, path.relative(configs._destPath, resFile)) +
-            pathRet.suffix;
+        configs._resURIMap[absFile] = url = pathURI.joinURI(configs.dest.host, path.relative(configs._destPath, resFile));
     }
 
     return htmlAttr.set(html, attrKey, url + pathRet.suffix);

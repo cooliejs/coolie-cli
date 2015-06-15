@@ -118,7 +118,7 @@ exports.parseURI2Path = function (uri) {
     ret.suffix = (uri.match(REG_SUFFIX) || ['', ''])[1];
     // 后缀
     ret.extname = path.extname(uri2);
-    // 文件名
+    // 无后缀文件名
     ret.basename = path.basename(uri2);
     // 实际文件
     ret.path = uri2;
