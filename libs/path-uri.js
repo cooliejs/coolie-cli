@@ -122,7 +122,7 @@ exports.parseURI2Path = function (uri) {
     // 实际文件
     ret.path = uri2;
     // 实际文件
-    ret.origin = uri;
+    ret.original = uri;
 
     return ret;
 };

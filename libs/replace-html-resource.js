@@ -37,7 +37,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
     var value = htmlAttr.get(html, attrKey);
     var pathRet = pathURI.parseURI2Path(value);
 
-    if (!value || REG_ABSOLUTE.test(value) || pathURI.isBase64(value)) {
+    if (!value || REG_ABSOLUTE.test(pathRet.original) || pathURI.isBase64(value)) {
         return html;
     }
 
