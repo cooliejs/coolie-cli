@@ -58,6 +58,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
     var srcName = basename.replace(REG_SUFFIX, '');
     var suffix = (basename.match(REG_SUFFIX) || [''])[0];
 
+    console.log(absFile);
     console.log(basename);
     console.log(srcName);
     console.log(suffix);

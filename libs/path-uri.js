@@ -16,6 +16,7 @@ var REG_RELATIVE_ROOT = /^\//;
 var REG_BASE_64 = /^data:.*?base64,/i;
 var REG_FIRST = /^\//;
 var REG_LAST = /\/$/;
+var REG_SUFFIX = /(\?.*|#.*)$/;
 
 
 /**
@@ -100,4 +101,24 @@ exports.joinURI = function (p1, p2) {
     p2 = exports.toURIPath(p2);
 
     return p1.replace(REG_LAST, '') + '/' + p2.replace(REG_FIRST, '');
+};
+
+
+/**
+ * 解析 URI
+ * @param uri
+ * @returns {{}}
+ */
+exports.parseURI = function (uri) {
+    var ret = {};
+    var uri2 = uri.replace(REG_SUFFIX, '');
+
+    // 后置
+    ret.suffix = (uri.match(REG_SUFFIX) || ['', ''])[1];
+    // 后缀
+    ret.extname = path.extname(uri2);
+    // 文件名
+    ret.basename = path.basename(uri2);
+
+    return ret;
 };
