@@ -37,7 +37,8 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
     var value = htmlAttr.get(html, attrKey);
     var pathRet = pathURI.parseURI2Path(value);
 
-    if (!value || REG_ABSOLUTE.test(pathRet.path) || pathURI.isBase64(pathRet.original)) {
+
+    if (!value || !pathURI.isRelatived(pathRet.path) || pathURI.isBase64(pathRet.original)) {
         return html;
     }
 
@@ -54,11 +55,6 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
         process.exit(1);
     }
-
-    var srcName = pathRet.basename;
-    var suffix = pathRet.suffix;
-
-    absFile = absFile.replace(REG_SUFFIX, '');
 
     var b64 = configs._resBase64Map[absFile];
 
@@ -80,9 +76,9 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
 
     // 未进行版本构建
     if (!url) {
-        var extname = path.extname(srcName);
-        var resName = pathRet.basename;
-        var resFile = path.join(configs._destPath, configs.resource.dest, resName);
+        var resName = pathURI.replaceVersion(pathRet.basename, version);
+        var resFile = path.join(configs._destPath, configs.resource.dest, 1);
+
         //var isImage = pathURI.isImage(extname);
 
         //if (configs.resource.minify !== false && isImage) {
@@ -102,8 +98,9 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         }
         //}
 
-        configs._resURIMap[absFile] = url = pathURI.joinURI(configs.dest.host, path.relative(configs._destPath, resFile));
+        configs._resURIMap[absFile] = url = pathURI.joinURI(configs.dest.host, path.relative(configs._destPath, resFile)) +
+            pathRet.suffix;
     }
 
-    return htmlAttr.set(html, attrKey, url + suffix);
+    return htmlAttr.set(html, attrKey, url + pathRet.suffix);
 };
