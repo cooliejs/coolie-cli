@@ -42,11 +42,12 @@ var cssminify = null;
  * 样式压缩
  * @param file {String} 当前的样式文件
  * @param code {String} 样式文件的代码
- * @param [destFile] {String} 保存的样式文件，如果与 file 相同，则不需要给出
+ * @param destFile {String} 保存的样式文件
  * @param [callback]
  */
 module.exports = function (file, code, destFile, callback) {
     var args = arguments;
+    var argL = args.length;
     var isBuildVersion = true;
     var configs = global.configs;
 
@@ -58,16 +59,14 @@ module.exports = function (file, code, destFile, callback) {
         };
     }
 
-    // cssminify(file, code)
-    // cssminify(file, code, callabck)
-    if (typeis.function(args[2]) || typeis.undefined(args[2])) {
-        callback = args[2];
+    // cssminify(file, code, destFile, callabck)
+    if (typeis.function(args[argL - 1])) {
+        callback = args[argL - 1];
         isBuildVersion = false;
     }
 
-
     try {
-        code = cssminify(file, code);
+        code = cssminify(file, code, null);
 
         if (isBuildVersion) {
             code = replaceCSSResource(file, code, destFile, false);

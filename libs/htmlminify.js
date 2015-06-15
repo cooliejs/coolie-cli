@@ -33,8 +33,6 @@ var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
 //<!--[if IE 6]><![endif]-->
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
 var REG_IMG = /<img\b[\s\S]*?>/gi;
-var REG_HTTP = /^(https?:)?\/\//i;
-var REG_ABSOLUTE = /^\//;
 var JS_TYPES = [
     'javascript',
     'text/javascript',
@@ -96,7 +94,7 @@ module.exports = function (file, code, callback) {
         if (isIgnore || type && type !== 'text/css') {
             code2 = $2;
         } else {
-            code2 = cssminify(file, $2);
+            code2 = cssminify(file, $2, null);
         }
 
         tag = htmlAttr.remove(tag, coolieIgnore);

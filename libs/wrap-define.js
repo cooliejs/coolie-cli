@@ -52,7 +52,7 @@ module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) 
             break;
 
         case 'css':
-            cssminify(file, code, next);
+            cssminify(file, code, null, next);
             break;
 
         case 'html':

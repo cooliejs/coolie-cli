@@ -91,7 +91,7 @@ module.exports = function (file, html) {
         if (type === 'css') {
             code = cssminify(f, code, destPath);
         } else {
-            code = jsminify(f, code);
+            code = jsminify(f, code, null);
         }
 
         bufferList.push(new Buffer('\n' + code, 'utf8'));
