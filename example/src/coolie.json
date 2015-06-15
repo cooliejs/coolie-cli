@@ -1,14 +1,14 @@
 {
   "js": {
     "src": [
-      "./static/js/app/**/*.js"
+
     ],
     "coolie-config.js": "./static/js/coolie-config.js",
     "dest": "./static/js/"
   },
   "html": {
     "src": [
-      "./html/**/*.html"
+      "./html/index3.html"
     ],
     "minify": true
   },

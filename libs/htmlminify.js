@@ -15,8 +15,8 @@ var sign = require('./sign.js');
 var replaceHTMLResource = require('./replace-html-resource.js');
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
-var REG_LINES = /[\n\r\t]/g;
-var REG_SPACES = /\s{2,}/g;
+var REG_LINES = /[\n\r]/g;
+var REG_SPACES = /\s{2,}|\t/g;
 // 单行注释
 var REG_LINE_COMMENTS = /<!--.*?-->/g;
 // yui注释
@@ -33,6 +33,7 @@ var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
 //<!--[if IE 6]><![endif]-->
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
 var REG_IMG = /<img\b[\s\S]*?>/gi;
+var REG_TAG_START = /<[a-z][a-z\d]*?\b[\s\S]*?>/ig;
 var JS_TYPES = [
     'javascript',
     'text/javascript',
@@ -94,6 +95,7 @@ module.exports = function (file, code, callback) {
         if (isIgnore || type && type !== 'text/css') {
             code2 = $2;
         } else {
+
             code2 = cssminify(file, $2, null);
         }
 
@@ -150,6 +152,19 @@ module.exports = function (file, code, callback) {
     // 再删除多余空白
     code = code.replace(REG_LINES, '')
         .replace(REG_SPACES, ' ');
+
+    // 替换: background 属性
+    code = code.replace(REG_TAG_START, function (tag) {
+        var style1 = htmlAttr.get(tag, 'style');
+
+        if (!style1) {
+            return tag;
+        }
+
+        var style2 = cssminify(file, style1, null);
+
+        return htmlAttr.set(tag, 'style', style2);
+    });
 
     // 恢复保留格式
     dato.each(preMap, function (key, val) {

@@ -8,7 +8,7 @@
 'use strict';
 
 var buildRegExp = function (attr) {
-    return new RegExp('\\s\\b' + attr + '\\b\\s*(=\\s*[\'"]([\\s\\S]*?)[\'"]|)', 'i');
+    return new RegExp('\\s\\b' + attr + '\\b\\s*(=\\s*([\'"])([\\s\\S]*?)\\2|)', 'i');
 };
 var REG_TAGNAME = /^<[^ ]+\b/;
 
@@ -23,7 +23,7 @@ exports.get = function (html, attrName) {
     var reg = buildRegExp(attrName);
 
     var ret1 = reg.test(html);
-    var ret2 = (html.match(reg) || ['', '', ''])[2];
+    var ret2 = (html.match(reg) || ['', '', '', ''])[3];
 
     return ret2 || ret1;
 };
