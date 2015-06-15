@@ -139,7 +139,7 @@ exports.replaceVersion = function (uri, version) {
     var p = exports.parseURI2Path(uri);
 
     return p.path.replace(REG_EXT, function ($0, $1) {
-        return '.' + version + '.' + $1;
-    }) + p.suffix;
+            return '.' + version + '.' + $1;
+        }) + p.suffix;
 };
 
