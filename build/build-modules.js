@@ -16,7 +16,6 @@ var dato = require('ydr-utils').dato;
 var pathURI = require("../libs/path-uri.js");
 var encryption = require('ydr-utils').encryption;
 var replaceConfig = require('../libs/replace-config.js');
-var replaceVersion = require('../libs/replace-version.js');
 var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
 var buildHTML = require('./build-html.js');
@@ -147,7 +146,7 @@ module.exports = function (srcPath) {
                         var md5Version = encryption.md5(md5List);
                         var destFile = path.join(destPath, relative);
 
-                        destFile = replaceVersion(destFile, md5Version);
+                        destFile = pathURI.replaceVersion(destFile, md5Version);
                         versionMap[pathURI.toURIPath(relative)] = md5Version;
 
                         fs.outputFile(destFile, code, function (err) {
@@ -184,7 +183,7 @@ module.exports = function (srcPath) {
             var coolieInfo = replaceConfig(code, versionMap);
             var destFile = path.join(destPath, relative);
 
-            destFile = replaceVersion(destFile, coolieInfo.version);
+            destFile = pathURI.replaceVersion(destFile, coolieInfo.version);
             configs._coolieConfigVersion = coolieInfo.version;
             configs._coolieConfig = coolieInfo.config;
             configs._jsBase = path.join(srcPath, path.dirname(configs.js['coolie-config.js']), coolieInfo.config.base);
