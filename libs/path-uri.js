@@ -107,7 +107,7 @@ exports.joinURI = function (p1, p2) {
 /**
  * 解析 URI 为路径信息
  * @param uri
- * @returns {{suffix: String, extname: String, basename: String, path: String}}
+ * @returns {Object}
  */
 exports.parseURI2Path = function (uri) {
     var ret = {};
@@ -121,6 +121,8 @@ exports.parseURI2Path = function (uri) {
     ret.basename = path.basename(uri2);
     // 实际文件
     ret.path = uri2;
+    // 实际文件
+    ret.origin = uri;
 
     return ret;
 };

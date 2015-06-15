@@ -35,15 +35,14 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
     }
 
     var value = htmlAttr.get(html, attrKey);
+    var pathRet = pathURI.parseURI2Path(value);
 
-    if (REG_HTTP.test(value) || !value || pathURI.isBase64(value)) {
+    if (!value || REG_ABSOLUTE.test(value) || pathURI.isBase64(value)) {
         return html;
     }
 
-    var isRelativeToFile = !REG_ABSOLUTE.test(value);
-    var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
+    var absDir = pathURI.isRelativeFile(value) ? path.dirname(file) : configs._srcPath;
     var absFile;
-    var pathRet = pathURI.parseURI2Path(value);
 
     try {
         absFile = path.join(absDir, value);
