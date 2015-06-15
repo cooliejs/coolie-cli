@@ -43,7 +43,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
     }
 
     var isRelativeToFile = pathURI.isRelativeFile(pathRet.path);
-    var absDir = isRelativeToFile ? path.dirname(pathRet.path) : configs._srcPath;
+    var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
     var absFile;
 
     try {
