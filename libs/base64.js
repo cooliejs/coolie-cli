@@ -46,6 +46,7 @@ module.exports = function (file, extname, callback) {
     } catch (err) {
         log('read file', pathURI.toSystemPath(file), 'error');
         log('read file', err.message, 'error');
+        process.exit(1);
     }
 
     var base64;
@@ -55,6 +56,7 @@ module.exports = function (file, extname, callback) {
     } catch (err) {
         log('base64 file', pathURI.toSystemPath(file), 'error');
         log('base64 file', err.message, 'error');
+        process.exit(1);
     }
 
     if (callback) {

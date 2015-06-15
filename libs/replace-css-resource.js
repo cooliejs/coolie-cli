@@ -13,7 +13,6 @@ var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
 var encryption = require('ydr-utils').encryption;
-var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_URL = /url\s*?\((.*?)\)/ig;
 var REG_QUOTE = /^["']|['"]$/g;
 
@@ -38,10 +37,6 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             return $0;
         }
 
-        //var suffix = ($1.match(REG_SUFFIX) || [''])[0];
-        //$1 = $1.replace(REG_SUFFIX, '');
-
-        //var extname = path.extname($1);
         var absDir = pathURI.isRelativeFile(pathRet.path) ? path.dirname(file) : configs._srcPath;
         var absFile;
 
