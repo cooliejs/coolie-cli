@@ -17,6 +17,7 @@ var REG_BASE_64 = /^data:.*?base64,/i;
 var REG_FIRST = /^\//;
 var REG_LAST = /\/$/;
 var REG_SUFFIX = /(\?.*|#.*)$/;
+var REG_EXT = /\.([^.]+)$/;
 
 
 /**
@@ -126,3 +127,19 @@ exports.parseURI2Path = function (uri) {
 
     return ret;
 };
+
+
+/**
+ * 版本替换
+ * @param uri
+ * @param version
+ * @returns {*}
+ */
+exports.replaceVersion = function (uri, version) {
+    var p = exports.parseURI2Path(uri);
+
+    return p.path.replace(REG_EXT, function ($0, $1) {
+        return '.' + version + '.' + $1;
+    }) + p.suffix;
+};
+

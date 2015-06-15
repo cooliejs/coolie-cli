@@ -37,15 +37,16 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
     var value = htmlAttr.get(html, attrKey);
     var pathRet = pathURI.parseURI2Path(value);
 
-    if (!value || REG_ABSOLUTE.test(pathRet.original) || pathURI.isBase64(value)) {
+    if (!value || REG_ABSOLUTE.test(pathRet.path) || pathURI.isBase64(pathRet.original)) {
         return html;
     }
 
-    var absDir = pathURI.isRelativeFile(value) ? path.dirname(file) : configs._srcPath;
+    var isRelativeToFile = pathURI.isRelativeFile(pathRet.path);
+    var absDir = isRelativeToFile ? path.dirname(pathRet.path) : configs._srcPath;
     var absFile;
 
     try {
-        absFile = path.join(absDir, value);
+        absFile = path.join(absDir, pathRet.path);
     } catch (err) {
         log('replace resource', pathURI.toSystemPath(file), 'error');
         log('replace resource', html, 'error');
@@ -80,7 +81,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
     // 未进行版本构建
     if (!url) {
         var extname = path.extname(srcName);
-        var resName = version + extname;
+        var resName = pathRet.basename;
         var resFile = path.join(configs._destPath, configs.resource.dest, resName);
         //var isImage = pathURI.isImage(extname);
 
