@@ -8,25 +8,18 @@
 
 var fs = require('fs-extra');
 var path = require('path');
-var encryption = require('ydr-utils').encryption;
 var dato = require('ydr-utils').dato;
 var log = require('./log.js');
 var htmlAttr = require('./html-attr.js');
 var pathURI = require('./path-uri.js');
 var htmlminify = require('./htmlminify.js');
-var replaceVersion = require('./replace-version.js');
 var replaceHTMLResource = require('./replace-html-resource.js');
 var concat = require('./concat.js');
 var copy = require('./copy.js');
-var REG_BEGIN = /<!--\s*?coolie\s*?-->/ig;
-var REG_END = /<!--\s*?\/coolie\s*?-->/i;
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/gi;
 var REG_IMG = /<img\b[\s\S]*?>/gi;
 var REG_SCRIPT = /<script[^>]*?>[\s\S]*?<\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/i;
-var REG_ABSOLUTE = /^\//;
-// 相同的组合只产生出一个文件
-var concatMap = {};
 var FAVICON_RELS = [
     'apple-touch-icon',
     'apple-touch-icon-precomposed',
