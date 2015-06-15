@@ -153,11 +153,14 @@ module.exports = function (file, code, callback) {
     code = code.replace(REG_LINES, '')
         .replace(REG_SPACES, ' ');
 
-    // 替换: background 属性
+    // 替换: style="background 属性
     code = code.replace(REG_TAG_START, function (tag) {
         var style1 = htmlAttr.get(tag, 'style');
+        var isIgnore = htmlAttr.get(tag, coolieIgnore);
 
-        if (!style1) {
+        tag = htmlAttr.remove(tag, coolieIgnore);
+
+        if (!style1 || isIgnore) {
             return tag;
         }
 
