@@ -43,6 +43,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
     var isRelativeToFile = !REG_ABSOLUTE.test(value);
     var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
     var absFile;
+    var pathRet = pathURI.parseURI2Path(value);
 
     try {
         absFile = path.join(absDir, value);
@@ -54,14 +55,8 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         process.exit(1);
     }
 
-    var basename = path.basename(absFile);
-    var srcName = basename.replace(REG_SUFFIX, '');
-    var suffix = (basename.match(REG_SUFFIX) || [''])[0];
-
-    console.log(absFile);
-    console.log(basename);
-    console.log(srcName);
-    console.log(suffix);
+    var srcName = pathRet.basename;
+    var suffix = pathRet.suffix;
 
     absFile = absFile.replace(REG_SUFFIX, '');
 

@@ -105,11 +105,11 @@ exports.joinURI = function (p1, p2) {
 
 
 /**
- * 解析 URI
+ * 解析 URI 为路径信息
  * @param uri
- * @returns {{}}
+ * @returns {{suffix: String, extname: String, basename: String, path: String}}
  */
-exports.parseURI = function (uri) {
+exports.parseURI2Path = function (uri) {
     var ret = {};
     var uri2 = uri.replace(REG_SUFFIX, '');
 
@@ -119,6 +119,8 @@ exports.parseURI = function (uri) {
     ret.extname = path.extname(uri2);
     // 文件名
     ret.basename = path.basename(uri2);
+    // 实际文件
+    ret.path = uri2;
 
     return ret;
 };
