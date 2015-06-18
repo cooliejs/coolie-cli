@@ -316,7 +316,8 @@ module.exports = function (srcPath) {
             console.log('');
             log('build success',
                 'copy ' + configs._copyLength + ' file(s), ' +
-                '\nbuild ' + mainLength + ' js file(s), ' +
+                '\nbuild ' + mainLength + ' main file(s), ' +
+                '\nbuild ' + jsLength + ' js file(s), ' +
                 '\nbuild ' + htmlLength + ' html file(s), ' +
                 '\nbuild ' + cssLength + ' css file(s), ' +
                     //'\nbuild ' + configs._resImageList.length + ' image file(s), ' +
