@@ -85,15 +85,6 @@ module.exports = function (srcPath) {
             process.exit(1);
         }
 
-        if (typeis.undefined(config.js)) {
-            config._noCoolieJS = true;
-            config.js = {
-                src: []
-            };
-
-            return;
-        }
-
         // js.src
         if (config.js.src) {
             var htmlPathType = typeis(config.js.src);
@@ -118,22 +109,23 @@ module.exports = function (srcPath) {
         }
 
         // js[coolie-config.js]
-        if (!config.js["coolie-config.js"]) {
-            log("parse config", 'js must have `coolie-config.js` property', "error");
-            process.exit(1);
-        }
+        if (config.js["coolie-config.js"]) {
+            if (typeis(config.js["coolie-config.js"]) !== "string") {
+                log("parse config", "`js[coolie-config.js]` property must be a string", "error");
+                process.exit(1);
+            }
 
-        if (typeis(config.js["coolie-config.js"]) !== "string") {
-            log("parse config", "`js[coolie-config.js]` property must be a string", "error");
-            process.exit(1);
-        }
+            coolieConfigJSFile = path.join(srcPath, config.js["coolie-config.js"]);
 
-        coolieConfigJSFile = path.join(srcPath, config.js["coolie-config.js"]);
+            if (!typeis.file(coolieConfigJSFile)) {
+                log("parse config", coolieConfigJSFile +
+                    "\nis NOT a file", "error");
+                process.exit(1);
+            }
 
-        if (!typeis.file(coolieConfigJSFile)) {
-            log("parse config", coolieConfigJSFile +
-                "\nis NOT a file", "error");
-            process.exit(1);
+            check._coolieConfigJS();
+        } else {
+            config._noCoolieJS = true;
         }
 
         // js.dest
@@ -146,12 +138,8 @@ module.exports = function (srcPath) {
 
     // 检查 coolie-config.js 内的 base 路径
     // base 路径必须在 coolie-config.js 以内，否则在构建之后的 main 会指向错误
-    check.coolieConfigJS = function () {
+    check._coolieConfigJS = function () {
         var code;
-
-        if (config._noCoolieJS) {
-            return;
-        }
 
         try {
             code = fs.readFileSync(coolieConfigJSFile, 'utf8');
@@ -348,7 +336,6 @@ module.exports = function (srcPath) {
 
     check.file();
     check.js();
-    check.coolieConfigJS();
     check.html();
     check.css();
     check.resource();
