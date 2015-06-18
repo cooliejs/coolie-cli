@@ -12,6 +12,7 @@ var log = require('../libs/log.js');
 var dato = require('ydr-utils').dato;
 var replaceHtml = require('../libs/replace-html.js');
 var pathURI = require('../libs/path-uri.js');
+var cssLength = 0;
 
 
 /**
@@ -46,6 +47,14 @@ module.exports = function (file, callback) {
             process.exit(1);
         }
 
-        callback(null, ret.depCSS, ret.depJS, ret.mainJS);
+        //dato.each(ret.depCSS, function (name, dep) {
+        //    cssLength += dep.length;
+        //});
+        //
+        //dato.each(ret.depCSS, function (name, dep) {
+        //    cssLength += dep.length;
+        //});
+
+        callback(null, ret.depCSS,ret.depJS, ret.mainJS);
     });
 };

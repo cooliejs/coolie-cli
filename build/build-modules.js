@@ -71,6 +71,7 @@ module.exports = function (srcPath) {
     var time = Date.now();
     var mainLength = 0;
     var htmlLength = 0;
+    var jsLength = 0;
     var cssLength = 0;
     var versionMap = {};
     var mainRelationshipMap = {};
@@ -109,7 +110,7 @@ module.exports = function (srcPath) {
             log('2/5', 'build main', 'task');
             configs._buildStep = 2;
 
-            if(configs._noCoolieJS){
+            if (configs._noCoolieJS) {
                 log('×', 'NO coolie.js files');
                 return next();
             }
@@ -217,7 +218,7 @@ module.exports = function (srcPath) {
                 howdo.each(htmls, function (j, file, nextHTML) {
                     htmlLength++;
 
-                    buildHTML(file, function (err, _cssLength, depCSS, mainJS) {
+                    buildHTML(file, function (err, depCSS, depJS, mainJS) {
                         var htmlRelative = path.relative(srcPath, file);
                         var url = pathURI.toURIPath(htmlRelative);
 
@@ -225,7 +226,15 @@ module.exports = function (srcPath) {
                             css: depCSS,
                             main: mainJS
                         };
-                        cssLength = _cssLength;
+
+                        dato.each(depCSS, function (name, dep) {
+                            cssLength += dep.length;
+                        });
+
+                        dato.each(depJS, function (name, dep) {
+                            jsLength += dep.length;
+                        });
+
                         nextHTML(err);
                     });
                 }).follow(function () {
@@ -310,7 +319,7 @@ module.exports = function (srcPath) {
                 '\nbuild ' + mainLength + ' js file(s), ' +
                 '\nbuild ' + htmlLength + ' html file(s), ' +
                 '\nbuild ' + cssLength + ' css file(s), ' +
-                //'\nbuild ' + configs._resImageList.length + ' image file(s), ' +
+                    //'\nbuild ' + configs._resImageList.length + ' image file(s), ' +
                 '\nbuild ' + Object.keys(configs._resVerMap).length + ' resource file(s), ' +
                 '\npast ' + past + ' ms', 'success');
             console.log('');
