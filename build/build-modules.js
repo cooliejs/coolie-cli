@@ -224,6 +224,7 @@ module.exports = function (srcPath) {
 
                         htmlJsCssRelationshipMap[url] = {
                             css: depCSS,
+                            js: depJS,
                             main: mainJS
                         };
 
