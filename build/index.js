@@ -6,6 +6,7 @@
 
 "use strict";
 
+var string = require('ydr-utils').string;
 var pkg = require('../package.json');
 var log = require("../libs/log.js");
 var buildConfig = require("./build-config.js");
@@ -22,6 +23,7 @@ var cmdArgs = process.argv.slice(2);
 var cmdArg0 = cmdArgs[0];
 var cmdArg1 = cmdArgs[1];
 var buildPath = cmdArg1 ? path.join(CWD, cmdArg1) : CWD;
+
 
 console.log('');
 console.log(colors.cyan('            ╔═══════════════════════════════════════════════════════╗'));
