@@ -43,6 +43,7 @@ module.exports = function (file, code) {
     var jsBase = configs._jsBase;
     var mainJS = '';
     var depCSS = {};
+    var depJS = {};
 
     // 循环匹配 <!--coolie-->(matched)<!--/coolie-->
     var matchedCoolie;
@@ -51,7 +52,12 @@ module.exports = function (file, code) {
         var ret = concat(file, matchedCoolie[1]);
 
         code = code.replace(REG_COOLIE, ret.replace);
-        depCSS[ret.url] = ret.urls;
+
+        if (ret.type === 'css') {
+            depCSS[ret.url] = ret.urls;
+        } else {
+            depJS[ret.url] = ret.urls;
+        }
     }
 
     // <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">

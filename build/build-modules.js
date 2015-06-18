@@ -225,7 +225,7 @@ module.exports = function (srcPath) {
                             css: depCSS,
                             main: mainJS
                         };
-                        cssLength += _cssLength;
+                        cssLength = _cssLength;
                         nextHTML(err);
                     });
                 }).follow(function () {
