@@ -22,24 +22,23 @@ var REG_SUFFIX = /(\?.*|#.*)$/;
 /**
  * 构建资源版本
  * @param file {String} 待替换的文件
- * @param html {String} 待替换的标签
+ * @param tag {String} 待替换的标签
  * @param attrKey {String} 资源标签属性
  * @param [isReplaceToBase64WhenRelativeToFile=false] {Boolean} 是否替换为 base64 编码，当资源相对于当前文件时
  * @returns {String}
  */
-module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToFile) {
+module.exports = function (file, tag, attrKey, isReplaceToBase64WhenRelativeToFile) {
     var configs = global.configs;
 
-    if (htmlAttr.get(html, 'coolieignore')) {
-        return htmlAttr.remove(html, 'coolieignore');
+    if (htmlAttr.get(tag, 'coolieignore')) {
+        return htmlAttr.remove(tag, 'coolieignore');
     }
 
-    var value = htmlAttr.get(html, attrKey);
+    var value = htmlAttr.get(tag, attrKey);
     var pathRet = pathURI.parseURI2Path(value);
 
-
     if (!value || !pathURI.isRelatived(pathRet.path) || pathURI.isBase64(pathRet.original)) {
-        return html;
+        return tag;
     }
 
     var isRelativeToFile = pathURI.isRelativeFile(pathRet.path);
@@ -50,7 +49,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         absFile = path.join(absDir, pathRet.path);
     } catch (err) {
         log('replace resource', pathURI.toSystemPath(file), 'error');
-        log('replace resource', html, 'error');
+        log('replace resource', tag, 'error');
         log('replace resource', err.message, 'error');
         log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
         process.exit(1);
@@ -64,7 +63,7 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
             configs._resBase64Map[absFile] = b64 = base64(absFile);
         }
 
-        return htmlAttr.set(html, attrKey, b64);
+        return htmlAttr.set(tag, attrKey, b64);
     }
 
     var version = configs._resVerMap[absFile];
@@ -100,5 +99,5 @@ module.exports = function (file, html, attrKey, isReplaceToBase64WhenRelativeToF
         configs._resURIMap[absFile] = url = pathURI.joinURI(configs.dest.host, path.relative(configs._destPath, resFile));
     }
 
-    return htmlAttr.set(html, attrKey, url + pathRet.suffix);
+    return htmlAttr.set(tag, attrKey, url + pathRet.suffix);
 };
