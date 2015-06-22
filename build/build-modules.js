@@ -20,7 +20,6 @@ var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
 var buildHTML = require('./build-html.js');
 var copy = require('../libs/copy.js');
-var imageminify = require('../libs/imageminify.js');
 
 
 module.exports = function (srcPath) {
@@ -100,7 +99,7 @@ module.exports = function (srcPath) {
                     copy(relative);
                     nextFile();
                 }).follow(function () {
-                    log('√', pathURI.toSystemPath(gbPath), 'success');
+                    //log('√', pathURI.toSystemPath(gbPath), 'success');
                     nextCopy();
                 });
             });

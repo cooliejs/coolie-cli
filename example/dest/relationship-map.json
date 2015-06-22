@@ -9,6 +9,7 @@
                 "static/css/3.css"
             ]
         },
+        "js": {},
         "main": "static/js/app/index.js",
         "deps": [
             "static/img/100x100.png",
@@ -26,6 +27,7 @@
                 "static/css/3.css"
             ]
         },
+        "js": {},
         "main": "static/js/app/index.js",
         "deps": [
             "static/img/100x100.png",
@@ -39,7 +41,9 @@
                 "static/css/1.css",
                 "static/css/2.css",
                 "static/css/3.css"
-            ],
+            ]
+        },
+        "js": {
             "static/js/263088e6549a84cc6cd46a01e81de79e.js": [
                 "static/js/index3-1.js"
             ],
@@ -56,6 +60,7 @@
                 "static/css/2.css"
             ]
         },
+        "js": {},
         "main": "static/js/app/user/index.js",
         "deps": [
             "static/js/libs/all.js",
