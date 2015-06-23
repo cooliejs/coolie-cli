@@ -14,9 +14,6 @@ var htmlAttr = require('./html-attr.js');
 var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
-var REG_HTTP = /^(https?:)?\/\//i;
-var REG_ABSOLUTE = /^\//;
-var REG_SUFFIX = /(\?.*|#.*)$/;
 
 
 /**
@@ -35,6 +32,11 @@ module.exports = function (file, tag, attrKey, isReplaceToBase64WhenRelativeToFi
     }
 
     var value = htmlAttr.get(tag, attrKey);
+
+    if (value === true) {
+        return tag;
+    }
+
     var pathRet = pathURI.parseURI2Path(value);
 
     if (!value || !pathURI.isRelatived(pathRet.path) || pathURI.isBase64(pathRet.original)) {

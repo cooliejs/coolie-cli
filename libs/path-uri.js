@@ -111,7 +111,7 @@ exports.joinURI = function (p1, p2) {
  * @returns {Object}
  */
 exports.parseURI2Path = function (uri) {
-    uri = uri || '';
+    uri = String(uri || '');
 
     var ret = {};
     var uri2 = uri.replace(REG_SUFFIX, '');
