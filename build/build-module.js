@@ -24,7 +24,7 @@ var globalId = require('../libs/global-id.js');
 
 /**
  * 构建一个模块
- * @param mainChunkMap {Object} 入口依赖的 chunk
+ * @param mainFile {String} 入口模块
  * @param name {String} 文件名称
  * @param type {String} 依赖类型
  * @param file {String} 文件路径
@@ -34,7 +34,7 @@ var globalId = require('../libs/global-id.js');
  * @arguments[1].deps 文件依赖的文件列表
  * @arguments[2].depIdsMap 文件依赖的文件列表
  */
-module.exports = function (mainChunkMap, name, type, file, depIdsMap, callback) {
+module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
     // 依赖 ID 列表
     var depList = [];
     // 依赖绝对路径与 ID 对应关系
@@ -77,10 +77,15 @@ module.exports = function (mainChunkMap, name, type, file, depIdsMap, callback) 
                     // 当前依赖模块属于独立块状模块
                     if (chunkId) {
                         depNameList.push(dep.raw);
-                        mainChunkMap[depId] = true;
                         configs._chunkModuleMap[depId] = configs._chunkModuleMap[depId] || {};
-                        configs._chunkModuleMap[depId].gid = globalId.get();
+                        configs._chunkModuleMap[depId].gid = configs._chunkModuleMap[depId].gid || globalId.get();
+                        configs._chunkModuleMap[depId].depending = configs._chunkModuleMap[depId].depending || [];
                         depName2IdMap[dep.raw] = depIdsMap[depId] = configs._chunkModuleMap[depId].gid;
+
+                        if (configs._chunkModuleMap[depId].depending.indexOf(mainFile) === -1) {
+                            configs._chunkModuleMap[depId].depending.push(mainFile);
+                        }
+
                         depList.push({
                             name: dep.name,
                             id: depId,
