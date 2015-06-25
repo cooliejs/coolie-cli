@@ -153,7 +153,7 @@ module.exports = function (srcPath) {
                 howdo.each(files, function (j, file, nextFile) {
                     var relative = path.relative(srcPath, file);
 
-                    buildMain(file, function (err, code, md5List, deepDeps) {
+                    buildMain(file, function (err, code, md5List, deepDeps, chunkList) {
                         if (err) {
                             return;
                         }
@@ -168,6 +168,7 @@ module.exports = function (srcPath) {
                         destFile = pathURI.replaceVersion(destFile, md5Version);
                         versionMap[pathURI.toURIPath(relative)] = md5Version;
 
+                        console.log(chunkList);
                         fs.outputFile(destFile, code, function (err) {
                             if (err) {
                                 log('write file', pathURI.toSystemPath(destFile), 'error');
