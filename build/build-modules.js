@@ -67,6 +67,7 @@ module.exports = function (srcPath) {
     configs._chunkFileMap = {};
     configs._chunkModuleIdMap = {};
     configs._chunkBufferMap = {};
+    configs._chunkMD5Map = {};
     configs.js.chunk.forEach(function (ck, index) {
         var gbPath = path.join(srcPath, ck);
         var files;

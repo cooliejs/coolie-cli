@@ -9,6 +9,7 @@
 
 var dato = require('ydr-utils').dato;
 var sign = require('../libs/sign.js');
+var fse = require('fs-extra');
 
 
 module.exports = function () {
@@ -22,10 +23,21 @@ module.exports = function () {
         chunkList[index].push(mod);
     });
 
-    dato.each(chunkList, function () {
+    dato.each(chunkList, function (i, files) {
         var bfList = [];
+        var output = sign('js');
 
+        dato.each(files, function (j, file) {
+            bfList.push(configs._chunkBufferMap[file]);
+        });
 
+        output += Buffer.concat(bfList).toString();
+
+        try {
+            fse.outputFileSync();
+        } catch (err) {
+            // ignore
+        }
     });
 };
 
