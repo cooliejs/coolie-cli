@@ -154,10 +154,12 @@ module.exports = function (srcPath) {
                 howdo.each(files, function (j, file, nextFile) {
                     var relative = path.relative(srcPath, file);
 
-                    buildMain(file, function (err, code, md5List, deepDeps, chunkList) {
+                    buildMain(file, function (err, bufferList, md5List, deepDeps, chunkList) {
                         if (err) {
                             return;
                         }
+
+                        var code = '';
 
                         mainRelationshipMap[pathURI.toURIPath(relative)] = deepDeps.map(function (dep) {
                             return pathURI.toURIPath(path.relative(srcPath, dep));
