@@ -48,6 +48,7 @@ module.exports = function (mainFile, callback) {
             if (isChunk) {
                 configs._chunkBufferMap[file] = new Buffer('\n' + meta.code, 'utf8');
                 configs._chunkMD5Map[file] = md5;
+                bufferList.push(new Buffer('', 'utf8'));
             } else {
                 md5List += md5;
                 bufferList.push(new Buffer('\n' + meta.code, 'utf8'));

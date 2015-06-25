@@ -347,6 +347,7 @@ module.exports = function (srcPath) {
                 '\npast ' + past + ' ms', 'success');
             console.log('');
             console.log('');
+            console.log();
         });
 };
 
