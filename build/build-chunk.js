@@ -24,7 +24,7 @@ module.exports = function (versionMap) {
     var configs = global.configs;
     var chunkList = [];
 
-    dato.each(configs._chunkModuleMap, function (mod, mid) {
+    dato.each(configs._chunkModuleMap, function (mod, meta) {
         var index = configs._chunkFileMap[mod] * 1;
 
         chunkList[index] = chunkList[index] || [];

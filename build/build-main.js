@@ -31,11 +31,12 @@ module.exports = function (mainFile, callback) {
     var deepDeps = [];
     var chunkList = [];
     var configs = global.configs;
-
-    configs._mainChunkMap[mainFile] = {};
+    var mainChunkMap = {
+        main: mainFile
+    };
 
     var _deepBuld = function (name, type, file) {
-        buildModule(name, type, file, depIdsMap, function (err, meta) {
+        buildModule(mainChunkMap, name, type, file, depIdsMap, function (err, meta) {
             if (err) {
                 log('build', pathURI.toSystemPath(file), 'error');
                 log('build', err.message, 'error');
