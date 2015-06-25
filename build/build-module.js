@@ -48,7 +48,7 @@ module.exports = function (name, type, file, depIdsMap, callback) {
     var isSingle = type !== 'js';
     // 相对目录
     var relativeDir = path.dirname(file);
-    var config = global.config;
+    var configs = global.configs;
 
     howdo
         // 1. 读取文件内容
@@ -74,8 +74,8 @@ module.exports = function (name, type, file, depIdsMap, callback) {
                     var depName = dep.name;
                     var depId = path.join(relativeDir, depName);
 
-                    if(config._chunkMap[depId]){
-                        console.log('chunk', depId);
+                    if(configs._chunkMap[depId]){
+                        console.log('chunk', depId, configs._chunkMap[depId]);
                     }
 
                     if (!depIdMap[depId]) {

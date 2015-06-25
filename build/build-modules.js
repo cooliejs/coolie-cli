@@ -77,7 +77,7 @@ module.exports = function (srcPath) {
         }
 
         files.forEach(function (f) {
-            configs._chunkMap[f] = index;
+            configs._chunkMap[f] = String(index);
         });
     });
     global.configs = configs;
