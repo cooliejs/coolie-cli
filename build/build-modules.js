@@ -169,7 +169,7 @@ module.exports = function (srcPath) {
                         versionMap[pathURI.toURIPath(relative)] = md5Version;
 
                         if (chunkList.length) {
-                            code += '\ncoolie.chunk([' + chunkList.join(',') + ']);';
+                            code += '\ncoolie.chunk(' + joinArr(chunkList) + ');';
                         }
 
                         fs.outputFile(destFile, code, function (err) {
@@ -349,4 +349,24 @@ module.exports = function (srcPath) {
             console.log('');
             console.log('');
         });
+};
+
+
+/**
+ * 数组合并并保留字符串
+ * @param arr
+ * @returns {string}
+ */
+var joinArr = function (arr) {
+    var s = '[';
+
+    arr.forEach(function (item, index) {
+        if (index) {
+            s += ',';
+        }
+
+        s += '"' + item + '"';
+    });
+
+    return s + ']';
 };
