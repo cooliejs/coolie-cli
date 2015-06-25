@@ -18,6 +18,7 @@
 var dato = require('ydr-utils').dato;
 var encryption = require('ydr-utils').encryption;
 var pathURI = require('./path-uri.js');
+var sign = require('./sign.js');
 var fse = require('fs-extra');
 var howdo = require('howdo');
 var path = require('path');
@@ -54,15 +55,13 @@ module.exports = function (mainMap, versionMap, callback) {
         }
     });
 
+    // 分析 chunk map 成数组
     dato.each(configs._chunkModuleMap, function (mod, meta) {
         var index = configs._chunkFileMap[mod] * 1;
 
         configs._chunkList[index] = configs._chunkList[index] || [];
         configs._chunkList[index].push(mod);
     });
-
-    console.log(configs._chunkList);
-    process.exit(1);
 
     howdo.each(mainMap, function (mainFile, main, done) {
         var version = encryption.md5(main.md5List);
@@ -71,13 +70,22 @@ module.exports = function (mainMap, versionMap, callback) {
         versionMap[pathURI.toURIPath(main.srcName)] = version;
 
         var destFile = path.join(configs._destPath, main.destName);
-        var code = '';
+        var output = sign('js');
+        var chunkList = [];
 
-        if (main.chunkList.length) {
-            code += '\ncoolie.chunk(' + joinArr(main.chunkList) + ');';
+        main.chunkList.forEach(function (chunkId) {
+            if (configs._chunkList[chunkId] && configs._chunkList[chunkId].length) {
+                chunkList.push(chunkId);
+            }
+        });
+
+        output += Buffer.concat(main.bufferList).toString();
+
+        if (chunkList.length) {
+            output += '\ncoolie.chunk(' + joinArr(chunkList) + ');';
         }
 
-        fse.outputFile(destFile, code, function (err) {
+        fse.outputFile(destFile, output, function (err) {
             if (err) {
                 log('write file', pathURI.toSystemPath(destFile), 'error');
                 log('write file', err.message, 'error');

@@ -368,23 +368,3 @@ module.exports = function (srcPath) {
             console.log();
         });
 };
-
-
-/**
- * 数组合并并保留字符串
- * @param arr
- * @returns {string}
- */
-var joinArr = function (arr) {
-    var s = '[';
-
-    arr.forEach(function (item, index) {
-        if (index) {
-            s += ',';
-        }
-
-        s += '"' + item + '"';
-    });
-
-    return s + ']';
-};
