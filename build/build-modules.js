@@ -18,6 +18,7 @@ var encryption = require('ydr-utils').encryption;
 var replaceConfig = require('../libs/replace-config.js');
 var parseConfig = require('../libs/parse-config.js');
 var buildMain = require('./build-main.js');
+var buildChunk = require('./build-chunk.js');
 var buildHTML = require('./build-html.js');
 var copy = require('../libs/copy.js');
 
@@ -185,6 +186,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
+            buildChunk();
             log('3/5', 'overwrite config', 'task');
             configs._buildStep = 3;
             next();
@@ -341,6 +343,5 @@ module.exports = function (srcPath) {
                 '\npast ' + past + ' ms', 'success');
             console.log('');
             console.log('');
-            console.log(configs._chunkModuleIdMap);
         });
 };

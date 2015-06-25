@@ -39,14 +39,16 @@ module.exports = function (mainFile, callback) {
                 process.exit(1);
             }
 
-            var code = meta.code;
             var depList = meta.depList;
             var output;
 
             // 采用内容 MD5
-            md5List += encryption.md5(code);
+            var code2 = configs._chunkModuleIdMap[file] ? '' : '\n' + meta.code;
+            var bf = new Buffer(code2, 'utf8');
+
+            md5List += code2 ? encryption.md5(code2) : '';
             depsCache[mainFile] = true;
-            bufferList.push(new Buffer(configs._chunkModuleIdMap[file] ? '' : '\n' + code, 'utf8'));
+            bufferList.push(bf);
             depsRelationship[file] = {};
 
             if (depList.length) {
