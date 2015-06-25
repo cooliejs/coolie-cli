@@ -76,6 +76,7 @@ module.exports = function (basedir) {
     // js.dest
     steps.push(function (data) {
         json.js.dest = _getVal(data, './static/js/', false);
+        json.js.chunk = [];
 
         log('4/7', '请输入合并压缩后的 CSS 文件的保存目录。默认为“./static/css/”。', 'success');
     });
