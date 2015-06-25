@@ -16,4 +16,5 @@ define(function (require) {
     //require('some.css', 'css');
     require('../libs2/some.txt', 'text');
     require('../libs2/some.json', 'json');
+    require('../libs2/some.js', 'js');
 });

@@ -44,13 +44,11 @@ module.exports = function (versionMap) {
         output += Buffer.concat(bfList).toString();
 
         var version = encryption.md5(md5List);
-        var fileName = pathURI.replaceVersion(i + '.js', version);
+        var fileName = i + '.js';
         var srcName = path.join(path.relative(configs._srcPath, configs._jsBase), fileName);
-        var srcFile = path.join(configs._srcPath, srcName);
-        var destFile = path.join(configs._destPath, srcName);
+        var destFile = pathURI.replaceVersion(path.join(configs._destPath, srcName), version);
 
-        //versionMap[srcFile] = version;
-        console.log(srcFile);
+        versionMap[pathURI.toURIPath(srcName)] = version;
 
         try {
             fse.outputFileSync(destFile, output);
