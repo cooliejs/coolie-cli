@@ -42,11 +42,13 @@ module.exports = function (mainFile, callback) {
             var depList = meta.depList;
             var output;
             var isChunk = configs._chunkModuleIdMap[file];
+            var md5 = encryption.md5(meta.code);
 
             if (isChunk) {
                 configs._chunkBufferMap[file] = new Buffer('\n' + meta.code, 'utf8');
+                configs._chunkMD5Map[file] = md5;
             } else {
-                md5List += encryption.md5(meta.code);
+                md5List += md5;
                 bufferList.push(new Buffer('\n' + meta.code, 'utf8'));
             }
 
