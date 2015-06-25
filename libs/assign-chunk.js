@@ -18,12 +18,16 @@
 var dato = require('ydr-utils').dato;
 var encryption = require('ydr-utils').encryption;
 var pathURI = require('./path-uri.js');
+var fse = require('fs-extra');
+var howdo = require('howdo');
+var path = require('path');
 
 
 /**
  * 智能分配 chunk
  * @param mainMap {Object} 入口 map
  * @param versionMap {Object} 版本 map
+ * @param callback {Function} 分配完毕回调
  *
  * @example
  * // 合法的 mainMap
@@ -34,7 +38,7 @@ var pathURI = require('./path-uri.js');
  *     bufferList: [bf1, bf2, ...]
  * }
  */
-module.exports = function (mainMap, versionMap) {
+module.exports = function (mainMap, versionMap, callback) {
     var configs = global.configs;
 
     dato.each(configs._chunkModuleMap, function (mod, meta) {
@@ -48,16 +52,32 @@ module.exports = function (mainMap, versionMap) {
 
             delete(configs._chunkModuleMap[mod]);
         }
-
-        //// 被多个入口模块使用的 chunk 模块
-        //configs._chunkMap
     });
 
-    dato.each(mainMap, function (mainFile, main) {
+    dato.each(configs._chunkModuleMap, function (mod, meta) {
+        var index = configs._chunkFileMap[mod] * 1;
+
+        chunkList[index] = chunkList[index] || [];
+        chunkList[index].push(mod);
+    });
+
+    howdo.each(mainMap, function (mainFile, main, done) {
         var version = encryption.md5(main.md5List);
 
         main.destName = pathURI.replaceVersion(main.srcName, version);
         versionMap[pathURI.toURIPath(main.srcName)] = version;
-    });
+
+        var destFile = path.join(configs._destPath, main.destName);
+
+        fse.outputFile(destFile, code, function (err) {
+            if (err) {
+                log('write file', pathURI.toSystemPath(destFile), 'error');
+                log('write file', err.message, 'error');
+                return process.exit(1);
+            }
+
+            done();
+        });
+    }).together(callback);
 };
 

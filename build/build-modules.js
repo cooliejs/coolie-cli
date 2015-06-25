@@ -70,6 +70,7 @@ module.exports = function (srcPath) {
     configs._chunkModuleMap = {};
     configs._chunkBufferMap = {};
     configs._chunkMD5Map = {};
+    configs._chunkList = {};
 
     configs.js.chunk.forEach(function (ck, index) {
         var gbPath = path.join(srcPath, ck);
@@ -201,7 +202,7 @@ module.exports = function (srcPath) {
                 });
             });
         })
-        // 分配chunk、合并 chunk
+        // 分配 chunk、合并 chunk
         .task(function (next) {
             assignChunk(mainMap, versionMap);
             buildChunk(versionMap);
