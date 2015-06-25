@@ -209,6 +209,8 @@ module.exports = function (srcPath) {
                 '\nbut now is ' + basePath, 'error');
             process.exit(1);
         }
+
+        config._jsBase = basePath;
     };
 
 

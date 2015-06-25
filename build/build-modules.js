@@ -210,7 +210,6 @@ module.exports = function (srcPath) {
             destFile = pathURI.replaceVersion(destFile, coolieInfo.version);
             configs._coolieConfigVersion = coolieInfo.version;
             configs._coolieConfig = coolieInfo.config;
-            configs._jsBase = path.join(srcPath, path.dirname(configs.js['coolie-config.js']), coolieInfo.config.base);
             fs.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {
                     log('overwrite config', pathURI.toSystemPath(destFile), 'error');
