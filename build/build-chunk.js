@@ -8,6 +8,8 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
+var sign = require('../libs/sign.js');
+
 
 module.exports = function () {
     var configs = global.configs;
@@ -20,6 +22,10 @@ module.exports = function () {
         chunkList[index].push(mod);
     });
 
-    console.log(chunkList);
+    dato.each(chunkList, function () {
+        var bfList = [];
+
+
+    });
 };
 
