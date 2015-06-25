@@ -139,6 +139,30 @@ module.exports = function (srcPath) {
             log("parse config", "`js.dest` property must be a string path", "error");
             process.exit(1);
         }
+
+        // js.chunk
+        if (config.js.chunk) {
+            var chunkPathType = typeis(config.js.chunk);
+
+            if (chunkPathType !== "string" && chunkPathType !== "array") {
+                log("parse config", "`js.chunk` property must be a string path or an array", "error");
+                process.exit(1);
+            }
+
+            if (chunkPathType === "array") {
+                config.js.chunk.forEach(function (mn, index) {
+                    if (typeis(mn) !== "string") {
+                        log("parse config", "`js.chunk[" + index + "]` must be a string", "error");
+                        process.exit(1);
+                    }
+                });
+            } else {
+                config.js.chunk = [config.js.chunk];
+            }
+        } else {
+            config.js.chunk = [];
+        }
+
     };
 
 

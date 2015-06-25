@@ -19,6 +19,7 @@ var jsminify = require('../libs/jsminify.js');
 var replaceRequire = require('../libs/replace-require.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
+var globalId = require('../libs/global-id.js');
 
 
 /**
@@ -26,14 +27,13 @@ var wrapDefine = require('../libs/wrap-define.js');
  * @param name 文件名称
  * @param type 依赖类型
  * @param file 文件路径
- * @param increase 自增对象
  * @param depIdsMap 模块绝对路径 <=> ID 对应表
  * @param callback 回调，返回包括
  * @arguments[1].code 压缩替换后的代码
  * @arguments[1].deps 文件依赖的文件列表
  * @arguments[1].depIdsMap 文件依赖的文件列表
  */
-module.exports = function (name, type, file, increase, depIdsMap, callback) {
+module.exports = function (name, type, file, depIdsMap, callback) {
     // 依赖 ID 列表
     var depList = [];
     var depIdMap = {};
@@ -80,7 +80,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
                         depNameList.push(dep.raw);
 
                         if (!depIdsMap[depId]) {
-                            depIdsMap[depId] = increase.add();
+                            depIdsMap[depId] = globalId.get();
                         }
 
                         depName2IdMap[dep.raw] = depIdsMap[depId];
@@ -124,6 +124,7 @@ module.exports = function (name, type, file, increase, depIdsMap, callback) {
 
 
         .follow(function (err, code) {
+            console.log(depIdMap);
             callback(err, {
                 isSingle: isSingle,
                 code: code,
