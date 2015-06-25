@@ -153,7 +153,7 @@ module.exports = function (srcPath) {
                 howdo.each(files, function (j, file, nextFile) {
                     var relative = path.relative(srcPath, file);
 
-                    buildMain(file, function (err, code, md5List, deepDeps, chunkList) {
+                    buildMain(file, function (err, code, md5List, deepDeps, chunkList, chunkMap) {
                         if (err) {
                             return;
                         }
