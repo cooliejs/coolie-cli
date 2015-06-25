@@ -67,7 +67,7 @@ module.exports = function (mainFile, callback) {
                     }
 
                     if(dep.chunk){
-                        console.log(dep);
+                        chunkList.push(dep.gid);
                     }
 
                     if (depsRelationship[depId] && depsRelationship[depId][file]) {
@@ -89,7 +89,7 @@ module.exports = function (mainFile, callback) {
                 output = sign('js');
                 output += Buffer.concat(bufferList).toString();
                 log("√", pathURI.toSystemPath(mainFile), "success");
-                callback(null, output, md5List, deepDeps);
+                callback(null, output, md5List, deepDeps, chunkList);
             }
         });
     };
