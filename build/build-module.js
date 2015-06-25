@@ -20,6 +20,8 @@ var replaceRequire = require('../libs/replace-require.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
 var globalId = require('../libs/global-id.js');
+// 块状模块与 ID 对应表
+var chunkModuleIdMap = {};
 
 
 /**
@@ -36,6 +38,7 @@ var globalId = require('../libs/global-id.js');
 module.exports = function (name, type, file, depIdsMap, callback) {
     // 依赖 ID 列表
     var depList = [];
+    // 依赖绝对路径与 ID 对应关系
     var depIdMap = {};
     // 依赖名称列表
     var depNameList = [];
@@ -45,6 +48,7 @@ module.exports = function (name, type, file, depIdsMap, callback) {
     var isSingle = type !== 'js';
     // 相对目录
     var relativeDir = path.dirname(file);
+    var config = global.config;
 
     howdo
         // 1. 读取文件内容
@@ -69,6 +73,10 @@ module.exports = function (name, type, file, depIdsMap, callback) {
                 parseDeps(file, code).forEach(function (dep) {
                     var depName = dep.name;
                     var depId = path.join(relativeDir, depName);
+
+                    if(config._chunkMap[depId]){
+                        console.log('chunk', depId);
+                    }
 
                     if (!depIdMap[depId]) {
                         depList.push({
@@ -124,7 +132,6 @@ module.exports = function (name, type, file, depIdsMap, callback) {
 
 
         .follow(function (err, code) {
-            console.log(depIdMap);
             callback(err, {
                 isSingle: isSingle,
                 code: code,
