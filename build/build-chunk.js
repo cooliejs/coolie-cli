@@ -44,10 +44,12 @@ module.exports = function (versionMap) {
         output += Buffer.concat(bfList).toString();
 
         var fileName = pathURI.replaceVersion(i + '.js', encryption.md5(md5List));
-        var file = path.join(configs._destJSBase, fileName);
+        var dirname = path.join(configs._destPath, path.relative(configs._srcPath, configs._jsBase));
+        var file = path.join(dirname, fileName);
 
         try {
             fse.outputFileSync(file, output);
+            log('√', pathURI.toSystemPath(file), 'success');
         } catch (err) {
             log('write file', pathURI.toSystemPath(file), 'error');
             log('write file', err.message, 'error');
