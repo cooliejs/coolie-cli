@@ -41,7 +41,6 @@ module.exports = function (mainFile, callback) {
             }
 
             var depList = meta.depList;
-            var output;
             var isChunk = configs._chunkModuleMap[file];
             var md5 = encryption.md5(meta.code);
 
@@ -91,10 +90,8 @@ module.exports = function (mainFile, callback) {
             }
 
             if (depsLength === bufferList.length) {
-                output = sign('js');
-                output += Buffer.concat(bufferList).toString();
                 log("√", pathURI.toSystemPath(mainFile), "success");
-                callback(null, output, md5List, deepDeps, chunkList);
+                callback(null, bufferList, md5List, deepDeps, chunkList);
             }
         });
     };
