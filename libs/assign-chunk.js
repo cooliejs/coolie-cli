@@ -10,7 +10,7 @@
  * 只有被 2 个（含）以上的入口模块使用过的 chunk 模块才会被公共出来，
  * 否则的会还是会被合并到入口模块里
  *
-\******************************************************************/
+ \******************************************************************/
 
 
 'use strict';
@@ -31,18 +31,23 @@
 module.exports = function (mainMap) {
     var configs = global.configs;
 
-    // 1. 分析抽离出来的 chunk 模块
     dato.each(configs._chunkModuleMap, function (mod, meta) {
-        if(meta.depending.length === 1){
+        // 仅被一个入口模块使用的 chunk 模块
+        if (meta.depending.length === 1) {
             var depending = meta.depending[0];
             var bfList = mainMap[depending].bufferList;
-            
+
             bfList.push(configs._chunkBufferMap[mod]);
 
             delete(configs._chunkModuleMap[mod]);
         }
+
+        //// 被多个入口模块使用的 chunk 模块
+        //configs._chunkMap
     });
 
     // 2. 仅使用一次的 chunk 回归到原来的位置
+
+    return mainMap;
 };
 
