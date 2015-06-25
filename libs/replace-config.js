@@ -13,7 +13,6 @@ var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var sign = require('./sign.js');
 var jsminify = require('./jsminify.js');
-var pathURI = require('./path-uri.js');
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /}$/;
 var coolieConfig = {};
