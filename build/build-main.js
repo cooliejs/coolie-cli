@@ -41,14 +41,16 @@ module.exports = function (mainFile, callback) {
 
             var depList = meta.depList;
             var output;
+            var isChunk = configs._chunkModuleIdMap[file];
 
-            // 采用内容 MD5
-            var code2 = configs._chunkModuleIdMap[file] ? '' : '\n' + meta.code;
-            var bf = new Buffer(code2, 'utf8');
+            if (isChunk) {
+                configs._chunkBufferMap[file] = new Buffer('\n' + meta.code, 'utf8');
+            } else {
+                md5List += encryption.md5(meta.code);
+                bufferList.push(new Buffer('\n' + meta.code, 'utf8'));
+            }
 
-            md5List += code2 ? encryption.md5(code2) : '';
             depsCache[mainFile] = true;
-            bufferList.push(bf);
             depsRelationship[file] = {};
 
             if (depList.length) {
