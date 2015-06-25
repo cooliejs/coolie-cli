@@ -48,7 +48,6 @@ module.exports = function (mainMap, versionMap, callback) {
             var depending = meta.depending[0];
 
             mainMap[depending].bufferList.push(configs._chunkBufferMap[mod]);
-            mainMap[depending].bufferList = [];
             mainMap[depending].md5List += configs._chunkMD5Map[mod];
 
             delete(configs._chunkModuleMap[mod]);

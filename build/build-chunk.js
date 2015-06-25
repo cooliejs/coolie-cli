@@ -22,16 +22,8 @@ var path = require('path');
  */
 module.exports = function (versionMap) {
     var configs = global.configs;
-    var chunkList = [];
 
-    dato.each(configs._chunkModuleMap, function (mod, meta) {
-        var index = configs._chunkFileMap[mod] * 1;
-
-        chunkList[index] = chunkList[index] || [];
-        chunkList[index].push(mod);
-    });
-
-    dato.each(chunkList, function (i, files) {
+    dato.each(configs._chunkList, function (i, files) {
         var bfList = [];
         var output = sign('js');
         var md5List = '';

@@ -204,9 +204,10 @@ module.exports = function (srcPath) {
         })
         // 分配 chunk、合并 chunk
         .task(function (next) {
-            assignChunk(mainMap, versionMap);
-            buildChunk(versionMap);
-            next();
+            assignChunk(mainMap, versionMap, function () {
+                buildChunk(versionMap);
+                next();
+            });
         })
 
         .task(function (next) {
