@@ -21,7 +21,7 @@
  *
  * @example
  * // 合法的 mainMap
- * {
+ * "/path/to/main.js": {
  *     // 入口文件绝对路径
  *     mainFile: "/path/to/main.js",
  *     // bufferList 是入口模块独有的模块

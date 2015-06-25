@@ -177,17 +177,27 @@ module.exports = function (srcPath) {
                             code += '\ncoolie.chunk(' + joinArr(chunkList) + ');';
                         }
 
-                        fs.outputFile(destFile, code, function (err) {
-                            if (err) {
-                                log('write file', pathURI.toSystemPath(destFile), 'error');
-                                log('write file', err.message, 'error');
-                                process.exit(1);
-                            }
+                        mainMap[file] = {
+                            mainFile: file,
+                            bufferList: bufferList
+                        };
+                        mainLength++;
+                        nextFile();
 
-                            //log('√', pathURI.toSystemPath(destFile), 'success');
-                            mainLength++;
-                            nextFile();
-                        });
+                        //fs.outputFile(destFile, code, function (err) {
+                        //    if (err) {
+                        //        log('write file', pathURI.toSystemPath(destFile), 'error');
+                        //        log('write file', err.message, 'error');
+                        //        process.exit(1);
+                        //    }
+                        //
+                        //    mainMap[file] = {
+                        //        mainFile: file,
+                        //        bufferList: bufferList
+                        //    };
+                        //    mainLength++;
+                        //    nextFile();
+                        //});
                     });
                 }).follow(function () {
                     nextMain();
