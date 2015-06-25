@@ -7,9 +7,8 @@
 'use strict';
 
 
-
 var Increase = function (init10) {
-    if(init10 === undefined){
+    if (init10 === undefined) {
         init10 = 0;
     }
 
@@ -26,7 +25,7 @@ Increase.prototype.add = function () {
     this._init10++;
     this._init36 = this._init10.toString(36);
 
-    return this._init36;
+    return this;
 };
 
 
@@ -39,5 +38,13 @@ Increase.prototype.get = function () {
 };
 
 
-module.exports = Increase;
+var increase = new Increase();
+
+/**
+ * 获得全局唯一 ID
+ * @returns {*}
+ */
+exports.get = function () {
+    return increase.add().get();
+};
 

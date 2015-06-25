@@ -14,7 +14,6 @@ var sign = require('../libs/sign.js');
 var dato = require('ydr-utils').dato;
 var pathURI = require("../libs/path-uri.js");
 var encryption = require('ydr-utils').encryption;
-var Increase = require('../libs/Increase.js');
 var buildModule = require('./build-module.js');
 
 
@@ -22,8 +21,6 @@ module.exports = function (mainFile, callback) {
     var bufferList = [];
     // 入口模块名称
     var mainName = path.basename(mainFile);
-    // 自增对象
-    var increase = new Increase();
     // 模块绝对路径 <=> ID 对应表
     var depIdsMap = {};
     // 记录已经构建的列表
@@ -34,7 +31,7 @@ module.exports = function (mainFile, callback) {
     var deepDeps = [];
 
     var _deepBuld = function (name, type, file) {
-        buildModule(name, type, file, increase, depIdsMap, function (err, meta) {
+        buildModule(name, type, file, depIdsMap, function (err, meta) {
             if (err) {
                 log("build", pathURI.toSystemPath(file), "error");
                 log('build', err.message, 'error');
