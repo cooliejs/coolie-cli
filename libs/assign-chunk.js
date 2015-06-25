@@ -90,9 +90,6 @@ module.exports = function (mainMap, versionMap, callback) {
 };
 
 
-
-
-
 /**
  * 数组合并并保留字符串
  * @param arr
