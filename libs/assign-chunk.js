@@ -57,9 +57,12 @@ module.exports = function (mainMap, versionMap, callback) {
     dato.each(configs._chunkModuleMap, function (mod, meta) {
         var index = configs._chunkFileMap[mod] * 1;
 
-        chunkList[index] = chunkList[index] || [];
-        chunkList[index].push(mod);
+        configs._chunkList[index] = configs._chunkList[index] || [];
+        configs._chunkList[index].push(mod);
     });
+
+    console.log(configs._chunkList);
+    process.exit(1);
 
     howdo.each(mainMap, function (mainFile, main, done) {
         var version = encryption.md5(main.md5List);
@@ -68,6 +71,11 @@ module.exports = function (mainMap, versionMap, callback) {
         versionMap[pathURI.toURIPath(main.srcName)] = version;
 
         var destFile = path.join(configs._destPath, main.destName);
+        var code = '';
+
+        if (main.chunkList.length) {
+            code += '\ncoolie.chunk(' + joinArr(main.chunkList) + ');';
+        }
 
         fse.outputFile(destFile, code, function (err) {
             if (err) {
@@ -81,3 +89,25 @@ module.exports = function (mainMap, versionMap, callback) {
     }).together(callback);
 };
 
+
+
+
+
+/**
+ * 数组合并并保留字符串
+ * @param arr
+ * @returns {string}
+ */
+var joinArr = function (arr) {
+    var s = '[';
+
+    arr.forEach(function (item, index) {
+        if (index) {
+            s += ',';
+        }
+
+        s += '"' + item + '"';
+    });
+
+    return s + ']';
+};
