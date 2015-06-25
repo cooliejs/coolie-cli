@@ -66,8 +66,12 @@ module.exports = function (mainFile, callback) {
                         deepDeps.push(depId);
                     }
 
-                    if(dep.chunk){
-                        chunkList.push(dep.gid);
+                    if (dep.chunk) {
+                        var chunkId = configs._chunkFileMap[dep.id];
+
+                        if (chunkList.indexOf(chunkId) === -1) {
+                            chunkList.push(chunkId);
+                        }
                     }
 
                     if (depsRelationship[depId] && depsRelationship[depId][file]) {
