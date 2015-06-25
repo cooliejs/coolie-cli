@@ -29,9 +29,9 @@ var globalId = require('../libs/global-id.js');
  * @param file 文件路径
  * @param depIdsMap 模块绝对路径 <=> ID 对应表
  * @param callback 回调，返回包括
- * @arguments[1].code 压缩替换后的代码
+ * @arguments[0].code 压缩替换后的代码
  * @arguments[1].deps 文件依赖的文件列表
- * @arguments[1].depIdsMap 文件依赖的文件列表
+ * @arguments[2].depIdsMap 文件依赖的文件列表
  */
 module.exports = function (name, type, file, depIdsMap, callback) {
     // 依赖 ID 列表
@@ -76,14 +76,15 @@ module.exports = function (name, type, file, depIdsMap, callback) {
                     // 当前依赖模块属于独立块状模块
                     if (chunkId) {
                         depNameList.push(dep.raw);
-                        configs._chunkModuleIdMap[depId] = configs._chunkModuleIdMap[depId] || globalId.get();
-                        depName2IdMap[dep.raw] = depIdsMap[depId] = configs._chunkModuleIdMap[depId];
+                        configs._chunkModuleMap[depId] = configs._chunkModuleMap[depId] || {};
+                        configs._chunkModuleMap[depId].gid = globalId.get();
+                        depName2IdMap[dep.raw] = depIdsMap[depId] = configs._chunkModuleMap[depId].gid;
                         depList.push({
                             name: dep.name,
                             id: depId,
                             type: dep.type,
                             chunk: true,
-                            gid: configs._chunkModuleIdMap[depId]
+                            gid: configs._chunkModuleMap[depId].gid
                         });
 
                         return;

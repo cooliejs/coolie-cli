@@ -32,6 +32,8 @@ module.exports = function (mainFile, callback) {
     var chunkList = [];
     var configs = global.configs;
 
+    configs._mainChunkMap[mainFile] = {};
+
     var _deepBuld = function (name, type, file) {
         buildModule(name, type, file, depIdsMap, function (err, meta) {
             if (err) {
@@ -42,7 +44,7 @@ module.exports = function (mainFile, callback) {
 
             var depList = meta.depList;
             var output;
-            var isChunk = configs._chunkModuleIdMap[file];
+            var isChunk = configs._chunkModuleMap[file];
             var md5 = encryption.md5(meta.code);
 
             if (isChunk) {
