@@ -8,8 +8,12 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
+var encryption = require('ydr-utils').encryption;
 var sign = require('../libs/sign.js');
+var log = require('../libs/log.js');
+var pathURI = require('../libs/path-uri.js');
 var fse = require('fs-extra');
+var path = require('path');
 
 
 module.exports = function () {
@@ -26,17 +30,24 @@ module.exports = function () {
     dato.each(chunkList, function (i, files) {
         var bfList = [];
         var output = sign('js');
+        var md5List = '';
 
         dato.each(files, function (j, file) {
             bfList.push(configs._chunkBufferMap[file]);
+            md5List += configs._chunkMD5Map[file];
         });
 
         output += Buffer.concat(bfList).toString();
 
+        var fileName = encryption.md5(md5List) + '.js';
+        var file = path.join(configs._jsPath, fileName);
+
         try {
-            fse.outputFileSync();
+            fse.outputFileSync(file, output, 'utf8');
         } catch (err) {
-            // ignore
+            log('write file', pathURI.toSystemPath(file), 'error');
+            log('write file', err.message, 'error');
+            process.exit(1);
         }
     });
 };
