@@ -168,7 +168,10 @@ module.exports = function (srcPath) {
                         destFile = pathURI.replaceVersion(destFile, md5Version);
                         versionMap[pathURI.toURIPath(relative)] = md5Version;
 
-                        console.log(chunkList);
+                        if (chunkList.length) {
+                            code += '\ncoolie.chunk([' + chunkList.join(',') + ']);';
+                        }
+
                         fs.outputFile(destFile, code, function (err) {
                             if (err) {
                                 log('write file', pathURI.toSystemPath(destFile), 'error');
