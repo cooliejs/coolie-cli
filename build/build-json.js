@@ -57,10 +57,10 @@ module.exports = function (basedir) {
         });
     }
 
-    // js.src
+    // js.main
     steps.push(function (data) {
         json.js = {};
-        json.js.src = _getVal(data, './static/js/app/**/*.js', true);
+        json.js.main = _getVal(data, './static/js/app/**/*.js', true);
 
         log('2/7', '请输入 coolie.js 配置文件所在的路径，默认为“./static/js/coolie-config.js”。', 'success');
     });

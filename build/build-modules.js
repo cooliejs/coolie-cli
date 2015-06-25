@@ -25,9 +25,9 @@ var copy = require('../libs/copy.js');
 module.exports = function (srcPath) {
     /**
      * @prototype js
-     * @prototype js.src
-     * @prototype js["coolie.js"]
+     * @prototype js.main
      * @prototype js["coolie-config.js"]
+     * @prototype js.chunk
      * @prototype css
      * @prototype css.src
      * @prototype css.host
@@ -116,9 +116,7 @@ module.exports = function (srcPath) {
 
             next();
         })
-        .each(configs.js.src, function (i, main, nextMain) {
-
-
+        .each(configs.js.main, function (i, main, nextMain) {
             // 构建入口模块
             var gbPath = path.join(srcPath, main);
 
