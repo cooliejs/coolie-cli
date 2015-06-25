@@ -74,8 +74,16 @@ module.exports = function (name, type, file, depIdsMap, callback) {
                     var depName = dep.name;
                     var depId = path.join(relativeDir, depName);
 
-                    if(configs._chunkMap[depId]){
-                        console.log('chunk', depId, configs._chunkMap[depId]);
+                    // 当前依赖模块属于独立块状模块
+                    if (configs._chunkMap[depId]) {
+                        depList.push({
+                            name: dep.name,
+                            id: depId,
+                            type: dep.type
+                        });
+                        depNameList.push(dep.raw);
+                        depName2IdMap[dep.raw] = depIdMap[depId] = chunkModuleIdMap[depId] = globalId.get();
+                        return;
                     }
 
                     if (!depIdMap[depId]) {
@@ -132,6 +140,7 @@ module.exports = function (name, type, file, depIdsMap, callback) {
 
 
         .follow(function (err, code) {
+            console.log(chunkModuleIdMap);
             callback(err, {
                 isSingle: isSingle,
                 code: code,
