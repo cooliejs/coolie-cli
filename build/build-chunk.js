@@ -44,7 +44,7 @@ module.exports = function (versionMap) {
         output += Buffer.concat(bfList).toString();
 
         var fileName = pathURI.replaceVersion(i + '.js', encryption.md5(md5List));
-        var file = path.join(configs._destPath, configs.js.dest, fileName);
+        var file = path.join(configs._destJSBase, fileName);
 
         try {
             fse.outputFileSync(file, output);

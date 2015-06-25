@@ -128,8 +128,6 @@ module.exports = function (srcPath) {
                     "\nis NOT a file", "error");
                 process.exit(1);
             }
-
-            check._coolieConfigJS();
         } else {
             config._noCoolieJS = true;
         }
@@ -194,8 +192,10 @@ module.exports = function (srcPath) {
             process.exit(1);
         }
 
+        var coolieConfigJSDir = path.dirname(coolieConfigJSFile);
+
         try {
-            basePath = path.join(path.dirname(coolieConfigJSFile), basePath);
+            basePath = path.join(coolieConfigJSDir, basePath);
         } catch (err) {
             log("parse config", pathURI.toSystemPath(file), "error");
             log("parse config", err.message, "error");
@@ -334,6 +334,10 @@ module.exports = function (srcPath) {
 
         if (config.dest.host.slice(-1) !== '/') {
             config.dest.host += '/';
+        }
+
+        if(!config._noCoolieJS){
+            check._coolieConfigJS();
         }
     };
 
