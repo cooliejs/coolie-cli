@@ -75,32 +75,33 @@ module.exports = function (name, type, file, depIdsMap, callback) {
 
                     // 当前依赖模块属于独立块状模块
                     if (chunkId) {
+                        depNameList.push(dep.raw);
+                        configs._chunkModuleIdMap[depId] = configs._chunkModuleIdMap[depId] || globalId.get();
+                        depName2IdMap[dep.raw] = depIdsMap[depId] = configs._chunkModuleIdMap[depId];
                         depList.push({
                             name: dep.name,
                             id: depId,
                             type: dep.type,
-                            chunk: true
+                            chunk: true,
+                            gid: configs._chunkModuleIdMap[depId]
                         });
-                        depNameList.push(dep.raw);
-                        configs._chunkModuleIdMap[depId] = configs._chunkModuleIdMap[depId] || globalId.get();
-                        depName2IdMap[dep.raw] = depIdsMap[depId] = configs._chunkModuleIdMap[depId];
 
                         return;
                     }
 
                     if (!depIdMap[depId]) {
+
+                        depIdMap[depId] = true;
+                        depNameList.push(dep.raw);
+                        depIdsMap[depId] = depIdsMap[depId] || globalId.get();
+
                         depList.push({
                             name: dep.name,
                             id: depId,
                             type: dep.type,
-                            chunk: false
+                            chunk: false,
+                            gid: depIdsMap[depId]
                         });
-                        depIdMap[depId] = true;
-                        depNameList.push(dep.raw);
-
-                        if (!depIdsMap[depId]) {
-                            depIdsMap[depId] = globalId.get();
-                        }
 
                         depName2IdMap[dep.raw] = depIdsMap[depId];
                     }

@@ -29,6 +29,7 @@ module.exports = function (mainFile, callback) {
     var depsRelationship = {};
     var md5List = '';
     var deepDeps = [];
+    var chunkList = [];
     var configs = global.configs;
 
     var _deepBuld = function (name, type, file) {
@@ -63,6 +64,10 @@ module.exports = function (mainFile, callback) {
 
                     if (deepDeps.indexOf(depId) === -1) {
                         deepDeps.push(depId);
+                    }
+
+                    if(dep.chunk){
+                        console.log(dep);
                     }
 
                     if (depsRelationship[depId] && depsRelationship[depId][file]) {
