@@ -1,10 +1,13 @@
 {
   "js": {
-    "src": [
+    "main": [
       "./static/js/app/**/*.js"
     ],
     "coolie-config.js": "./static/js/coolie-config.js",
-    "dest": "./static/js/"
+    "dest": "./static/js/",
+    "chunk": [
+      "./static/js/lib/**/*.js"
+    ]
   },
   "html": {
     "src": [

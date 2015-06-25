@@ -75,9 +75,10 @@ module.exports = function (srcPath) {
 
     // 检查 js 路径
     // js: {
-    //    src: [],
+    //    main: [],
     //    coolie-config.js: "",
     //    dest: ""
+    //    chunk: []
     // }
     check.js = function () {
         if (typeis(config.js) !== "object") {
@@ -85,27 +86,32 @@ module.exports = function (srcPath) {
             process.exit(1);
         }
 
-        // js.src
-        if (config.js.src) {
-            var htmlPathType = typeis(config.js.src);
+        if(config.js.src){
+            log("parse config", "please change `js.src` to `js.main`", "error");
+            process.exit(1);
+        }
+
+        // js.main
+        if (config.js.main) {
+            var htmlPathType = typeis(config.js.main);
 
             if (htmlPathType !== "string" && htmlPathType !== "array") {
-                log("parse config", "`js.src` property must be a string path or an array", "error");
+                log("parse config", "`js.main` property must be a string path or an array", "error");
                 process.exit(1);
             }
 
             if (htmlPathType === "array") {
-                config.js.src.forEach(function (mn, index) {
+                config.js.main.forEach(function (mn, index) {
                     if (typeis(mn) !== "string") {
-                        log("parse config", "`js.src[" + index + "]` must be a string", "error");
+                        log("parse config", "`js.main[" + index + "]` must be a string", "error");
                         process.exit(1);
                     }
                 });
             } else {
-                config.js.src = [config.js.src];
+                config.js.main = [config.js.main];
             }
         } else {
-            config.js.src = [];
+            config.js.main = [];
         }
 
         // js[coolie-config.js]
