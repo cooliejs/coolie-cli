@@ -16,6 +16,9 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
+var encryption = require('ydr-utils').encryption;
+var pathURI = require('./path-uri.js');
+
 
 /**
  * 智能分配 chunk
@@ -38,9 +41,10 @@ module.exports = function (mainMap, versionMap) {
         // 仅被一个入口模块使用的 chunk 模块
         if (meta.depending.length === 1) {
             var depending = meta.depending[0];
-            var bfList = mainMap[depending].bufferList;
 
-            bfList.push(configs._chunkBufferMap[mod]);
+            mainMap[depending].bufferList.push(configs._chunkBufferMap[mod]);
+            mainMap[depending].bufferList = [];
+            mainMap[depending].md5List += configs._chunkMD5Map[mod];
 
             delete(configs._chunkModuleMap[mod]);
         }
@@ -49,10 +53,11 @@ module.exports = function (mainMap, versionMap) {
         //configs._chunkMap
     });
 
-    // 2. 仅使用一次的 chunk 回归到原来的位置
+    dato.each(mainMap, function (mainFile, main) {
+        var version = encryption.md5(main.md5List);
 
-    console.log(mainMap);
-    process.exit(1);
-    return mainMap;
+        main.destName = pathURI.replaceVersion(main.srcName, version);
+        versionMap[pathURI.toURIPath(main.srcName)] = version;
+    });
 };
 
