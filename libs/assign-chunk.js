@@ -15,9 +15,12 @@
 
 'use strict';
 
+var dato = require('ydr-utils').dato;
+
 /**
  * 智能分配 chunk
  * @param mainMap {Object} 入口 map
+ * @param versionMap {Object} 版本 map
  *
  * @example
  * // 合法的 mainMap
@@ -28,7 +31,7 @@
  *     bufferList: [bf1, bf2, ...]
  * }
  */
-module.exports = function (mainMap) {
+module.exports = function (mainMap, versionMap) {
     var configs = global.configs;
 
     dato.each(configs._chunkModuleMap, function (mod, meta) {
@@ -48,6 +51,8 @@ module.exports = function (mainMap) {
 
     // 2. 仅使用一次的 chunk 回归到原来的位置
 
+    console.log(mainMap);
+    process.exit(1);
     return mainMap;
 };
 

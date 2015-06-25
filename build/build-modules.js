@@ -161,24 +161,24 @@ module.exports = function (srcPath) {
                             return;
                         }
 
-                        var code = '';
-
                         mainRelationshipMap[pathURI.toURIPath(relative)] = deepDeps.map(function (dep) {
                             return pathURI.toURIPath(path.relative(srcPath, dep));
                         });
 
-                        var md5Version = encryption.md5(md5List);
-                        var destFile = path.join(destPath, relative);
+                        //var md5Version = encryption.md5(md5List);
+                        //var destFile = path.join(destPath, relative);
+                        //
+                        //destFile = pathURI.replaceVersion(destFile, md5Version);
+                        //versionMap[pathURI.toURIPath(relative)] = md5Version;
 
-                        destFile = pathURI.replaceVersion(destFile, md5Version);
-                        versionMap[pathURI.toURIPath(relative)] = md5Version;
-
-                        if (chunkList.length) {
-                            code += '\ncoolie.chunk(' + joinArr(chunkList) + ');';
-                        }
+                        //if (chunkList.length) {
+                        //    code += '\ncoolie.chunk(' + joinArr(chunkList) + ');';
+                        //}
 
                         mainMap[file] = {
                             mainFile: file,
+                            md5List: md5List,
+                            chunkList: chunkList,
                             bufferList: bufferList
                         };
                         mainLength++;
@@ -191,10 +191,6 @@ module.exports = function (srcPath) {
                         //        process.exit(1);
                         //    }
                         //
-                        //    mainMap[file] = {
-                        //        mainFile: file,
-                        //        bufferList: bufferList
-                        //    };
                         //    mainLength++;
                         //    nextFile();
                         //});
@@ -206,7 +202,7 @@ module.exports = function (srcPath) {
         })
         // 分配chunk、合并 chunk
         .task(function (next) {
-            assignChunk();
+            assignChunk(mainMap, versionMap);
             buildChunk(versionMap);
             next();
         })
