@@ -16,7 +16,11 @@ var fse = require('fs-extra');
 var path = require('path');
 
 
-module.exports = function () {
+/**
+ * chunk 构建
+ * @param versionMap {Object} 版本
+ */
+module.exports = function (versionMap) {
     var configs = global.configs;
     var chunkList = [];
 

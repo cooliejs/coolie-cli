@@ -191,7 +191,7 @@ module.exports = function (srcPath) {
         })
 
         .task(function (next) {
-            buildChunk();
+            buildChunk(versionMap);
             log('3/5', 'overwrite config', 'task');
             configs._buildStep = 3;
             next();
