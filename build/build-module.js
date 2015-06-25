@@ -40,6 +40,8 @@ module.exports = function (name, type, file, depIdsMap, callback) {
     var depIdMap = {};
     // 依赖名称列表
     var depNameList = [];
+    // 依赖的 chunk 列表
+    var chunkList = [];
     // 依赖名称与 ID 对应关系
     var depName2IdMap = {};
     // 单独的文件，没有依赖
@@ -71,9 +73,10 @@ module.exports = function (name, type, file, depIdsMap, callback) {
                 parseDeps(file, code).forEach(function (dep) {
                     var depName = dep.name;
                     var depId = path.join(relativeDir, depName);
+                    var chunkId = configs._chunkFileMap[depId];
 
                     // 当前依赖模块属于独立块状模块
-                    if (configs._chunkFileMap[depId]) {
+                    if (chunkId) {
                         depList.push({
                             name: dep.name,
                             id: depId,
@@ -81,7 +84,13 @@ module.exports = function (name, type, file, depIdsMap, callback) {
                             chunk: true
                         });
                         depNameList.push(dep.raw);
-                        depName2IdMap[dep.raw] = depIdsMap[depId] = configs._chunkModuleIdMap[depId] = globalId.get();
+                        configs._chunkModuleIdMap[depId] = configs._chunkModuleIdMap[depId] || globalId.get();
+                        depName2IdMap[dep.raw] = depIdsMap[depId] = configs._chunkModuleIdMap[depId];
+
+                        if(chunkList.indexOf(chunkId) === -1){
+                            chunkList.push(chunkId);
+                        }
+
                         return;
                     }
 
@@ -143,7 +152,8 @@ module.exports = function (name, type, file, depIdsMap, callback) {
             callback(err, {
                 isSingle: isSingle,
                 code: code,
-                depList: depList
+                depList: depList,
+                chunkList: chunkList
             });
         });
 };
