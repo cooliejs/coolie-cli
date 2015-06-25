@@ -20,8 +20,6 @@ var replaceRequire = require('../libs/replace-require.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
 var globalId = require('../libs/global-id.js');
-// 块状模块与 ID 对应表
-var chunkModuleIdMap = {};
 
 
 /**
@@ -75,14 +73,15 @@ module.exports = function (name, type, file, depIdsMap, callback) {
                     var depId = path.join(relativeDir, depName);
 
                     // 当前依赖模块属于独立块状模块
-                    if (configs._chunkMap[depId]) {
+                    if (configs._chunkFileMap[depId]) {
                         depList.push({
                             name: dep.name,
                             id: depId,
-                            type: dep.type
+                            type: dep.type,
+                            chunk: true
                         });
                         depNameList.push(dep.raw);
-                        depName2IdMap[dep.raw] = depIdMap[depId] = chunkModuleIdMap[depId] = globalId.get();
+                        depName2IdMap[dep.raw] = depIdsMap[depId] = configs._chunkModuleIdMap[depId] = globalId.get();
                         return;
                     }
 
@@ -90,7 +89,8 @@ module.exports = function (name, type, file, depIdsMap, callback) {
                         depList.push({
                             name: dep.name,
                             id: depId,
-                            type: dep.type
+                            type: dep.type,
+                            chunk: false
                         });
                         depIdMap[depId] = true;
                         depNameList.push(dep.raw);
@@ -140,7 +140,6 @@ module.exports = function (name, type, file, depIdsMap, callback) {
 
 
         .follow(function (err, code) {
-            console.log(chunkModuleIdMap);
             callback(err, {
                 isSingle: isSingle,
                 code: code,

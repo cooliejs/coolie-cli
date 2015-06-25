@@ -63,6 +63,8 @@ module.exports = function (srcPath) {
     configs._copyFilesMap = {};
     configs._copyLength = 0;
     configs._concatMap = {};
+    configs._chunkFileMap = {};
+    configs._chunkModuleIdMap = {};
     configs._chunkMap = {};
     configs.js.chunk.forEach(function (ck, index) {
         var gbPath = path.join(srcPath, ck);
@@ -77,7 +79,7 @@ module.exports = function (srcPath) {
         }
 
         files.forEach(function (f) {
-            configs._chunkMap[f] = String(index);
+            configs._chunkFileMap[f] = String(index);
         });
     });
     global.configs = configs;
@@ -339,5 +341,6 @@ module.exports = function (srcPath) {
                 '\npast ' + past + ' ms', 'success');
             console.log('');
             console.log('');
+            console.log(configs._chunkModuleIdMap);
         });
 };
