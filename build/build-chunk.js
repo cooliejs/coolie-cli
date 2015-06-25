@@ -39,7 +39,7 @@ module.exports = function () {
 
         output += Buffer.concat(bfList).toString();
 
-        var fileName = encryption.md5(md5List) + '.js';
+        var fileName = pathURI.replaceVersion(i + '.js', encryption.md5(md5List));
         var file = path.join(configs._destPath, configs.js.dest, fileName);
 
         try {
