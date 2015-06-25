@@ -17,6 +17,7 @@ var pathURI = require("../libs/path-uri.js");
 var encryption = require('ydr-utils').encryption;
 var replaceConfig = require('../libs/replace-config.js');
 var parseConfig = require('../libs/parse-config.js');
+var assignChunk = require('../libs/assign-chunk.js');
 var buildMain = require('./build-main.js');
 var buildChunk = require('./build-chunk.js');
 var buildHTML = require('./build-html.js');
@@ -47,6 +48,7 @@ module.exports = function (srcPath) {
     var jsPath = path.join(srcPath, configs.js.dest);
     var cssPath = path.join(srcPath, configs.css.dest);
     var coolieConfigJSPath = configs._noCoolieJS ? null : path.join(srcPath, configs.js['coolie-config.js']);
+    var mainMap = {};
 
     configs._srcPath = srcPath;
     configs._destPath = destPath;
@@ -68,7 +70,6 @@ module.exports = function (srcPath) {
     configs._chunkModuleMap = {};
     configs._chunkBufferMap = {};
     configs._chunkMD5Map = {};
-    configs._chunkMap = {};
 
     configs.js.chunk.forEach(function (ck, index) {
         var gbPath = path.join(srcPath, ck);
@@ -193,9 +194,14 @@ module.exports = function (srcPath) {
                 });
             });
         })
+        // 分配chunk、合并 chunk
+        .task(function (next) {
+            assignChunk();
+            buildChunk(versionMap);
+            next();
+        })
 
         .task(function (next) {
-            buildChunk(versionMap);
             log('3/5', 'overwrite config', 'task');
             configs._buildStep = 3;
             next();
