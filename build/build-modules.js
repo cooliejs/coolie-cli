@@ -63,9 +63,26 @@ module.exports = function (srcPath) {
     configs._copyFilesMap = {};
     configs._copyLength = 0;
     configs._concatMap = {};
+    configs._chunkMap = {};
+    configs.js.chunk.forEach(function (ck, index) {
+        var gbPath = path.join(srcPath, ck);
+        var files;
+
+        try {
+            files = glob.sync(gbPath, {dot: false, nodir: true});
+        } catch (err) {
+            log('glob', pathURI.toSystemPath(gbPath), 'error');
+            log('glob', err.message, 'error');
+            process.exit(1);
+        }
+
+        files.forEach(function (f) {
+            configs._chunkMap[f] = index;
+        });
+    });
     global.configs = configs;
 
-    return console.log(JSON.stringify(configs, null, 2));
+    //return console.log(JSON.stringify(configs, null, 2));
 
     var time = Date.now();
     var mainLength = 0;

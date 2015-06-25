@@ -93,14 +93,14 @@ module.exports = function (srcPath) {
 
         // js.main
         if (config.js.main) {
-            var htmlPathType = typeis(config.js.main);
+            var mainPathType = typeis(config.js.main);
 
-            if (htmlPathType !== "string" && htmlPathType !== "array") {
+            if (mainPathType !== "string" && mainPathType !== "array") {
                 log("parse config", "`js.main` property must be a string path or an array", "error");
                 process.exit(1);
             }
 
-            if (htmlPathType === "array") {
+            if (mainPathType === "array") {
                 config.js.main.forEach(function (mn, index) {
                     if (typeis(mn) !== "string") {
                         log("parse config", "`js.main[" + index + "]` must be a string", "error");
@@ -162,9 +162,7 @@ module.exports = function (srcPath) {
         } else {
             config.js.chunk = [];
         }
-
     };
-
 
     // 检查 coolie-config.js 内的 base 路径
     // base 路径必须在 coolie-config.js 以内，否则在构建之后的 main 会指向错误
