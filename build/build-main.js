@@ -29,11 +29,12 @@ module.exports = function (mainFile, callback) {
     var depsRelationship = {};
     var md5List = '';
     var deepDeps = [];
+    var configs = global.configs;
 
     var _deepBuld = function (name, type, file) {
         buildModule(name, type, file, depIdsMap, function (err, meta) {
             if (err) {
-                log("build", pathURI.toSystemPath(file), "error");
+                log('build', pathURI.toSystemPath(file), 'error');
                 log('build', err.message, 'error');
                 process.exit(1);
             }
@@ -45,11 +46,11 @@ module.exports = function (mainFile, callback) {
             // 采用内容 MD5
             md5List += encryption.md5(code);
             depsCache[mainFile] = true;
-            bufferList.push(new Buffer("\n" + code, "utf8"));
+            bufferList.push(new Buffer(configs._chunkModuleIdMap[file] ? '' : '\n' + code, 'utf8'));
             depsRelationship[file] = {};
 
             if (depList.length) {
-                depList.forEach(function (dep, index) {
+                depList.forEach(function (dep) {
                     var depId = dep.id;
 
                     depsRelationship[file][depId] = true;
@@ -59,7 +60,8 @@ module.exports = function (mainFile, callback) {
                     }
 
                     if (depsRelationship[depId] && depsRelationship[depId][file]) {
-                        log('depend cycle', pathURI.toSystemPath(file) + '\n' + pathURI.toSystemPath(depId), 'error');
+                        log('depend cycle', pathURI.toSystemPath(file) + '\n' +
+                            pathURI.toSystemPath(depId), 'error');
                         process.exit(1);
                     }
 
@@ -75,6 +77,7 @@ module.exports = function (mainFile, callback) {
             if (depsLength === bufferList.length) {
                 output = sign('js');
                 output += Buffer.concat(bufferList).toString();
+                log("√", pathURI.toSystemPath(mainFile), "success");
                 callback(null, output, md5List, deepDeps);
             }
         });
@@ -82,6 +85,5 @@ module.exports = function (mainFile, callback) {
 
     // 第一个 define 模块为入口模块，不必指定其 name
     depIdsMap[mainFile] = '0';
-    log("√", pathURI.toSystemPath(mainFile), "success");
     _deepBuld(mainName, 'js', mainFile);
 };
