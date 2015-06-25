@@ -43,15 +43,20 @@ module.exports = function (versionMap) {
 
         output += Buffer.concat(bfList).toString();
 
-        var fileName = pathURI.replaceVersion(i + '.js', encryption.md5(md5List));
-        var dirname = path.join(configs._destPath, path.relative(configs._srcPath, configs._jsBase));
-        var file = path.join(dirname, fileName);
+        var version = encryption.md5(md5List);
+        var fileName = pathURI.replaceVersion(i + '.js', version);
+        var srcName = path.join(path.relative(configs._srcPath, configs._jsBase), fileName);
+        var srcFile = path.join(configs._srcPath, srcName);
+        var destFile = path.join(configs._destPath, srcName);
+
+        //versionMap[srcFile] = version;
+        console.log(srcFile);
 
         try {
-            fse.outputFileSync(file, output);
-            log('√', pathURI.toSystemPath(file), 'success');
+            fse.outputFileSync(destFile, output);
+            log('√', pathURI.toSystemPath(destFile), 'success');
         } catch (err) {
-            log('write file', pathURI.toSystemPath(file), 'error');
+            log('write file', pathURI.toSystemPath(destFile), 'error');
             log('write file', err.message, 'error');
             process.exit(1);
         }
