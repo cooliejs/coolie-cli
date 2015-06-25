@@ -40,10 +40,10 @@ module.exports = function () {
         output += Buffer.concat(bfList).toString();
 
         var fileName = encryption.md5(md5List) + '.js';
-        var file = path.join(configs._jsPath, fileName);
+        var file = path.join(configs._destPath, configs.js.dest, fileName);
 
         try {
-            fse.outputFileSync(file, output, 'utf8');
+            fse.outputFileSync(file, output);
         } catch (err) {
             log('write file', pathURI.toSystemPath(file), 'error');
             log('write file', err.message, 'error');
