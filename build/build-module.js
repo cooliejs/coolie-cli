@@ -71,7 +71,6 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
             if (!isSingle) {
                 var deps = parseDeps(file, code);
 
-
                 deps.forEach(function (dep) {
                     var depName = dep.name;
                     var depId = path.join(relativeDir, depName);
