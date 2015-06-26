@@ -166,16 +166,6 @@ module.exports = function (srcPath) {
                             return pathURI.toURIPath(path.relative(srcPath, dep));
                         });
 
-                        //var md5Version = encryption.md5(md5List);
-                        //var destFile = path.join(destPath, relative);
-                        //
-                        //destFile = pathURI.replaceVersion(destFile, md5Version);
-                        //versionMap[pathURI.toURIPath(relative)] = md5Version;
-
-                        //if (chunkList.length) {
-                        //    code += '\ncoolie.chunk(' + joinArr(chunkList) + ');';
-                        //}
-
                         mainMap[file] = {
                             mainFile: file,
                             srcName: srcName,
@@ -185,17 +175,6 @@ module.exports = function (srcPath) {
                         };
                         mainLength++;
                         nextFile();
-
-                        //fs.outputFile(destFile, code, function (err) {
-                        //    if (err) {
-                        //        log('write file', pathURI.toSystemPath(destFile), 'error');
-                        //        log('write file', err.message, 'error');
-                        //        process.exit(1);
-                        //    }
-                        //
-                        //    mainLength++;
-                        //    nextFile();
-                        //});
                     });
                 }).follow(function () {
                     nextMain();
