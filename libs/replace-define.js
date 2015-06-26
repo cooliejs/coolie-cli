@@ -50,7 +50,10 @@ module.exports = function (file, code, depList, depIdsMap) {
         }
     });
 
-    return code
+
+    code = code
         .replace(REG_DEFINE_1, 'define("' + id + '",[' + depsCode + '],$1)')
         .replace(REG_DEFINE_2, 'define("' + id + '",[' + depsCode + '],function');
+
+    return code;
 };

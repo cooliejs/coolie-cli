@@ -127,11 +127,8 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                     }
 
 
-                    //if (!depIdMap[depId]) {
-                    //    depIdMap[depId] = true;
                     depNameList.push(dep.raw);
                     depIdsMap[depId] = configs._privateModuleMap[depId].gid;
-
 
                     if (!depIdMap[depId]) {
                         depIdMap[depId] = true;
@@ -144,20 +141,7 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                         });
                     }
 
-
                     depName2IdMap[dep.raw] = depIdsMap[depId];
-
-
-
-                    //}
-
-                    //if (file === '/Users/zhangyunlai/development/github/nodejs-community/webroot-dev/static/js/modules/common/ajax.js') {
-                    //    console.log(file);
-                    //    console.log(dep);
-                    //    console.log(configs._privateModuleMap[depId]);
-                    //    console.log(depName2IdMap);
-                    //    process.exit(1);
-                    //}
                 });
             }
 
@@ -167,17 +151,6 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
 
         // 3. 替换 require
         .task(function (next, code) {
-            //if (
-            //    file === '/Users/zhangyunlai/development/github/nodejs-community' +
-            //    '/webroot-dev/static/js/modules/common/ajax.js'
-            //) {
-            //    console.log(file);
-            //    console.log(depNameList);
-            //    console.log(depList);
-            //    console.log(depName2IdMap);
-            //    process.exit();
-            //}
-
             if (!isSingle) {
                 code = replaceRequire(file, code, depNameList, depName2IdMap);
             }
