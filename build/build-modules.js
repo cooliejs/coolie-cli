@@ -186,7 +186,6 @@ module.exports = function (srcPath) {
         .task(function (next) {
             if (!configs.js.chunk || !configs.js.chunk.length) {
                 log('×', 'unchunk modules', 'warning');
-                return next();
             }
 
             howdo
