@@ -310,8 +310,14 @@ module.exports = function (srcPath) {
                 if (mainRelationshipMap[item.main]) {
                     item.deps = mainRelationshipMap[item.main];
                 } else if (item.main) {
-                    log('miss main', item.main, 'error');
+                    log('×', 'miss main file: ' + item.main , 'warning');
                     item.deps = [];
+                }
+            });
+
+            dato.each(mainRelationshipMap, function (key, main) {
+                if(!htmlJsCssRelationshipMap[main]){
+                    log('×', 'unuse main file: ' + main , 'warning');
                 }
             });
 
