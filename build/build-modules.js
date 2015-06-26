@@ -100,6 +100,7 @@ module.exports = function (srcPath) {
     var versionMap = {};
     var mainRelationshipMap = {};
     var htmlJsCssRelationshipMap = {};
+    var htmlMainRelationshipMap = {};
 
     howdo
         .task(function (next) {
@@ -253,6 +254,7 @@ module.exports = function (srcPath) {
                             js: depJS,
                             main: mainJS
                         };
+                        htmlMainRelationshipMap[mainJS] = true;
 
                         dato.each(depCSS, function (name, dep) {
                             cssLength += dep.length;
@@ -310,14 +312,14 @@ module.exports = function (srcPath) {
                 if (mainRelationshipMap[item.main]) {
                     item.deps = mainRelationshipMap[item.main];
                 } else if (item.main) {
-                    log('×', 'miss main file: ' + item.main , 'warning');
+                    log('×', 'miss main file: ' + item.main, 'warning');
                     item.deps = [];
                 }
             });
 
-            dato.each(mainRelationshipMap, function (key, main) {
-                if(!htmlJsCssRelationshipMap[key]){
-                    log('×', 'unuse main file: ' + key , 'warning');
+            dato.each(mainRelationshipMap, function (key) {
+                if (!htmlMainRelationshipMap[key]) {
+                    log('×', 'unuse main file: ' + key, 'warning');
                 }
             });
 

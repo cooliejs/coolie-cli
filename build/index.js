@@ -26,10 +26,10 @@ var buildPath = cmdArg1 ? path.join(CWD, cmdArg1) : CWD;
 
 
 console.log('');
-console.log(colors.cyan('            ╔═══════════════════════════════════════════════════════╗'));
-console.log(colors.cyan('            ║         ', 'coolie.cli@' + pkg.version, '                           ║'));
-console.log(colors.cyan('            ║         ', pkg.description, '          ║'));
-console.log(colors.cyan('            ╚═══════════════════════════════════════════════════════╝'));
+console.log(colors.cyan('   ╔═════════════════════════════════════════╗'));
+console.log(colors.cyan('   ║  ', 'coolie@' + pkg.version, '                        ║'));
+console.log(colors.cyan('   ║  ', pkg.description, '   ║'));
+console.log(colors.cyan('   ╚═════════════════════════════════════════╝'));
 console.log('');
 
 switch ((cmdArg0 || "").toLowerCase()) {
