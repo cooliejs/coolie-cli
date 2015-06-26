@@ -186,9 +186,10 @@ module.exports = function (srcPath) {
         .task(function (next) {
             assignChunk(mainMap, versionMap, function () {
                 buildChunk(versionMap);
-                console.log(configs._chunkModuleMap);
-                console.log(configs._privateModuleMap);
-                process.exit(1);
+                //console.log(configs._chunkModuleMap);
+                //console.log('======================================================================');
+                //console.log(configs._privateModuleMap);
+                //process.exit(1);
                 next();
             });
         })

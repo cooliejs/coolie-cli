@@ -78,6 +78,7 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                     if (chunkId) {
                         depNameList.push(dep.raw);
                         configs._chunkModuleMap[depId] = configs._chunkModuleMap[depId] || {};
+                        configs._chunkModuleMap[depId].type = 'chunk';
                         configs._chunkModuleMap[depId].gid = configs._chunkModuleMap[depId].gid || globalId.get();
                         configs._chunkModuleMap[depId].depending = configs._chunkModuleMap[depId].depending || [];
                         depName2IdMap[dep.raw] = depIdsMap[depId] = configs._chunkModuleMap[depId].gid;
@@ -97,13 +98,15 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                         return;
                     }
 
-                    if (!depIdMap[depId]) {
-                        configs._privateModuleMap[depId] = configs._privateModuleMap[depId] || {};
-                        configs._privateModuleMap[depId].gid = configs._privateModuleMap[depId].gid || globalId.get();
-                        depIdMap[depId] = true;
-                        depNameList.push(dep.raw);
-                        depIdsMap[depId] = configs._privateModuleMap[depId].gid
+                    configs._privateModuleMap[depId] = configs._privateModuleMap[depId] || {};
+                    configs._privateModuleMap[depId].type = 'private';
+                    configs._privateModuleMap[depId].gid = configs._privateModuleMap[depId].gid || globalId.get();
+                    configs._privateModuleMap[depId].depending = configs._privateModuleMap[depId].depending || [];
 
+                    if (configs._privateModuleMap[depId].depending.indexOf(mainFile) === -1) {
+                        depNameList.push(dep.raw);
+                        depIdsMap[depId] = configs._privateModuleMap[depId].gid;
+                        configs._privateModuleMap[depId].depending.push(mainFile);
                         depList.push({
                             name: dep.name,
                             id: depId,
