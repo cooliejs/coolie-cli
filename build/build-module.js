@@ -69,7 +69,10 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
         // 2. 读取依赖
         .task(function (next, code) {
             if (!isSingle) {
-                parseDeps(file, code).forEach(function (dep) {
+                var deps = parseDeps(file, code);
+
+
+                deps.forEach(function (dep) {
                     var depName = dep.name;
                     var depId = path.join(relativeDir, depName);
                     var chunkId = configs._chunkFileMap[depId];
@@ -98,15 +101,40 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                         return;
                     }
 
+
+                    configs._privateModuleMap[file] = configs._privateModuleMap[file] || {};
+                    configs._privateModuleMap[file].id = file;
+                    configs._privateModuleMap[file].type = 'private';
+                    configs._privateModuleMap[file].dependencies = configs._privateModuleMap[file].dependencies || [];
+
+                    if (configs._privateModuleMap[file].dependencies.indexOf(depId) === -1) {
+                        configs._privateModuleMap[file].dependencies.push(depId);
+                    }
+
                     configs._privateModuleMap[depId] = configs._privateModuleMap[depId] || {};
+                    configs._privateModuleMap[depId].id = depId;
                     configs._privateModuleMap[depId].type = 'private';
                     configs._privateModuleMap[depId].gid = configs._privateModuleMap[depId].gid || globalId.get();
                     configs._privateModuleMap[depId].depending = configs._privateModuleMap[depId].depending || [];
+                    configs._privateModuleMap[depId].parents = configs._privateModuleMap[depId].parents || [];
+
+                    if (configs._privateModuleMap[depId].parents.indexOf(file) === -1) {
+                        configs._privateModuleMap[depId].parents.push(file);
+                    }
 
                     if (configs._privateModuleMap[depId].depending.indexOf(mainFile) === -1) {
-                        depNameList.push(dep.raw);
-                        depIdsMap[depId] = configs._privateModuleMap[depId].gid;
                         configs._privateModuleMap[depId].depending.push(mainFile);
+                    }
+
+
+                    //if (!depIdMap[depId]) {
+                    //    depIdMap[depId] = true;
+                    depNameList.push(dep.raw);
+                    depIdsMap[depId] = configs._privateModuleMap[depId].gid;
+
+
+                    if (!depIdMap[depId]) {
+                        depIdMap[depId] = true;
                         depList.push({
                             name: dep.name,
                             id: depId,
@@ -114,9 +142,22 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                             chunk: false,
                             gid: depIdsMap[depId]
                         });
-
-                        depName2IdMap[dep.raw] = depIdsMap[depId];
                     }
+
+
+                    depName2IdMap[dep.raw] = depIdsMap[depId];
+
+
+
+                    //}
+
+                    //if (file === '/Users/zhangyunlai/development/github/nodejs-community/webroot-dev/static/js/modules/common/ajax.js') {
+                    //    console.log(file);
+                    //    console.log(dep);
+                    //    console.log(configs._privateModuleMap[depId]);
+                    //    console.log(depName2IdMap);
+                    //    process.exit(1);
+                    //}
                 });
             }
 
@@ -126,6 +167,17 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
 
         // 3. 替换 require
         .task(function (next, code) {
+            //if (
+            //    file === '/Users/zhangyunlai/development/github/nodejs-community' +
+            //    '/webroot-dev/static/js/modules/common/ajax.js'
+            //) {
+            //    console.log(file);
+            //    console.log(depNameList);
+            //    console.log(depList);
+            //    console.log(depName2IdMap);
+            //    process.exit();
+            //}
+
             if (!isSingle) {
                 code = replaceRequire(file, code, depNameList, depName2IdMap);
             }
