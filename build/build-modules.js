@@ -130,70 +130,70 @@ module.exports = function (srcPath) {
             });
         })
 
-        .task(function (next) {
-            log('2/5', 'build main', 'task');
-            configs._buildStep = 2;
-
-            if (configs._noCoolieJS) {
-                log('×', 'NO coolie.js files');
-                return next();
-            }
-
-            next();
-        })
-        .each(configs.js.main, function (i, main, nextMain) {
-            // 构建入口模块
-            var gbPath = path.join(srcPath, main);
-
-            //log('build js', pathURI.toSystemPath(gbPath));
-
-            glob(gbPath, {dot: false, nodir: true}, function (err, files) {
-                if (err) {
-                    log('glob', pathURI.toSystemPath(gbPath), 'error');
-                    log('glob', err.message, 'error');
-                    process.exit(1);
-                }
-
-                howdo.each(files, function (j, file, nextFile) {
-                    var srcName = path.relative(srcPath, file);
-
-                    buildMain(file, function (err, bufferList, md5List, deepDeps, chunkList) {
-                        if (err) {
-                            return;
-                        }
-
-                        mainRelationshipMap[pathURI.toURIPath(srcName)] = deepDeps.map(function (dep) {
-                            return pathURI.toURIPath(path.relative(srcPath, dep));
-                        });
-
-                        mainMap[file] = {
-                            mainFile: file,
-                            srcName: srcName,
-                            md5List: md5List,
-                            chunkList: chunkList,
-                            bufferList: bufferList
-                        };
-                        mainLength++;
-                        nextFile();
-                    });
-                }).follow(function () {
-                    nextMain();
-                });
-            });
-        })
-        // chunk 管理
-        .task(function (next) {
-            howdo
-                // 分配 chunk
-                .task(function (next) {
-                    assignChunk(mainMap, versionMap, next);
-                })
-                // 合并 chunk
-                .task(function (next) {
-                    buildChunk(versionMap, next);
-                })
-                .follow(next);
-        })
+        //.task(function (next) {
+        //    log('2/5', 'build main', 'task');
+        //    configs._buildStep = 2;
+        //
+        //    if (configs._noCoolieJS) {
+        //        log('×', 'NO coolie.js files');
+        //        return next();
+        //    }
+        //
+        //    next();
+        //})
+        //.each(configs.js.main, function (i, main, nextMain) {
+        //    // 构建入口模块
+        //    var gbPath = path.join(srcPath, main);
+        //
+        //    //log('build js', pathURI.toSystemPath(gbPath));
+        //
+        //    glob(gbPath, {dot: false, nodir: true}, function (err, files) {
+        //        if (err) {
+        //            log('glob', pathURI.toSystemPath(gbPath), 'error');
+        //            log('glob', err.message, 'error');
+        //            process.exit(1);
+        //        }
+        //
+        //        howdo.each(files, function (j, file, nextFile) {
+        //            var srcName = path.relative(srcPath, file);
+        //
+        //            buildMain(file, function (err, bufferList, md5List, deepDeps, chunkList) {
+        //                if (err) {
+        //                    return;
+        //                }
+        //
+        //                mainRelationshipMap[pathURI.toURIPath(srcName)] = deepDeps.map(function (dep) {
+        //                    return pathURI.toURIPath(path.relative(srcPath, dep));
+        //                });
+        //
+        //                mainMap[file] = {
+        //                    mainFile: file,
+        //                    srcName: srcName,
+        //                    md5List: md5List,
+        //                    chunkList: chunkList,
+        //                    bufferList: bufferList
+        //                };
+        //                mainLength++;
+        //                nextFile();
+        //            });
+        //        }).follow(function () {
+        //            nextMain();
+        //        });
+        //    });
+        //})
+        //// chunk 管理
+        //.task(function (next) {
+        //    howdo
+        //        // 分配 chunk
+        //        .task(function (next) {
+        //            assignChunk(mainMap, versionMap, next);
+        //        })
+        //        // 合并 chunk
+        //        .task(function (next) {
+        //            buildChunk(versionMap, next);
+        //        })
+        //        .follow(next);
+        //})
 
         .task(function (next) {
             log('3/5', 'overwrite config', 'task');

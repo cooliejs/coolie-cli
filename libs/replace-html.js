@@ -92,12 +92,12 @@ module.exports = function (file, code) {
 
         if (hasCoolie && !dataConfig) {
             log('warning', pathURI.toSystemPath(file), 'error');
-            log('warning', 'coolie.js script `data-config` attribute is EMPTY.', 'error');
+            log('warning', 'The `data-config` attribute of coolie.js script is EMPTY.', 'error');
         }
 
         if (hasCoolie && !dataMain) {
             log('warning', pathURI.toSystemPath(file), 'error');
-            log('warning', 'coolie.js script `data-main` attribute is EMPTY.', 'error');
+            log('warning', 'The `data-main` attribute of coolie.js script is EMPTY.', 'error');
         }
 
         if (hasCoolie) {
@@ -114,7 +114,7 @@ module.exports = function (file, code) {
                     dataMain = path.join(jsBase, dataMain);
                 } catch (err) {
                     log('html file', pathURI.toSystemPath(file), 'error');
-                    log('data-main', dataMain ? dataMain : '<EMPTY>', 'error');
+                    log('data-main', dataMain ? dataMain : 'EMPTY', 'error');
                     process.exit(1);
                 }
 
