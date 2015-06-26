@@ -184,6 +184,10 @@ module.exports = function (srcPath) {
         })
         // chunk 管理
         .task(function (next) {
+            if (!configs.chunk || !configs.chunk.length) {
+                return next();
+            }
+
             howdo
                 // 分配 chunk
                 .task(function (next) {
