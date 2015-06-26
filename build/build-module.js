@@ -86,8 +86,6 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                             configs._chunkModuleMap[depId].depending.push(mainFile);
                         }
 
-                        console.log('', depIdsMap[depId]);
-
                         depList.push({
                             name: dep.name,
                             id: depId,
@@ -103,7 +101,6 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                         depIdMap[depId] = true;
                         depNameList.push(dep.raw);
                         depIdsMap[depId] = depIdsMap[depId] || globalId.get();
-                        console.log(depIdsMap[depId]);
 
                         depList.push({
                             name: dep.name,

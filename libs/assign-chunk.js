@@ -54,9 +54,6 @@ module.exports = function (mainMap, versionMap, callback) {
         }
     });
 
-    console.log(configs._chunkModuleMap);
-    return process.exit(1);
-
     // 分析 chunk map 成数组
     dato.each(configs._chunkModuleMap, function (mod, meta) {
         var index = configs._chunkFileMap[mod] * 1;
