@@ -14,16 +14,18 @@ var log = require('../libs/log.js');
 var pathURI = require('../libs/path-uri.js');
 var fse = require('fs-extra');
 var path = require('path');
+var howdo = require('howdo');
 
 
 /**
  * chunk 构建
  * @param versionMap {Object} 版本
+ * @param callback {Function} 回调
  */
-module.exports = function (versionMap) {
+module.exports = function (versionMap, callback) {
     var configs = global.configs;
 
-    dato.each(configs._chunkList, function (i, files) {
+    howdo.each(configs._chunkList, function (i, files, done) {
         var bfList = [];
         var output = sign('js');
         var md5List = '';
@@ -42,14 +44,16 @@ module.exports = function (versionMap) {
 
         versionMap[pathURI.toURIPath(srcName)] = version;
 
-        try {
-            fse.outputFileSync(destFile, output);
+        fse.outputFile(destFile, output, function (err) {
+            if(err){
+                log('write file', pathURI.toSystemPath(destFile), 'error');
+                log('write file', err.message, 'error');
+                process.exit(1);
+            }
+
             log('√', pathURI.toSystemPath(destFile), 'success');
-        } catch (err) {
-            log('write file', pathURI.toSystemPath(destFile), 'error');
-            log('write file', err.message, 'error');
-            process.exit(1);
-        }
-    });
+            done();
+        });
+    }).together(callback);
 };
 

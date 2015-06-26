@@ -14,7 +14,6 @@ var glob = require('glob');
 var log = require('../libs/log.js');
 var dato = require('ydr-utils').dato;
 var pathURI = require("../libs/path-uri.js");
-var encryption = require('ydr-utils').encryption;
 var replaceConfig = require('../libs/replace-config.js');
 var parseConfig = require('../libs/parse-config.js');
 var assignChunk = require('../libs/assign-chunk.js');
@@ -184,14 +183,16 @@ module.exports = function (srcPath) {
         })
         // 分配 chunk、合并 chunk
         .task(function (next) {
-            assignChunk(mainMap, versionMap, function () {
-                buildChunk(versionMap);
-                //console.log(configs._chunkModuleMap);
-                //console.log('======================================================================');
-                //console.log(configs._privateModuleMap);
-                //process.exit(1);
-                next();
-            });
+            howdo
+                // 分配 chunk
+                .task(function (next) {
+                    assignChunk(mainMap, versionMap, next);
+                })
+                // 合并 chunk
+                .task(function (next) {
+                    buildChunk(versionMap, next);
+                })
+                .follow(next);
         })
 
         .task(function (next) {
