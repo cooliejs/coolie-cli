@@ -184,7 +184,7 @@ module.exports = function (srcPath) {
         })
         // chunk 管理
         .task(function (next) {
-            if (!configs.chunk || !configs.chunk.length) {
+            if (!configs.js.chunk || !configs.js.chunk.length) {
                 log('×', 'unchunk modules', 'warning');
                 return next();
             }
