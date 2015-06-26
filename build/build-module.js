@@ -98,9 +98,11 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                     }
 
                     if (!depIdMap[depId]) {
+                        configs._privateModuleMap[depId] = configs._privateModuleMap[depId] || {};
+                        configs._privateModuleMap[depId].gid = configs._privateModuleMap[depId].gid || globalId.get();
                         depIdMap[depId] = true;
                         depNameList.push(dep.raw);
-                        depIdsMap[depId] = depIdsMap[depId] || globalId.get();
+                        depIdsMap[depId] = configs._privateModuleMap[depId].gid
 
                         depList.push({
                             name: dep.name,

@@ -67,6 +67,7 @@ module.exports = function (srcPath) {
     configs._copyLength = 0;
     configs._concatMap = {};
     configs._chunkFileMap = {};
+    configs._privateModuleMap = {};
     configs._chunkModuleMap = {};
     configs._chunkBufferMap = {};
     configs._chunkMD5Map = {};
@@ -186,6 +187,7 @@ module.exports = function (srcPath) {
             assignChunk(mainMap, versionMap, function () {
                 buildChunk(versionMap);
                 console.log(configs._chunkModuleMap);
+                console.log(configs._privateModuleMap);
                 process.exit(1);
                 next();
             });
