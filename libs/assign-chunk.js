@@ -42,17 +42,17 @@ var path = require('path');
 module.exports = function (mainMap, versionMap, callback) {
     var configs = global.configs;
 
-    dato.each(configs._chunkModuleMap, function (mod, meta) {
-        // 仅被一个入口模块使用的 chunk 模块
-        if (meta.depending.length === 1) {
-            var depending = meta.depending[0];
-
-            mainMap[depending].bufferList.push(configs._chunkBufferMap[mod]);
-            mainMap[depending].md5List += configs._chunkMD5Map[mod];
-
-            delete(configs._chunkModuleMap[mod]);
-        }
-    });
+    //dato.each(configs._chunkModuleMap, function (mod, meta) {
+    //    // 仅被一个入口模块使用的 chunk 模块
+    //    if (meta.depending.length === 1) {
+    //        var depending = meta.depending[0];
+    //
+    //        mainMap[depending].bufferList.push(configs._chunkBufferMap[mod]);
+    //        mainMap[depending].md5List += configs._chunkMD5Map[mod];
+    //
+    //        delete(configs._chunkModuleMap[mod]);
+    //    }
+    //});
 
     // 分析 chunk map 成数组
     dato.each(configs._chunkModuleMap, function (mod, meta) {
