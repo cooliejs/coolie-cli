@@ -181,7 +181,7 @@ module.exports = function (srcPath) {
                 });
             });
         })
-        // 分配 chunk、合并 chunk
+        // chunk 管理
         .task(function (next) {
             howdo
                 // 分配 chunk
