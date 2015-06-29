@@ -74,6 +74,9 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                 deps.forEach(function (dep) {
                     var depName = dep.name;
                     var depId = path.join(relativeDir, depName);
+
+                    depId = pathURI.toSystemPath(depId);
+
                     var chunkId = configs._chunkFileMap[depId];
 
                     // 当前依赖模块属于独立块状模块
