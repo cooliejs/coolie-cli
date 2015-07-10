@@ -72,7 +72,7 @@ module.exports = function (file, tag, attrKey, isReplaceToBase64WhenRelativeToFi
     var url = configs._resURIMap[absFile];
 
     if (!version) {
-        version = encryption.md5(absFile);
+        version = encryption.etag(absFile);
     }
 
     // 未进行版本构建
