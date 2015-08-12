@@ -13,7 +13,6 @@ var path = require('path');
 var log = require('../libs/log.js');
 var pathURI = require('../libs/path-uri.js');
 var dato = require('ydr-utils').dato;
-var pathURI = require('../libs/path-uri.js');
 var typeis = require('ydr-utils').typeis;
 var number = require('ydr-utils').number;
 var nextStep = require('../libs/next-step.js');
