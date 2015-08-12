@@ -69,6 +69,6 @@ switch ((cmdArg0 || "").toLowerCase()) {
         log(true, "coolie alien [path]", "下载 alien/ 到指定目录", "success");
         log(true, "coolie config [path]", "在指定目录生成`coolie-config.js`", "success");
         log(true, "coolie json [path]", "在指定目录生成`coolie.json`", "success");
-        log(true, "coolie build [path]", "在指定目录根据`coolie.json`配置文件执行构建HTML/JS/CSS", "success");
+        log(true, "coolie build [path]", "在指定目录根据`coolie.json`执行前端构建", "success");
 }
 
