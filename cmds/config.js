@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * cmd config
  * @author ydr.me
  * @create 2015-08-12 09:20
  */
