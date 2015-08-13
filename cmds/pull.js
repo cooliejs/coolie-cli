@@ -19,7 +19,10 @@ module.exports = function (basedir) {
 
     log('pull coolie.min.js', url);
     request.get({
-        url: pkg.coolie
+        url: pkg.coolie,
+        query: {
+            _: Date.now()
+        }
     }, function (err, body, res) {
         if (err) {
             log('pull coolie.min.js', url, 'error');

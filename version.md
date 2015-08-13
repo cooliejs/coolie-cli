@@ -1,7 +1,9 @@
 # 0.x.x
 - 0.21.x
     - 适配了[coolie.js@0.14.x](https://github.com/cloudcome/coolie)
+    - 适配了[coolie.js@1.0.x](https://github.com/cloudcome/coolie)
     - 支持了分块构建
+    - 优化了部分说辞
 - 0.20.x
     - 图片压缩不兼容，去除
     - 增加了兼容性
