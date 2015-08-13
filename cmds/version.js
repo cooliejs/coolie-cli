@@ -15,24 +15,29 @@ var currentVersion = pkg.version;
 var coolieCliURL = 'http://registry.npmjs.com/coolie';
 var coolieJSURL = 'https://raw.githubusercontent.com/cloudcome/coolie/master/package.json';
 
-module.exports = function(){
+module.exports = function () {
     log('local version', currentVersion, 'success');
     log('check version', 'wait a moment...');
 
     howdo
         // 检查 coolie cli 版本
         .task(function () {
-            request.get(coolieCliURL, function (err, data) {
-                if(err){
+            request.get({
+                url: coolieCliURL,
+                query: {
+                    _: Date.now()
+                }
+            }, function (err, data) {
+                if (err) {
                     log('check version', 'connect npmjs.com error', 'error');
                     process.exit(1);
                 }
 
                 var json = {};
 
-                try{
+                try {
                     json = JSON.parse(data);
-                }catch(err){
+                } catch (err) {
                     log('check version', 'parse json string error', 'error');
                     process.exit(1);
                 }
@@ -42,17 +47,22 @@ module.exports = function(){
         })
         // 检查 coolie.js 版本
         .task(function () {
-            request.get(coolieJSURL, function (err, data) {
-                if(err){
+            request.get({
+                url: coolieJSURL,
+                query: {
+                    _: Date.now()
+                }
+            }, function (err, data) {
+                if (err) {
                     log('check version', 'connect github.com error', 'error');
                     process.exit(1);
                 }
 
                 var json = {};
 
-                try{
+                try {
                     json = JSON.parse(data);
-                }catch(err){
+                } catch (err) {
                     log('check version', 'parse json string error', 'error');
                     process.exit(1);
                 }
