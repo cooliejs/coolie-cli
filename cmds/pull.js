@@ -33,10 +33,10 @@ module.exports = function (basedir) {
             return process.exit(1);
         }
 
-
         var version = (body.match(REG_VERSION) || ['', '0.0.0'])[1];
         var writeFile = path.join(basedir, './coolie.min-' + version + '.js');
 
+        log('coolie.js version', version, 'success');
         fse.outputFile(writeFile, body, function (err) {
             if (err) {
                 log('pull coolie.min.js', url, 'error');
