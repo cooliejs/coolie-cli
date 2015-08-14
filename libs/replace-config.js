@@ -100,7 +100,7 @@ module.exports = function (code, versionMap) {
         return {
             config: coolieConfig,
             code: sign('js') + '\n' + jsminify(coolieConfigJSPath, code2),
-            version: encryption.md5(code2).slice(0, configs.dest.md5Length)
+            version: encryption.md5(code2).slice(0, configs.dest.versionLength)
         };
     } catch (err) {
         log('coolie-config.js', pathURI.toSystemPath(coolieConfigJSPath), 'error');

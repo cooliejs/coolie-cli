@@ -68,7 +68,7 @@ module.exports = function (file, html) {
         return configs._concatMap[md5List];
     }
 
-    var srcName = encryption.md5(md5List).slice(0, configs.dest.md5Length) + '.' + type;
+    var srcName = encryption.md5(md5List).slice(0, configs.dest.versionLength) + '.' + type;
     var srcPath = path.join(type === 'css' ? configs._cssPath : configs._jsPath, srcName);
     var srcRelative = path.relative(configs._srcPath, srcPath);
     var url = pathURI.toURIPath(srcRelative);

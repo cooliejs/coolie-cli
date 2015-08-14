@@ -32,6 +32,6 @@
   "dest": {
     "dirname": "../dest/",
     "host": "/",
-    "md5Length": 6
+    "versionLength": 8
   }
 }

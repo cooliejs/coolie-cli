@@ -37,7 +37,7 @@ module.exports = function (versionMap, callback) {
 
         output += Buffer.concat(bfList).toString();
 
-        var version = encryption.md5(md5List).slice(0, configs.dest.md5Length);
+        var version = encryption.md5(md5List).slice(0, configs.dest.versionLength);
         var fileName = i + '.js';
         var srcName = path.join(path.relative(configs._srcPath, configs._jsBase), fileName);
         var destFile = pathURI.replaceVersion(path.join(configs._destPath, srcName), version);
