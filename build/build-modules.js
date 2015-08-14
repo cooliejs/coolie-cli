@@ -13,6 +13,7 @@ var path = require('path');
 var glob = require('glob');
 var log = require('../libs/log.js');
 var dato = require('ydr-utils').dato;
+var typeis = require('ydr-utils').typeis;
 var pathURI = require("../libs/path-uri.js");
 var replaceConfig = require('../libs/replace-config.js');
 var parseConfig = require('../libs/parse-config.js');
@@ -75,20 +76,28 @@ module.exports = function (srcPath) {
     configs._chunkMD5Map = {};
     configs._chunkList = {};
 
-    configs.js.chunk.forEach(function (ck, index) {
-        var gbPath = path.join(srcPath, ck);
-        var files;
+    configs.js.chunk.forEach(function (chunk, index) {
+        var chunkList = chunk;
 
-        try {
-            files = glob.sync(gbPath, {dot: false, nodir: true});
-        } catch (err) {
-            log('glob', pathURI.toSystemPath(gbPath), 'error');
-            log('glob', err.message, 'error');
-            process.exit(1);
+        if (!typeis.array(chunk)) {
+            chunkList = [chunk];
         }
 
-        files.forEach(function (f) {
-            configs._chunkFileMap[pathURI.toSystemPath(f)] = String(index);
+        chunkList.forEach(function (chunk) {
+            var gbPath = path.join(srcPath, chunk);
+            var files;
+
+            try {
+                files = glob.sync(gbPath, {dot: false, nodir: true});
+            } catch (err) {
+                log('glob', pathURI.toSystemPath(gbPath), 'error');
+                log('glob', err.message, 'error');
+                process.exit(1);
+            }
+
+            files.forEach(function (f) {
+                configs._chunkFileMap[pathURI.toSystemPath(f)] = String(index);
+            });
         });
     });
     global.configs = configs;

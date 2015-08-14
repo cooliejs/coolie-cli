@@ -149,8 +149,8 @@ module.exports = function (srcPath) {
 
             if (chunkPathType === "array") {
                 config.js.chunk.forEach(function (mn, index) {
-                    if (typeis(mn) !== "string") {
-                        log("parse config", "`js.chunk[" + index + "]` must be a string", "error");
+                    if (!typeis.string(mn) && !typeis.array(mn)) {
+                        log("parse config", "`js.chunk[" + index + "]` must be a string or an array", "error");
                         process.exit(1);
                     }
                 });

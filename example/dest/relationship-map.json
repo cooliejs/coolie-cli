@@ -63,6 +63,7 @@
         "js": {},
         "main": "static/js/app/user/index.js",
         "deps": [
+            "static/js/libs1/path1/path2/index.js",
             "static/js/libs1/all.js",
             "static/js/libs2/some.txt",
             "static/js/libs2/some.json",

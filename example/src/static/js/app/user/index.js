@@ -11,6 +11,7 @@ define(function (require) {
      */
     'use strict';
 
+    require('../../libs1/path1/path2/');
     require('../../libs1/all.js');
 
     console.log('app/user/index');
