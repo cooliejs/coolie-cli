@@ -313,7 +313,7 @@ module.exports = function (srcPath) {
     // dest: {
     //     dirname: "",
     //     host: ""
-    //     md5Length: 32
+    //     versionLength: 32
     // }
     check.dest = function () {
         if (!typeis.object(config.dest)) {
@@ -337,7 +337,7 @@ module.exports = function (srcPath) {
             config.dest.host += '/';
         }
 
-        config.dest.md5Length = config.dest.md5Length || 32;
+        config.dest.versionLength = config.dest.versionLength || 32;
 
         if (!config._noCoolieJS) {
             check._coolieConfigJS();

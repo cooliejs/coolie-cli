@@ -1,11 +1,11 @@
 {
     "html/index.html": {
         "css": {
-            "static/css/2ad769.css": [
+            "static/css/2ad76922.css": [
                 "static/css/path1/path2/3.css",
                 "static/css/bootstrap.css"
             ],
-            "static/css/0caf51.css": [
+            "static/css/0caf51b2.css": [
                 "static/css/3.css"
             ]
         },
@@ -19,11 +19,11 @@
     },
     "html/index2.html": {
         "css": {
-            "static/css/2ad769.css": [
+            "static/css/2ad76922.css": [
                 "static/css/path1/path2/3.css",
                 "static/css/bootstrap.css"
             ],
-            "static/css/0caf51.css": [
+            "static/css/0caf51b2.css": [
                 "static/css/3.css"
             ]
         },
@@ -37,17 +37,17 @@
     },
     "html/index3.html": {
         "css": {
-            "static/css/365a31.css": [
+            "static/css/365a31b5.css": [
                 "static/css/1.css",
                 "static/css/2.css",
                 "static/css/3.css"
             ]
         },
         "js": {
-            "static/js/263088.js": [
+            "static/js/263088e6.js": [
                 "static/js/index3-1.js"
             ],
-            "static/js/d4de39.js": [
+            "static/js/d4de39b0.js": [
                 "static/js/index3-2.js"
             ]
         },
@@ -55,7 +55,7 @@
     },
     "html/user/index.html": {
         "css": {
-            "static/css/802051.css": [
+            "static/css/802051cd.css": [
                 "static/css/1.css",
                 "static/css/2.css"
             ]
