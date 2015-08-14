@@ -67,7 +67,7 @@ module.exports = function (mainMap, versionMap, callback) {
     });
 
     howdo.each(mainMap, function (mainFile, main, done) {
-        var version = encryption.md5(main.md5List);
+        var version = encryption.md5(main.md5List).slice(0, configs.dest.md5Length);
 
         main.destName = pathURI.replaceVersion(main.srcName, version);
         versionMap[pathURI.toURIPath(main.srcName)] = version;

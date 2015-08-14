@@ -86,7 +86,7 @@ module.exports = function (srcPath) {
             process.exit(1);
         }
 
-        if(config.js.src){
+        if (config.js.src) {
             log("parse config", "please change `js.src` to `js.main`", "error");
             process.exit(1);
         }
@@ -313,6 +313,7 @@ module.exports = function (srcPath) {
     // dest: {
     //     dirname: "",
     //     host: ""
+    //     md5Length: 32
     // }
     check.dest = function () {
         if (!typeis.object(config.dest)) {
@@ -336,7 +337,9 @@ module.exports = function (srcPath) {
             config.dest.host += '/';
         }
 
-        if(!config._noCoolieJS){
+        config.dest.md5Length = config.dest.md5Length || 32;
+
+        if (!config._noCoolieJS) {
             check._coolieConfigJS();
         }
     };
