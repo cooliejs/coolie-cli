@@ -36,6 +36,7 @@
   "book": "http://coolie.ydr.me/",
   "coolie": "https://raw.githubusercontent.com/cloudcome/coolie/master/coolie.min.js",
   "alien": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/alien.zip",
+  "donkey": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/donkey.zip",
   "repository": {
     "type": "git",
     "url": "https://github.com/cloudcome/nodejs-coolie"

@@ -7,16 +7,11 @@
 
 'use strict';
 
-var path = require('path');
-var fs = require('fs');
-var request = require('ydr-utils').request;
-var random = require('ydr-utils').random;
 var pkg = require('../package.json');
-var log = require('../libs/log.js');
-var AdmZip = require('adm-zip');
+var downZip = require('../libs/down-zip.js');
 
 
-module.exports = function () {
-    log('download donkey', 'comming soon');
+module.exports = function (dirname) {
+    downZip(dirname, pkg.donkey, 'donkey');
 };
 
