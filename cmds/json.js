@@ -117,6 +117,7 @@ module.exports = function (basedir) {
         json.dest = {};
         json.dest.dirname = _getVal(data, '../dest/', false);
         json.dest.host = '';
+        json.dest.md5Length = 32;
         jsonString = JSON.stringify(json, null, 2);
 
         log('confirm', '文件内容为：', 'success');
