@@ -41,7 +41,7 @@ module.exports = function (srcPath) {
      * @prototype dest
      * @prototype dest.dirname
      * @prototype dest.host
-     * @prototype dest.md5Length
+     * @prototype dest.versionLength
      * @prototype copy
      * @type {object}
      */
