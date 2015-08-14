@@ -31,6 +31,7 @@
   ],
   "dest": {
     "dirname": "../dest/",
-    "host": "/"
+    "host": "/",
+    "md5Length": 6
   }
 }
