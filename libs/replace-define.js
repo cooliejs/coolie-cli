@@ -13,7 +13,7 @@ var dato = require('ydr-utils').dato;
 // define&&define.amd?define(function(
 // define(function(
 // define( "jquery", [], function() {
-var REG_DEFINE_1 = /\bdefine\((.*)\bfunction\(/;
+var REG_DEFINE_1 = /\bdefine\((.*?)\bfunction\(/;
 
 
 // define&&define.amd?define(e)
