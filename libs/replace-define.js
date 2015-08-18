@@ -10,17 +10,16 @@
 var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var dato = require('ydr-utils').dato;
-// define&&define.amd?define(e)
-// define(e)
 // define&&define.amd?define(function(
 // define(function(
 // define( "jquery", [], function() {
+var REG_DEFINE_1 = /\bdefine\s*?\((.*?)\bfucntion\s*?\(/;
 
-// define(balabala)
-var REG_DEFINE_1 = /\bdefine\(([^)]*?)\)/;
 
-// define(function(
-var REG_DEFINE_2 = /\bdefine\s*?\(\s*?function\s*?\(/;
+// define&&define.amd?define(e)
+// define(e)
+var REG_DEFINE_2 = /\bdefine\(([^)]*?)\)/;
+
 
 
 /**
@@ -55,10 +54,9 @@ module.exports = function (file, code, depList, depIdsMap) {
         }
     });
 
-
     code = code
-        .replace(REG_DEFINE_1, 'define("' + id + '",[' + depsCode + '],$1)')
-        .replace(REG_DEFINE_2, 'define("' + id + '",[' + depsCode + '],function');
+        .replace(REG_DEFINE_1, 'define("' + id + '",[' + depsCode + '],function')
+        .replace(REG_DEFINE_2, 'define("' + id + '",[' + depsCode + '],$1)');
 
     return code;
 };
