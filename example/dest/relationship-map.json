@@ -11,7 +11,10 @@
         },
         "js": {},
         "main": "static/js/app/index.js",
-        "deps": []
+        "deps": [
+            "static/js/libs1/vue.min.js",
+            "static/js/libs1/jquery.js"
+        ]
     },
     "html/index2.html": {
         "css": {
@@ -25,7 +28,10 @@
         },
         "js": {},
         "main": "static/js/app/index.js",
-        "deps": []
+        "deps": [
+            "static/js/libs1/vue.min.js",
+            "static/js/libs1/jquery.js"
+        ]
     },
     "html/index3.html": {
         "css": {
