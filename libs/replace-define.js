@@ -13,7 +13,7 @@ var dato = require('ydr-utils').dato;
 // define&&define.amd?define(function(
 // define(function(
 // define( "jquery", [], function() {
-var REG_DEFINE_1 = /\bdefine\s*?\((.*)\bfunction\s*?\(/;
+var REG_DEFINE_1 = /\bdefine\((.*)\bfunction\(/;
 
 
 // define&&define.amd?define(e)
@@ -55,7 +55,7 @@ module.exports = function (file, code, depList, depIdsMap) {
     });
 
     code = code
-        .replace(REG_DEFINE_1, 'define("' + id + '",[' + depsCode + '],function')
+        .replace(REG_DEFINE_1, 'define("' + id + '",[' + depsCode + '],function(')
         .replace(REG_DEFINE_2, 'define("' + id + '",[' + depsCode + '],$1)');
 
     return code;
