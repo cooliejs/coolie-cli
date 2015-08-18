@@ -12,9 +12,7 @@
         "js": {},
         "main": "static/js/app/index.js",
         "deps": [
-            "static/js/libs1/path1/path2/index.js",
-            "static/js/libs2/some.txt",
-            "static/js/libs2/some.json"
+            "static/js/libs1/jquery.js"
         ]
     },
     "html/index2.html": {
@@ -30,9 +28,7 @@
         "js": {},
         "main": "static/js/app/index.js",
         "deps": [
-            "static/js/libs1/path1/path2/index.js",
-            "static/js/libs2/some.txt",
-            "static/js/libs2/some.json"
+            "static/js/libs1/jquery.js"
         ]
     },
     "html/index3.html": {
@@ -62,12 +58,6 @@
         },
         "js": {},
         "main": "static/js/app/user/index.js",
-        "deps": [
-            "static/js/libs1/path1/path2/index.js",
-            "static/js/libs1/all.js",
-            "static/js/libs2/some.txt",
-            "static/js/libs2/some.json",
-            "static/js/libs2/some.js"
-        ]
+        "deps": []
     }
 }

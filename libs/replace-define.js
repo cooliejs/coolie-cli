@@ -14,8 +14,13 @@ var dato = require('ydr-utils').dato;
 // define(e)
 // define&&define.amd?define(function(
 // define(function(
+// define( "jquery", [], function() {
+
+// define(balabala)
 var REG_DEFINE_1 = /\bdefine\(([^)]*?)\)/;
-var REG_DEFINE_2 = /\bdefine\(function\(/;
+
+// define(function(
+var REG_DEFINE_2 = /\bdefine\s*?\(\s*?function\s*?\(/;
 
 
 /**
