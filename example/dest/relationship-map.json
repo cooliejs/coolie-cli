@@ -11,9 +11,7 @@
         },
         "js": {},
         "main": "static/js/app/index.js",
-        "deps": [
-            "static/js/libs1/jquery.js"
-        ]
+        "deps": []
     },
     "html/index2.html": {
         "css": {
@@ -27,9 +25,7 @@
         },
         "js": {},
         "main": "static/js/app/index.js",
-        "deps": [
-            "static/js/libs1/jquery.js"
-        ]
+        "deps": []
     },
     "html/index3.html": {
         "css": {
@@ -58,12 +54,6 @@
         },
         "js": {},
         "main": "static/js/app/user/index.js",
-        "deps": [
-            "static/js/libs1/path1/path2/index.js",
-            "static/js/libs1/all.js",
-            "static/js/libs2/some.txt",
-            "static/js/libs2/some.json",
-            "static/js/libs2/some.js"
-        ]
+        "deps": []
     }
 }
