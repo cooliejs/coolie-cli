@@ -12,8 +12,7 @@
         "js": {},
         "main": "static/js/app/index.js",
         "deps": [
-            "static/js/libs1/vue.min.js",
-            "static/js/libs1/jquery.js"
+            "static/js/libs2/some.html"
         ]
     },
     "html/index2.html": {
@@ -29,8 +28,7 @@
         "js": {},
         "main": "static/js/app/index.js",
         "deps": [
-            "static/js/libs1/vue.min.js",
-            "static/js/libs1/jquery.js"
+            "static/js/libs2/some.html"
         ]
     },
     "html/index3.html": {
@@ -42,7 +40,7 @@
             ]
         },
         "js": {
-            "static/js/263088e6.js": [
+            "static/js/d2c73edf.js": [
                 "static/js/index3-1.js"
             ],
             "static/js/d4de39b0.js": [
