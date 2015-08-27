@@ -12,6 +12,7 @@
     "ydr.me",
     "javascript",
     "alien",
+    "donkey",
     "seajs",
     "Common JS",
     "CMD",
@@ -22,10 +23,11 @@
     "module",
     "coolie",
     "builder",
-    "webpack",
     "nodejs",
     "node",
-    "browerify"
+    "browerify",
+    "webpack",
+    "fis"
   ],
   "author": {
     "name": "cloudcome",
