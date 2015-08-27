@@ -63,7 +63,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
         var destFile = configs._resDestMap[absFile];
 
         if (!version) {
-            version = encryption.etag(absFile);
+            version = encryption.etag(absFile).slice(0, configs.dest.versionLength);
 
             //var isImage = pathURI.isImage(extname);
 
