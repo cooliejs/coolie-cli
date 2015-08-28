@@ -55,7 +55,9 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
         .task(function (next) {
             switch (type) {
                 case 'image':
-                    var to = copy(file);
+                    var toFile = copy(file, {
+                        dest: configs
+                    });
                     break;
 
                 default :

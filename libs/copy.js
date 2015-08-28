@@ -74,10 +74,10 @@ module.exports = function (from, relativeFile, options) {
         var version = encryption.etag(fromFile).slice(0, configs.dest.versionLength);
         var extname = path.extname(fromFile);
 
-        if(options.dest){
-
-        }else{
-
+        if (options.dest) {
+            toFile = path.join(options.dest, version + extname);
+        } else {
+            toFile = path.join(configs._destPath, path.dirname(from), version + extname);
         }
     } else {
         toFile = path.join(configs._destPath, from);
