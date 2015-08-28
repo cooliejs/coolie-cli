@@ -14,6 +14,7 @@ var pathURI = require('./path-uri.js');
 var log = require('./log.js');
 var path = require('path');
 var fse = require('fs-extra');
+var REG_POINT = /^.{1,2}\//;
 var defaults = {
     // 是否构建版本
     version: false,
@@ -38,7 +39,14 @@ module.exports = function (from, relativeFile, options) {
     options = dato.extend({}, defaults, options);
 
     var configs = global.configs;
-    var fromFile = path.join(configs._srcPath, from);
+    var releativeTo = path.relative(configs._srcPath, from);
+    var fromFile = '';
+
+    if (REG_POINT.test(releativeTo)) {
+        fromFile = path.join(configs._srcPath, from);
+    } else {
+        fromFile = from;
+    }
 
     if (!pathURI.isRelatived(from)) {
         return;
