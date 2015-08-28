@@ -56,8 +56,11 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
             switch (type) {
                 case 'image':
                     var toFile = copy(file, {
-                        dest: configs
+                        dest: configs._resDestPath,
+                        version: true
                     });
+                    var uri = path.relative(configs._resDestPath, toFile);
+                    next(null, '');
                     break;
 
                 default :

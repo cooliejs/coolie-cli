@@ -66,6 +66,7 @@ module.exports = function (srcPath) {
     configs._resImageList = [];
     configs._resImageMap = {};
     configs._resDestMap = {};
+    configs._resDestPath = path.join(destPath, configs.resource.dest);
     configs._copyFilesMap = {};
     configs._copyLength = 0;
     configs._concatMap = {};
