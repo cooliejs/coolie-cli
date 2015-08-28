@@ -52,16 +52,19 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
     howdo
         // 1. 读取文件内容
         .task(function (next) {
-            // 文件内容
-            var code = '';
+            switch (type) {
+                case 'image':
 
-            try {
-                code = type === 'image' ? base64(file) : fs.readFileSync(file, 'utf8');
-                next(null, code);
-            } catch (err) {
-                log('read file', pathURI.toSystemPath(file), 'error');
-                log('read file', err.message, 'error');
-                process.exit(1);
+                    break;
+
+                default :
+                    try {
+                        next(null, fs.readFileSync(file, 'utf8'));
+                    } catch (err) {
+                        log('read file', pathURI.toSystemPath(file), 'error');
+                        log('read file', err.message, 'error');
+                        process.exit(1);
+                    }
             }
         })
 

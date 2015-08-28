@@ -48,16 +48,18 @@ module.exports = function (from, relativeFile, options) {
         process.exit(1);
     }
 
-    if (configs._copyFilesMap[fromFile]) {
+    var to = configs._copyFilesMap[fromFile];
+
+    if (to) {
         //log('copy ignore', fromFile);
-        return from;
+        return to;
     }
 
     var toFile = path.join(configs._destPath, from);
 
     try {
         fse.copySync(fromFile, toFile);
-        configs._copyFilesMap[fromFile] = true;
+        configs._copyFilesMap[fromFile] = toFile;
         configs._copyLength++;
         log('√', pathURI.toSystemPath(toFile), 'success');
     } catch (err) {
@@ -67,5 +69,5 @@ module.exports = function (from, relativeFile, options) {
         process.exit(1);
     }
 
-    return from;
+    return toFile;
 };
