@@ -60,7 +60,7 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                         version: true
                     });
                     var uri = path.relative(configs._resDestPath, toFile);
-                    next(null, '');
+                    next(null, pathURI.joinURI(configs.dest.host, uri));
                     break;
 
                 default :
