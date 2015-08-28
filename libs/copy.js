@@ -9,13 +9,16 @@
 
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
+var encryption = require('ydr-utils').encryption;
 var pathURI = require('./path-uri.js');
 var log = require('./log.js');
 var path = require('path');
 var fse = require('fs-extra');
 var defaults = {
     // 是否构建版本
-    buildVersion: false
+    version: false,
+    // 是否压缩
+    minify: false
 };
 
 /**
@@ -60,8 +63,9 @@ module.exports = function (from, relativeFile, options) {
 
     var toFile = path.join(configs._destPath, from);
 
-    if(options.buildVersion){
-
+    if(options.version){
+        var version = encryption.etag(fromFile).slice(0, configs.dest.versionLength);
+        var extname = path.extname(fromFile);
     }
 
     try {
