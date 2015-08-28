@@ -16,6 +16,7 @@ var dato = require('ydr-utils').dato;
 var pathURI = require("../libs/path-uri.js");
 var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');
+var cssminify = require('../libs/cssminify.js');
 var replaceRequire = require('../libs/replace-require.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
@@ -53,14 +54,36 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
     howdo
         // 1. 读取文件内容
         .task(function (next) {
+            var toFile;
+            var uri;
+
             switch (type) {
                 case 'image':
-                case 'css':
-                    var toFile = copy(file, {
+                    toFile = copy(file, {
                         dest: configs._resDestPath,
                         version: true
                     });
-                    var uri = path.relative(configs._destPath, toFile);
+                    uri = path.relative(configs._destPath, toFile);
+                    next(null, pathURI.joinURI(configs.dest.host, uri));
+                    break;
+
+                case 'css':
+                    var code = '';
+
+                    try {
+                        code = fs.readFileSync(file, 'utf8');
+                    } catch (err) {
+                        log('read file', pathURI.toSystemPath(file), 'error');
+                        log('read file', err.message, 'error');
+                        process.exit(1);
+                    }
+
+                    toFile = copy(file, {
+                        dest: configs._cssDestPath,
+                        version: true
+                    });
+                    uri = path.relative(configs._destPath, toFile);
+                    cssminify(file, code);
                     next(null, pathURI.joinURI(configs.dest.host, uri));
                     break;
 
