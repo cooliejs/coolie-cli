@@ -61,8 +61,6 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                         version: true
                     });
                     var uri = path.relative(configs._destPath, toFile);
-                    console.log(configs._destPath);
-                    console.log(toFile);
                     next(null, pathURI.joinURI(configs.dest.host, uri));
                     break;
 
