@@ -20,6 +20,7 @@ var replaceRequire = require('../libs/replace-require.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
 var globalId = require('../libs/global-id.js');
+var copy = require('../libs/copy.js');
 
 
 /**
@@ -54,7 +55,7 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
         .task(function (next) {
             switch (type) {
                 case 'image':
-
+                    var to = copy(file);
                     break;
 
                 default :

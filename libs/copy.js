@@ -13,7 +13,10 @@ var pathURI = require('./path-uri.js');
 var log = require('./log.js');
 var path = require('path');
 var fse = require('fs-extra');
-var defaults = {};
+var defaults = {
+    // 是否构建版本
+    buildVersion: false
+};
 
 /**
  * 复制单个文件
@@ -56,6 +59,10 @@ module.exports = function (from, relativeFile, options) {
     }
 
     var toFile = path.join(configs._destPath, from);
+
+    if(options.buildVersion){
+
+    }
 
     try {
         fse.copySync(fromFile, toFile);
