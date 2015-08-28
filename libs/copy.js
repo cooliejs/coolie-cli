@@ -18,7 +18,9 @@ var defaults = {
     // 是否构建版本
     version: false,
     // 是否压缩
-    minify: false
+    minify: false,
+    // 指定目标地址
+    dest: null
 };
 
 /**
@@ -28,6 +30,11 @@ var defaults = {
  * @param [options] {Object} 配置
  */
 module.exports = function (from, relativeFile, options) {
+    if (typeis.object(arguments[1])) {
+        options = arguments[1];
+        relativeFile = null;
+    }
+
     options = dato.extend({}, defaults, options);
 
     var configs = global.configs;
@@ -63,10 +70,16 @@ module.exports = function (from, relativeFile, options) {
 
     var toFile = '';
 
-    if(options.version){
+    if (options.version) {
         var version = encryption.etag(fromFile).slice(0, configs.dest.versionLength);
         var extname = path.extname(fromFile);
-    }else{
+
+        if(options.dest){
+
+        }else{
+
+        }
+    } else {
         toFile = path.join(configs._destPath, from);
     }
 
