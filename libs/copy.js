@@ -61,11 +61,13 @@ module.exports = function (from, relativeFile, options) {
         return to;
     }
 
-    var toFile = path.join(configs._destPath, from);
+    var toFile = '';
 
     if(options.version){
         var version = encryption.etag(fromFile).slice(0, configs.dest.versionLength);
         var extname = path.extname(fromFile);
+    }else{
+        toFile = path.join(configs._destPath, from);
     }
 
     try {
