@@ -1,5 +1,5 @@
 define(function (require, exports, module) {
-    //require('../../img/100x100.png', 'image');
+    require('../../img/100x100.png', 'image');
     //require('../../img/loading.gif', 'image');
     //require('../libs1/vue.min.js');
     //require('../libs1/jquery.js');
@@ -12,5 +12,5 @@ define(function (require, exports, module) {
     //}
 
 
-    require('../libs2/some.html', 'html');
+    //require('../libs2/some.html', 'html');
 });
