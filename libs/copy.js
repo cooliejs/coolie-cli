@@ -15,6 +15,8 @@ var log = require('./log.js');
 var path = require('path');
 var fse = require('fs-extra');
 var defaults = {
+    // 原始代码片段
+    srcCode: '',
     // 是否构建版本
     version: false,
     // 是否压缩
@@ -26,16 +28,27 @@ var defaults = {
 /**
  * 复制单个文件
  * @param fromFile {String} 起始地址
+ * @param srcFile {String} 源文件
  * @param [options] {Object} 配置
  */
-module.exports = function (fromFile, options) {
+module.exports = function (fromFile, srcFile, options) {
+    // 如果不是相对路径文件
+    if (!pathURI.isRelatived(fromFile)) {
+        return;
+    }
+
     options = dato.extend({}, defaults, options);
 
     var configs = global.configs;
 
     if (!typeis.file(fromFile)) {
-        log('file', pathURI.toSystemPath(fromFile) +
-            '\n is NOT a file', 'error');
+        log('copy file', pathURI.toSystemPath(srcFile), 'error');
+
+        if (options.srcCode) {
+            log('source code', options.srcCode, 'error');
+        }
+
+        log('copy error', pathURI.toSystemPath(fromFile) + ' is NOT a local file', 'error');
         process.exit(1);
     }
 
@@ -57,9 +70,9 @@ module.exports = function (fromFile, options) {
             toFile = path.join(configs._destPath, path.dirname(releativeTo), version + extname);
         }
     } else {
-        if(options.dest){
+        if (options.dest) {
             toFile = path.join(options.dest, releativeTo);
-        }else{
+        } else {
             toFile = path.join(configs._destPath, releativeTo);
         }
     }
