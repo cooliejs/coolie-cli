@@ -50,12 +50,12 @@ var createURL = function (file, code, configs, meta, filter) {
         code = filter(uri, destFile);
     }
 
-    if(code === null){
+    if (code === null) {
         copy(file, {
             dest: configs._resDestPath,
             version: true
         });
-    }else{
+    } else {
         try {
             fse.outputFileSync(destFile, code, 'utf-8');
         } catch (err) {
@@ -85,7 +85,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
 
         var text = code;
 
-        if (meta.type !== 'json') {
+        if (!(meta.type === 'json' && meta.outType === 'js')) {
             var o = {
                 o: code
             };
@@ -116,7 +116,24 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
 
     switch (meta.type) {
         case 'json':
-            next(null, jsonminify(file, code));
+            switch (meta.outType) {
+                case 'url':
+                    uri = createURL(file, code, configs, meta, function (uri, destFile) {
+                        return jsonminify(file, code);
+                    });
+                    next(null, pathURI.joinURI(configs.dest.host, uri));
+                    break;
+
+                case 'base64':
+                    code = cssminify(file, code, null);
+                    next(null, base64(new Buffer(cssminify(file, code, null), 'binary'), extname));
+                    break;
+
+                default :
+                    code = jsonminify(file, code);
+                    next(null, code);
+                    break;
+            }
             break;
 
         case 'css':
@@ -130,7 +147,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
 
                 case 'base64':
                     code = cssminify(file, code, null);
-                    next(null, base64(new Buffer(cssminify(file, code, null), 'binary'), extname));
+                    next(null, base64(new Buffer(code, 'binary'), extname));
                     break;
 
                 default :
@@ -148,7 +165,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
 
                 case 'base64':
                     code = cssminify(file, code, null);
-                    next(null, base64(new Buffer(code, 'binary'), '.css'));
+                    next(null, base64(new Buffer(code, 'binary'), extname));
                     break;
 
                 default :
@@ -158,14 +175,30 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
             break;
 
         case 'html':
-            htmlminify(file, code, next);
+            switch (meta.outType) {
+                case 'url':
+                    uri = createURL(file, code, configs, meta, function (uri, destFile) {
+                        return htmlminify(file, code);
+                    });
+                    next(null, pathURI.joinURI(configs.dest.host, uri));
+                    break;
+
+                case 'base64':
+                    code = htmlminify(file, code);
+                    next(null, base64(new Buffer(code, 'binary'), extname));
+                    break;
+
+                default :
+                    htmlminify(file, code, next);
+                    break;
+            }
             break;
 
         case 'image':
             switch (meta.outType) {
                 case 'base64':
                     code = cssminify(file, code, null);
-                    next(null, base64(new Buffer(code, 'binary'), '.css'));
+                    next(null, base64(file));
                     break;
 
                 default :

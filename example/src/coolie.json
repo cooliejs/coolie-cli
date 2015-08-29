@@ -10,7 +10,7 @@
         "./static/js/libs1/path1/**/*",
         "./static/js/libs1/all.js"
       ],
-      "./static/js/libs2/**/*.html"
+      "./static/js/libs2/**/*.html2"
     ]
   },
   "html": {
