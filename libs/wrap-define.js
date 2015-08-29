@@ -125,8 +125,8 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
                     break;
 
                 case 'base64':
-                    code = cssminify(file, code, null);
-                    next(null, base64(new Buffer(cssminify(file, code, null), 'binary'), extname));
+                    code = jsonminify(file, code, null);
+                    next(null, base64(new Buffer(code, 'utf8'), extname));
                     break;
 
                 default :
@@ -147,7 +147,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
 
                 case 'base64':
                     code = cssminify(file, code, null);
-                    next(null, base64(new Buffer(code, 'binary'), extname));
+                    next(null, base64(new Buffer(code, 'utf8'), extname));
                     break;
 
                 default :
@@ -165,7 +165,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
 
                 case 'base64':
                     code = cssminify(file, code, null);
-                    next(null, base64(new Buffer(code, 'binary'), extname));
+                    next(null, base64(new Buffer(code, 'utf8'), extname));
                     break;
 
                 default :
@@ -185,7 +185,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
 
                 case 'base64':
                     code = htmlminify(file, code);
-                    next(null, base64(new Buffer(code, 'binary'), extname));
+                    next(null, base64(new Buffer(code, 'utf8'), extname));
                     break;
 
                 default :

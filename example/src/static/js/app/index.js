@@ -1,9 +1,15 @@
 define(function (require, exports, module) {
-    //require('../../img/100x100.png', 'image|url');
     //require('../../img/loading.gif', 'image');
     //require('../libs1/vue.min.js');
     //require('../libs1/jquery.js');
     //require('../libs1/path1/path2/');
+
+    // image
+    //require('../../img/100x100.png', 'image');
+    //require('../../img/100x100.png', 'image|url');
+    //require('../../img/100x100.png', 'image|text');
+    //require('../../img/100x100.png', 'image|base64');
+
 
     // text
     //require('../libs2/some.txt', 'text');
@@ -30,7 +36,7 @@ define(function (require, exports, module) {
     //require('../libs2/some.html', 'html');
     //require('../libs2/some.html', 'html|url');
     //require('../libs2/some.html', 'html|text');
-    require('../libs2/some.html', 'html|base64');
+    //require('../libs2/some.html', 'html|base64');
 
 
 
