@@ -93,7 +93,7 @@ module.exports = function (mainMap, versionMap, callback) {
         fse.outputFile(destFile, output, function (err) {
             if (err) {
                 log('write file', pathURI.toSystemPath(destFile), 'error');
-                log('write file', err.message, 'error');
+                log('write error', err.message, 'error');
                 return process.exit(1);
             }
 

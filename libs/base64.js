@@ -61,7 +61,7 @@ module.exports = function (file, extname, callback) {
         base64 = new Buffer(binary, 'binary').toString('base64');
     } catch (err) {
         log('base64 file', pathURI.toSystemPath(file), 'error');
-        log('base64 file', err.message, 'error');
+        log('base64 error', err.message, 'error');
         process.exit(1);
     }
 
