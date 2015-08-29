@@ -52,6 +52,7 @@ var createURL = function (file, code, configs, meta, filter) {
 
     if (code === null) {
         copy(file, {
+            srcFile: file,
             dest: configs._resDestPath,
             version: true
         });
@@ -89,6 +90,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
             var o = {
                 o: code
             };
+
             text = JSON.stringify(o)
                 .replace(REG_HUA_START, '')
                 .replace(REG_HUA_END, '');
