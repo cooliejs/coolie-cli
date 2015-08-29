@@ -1,5 +1,5 @@
 /*!
- * 文件描述
+ * path uri 转换
  * @author ydr.me
  * @create 2015-05-19 13:47
  */
