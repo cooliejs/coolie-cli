@@ -10,9 +10,12 @@
 var REG_HUA_START = /^.*?:/;
 var REG_HUA_END = /}$/;
 var log = require('./log.js');
+var encryption = require('ydr-utils').encryption;
 var cssminify = require('./cssminify.js');
 var htmlminify = require('./htmlminify.js');
 var jsonminify = require('./jsonminify.js');
+var path = require('path');
+
 
 /**
  * 包裹一层 define
@@ -23,6 +26,8 @@ var jsonminify = require('./jsonminify.js');
  * @param callback
  */
 module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) {
+    var configs = global.configs;
+
     var next = function (err, code) {
         if (err) {
             return;
@@ -52,7 +57,10 @@ module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) 
             break;
 
         case 'css':
-            cssminify(file, code, null, next);
+            var version = encryption.etag(file);
+            var destFile = path.join(configs._cssDestPath, version + '.css');
+
+            cssminify(file, code, destFile, next);
             break;
 
         case 'html':

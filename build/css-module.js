@@ -31,7 +31,7 @@ module.exports = function (file, pipeline, options) {
 
     switch (optType) {
         case 'text':
-            code = cssminify(file, code);
+            code = cssminify(file, code, null);
             break;
 
         case 'url':

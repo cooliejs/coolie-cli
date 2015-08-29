@@ -42,13 +42,12 @@ var cssminify = null;
  * 样式压缩
  * @param file {String} 当前的样式文件
  * @param code {String} 样式文件的代码
- * @param [destFile] {String} 保存的样式文件
+ * @param destFile {String} 保存的样式文件
  * @param [callback]
  */
 module.exports = function (file, code, destFile, callback) {
     var args = arguments;
     var argL = args.length;
-    var isBuildVersion = true;
     var configs = global.configs;
 
     if (!cssminify) {
@@ -62,13 +61,12 @@ module.exports = function (file, code, destFile, callback) {
     // cssminify(file, code, destFile, callabck)
     if (typeis.function(args[argL - 1])) {
         callback = args[argL - 1];
-        isBuildVersion = false;
     }
 
     try {
         code = cssminify(file, code, null);
 
-        if (isBuildVersion) {
+        if (destFile) {
             code = replaceCSSResource(file, code, destFile, false);
         } else {
             code = replaceCSSResource(file, code, null, true);

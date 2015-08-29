@@ -68,10 +68,10 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                     next(null, pathURI.joinURI(configs.dest.host, uri));
                     break;
 
-                case 'css':
-                    var ret = buildCssModule(file, 'css!text');
-                    next(null, ret.code);
-                    break;
+                //case 'css':
+                //    var ret = buildCssModule(file, 'css!text');
+                //    next(null, ret.code);
+                //    break;
 
                 default :
                     try {
