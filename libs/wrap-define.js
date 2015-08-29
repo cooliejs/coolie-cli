@@ -24,10 +24,10 @@ var fse = require('fs-extra');
  * @param file
  * @param code
  * @param depIdsMap
- * @param textType
+ * @param meta
  * @param callback
  */
-module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) {
+module.exports = function wrapDefine(file, code, depIdsMap, meta, callback) {
     var configs = global.configs;
 
     var next = function (err, code) {
@@ -37,7 +37,7 @@ module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) 
 
         var text = code;
 
-        if (textType !== 'json') {
+        if (meta.type !== 'json') {
             var o = {
                 o: code
             };
@@ -53,27 +53,36 @@ module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) 
         callback(null, code);
     };
 
-    switch (textType) {
+    switch (meta.type) {
         case 'json':
             next(null, jsonminify(file, code));
             break;
 
         case 'css':
-            var version = encryption.etag(file).slice(0, configs.dest.versionLength);
-            var destFile = path.join(configs._cssDestPath, version + '.css');
-            var uri = path.relative(configs._destPath, destFile);
+            // 出口类型
+            switch (meta.outType) {
+                case 'url':
+                    var version = encryption.etag(file).slice(0, configs.dest.versionLength);
+                    var destFile = path.join(configs._cssDestPath, version + '.css');
+                    var uri = path.relative(configs._destPath, destFile);
 
-            code = cssminify(file, code, destFile);
+                    code = cssminify(file, code, destFile);
 
-            try {
-                fse.outputFileSync(destFile, code, 'utf-8');
-            } catch (err) {
-                log('write file', pathURI.toSystemPath(file), 'error');
-                log('write file', err.message, 'error');
-                process.exit(1);
+                    try {
+                        fse.outputFileSync(destFile, code, 'utf-8');
+                    } catch (err) {
+                        log('write file', pathURI.toSystemPath(file), 'error');
+                        log('write file', err.message, 'error');
+                        process.exit(1);
+                    }
+
+                    next(null, pathURI.joinURI(configs.dest.host, uri));
+                    break;
+
+                default :
+                    cssminify(file, code, null, next);
+                    break;
             }
-
-            next(null, pathURI.joinURI(configs.dest.host, uri));
             break;
 
         case 'html':
