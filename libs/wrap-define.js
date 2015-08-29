@@ -14,6 +14,7 @@ var encryption = require('ydr-utils').encryption;
 var cssminify = require('./cssminify.js');
 var htmlminify = require('./htmlminify.js');
 var jsonminify = require('./jsonminify.js');
+var pathURI = require('./path-uri.js');
 var path = require('path');
 
 
@@ -59,8 +60,10 @@ module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) 
         case 'css':
             var version = encryption.etag(file);
             var destFile = path.join(configs._cssDestPath, version + '.css');
+            var uri = path.relative(configs._destPath, destFile);
 
-            cssminify(file, code, destFile, next);
+            cssminify(file, code, destFile);
+            next(null, pathURI);
             break;
 
         case 'html':
