@@ -68,6 +68,11 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                     break;
 
                 case 'css':
+                    toFile = copy(file, {
+                        dest: configs._cssDestPath,
+                        version: true
+                    });
+
                     var code = '';
 
                     try {
@@ -78,12 +83,8 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                         process.exit(1);
                     }
 
-                    toFile = copy(file, {
-                        dest: configs._cssDestPath,
-                        version: true
-                    });
                     uri = path.relative(configs._destPath, toFile);
-                    cssminify(file, code);
+                    cssminify(file, code, toFile);
                     next(null, pathURI.joinURI(configs.dest.host, uri));
                     break;
 

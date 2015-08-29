@@ -42,7 +42,7 @@ var cssminify = null;
  * 样式压缩
  * @param file {String} 当前的样式文件
  * @param code {String} 样式文件的代码
- * @param destFile {String} 保存的样式文件
+ * @param [destFile] {String} 保存的样式文件
  * @param [callback]
  */
 module.exports = function (file, code, destFile, callback) {
