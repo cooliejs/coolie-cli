@@ -40,15 +40,13 @@ module.exports = function (fromFile, options) {
         process.exit(1);
     }
 
-    var to = configs._copyFilesMap[fromFile];
+    var toFile = configs._copyFilesMap[fromFile];
 
-    if (to) {
-        //log('copy ignore', fromFile);
-        return to;
+    if (toFile) {
+        return toFile;
     }
 
     var releativeTo = path.relative(configs._srcPath, fromFile);
-    var toFile = '';
 
     if (options.version) {
         var version = encryption.etag(fromFile).slice(0, configs.dest.versionLength);

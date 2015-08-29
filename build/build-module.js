@@ -57,30 +57,37 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
             var toFile;
             var uri;
 
-            switch (type) {
-                case 'image':
-                    toFile = copy(file, {
-                        dest: configs._resDestPath,
-                        version: true
-                    });
-                    uri = path.relative(configs._destPath, toFile);
-                    next(null, pathURI.joinURI(configs.dest.host, uri));
-                    break;
-
-                //case 'css':
-                //    var ret = buildCssModule(file, 'css!text');
-                //    next(null, ret.code);
-                //    break;
-
-                default :
-                    try {
-                        next(null, fs.readFileSync(file, 'utf8'));
-                    } catch (err) {
-                        log('read file', pathURI.toSystemPath(file), 'error');
-                        log('read file', err.message, 'error');
-                        process.exit(1);
-                    }
+            if (isSingle) {
+                wrapDefine(file, depIdsMap, meta, next);
+            } else {
+                try {
+                    next(null, fs.readFileSync(file, 'utf8'));
+                } catch (err) {
+                    log('read file', pathURI.toSystemPath(file), 'error');
+                    log('read file', err.message, 'error');
+                    process.exit(1);
+                }
             }
+
+            //switch (type) {
+            //    case 'image':
+            //        toFile = copy(file, {
+            //            dest: configs._resDestPath,
+            //            version: true
+            //        });
+            //        uri = path.relative(configs._destPath, toFile);
+            //        next(null, pathURI.joinURI(configs.dest.host, uri));
+            //        break;
+            //
+            //    default :
+            //        try {
+            //            next(null, fs.readFileSync(file, 'utf8'));
+            //        } catch (err) {
+            //            log('read file', pathURI.toSystemPath(file), 'error');
+            //            log('read file', err.message, 'error');
+            //            process.exit(1);
+            //        }
+            //}
         })
 
 
@@ -194,7 +201,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
         // 5. 替换 define
         .task(function (next, code) {
             if (isSingle) {
-                wrapDefine(file, code, depIdsMap, meta, next);
+                next(null, code);
             } else {
                 code = replaceDefine(file, code, depList, depIdsMap);
                 next(null, code);

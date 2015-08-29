@@ -17,6 +17,7 @@ var htmlminify = require('./htmlminify.js');
 var jsonminify = require('./jsonminify.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
+var copy = require('./copy.js');
 var path = require('path');
 var fse = require('fs-extra');
 
@@ -26,23 +27,41 @@ var fse = require('fs-extra');
  * @param file
  * @param code
  * @param configs
+ * @param meta
+ * @param filter
  */
-var createURL = function (file, code, configs, filter) {
+var createURL = function (file, code, configs, meta, filter) {
     var extname = path.extname(file);
     var version = encryption.etag(file).slice(0, configs.dest.versionLength);
-    var destFile = path.join(configs._cssDestPath, version + extname);
+    var destFile = '';
+
+    switch (meta.type) {
+        case 'css':
+            destFile = path.join(configs._cssDestPath, version + extname);
+            break;
+
+        default :
+            destFile = path.join(configs._resDestPath, version + extname);
+    }
+
     var uri = path.relative(configs._destPath, destFile);
 
-    if (typeis.function(filter)) {
+    if (code !== null && typeis.function(filter)) {
         code = filter(uri, destFile);
     }
 
-    try {
-        fse.outputFileSync(destFile, code, 'utf-8');
-    } catch (err) {
-        log('write file', pathURI.toSystemPath(file), 'error');
-        log('write file', err.message, 'error');
-        process.exit(1);
+    if(code === null){
+        copy(file, {
+            dest: configs._resDestPath
+        });
+    }else{
+        try {
+            fse.outputFileSync(destFile, code, 'utf-8');
+        } catch (err) {
+            log('write file', pathURI.toSystemPath(file), 'error');
+            log('write file', err.message, 'error');
+            process.exit(1);
+        }
     }
 
     return uri;
@@ -52,12 +71,11 @@ var createURL = function (file, code, configs, filter) {
 /**
  * 包裹一层 define
  * @param file
- * @param code
  * @param depIdsMap
  * @param meta
  * @param callback
  */
-module.exports = function wrapDefine(file, code, depIdsMap, meta, callback) {
+module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
     var configs = global.configs;
     var next = function (err, code) {
         if (err) {
@@ -83,6 +101,17 @@ module.exports = function wrapDefine(file, code, depIdsMap, meta, callback) {
     };
     var uri;
     var extname = path.extname(file);
+    var code = '';
+
+    if (meta.type !== 'image') {
+        try {
+            code = fse.readFileSync(file, 'utf8');
+        } catch (err) {
+            log('read file', pathURI.toSystemPath(file), 'error');
+            log('read file', err.message, 'error');
+            process.exit(1);
+        }
+    }
 
     switch (meta.type) {
         case 'json':
@@ -92,7 +121,7 @@ module.exports = function wrapDefine(file, code, depIdsMap, meta, callback) {
         case 'css':
             switch (meta.outType) {
                 case 'url':
-                    uri = createURL(file, code, configs, function (uri, destFile) {
+                    uri = createURL(file, code, configs, meta, function (uri, destFile) {
                         return cssminify(file, code, destFile);
                     });
                     next(null, pathURI.joinURI(configs.dest.host, uri));
@@ -112,7 +141,7 @@ module.exports = function wrapDefine(file, code, depIdsMap, meta, callback) {
         case 'text':
             switch (meta.outType) {
                 case 'url':
-                    uri = createURL(file, code, configs);
+                    uri = createURL(file, null, configs, meta);
                     next(null, pathURI.joinURI(configs.dest.host, uri));
                     break;
 
@@ -129,6 +158,20 @@ module.exports = function wrapDefine(file, code, depIdsMap, meta, callback) {
 
         case 'html':
             htmlminify(file, code, next);
+            break;
+
+        case 'image':
+            switch (meta.outType) {
+                case 'base64':
+                    code = cssminify(file, code, null);
+                    next(null, base64(new Buffer(code, 'binary'), '.css'));
+                    break;
+
+                default :
+                    uri = createURL(file, code, configs, meta);
+                    next(null, pathURI.joinURI(configs.dest.host, uri));
+                    break;
+            }
             break;
 
         default :
