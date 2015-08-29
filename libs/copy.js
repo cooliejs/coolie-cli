@@ -15,6 +15,8 @@ var log = require('./log.js');
 var path = require('path');
 var fse = require('fs-extra');
 var defaults = {
+    // 原始文件
+    srcFile: '',
     // 原始代码片段
     srcCode: '',
     // 是否构建版本
@@ -28,10 +30,9 @@ var defaults = {
 /**
  * 复制单个文件
  * @param fromFile {String} 起始地址
- * @param srcFile {String} 源文件
  * @param [options] {Object} 配置
  */
-module.exports = function (fromFile, srcFile, options) {
+module.exports = function (fromFile, options) {
     // 如果不是相对路径文件
     if (!pathURI.isRelatived(fromFile)) {
         return;
@@ -42,7 +43,9 @@ module.exports = function (fromFile, srcFile, options) {
     var configs = global.configs;
 
     if (!typeis.file(fromFile)) {
-        log('copy file', pathURI.toSystemPath(srcFile), 'error');
+        if (options.srcFile) {
+            log('copy file', pathURI.toSystemPath(options.srcFile), 'error');
+        }
 
         if (options.srcCode) {
             log('source code', options.srcCode, 'error');

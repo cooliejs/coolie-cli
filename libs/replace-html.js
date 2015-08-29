@@ -101,7 +101,8 @@ module.exports = function (file, code) {
         }
 
         if (hasCoolie) {
-            var copySrc = copy(src, file, {
+            var copySrc = copy(src, {
+                srcFile: file,
                 srcCode: $0
             });
 
