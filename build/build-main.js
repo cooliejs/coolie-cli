@@ -32,8 +32,8 @@ module.exports = function (mainFile, callback) {
     var chunkList = [];
     var configs = global.configs;
 
-    var _deepBuld = function (name, type, file) {
-        buildModule(mainFile, name, type, file, depIdsMap, function (err, meta) {
+    var _deepBuld = function (name, pipeline, file) {
+        buildModule(mainFile, name, pipeline, file, depIdsMap, function (err, meta) {
             if (err) {
                 log('build', pathURI.toSystemPath(file), 'error');
                 log('build', err.message, 'error');
@@ -83,7 +83,7 @@ module.exports = function (mainFile, callback) {
                     if (!depsCache[depId]) {
                         depsCache[depId] = true;
                         //log("require", pathURI.toSystemPath(depId));
-                        _deepBuld(dep.name, dep.type, depId);
+                        _deepBuld(dep.name, dep.pipeline, depId);
                         depsLength++;
                     }
                 });

@@ -157,6 +157,8 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                             name: dep.name,
                             id: depId,
                             type: dep.type,
+                            outType: dep.outType,
+                            pipeline: dep.pipeline,
                             chunk: false,
                             gid: depIdsMap[depId]
                         });
