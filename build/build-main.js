@@ -32,8 +32,8 @@ module.exports = function (mainFile, callback) {
     var chunkList = [];
     var configs = global.configs;
 
-    var _deepBuld = function (name, pipeline, file) {
-        buildModule(mainFile, name, pipeline, file, depIdsMap, function (err, meta) {
+    var _deepBuld = function (meta, file) {
+        buildModule(mainFile, meta, file, depIdsMap, function (err, meta) {
             if (err) {
                 log('build', pathURI.toSystemPath(file), 'error');
                 log('build', err.message, 'error');
@@ -83,7 +83,7 @@ module.exports = function (mainFile, callback) {
                     if (!depsCache[depId]) {
                         depsCache[depId] = true;
                         //log("require", pathURI.toSystemPath(depId));
-                        _deepBuld(dep.name, dep.pipeline, depId);
+                        _deepBuld(dep, depId);
                         depsLength++;
                     }
                 });
@@ -98,5 +98,9 @@ module.exports = function (mainFile, callback) {
 
     // 第一个 define 模块为入口模块，不必指定其 name
     depIdsMap[mainFile] = '0';
-    _deepBuld(mainName, 'js', mainFile);
+    _deepBuld({
+        name: mainName,
+        type: 'js',
+        pipeline: 'js'
+    }, mainFile);
 };

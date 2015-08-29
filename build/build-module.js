@@ -22,14 +22,12 @@ var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
 var globalId = require('../libs/global-id.js');
 var copy = require('../libs/copy.js');
-var buildCssModule = require('./css-module.js');
 
 
 /**
  * 构建一个模块
  * @param mainFile {String} 入口模块
- * @param name {String} 文件名称
- * @param type {String} 依赖类型
+ * @param meta {Object} 文件名称
  * @param file {String} 文件路径
  * @param depIdsMap {Object} 模块绝对路径 <=> ID 对应表
  * @param callback {Function} 回调，返回包括
@@ -37,7 +35,8 @@ var buildCssModule = require('./css-module.js');
  * @arguments[1].deps 文件依赖的文件列表
  * @arguments[2].depIdsMap 文件依赖的文件列表
  */
-module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
+module.exports = function (mainFile, meta, file, depIdsMap, callback) {
+    var type = meta.type;
     // 依赖 ID 列表
     var depList = [];
     // 依赖绝对路径与 ID 对应关系
@@ -195,7 +194,7 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
         // 5. 替换 define
         .task(function (next, code) {
             if (isSingle) {
-                wrapDefine(file, code, depIdsMap, type, next);
+                wrapDefine(file, code, depIdsMap, meta, next);
             } else {
                 code = replaceDefine(file, code, depList, depIdsMap);
                 next(null, code);
