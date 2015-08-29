@@ -6,7 +6,7 @@ define(function (require, exports, module) {
     //require('../libs1/path1/path2/');
     //require('../libs2/some.txt', 'text');
     //require('../libs2/some.json', 'json');
-    require('../libs2/some.css', 'css');
+    require('../libs2/some.css', 'css|base64');
     //
     //if(DEBUG){
     //    alert(123);

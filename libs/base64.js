@@ -18,7 +18,7 @@ var typeis = require('ydr-utils').typeis;
 
 /**
  * 文件 base64 编码
- * @param file
+ * @param file {String|Object} 文件或者文件二进制编码
  * @param [extname]
  * @param [callback]
  * @returns {*}
@@ -37,17 +37,23 @@ module.exports = function (file, extname, callback) {
     }
 
     var binary;
-    extname = extname || path.extname(file);
+
+    if (typeis.string(file)) {
+        extname = extname || path.extname(file);
+
+        try {
+            binary = fs.readFileSync(file, 'binary');
+        } catch (err) {
+            log('read file', pathURI.toSystemPath(file), 'error');
+            log('read file', err.message, 'error');
+            process.exit(1);
+        }
+    } else {
+        binary = file;
+    }
+
     // data:image/png;base64,
     var prefix = 'data:' + mime.get(extname) + ';base64,';
-
-    try {
-        binary = fs.readFileSync(file, 'binary');
-    } catch (err) {
-        log('read file', pathURI.toSystemPath(file), 'error');
-        log('read file', err.message, 'error');
-        process.exit(1);
-    }
 
     var base64;
 

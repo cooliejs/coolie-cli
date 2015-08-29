@@ -28,9 +28,7 @@
     "dest": "./static/res/",
     "minify": true
   },
-  "copy": [
-    "coolie.json"
-  ],
+  "copy": [],
   "dest": {
     "dirname": "../dest/",
     "host": "/",

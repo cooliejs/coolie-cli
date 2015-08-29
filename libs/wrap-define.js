@@ -15,6 +15,7 @@ var cssminify = require('./cssminify.js');
 var htmlminify = require('./htmlminify.js');
 var jsonminify = require('./jsonminify.js');
 var pathURI = require('./path-uri.js');
+var base64 = require('./base64.js');
 var path = require('path');
 var fse = require('fs-extra');
 
@@ -77,6 +78,12 @@ module.exports = function wrapDefine(file, code, depIdsMap, meta, callback) {
                     }
 
                     next(null, pathURI.joinURI(configs.dest.host, uri));
+                    break;
+
+                case 'base64':
+                    code = cssminify(file, code, null);
+                    var binary = new Buffer(code, 'binary');
+                    next(null, base64(binary, '.css'));
                     break;
 
                 default :
