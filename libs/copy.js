@@ -14,6 +14,7 @@ var pathURI = require('./path-uri.js');
 var log = require('./log.js');
 var path = require('path');
 var fse = require('fs-extra');
+var REG_POINT = /^\.{1,2}\//;
 var defaults = {
     // 原始文件
     srcFile: '',
@@ -41,6 +42,15 @@ module.exports = function (fromFile, options) {
     options = dato.extend({}, defaults, options);
 
     var configs = global.configs;
+    var fromTo = path.relative(configs._srcPath, fromFile);
+
+    if (REG_POINT.test(fromTo)) {
+        if (pathURI.isRelativeFile(fromFile) && options.srcFile) {
+            fromFile = path.join(path.dirname(options.srcFile), fromFile);
+        } else {
+            fromFile = path.join(configs._srcPath, fromFile);
+        }
+    }
 
     if (!typeis.file(fromFile)) {
         if (options.srcFile) {
