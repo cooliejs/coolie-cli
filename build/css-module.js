@@ -10,6 +10,8 @@
 var fse = require('fs-extra');
 var path = require('path');
 var cssminify = require('../libs/cssminify.js');
+var log = require('../libs/log.js');
+var pathURI = require('../libs/path-uri.js');
 var encryption = require('ydr-utils').encryption;
 
 
@@ -25,6 +27,7 @@ module.exports = function (file, pipeline, options) {
     var configs = global.configs;
     var code = fse.readFileSync(file, 'utf8');
     var optType = pipeline.length > 1 ? pipeline[pipeline.length - 1] : 'text';
+    var destFile = null;
 
     switch (optType) {
         case 'text':
@@ -33,13 +36,24 @@ module.exports = function (file, pipeline, options) {
 
         case 'url':
             var version = encryption.etag(file).slice(0, configs.dest.versionLength);
-            var destFile = path.join(configs._cssDestPath, version + '.css');
+            destFile = path.join(configs._cssDestPath, version + '.css');
 
             code = cssminify(file, code, destFile);
-            fse.writeFileSync();
+
+            try {
+                fse.writeFileSync(destFile, code, 'utf8');
+            } catch (err) {
+                log('cssminify', pathURI.toSystemPath(file), 'error');
+                log('cssminify', err.message, 'error');
+                process.exit(1);
+            }
+
             break;
     }
 
-    return code;
+    return {
+        code: code,
+        destFile: destFile
+    };
 };
 

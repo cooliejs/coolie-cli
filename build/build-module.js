@@ -22,6 +22,7 @@ var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
 var globalId = require('../libs/global-id.js');
 var copy = require('../libs/copy.js');
+var buildCssModule = require('./css-module.js');
 
 
 /**
@@ -68,24 +69,8 @@ module.exports = function (mainFile, name, type, file, depIdsMap, callback) {
                     break;
 
                 case 'css':
-                    toFile = copy(file, {
-                        dest: configs._cssDestPath,
-                        version: true
-                    });
-
-                    var code = '';
-
-                    try {
-                        code = fs.readFileSync(file, 'utf8');
-                    } catch (err) {
-                        log('read file', pathURI.toSystemPath(file), 'error');
-                        log('read file', err.message, 'error');
-                        process.exit(1);
-                    }
-
-                    uri = path.relative(configs._destPath, toFile);
-                    cssminify(file, code, toFile);
-                    next(null, pathURI.joinURI(configs.dest.host, uri));
+                    var ret = buildCssModule(file, 'css!text');
+                    next(null, ret.code);
                     break;
 
                 default :
