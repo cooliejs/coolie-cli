@@ -11,6 +11,7 @@ var REG_HUA_START = /^.*?:/;
 var REG_HUA_END = /}$/;
 var log = require('./log.js');
 var encryption = require('ydr-utils').encryption;
+var typeis = require('ydr-utils').typeis;
 var cssminify = require('./cssminify.js');
 var htmlminify = require('./htmlminify.js');
 var jsonminify = require('./jsonminify.js');
@@ -18,6 +19,34 @@ var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
 var path = require('path');
 var fse = require('fs-extra');
+
+
+/**
+ * 生成模块 url
+ * @param file
+ * @param code
+ * @param configs
+ */
+var createURL = function (file, code, configs, filter) {
+    var extname = path.extname(file);
+    var version = encryption.etag(file).slice(0, configs.dest.versionLength);
+    var destFile = path.join(configs._cssDestPath, version + extname);
+    var uri = path.relative(configs._destPath, destFile);
+
+    if (typeis.function(filter)) {
+        code = filter(uri, destFile);
+    }
+
+    try {
+        fse.outputFileSync(destFile, code, 'utf-8');
+    } catch (err) {
+        log('write file', pathURI.toSystemPath(file), 'error');
+        log('write file', err.message, 'error');
+        process.exit(1);
+    }
+
+    return uri;
+};
 
 
 /**
@@ -30,7 +59,6 @@ var fse = require('fs-extra');
  */
 module.exports = function wrapDefine(file, code, depIdsMap, meta, callback) {
     var configs = global.configs;
-
     var next = function (err, code) {
         if (err) {
             return;
@@ -53,6 +81,8 @@ module.exports = function wrapDefine(file, code, depIdsMap, meta, callback) {
 
         callback(null, code);
     };
+    var uri;
+    var extname = path.extname(file);
 
     switch (meta.type) {
         case 'json':
@@ -60,34 +90,39 @@ module.exports = function wrapDefine(file, code, depIdsMap, meta, callback) {
             break;
 
         case 'css':
-            // 出口类型
             switch (meta.outType) {
                 case 'url':
-                    var version = encryption.etag(file).slice(0, configs.dest.versionLength);
-                    var destFile = path.join(configs._cssDestPath, version + '.css');
-                    var uri = path.relative(configs._destPath, destFile);
-
-                    code = cssminify(file, code, destFile);
-
-                    try {
-                        fse.outputFileSync(destFile, code, 'utf-8');
-                    } catch (err) {
-                        log('write file', pathURI.toSystemPath(file), 'error');
-                        log('write file', err.message, 'error');
-                        process.exit(1);
-                    }
-
+                    uri = createURL(file, code, configs, function (uri, destFile) {
+                        return cssminify(file, code, destFile);
+                    });
                     next(null, pathURI.joinURI(configs.dest.host, uri));
                     break;
 
                 case 'base64':
                     code = cssminify(file, code, null);
-                    var binary = new Buffer(code, 'binary');
-                    next(null, base64(binary, '.css'));
+                    next(null, base64(new Buffer(cssminify(file, code, null), 'binary'), extname));
                     break;
 
                 default :
                     cssminify(file, code, null, next);
+                    break;
+            }
+            break;
+
+        case 'text':
+            switch (meta.outType) {
+                case 'url':
+                    uri = createURL(file, code, configs);
+                    next(null, pathURI.joinURI(configs.dest.host, uri));
+                    break;
+
+                case 'base64':
+                    code = cssminify(file, code, null);
+                    next(null, base64(new Buffer(code, 'binary'), '.css'));
+                    break;
+
+                default :
+                    next(null, code);
                     break;
             }
             break;
