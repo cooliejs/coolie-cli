@@ -15,7 +15,6 @@
   },
   "html": {
     "src": [
-      "./html/index.html"
     ],
     "minify": true
   },

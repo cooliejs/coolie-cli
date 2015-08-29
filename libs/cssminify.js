@@ -65,12 +65,7 @@ module.exports = function (file, code, destFile, callback) {
 
     try {
         code = cssminify(file, code, null);
-
-        if (destFile) {
-            code = replaceCSSResource(file, code, destFile, false);
-        } else {
-            code = replaceCSSResource(file, code, null, true);
-        }
+        code = replaceCSSResource(file, code, destFile);
 
         if (callback) {
             callback(null, code);
