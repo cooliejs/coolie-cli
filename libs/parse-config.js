@@ -1,5 +1,5 @@
 /*!
- * create-config.js
+ * 解析 coolie.json
  * @author ydr.me
  * @create 2014-10-23 22:13
  */
