@@ -14,7 +14,6 @@ var pathURI = require('./path-uri.js');
 var log = require('./log.js');
 var path = require('path');
 var fse = require('fs-extra');
-var REG_POINT = /^.{1,2}\//;
 var defaults = {
     // 是否构建版本
     version: false,
@@ -73,7 +72,7 @@ module.exports = function (fromFile, options) {
     } catch (err) {
         log('copy from', pathURI.toSystemPath(fromFile), 'error');
         log('copy to', pathURI.toSystemPath(toFile), 'error');
-        log('copy file', err.message, 'error');
+        log('copy error', err.message, 'error');
         process.exit(1);
     }
 
