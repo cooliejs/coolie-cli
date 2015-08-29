@@ -52,7 +52,8 @@ var createURL = function (file, code, configs, meta, filter) {
 
     if(code === null){
         copy(file, {
-            dest: configs._resDestPath
+            dest: configs._resDestPath,
+            version: true
         });
     }else{
         try {
@@ -141,7 +142,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
         case 'text':
             switch (meta.outType) {
                 case 'url':
-                    uri = createURL(file, null, configs, meta);
+                    uri = createURL(file, code, configs, meta);
                     next(null, pathURI.joinURI(configs.dest.host, uri));
                     break;
 
@@ -168,7 +169,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
                     break;
 
                 default :
-                    uri = createURL(file, code, configs, meta);
+                    uri = createURL(file, null, configs, meta);
                     next(null, pathURI.joinURI(configs.dest.host, uri));
                     break;
             }
