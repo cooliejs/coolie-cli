@@ -22,10 +22,10 @@ var REG_QUOTE = /^["']|['"]$/g;
  * @param file {String} 待替换的文件
  * @param css {String} 待替换的 CSS 文件
  * @param destCSSFile {String} CSS 文件的保存路径
- * @param [isReplaceToBase64WhenRelativeToFile=false] {Boolean} 是否替换为 base64 编码，当资源相对于当前文件时
+ * @param [base64Resource=false] {Boolean} 是否替换为 base64 编码
  * @returns {String}
  */
-module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelativeToFile) {
+module.exports = function (file, css, destCSSFile, base64Resource) {
     var configs = global.configs;
 
     return css.replace(REG_URL, function ($0, $1) {
@@ -49,7 +49,7 @@ module.exports = function (file, css, destCSSFile, isReplaceToBase64WhenRelative
             process.exit(1);
         }
 
-        if (pathURI.isRelativeFile(pathRet.path) && isReplaceToBase64WhenRelativeToFile) {
+        if (!destCSSFile || base64Resource) {
             var b64 = configs._resBase64Map[absFile];
 
             if (!b64) {
