@@ -16,6 +16,7 @@ var htmlminify = require('./htmlminify.js');
 var jsonminify = require('./jsonminify.js');
 var pathURI = require('./path-uri.js');
 var path = require('path');
+var fse = require('fs-extra');
 
 
 /**
@@ -58,12 +59,21 @@ module.exports = function wrapDefine(file, code, depIdsMap, textType, callback) 
             break;
 
         case 'css':
-            var version = encryption.etag(file);
+            var version = encryption.etag(file).slice(0, configs.dest.versionLength);
             var destFile = path.join(configs._cssDestPath, version + '.css');
             var uri = path.relative(configs._destPath, destFile);
 
-            cssminify(file, code, destFile);
-            next(null, pathURI);
+            code = cssminify(file, code, destFile);
+
+            try {
+                fse.outputFileSync(destFile, code, 'utf-8');
+            } catch (err) {
+                log('write file', pathURI.toSystemPath(file), 'error');
+                log('write file', err.message, 'error');
+                process.exit(1);
+            }
+
+            next(null, pathURI.joinURI(configs.dest.host, uri));
             break;
 
         case 'html':

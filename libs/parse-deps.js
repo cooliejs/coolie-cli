@@ -87,10 +87,13 @@ module.exports = function (file, code) {
     code.replace(REG_SLASH, '').replace(REG_REQUIRE, function ($0, $1, $2) {
         if ($2) {
             var matches = $2.match(REG_REQUIRE_TYPE);
+            var pipeline = (matches[2] ? matches[2].toLowerCase() : 'js').split('|');
             var dep = {
                 raw: matches[1],
                 name: cleanURL(matches[1], !!matches[2]),
-                type: matches[2] ? matches[2].toLowerCase() : 'js'
+                type: pipeline[0],
+                outType: pipeline[1] || 'js',
+                pipeline: pipeline
             };
 
             requires.push(dep);
