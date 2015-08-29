@@ -29,7 +29,7 @@
     "minify": true
   },
   "copy": [
-    "./abc.js"
+    "coolie.json"
   ],
   "dest": {
     "dirname": "../dest/",

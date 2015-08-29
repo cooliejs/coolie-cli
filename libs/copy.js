@@ -27,14 +27,11 @@ var defaults = {
 /**
  * 复制单个文件
  * @param from {String} 起始地址
- * @param [relativeFile] {String} 相对文件
  * @param [options] {Object} 配置
+ *
+ * 如：复制 /src/a/b/c/1.js
  */
-module.exports = function (from, relativeFile, options) {
-    if (typeis.object(arguments[1])) {
-        options = arguments[1];
-        relativeFile = null;
-    }
+module.exports = function (from, options) {
 
     options = dato.extend({}, defaults, options);
 
@@ -42,25 +39,11 @@ module.exports = function (from, relativeFile, options) {
     var releativeTo = path.relative(configs._srcPath, from);
     var fromFile = '';
 
+    // 相对地址
     if (REG_POINT.test(releativeTo)) {
         fromFile = path.join(configs._srcPath, from);
     } else {
         fromFile = from;
-    }
-
-    if (!pathURI.isRelatived(from)) {
-        return;
-    }
-
-    var relativeDir;
-
-    if (relativeFile) {
-        relativeDir = path.dirname(relativeFile);
-
-        if (pathURI.isRelativeFile(from)) {
-            fromFile = path.join(relativeDir, from);
-            from = path.relative(configs._srcPath, fromFile);
-        }
     }
 
     if (!typeis.file(fromFile)) {

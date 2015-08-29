@@ -135,9 +135,7 @@ module.exports = function (srcPath) {
                 }
 
                 howdo.each(files, function (j, file, nextFile) {
-                    var relative = path.relative(srcPath, file);
-
-                    copy(relative);
+                    copy(file);
                     nextFile();
                 }).follow(function () {
                     //log('√', pathURI.toSystemPath(gbPath), 'success');
