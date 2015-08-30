@@ -103,11 +103,14 @@ module.exports = function (file, code) {
         if (hasCoolie) {
             var copySrc = copy(src, {
                 srcFile: file,
-                dest: configs._srcPath,
-                srcCode: $0
+                dest: configs._jsDestPath,
+                srcCode: $0,
+                version: true
             });
 
             if (copySrc) {
+                var uri = path.relative(configs._destPath, copySrc);
+                console.log(copySrc, uri);
                 $0 = htmlAttr.set($0, 'src', pathURI.joinURI(configs.dest.host, copySrc));
             }
         }

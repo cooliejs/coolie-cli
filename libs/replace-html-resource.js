@@ -50,9 +50,9 @@ module.exports = function (file, tag, attrKey, isReplaceToBase64WhenRelativeToFi
     try {
         absFile = path.join(absDir, pathRet.path);
     } catch (err) {
-        log('replace resource', pathURI.toSystemPath(file), 'error');
+        log('replace file', pathURI.toSystemPath(file), 'error');
         log('replace resource', tag, 'error');
-        log('replace resource', err.message, 'error');
+        log('replace error', err.message, 'error');
         log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
         process.exit(1);
     }

@@ -45,7 +45,9 @@ module.exports = function (fromFile, options) {
     var fromTo = path.relative(configs._srcPath, fromFile);
 
     if (REG_POINT.test(fromTo)) {
-        if (pathURI.isRelativeFile(fromFile) && options.srcFile) {
+        if (pathURI.isRelativeRoot(fromFile)) {
+            fromFile = path.join(configs._srcPath, fromFile);
+        } else if (pathURI.isRelativeFile(fromFile) && options.srcFile) {
             fromFile = path.join(path.dirname(options.srcFile), fromFile);
         } else if (options.dest) {
             fromFile = path.join(options.dest, fromFile);
