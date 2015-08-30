@@ -103,7 +103,7 @@ module.exports = function (file, code) {
         if (hasCoolie) {
             var copySrc = copy(src, {
                 srcFile: file,
-                dest: configs._jsPath
+                dest: configs._srcPath,
                 srcCode: $0
             });
 
