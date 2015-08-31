@@ -110,8 +110,8 @@ module.exports = function (file, code) {
 
             if (copySrc) {
                 var uri = path.relative(configs._destPath, copySrc);
-                console.log(copySrc, uri);
-                $0 = htmlAttr.set($0, 'src', pathURI.joinURI(configs.dest.host, copySrc));
+
+                $0 = htmlAttr.set($0, 'src', pathURI.joinURI(configs.dest.host, uri));
             }
         }
 

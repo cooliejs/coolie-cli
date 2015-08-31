@@ -16,6 +16,7 @@ var jsminify = require('./jsminify.js');
 var sign = require('./sign.js');
 var log = require('./log.js');
 var dato = require('ydr-utils').dato;
+var typeis = require('ydr-utils').typeis;
 var encryption = require('ydr-utils').encryption;
 var ruleMap = {
     css: {
@@ -48,7 +49,7 @@ module.exports = function (file, html) {
     dato.each(htmlMatches, function (index, tag) {
         var source = htmlAttr.get(tag, rule.attr);
 
-        if (source === true || source === false) {
+        if (typeis.boolean(source)) {
             return;
         }
 
@@ -107,13 +108,13 @@ module.exports = function (file, html) {
         fse.outputFileSync(destPath, newCode);
     } catch (err) {
         log("write file", pathURI.toSystemPath(destPath), "error");
-        log('write file', err.message, 'error');
+        log('write error', err.message, 'error');
         process.exit(1);
     }
 
     log('√', pathURI.toSystemPath(destPath), 'success');
 
-    return configs._concatMap[md5List] = {
+    return (configs._concatMap[md5List] = {
         srcName: srcName,
         srcPath: srcPath,
         destPath: destPath,
@@ -122,9 +123,8 @@ module.exports = function (file, html) {
         file: file,
         type: type,
         files: files,
-        replace: type === 'css'
-            ? '<link rel="stylesheet" href="' + pathURI.joinURI(configs.dest.host, url) + '">'
-            : '<script src="' + pathURI.joinURI(configs.dest.host, url) + '"></script>'
-    };
+        replace: type === 'css' ? '<link rel="stylesheet" href="' + pathURI.joinURI(configs.dest.host, url) + '">' :
+        '<script src="' + pathURI.joinURI(configs.dest.host, url) + '"></script>'
+    });
 };
 
