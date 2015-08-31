@@ -34,7 +34,7 @@ var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
 var REG_IMG = /<img\b[\s\S]*?>/gi;
 var REG_TAG_START = /<[a-z][a-z\d]*?\b[\s\S]*?>/ig;
-var REG_DANGER_END = /}}<\/script>$/;
+var REG_AMBIGUITY_SLICE = /}};?<\/script>$/;
 var JS_TYPES = [
     'javascript',
     'text/javascript',
@@ -137,8 +137,7 @@ module.exports = function (file, code, callback) {
 
         tag = htmlAttr.remove(tag, coolieIgnore);
         // 压缩代码并消除歧义
-        console.log(tag + code2 + '</script>');
-        preMap[key] = (tag + code2 + '</script>').replace(REG_DANGER_END, '} }</script>');
+        preMap[key] = (tag + code2 + '</script>').replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
 
         return key;
     });
