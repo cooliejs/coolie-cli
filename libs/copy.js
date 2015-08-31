@@ -93,8 +93,6 @@ module.exports = function (fromFile, options) {
     }
 
     try {
-        console.log(fromFile);
-        console.log(toFile);
         fse.copySync(fromFile, toFile);
         configs._copyFilesMap[fromFile] = toFile;
         configs._copyLength++;
