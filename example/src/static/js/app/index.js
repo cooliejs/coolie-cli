@@ -19,10 +19,10 @@ define(function (require, exports, module) {
 
 
     // json
-    require('../libs2/some.json', 'json');
+    //require('../libs2/some.json', 'json');
     //require('../libs2/some.json', 'json|url');
     //require('../libs2/some.json', 'json|text');
-    //require('../libs2/some.json', 'json|base64');
+    require('../libs2/some.json', 'json|base64');
 
 
     // css

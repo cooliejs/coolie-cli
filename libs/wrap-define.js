@@ -26,38 +26,32 @@ var fse = require('fs-extra');
 /**
  * 生成模块 url
  * @param file
- * @param code
+ * @param code {String|Null} image 的 code 为 null
  * @param configs
  * @param meta
  * @param filter
  */
 var createURL = function (file, code, configs, meta, filter) {
-    var extname = path.extname(file);
-    var version = encryption.etag(file).slice(0, configs.dest.versionLength);
+    var dest = meta.type === 'css' ? configs._cssDestPath : configs._resDestPath;
     var destFile = '';
 
-    switch (meta.type) {
-        case 'css':
-            destFile = path.join(configs._cssDestPath, version + extname);
-            break;
-
-        default :
-            destFile = path.join(configs._resDestPath, version + extname);
-    }
-
-    var uri = path.relative(configs._destPath, destFile);
-
-    if (code !== null && typeis.function(filter)) {
-        code = filter(uri, destFile);
-    }
-
+    // 直接复制
     if (code === null) {
-        copy(file, {
-            srcFile: file,
-            dest: configs._resDestPath,
-            version: true
+        destFile = copy(file, {
+            dest: dest,
+            version: true,
+            logType: 1
         });
     } else {
+        var extname = path.extname(file);
+        var version = encryption.etag(file).slice(0, configs.dest.versionLength);
+
+        destFile = path.join(configs._cssDestPath, version + extname);
+
+        if (code !== null && typeis.function(filter)) {
+            code = filter(destFile);
+        }
+
         try {
             fse.outputFileSync(destFile, code, 'utf-8');
         } catch (err) {
@@ -67,7 +61,9 @@ var createURL = function (file, code, configs, meta, filter) {
         }
     }
 
-    return uri;
+    var relativeTo = path.relative(configs._destPath, destFile);
+
+    return pathURI.joinURI(configs.dest.host, relativeTo);
 };
 
 
@@ -121,7 +117,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
         case 'json':
             switch (meta.outType) {
                 case 'url':
-                    uri = createURL(file, code, configs, meta, function (uri, destFile) {
+                    uri = createURL(file, code, configs, meta, function (destFile) {
                         return jsonminify(file, code);
                     });
                     next(null, pathURI.joinURI(configs.dest.host, uri));
@@ -143,7 +139,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
         case 'css':
             switch (meta.outType) {
                 case 'url':
-                    uri = createURL(file, code, configs, meta, function (uri, destFile) {
+                    uri = createURL(file, code, configs, meta, function (destFile) {
                         return cssminify(file, code, destFile);
                     });
                     next(null, pathURI.joinURI(configs.dest.host, uri));
@@ -182,7 +178,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
         case 'html':
             switch (meta.outType) {
                 case 'url':
-                    uri = createURL(file, code, configs, meta, function (uri, destFile) {
+                    uri = createURL(file, code, configs, meta, function (destFile) {
                         return htmlminify(file, code);
                     });
                     next(null, pathURI.joinURI(configs.dest.host, uri));
