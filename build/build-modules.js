@@ -139,7 +139,7 @@ module.exports = function (srcPath) {
                     copy(file);
                     nextFile();
                 }).follow(function () {
-                    //log('√', pathURI.toSystemPath(gbPath), 'success');
+                    //log('√', pathURI.toRootURL(gbPath), 'success');
                     nextCopy();
                 });
             });
@@ -240,7 +240,7 @@ module.exports = function (srcPath) {
                     process.exit(1);
                 }
 
-                log('√', pathURI.toSystemPath(destFile), 'success');
+                log('√', pathURI.toRootURL(destFile), 'success');
                 next();
             });
         })
@@ -349,7 +349,7 @@ module.exports = function (srcPath) {
                     return process.exit(1);
                 }
 
-                log('√', pathURI.toSystemPath(mapFile), 'success');
+                log('√', pathURI.toRootURL(mapFile), 'success');
                 next();
             });
         })

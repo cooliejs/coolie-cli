@@ -112,7 +112,7 @@ module.exports = function (file, html) {
         process.exit(1);
     }
 
-    log('√', pathURI.toSystemPath(destPath), 'success');
+    log('√', pathURI.toRootURL(destPath), 'success');
 
     return (configs._concatMap[md5List] = {
         srcName: srcName,

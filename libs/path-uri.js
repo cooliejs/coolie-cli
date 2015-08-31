@@ -31,6 +31,18 @@ exports.toSystemPath = function (p) {
 
 
 /**
+ * 转换为根 uri
+ * @param p
+ * @returns {String}
+ */
+exports.toRootURL = function (p) {
+    var configs = global.configs;
+
+    return '/' + path.relative(configs._srcPath, exports.toURIPath(p));
+};
+
+
+/**
  * 转换路径为 URL 格式
  * @param p
  * @returns {string}

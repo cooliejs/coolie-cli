@@ -90,7 +90,7 @@ module.exports = function (mainFile, callback) {
             }
 
             if (depsLength === bufferList.length) {
-                log("√", pathURI.toSystemPath(mainFile), "success");
+                log("√", pathURI.toRootURL(mainFile), "success");
                 callback(null, bufferList, md5List, deepDeps, chunkList);
             }
         });

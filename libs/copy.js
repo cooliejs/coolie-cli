@@ -104,11 +104,11 @@ module.exports = function (fromFile, options) {
 
         switch (options.logType) {
             case 1:
-                log('√', pathURI.toSystemPath(fromFile), 'success');
+                log('√', pathURI.toRootURL(fromFile), 'success');
                 break;
 
             case 2:
-                log('√', pathURI.toSystemPath(toFile), 'success');
+                log('√', pathURI.toRootURL(toFile), 'success');
                 break;
         }
     } catch (err) {

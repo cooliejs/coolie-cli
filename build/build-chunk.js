@@ -51,7 +51,7 @@ module.exports = function (versionMap, callback) {
                 process.exit(1);
             }
 
-            log('√', pathURI.toSystemPath(destFile), 'success');
+            log('√', pathURI.toRootURL(destFile), 'success');
             done();
         });
     }).together(callback);
