@@ -46,6 +46,8 @@ module.exports = function (file, callback) {
             process.exit(1);
         }
 
+        log('√', pathURI.toSystemPath(file), 'success');
+
         //dato.each(ret.depCSS, function (name, dep) {
         //    cssLength += dep.length;
         //});

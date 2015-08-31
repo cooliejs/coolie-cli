@@ -285,8 +285,6 @@ module.exports = function (srcPath) {
                         nextHTML(err);
                     });
                 }).follow(function () {
-                    log('√', pathURI.toSystemPath(gbPath), 'success');
-
                     nextGlob();
                 });
             });
