@@ -18,6 +18,7 @@ var jsonminify = require('./jsonminify.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
 var copy = require('./copy.js');
+var unicode = require('./unicode.js');
 var path = require('path');
 var fse = require('fs-extra');
 
@@ -111,7 +112,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
             code = fse.readFileSync(file, 'utf8');
         } catch (err) {
             log('read file', pathURI.toSystemPath(file), 'error');
-            log('read file', err.message, 'error');
+            log('read error', err.message, 'error');
             process.exit(1);
         }
     }
@@ -128,6 +129,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
 
                 case 'base64':
                     code = jsonminify(file, code, null);
+                    code = unicode(code);
                     next(null, base64(new Buffer(code, 'utf8'), extname));
                     break;
 
@@ -149,6 +151,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
 
                 case 'base64':
                     code = cssminify(file, code, null);
+                    code = unicode(code);
                     next(null, base64(new Buffer(code, 'utf8'), extname));
                     break;
 
@@ -166,7 +169,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
                     break;
 
                 case 'base64':
-                    code = cssminify(file, code, null);
+                    code = unicode(code);
                     next(null, base64(new Buffer(code, 'utf8'), extname));
                     break;
 
@@ -187,6 +190,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
 
                 case 'base64':
                     code = htmlminify(file, code);
+                    code = unicode(code);
                     next(null, base64(new Buffer(code, 'utf8'), extname));
                     break;
 
