@@ -16,7 +16,6 @@ var dato = require('ydr-utils').dato;
 var pathURI = require("../libs/path-uri.js");
 var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');
-var cssminify = require('../libs/cssminify.js');
 var replaceRequire = require('../libs/replace-require.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');

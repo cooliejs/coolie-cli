@@ -25,7 +25,12 @@ var defaults = {
     // 是否压缩
     minify: false,
     // 指定目标地址
-    dest: null
+    dest: null,
+    // 打印类型
+    // 0：不打印
+    // 1：源文件
+    // 2：目标文件
+    logType: 2
 };
 
 /**
@@ -96,7 +101,16 @@ module.exports = function (fromFile, options) {
         fse.copySync(fromFile, toFile);
         configs._copyFilesMap[fromFile] = toFile;
         configs._copyLength++;
-        log('√', pathURI.toSystemPath(toFile), 'success');
+
+        switch (options.logType) {
+            case 1:
+                log('√', pathURI.toSystemPath(fromFile), 'success');
+                break;
+
+            case 2:
+                log('√', pathURI.toSystemPath(toFile), 'success');
+                break;
+        }
     } catch (err) {
         log('copy from', pathURI.toSystemPath(fromFile), 'error');
         log('copy to', pathURI.toSystemPath(toFile), 'error');
