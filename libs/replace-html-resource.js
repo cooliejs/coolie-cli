@@ -57,19 +57,13 @@ module.exports = function (file, tag, attrKey) {
         process.exit(1);
     }
 
-    var url = configs._resURIMap[absFile];
-
-    // 未进行版本构建
-    if (!url) {
-        var resFile = copy(absFile, {
-            version: true,
-            dest: configs._resDestPath,
-            logType: 1
-        });
-        var resRelative = path.relative(configs._destPath, resFile);
-
-        configs._resURIMap[absFile] = url = pathURI.joinURI(configs.dest.host, resRelative);
-    }
+    var resFile = copy(absFile, {
+        version: true,
+        dest: configs._resDestPath,
+        logType: 1
+    });
+    var resRelative = path.relative(configs._destPath, resFile);
+    var url = pathURI.joinURI(configs.dest.host, resRelative);
 
     return htmlAttr.set(tag, attrKey, url + pathRet.suffix);
 };
