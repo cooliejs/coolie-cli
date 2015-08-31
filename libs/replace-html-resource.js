@@ -65,8 +65,9 @@ module.exports = function (file, tag, attrKey) {
             version: true,
             dest: configs._resDestPath
         });
+        var resRelative = path.relative(configs._destPath, resFile);
 
-        configs._resURIMap[absFile] = url = pathURI.joinURI(configs.dest.host, path.relative(configs._destPath, resFile));
+        configs._resURIMap[absFile] = url = pathURI.joinURI(configs.dest.host, resRelative);
     }
 
     return htmlAttr.set(tag, attrKey, url + pathRet.suffix);

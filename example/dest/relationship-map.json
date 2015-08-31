@@ -13,8 +13,6 @@
         "main": "static/js/app/index.js",
         "deps": [
             "static/img/loading.gif",
-            "static/js/libs1/vue.min.js",
-            "static/js/libs1/jquery.js",
             "static/js/libs1/path1/path2/index.js",
             "static/img/100x100.png",
             "static/js/libs2/some.txt",
@@ -37,8 +35,6 @@
         "main": "static/js/app/index.js",
         "deps": [
             "static/img/loading.gif",
-            "static/js/libs1/vue.min.js",
-            "static/js/libs1/jquery.js",
             "static/js/libs1/path1/path2/index.js",
             "static/img/100x100.png",
             "static/js/libs2/some.txt",

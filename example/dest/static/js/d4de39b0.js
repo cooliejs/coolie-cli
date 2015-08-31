@@ -1,2 +1,2 @@
-/*coolie@0.22.0*/
+/*coolie@0.22.3*/
 !function(){var a=2;alert(a)}();

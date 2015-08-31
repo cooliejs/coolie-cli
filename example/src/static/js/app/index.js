@@ -1,7 +1,7 @@
 define(function (require, exports, module) {
     require('../../img/loading.gif', 'image');
-    require('../libs1/vue.min.js');
-    require('../libs1/jquery.js');
+    //require('../libs1/vue.min.js');
+    //require('../libs1/jquery.js');
     require('../libs1/path1/path2/');
 
     // image
