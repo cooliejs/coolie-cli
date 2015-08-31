@@ -34,6 +34,7 @@ var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
 var REG_IMG = /<img\b[\s\S]*?>/gi;
 var REG_TAG_START = /<[a-z][a-z\d]*?\b[\s\S]*?>/ig;
+// 有歧义的代码片段
 var REG_AMBIGUITY_SLICE = /}};?<\/script>$/;
 var JS_TYPES = [
     'javascript',
@@ -96,7 +97,6 @@ module.exports = function (file, code, callback) {
         if (isIgnore || type && type !== 'text/css') {
             code2 = $2;
         } else {
-
             code2 = cssminify(file, $2, null);
         }
 
@@ -171,7 +171,7 @@ module.exports = function (file, code, callback) {
         return htmlAttr.set(tag, 'style', style2);
     });
 
-    // 恢复保留格式
+    // 恢复预格式
     dato.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
