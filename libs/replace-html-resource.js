@@ -9,12 +9,12 @@
 
 var fs = require('fs-extra');
 var path = require('path');
-var encryption = require('ydr-utils').encryption;
 var htmlAttr = require('./html-attr.js');
 var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
 var copy = require('./copy.js');
+var coolieIgnore = 'coolieignore';
 
 
 /**
@@ -27,8 +27,8 @@ var copy = require('./copy.js');
 module.exports = function (file, tag, attrKey) {
     var configs = global.configs;
 
-    if (htmlAttr.get(tag, 'coolieignore')) {
-        return htmlAttr.remove(tag, 'coolieignore');
+    if (htmlAttr.get(tag, coolieIgnore)) {
+        return htmlAttr.remove(tag, coolieIgnore);
     }
 
     var value = htmlAttr.get(tag, attrKey);
@@ -63,7 +63,8 @@ module.exports = function (file, tag, attrKey) {
     if (!url) {
         var resFile = copy(absFile, {
             version: true,
-            dest: configs._resDestPath
+            dest: configs._resDestPath,
+            logType: 1
         });
         var resRelative = path.relative(configs._destPath, resFile);
 
