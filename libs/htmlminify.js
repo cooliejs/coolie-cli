@@ -136,9 +136,9 @@ module.exports = function (file, code, callback) {
         }
 
         tag = htmlAttr.remove(tag, coolieIgnore);
-        // 压缩代码并消除歧义
         preMap[key] = (tag + code2 + '</script>');
 
+        // 压缩代码并消除歧义
         if (!isIgnore && (type === false || JS_TYPES.indexOf(type) > -1)) {
             preMap[key] = preMap[key].replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
         }
