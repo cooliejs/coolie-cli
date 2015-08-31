@@ -1,4 +1,7 @@
 # 0.x.x
+- 0.22.x
+    - 适配了[coolie.js@1.1.x](https://github.com/cloudcome/coolie)
+    - 模块管道方案
 - 0.21.x
     - 适配了[coolie.js@0.14.x](https://github.com/cloudcome/coolie)
     - 适配了[coolie.js@1.0.x](https://github.com/cloudcome/coolie)
