@@ -49,26 +49,29 @@ var coolieFn = function () {
  */
 module.exports = function (srcPath) {
     var file = path.join(srcPath, "./coolie.json");
-    var config = {};
+    var config = '';
     var check = {};
 
     // 检查文件
     check.file = function () {
-        if (typeis(file) === "string") {
-            try {
-                config = fs.readFileSync(file);
+        if (!typeis.file(file)) {
+            log("coolie.json", pathURI.toSystemPath(file) + ' is NOT a file', "error");
+            process.exit(1);
+        }
 
-                try {
-                    config = JSON.parse(config);
-                } catch (err) {
-                    log("parse coolie.json", "`coolie.json` parse error", "error");
-                    log("parse coolie.json", err.message, "error");
-                    process.exit(1);
-                }
+        try {
+            config = fs.readFileSync(file, 'utf8');
+
+            try {
+                config = JSON.parse(config);
             } catch (err) {
-                log("read coolie.json", err.message, "error");
+                log("parse coolie.json", "`coolie.json` parse error", "error");
+                log("parse coolie.json", err.message, "error");
                 process.exit(1);
             }
+        } catch (err) {
+            log("read coolie.json", err.message, "error");
+            process.exit(1);
         }
     };
 
