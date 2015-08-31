@@ -55,7 +55,7 @@ module.exports = function (srcPath) {
     // 检查文件
     check.file = function () {
         if (!typeis.file(file)) {
-            log("coolie.json", pathURI.toSystemPath(file) + ' is NOT a file', "error");
+            log("coolie.json", pathURI.toSystemPath(file) + '\nis NOT a file', "error");
             process.exit(1);
         }
 
