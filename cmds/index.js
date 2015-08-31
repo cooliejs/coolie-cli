@@ -78,5 +78,3 @@ switch ((cmdArg0 || "").toLowerCase()) {
         cmdHelp();
 }
 
-console.log('');
-
