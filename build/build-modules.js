@@ -61,7 +61,7 @@ module.exports = function (srcPath) {
     configs._jsDestPath = path.join(destPath, configs.js.dest);
     configs._cssDestPath = path.join(destPath, configs.css.dest);
     configs._coolieConfigJSPath = coolieConfigJSPath;
-    configs._coolieConfigJSURI = configs._noCoolieJS ? null : pathURI.toURIPath(path.relative(srcPath, coolieConfigJSPath));
+    configs._coolieConfigJSURI = configs._noCoolieJS ? null : pathURI.toURIPath(pathURI.relative(srcPath, coolieConfigJSPath));
     configs._buildStep = 0;
     configs._resVerMap = {};
     configs._resURIMap = {};
@@ -170,7 +170,7 @@ module.exports = function (srcPath) {
                 }
 
                 howdo.each(files, function (j, file, nextFile) {
-                    var srcName = path.relative(srcPath, file);
+                    var srcName = pathURI.relative(srcPath, file);
 
                     buildMain(file, function (err, bufferList, md5List, deepDeps, chunkList) {
                         if (err) {

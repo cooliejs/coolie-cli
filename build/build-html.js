@@ -35,7 +35,7 @@ module.exports = function (file, callback) {
 
         //log('build html', pathURI.toSystemPath(file), 'warning');
 
-        var relative = path.relative(srcPath, file);
+        var relative = pathURI.relative(srcPath, file);
         var destFile = path.join(destPath, relative);
 
         try {
