@@ -74,7 +74,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
             //            dest: configs._resDestPath,
             //            version: true
             //        });
-            //        uri = path.relative(configs._destPath, toFile);
+            //        uri = pathURI.relative(configs._destPath, toFile);
             //        next(null, pathURI.joinURI(configs.dest.host, uri));
             //        break;
             //
