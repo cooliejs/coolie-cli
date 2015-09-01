@@ -53,9 +53,6 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
     howdo
         // 1. 读取文件内容
         .task(function (next) {
-            var toFile;
-            var uri;
-
             if (isSingle) {
                 wrapDefine(file, depIdsMap, meta, next);
             } else {
@@ -67,26 +64,6 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
                     process.exit(1);
                 }
             }
-
-            //switch (type) {
-            //    case 'image':
-            //        toFile = copy(file, {
-            //            dest: configs._resDestPath,
-            //            version: true
-            //        });
-            //        uri = pathURI.relative(configs._destPath, toFile);
-            //        next(null, pathURI.joinURI(configs.dest.host, uri));
-            //        break;
-            //
-            //    default :
-            //        try {
-            //            next(null, fs.readFileSync(file, 'utf8'));
-            //        } catch (err) {
-            //            log('read file', pathURI.toSystemPath(file), 'error');
-            //            log('read file', err.message, 'error');
-            //            process.exit(1);
-            //        }
-            //}
         })
 
 

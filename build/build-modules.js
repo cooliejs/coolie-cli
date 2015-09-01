@@ -178,7 +178,7 @@ module.exports = function (srcPath) {
                         }
 
                         mainRelationshipMap[pathURI.toURIPath(srcName)] = deepDeps.map(function (dep) {
-                            return pathURI.toURIPath(path.relative(srcPath, dep));
+                            return pathURI.toURIPath(pathURI.relative(srcPath, dep));
                         });
 
                         mainMap[file] = {
@@ -226,7 +226,7 @@ module.exports = function (srcPath) {
 
             // 覆盖生成 coolie-config.js
             var code = fs.readFileSync(coolieConfigJSPath, 'utf8');
-            var relative = path.relative(srcPath, coolieConfigJSPath);
+            var relative = pathURI.relative(srcPath, coolieConfigJSPath);
             var coolieInfo = replaceConfig(code, versionMap);
             var destFile = path.join(destPath, relative);
 
@@ -264,7 +264,7 @@ module.exports = function (srcPath) {
                     htmlLength++;
 
                     buildHTML(file, function (err, depCSS, depJS, mainJS) {
-                        var htmlRelative = path.relative(srcPath, file);
+                        var htmlRelative = pathURI.relative(srcPath, file);
                         var url = pathURI.toURIPath(htmlRelative);
 
                         htmlJsCssRelationshipMap[url] = {
