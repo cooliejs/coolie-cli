@@ -72,7 +72,7 @@ module.exports = function (code, versionMap) {
         dato.each(versionMap, function (file, ver) {
             file = path.join(srcPath, file);
 
-            var relative = path.relative(basePath, file);
+            var relative = pathURI.relative(basePath, file);
 
             relative = pathURI.toURIPath(relative);
             versionMap2[relative] = ver;

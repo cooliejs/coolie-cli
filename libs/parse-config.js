@@ -205,7 +205,7 @@ module.exports = function (srcPath) {
             process.exit(1);
         }
 
-        var toBase = path.relative(srcPath, basePath);
+        var toBase = pathURI.relative(srcPath, basePath);
 
         if (toBase.indexOf('../') > -1) {
             log('coolie base', 'coolie base path must be under ' + srcPath +
