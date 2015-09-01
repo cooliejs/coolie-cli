@@ -71,7 +71,7 @@ module.exports = function (file, html) {
 
     var srcName = encryption.md5(md5List).slice(0, configs.dest.versionLength) + '.' + type;
     var srcPath = path.join(type === 'css' ? configs._cssPath : configs._jsPath, srcName);
-    var srcRelative = path.relative(configs._srcPath, srcPath);
+    var srcRelative = pathURI.relative(configs._srcPath, srcPath);
     var url = pathURI.toURIPath(srcRelative);
     var destPath = path.join(configs._destPath, srcRelative);
     var bufferList = [];
@@ -97,7 +97,7 @@ module.exports = function (file, html) {
 
         bufferList.push(new Buffer('\n' + code, 'utf8'));
 
-        var relative = path.relative(configs._srcPath, f);
+        var relative = pathURI.relative(configs._srcPath, f);
 
         urls.push(pathURI.toURIPath(relative));
     });

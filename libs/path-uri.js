@@ -157,3 +157,15 @@ exports.replaceVersion = function (uri, version) {
         }) + p.suffix;
 };
 
+
+/**
+ * 路径相对转换
+ * @param from
+ * @param to
+ */
+exports.relative = function (from, to) {
+    from = exports.toSystemPath(from);
+    to = exports.toSystemPath(to);
+
+    return path.relative(from, to);
+};

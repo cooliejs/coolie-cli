@@ -52,9 +52,14 @@
             ]
         },
         "js": {
-            "static/js/05a54e6e.js": [
+            "static/js/9d80099a.js": [
                 "static/js/index3-1.js",
-                "static/js/index3-2.js"
+                "static/js/index3-2.js",
+                "static/js/index3-3.js",
+                "static/js/index3-4.js",
+                "static/js/index3-5.js",
+                "static/js/index3-6.js",
+                "static/js/index3-7.js"
             ]
         },
         "main": ""

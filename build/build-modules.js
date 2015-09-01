@@ -371,7 +371,7 @@ module.exports = function (srcPath) {
                 '\nbuild ' + htmlLength + ' html file(s), ' +
                 '\nbuild ' + cssLength + ' css file(s), ' +
                     //'\nbuild ' + configs._resImageList.length + ' image file(s), ' +
-                '\nbuild ' + Object.keys(configs._resVerMap).length + ' resource file(s), ' +
+                //'\nbuild ' + Object.keys(configs._resVerMap).length + ' resource file(s), ' +
                 '\npast ' + past + ' ms', 'success');
             console.log('');
             console.log('');
