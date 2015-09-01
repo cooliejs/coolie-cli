@@ -62,7 +62,7 @@ module.exports = function (file, tag, attrKey) {
         dest: configs._resDestPath,
         logType: 1
     });
-    var resRelative = path.relative(configs._destPath, resFile);
+    var resRelative = pathURI.relative(configs._destPath, resFile);
     var url = pathURI.joinURI(configs.dest.host, resRelative);
 
     return htmlAttr.set(tag, attrKey, url + pathRet.suffix);

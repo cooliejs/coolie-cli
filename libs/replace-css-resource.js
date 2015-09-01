@@ -48,11 +48,11 @@ module.exports = function (file, css, destCSSFile) {
 
         // 有目标文件，css 里的资源相对于 css 文件本身
         if (destCSSFile) {
-            url = path.relative(path.dirname(destCSSFile), destFile);
+            url = pathURI.relative(path.dirname(destCSSFile), destFile);
         }
         // 否则，css 里的资源相对于根目录
         else {
-            url = pathURI.joinURI(configs.dest.host, path.relative(configs._destPath, destFile));
+            url = pathURI.joinURI(configs.dest.host, pathURI.relative(configs._destPath, destFile));
         }
 
         url = pathURI.toURIPath(url) + pathRet.suffix;
