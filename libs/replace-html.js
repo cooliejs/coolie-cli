@@ -109,7 +109,7 @@ module.exports = function (file, code) {
             });
 
             if (copySrc) {
-                var uri = path.relative(configs._destPath, copySrc);
+                var uri = pathURI.relative(configs._destPath, copySrc);
 
                 $0 = htmlAttr.set($0, 'src', pathURI.joinURI(configs.dest.host, uri));
             }
@@ -125,7 +125,7 @@ module.exports = function (file, code) {
                     process.exit(1);
                 }
 
-                dataMain = path.relative(srcPath, dataMain);
+                dataMain = pathURI.relative(srcPath, dataMain);
                 mainJS = pathURI.toURIPath(dataMain);
 
                 //不是本地根目录
