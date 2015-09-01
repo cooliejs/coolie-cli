@@ -205,7 +205,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
 
                 default :
                     uri = createURL(file, null, configs, meta);
-                    next(null, pathURI.joinURI(configs.dest.host, uri));
+                    next(null, uri);
                     break;
             }
             break;

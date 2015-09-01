@@ -32,7 +32,7 @@
   "copy": [],
   "dest": {
     "dirname": "../dest/",
-    "host": "/",
+    "host": "http://cnd.domain.com/s/a/b",
     "versionLength": 8
   }
 }
