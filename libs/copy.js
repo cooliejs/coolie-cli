@@ -14,7 +14,7 @@ var pathURI = require('./path-uri.js');
 var log = require('./log.js');
 var path = require('ydr-utils').path;
 var fse = require('fs-extra');
-var REG_POINT = /^\.{1,2}\//;
+var REG_POINT = path.sep === '/' ? /^\.{1,2}\// : /^\.{1,2}\\/;
 var defaults = {
     // 原始文件
     srcFile: '',
