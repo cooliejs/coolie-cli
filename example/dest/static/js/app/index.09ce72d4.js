@@ -1,4 +1,4 @@
-/*coolie@0.22.5*/
+/*coolie@0.22.6*/
 define("0",["1","2","3","4","5","6","7"],function(n,e,f){n("1");n("2");n("3");n("4");n("5");n("6");n("7")});
 define("1",[],function(y,d,r){r.exports="http://cnd.domain.com/s/a/b/static/res/232b2929.gif"});
 define("3",[],function(y,d,r){r.exports="http://cnd.domain.com/s/a/b/static/res/6eb3c4ed.png"});
