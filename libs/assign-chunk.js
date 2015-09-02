@@ -21,7 +21,7 @@ var pathURI = require('./path-uri.js');
 var sign = require('./sign.js');
 var fse = require('fs-extra');
 var howdo = require('howdo');
-var path = require('path');
+var path = require('ydr-utils').path;
 
 
 /**
@@ -71,8 +71,6 @@ module.exports = function (mainMap, versionMap, callback) {
 
         main.destName = pathURI.replaceVersion(main.srcName, version);
         versionMap[pathURI.toURIPath(main.srcName)] = version;
-
-
 
         var destFile = path.join(configs._destPath, main.destName);
         var output = sign('js');

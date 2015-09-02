@@ -6,7 +6,7 @@
 
 'use strict';
 
-var path = require('path');
+var path = require('ydr-utils').path;
 var log = require('./log.js');
 var cssminify = require('./cssminify.js');
 var jsminify = require('./jsminify.js');

@@ -14,7 +14,7 @@ var pathURI = require('./path-uri.js');
 var replaceCSSResource = require('./replace-css-resource.js');
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
-var path = require('path');
+var path = require('ydr-utils').path;
 var defaults = {
     // 高级优化
     advanced: false,

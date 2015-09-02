@@ -7,7 +7,7 @@
 'use strict';
 
 var fs = require('fs-extra');
-var path = require('path');
+var path = require('ydr-utils').path;
 var log = require('../libs/log.js');
 var dato = require('ydr-utils').dato;
 var replaceHtml = require('../libs/replace-html.js');

@@ -7,7 +7,7 @@
 
 "use strict";
 
-var path = require('path');
+var path = require('ydr-utils').path;
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
 var sign = require('../libs/sign.js');

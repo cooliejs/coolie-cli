@@ -13,7 +13,7 @@ var sign = require('../libs/sign.js');
 var log = require('../libs/log.js');
 var pathURI = require('../libs/path-uri.js');
 var fse = require('fs-extra');
-var path = require('path');
+var path = require('ydr-utils').path;
 var howdo = require('howdo');
 
 

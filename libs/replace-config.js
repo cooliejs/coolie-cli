@@ -8,7 +8,7 @@
 
 var dato = require('ydr-utils').dato;
 var encryption = require('ydr-utils').encryption;
-var path = require('path');
+var path = require('ydr-utils').path;
 var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var sign = require('./sign.js');

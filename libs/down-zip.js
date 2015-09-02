@@ -7,7 +7,7 @@
 
 'use strict';
 
-var path = require('path');
+var path = require('ydr-utils').path;
 var fs = require('fs');
 var request = require('ydr-utils').request;
 var random = require('ydr-utils').random;

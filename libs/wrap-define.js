@@ -19,7 +19,7 @@ var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
 var copy = require('./copy.js');
 var unicode = require('./unicode.js');
-var path = require('path');
+var path = require('ydr-utils').path;
 var fse = require('fs-extra');
 
 

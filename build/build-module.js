@@ -8,7 +8,7 @@
 "use strict";
 
 var howdo = require('howdo');
-var path = require('path');
+var path = require('ydr-utils').path;
 var fs = require('fs-extra');
 var log = require('../libs/log.js');
 var base64 = require('../libs/base64.js');

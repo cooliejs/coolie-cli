@@ -8,7 +8,7 @@
 'use strict';
 
 //var optimage = require('optimage');
-//var path = require('path');
+//var path = require('ydr-utils').path;
 //var fse = require('fs-extra');
 //var log = require('./log.js');
 //var pathURI = require('./path-uri.js');

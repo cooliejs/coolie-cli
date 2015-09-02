@@ -9,7 +9,7 @@
 
 var fs = require('fs-extra');
 var howdo = require('howdo');
-var path = require('path');
+var path = require('ydr-utils').path;
 var glob = require('glob');
 var log = require('../libs/log.js');
 var dato = require('ydr-utils').dato;
