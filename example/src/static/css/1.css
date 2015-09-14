@@ -1,5 +1,6 @@
 body{
     background: #f5f5f5 url("../img/100x100.png?imageView2/0/q/50");
+    _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/static/pic/body-bg.png');
 }
 
 

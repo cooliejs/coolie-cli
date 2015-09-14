@@ -52,7 +52,9 @@ module.exports = function (file, css, destCSSFile) {
             var destFile = copy(absFile, {
                 dest: configs._resDestPath,
                 version: true,
-                logType: 1
+                logType: 1,
+                srcFile: file,
+                srcCode: all
             });
 
             var url = '';
