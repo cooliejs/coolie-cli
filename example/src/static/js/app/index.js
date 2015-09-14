@@ -1,11 +1,11 @@
 define(function (require, exports, module) {
-    require('../../img/loading.gif', 'image');
     //require('../libs1/vue.min.js');
     //require('../libs1/jquery.js');
     require('../libs1/path1/path2/');
 
     // image
-    require('../../img/100x100.png', 'image');
+    require('../../img/loading.gif', 'image|base64');
+    require('../../img/100x100.png', 'image|url');
     //require('../../img/100x100.png', 'image|url');
     //require('../../img/100x100.png', 'image|text');
     //require('../../img/100x100.png', 'image|base64');

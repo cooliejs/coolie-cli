@@ -12,8 +12,8 @@
         "js": {},
         "main": "static/js/app/index.js",
         "deps": [
-            "static/img/loading.gif",
             "static/js/libs1/path1/path2/index.js",
+            "static/img/loading.gif",
             "static/img/100x100.png",
             "static/js/libs2/some.txt",
             "static/js/libs2/some.json",
@@ -34,8 +34,8 @@
         "js": {},
         "main": "static/js/app/index.js",
         "deps": [
-            "static/img/loading.gif",
             "static/js/libs1/path1/path2/index.js",
+            "static/img/loading.gif",
             "static/img/100x100.png",
             "static/js/libs2/some.txt",
             "static/js/libs2/some.json",
