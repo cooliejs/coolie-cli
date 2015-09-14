@@ -19,11 +19,13 @@ var REG_URL = /url\s*?\((.*?)\)/ig;
 var REG_SRC = /\(src\s*?=\s*?(.*?)\)/;
 var REG_QUOTE = /^["']|['"]$/g;
 var regs = [{
-    key: 'url',
-    reg: REG_URL
+    before: 'url(',
+    reg: REG_URL,
+    after: ')'
 }, {
-    key: 'src',
-    reg: REG_SRC
+    before: '(src="',
+    reg: REG_SRC,
+    after: '")'
 }];
 
 
@@ -70,7 +72,7 @@ module.exports = function (file, css, destCSSFile) {
 
             url = pathURI.toURIPath(url) + pathRet.suffix;
 
-            return item.key + '(' + url + ')';
+            return item.before + url + item.after;
         });
     });
 
