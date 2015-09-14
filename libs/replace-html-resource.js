@@ -15,55 +15,79 @@ var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
 var copy = require('./copy.js');
 var coolieIgnore = 'coolieignore';
+var REG_RESOURCE = /<img\b[\s\S]*?>/gi;
+var REG_RESOURCE = /<embed\b[\s\S]*?>/gi;
+var regList = [{
+    reg: /<(:?img|embed|audio|video|source)\b[\s\S]*?>/gi,
+    attr: 'src'
+}, {
+    reg: /<(:?object)\b[\s\S]*?>/gi,
+    attr: 'data'
+}, {
+    reg: /<(:?source)\b[\s\S]*?>/gi,
+    attr: 'srcset'
+}, {
+    reg: /<(:?img)\b[\s\S]*?>/gi,
+    attr: 'data-original',
+    sure: 'src'
+}];
 
 
 /**
  * 构建资源版本
  * @param file {String} 待替换的文件
- * @param tag {String} 待替换的标签
- * @param attrKey {String} 资源标签属性
+ * @param code {String} 代码
  * @returns {String}
  */
-module.exports = function (file, tag, attrKey) {
+module.exports = function (file, code) {
     var configs = global.configs;
 
-    if (htmlAttr.get(tag, coolieIgnore)) {
-        return htmlAttr.remove(tag, coolieIgnore);
-    }
+    regList.forEach(function (item) {
+        code = code.replace(item.reg, function (tag) {
 
-    var value = htmlAttr.get(tag, attrKey);
+            if (htmlAttr.get(tag, coolieIgnore)) {
+                return htmlAttr.remove(tag, coolieIgnore);
+            }
 
-    if (value === true) {
-        return tag;
-    }
+            var value = htmlAttr.get(tag, item.attr);
 
-    var pathRet = pathURI.parseURI2Path(value);
+            if (value === true) {
+                return tag;
+            }
 
-    if (!value || !pathURI.isRelatived(pathRet.path) || pathURI.isBase64(pathRet.original)) {
-        return tag;
-    }
+            var pathRet = pathURI.parseURI2Path(value);
 
-    var isRelativeToFile = pathURI.isRelativeFile(pathRet.path);
-    var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
-    var absFile;
+            if (!value || !pathURI.isRelatived(pathRet.path) || pathURI.isBase64(pathRet.original)) {
+                return tag;
+            }
 
-    try {
-        absFile = path.join(absDir, pathRet.path);
-    } catch (err) {
-        log('replace file', pathURI.toSystemPath(file), 'error');
-        log('replace resource', tag, 'error');
-        log('replace error', err.message, 'error');
-        log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
-        process.exit(1);
-    }
+            var isRelativeToFile = pathURI.isRelativeFile(pathRet.path);
+            var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
+            var absFile;
 
-    var resFile = copy(absFile, {
-        version: true,
-        dest: configs._resDestPath,
-        logType: 1
+            try {
+                absFile = path.join(absDir, pathRet.path);
+            } catch (err) {
+                log('replace file', pathURI.toSystemPath(file), 'error');
+                log('replace resource', tag, 'error');
+                log('replace error', err.message, 'error');
+                log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
+                process.exit(1);
+            }
+
+            var resFile = copy(absFile, {
+                version: true,
+                dest: configs._resDestPath,
+                logType: 1,
+                srcFile: file,
+                srcCode: tag
+            });
+            var resRelative = pathURI.relative(configs._destPath, resFile);
+            var url = pathURI.joinURI(configs.dest.host, resRelative);
+
+            return htmlAttr.set(tag, attrKey, url + pathRet.suffix);
+        });
     });
-    var resRelative = pathURI.relative(configs._destPath, resFile);
-    var url = pathURI.joinURI(configs.dest.host, resRelative);
 
-    return htmlAttr.set(tag, attrKey, url + pathRet.suffix);
+    return code;
 };
