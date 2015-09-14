@@ -15,8 +15,6 @@ var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
 var copy = require('./copy.js');
 var coolieIgnore = 'coolieignore';
-var REG_RESOURCE = /<img\b[\s\S]*?>/gi;
-var REG_RESOURCE = /<embed\b[\s\S]*?>/gi;
 var regList = [{
     reg: /<(:?img|embed|audio|video|source)\b[\s\S]*?>/gi,
     attr: 'src'
@@ -29,7 +27,7 @@ var regList = [{
 }, {
     reg: /<(:?img)\b[\s\S]*?>/gi,
     attr: 'data-original',
-    sure: 'src'
+    makeSureAttr: 'src'
 }];
 
 
@@ -44,14 +42,20 @@ module.exports = function (file, code) {
 
     regList.forEach(function (item) {
         code = code.replace(item.reg, function (tag) {
-
             if (htmlAttr.get(tag, coolieIgnore)) {
                 return htmlAttr.remove(tag, coolieIgnore);
             }
 
+            var makeSure = htmlAttr.get(tag, item.makeSureAttr);
             var value = htmlAttr.get(tag, item.attr);
 
+            // 属性值为空
             if (value === true) {
+                return tag;
+            }
+
+            // 确保属性不存在
+            if (item.makeSureAttr && !makeSure) {
                 return tag;
             }
 
@@ -71,7 +75,7 @@ module.exports = function (file, code) {
                 log('replace file', pathURI.toSystemPath(file), 'error');
                 log('replace resource', tag, 'error');
                 log('replace error', err.message, 'error');
-                log('replace ' + attrKey, value === true ? '<EMPTY>' : value, 'error');
+                log('replace ' + item.attr, value === true ? '<EMPTY>' : value, 'error');
                 process.exit(1);
             }
 
@@ -85,7 +89,7 @@ module.exports = function (file, code) {
             var resRelative = pathURI.relative(configs._destPath, resFile);
             var url = pathURI.joinURI(configs.dest.host, resRelative);
 
-            return htmlAttr.set(tag, attrKey, url + pathRet.suffix);
+            return htmlAttr.set(tag, item.attr, url + pathRet.suffix);
         });
     });
 

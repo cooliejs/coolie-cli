@@ -17,7 +17,6 @@ var replaceHTMLResource = require('./replace-html-resource.js');
 var concat = require('./concat.js');
 var copy = require('./copy.js');
 var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/gi;
-var REG_IMG = /<img\b[\s\S]*?>/gi;
 var REG_SCRIPT = /<script[^>]*?>[\s\S]*?<\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/i;
 var FAVICON_RELS = [
@@ -142,10 +141,8 @@ module.exports = function (file, code) {
         return $0;
     });
 
-    // <img src=".*">
-    code = code.replace(REG_IMG, function ($0) {
-        return replaceHTMLResource(file, $0, 'src');
-    });
+    // 资源替换
+    code = replaceHTMLResource(file, code);
 
     return {
         depJS: depJS,
