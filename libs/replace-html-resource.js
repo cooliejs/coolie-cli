@@ -26,8 +26,7 @@ var regList = [{
     attr: 'srcset'
 }, {
     reg: /<(:?img)\b[\s\S]*?>/gi,
-    attr: 'data-original',
-    makeSureAttr: 'src'
+    attr: 'data-original'
 }];
 
 
@@ -46,16 +45,10 @@ module.exports = function (file, code) {
                 return htmlAttr.remove(tag, coolieIgnore);
             }
 
-            var makeSure = htmlAttr.get(tag, item.makeSureAttr);
             var value = htmlAttr.get(tag, item.attr);
 
             // 属性值为空
             if (value === true) {
-                return tag;
-            }
-
-            // 确保属性不存在
-            if (item.makeSureAttr && !makeSure) {
                 return tag;
             }
 
