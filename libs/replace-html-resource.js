@@ -16,17 +16,17 @@ var base64 = require('./base64.js');
 var copy = require('./copy.js');
 var coolieIgnore = 'coolieignore';
 var regList = [{
-    reg: /<(:?img|embed|audio|video|source)\b[\s\S]*?>/gi,
-    attr: 'src'
+    reg: /<(:?embed|audio|video|source)\b[\s\S]*?>/gi,
+    attrs: ['src']
 }, {
     reg: /<(:?object)\b[\s\S]*?>/gi,
-    attr: 'data'
+    attrs: ['data']
 }, {
     reg: /<(:?source)\b[\s\S]*?>/gi,
-    attr: 'srcset'
+    attrs: ['srcset']
 }, {
     reg: /<(:?img)\b[\s\S]*?>/gi,
-    attr: 'data-original'
+    attrs: ['src', 'data-original']
 }];
 
 
@@ -45,44 +45,48 @@ module.exports = function (file, code) {
                 return htmlAttr.remove(tag, coolieIgnore);
             }
 
-            var value = htmlAttr.get(tag, item.attr);
+            item.attrs.forEach(function (attr) {
+                var value = htmlAttr.get(tag, attr);
 
-            // 属性值为空
-            if (value === true) {
-                return tag;
-            }
+                // 属性值为空
+                if (value === true) {
+                    return tag;
+                }
 
-            var pathRet = pathURI.parseURI2Path(value);
+                var pathRet = pathURI.parseURI2Path(value);
 
-            if (!value || !pathURI.isRelatived(pathRet.path) || pathURI.isBase64(pathRet.original)) {
-                return tag;
-            }
+                if (!value || !pathURI.isRelatived(pathRet.path) || pathURI.isBase64(pathRet.original)) {
+                    return tag;
+                }
 
-            var isRelativeToFile = pathURI.isRelativeFile(pathRet.path);
-            var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
-            var absFile;
+                var isRelativeToFile = pathURI.isRelativeFile(pathRet.path);
+                var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
+                var absFile;
 
-            try {
-                absFile = path.join(absDir, pathRet.path);
-            } catch (err) {
-                log('replace file', pathURI.toSystemPath(file), 'error');
-                log('replace resource', tag, 'error');
-                log('replace error', err.message, 'error');
-                log('replace ' + item.attr, value === true ? '<EMPTY>' : value, 'error');
-                process.exit(1);
-            }
+                try {
+                    absFile = path.join(absDir, pathRet.path);
+                } catch (err) {
+                    log('replace file', pathURI.toSystemPath(file), 'error');
+                    log('replace resource', tag, 'error');
+                    log('replace error', err.message, 'error');
+                    log('replace ' + item.attr, value === true ? '<EMPTY>' : value, 'error');
+                    process.exit(1);
+                }
 
-            var resFile = copy(absFile, {
-                version: true,
-                dest: configs._resDestPath,
-                logType: 1,
-                srcFile: file,
-                srcCode: tag
+                var resFile = copy(absFile, {
+                    version: true,
+                    dest: configs._resDestPath,
+                    logType: 1,
+                    srcFile: file,
+                    srcCode: tag
+                });
+                var resRelative = pathURI.relative(configs._destPath, resFile);
+                var url = pathURI.joinURI(configs.dest.host, resRelative);
+
+                htmlAttr.set(tag, item.attr, url + pathRet.suffix);
             });
-            var resRelative = pathURI.relative(configs._destPath, resFile);
-            var url = pathURI.joinURI(configs.dest.host, resRelative);
 
-            return htmlAttr.set(tag, item.attr, url + pathRet.suffix);
+            return htmlAttr
         });
     });
 
