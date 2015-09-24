@@ -83,7 +83,7 @@ module.exports = function (file, code) {
                 var resRelative = pathURI.relative(configs._destPath, resFile);
                 var url = pathURI.joinURI(configs.dest.host, resRelative);
 
-                htmlAttr.set(tag, item.attr, url + pathRet.suffix);
+                tag = htmlAttr.set(tag, attr, url + pathRet.suffix);
             });
 
             return tag;

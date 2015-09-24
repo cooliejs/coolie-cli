@@ -1,4 +1,4 @@
-/*coolie@0.22.10*/
+/*coolie@0.22.11*/
 define("0",["1","8"],function(e){"use strict";e("1");e("8");console.log("app/user/index")});
 define("4",[],function(y,d,r){r.exports="你好 coolie"});
 define("5",[],function(y,d,r){r.exports={"a":1,"b":"中国"}});
