@@ -86,7 +86,7 @@ module.exports = function (file, code) {
                 htmlAttr.set(tag, item.attr, url + pathRet.suffix);
             });
 
-            return htmlAttr
+            return tag;
         });
     });
 

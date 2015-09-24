@@ -15,7 +15,7 @@
   },
   "html": {
     "src": [
-      "./html/index4.html"
+      "./html/*"
     ],
     "minify": true
   },
