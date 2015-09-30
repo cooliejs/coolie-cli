@@ -17,6 +17,7 @@ var pathURI = require("../libs/path-uri.js");
 var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');
 var replaceRequire = require('../libs/replace-require.js');
+var parseAsync = require('../libs/parse-async.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
 var globalId = require('../libs/global-id.js');
@@ -157,16 +158,30 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
         // 3. 替换 require
         .task(function (next, code) {
             if (!isSingle) {
-                console.log(code);
                 code = replaceRequire(file, code, depNameList, depName2IdMap);
-                console.log(code);
             }
 
             next(null, code);
         })
 
 
-        // 4. 压缩
+        // 4. 解析 require.async
+        .task(function (next, code) {
+            if (!isSingle) {
+                var asyncList = parseAsync(file, code);
+
+                if(!asyncList.length){
+                    return next(null, code);
+                }
+
+                return
+            }
+
+            next(null, code);
+        })
+
+
+        // 5. 压缩
         .task(function (next, code) {
             if (isSingle) {
                 next(null, code);
@@ -176,7 +191,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
         })
 
 
-        // 5. 替换 define
+        // 6. 替换 define
         .task(function (next, code) {
             if (isSingle) {
                 next(null, code);
@@ -187,6 +202,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
         })
 
 
+        // 异步串行
         .follow(function (err, code) {
             callback(err, {
                 isSingle: isSingle,
