@@ -173,6 +173,7 @@ module.exports = function (srcPath) {
         try {
             code = fs.readFileSync(coolieConfigJSFile, 'utf8');
         } catch (err) {
+            log("parse config", pathURI.toSystemPath(coolieConfigJSFile), "error");
             log("read file", pathURI.toSystemPath(coolieConfigJSFile), "error");
             log("read file", err.message, "error");
             process.exit(1);

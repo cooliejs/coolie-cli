@@ -107,6 +107,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
         try {
             code = fse.readFileSync(file, 'utf8');
         } catch (err) {
+            log('wrap define', pathURI.toSystemPath(file), 'error');
             log('read file', pathURI.toSystemPath(file), 'error');
             log('read error', err.message, 'error');
             process.exit(1);

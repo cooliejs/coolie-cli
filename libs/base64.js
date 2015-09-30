@@ -44,6 +44,7 @@ module.exports = function (file, extname, callback) {
         try {
             binary = fs.readFileSync(file, 'binary');
         } catch (err) {
+            log('base64', pathURI.toSystemPath(file), 'error');
             log('read file', pathURI.toSystemPath(file), 'error');
             log('read file', err.message, 'error');
             process.exit(1);

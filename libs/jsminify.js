@@ -65,7 +65,7 @@ var compressorOptions = {
 module.exports = function (file, code, callback) {
     var ret;
 
-    try {
+    //try {
         ret = uglifyJS.minify(code, {
             fromString: true,
             // 是否警告提示
@@ -81,9 +81,9 @@ module.exports = function (file, code, callback) {
         } else {
             return ret.code;
         }
-    } catch (err) {
-        log('jsminify', pathURI.toSystemPath(file), 'error');
-        log('jsminify', err.message, 'error');
-        process.exit(1);
-    }
+    //} catch (err) {
+    //    log('jsminify', pathURI.toSystemPath(file), 'error');
+    //    log('jsminify', err.message, 'error');
+    //    process.exit(1);
+    //}
 };

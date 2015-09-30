@@ -26,6 +26,7 @@ module.exports = function (file, callback) {
 
     fs.readFile(file, 'utf8', function (err, code) {
         if (err) {
+            log("build html", pathURI.toSystemPath(file), "error");
             log("read file", pathURI.toSystemPath(file), "error");
             log('read file', err.message, 'error');
             process.exit(1);
