@@ -157,7 +157,9 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
         // 3. 替换 require
         .task(function (next, code) {
             if (!isSingle) {
+                console.log(code);
                 code = replaceRequire(file, code, depNameList, depName2IdMap);
+                console.log(code);
             }
 
             next(null, code);
