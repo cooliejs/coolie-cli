@@ -1,5 +1,19 @@
 define(function (require, exports, module) {
-    require.async('');
+    'use strict';
+
+    switch (location.hash) {
+        case '#page1':
+            require.async('../page1.js');
+            break;
+
+        case '#page2':
+            require.async('../page2.js');
+            break;
+
+        default :
+            require.async('../404.js');
+            break;
+    }
 
 
     ////require('../libs1/vue.min.js');
