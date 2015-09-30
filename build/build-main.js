@@ -9,8 +9,8 @@
 
 var path = require('ydr-utils').path;
 var fs = require('fs-extra');
+var howdo = require('howdo');
 var log = require('../libs/log.js');
-var sign = require('../libs/sign.js');
 var dato = require('ydr-utils').dato;
 var pathURI = require("../libs/path-uri.js");
 var encryption = require('ydr-utils').encryption;
@@ -33,7 +33,20 @@ module.exports = function (mainFile, callback) {
     var configs = global.configs;
 
     var _deepBuld = function (meta, file) {
-        buildModule(mainFile, meta, file, depIdsMap, function (err, meta) {
+        buildModule(mainFile, meta, file, depIdsMap, function (asyncList, code, next) {
+            howdo.each(asyncList, function (index, asyncMain, next) {
+                var asyncFile = path.join(path.dirname(mainFile), asyncMain);
+
+                // 第一个 define 模块为入口模块，不必指定其 name
+                depIdsMap[asyncFile] = '0';
+                _deepBuld({
+                    name: asyncMain,
+                    type: 'js',
+                    pipeline: 'js'
+                }, mainFile);
+
+            }).follow(next);
+        }, function (err, meta) {
             if (err) {
                 log('build', pathURI.toSystemPath(file), 'error');
                 log('build', err.message, 'error');
