@@ -30,12 +30,13 @@ var copy = require('../libs/copy.js');
  * @param meta {Object} 文件名称
  * @param file {String} 文件路径
  * @param depIdsMap {Object} 模块绝对路径 <=> ID 对应表
+ * @param buildAsync {Function} 构建异步入口
  * @param callback {Function} 回调，返回包括
  * @arguments[0].code 压缩替换后的代码
  * @arguments[1].deps 文件依赖的文件列表
  * @arguments[2].depIdsMap 文件依赖的文件列表
  */
-module.exports = function (mainFile, meta, file, depIdsMap, callback) {
+module.exports = function (mainFile, meta, file, depIdsMap, buildAsync, callback) {
     var type = meta.type;
     // 依赖 ID 列表
     var depList = [];
@@ -81,8 +82,8 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
 
                     var chunkId = configs._chunkFileMap[depId];
 
-                    // 当前依赖模块属于独立块状模块
-                    if (chunkId) {
+                    // 当前依赖模块属于独立块状模块 && 同步模块
+                    if (chunkId && !meta.async) {
                         depNameList.push(dep.raw);
                         configs._chunkModuleMap[depId] = configs._chunkModuleMap[depId] || {};
                         configs._chunkModuleMap[depId].type = 'chunk';
@@ -130,7 +131,6 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
                         configs._privateModuleMap[depId].depending.push(mainFile);
                     }
 
-
                     depNameList.push(dep.raw);
                     depIdsMap[depId] = configs._privateModuleMap[depId].gid;
 
@@ -174,7 +174,8 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
                     return next(null, code);
                 }
 
-                return
+                // 进行异步模块构建
+                return buildAsync(asyncList, code, next);
             }
 
             next(null, code);
