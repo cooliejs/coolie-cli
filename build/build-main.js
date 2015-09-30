@@ -17,7 +17,7 @@ var encryption = require('ydr-utils').encryption;
 var buildModule = require('./build-module.js');
 
 
-module.exports = function (mainFile, callback) {
+var buildMain = module.exports = function (mainFile, callback) {
     var bufferList = [];
     // 入口模块名称
     var mainName = path.basename(mainFile);
@@ -35,16 +35,9 @@ module.exports = function (mainFile, callback) {
     var _deepBuld = function (meta, file) {
         buildModule(mainFile, meta, file, depIdsMap, function (asyncList, code, next) {
             howdo.each(asyncList, function (index, asyncMain, next) {
-                var asyncFile = path.join(path.dirname(mainFile), asyncMain);
+                var asyncFile = path.join(path.dirname(mainFile), asyncMain.name);
 
-                // 第一个 define 模块为入口模块，不必指定其 name
-                depIdsMap[asyncFile] = '0';
-                _deepBuld({
-                    name: asyncMain,
-                    type: 'js',
-                    pipeline: 'js'
-                }, mainFile);
-
+                buildMain(asyncFile, next);
             }).follow(next);
         }, function (err, meta) {
             if (err) {
@@ -117,3 +110,4 @@ module.exports = function (mainFile, callback) {
         pipeline: 'js'
     }, mainFile);
 };
+
