@@ -25,7 +25,7 @@ var howdo = require('howdo');
 module.exports = function (versionMap, callback) {
     var configs = global.configs;
 
-    howdo.each(configs._chunkList, function (i, files, done) {
+    howdo.each(configs._chunkList, function (index, files, done) {
         var bfList = [];
         var output = sign('js');
         var md5List = '';
@@ -38,14 +38,15 @@ module.exports = function (versionMap, callback) {
         output += Buffer.concat(bfList).toString();
 
         var version = encryption.md5(md5List).slice(0, configs.dest.versionLength);
-        var fileName = i + '.js';
-        var srcName = path.join(pathURI.relative(configs._srcPath, configs._jsBase), fileName);
-        var destFile = pathURI.replaceVersion(path.join(configs._destPath, srcName), version);
+        var fileName = index + '.js';
+        var srcName = path.join(pathURI.relative(configs._srcPath, configs._chunkDirname), fileName);
+        var destFile = path.join(configs._destPath, srcName);
 
+        destFile = pathURI.replaceVersion(destFile, version);
         versionMap[pathURI.toURIPath(srcName)] = version;
 
         fse.outputFile(destFile, output, function (err) {
-            if(err){
+            if (err) {
                 log('write file', pathURI.toSystemPath(destFile), 'error');
                 log('write file', err.message, 'error');
                 process.exit(1);
