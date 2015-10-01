@@ -59,7 +59,8 @@ module.exports = function (srcPath) {
     configs._destPath = destPath;
     configs._jsPath = jsPath;
     configs._mainFiles = {};
-    configs._mainBufferMap = {};
+    configs._bufferMap = {};
+    configs._fileIdMap = {};
     configs._asyncPath = path.join(jsPath, '../async/');
     configs._asyncMap = {};
     configs._chunkPath = path.join(jsPath, '../chunk/');
@@ -204,7 +205,7 @@ module.exports = function (srcPath) {
                     process.exit(1);
                 }
 
-                configs._mainBufferMap[file] = new Buffer(code, 'utf8');
+                configs._bufferMap[file] = new Buffer(code, 'utf8');
                 parseAsync(file, code).forEach(function (info) {
                     configs._mainFiles[file].asyncList = configs._mainFiles[file].asyncList || [];
                     configs._mainFiles[file].asyncList.push(info);

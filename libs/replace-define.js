@@ -32,12 +32,12 @@ var REG_DEFINE_5 = /([^.\["]|^)\bdefine\((.*?)\)/;
  * @param file 模块绝对路径
  * @param code 模块压缩后的代码
  * @param depList 模块依赖
- * @param depIdsMap 依赖对应表
  * @returns {string}
  */
-module.exports = function (file, code, depList, depIdsMap) {
+module.exports = function (file, code, depList) {
+    var configs = global.configs;
     var depsCode = '';
-    var id = depIdsMap[file];
+    var id = configs._moduleIdMap[file];
 
     if (!id) {
         log('replace define', 'the module ID is undefined in ' + pathURI.toSystemPath(file), 'error');
@@ -47,14 +47,14 @@ module.exports = function (file, code, depList, depIdsMap) {
     depList.forEach(function (dep) {
         var depId = dep.id;
 
-        if (depIdsMap[depId]) {
+        if (configs._moduleIdMap[depId]) {
             if (depsCode) {
                 depsCode += ',';
             }
 
-            depsCode += '"' + depIdsMap[depId] + '"';
+            depsCode += '"' + configs._moduleIdMap[depId] + '"';
         } else {
-            log('replace define', 'can not find ' + depIdsMap + ' map', 'error');
+            log('replace define', 'can not find ' + configs._moduleIdMap + ' map', 'error');
             process.exit(1);
         }
     });

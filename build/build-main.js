@@ -30,8 +30,6 @@ module.exports = function (mainFile, mainInfo, callback) {
     var bufferList = [];
     // 入口模块名称
     var mainName = path.basename(mainFile);
-    // 模块绝对路径 <=> ID 对应表
-    var depIdsMap = {};
     // 记录已经构建的列表
     var depsCache = {};
     var depsLength = 1;
@@ -42,7 +40,7 @@ module.exports = function (mainFile, mainInfo, callback) {
     var configs = global.configs;
 
     var _deepBuld = function (meta, moduleFile) {
-        buildModule(mainFile, meta, moduleFile, depIdsMap, function (err, meta) {
+        buildModule(mainFile, meta, moduleFile, function (err, meta) {
             if (err) {
                 log('build', pathURI.toSystemPath(moduleFile), 'error');
                 log('build', err.message, 'error');
@@ -112,8 +110,6 @@ module.exports = function (mainFile, mainInfo, callback) {
         });
     };
 
-    // 第一个 define 模块为入口模块，不必指定其 name
-    depIdsMap[mainFile] = '0';
     _deepBuld({
         name: mainName,
         type: 'js',

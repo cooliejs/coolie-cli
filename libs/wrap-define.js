@@ -70,11 +70,10 @@ var createURL = function (file, code, configs, meta, filter) {
 /**
  * 包裹一层 define
  * @param file
- * @param depIdsMap
  * @param meta
  * @param callback
  */
-module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
+module.exports = function wrapDefine(file, meta, callback) {
     var configs = global.configs;
     var next = function (err, code) {
         if (err) {
@@ -93,7 +92,7 @@ module.exports = function wrapDefine(file, depIdsMap, meta, callback) {
                 .replace(REG_HUA_END, '');
         }
 
-        code = 'define("' + depIdsMap[file] + '",[],function(y,d,r){' +
+        code = 'define("' + configs._moduleIdMap[file] + '",[],function(y,d,r){' +
             'r.exports=' + text + '' +
             '});';
 

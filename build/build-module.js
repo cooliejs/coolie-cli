@@ -26,15 +26,16 @@ var copy = require('../libs/copy.js');
 /**
  * 构建一个模块
  * @param mainFile {String} 入口模块
- * @param meta {Object} 文件名称
+ * @param meta {Object} 模块属性
+ * @param meta.name {String} 名称
+ * @param meta.type {String} 类型
+ * @param meta.pipeline {String} 管道
  * @param moduleFile {String} 文件路径
- * @param depIdsMap {Object} 模块绝对路径 <=> ID 对应表
  * @param callback {Function} 回调，返回包括
  * @arguments[0].code 压缩替换后的代码
  * @arguments[1].deps 文件依赖的文件列表
- * @arguments[2].depIdsMap 文件依赖的文件列表
  */
-module.exports = function (mainFile, meta, moduleFile, depIdsMap, callback) {
+module.exports = function (mainFile, meta, moduleFile, callback) {
     var type = meta.type;
     // 依赖 ID 列表
     var depList = [];
@@ -49,13 +50,19 @@ module.exports = function (mainFile, meta, moduleFile, depIdsMap, callback) {
     var isSingle = type !== 'js';
     // 相对目录
     var configs = global.configs;
+    // 是否为入口模块
+    var isMain = mainFile === moduleFile;
 
     howdo
         // 1. 读取文件内容
         .task(function (next) {
             if (isSingle) {
-                wrapDefine(moduleFile, depIdsMap, meta, next);
+                wrapDefine(moduleFile, meta, next);
             } else {
+                if (configs._bufferMap[moduleFile]) {
+                    return next(null, configs._bufferMap[moduleFile].toString());
+                }
+
                 try {
                     next(null, fs.readFileSync(moduleFile, 'utf8'));
                 } catch (err) {
@@ -88,7 +95,7 @@ module.exports = function (mainFile, meta, moduleFile, depIdsMap, callback) {
                         configs._chunkModuleMap[depId].type = 'chunk';
                         configs._chunkModuleMap[depId].gid = configs._moduleIdMap[depId];
                         configs._chunkModuleMap[depId].depending = configs._chunkModuleMap[depId].depending || [];
-                        depName2IdMap[dep.raw] = depIdsMap[depId] = configs._chunkModuleMap[depId].gid;
+                        depName2IdMap[dep.raw] = configs._chunkModuleMap[depId].gid;
 
                         if (configs._chunkModuleMap[depId].depending.indexOf(mainFile) === -1) {
                             configs._chunkModuleMap[depId].depending.push(mainFile);
@@ -131,7 +138,6 @@ module.exports = function (mainFile, meta, moduleFile, depIdsMap, callback) {
                     }
 
                     depNameList.push(dep.raw);
-                    depIdsMap[depId] = configs._privateModuleMap[depId].gid;
 
                     if (!depIdMap[depId]) {
                         depIdMap[depId] = true;
@@ -142,11 +148,11 @@ module.exports = function (mainFile, meta, moduleFile, depIdsMap, callback) {
                             outType: dep.outType,
                             pipeline: dep.pipeline,
                             chunk: false,
-                            gid: depIdsMap[depId]
+                            gid: configs._moduleIdMap[depId]
                         });
                     }
 
-                    depName2IdMap[dep.raw] = depIdsMap[depId];
+                    depName2IdMap[dep.raw] = configs._moduleIdMap[depId];
                 });
             }
 
@@ -177,7 +183,7 @@ module.exports = function (mainFile, meta, moduleFile, depIdsMap, callback) {
             if (isSingle) {
                 next(null, code);
             } else {
-                code = replaceDefine(moduleFile, code, depList, depIdsMap);
+                code = replaceDefine(moduleFile, code, depList);
                 next(null, code);
             }
         })
