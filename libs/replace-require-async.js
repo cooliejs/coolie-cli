@@ -31,6 +31,11 @@ module.exports = function (file, code) {
         return code;
     }
 
+    if(!configs._mainFiles[file].asyncList){
+        log('replace require.async', 'can not found async list', 'error');
+        process.exit(1);
+    }
+
     configs._mainFiles[file].asyncList.forEach(function (info) {
         depNameList.push(info.raw);
         depName2IdMap[info.raw] = info.gid;
