@@ -80,12 +80,19 @@ module.exports = function (code, versionMap) {
 
         version = JSON.stringify(versionMap2);
 
+        coolieConfig.async = path.toURI(path.relative(configs._jsBase, configs._asyncDirname));
+        coolieConfig.chunk = path.toURI(path.relative(configs._jsBase, configs._chunkDirname));
+
         log('√', 'base: "' + coolieConfig.base + '"', 'success');
+        log('√', 'async: "' + coolieConfig.async + '"', 'success');
+        log('√', 'chunk: "' + coolieConfig.chunk + '"', 'success');
         log('√', 'version: "' + JSON.stringify(versionMap2, null, 2) + '"', 'success');
         log('√', 'callbacks: ' + callbacks.length, 'success');
 
         var code2 = 'coolie.config({' +
             'base:"' + coolieConfig.base + '",' +
+            'async:"' + coolieConfig.async + '",' +
+            'chunk:"' + coolieConfig.chunk + '",' +
             'debug:false,' +
             'cache:true,' +
             'version:' + version + '})' +
