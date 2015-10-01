@@ -39,8 +39,9 @@ var path = require('ydr-utils').path;
  *     bufferList: [bf1, bf2, ...]
  * }
  */
-module.exports = function (mainMap, versionMap, callback) {
+module.exports = function (versionMap, callback) {
     var configs = global.configs;
+    var mainMap = configs._mainMap;
 
     // 只有在 1 个 main 以上
     if (Object.keys(mainMap).length > 1) {

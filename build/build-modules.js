@@ -51,7 +51,6 @@ module.exports = function (srcPath) {
     var jsPath = path.join(srcPath, configs.js.dest);
     var cssPath = path.join(srcPath, configs.css.dest);
     var coolieConfigJSPath = configs._noCoolieJS ? null : path.join(srcPath, configs.js['coolie-config.js']);
-    var mainMap = {};
 
     configs._srcPath = srcPath;
     configs._destPath = destPath;
@@ -84,6 +83,7 @@ module.exports = function (srcPath) {
     configs._chunkBufferMap = {};
     configs._chunkMD5Map = {};
     configs._chunkList = {};
+    configs._mainMap = {};
 
     configs.js.chunk.forEach(function (chunk, index) {
         var chunkList = chunk;
@@ -177,17 +177,24 @@ module.exports = function (srcPath) {
                 howdo.each(files, function (j, file, nextFile) {
                     var srcName = pathURI.relative(srcPath, file);
 
-                    buildMain(file, function (err, bufferList, md5List, deepDeps, chunkList) {
+                    buildMain(file, function (err,info) {
                         if (err) {
                             return;
                         }
+
+                        var bufferList = info.bufferList;
+                        var md5List = info.md5List;
+                        var deepDeps = info.deepDeps;
+                        var depFiles = info.depFiles;
+                        var chunkList = info.chunkList;
 
                         mainRelationshipMap[pathURI.toURIPath(srcName)] = deepDeps.map(function (dep) {
                             return pathURI.toURIPath(pathURI.relative(srcPath, dep));
                         });
 
-                        mainMap[file] = {
+                        configs._mainMap[file] = {
                             mainFile: file,
+                            depFiles: depFiles,
                             srcName: srcName,
                             md5List: md5List,
                             chunkList: chunkList,
@@ -197,7 +204,7 @@ module.exports = function (srcPath) {
                         nextFile();
                     });
                 }).follow(function () {
-                    console.log(mainMap);
+                    console.log(configs._mainMap);
                     console.log(configs._asyncMap);
                     nextMain();
                 });
@@ -212,7 +219,7 @@ module.exports = function (srcPath) {
             howdo
                 // 分配 chunk
                 .task(function (next) {
-                    assignChunk(mainMap, versionMap, next);
+                    assignChunk(versionMap, next);
                 })
                 // 合并 chunk
                 .task(function (next) {
