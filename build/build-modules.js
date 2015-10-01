@@ -335,11 +335,23 @@ module.exports = function (srcPath) {
                     buildHTML(file, function (err, depCSS, depJS, mainJS) {
                         var htmlRelative = pathURI.relative(srcPath, file);
                         var url = pathURI.toURIPath(htmlRelative);
+                        var mainFile = path.join(configs._srcPath, mainJS);
+                        var async = {};
+
+                        if(!configs._mainFiles[mainFile].async){
+                            configs._mainFiles[mainFile].asyncList.forEach(function (asyncInfo) {
+                                var file = asyncInfo.id;
+                                var relative = path.relative(configs._srcPath, file);
+                                var name = path.toURI(relative);
+                                async[name] = true;
+                            });
+                        }
 
                         htmlJsCssRelationshipMap[url] = {
                             css: depCSS,
                             js: depJS,
-                            main: mainJS
+                            main: mainJS,
+                            async: async
                         };
                         htmlMainRelationshipMap[mainJS] = true;
 
@@ -434,11 +446,11 @@ module.exports = function (srcPath) {
 
             console.log('');
             log('build success',
-                'copy ' + configs._copyLength + ' file(s), ' +
-                '\nbuild ' + mainLength + ' main file(s), ' +
-                '\nbuild ' + jsLength + ' js file(s), ' +
-                '\nbuild ' + htmlLength + ' html file(s), ' +
-                '\nbuild ' + cssLength + ' css file(s), ' +
+                'copy ' + configs._copyLength + ' times, ' +
+                '\nbuild ' + mainLength + ' main times, ' +
+                '\nbuild ' + jsLength + ' js times, ' +
+                '\nbuild ' + htmlLength + ' html times, ' +
+                '\nbuild ' + cssLength + ' css times, ' +
                     //'\nbuild ' + configs._resImageList.length + ' image file(s), ' +
                     //'\nbuild ' + Object.keys(configs._resVerMap).length + ' resource file(s), ' +
                 '\npast ' + past + ' ms', 'success');
