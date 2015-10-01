@@ -24,6 +24,11 @@ module.exports = function (file, code) {
 
     var depNameList = [];
     var depName2IdMap = {};
+    var mainInfo = configs._mainFiles[file];
+
+    if(mainInfo.async){
+        return code;
+    }
 
     configs._mainFiles[file].asyncList.forEach(function (info) {
         depNameList.push(info.raw);
@@ -47,7 +52,7 @@ module.exports = function (file, code) {
             process.exit(1);
         }
 
-        code = code.replace(reg, requireVar + "(\"" + depName2IdMap[depName] + "\")");
+        code = code.replace(reg, requireVar + ".async(\"" + depName2IdMap[depName] + "\")");
     });
 
     return code;
