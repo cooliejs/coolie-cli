@@ -82,7 +82,7 @@ module.exports = function (mainFile, mainInfo, callback) {
                     }
 
                     if (depsRelationship[depId] && depsRelationship[depId][moduleFile]) {
-                        log('make depend cycle', pathURI.toSystemPath(moduleFile) + '\n' +
+                        log('make depended cycle', pathURI.toSystemPath(moduleFile) + '\n' +
                             pathURI.toSystemPath(depId), 'error');
                         process.exit(1);
                     }

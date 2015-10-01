@@ -185,6 +185,7 @@ module.exports = function (srcPath) {
                                 async: false,
                                 gid: '0'
                             };
+                            configs._moduleIdMap[file] = '0';
                         });
                         done();
                     });
@@ -211,6 +212,7 @@ module.exports = function (srcPath) {
                     configs._mainFiles[file].asyncList.push(info);
                     configs._mainFiles[info.id] = configs._mainFiles[info.id] || {async: true};
                     configs._mainFiles[info.id].gid = configs._mainFiles[info.id].gid || globalId.get();
+                    configs._moduleIdMap[info.id] = configs._mainFiles[info.id].gid;
                 });
                 next();
             }).follow(next);
