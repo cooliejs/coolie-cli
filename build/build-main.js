@@ -17,7 +17,16 @@ var encryption = require('ydr-utils').encryption;
 var buildModule = require('./build-module.js');
 
 
-var buildMain = module.exports = function (mainFile, callback) {
+/**
+ * 构建入口模块
+ * @param mainFile
+ * @param mainInfo
+ * @param mainInfo.async {Boolean} 是否为异步模块
+ * @param mainInfo.gid {String} 全局 ID
+ * @param mainInfo.asyncList {Array} 依赖的异步模块
+ * @param callback
+ */
+module.exports = function (mainFile, mainInfo, callback) {
     var bufferList = [];
     // 入口模块名称
     var mainName = path.basename(mainFile);
@@ -32,21 +41,21 @@ var buildMain = module.exports = function (mainFile, callback) {
     var chunkList = [];
     var configs = global.configs;
 
-    var _deepBuld = function (meta, file) {
-        buildModule(mainFile, meta, file, depIdsMap, function (err, meta) {
+    var _deepBuld = function (meta, moduleFile) {
+        buildModule(mainFile, meta, moduleFile, depIdsMap, function (err, meta) {
             if (err) {
-                log('build', pathURI.toSystemPath(file), 'error');
+                log('build', pathURI.toSystemPath(moduleFile), 'error');
                 log('build', err.message, 'error');
                 process.exit(1);
             }
 
             var depList = meta.depList;
-            var isChunk = configs._chunkModuleMap[file];
+            var isChunk = configs._chunkModuleMap[moduleFile];
             var md5 = encryption.md5(meta.code);
 
             if (isChunk) {
-                configs._chunkBufferMap[file] = new Buffer('\n' + meta.code, 'utf8');
-                configs._chunkMD5Map[file] = md5;
+                configs._chunkBufferMap[moduleFile] = new Buffer('\n' + meta.code, 'utf8');
+                configs._chunkMD5Map[moduleFile] = md5;
                 bufferList.push(new Buffer('', 'utf8'));
             } else {
                 md5List += md5;
@@ -54,13 +63,13 @@ var buildMain = module.exports = function (mainFile, callback) {
             }
 
             depsCache[mainFile] = true;
-            depsRelationship[file] = {};
+            depsRelationship[moduleFile] = {};
 
             if (depList.length) {
                 depList.forEach(function (dep) {
                     var depId = dep.id;
 
-                    depsRelationship[file][depId] = true;
+                    depsRelationship[moduleFile][depId] = true;
 
                     if (deepDeps.indexOf(depId) === -1) {
                         deepDeps.push(depId);
@@ -74,8 +83,8 @@ var buildMain = module.exports = function (mainFile, callback) {
                         }
                     }
 
-                    if (depsRelationship[depId] && depsRelationship[depId][file]) {
-                        log('make depend cycle', pathURI.toSystemPath(file) + '\n' +
+                    if (depsRelationship[depId] && depsRelationship[depId][moduleFile]) {
+                        log('make depend cycle', pathURI.toSystemPath(moduleFile) + '\n' +
                             pathURI.toSystemPath(depId), 'error');
                         process.exit(1);
                     }

@@ -27,14 +27,14 @@ var copy = require('../libs/copy.js');
  * 构建一个模块
  * @param mainFile {String} 入口模块
  * @param meta {Object} 文件名称
- * @param file {String} 文件路径
+ * @param moduleFile {String} 文件路径
  * @param depIdsMap {Object} 模块绝对路径 <=> ID 对应表
  * @param callback {Function} 回调，返回包括
  * @arguments[0].code 压缩替换后的代码
  * @arguments[1].deps 文件依赖的文件列表
  * @arguments[2].depIdsMap 文件依赖的文件列表
  */
-module.exports = function (mainFile, meta, file, depIdsMap, callback) {
+module.exports = function (mainFile, meta, moduleFile, depIdsMap, callback) {
     var type = meta.type;
     // 依赖 ID 列表
     var depList = [];
@@ -54,13 +54,13 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
         // 1. 读取文件内容
         .task(function (next) {
             if (isSingle) {
-                wrapDefine(file, depIdsMap, meta, next);
+                wrapDefine(moduleFile, depIdsMap, meta, next);
             } else {
                 try {
-                    next(null, fs.readFileSync(file, 'utf8'));
+                    next(null, fs.readFileSync(moduleFile, 'utf8'));
                 } catch (err) {
-                    log('build module', pathURI.toSystemPath(file), 'error');
-                    log('read file', pathURI.toSystemPath(file), 'error');
+                    log('build module', pathURI.toSystemPath(moduleFile), 'error');
+                    log('read file', pathURI.toSystemPath(moduleFile), 'error');
                     log('read file', err.message, 'error');
                     process.exit(1);
                 }
@@ -71,7 +71,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
         // 2. 读取依赖
         .task(function (next, code) {
             if (!isSingle) {
-                var deps = parseDeps(file, code);
+                var deps = parseDeps(moduleFile, code);
 
                 deps.forEach(function (dep) {
                     // 模块的唯一物理路径
@@ -106,13 +106,13 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
                     }
 
 
-                    configs._privateModuleMap[file] = configs._privateModuleMap[file] || {};
-                    configs._privateModuleMap[file].id = file;
-                    configs._privateModuleMap[file].type = 'private';
-                    configs._privateModuleMap[file].dependencies = configs._privateModuleMap[file].dependencies || [];
+                    configs._privateModuleMap[moduleFile] = configs._privateModuleMap[moduleFile] || {};
+                    configs._privateModuleMap[moduleFile].id = moduleFile;
+                    configs._privateModuleMap[moduleFile].type = 'private';
+                    configs._privateModuleMap[moduleFile].dependencies = configs._privateModuleMap[moduleFile].dependencies || [];
 
-                    if (configs._privateModuleMap[file].dependencies.indexOf(depId) === -1) {
-                        configs._privateModuleMap[file].dependencies.push(depId);
+                    if (configs._privateModuleMap[moduleFile].dependencies.indexOf(depId) === -1) {
+                        configs._privateModuleMap[moduleFile].dependencies.push(depId);
                     }
 
                     configs._privateModuleMap[depId] = configs._privateModuleMap[depId] || {};
@@ -122,8 +122,8 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
                     configs._privateModuleMap[depId].depending = configs._privateModuleMap[depId].depending || [];
                     configs._privateModuleMap[depId].parents = configs._privateModuleMap[depId].parents || [];
 
-                    if (configs._privateModuleMap[depId].parents.indexOf(file) === -1) {
-                        configs._privateModuleMap[depId].parents.push(file);
+                    if (configs._privateModuleMap[depId].parents.indexOf(moduleFile) === -1) {
+                        configs._privateModuleMap[depId].parents.push(moduleFile);
                     }
 
                     if (configs._privateModuleMap[depId].depending.indexOf(mainFile) === -1) {
@@ -156,7 +156,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
         // 3. 替换 require
         .task(function (next, code) {
             if (!isSingle) {
-                code = replaceRequire(file, code, depNameList, depName2IdMap);
+                code = replaceRequire(moduleFile, code, depNameList, depName2IdMap);
             }
 
             next(null, code);
@@ -167,7 +167,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
             if (isSingle) {
                 next(null, code);
             } else {
-                jsminify(file, code, next);
+                jsminify(moduleFile, code, next);
             }
         })
 
@@ -177,7 +177,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
             if (isSingle) {
                 next(null, code);
             } else {
-                code = replaceDefine(file, code, depList, depIdsMap);
+                code = replaceDefine(moduleFile, code, depList, depIdsMap);
                 next(null, code);
             }
         })
