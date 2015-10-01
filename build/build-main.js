@@ -96,7 +96,8 @@ var buildMain = module.exports = function (mainFile, callback) {
                     bufferList: bufferList,
                     md5List: md5List,
                     deepDeps: deepDeps,
-                    chunkList: chunkList
+                    chunkList: chunkList,
+                    depFiles: depsCache
                 });
             }
         });
