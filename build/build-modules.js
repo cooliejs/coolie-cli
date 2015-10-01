@@ -343,7 +343,8 @@ module.exports = function (srcPath) {
                                 var file = asyncInfo.id;
                                 var relative = path.relative(configs._srcPath, file);
                                 var name = path.toURI(relative);
-                                async[name] = true;
+
+                                async[name] = asyncRelationshipMap[file];
                             });
                         }
 
