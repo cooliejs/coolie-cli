@@ -1,0 +1,17 @@
+{
+    "html/async.html": {
+        "css": {},
+        "js": {},
+        "main": "static/js/app/async.js",
+        "async": {
+            "static/js/pages/page1.js": [],
+            "static/js/pages/page2.js": [],
+            "static/js/pages/404.js": [
+                "static/js/libs1/path1/path2/index.js"
+            ]
+        },
+        "deps": [
+            "static/js/libs1/path1/path2/index.js"
+        ]
+    }
+}
