@@ -17,6 +17,7 @@ var pathURI = require("../libs/path-uri.js");
 var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');
 var replaceRequire = require('../libs/replace-require.js');
+var replaceRequireAsync = require('../libs/replace-require-async.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
 var globalId = require('../libs/global-id.js');
@@ -73,7 +74,6 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
                 }
             }
         })
-
 
         // 2. 读取依赖
         .task(function (next, code) {
@@ -159,16 +159,7 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
             next(null, code);
         })
 
-        // 3. 替换 require
-        .task(function (next, code) {
-            if (!isSingle) {
-                code = replaceRequire(moduleFile, code, depNameList, depName2IdMap);
-            }
-
-            next(null, code);
-        })
-
-        // 4. 压缩
+        // 3. 压缩
         .task(function (next, code) {
             if (isSingle) {
                 next(null, code);
@@ -177,8 +168,26 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
             }
         })
 
+        // 4. 替换 require
+        .task(function (next, code) {
+            if (!isSingle) {
+                code = replaceRequire(moduleFile, code, depNameList, depName2IdMap);
+            }
 
-        // 5. 替换 define
+            next(null, code);
+        })
+
+        // 5. 替换 require.async
+        .task(function (next, code) {
+            // 非孤立模块 && 是入口模块
+            if (!isSingle && isMain) {
+                code = replaceRequireAsync(moduleFile, code);
+            }
+
+            next(null, code);
+        })
+
+        // 6. 替换 define
         .task(function (next, code) {
             if (isSingle) {
                 next(null, code);

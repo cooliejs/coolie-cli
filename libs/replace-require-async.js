@@ -18,16 +18,26 @@ var REG_DEFINE = /\bdefine\b\s*?\b\(\s*?function\b[^(]*\(([^,)]*)/;
  * 替换 require
  * @param file {String} 文件路径
  * @param code {String} 代码
- * @param depNameList {Array} 依赖数组
- * @param depName2IdMap {Object} 依赖对应表
  */
-module.exports = function (file, code, depNameList, depName2IdMap) {
+module.exports = function (file, code) {
+    var configs = global.configs;
+
+    var depNameList = [];
+    var depName2IdMap = {};
+
+    configs._mainFiles[file].asyncList.forEach(function (info) {
+        depNameList.push(info.raw);
+        depName2IdMap[info.raw] = info.gid;
+    });
+
     var requireVar = _getRequireVar(code);
 
     if (!requireVar && depNameList.length) {
-        log('replace require', 'can not found `require` variable, but used', 'error');
+        log('replace require.async', 'can not found `require` variable, but used', 'error');
         process.exit(1);
     }
+
+    process.exit();
 
     depNameList.forEach(function (depName) {
         var reg = _buildReg(requireVar, depName);
@@ -67,8 +77,7 @@ function _buildReg(requireVar, dep) {
     dep = string.escapeRegExp(dep);
 
     // require("...");
-    // require("some!...");
     // require("...", "...");
-    return new RegExp("\\b" + string.escapeRegExp(requireVar) + "\\(['\"](?:[^'\"]*!)?" + dep + "['\"]" +
+    return new RegExp("\\b" + string.escapeRegExp(requireVar) + "\\.async\\(['\"]" + dep + "['\"]" +
         "(?:\\s*?,\\s*?['\"][^'\"]*?['\"])?\\)", 'g');
 }
