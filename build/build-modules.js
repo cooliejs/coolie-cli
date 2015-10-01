@@ -189,7 +189,7 @@ module.exports = function (srcPath) {
         })
         // 分析出 async 模块
         .task(function (next) {
-            howdo.each(configs._mainFiles, function (file, boo, done) {
+            howdo.each(configs._mainFiles, function (file, boo, next) {
                 var code = '';
 
                 try {
@@ -201,56 +201,45 @@ module.exports = function (srcPath) {
                     process.exit(1);
                 }
 
-
-                var asyncList = parseAsync(file, code);
-            }).together(next);
-        })
-        .each(configs.js.main, function (i, main, nextMain) {
-            // 构建入口模块
-            var gbPath = path.join(srcPath, main);
-
-            //log('build js', pathURI.toSystemPath(gbPath));
-
-            glob(gbPath, {dot: false, nodir: true}, function (err, files) {
-                if (err) {
-                    log('glob', pathURI.toSystemPath(gbPath), 'error');
-                    log('glob', err.message, 'error');
-                    process.exit(1);
-                }
-
-                howdo.each(files, function (j, file, nextFile) {
-                    var srcName = pathURI.relative(srcPath, file);
-
-                    buildMain(file, function (err, info) {
-                        if (err) {
-                            return;
-                        }
-
-                        var bufferList = info.bufferList;
-                        var md5List = info.md5List;
-                        var deepDeps = info.deepDeps;
-                        var depFiles = info.depFiles;
-                        var chunkList = info.chunkList;
-
-                        mainRelationshipMap[pathURI.toURIPath(srcName)] = deepDeps.map(function (dep) {
-                            return pathURI.toURIPath(pathURI.relative(srcPath, dep));
-                        });
-
-                        configs._mainMap[file] = {
-                            mainFile: file,
-                            depFiles: depFiles,
-                            srcName: srcName,
-                            md5List: md5List,
-                            chunkList: chunkList,
-                            bufferList: bufferList
-                        };
-                        mainLength++;
-                        nextFile();
-                    });
-                }).follow(function () {
-                    nextMain();
+                configs._mainBufferMap[file] = new Buffer(code, 'utf8');
+                parseAsync(file, code).forEach(function (info) {
+                    configs._mainFiles[info.id] = true;
                 });
-            });
+                next();
+            }).follow(next);
+        })
+        // 构建 main
+        .task(function (next) {
+            howdo.each(configs._mainFiles, function (file, boo, next) {
+                var srcName = pathURI.relative(srcPath, file);
+
+                buildMain(file, function (err, info) {
+                    if (err) {
+                        return;
+                    }
+
+                    var bufferList = info.bufferList;
+                    var md5List = info.md5List;
+                    var deepDeps = info.deepDeps;
+                    var depFiles = info.depFiles;
+                    var chunkList = info.chunkList;
+
+                    mainRelationshipMap[pathURI.toURIPath(srcName)] = deepDeps.map(function (dep) {
+                        return pathURI.toURIPath(pathURI.relative(srcPath, dep));
+                    });
+
+                    configs._mainMap[file] = {
+                        mainFile: file,
+                        depFiles: depFiles,
+                        srcName: srcName,
+                        md5List: md5List,
+                        chunkList: chunkList,
+                        bufferList: bufferList
+                    };
+                    mainLength++;
+                    next();
+                });
+            }).follow(next);
         })
         // chunk 管理
         .task(function (next) {
