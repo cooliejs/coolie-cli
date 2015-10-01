@@ -77,11 +77,8 @@ module.exports = function (mainFile, meta, file, depIdsMap, buildAsync, callback
                 var deps = parseDeps(file, code);
 
                 deps.forEach(function (dep) {
-                    var depName = dep.name;
-                    var depId = path.join(relativeDir, depName);
-
                     // 模块的唯一物理路径
-                    depId = dep.id;
+                    var depId = dep.id;
                     // 全局的模块 ID
                     configs._moduleIdMap[depId] = configs._moduleIdMap[depId] || globalId.get();
 
@@ -174,7 +171,9 @@ module.exports = function (mainFile, meta, file, depIdsMap, buildAsync, callback
                 var _asyncList = parseAsync(file, code);
 
                 _asyncList.forEach(function (info) {
-
+                    configs._asyncMap[info.id] = configs._asyncMap[info.id] || {};
+                    configs._asyncMap[info.id].depending = configs._asyncMap[info.id].depending || [];
+                    configs._asyncMap[info.id].depending.push(file);
                 });
             }
 

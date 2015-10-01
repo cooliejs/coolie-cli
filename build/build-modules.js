@@ -57,6 +57,7 @@ module.exports = function (srcPath) {
     configs._destPath = destPath;
     configs._jsPath = jsPath;
     configs._asyncPath = path.join(jsPath, '../async/');
+    configs._asyncMap = {};
     configs._asyncIndex = 0;
     configs._chunkPath = path.join(jsPath, '../chunk/');
     configs._cssPath = cssPath;
@@ -196,6 +197,8 @@ module.exports = function (srcPath) {
                         nextFile();
                     });
                 }).follow(function () {
+                    console.log(mainMap);
+                    console.log(configs._asyncMap);
                     nextMain();
                 });
             });
