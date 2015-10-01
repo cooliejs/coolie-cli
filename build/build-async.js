@@ -7,7 +7,21 @@
 
 'use strict';
 
+var dato = require('ydr-utils').dato;
+
+var buildMain = require('./build-main.js');
+
 module.exports = function (versionMap, callback) {
-    console.log(versionMap);
+    var configs = global.configs;
+
+    dato.each(configs._asyncMap, function (asynMain, info) {
+        //console.log(asynMain);
+        //console.log(info.depending);
+        //console.log(configs._mainMap[info.depending[0]]);
+
+        buildMain(asynMain, function () {
+
+        });
+    });
 };
 

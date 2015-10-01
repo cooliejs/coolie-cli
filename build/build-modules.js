@@ -7,7 +7,7 @@
 
 'use strict';
 
-var fs = require('fs-extra');
+var fse = require('fs-extra');
 var howdo = require('howdo');
 var path = require('ydr-utils').path;
 var glob = require('glob');
@@ -56,6 +56,8 @@ module.exports = function (srcPath) {
     configs._srcPath = srcPath;
     configs._destPath = destPath;
     configs._jsPath = jsPath;
+    configs._mainFiles = {};
+    configs._mainBufferMap = {};
     configs._asyncPath = path.join(jsPath, '../async/');
     configs._asyncMap = {};
     configs._asyncIndex = 0;
@@ -162,6 +164,38 @@ module.exports = function (srcPath) {
 
             next();
         })
+        // 分析出入口文件
+        .task(function (next) {
+            howdo
+                .each(configs.js.main, function (index, main, done) {
+                    // 构建入口模块
+                    var gbPath = path.join(srcPath, main);
+
+                    glob(gbPath, {dot: false, nodir: true}, function (err, files) {
+                        if (err) {
+                            log('glob', pathURI.toSystemPath(gbPath), 'error');
+                            log('glob', err.message, 'error');
+                            process.exit(1);
+                        }
+
+                        files.forEach(function (file) {
+                            if(!configs._mainFiles[file]){
+                                configs._mainFiles[file] = true;
+                            }
+                        });
+                        done();
+                    });
+                })
+                .together(next);
+        })
+        // 分析出 async 模块
+        .task(function (next) {
+            howdo.each(configs._mainFiles, function (file, boo, done) {
+                fse.readFileSync(file, 'utf8', function (err, code) {
+
+                });
+            }).together(next);
+        })
         .each(configs.js.main, function (i, main, nextMain) {
             // 构建入口模块
             var gbPath = path.join(srcPath, main);
@@ -178,7 +212,7 @@ module.exports = function (srcPath) {
                 howdo.each(files, function (j, file, nextFile) {
                     var srcName = pathURI.relative(srcPath, file);
 
-                    buildMain(file, function (err,info) {
+                    buildMain(file, function (err, info) {
                         if (err) {
                             return;
                         }
@@ -205,8 +239,6 @@ module.exports = function (srcPath) {
                         nextFile();
                     });
                 }).follow(function () {
-                    console.log(configs._mainMap);
-                    console.log(configs._asyncMap);
                     nextMain();
                 });
             });
@@ -226,10 +258,6 @@ module.exports = function (srcPath) {
                 .task(function (next) {
                     buildChunk(versionMap, next);
                 })
-                // 构建 async
-                .task(function (next) {
-                    buildAsync(versionMap, next);
-                })
                 .follow(next);
         })
 
@@ -244,7 +272,7 @@ module.exports = function (srcPath) {
             }
 
             // 覆盖生成 coolie-config.js
-            var code = fs.readFileSync(coolieConfigJSPath, 'utf8');
+            var code = fse.readFileSync(coolieConfigJSPath, 'utf8');
             var relative = pathURI.relative(srcPath, coolieConfigJSPath);
             var coolieInfo = replaceConfig(code, versionMap);
             var destFile = path.join(destPath, relative);
@@ -252,7 +280,7 @@ module.exports = function (srcPath) {
             destFile = pathURI.replaceVersion(destFile, coolieInfo.version);
             configs._coolieConfigVersion = coolieInfo.version;
             configs._coolieConfig = coolieInfo.config;
-            fs.outputFile(destFile, coolieInfo.code, function (err) {
+            fse.outputFile(destFile, coolieInfo.code, function (err) {
                 if (err) {
                     log('overwrite config', pathURI.toSystemPath(destFile), 'error');
                     log('overwrite config', err.message, 'error');
@@ -361,7 +389,7 @@ module.exports = function (srcPath) {
             var mapFile = path.join(destPath, './relationship-map.json');
             var data = JSON.stringify(htmlJsCssRelationshipMap, null, 4);
 
-            fs.outputFile(mapFile, data, function (err) {
+            fse.outputFile(mapFile, data, function (err) {
                 if (err) {
                     log('write file', pathURI.toSystemPath(mapFile), 'error');
                     log('write file', err.message, 'error');
@@ -390,7 +418,7 @@ module.exports = function (srcPath) {
                 '\nbuild ' + htmlLength + ' html file(s), ' +
                 '\nbuild ' + cssLength + ' css file(s), ' +
                     //'\nbuild ' + configs._resImageList.length + ' image file(s), ' +
-                //'\nbuild ' + Object.keys(configs._resVerMap).length + ' resource file(s), ' +
+                    //'\nbuild ' + Object.keys(configs._resVerMap).length + ' resource file(s), ' +
                 '\npast ' + past + ' ms', 'success');
             console.log('');
             console.log('');
