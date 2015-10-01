@@ -22,7 +22,6 @@ var parseAsync = require('../libs/parse-async.js');
 var assignChunk = require('../libs/assign-chunk.js');
 var buildMain = require('./build-main.js');
 var buildChunk = require('./build-chunk.js');
-var buildAsync = require('./build-async.js');
 var buildHTML = require('./build-html.js');
 var copy = require('../libs/copy.js');
 var globalId = require('../libs/global-id.js');
@@ -126,6 +125,8 @@ module.exports = function (srcPath) {
     var cssLength = 0;
     var versionMap = {};
     var mainRelationshipMap = {};
+    var asyncRelationshipMap = {};
+    var chunkRelationshipList = [];
     var htmlJsCssRelationshipMap = {};
     var htmlMainRelationshipMap = {};
 
@@ -214,6 +215,7 @@ module.exports = function (srcPath) {
                     configs._mainFiles[info.id] = configs._mainFiles[info.id] || {async: true};
                     configs._mainFiles[info.id].gid = configs._mainFiles[info.id].gid || globalId.get();
                     configs._moduleIdMap[info.id] = configs._mainFiles[info.id].gid;
+                    configs._asyncMap[info.id] = configs._mainFiles[info.id].gid;
                 });
                 next();
             }).follow(next);
@@ -240,9 +242,15 @@ module.exports = function (srcPath) {
                     var depFiles = info.depFiles;
                     var chunkList = info.chunkList;
 
-                    mainRelationshipMap[pathURI.toURIPath(srcName)] = deepDeps.map(function (dep) {
-                        return pathURI.toURIPath(pathURI.relative(srcPath, dep));
-                    });
+                    if (configs._asyncMap[mainFile]) {
+                        asyncRelationshipMap[mainFile] = deepDeps.map(function (dep) {
+                            return pathURI.toURIPath(pathURI.relative(srcPath, dep));
+                        });
+                    } else {
+                        mainRelationshipMap[pathURI.toURIPath(srcName)] = deepDeps.map(function (dep) {
+                            return pathURI.toURIPath(pathURI.relative(srcPath, dep));
+                        });
+                    }
 
                     configs._mainMap[mainFile] = {
                         mainFile: mainFile,

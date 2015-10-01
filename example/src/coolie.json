@@ -15,7 +15,7 @@
   },
   "html": {
     "src": [
-
+      "./html/async.html"
     ],
     "minify": true
   },
