@@ -17,7 +17,6 @@ var pathURI = require("../libs/path-uri.js");
 var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');
 var replaceRequire = require('../libs/replace-require.js');
-var parseAsync = require('../libs/parse-async.js');
 var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
 var globalId = require('../libs/global-id.js');
@@ -163,22 +162,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
             next(null, code);
         })
 
-        // 4. 解析 require.async
-        .task(function (next, code) {
-            if (!isSingle) {
-                var _asyncList = parseAsync(file, code);
-
-                _asyncList.forEach(function (info) {
-                    configs._asyncMap[info.id] = configs._asyncMap[info.id] || {};
-                    configs._asyncMap[info.id].depending = configs._asyncMap[info.id].depending || [];
-                    configs._asyncMap[info.id].depending.push(file);
-                });
-            }
-
-            next(null, code);
-        })
-
-        // 5. 压缩
+        // 4. 压缩
         .task(function (next, code) {
             if (isSingle) {
                 next(null, code);
@@ -188,7 +172,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
         })
 
 
-        // 6. 替换 define
+        // 5. 替换 define
         .task(function (next, code) {
             if (isSingle) {
                 next(null, code);

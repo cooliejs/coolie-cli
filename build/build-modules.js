@@ -24,6 +24,7 @@ var buildChunk = require('./build-chunk.js');
 var buildAsync = require('./build-async.js');
 var buildHTML = require('./build-html.js');
 var copy = require('../libs/copy.js');
+var globalId = require('../libs/global-id.js');
 
 
 module.exports = function (srcPath) {
@@ -61,7 +62,6 @@ module.exports = function (srcPath) {
     configs._mainBufferMap = {};
     configs._asyncPath = path.join(jsPath, '../async/');
     configs._asyncMap = {};
-    configs._asyncIndex = 0;
     configs._chunkPath = path.join(jsPath, '../chunk/');
     configs._cssPath = cssPath;
     configs._cssSrcPath = cssPath;
@@ -180,7 +180,10 @@ module.exports = function (srcPath) {
                         }
 
                         files.forEach(function (file) {
-                            configs._mainFiles[file] = true;
+                            configs._mainFiles[file] = {
+                                async: false,
+                                gid: '0'
+                            };
                         });
                         done();
                     });
@@ -203,17 +206,26 @@ module.exports = function (srcPath) {
 
                 configs._mainBufferMap[file] = new Buffer(code, 'utf8');
                 parseAsync(file, code).forEach(function (info) {
-                    configs._mainFiles[info.id] = true;
+                    configs._mainFiles[file].asyncList = configs._mainFiles[file].asyncList || [];
+                    configs._mainFiles[file].asyncList.push(info);
+                    configs._mainFiles[info.id] = configs._mainFiles[info.id] || {async: true};
+                    configs._mainFiles[info.id].gid = configs._mainFiles[info.id].gid || globalId.get();
                 });
                 next();
             }).follow(next);
         })
         // 构建 main
         .task(function (next) {
-            howdo.each(configs._mainFiles, function (file, boo, next) {
-                var srcName = pathURI.relative(srcPath, file);
+            dato.each(configs._mainFiles, function (mainFile, info) {
+                dato.each(info.asyncList || [], function (index, asyncInfo) {
+                    asyncInfo.gid = configs._mainFiles[asyncInfo.id].gid;
+                });
+            });
 
-                buildMain(file, function (err, info) {
+            howdo.each(configs._mainFiles, function (mainFile, mainInfo, next) {
+                var srcName = pathURI.relative(srcPath, mainFile);
+
+                buildMain(mainFile, mainInfo, function (err, info) {
                     if (err) {
                         return;
                     }
@@ -228,8 +240,8 @@ module.exports = function (srcPath) {
                         return pathURI.toURIPath(pathURI.relative(srcPath, dep));
                     });
 
-                    configs._mainMap[file] = {
-                        mainFile: file,
+                    configs._mainMap[mainFile] = {
+                        mainFile: mainFile,
                         depFiles: depFiles,
                         srcName: srcName,
                         md5List: md5List,
