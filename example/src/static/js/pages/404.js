@@ -1,3 +1,3 @@
 define(function (require, exports, module) {
-    alert('page1');
+    require('../libs1/path1/path2/index.js');
 });

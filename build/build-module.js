@@ -40,6 +40,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, buildAsync, callback
     var type = meta.type;
     // 依赖 ID 列表
     var depList = [];
+    var asyncList = [];
     // 依赖绝对路径与 ID 对应关系
     var depIdMap = {};
     // 依赖名称列表
@@ -79,16 +80,19 @@ module.exports = function (mainFile, meta, file, depIdsMap, buildAsync, callback
                     var depName = dep.name;
                     var depId = path.join(relativeDir, depName);
 
+                    // 模块的唯一物理路径
                     depId = pathURI.toSystemPath(depId);
+                    // 全局的模块 ID
+                    configs._moduleIdMap[depId] = configs._moduleIdMap[depId] || globalId.get();
 
                     var chunkId = configs._chunkFileMap[depId];
 
-                    // 当前依赖模块属于独立块状模块 && 同步模块
-                    if (chunkId && !meta.async) {
+                    // 当前依赖模块属于独立块状模块
+                    if (chunkId) {
                         depNameList.push(dep.raw);
                         configs._chunkModuleMap[depId] = configs._chunkModuleMap[depId] || {};
                         configs._chunkModuleMap[depId].type = 'chunk';
-                        configs._chunkModuleMap[depId].gid = configs._chunkModuleMap[depId].gid || globalId.get();
+                        configs._chunkModuleMap[depId].gid = configs._moduleIdMap[depId];
                         configs._chunkModuleMap[depId].depending = configs._chunkModuleMap[depId].depending || [];
                         depName2IdMap[dep.raw] = depIdsMap[depId] = configs._chunkModuleMap[depId].gid;
 
@@ -120,7 +124,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, buildAsync, callback
                     configs._privateModuleMap[depId] = configs._privateModuleMap[depId] || {};
                     configs._privateModuleMap[depId].id = depId;
                     configs._privateModuleMap[depId].type = 'private';
-                    configs._privateModuleMap[depId].gid = configs._privateModuleMap[depId].gid || globalId.get();
+                    configs._privateModuleMap[depId].gid = configs._moduleIdMap[depId];
                     configs._privateModuleMap[depId].depending = configs._privateModuleMap[depId].depending || [];
                     configs._privateModuleMap[depId].parents = configs._privateModuleMap[depId].parents || [];
 
@@ -155,7 +159,6 @@ module.exports = function (mainFile, meta, file, depIdsMap, buildAsync, callback
             next(null, code);
         })
 
-
         // 3. 替换 require
         .task(function (next, code) {
             if (!isSingle) {
@@ -165,23 +168,18 @@ module.exports = function (mainFile, meta, file, depIdsMap, buildAsync, callback
             next(null, code);
         })
 
-
         // 4. 解析 require.async
         .task(function (next, code) {
             if (!isSingle) {
-                var asyncList = parseAsync(file, code);
+                var _asyncList = parseAsync(file, code);
 
-                if(!asyncList.length){
-                    return next(null, code);
-                }
+                _asyncList.forEach(function (info) {
 
-                // 进行异步模块构建
-                return buildAsync(asyncList, code, next);
+                });
             }
 
             next(null, code);
         })
-
 
         // 5. 压缩
         .task(function (next, code) {
@@ -209,7 +207,8 @@ module.exports = function (mainFile, meta, file, depIdsMap, buildAsync, callback
             callback(err, {
                 isSingle: isSingle,
                 code: code,
-                depList: depList
+                depList: depList,
+                asyncList: asyncList
             });
         });
 };
