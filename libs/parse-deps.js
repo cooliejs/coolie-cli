@@ -7,6 +7,8 @@
 
 "use strict";
 
+var path = require('ydr-utils').path;
+
 var log = require('./log.js');
 
 
@@ -89,6 +91,7 @@ module.exports = function (file, code) {
             var matches = $2.match(REG_REQUIRE_TYPE);
             var pipeline = (matches[2] ? matches[2].toLowerCase() : 'js').split('|');
             var dep = {
+                id: path.join(path.dirname(file), name),
                 raw: matches[1],
                 name: cleanURL(matches[1], !!matches[2]),
                 type: pipeline[0],

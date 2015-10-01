@@ -81,7 +81,7 @@ module.exports = function (mainFile, meta, file, depIdsMap, buildAsync, callback
                     var depId = path.join(relativeDir, depName);
 
                     // 模块的唯一物理路径
-                    depId = pathURI.toSystemPath(depId);
+                    depId = dep.id;
                     // 全局的模块 ID
                     configs._moduleIdMap[depId] = configs._moduleIdMap[depId] || globalId.get();
 
