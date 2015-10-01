@@ -26,6 +26,7 @@ module.exports = function (file, code) {
     var depName2IdMap = {};
     var mainInfo = configs._mainFiles[file];
 
+    // 异步模块跳过
     if(mainInfo.async){
         return code;
     }
