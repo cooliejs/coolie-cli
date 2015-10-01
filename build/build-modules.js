@@ -17,6 +17,7 @@ var typeis = require('ydr-utils').typeis;
 var pathURI = require("../libs/path-uri.js");
 var replaceConfig = require('../libs/replace-config.js');
 var parseConfig = require('../libs/parse-config.js');
+var parseAsync = require('../libs/parse-async.js');
 var assignChunk = require('../libs/assign-chunk.js');
 var buildMain = require('./build-main.js');
 var buildChunk = require('./build-chunk.js');
@@ -179,9 +180,7 @@ module.exports = function (srcPath) {
                         }
 
                         files.forEach(function (file) {
-                            if(!configs._mainFiles[file]){
-                                configs._mainFiles[file] = true;
-                            }
+                            configs._mainFiles[file] = true;
                         });
                         done();
                     });
@@ -191,9 +190,19 @@ module.exports = function (srcPath) {
         // 分析出 async 模块
         .task(function (next) {
             howdo.each(configs._mainFiles, function (file, boo, done) {
-                fse.readFileSync(file, 'utf8', function (err, code) {
+                var code = '';
 
-                });
+                try {
+                    code = fse.readFileSync(file, 'utf8');
+                } catch (err) {
+                    log('parse async', pathURI.toSystemPath(file), 'error');
+                    log('read file', pathURI.toSystemPath(file), 'error');
+                    log('read file', err.message, 'error');
+                    process.exit(1);
+                }
+
+
+                var asyncList = parseAsync(file, code);
             }).together(next);
         })
         .each(configs.js.main, function (i, main, nextMain) {
