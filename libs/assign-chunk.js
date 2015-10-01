@@ -68,9 +68,16 @@ module.exports = function (versionMap, callback) {
 
     howdo.each(mainMap, function (mainFile, main, done) {
         var version = encryption.md5(main.md5List).slice(0, configs.dest.versionLength);
+        var mainInfo = configs._mainFiles[mainFile];
+        var srcName = main.srcName;
 
-        main.destName = pathURI.replaceVersion(main.srcName, version);
-        versionMap[pathURI.toURIPath(main.srcName)] = version;
+        if (mainInfo.async) {
+            srcName = path.join(configs._asyncDirname, mainInfo.gid + '.js');
+            srcName = path.relative(configs._srcPath, srcName);
+        }
+
+        main.destName = pathURI.replaceVersion(srcName, version);
+        versionMap[pathURI.toURIPath(srcName)] = version;
 
         var destFile = path.join(configs._destPath, main.destName);
         var output = sign('js');
