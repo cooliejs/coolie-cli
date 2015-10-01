@@ -49,7 +49,6 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
     // 单独的文件，没有依赖
     var isSingle = type !== 'js';
     // 相对目录
-    var relativeDir = path.dirname(file);
     var configs = global.configs;
 
     howdo
