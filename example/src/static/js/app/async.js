@@ -1,7 +1,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    //require('../libs1/path1/path2/index.js');
+    require('../libs1/path1/path2/index.js');
 
     switch (location.hash) {
         case '#page1':

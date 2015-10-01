@@ -92,6 +92,7 @@ var buildMain = module.exports = function (mainFile, callback) {
             if (depsLength === bufferList.length) {
                 log("√", pathURI.toRootURL(mainFile), "success");
                 //callback(null, bufferList, md5List, deepDeps, chunkList);
+                delete(depsCache[mainFile]);
                 callback(null, {
                     bufferList: bufferList,
                     md5List: md5List,

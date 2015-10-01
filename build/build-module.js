@@ -58,14 +58,14 @@ module.exports = function (mainFile, meta, file, depIdsMap, callback) {
             if (isSingle) {
                 wrapDefine(file, depIdsMap, meta, next);
             } else {
-                try {
+                //try {
                     next(null, fs.readFileSync(file, 'utf8'));
-                } catch (err) {
-                    log('build module', pathURI.toSystemPath(file), 'error');
-                    log('read file', pathURI.toSystemPath(file), 'error');
-                    log('read file', err.message, 'error');
-                    process.exit(1);
-                }
+                //} catch (err) {
+                //    log('build module', pathURI.toSystemPath(file), 'error');
+                //    log('read file', pathURI.toSystemPath(file), 'error');
+                //    log('read file', err.message, 'error');
+                //    process.exit(1);
+                //}
             }
         })
 
