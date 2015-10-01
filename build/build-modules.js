@@ -20,6 +20,7 @@ var parseConfig = require('../libs/parse-config.js');
 var assignChunk = require('../libs/assign-chunk.js');
 var buildMain = require('./build-main.js');
 var buildChunk = require('./build-chunk.js');
+var buildAsync = require('./build-async.js');
 var buildHTML = require('./build-html.js');
 var copy = require('../libs/copy.js');
 
@@ -224,6 +225,10 @@ module.exports = function (srcPath) {
                 // 合并 chunk
                 .task(function (next) {
                     buildChunk(versionMap, next);
+                })
+                // 构建 async
+                .task(function (next) {
+                    buildAsync(versionMap, next);
                 })
                 .follow(next);
         })
