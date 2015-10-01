@@ -26,7 +26,6 @@ var path = require('ydr-utils').path;
 
 /**
  * 智能分配 chunk
- * @param mainMap {Object} 入口 map
  * @param versionMap {Object} 版本 map
  * @param callback {Function} 分配完毕回调
  *

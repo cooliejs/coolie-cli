@@ -8,6 +8,6 @@
 'use strict';
 
 module.exports = function (versionMap, callback) {
-
+    console.log(versionMap);
 };
 
