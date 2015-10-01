@@ -33,13 +33,7 @@ var buildMain = module.exports = function (mainFile, callback) {
     var configs = global.configs;
 
     var _deepBuld = function (meta, file) {
-        buildModule(mainFile, meta, file, depIdsMap, function (asyncList, code, next) {
-            howdo.each(asyncList, function (index, asyncMain, next) {
-                var asyncFile = path.join(path.dirname(mainFile), asyncMain.name);
-
-                buildMain(asyncFile, next);
-            }).follow(next);
-        }, function (err, meta) {
+        buildModule(mainFile, meta, file, depIdsMap, function (err, meta) {
             if (err) {
                 log('build', pathURI.toSystemPath(file), 'error');
                 log('build', err.message, 'error');
@@ -48,7 +42,7 @@ var buildMain = module.exports = function (mainFile, callback) {
 
             var depList = meta.depList;
             var isChunk = configs._chunkModuleMap[file];
-            var md5 = encryption.md5(meta.code).slice(0, configs.dest.versionLength);
+            var md5 = encryption.md5(meta.code);
 
             if (isChunk) {
                 configs._chunkBufferMap[file] = new Buffer('\n' + meta.code, 'utf8');
@@ -97,7 +91,13 @@ var buildMain = module.exports = function (mainFile, callback) {
 
             if (depsLength === bufferList.length) {
                 log("√", pathURI.toRootURL(mainFile), "success");
-                callback(null, bufferList, md5List, deepDeps, chunkList);
+                //callback(null, bufferList, md5List, deepDeps, chunkList);
+                callback(null, {
+                    bufferList: bufferList,
+                    md5List: md5List,
+                    deepDeps: deepDeps,
+                    chunkList: chunkList
+                });
             }
         });
     };

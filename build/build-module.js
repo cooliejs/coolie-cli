@@ -30,13 +30,12 @@ var copy = require('../libs/copy.js');
  * @param meta {Object} 文件名称
  * @param file {String} 文件路径
  * @param depIdsMap {Object} 模块绝对路径 <=> ID 对应表
- * @param buildAsync {Function} 构建异步入口
  * @param callback {Function} 回调，返回包括
  * @arguments[0].code 压缩替换后的代码
  * @arguments[1].deps 文件依赖的文件列表
  * @arguments[2].depIdsMap 文件依赖的文件列表
  */
-module.exports = function (mainFile, meta, file, depIdsMap, buildAsync, callback) {
+module.exports = function (mainFile, meta, file, depIdsMap, callback) {
     var type = meta.type;
     // 依赖 ID 列表
     var depList = [];
