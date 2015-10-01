@@ -37,8 +37,6 @@ module.exports = function (file, code) {
         process.exit(1);
     }
 
-    process.exit();
-
     depNameList.forEach(function (depName) {
         var reg = _buildReg(requireVar, depName);
         var id = depName2IdMap[depName];
