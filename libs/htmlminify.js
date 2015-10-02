@@ -97,7 +97,8 @@ module.exports = function (file, code, callback) {
         if (isIgnore || type && type !== 'text/css') {
             code2 = $2;
         } else {
-            code2 = cssminify(file, $2, null);
+            var cssInfo = cssminify(file, $2, null);
+            code2 = cssInfo.code;
         }
 
         tag = htmlAttr.remove(tag, coolieIgnore);
@@ -174,7 +175,7 @@ module.exports = function (file, code, callback) {
 
         var style2 = cssminify(file, style1, null);
 
-        return htmlAttr.set(tag, 'style', style2);
+        return htmlAttr.set(tag, 'style', style2.code);
     });
 
     // 恢复预格式

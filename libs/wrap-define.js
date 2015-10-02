@@ -140,19 +140,21 @@ module.exports = function wrapDefine(file, meta, callback) {
             switch (meta.outType) {
                 case 'url':
                     uri = createURL(file, code, configs, meta, function (destFile) {
-                        return cssminify(file, code, destFile);
+                        return cssminify(file, code, destFile).code;
                     });
                     next(null, pathURI.joinURI(configs.dest.host, uri));
                     break;
 
                 case 'base64':
-                    code = cssminify(file, code, null);
+                    code = cssminify(file, code, null).code;
                     code = unicode(code);
                     next(null, base64(new Buffer(code, 'utf8'), extname));
                     break;
 
                 default :
-                    cssminify(file, code, null, next);
+                    cssminify(file, code, null, function (err, cssInfo) {
+                        next(err, cssInfo && cssInfo.code);
+                    });
                     break;
             }
             break;
@@ -199,7 +201,7 @@ module.exports = function wrapDefine(file, meta, callback) {
         case 'image':
             switch (meta.outType) {
                 case 'base64':
-                    code = cssminify(file, code, null);
+                    code = cssminify(file, code, null).code;
                     next(null, base64(file));
                     break;
 

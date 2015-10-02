@@ -70,7 +70,7 @@ module.exports = function (file, code, destFile, callback) {
         if (callback) {
             callback(null, cssInfo);
         } else {
-            return code;
+            return cssInfo;
         }
     } catch (err) {
         log('cssminify', pathURI.toSystemPath(file), 'error');

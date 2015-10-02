@@ -90,7 +90,8 @@ module.exports = function (file, html) {
         }
 
         if (type === 'css') {
-            code = cssminify(f, code, destPath);
+            var cssInfo = cssminify(f, code, destPath);
+            code = cssInfo.code;
         } else {
             code = jsminify(f, code, null);
         }
