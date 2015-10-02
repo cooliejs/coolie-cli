@@ -45,6 +45,7 @@ module.exports = function (file, html) {
     var htmlMatches = html.match(rule.reg);
     var files = [];
     var md5List = '';
+    var deps = {};
 
     dato.each(htmlMatches, function (index, tag) {
         var source = htmlAttr.get(tag, rule.attr);
@@ -89,18 +90,20 @@ module.exports = function (file, html) {
             process.exit(1);
         }
 
+        var relative = pathURI.relative(configs._srcPath, f);
+        var uri = pathURI.toURIPath(relative);
+
+        urls.push(uri);
+
         if (type === 'css') {
             var cssInfo = cssminify(f, code, destPath);
             code = cssInfo.code;
+            deps[uri] = cssInfo.deps;
         } else {
             code = jsminify(f, code, null);
         }
 
         bufferList.push(new Buffer('\n' + code, 'utf8'));
-
-        var relative = pathURI.relative(configs._srcPath, f);
-
-        urls.push(pathURI.toURIPath(relative));
     });
 
     var newCode = sign(type) + Buffer.concat(bufferList).toString();
@@ -125,7 +128,8 @@ module.exports = function (file, html) {
         type: type,
         files: files,
         replace: type === 'css' ? '<link rel="stylesheet" href="' + pathURI.joinURI(configs.dest.host, url) + '">' :
-        '<script src="' + pathURI.joinURI(configs.dest.host, url) + '"></script>'
+        '<script src="' + pathURI.joinURI(configs.dest.host, url) + '"></script>',
+        deps: deps
     });
 };
 

@@ -53,7 +53,7 @@ module.exports = function (file, code) {
         code = code.replace(REG_COOLIE, ret.replace);
 
         if (ret.type === 'css') {
-            depCSS[ret.url] = ret.urls;
+            depCSS[ret.url] = ret.deps;
         } else {
             depJS[ret.url] = ret.urls;
         }

@@ -1,10 +1,19 @@
 {
     "html/async.html": {
         "css": {
-            "static/css/2ad76922.css": [
-                {"static/css/path1/path2/3.css": []},
-                "static/css/bootstrap.css"
-            ]
+            "static/css/2ad76922.css": {
+                "static/css/path1/path2/3.css": [
+                    "static/img/100x100.png"
+                ],
+                "static/css/bootstrap.css": [
+                    "static/fonts/glyphicons-halflings-regular.eot",
+                    "static/fonts/glyphicons-halflings-regular.eot",
+                    "static/fonts/glyphicons-halflings-regular.woff2",
+                    "static/fonts/glyphicons-halflings-regular.woff",
+                    "static/fonts/glyphicons-halflings-regular.ttf",
+                    "static/fonts/glyphicons-halflings-regular.svg"
+                ]
+            }
         },
         "js": {
             "static/js/05a54e6e.js": [
