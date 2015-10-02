@@ -32,15 +32,16 @@ var regs = [{
 /**
  * 构建资源版本
  * @param file {String} 待替换的文件
- * @param css {String} 待替换的 CSS 文件
+ * @param cssCode {String} 待替换的 CSS 文件
  * @param destCSSFile {String} CSS 文件的保存路径
- * @returns {String}
+ * @returns {Object}
  */
-module.exports = function (file, css, destCSSFile) {
+module.exports = function (file, cssCode, destCSSFile) {
     var configs = global.configs;
+    var copyFiles = [];
 
     regs.forEach(function (item) {
-        css = css.replace(item.reg, function (all, resource) {
+        cssCode = cssCode.replace(item.reg, function (all, resource) {
             resource = resource.replace(REG_QUOTE, '');
 
             var pathRet = pathURI.parseURI2Path(resource);
@@ -51,6 +52,7 @@ module.exports = function (file, css, destCSSFile) {
 
             var absDir = pathURI.isRelativeFile(pathRet.path) ? path.dirname(file) : configs._srcPath;
             var absFile = path.join(absDir, pathRet.path);
+            copyFiles.push(path.relative(configs._srcPath, absFile));
             var destFile = copy(absFile, {
                 dest: configs._resDestPath,
                 version: true,
@@ -76,5 +78,8 @@ module.exports = function (file, css, destCSSFile) {
         });
     });
 
-    return css;
+    return {
+        code: cssCode,
+        deps: copyFiles
+    };
 };

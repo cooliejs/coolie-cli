@@ -65,10 +65,10 @@ module.exports = function (file, code, destFile, callback) {
 
     try {
         code = cssminify(file, code, null);
-        code = replaceCSSResource(file, code, destFile);
+        var cssInfo = replaceCSSResource(file, code, destFile);
 
         if (callback) {
-            callback(null, code);
+            callback(null, cssInfo);
         } else {
             return code;
         }
