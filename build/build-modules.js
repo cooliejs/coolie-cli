@@ -407,11 +407,17 @@ module.exports = function (srcPath) {
         })
         .task(function (next) {
             dato.each(htmlJsCssRelationshipMap, function (key, item) {
-                if (mainRelationshipMap[item.main]) {
-                    item.deps = mainRelationshipMap[item.main];
+                var mainJS = item.main;
+                var temp = {};
+
+                if (mainRelationshipMap[mainJS]) {
+                    temp[mainJS] = mainRelationshipMap[item.main];
+                    item.main = temp;
+                    //item.deps = mainRelationshipMap[item.main];
                 } else if (item.main) {
-                    log('×', 'miss main file: ' + item.main, 'warning');
-                    item.deps = [];
+                    log('×', 'miss main file: ' + mainJS, 'warning');
+                    temp[mainJS] = [];
+                    item.main = temp;
                 }
             });
 
