@@ -209,8 +209,8 @@ module.exports = function (srcPath) {
                 }
 
                 configs._bufferMap[file] = new Buffer(code, 'utf8');
+                configs._mainFiles[file].asyncList = configs._mainFiles[file].asyncList || [];
                 parseAsync(file, code).forEach(function (info) {
-                    configs._mainFiles[file].asyncList = configs._mainFiles[file].asyncList || [];
                     configs._mainFiles[file].asyncList.push(info);
                     configs._mainFiles[info.id] = configs._mainFiles[info.id] || {async: true};
                     configs._mainFiles[info.id].gid = configs._mainFiles[info.id].gid || globalId.get();

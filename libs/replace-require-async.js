@@ -8,6 +8,7 @@
 "use strict";
 
 var string = require('ydr-utils').string;
+var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
 var log = require("./log.js");
 var pathURI = require("./path-uri.js");
@@ -32,7 +33,8 @@ module.exports = function (file, code) {
     }
 
     if(!configs._mainFiles[file].asyncList){
-        log('replace require.async', 'can not found async list', 'error');
+        log('require.async', path.toSystem(file), 'errror');
+        log('require.async', 'can not found async list', 'error');
         process.exit(1);
     }
 
