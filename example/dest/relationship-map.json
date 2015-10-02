@@ -1,7 +1,17 @@
 {
     "html/async.html": {
-        "css": {},
-        "js": {},
+        "css": {
+            "static/css/2ad76922.css": [
+                {"static/css/path1/path2/3.css": []},
+                "static/css/bootstrap.css"
+            ]
+        },
+        "js": {
+            "static/js/05a54e6e.js": [
+                "static/js/index3-1.js",
+                "static/js/index3-2.js"
+            ]
+        },
         "main": "static/js/app/async.js",
         "async": {
             "static/js/pages/page1.js": [],
