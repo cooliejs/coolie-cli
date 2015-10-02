@@ -104,7 +104,8 @@ module.exports = function (file, code) {
                 srcFile: file,
                 dest: configs._jsDestPath,
                 srcCode: $0,
-                version: true
+                version: true,
+                logType: 1
             });
 
             if (copySrc) {
