@@ -1,4 +1,7 @@
 # 0.x.x
+- 0.23.x
+    - 适配了[coolie.js@1.2.x](https://github.com/cloudcome/coolie)
+    - 模块增量构建
 - 0.22.x
     - 适配了[coolie.js@1.1.x](https://github.com/cloudcome/coolie)
     - 模块管道方案
@@ -76,7 +79,7 @@
 	- 支持 html 文件的构建
 	- 支持 css 引用的合并替换
 	- 新增命令打开帮助页面
-- 0.0.17
+- 0.0.x
 	- 适配了[coolie.js@0.1.x](https://github.com/cloudcome/coolie)
 	- 优化构建配置
 	- build 的时候支持压缩 css、html 模块
