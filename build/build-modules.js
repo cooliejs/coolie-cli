@@ -338,7 +338,7 @@ module.exports = function (srcPath) {
                         var mainFile = path.join(configs._srcPath, mainJS);
                         var async = {};
 
-                        if (!configs._mainFiles[mainFile].async) {
+                        if (configs._mainFiles[mainFile] && !configs._mainFiles[mainFile].async) {
                             configs._mainFiles[mainFile].asyncList.forEach(function (asyncInfo) {
                                 var file = asyncInfo.id;
                                 var relative = path.relative(configs._srcPath, file);
