@@ -231,7 +231,7 @@ module.exports = function (srcPath) {
             howdo.each(configs._mainFiles, function (mainFile, mainInfo, next) {
                 var srcName = pathURI.relative(srcPath, mainFile);
 
-                buildMain(mainFile, mainInfo, function (err, info) {
+                buildMain(mainFile, function (err, info) {
                     if (err) {
                         return;
                     }
@@ -453,11 +453,11 @@ module.exports = function (srcPath) {
 
             console.log('');
             log('build success',
-                'copy ' + configs._copyLength + ' times, ' +
-                '\nbuild ' + mainLength + ' main times, ' +
-                '\nbuild ' + jsLength + ' js times, ' +
-                '\nbuild ' + htmlLength + ' html times, ' +
-                '\nbuild ' + cssLength + ' css times, ' +
+                'copy ' + configs._copyLength + ' files, ' +
+                '\nbuild ' + mainLength + ' main module, ' +
+                '\nbuild ' + jsLength + ' js files, ' +
+                '\nbuild ' + htmlLength + ' html files, ' +
+                '\nbuild ' + cssLength + ' css files, ' +
                     //'\nbuild ' + configs._resImageList.length + ' image file(s), ' +
                     //'\nbuild ' + Object.keys(configs._resVerMap).length + ' resource file(s), ' +
                 '\npast ' + past + ' ms', 'success');

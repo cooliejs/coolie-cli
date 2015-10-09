@@ -7,26 +7,22 @@
 
 "use strict";
 
-var path = require('ydr-utils').path;
 var fs = require('fs-extra');
-var howdo = require('howdo');
-var log = require('../libs/log.js');
+var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
-var pathURI = require("../libs/path-uri.js");
 var encryption = require('ydr-utils').encryption;
+
+var log = require('../libs/log.js');
+var pathURI = require("../libs/path-uri.js");
 var buildModule = require('./build-module.js');
 
 
 /**
  * 构建入口模块
  * @param mainFile
- * @param mainInfo
- * @param mainInfo.async {Boolean} 是否为异步模块
- * @param mainInfo.gid {String} 全局 ID
- * @param mainInfo.asyncList {Array} 依赖的异步模块
  * @param callback
  */
-module.exports = function (mainFile, mainInfo, callback) {
+module.exports = function (mainFile, callback) {
     var bufferList = [];
     // 入口模块名称
     var mainName = path.basename(mainFile);

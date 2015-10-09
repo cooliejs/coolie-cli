@@ -10,9 +10,10 @@
 var howdo = require('howdo');
 var path = require('ydr-utils').path;
 var fs = require('fs-extra');
+var dato = require('ydr-utils').dato;
+
 var log = require('../libs/log.js');
 var base64 = require('../libs/base64.js');
-var dato = require('ydr-utils').dato;
 var pathURI = require("../libs/path-uri.js");
 var parseDeps = require('../libs/parse-deps.js');
 var jsminify = require('../libs/jsminify.js');
