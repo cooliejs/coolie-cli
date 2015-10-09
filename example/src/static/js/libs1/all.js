@@ -11,10 +11,5 @@ define(function (require) {
      */
     'use strict';
 
-    console.log('libs1/all.js');
-    //require('./some.html', 'html');
-    //require('some.css', 'css');
-    require('../libs2/some.txt', 'text');
-    require('../libs2/some.json', 'json');
-    require('../libs2/some.js', 'js');
+    require('');
 });
