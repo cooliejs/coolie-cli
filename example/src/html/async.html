@@ -16,16 +16,29 @@
     <link rel="stylesheet" href="/static/css/path1/path2/3.css"/>
     <link rel="stylesheet" href="/static/css/bootstrap.css"/>
     <!-- /coolie-->
+
+    <style>
+        html{
+            font-size: 30px;
+        }
+
+        a{
+            margin-right: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
 
-<!--coolie-->
-<script src="../static/js/index3-1.js"></script>
-<script src="/static/js/index3-2.js"></script>
-<!--/coolie-->
+<a href="#page1">#page1</a>
+<a href="#page2">#page2</a>
+<a href="#404">#404</a>
+
+<h1 id="ret"></h1>
 
 
-<script coolie src="/static/js/coolie.min-1.1.1.js"
+<script coolie src="http://192.168.2.111:10004/coolie.js"
         data-config="~/static/js/coolie-config.js"
         data-main="./async.js"></script>
 

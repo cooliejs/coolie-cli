@@ -1,3 +1,3 @@
 define(function (require, exports, module) {
-    alert('page1');
+    document.getElementById('ret').innerHTML = 'page1';
 });

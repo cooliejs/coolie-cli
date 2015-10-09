@@ -15,12 +15,7 @@
                 ]
             }
         },
-        "js": {
-            "static/js/05a54e6e.js": [
-                "static/js/index3-1.js",
-                "static/js/index3-2.js"
-            ]
-        },
+        "js": {},
         "main": {
             "static/js/app/async.js": [
                 "static/js/libs1/path1/path2/index.js"

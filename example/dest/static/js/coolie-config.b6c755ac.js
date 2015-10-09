@@ -1,2 +1,0 @@
-/*coolie@0.23.0*/
-coolie.config({base:"./app/",async:"../async",chunk:"../chunk",debug:!1,cache:!0,version:{"async.js":"8b3f4797","../async/1.js":"4c16f035","../async/2.js":"9008cce9","../async/3.js":"c2035ba2","../chunk/0.js":"cd7f56da"}}).use().callback(function(){alert(123)}).callback(function(){alert(456)});
