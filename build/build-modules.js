@@ -214,7 +214,7 @@ module.exports = function (srcPath) {
                     configs._mainFiles[file].asyncList.push(info);
                     configs._mainFiles[info.id] = configs._mainFiles[info.id] || {async: true};
                     configs._mainFiles[info.id].gid = configs._mainFiles[info.id].gid || globalId.get();
-                    configs._moduleIdMap[info.id] = configs._mainFiles[info.id].gid;
+                    configs._moduleIdMap[info.id] = '0';
                     configs._asyncMap[info.id] = configs._mainFiles[info.id].gid;
                 });
                 next();
@@ -338,7 +338,7 @@ module.exports = function (srcPath) {
                         var mainFile = path.join(configs._srcPath, mainJS);
                         var async = {};
 
-                        if(!configs._mainFiles[mainFile].async){
+                        if (!configs._mainFiles[mainFile].async) {
                             configs._mainFiles[mainFile].asyncList.forEach(function (asyncInfo) {
                                 var file = asyncInfo.id;
                                 var relative = path.relative(configs._srcPath, file);
