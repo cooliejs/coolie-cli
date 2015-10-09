@@ -357,7 +357,7 @@ module.exports = function (srcPath) {
                         htmlMainRelationshipMap[mainJS] = true;
 
                         dato.each(depCSS, function (name, dep) {
-                            cssLength += dep.length;
+                            cssLength += Object.keys(dep).length;
                         });
 
                         dato.each(depJS, function (name, dep) {
