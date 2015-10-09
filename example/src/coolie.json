@@ -5,7 +5,7 @@
     ],
     "coolie-config.js": "./static/js/coolie-config.js",
     "dest": "./static/js/",
-    "chunk": [
+    "chunk2": [
       [
         "./static/js/libs1/path1/**/*",
         "./static/js/libs1/all.js"
@@ -32,7 +32,7 @@
   "copy": [],
   "dest": {
     "dirname": "../dest/",
-    "host": "http://cnd.domain.com/s/a/b",
+    "host": "",
     "versionLength": 8
   }
 }
