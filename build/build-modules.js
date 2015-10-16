@@ -90,6 +90,8 @@ module.exports = function (srcPath) {
     configs._chunkList = {};
     configs._mainMap = {};
 
+    global.coolie.configs = configs;
+
     configs.js.chunk.forEach(function (chunk, index) {
         var chunkList = chunk;
 
