@@ -6,20 +6,16 @@ __The front-end development builder.__
 __前端开发构建工具。__
 
 
-- gitbook <http://coolie.ydr.me/>
+- coolie book <http://coolie.ydr.me/>
 - 社区 <http://FrontEndDev.org/>
 
 
 # 功能
-- js 模块的合并、压缩、依赖分析、构建。
-- css 模块的合并、压缩、构建、引用分析。
-- html 样式依赖分析、压缩、构建，资源地址管理。
-- 静态引用资源（图片、字体）版本管理。
-- 支持跨站资源发布及构建。
-- 生成资源引用关系地图（relationship-map.json）。
-- 命令生成`coolie-config.js`。
-- 命令生成`coolie.json`。
-- 等等。
+- JS 文件的分析、合并、压缩、版本管理
+- CSS 文件的分析、合并、压缩、版本管理
+- HTML 文件分析、压缩、版本管理
+- 入口模块的分析、分块构建、增量构建、合并、压缩、版本管理
+- 静态资源的分析、压缩、版本管理
 
 
 
@@ -29,13 +25,13 @@ npm install -g coolie
 ```
 
 
-# API
+# CMDS
 ## `coolie`
 输出命令帮助信息。
 
 
-## `coolie wiki`
-打开 coolie wiki 页面。
+## `coolie book`
+打开 coolie book 页面。
 
 
 ## `coolie version`
@@ -44,10 +40,6 @@ npm install -g coolie
 
 ## `coolie pull [path]`
 下载`coolie.min.js`到指定目录。
-
-
-## `coolie alien [path]`
-下载`alien`发布版到指定目录。
 
 
 ## `coolie config [path]`
