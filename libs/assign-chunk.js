@@ -72,7 +72,7 @@ module.exports = function (versionMap, callback) {
         var srcName = main.srcName;
 
         if (mainInfo.async) {
-            srcName = path.join(configs._asyncDirname, mainInfo.gid + '.js');
+            srcName = path.join(configs.srcAsyncDirname, mainInfo.gid + '.js');
             srcName = path.relative(configs.srcDirname, srcName);
         }
 

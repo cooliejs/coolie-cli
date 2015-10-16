@@ -39,7 +39,7 @@ module.exports = function (versionMap, callback) {
 
         var version = encryption.md5(md5List).slice(0, configs.dest.versionLength);
         var fileName = index + '.js';
-        var srcName = path.join(pathURI.relative(configs.srcDirname, configs._chunkDirname), fileName);
+        var srcName = path.join(pathURI.relative(configs.srcDirname, configs.srcChunkDirname), fileName);
         var destFile = path.join(configs.destDirname, srcName);
 
         destFile = pathURI.replaceVersion(destFile, version);
