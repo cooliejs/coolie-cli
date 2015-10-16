@@ -73,13 +73,13 @@ module.exports = function (file, code) {
         }
     }
 
-    // <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-    // <link rel="apple-touch-icon" href="/apple-touch-icon-72.png" />
     code = code.replace(REG_LINK, function ($0) {
         var rel = htmlAttr.get($0, 'rel');
         var type = htmlAttr.get($0, 'type');
         var href = htmlAttr.get($0, 'href');
         var find = false;
+
+        console.log($0);
 
         dato.each(FAVICON_RELS, function (index, _rel) {
             if (rel === _rel) {

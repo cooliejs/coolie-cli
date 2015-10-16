@@ -18,7 +18,8 @@ module.exports = function (coolie) {
         },
         "html": {
             "src": [
-                "./html/**"
+                //"./html/**"
+                "./html/replace.html"
             ],
             "minify": true,
             hook: function (meta) {
