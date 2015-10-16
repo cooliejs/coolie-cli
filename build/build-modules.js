@@ -55,18 +55,22 @@ module.exports = function (srcPath) {
     var cssPath = path.join(srcPath, configs.css.dest);
     var coolieConfigJSPath = configs._noCoolieJS ? null : path.join(srcPath, configs.js['coolie-config.js']);
 
+    // public
     configs.srcDirname = srcPath;
     configs.destDirname = destPath;
     configs.srcJSDirname = jsPath;
     configs.srcCSSDirname = cssPath;
+    configs.destJSDirname = path.join(destPath, configs.js.dest);
+    configs.destCSSDirname = path.join(destPath, configs.css.dest);
+    configs.destResDirname = path.join(destPath, configs.resource.dest);
+
+    // private
     configs._mainFiles = {};
     configs._bufferMap = {};
     configs._fileIdMap = {};
     configs._asyncDirname = guessDirname(jsPath, 'async');
     configs._asyncMap = {};
     configs._chunkDirname = guessDirname(jsPath, 'chunk');
-    configs.destJSDirname = path.join(destPath, configs.js.dest);
-    configs.destCSSDirname = path.join(destPath, configs.css.dest);
     configs._coolieConfigJSPath = coolieConfigJSPath;
     configs._coolieConfigJSURI = configs._noCoolieJS ? null : pathURI.toURIPath(pathURI.relative(srcPath, coolieConfigJSPath));
     configs._buildStep = 0;
@@ -76,7 +80,6 @@ module.exports = function (srcPath) {
     configs._resImageList = [];
     configs._resImageMap = {};
     configs._resDestMap = {};
-    configs._resDestPath = path.join(destPath, configs.resource.dest);
     configs._copyFilesMap = {};
     configs._copyLength = 0;
     configs._concatMap = {};

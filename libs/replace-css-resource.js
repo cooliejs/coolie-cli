@@ -54,7 +54,7 @@ module.exports = function (file, cssCode, destCSSFile) {
             var absFile = path.join(absDir, pathRet.path);
             copyFiles.push(path.relative(configs.srcDirname, absFile));
             var destFile = copy(absFile, {
-                dest: configs._resDestPath,
+                dest: configs.destResDirname,
                 version: true,
                 logType: 1,
                 srcFile: file,

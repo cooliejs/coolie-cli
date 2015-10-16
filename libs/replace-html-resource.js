@@ -111,7 +111,7 @@ module.exports = function (file, code) {
 
                 var resFile = copy(absFile, {
                     version: true,
-                    dest: configs._resDestPath,
+                    dest: configs.destResDirname,
                     logType: 1,
                     srcFile: file,
                     srcCode: tag
