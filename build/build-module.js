@@ -34,6 +34,7 @@ var copy = require('../libs/copy.js');
  * @param meta.id {String} 模块ID
  * @param meta.gid {String} 全局ID
  * @param meta.chunk {Boolean} 是否为分块模块
+ * @param meta.async {Boolean} 是否为异步模块
  * @param moduleFile {String} 文件路径
  * @param callback {Function} 回调，返回包括
  * @arguments[0].code 压缩替换后的代码
@@ -114,7 +115,8 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
                             id: depId,
                             type: dep.type,
                             chunk: true,
-                            gid: configs._chunkModuleMap[depId].gid
+                            gid: configs._chunkModuleMap[depId].gid,
+                            async: configs._asyncMap[depId]
                         });
 
                         return;
@@ -156,7 +158,8 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
                             outType: dep.outType,
                             pipeline: dep.pipeline,
                             chunk: false,
-                            gid: configs._moduleIdMap[depId]
+                            gid: configs._moduleIdMap[depId],
+                            async: configs._asyncMap[depId]
                         });
                     }
 

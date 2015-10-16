@@ -10,3 +10,6 @@
 10、更合理的接口化，配置改成 js 文件
 11、支持文件流 require('./style.css', 'css|url'); √
 12、单页面应用的前端构建，资源增量加载，页面模块和页面单一依赖的模块抽离
+
+13、img data-original 脱离
+14、html include 功能

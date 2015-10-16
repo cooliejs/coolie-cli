@@ -109,7 +109,10 @@ module.exports = function (mainFile, callback) {
     _deepBuld({
         name: mainName,
         type: 'js',
-        main: true
+        main: true,
+        async: configs._asyncMap[mainFile],
+        chunk: false,
+        gid: configs._moduleIdMap[mainFile]
     }, mainFile);
 };
 
