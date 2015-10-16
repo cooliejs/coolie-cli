@@ -116,7 +116,7 @@ module.exports = function (file, code) {
                     srcFile: file,
                     srcCode: tag
                 });
-                var resRelative = pathURI.relative(configs._destPath, resFile);
+                var resRelative = pathURI.relative(configs.destDirname, resFile);
                 var url = pathURI.joinURI(configs.dest.host, resRelative);
 
                 tag = htmlAttr.set(tag, attr, url + pathRet.suffix);

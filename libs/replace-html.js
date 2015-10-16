@@ -114,7 +114,7 @@ module.exports = function (file, code) {
             });
 
             if (copySrc) {
-                var uri = pathURI.relative(configs._destPath, copySrc);
+                var uri = pathURI.relative(configs.destDirname, copySrc);
 
                 $0 = htmlAttr.set($0, 'src', pathURI.joinURI(configs.dest.host, uri));
             }

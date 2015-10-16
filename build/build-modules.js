@@ -56,7 +56,7 @@ module.exports = function (srcPath) {
     var coolieConfigJSPath = configs._noCoolieJS ? null : path.join(srcPath, configs.js['coolie-config.js']);
 
     configs.srcDirname = srcPath;
-    configs._destPath = destPath;
+    configs.destDirname = destPath;
     configs._jsPath = jsPath;
     configs._mainFiles = {};
     configs._bufferMap = {};

@@ -61,7 +61,7 @@ var createURL = function (file, code, configs, meta, filter) {
         }
     }
 
-    var relativeTo = pathURI.relative(configs._destPath, destFile);
+    var relativeTo = pathURI.relative(configs.destDirname, destFile);
 
     return pathURI.joinURI(configs.dest.host, relativeTo);
 };

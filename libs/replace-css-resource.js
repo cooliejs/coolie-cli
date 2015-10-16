@@ -69,7 +69,7 @@ module.exports = function (file, cssCode, destCSSFile) {
             }
             // 否则，css 里的资源相对于根目录
             else {
-                url = pathURI.joinURI(configs.dest.host, pathURI.relative(configs._destPath, destFile));
+                url = pathURI.joinURI(configs.dest.host, pathURI.relative(configs.destDirname, destFile));
             }
 
             url = pathURI.toURIPath(url) + pathRet.suffix;

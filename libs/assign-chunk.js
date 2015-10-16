@@ -79,7 +79,7 @@ module.exports = function (versionMap, callback) {
         main.destName = pathURI.replaceVersion(srcName, version);
         versionMap[pathURI.toURIPath(srcName)] = version;
 
-        var destFile = path.join(configs._destPath, main.destName);
+        var destFile = path.join(configs.destDirname, main.destName);
         var output = sign('js');
         var chunkList = [];
 

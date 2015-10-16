@@ -87,13 +87,13 @@ module.exports = function (fromFile, options) {
         if (options.dest) {
             toFile = path.join(options.dest, version + extname);
         } else {
-            toFile = path.join(configs._destPath, path.dirname(releativeTo), version + extname);
+            toFile = path.join(configs.destDirname, path.dirname(releativeTo), version + extname);
         }
     } else {
         if (options.dest) {
             toFile = path.join(options.dest, releativeTo);
         } else {
-            toFile = path.join(configs._destPath, releativeTo);
+            toFile = path.join(configs.destDirname, releativeTo);
         }
     }
 

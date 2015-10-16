@@ -74,7 +74,7 @@ module.exports = function (file, html) {
     var srcPath = path.join(type === 'css' ? configs._cssPath : configs._jsPath, srcName);
     var srcRelative = pathURI.relative(configs.srcDirname, srcPath);
     var url = pathURI.toURIPath(srcRelative);
-    var destPath = path.join(configs._destPath, srcRelative);
+    var destPath = path.join(configs.destDirname, srcRelative);
     var bufferList = [];
     var urls = [];
 
