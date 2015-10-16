@@ -1,7 +1,7 @@
 "use strict";
 
 
-module.exports = function(coolie){
+module.exports = function (coolie) {
     coolie.config({
         "js": {
             "main": [

@@ -1,3 +1,7 @@
+# 1.x.x
+- 1.0.x
+    - 配置文件接口化
+
 # 0.x.x
 - 0.23.x
     - 适配了[coolie.js@1.2.x](https://github.com/cloudcome/coolie)
