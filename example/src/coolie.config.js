@@ -5,7 +5,7 @@ module.exports = function (coolie) {
     coolie.config = {
         "js": {
             "main": [
-                "./static/js/app/**.js"
+                //"./static/js/app/**.js"
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
@@ -43,8 +43,10 @@ module.exports = function (coolie) {
         },
 
         // 挂载构建 HTML
-        hookReaplceHTML: function (html) {
-
+        hookReaplceHTML: function (file, code) {
+            console.log('==============================================');
+            console.log(file);
+            console.log(code);
         }
     };
 };

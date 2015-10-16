@@ -8,24 +8,9 @@
         },
         "js": {},
         "main": {
-            "static/js/app/async.js": [
-                "static/js/libs1/all.js",
-                "static/js/libs2/some.css",
-                "static/js/libs2/some.html",
-                "static/js/libs2/some.jpg",
-                "static/js/libs2/some.json",
-                "static/js/libs2/some.txt"
-            ]
+            "static/js/app/async.js": []
         },
-        "async": {
-            "static/js/pages/page1.js": [
-                "static/js/libs2/some.txt"
-            ],
-            "static/js/pages/page2.js": [],
-            "static/js/pages/404.js": [
-                "static/js/libs1/path1/path2/index.js"
-            ]
-        }
+        "async": {}
     },
     "html/index.html": {
         "css": {
@@ -39,15 +24,7 @@
         },
         "js": {},
         "main": {
-            "static/js/app/index.js": [
-                "static/js/libs1/path1/path2/index.js",
-                "static/img/loading.gif",
-                "static/img/100x100.png",
-                "static/js/libs2/some.txt",
-                "static/js/libs2/some.json",
-                "static/js/libs2/some.css",
-                "static/js/libs2/some.html"
-            ]
+            "static/js/app/index.js": []
         },
         "async": {}
     },
@@ -63,15 +40,7 @@
         },
         "js": {},
         "main": {
-            "static/js/app/index.js": [
-                "static/js/libs1/path1/path2/index.js",
-                "static/img/loading.gif",
-                "static/img/100x100.png",
-                "static/js/libs2/some.txt",
-                "static/js/libs2/some.json",
-                "static/js/libs2/some.css",
-                "static/js/libs2/some.html"
-            ]
+            "static/js/app/index.js": []
         },
         "async": {}
     },

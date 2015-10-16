@@ -156,6 +156,9 @@ module.exports = function (file, code) {
         return $0;
     });
 
+    // 挂载
+    configs.hookReaplceHTML(file, code);
+
     // 资源替换
     code = replaceHTMLResource(file, code);
 
