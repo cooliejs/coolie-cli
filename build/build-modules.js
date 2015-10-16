@@ -57,7 +57,7 @@ module.exports = function (srcPath) {
 
     configs.srcDirname = srcPath;
     configs.destDirname = destPath;
-    configs._jsPath = jsPath;
+    configs.destJSDirname = jsPath;
     configs._mainFiles = {};
     configs._bufferMap = {};
     configs._fileIdMap = {};
