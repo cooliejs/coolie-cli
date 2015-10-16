@@ -65,7 +65,6 @@ module.exports = function (srcPath) {
     configs._asyncMap = {};
     configs._chunkDirname = guessDirname(jsPath, 'chunk');
     configs.destCSSDirname = cssPath;
-    configs._cssSrcPath = cssPath;
     configs._jsDestPath = path.join(destPath, configs.js.dest);
     configs._cssDestPath = path.join(destPath, configs.css.dest);
     configs._coolieConfigJSPath = coolieConfigJSPath;
