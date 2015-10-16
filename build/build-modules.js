@@ -65,7 +65,7 @@ module.exports = function (srcPath) {
     configs.srcCoolieConfigJSPath = coolieConfigJSPath;
     configs.destJSDirname = path.join(destPath, configs.js.dest);
     configs.destCSSDirname = path.join(destPath, configs.css.dest);
-    configs.destResDirname = path.join(destPath, configs.resource.dest);
+    configs.destResourceDirname = path.join(destPath, configs.resource.dest);
 
     // private
     configs._mainFiles = {};

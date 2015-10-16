@@ -32,7 +32,7 @@ var fse = require('fs-extra');
  * @param filter
  */
 var createURL = function (file, code, configs, meta, filter) {
-    var dest = meta.type === 'css' ? configs.destCSSDirname : configs.destResDirname;
+    var dest = meta.type === 'css' ? configs.destCSSDirname : configs.destResourceDirname;
     var destFile = '';
 
     // 直接复制
