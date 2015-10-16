@@ -2,7 +2,7 @@
 
 
 module.exports = function (coolie) {
-    coolie.config = {
+    coolie.config({
         "js": {
             "main": [
                 //"./static/js/app/**.js"
@@ -45,8 +45,8 @@ module.exports = function (coolie) {
         },
 
         hookReplaceHTMLResource: function (file, tag) {
-            console.log(file);
-            console.log(tag);
+            var href = coolie.htmlAttr.get(tag, 'href');
+            coolie.copy(file);
         }
-    };
+    });
 };

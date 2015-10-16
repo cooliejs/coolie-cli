@@ -57,15 +57,20 @@ module.exports = function (srcPath) {
     var config = {};
     var check = {};
     var coolie = {
+        config: function (_config) {
+            config = _config;
+        },
         htmlAttr: require('./html-attr.js'),
-        copy: require('./copy.js')
+        copy: require('./copy.js'),
+        pathURI: require('./path-uri.js')
     };
+
+    global.coolie = coolie;
 
     // 检查文件
     check.file = function () {
         if (typeis.file(coolieJSFile)) {
             require(coolieJSFile)(coolie);
-            config = coolie.config;
         } else {
             if (!typeis.file(coolieJSONFile)) {
                 log("coolie.json", pathURI.toSystemPath(coolieJSONFile) + '\nis NOT a file', "error");
