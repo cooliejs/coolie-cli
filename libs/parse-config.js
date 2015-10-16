@@ -41,6 +41,9 @@ var coolieFn = function () {
         }
     };
 };
+var noop = function () {
+    // ignore
+};
 
 
 /**
@@ -383,6 +386,16 @@ module.exports = function (srcPath) {
     };
 
 
+    // 检查 hook
+    check.hook = function () {
+          dato.extend({
+              hookReplaceHTML: noop,
+              hookReplaceHTMLResource: noop,
+              hookReplaceCSSResource: noop
+          }, config);
+    };
+
+
     check.file();
     check.js();
     check.html();
@@ -390,6 +403,7 @@ module.exports = function (srcPath) {
     check.resource();
     check.dest();
     check.copy();
+    check.hook();
 
     return config;
 };

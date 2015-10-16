@@ -42,12 +42,8 @@ module.exports = function (coolie) {
             "versionLength": 8
         },
 
-        // 挂载构建模块
-        hookModule:  function (module) {
-            //console.log(module);
-        },
         // 挂载构建 HTML
-        hookHTML: function (html) {
+        hookReaplceHTML: function (html) {
 
         }
     };

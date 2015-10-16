@@ -58,10 +58,10 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
     // 是否为入口模块
     var isMain = mainFile === moduleFile;
 
-    configs.hookModule(dato.extend({
-        main: mainFile,
-        file: moduleFile
-    }, meta));
+    //configs.hookBuildModule(dato.extend({
+    //    main: mainFile,
+    //    file: moduleFile
+    //}, meta));
 
     howdo
         // 1. 读取文件内容
