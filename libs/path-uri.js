@@ -82,13 +82,13 @@ exports.isRelativeRoot = function (p) {
 
 
 /**
- * 路径转成实际文件地址
+ * 路径转成绝对路径
  * @param p
  * @param parentFile
  * @param rootDirname
  * @returns {string}
  */
-exports.toFile = function (p, parentFile, rootDirname) {
+exports.toAbsolute = function (p, parentFile, rootDirname) {
     p = path.toSystem(p);
     rootDirname = path.toSystem(rootDirname);
 

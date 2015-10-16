@@ -44,18 +44,25 @@ module.exports = function (coolie) {
         hookReaplceHTML: function (file, code) {
         },
 
+        // 挂载替换 html 资源
         hookReplaceHTMLResource: function (file, tag, tagName) {
-            if (tagName !== 'link') {
+            if (tagName !== 'img') {
                 return;
             }
 
-            var href = coolie.htmlAttr.get(tag, 'href');
-            var toFile = coolie.copy(file, {
-                version: true
+            var dataOriginal = coolie.htmlAttr.get(tag, 'data-original');
+
+            if (!dataOriginal || dataOriginal === true) {
+                return tag;
+            }
+
+            var dataOriginalFile = coolie.pathURI.toAbsolute(dataOriginal, file, coolie.configs.srcDirname);
+            var toFile = coolie.copy(dataOriginalFile, {
+                version: true,
+                dest: coolie.configs.destResourceDirname
             });
             var toURI = coolie.pathURI.toRootURL(toFile, coolie.configs.destDirname);
-
-            return coolie.htmlAttr.set(tag, 'href', toURI);
+            return coolie.htmlAttr.set(tag, 'data-original', toURI);
         }
     });
 };
