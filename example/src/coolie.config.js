@@ -14,10 +14,7 @@ module.exports = function (coolie) {
                     "./static/js/libs1/**"
                 ],
                 "./static/js/libs2/**"
-            ],
-            hook: function (meta) {
-                console.log(meta);
-            }
+            ]
         },
         "html": {
             "src": [
@@ -43,6 +40,15 @@ module.exports = function (coolie) {
             "dirname": "../dest/",
             "host": "",
             "versionLength": 8
+        },
+
+        // 挂载构建模块
+        hookModule:  function (module) {
+            //console.log(module);
+        },
+        // 挂载构建 HTML
+        hookHTML: function (html) {
+
         }
-    }
+    };
 };

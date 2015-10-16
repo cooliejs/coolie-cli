@@ -58,7 +58,7 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
     // 是否为入口模块
     var isMain = mainFile === moduleFile;
 
-    configs.js.hook(dato.extend({
+    configs.hookModule(dato.extend({
         main: mainFile,
         file: moduleFile
     }, meta));
