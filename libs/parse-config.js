@@ -23,7 +23,9 @@ var coolieFn = function () {
         config: function (cnf) {
             cnf = cnf || {};
 
-            config.base = cnf.base || './';
+            config.base = cnf.base || '';
+            config.version = cnf.version || '';
+            config.host = cnf.host || '';
 
             return coolie;
         },
@@ -46,28 +48,22 @@ var coolieFn = function () {
  * @returns {Object}
  */
 module.exports = function (srcPath) {
-    var coolieJSFile = path.join(srcPath, "./coolie.js");
-    var coolieJSONFile = path.join(srcPath, "./coolie.json");
-    var config = {};
+    var file = path.join(srcPath, "./coolie.json");
+    var config = '';
     var check = {};
 
     // 检查文件
     check.file = function () {
-        if (typeis.file(coolieJSFile)) {
-            config = require(coolieJSFile);
-            return false;
-        }
-
-        if (!typeis.file(coolieJSONFile)) {
-            log("coolie.json", pathURI.toSystemPath(coolieJSONFile) + '\nis NOT a file', "error");
+        if (!typeis.file(file)) {
+            log("coolie.json", pathURI.toSystemPath(file) + '\nis NOT a file', "error");
             process.exit(1);
         }
 
         try {
-            var configCode = fs.readFileSync(coolieJSONFile, 'utf8');
+            config = fs.readFileSync(file, 'utf8');
 
             try {
-                config = JSON.parse(configCode);
+                config = JSON.parse(config);
             } catch (err) {
                 log("parse coolie.json", "`coolie.json` parse error", "error");
                 log("parse coolie.json", err.message, "error");
@@ -195,7 +191,7 @@ module.exports = function (srcPath) {
             basePath = coolieConfig.base;
             //basePath = path.join(path.dirname(config.js['coolie.js']), coolieConfig.base);
         } catch (err) {
-            log("parse config", pathURI.toSystemPath(coolieJSONFile), "error");
+            log("parse config", pathURI.toSystemPath(file), "error");
             log("parse config", err.message, "error");
             process.exit(1);
         }
@@ -205,7 +201,7 @@ module.exports = function (srcPath) {
         try {
             basePath = path.join(coolieConfigJSDir, basePath);
         } catch (err) {
-            log("parse config", pathURI.toSystemPath(coolieJSONFile), "error");
+            log("parse config", pathURI.toSystemPath(file), "error");
             log("parse config", err.message, "error");
             process.exit(1);
         }
@@ -379,14 +375,13 @@ module.exports = function (srcPath) {
     };
 
 
-    if (check.file() !== false) {
-        check.js();
-        check.html();
-        check.css();
-        check.resource();
-        check.dest();
-        check.copy();
-    }
+    check.file();
+    check.js();
+    check.html();
+    check.css();
+    check.resource();
+    check.dest();
+    check.copy();
 
     return config;
 };

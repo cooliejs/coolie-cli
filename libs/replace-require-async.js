@@ -60,7 +60,7 @@ module.exports = function (file, code) {
             process.exit(1);
         }
 
-        code = code.replace(reg, requireVar + ".async(\"" + depName2IdMap[depName] + "\")");
+        code = code.replace(reg, requireVar + ".async(\"" + depName2IdMap[depName] + "\"");
     });
 
     return code;
@@ -87,8 +87,6 @@ function _getRequireVar(str) {
 function _buildReg(requireVar, dep) {
     dep = string.escapeRegExp(dep);
 
-    // require("...");
-    // require("...", "...");
-    return new RegExp("\\b" + string.escapeRegExp(requireVar) + "\\.async\\(['\"]" + dep + "['\"]" +
-        "(?:\\s*?,\\s*?['\"][^'\"]*?['\"])?\\)", 'g');
+    // require.async("..."
+    return new RegExp("\\b" + string.escapeRegExp(requireVar) + "\\.async\\(['\"]" + dep + "['\"]", 'g');
 }

@@ -31,6 +31,20 @@ var FAVICON_RELS = [
 
 
 /**
+ * 解析为 URI
+ * @param fileUris
+ * @returns {*|Array}
+ */
+var parsePathURIs = function (fileUris) {
+    fileUris = fileUris || [];
+
+    return fileUris.map(function (uri) {
+        return path.toURI(uri);
+    });
+};
+
+
+/**
  * 提取 CSS 依赖并合并依赖
  * @param file {String} HTML 文件路径
  * @param code {String} HTML 文件内容
@@ -53,7 +67,7 @@ module.exports = function (file, code) {
         code = code.replace(REG_COOLIE, ret.replace);
 
         if (ret.type === 'css') {
-            depCSS[ret.url] = ret.deps;
+            depCSS[ret.url] = parsePathURIs(ret.urls);
         } else {
             depJS[ret.url] = ret.urls;
         }

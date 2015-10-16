@@ -68,6 +68,6 @@ function _buildReg(requireVar, dep) {
 
     // require("...");
     // require("...", "...");
-    return new RegExp("\\b" + string.escapeRegExp(requireVar) + "\\(['\"]" + dep + "['\"]" +
+    return new RegExp(string.escapeRegExp(requireVar) + "\\(['\"]" + dep + "['\"]" +
         "(?:\\s*?,\\s*?['\"][^'\"]*?['\"])?\\)", 'g');
 }

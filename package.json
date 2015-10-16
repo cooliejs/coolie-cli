@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.23.0",
+  "version": "0.23.5",
   "description": "The front-end development builder.",
   "preferGlobal": true,
   "bin": {
@@ -27,7 +27,8 @@
     "node",
     "browerify",
     "webpack",
-    "fis"
+    "fis",
+    "async"
   ],
   "author": {
     "name": "cloudcome",
@@ -57,5 +58,28 @@
     "open": "0.0.5",
     "uglify-js": "^2.4.23",
     "ydr-utils": "^22.43.3"
-  }
+  },
+  "gitHead": "cafbb7d49d7a1407b2d321530e8075fb02fe202c",
+  "_id": "coolie@0.23.5",
+  "scripts": {},
+  "_shasum": "6697b469195c5454d8a29c714274e3d7976badc7",
+  "_from": "coolie@*",
+  "_npmVersion": "2.7.4",
+  "_nodeVersion": "0.12.2",
+  "_npmUser": {
+    "name": "cloudcome",
+    "email": "cloudcome@163.com"
+  },
+  "dist": {
+    "shasum": "6697b469195c5454d8a29c714274e3d7976badc7",
+    "tarball": "http://registry.npmjs.org/coolie/-/coolie-0.23.5.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "cloudcome",
+      "email": "cloudcome@163.com"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/coolie/-/coolie-0.23.5.tgz"
 }
