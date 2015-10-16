@@ -16,18 +16,8 @@ var htmlminify = require('./htmlminify.js');
 var replaceHTMLResource = require('./replace-html-resource.js');
 var concat = require('./concat.js');
 var copy = require('./copy.js');
-var REG_LINK = /<link\b[^>]*?\bhref\b\s*?=\s*?['"](.*?)['"][^>]*?>/gi;
 var REG_SCRIPT = /<script[^>]*?>[\s\S]*?<\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/i;
-var FAVICON_RELS = [
-    'apple-touch-icon',
-    'apple-touch-icon-precomposed',
-    'apple-touch-startup-image',
-    'icon',
-    'shortcut icon',
-    'og:image',
-    'msapplication-TileImage'
-];
 
 
 /**
@@ -73,27 +63,28 @@ module.exports = function (file, code) {
         }
     }
 
-    code = code.replace(REG_LINK, function ($0) {
-        var rel = htmlAttr.get($0, 'rel');
-        var type = htmlAttr.get($0, 'type');
-        var href = htmlAttr.get($0, 'href');
-        var find = false;
-
-        console.log($0);
-
-        dato.each(FAVICON_RELS, function (index, _rel) {
-            if (rel === _rel) {
-                find = true;
-                return false;
-            }
-        });
-
-        if (find) {
-            return replaceHTMLResource(file, $0, 'href');
-        }
-
-        return $0;
-    });
+    //// replace link
+    //code = code.replace(REG_LINK, function ($0) {
+    //    var rel = htmlAttr.get($0, 'rel');
+    //    var type = htmlAttr.get($0, 'type');
+    //    var href = htmlAttr.get($0, 'href');
+    //    var find = false;
+    //
+    //    console.log($0);
+    //
+    //    dato.each(FAVICON_RELS, function (index, _rel) {
+    //        if (rel === _rel) {
+    //            find = true;
+    //            return false;
+    //        }
+    //    });
+    //
+    //    if (find) {
+    //        return replaceHTMLResource(file, $0, 'href');
+    //    }
+    //
+    //    return $0;
+    //});
 
     // 对 <script> 进行解析并且替换。
     code = code.replace(REG_SCRIPT, function ($0, $1, $2, $3) {

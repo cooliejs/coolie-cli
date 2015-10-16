@@ -9,24 +9,36 @@
 
 var fs = require('fs-extra');
 var path = require('ydr-utils').path;
+var string = require('ydr-utils').string;
+var dato = require('ydr-utils').dato;
+
 var htmlAttr = require('./html-attr.js');
 var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
 var copy = require('./copy.js');
+
 var coolieIgnore = 'coolieignore';
+var linkRelList = [
+    /apple-touch-icon/,
+    /apple-touch-icon-precomposed/,
+    /apple-touch-startup-image/,
+    /icon/,
+    /og:image/,
+    /msapplication-TileImage/
+];
 var regList = [{
-    reg: /<(:?embed|audio|video|source)\b[\s\S]*?>/gi,
-    attrs: ['src']
+    reg: /<(link)\b[\s\S]*?>/gi,
+    replaceAttrs: ['href']
 }, {
-    reg: /<(:?object)\b[\s\S]*?>/gi,
-    attrs: ['data']
+    reg: /<(embed|audio|video|source|img)\b[\s\S]*?>/gi,
+    replaceAttrs: ['src']
 }, {
-    reg: /<(:?source)\b[\s\S]*?>/gi,
-    attrs: ['srcset']
+    reg: /<(object)\b[\s\S]*?>/gi,
+    replaceAttrs: ['data']
 }, {
-    reg: /<(:?img)\b[\s\S]*?>/gi,
-    attrs: ['src', 'data-original']
+    reg: /<(source)\b[\s\S]*?>/gi,
+    replaceAttrs: ['srcset']
 }];
 
 
@@ -40,12 +52,30 @@ module.exports = function (file, code) {
     var configs = global.configs;
 
     regList.forEach(function (item) {
-        code = code.replace(item.reg, function (tag) {
+        code = code.replace(item.reg, function (tag, tagName) {
+            var find = true;
+
+            switch (tagName) {
+                case 'link':
+                    find = false;
+                    var linkRel = htmlAttr.get(tag, 'rel');
+
+                    dato.each(linkRelList, function (index, regRel) {
+                        find = regRel.test(linkRel);
+                        return !find;
+                    });
+                    break;
+            }
+
+            if (!find) {
+                return tag;
+            }
+
             if (htmlAttr.get(tag, coolieIgnore)) {
                 return htmlAttr.remove(tag, coolieIgnore);
             }
 
-            item.attrs.forEach(function (attr) {
+            item.replaceAttrs.forEach(function (attr) {
                 var value = htmlAttr.get(tag, attr);
 
                 // 属性值为空
