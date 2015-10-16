@@ -82,6 +82,29 @@ exports.isRelativeRoot = function (p) {
 
 
 /**
+ * 路径转成实际文件地址
+ * @param p
+ * @param parentFile
+ * @param rootDirname
+ * @returns {string}
+ */
+exports.toFile = function (p, parentFile, rootDirname) {
+    p = path.toSystem(p);
+    rootDirname = path.toSystem(rootDirname);
+
+    // 相对文件
+    if (exports.isRelativeFile(p)) {
+        var parentDirname = path.dirname(parentFile);
+        parentDirname = path.toSystem(parentDirname);
+        return path.join(parentDirname, p);
+    }
+
+    // 绝对文件
+    return path.join(rootDirname, p);
+};
+
+
+/**
  * 判断路径后缀是否为图片
  * @param extname
  * @returns {boolean}

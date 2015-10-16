@@ -44,12 +44,18 @@ module.exports = function (coolie) {
         hookReaplceHTML: function (file, code) {
         },
 
-        hookReplaceHTMLResource: function (file, tag) {
+        hookReplaceHTMLResource: function (file, tag, tagName) {
+            if (tagName !== 'link') {
+                return;
+            }
+
             var href = coolie.htmlAttr.get(tag, 'href');
             var toFile = coolie.copy(file, {
                 version: true
             });
-            var toURI = coolie.pathURI.
+            var toURI = coolie.pathURI.toRootURL(toFile, coolie.configs.destDirname);
+
+            return coolie.htmlAttr.set(tag, 'href', toURI);
         }
     });
 };
