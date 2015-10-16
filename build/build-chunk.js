@@ -52,7 +52,7 @@ module.exports = function (versionMap, callback) {
                 process.exit(1);
             }
 
-            log('√', pathURI.toRootURL(destFile), 'success');
+            log('√', pathURI.toRootURL(destFile, configs.srcDirname), 'success');
             done();
         });
     }).together(callback);

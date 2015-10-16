@@ -32,13 +32,12 @@ exports.toSystemPath = function (p) {
 
 /**
  * 转换为根 uri
- * @param p
+ * @param p {String} 路径
+ * @param root {String} 根目录
  * @returns {String}
  */
-exports.toRootURL = function (p) {
-    var configs = global.configs;
-
-    return '/' + exports.relative(configs.srcDirname, exports.toURIPath(p));
+exports.toRootURL = function (p, root) {
+    return '/' + exports.relative(root, exports.toURIPath(p));
 };
 
 

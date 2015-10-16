@@ -93,7 +93,7 @@ module.exports = function (mainFile, callback) {
             }
 
             if (depsLength === bufferList.length) {
-                log("√", pathURI.toRootURL(mainFile), "success");
+                log("√", pathURI.toRootURL(mainFile, configs.srcDirname), "success");
                 delete(depsCache[mainFile]);
                 callback(null, {
                     bufferList: bufferList,

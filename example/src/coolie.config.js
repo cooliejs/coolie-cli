@@ -46,7 +46,10 @@ module.exports = function (coolie) {
 
         hookReplaceHTMLResource: function (file, tag) {
             var href = coolie.htmlAttr.get(tag, 'href');
-            coolie.copy(file);
+            var toFile = coolie.copy(file, {
+                version: true
+            });
+            var toURI = coolie.pathURI.
         }
     });
 };
