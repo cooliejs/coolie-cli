@@ -109,7 +109,7 @@ module.exports = function (mainFile, callback) {
     _deepBuld({
         name: mainName,
         type: 'js',
-        pipeline: 'js'
+        main: true
     }, mainFile);
 };
 

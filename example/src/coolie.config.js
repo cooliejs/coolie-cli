@@ -15,15 +15,18 @@ module.exports = function (coolie) {
                 ],
                 "./static/js/libs2/**"
             ],
-            hook: function (file) {
-                console.log(file);
+            hook: function (meta) {
+                console.log(meta);
             }
         },
         "html": {
             "src": [
                 "./html/**"
             ],
-            "minify": true
+            "minify": true,
+            hook: function (meta) {
+
+            }
         },
         "css": {
             "dest": "./static/css/",

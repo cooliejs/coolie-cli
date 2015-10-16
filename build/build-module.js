@@ -31,7 +31,9 @@ var copy = require('../libs/copy.js');
  * @param meta {Object} 模块属性
  * @param meta.name {String} 名称
  * @param meta.type {String} 类型
- * @param meta.pipeline {String} 管道
+ * @param meta.id {String} 模块ID
+ * @param meta.gid {String} 全局ID
+ * @param meta.chunk {Boolean} 是否为分块模块
  * @param moduleFile {String} 文件路径
  * @param callback {Function} 回调，返回包括
  * @arguments[0].code 压缩替换后的代码
@@ -54,6 +56,11 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
     var configs = global.configs;
     // 是否为入口模块
     var isMain = mainFile === moduleFile;
+
+    configs.js.hook(dato.extend({
+        main: mainFile,
+        file: moduleFile
+    }, meta));
 
     howdo
         // 1. 读取文件内容
