@@ -90,8 +90,6 @@ module.exports = function (srcPath) {
     configs._chunkList = {};
     configs._mainMap = {};
 
-    return console.log(JSON.stringify(configs, null, 4));
-
     configs.js.chunk.forEach(function (chunk, index) {
         var chunkList = chunk;
 

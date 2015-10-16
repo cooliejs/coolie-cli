@@ -14,7 +14,10 @@ module.exports = function (coolie) {
                     "./static/js/libs1/**"
                 ],
                 "./static/js/libs2/**"
-            ]
+            ],
+            hook: function (file) {
+                console.log(file);
+            }
         },
         "html": {
             "src": [
