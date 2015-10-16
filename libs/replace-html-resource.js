@@ -96,7 +96,7 @@ module.exports = function (file, code) {
                 }
 
                 var isRelativeToFile = pathURI.isRelativeFile(pathRet.path);
-                var absDir = isRelativeToFile ? path.dirname(file) : configs._srcPath;
+                var absDir = isRelativeToFile ? path.dirname(file) : configs.srcDirname;
                 var absFile;
 
                 try {

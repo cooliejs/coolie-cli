@@ -50,9 +50,9 @@ module.exports = function (file, cssCode, destCSSFile) {
                 return all;
             }
 
-            var absDir = pathURI.isRelativeFile(pathRet.path) ? path.dirname(file) : configs._srcPath;
+            var absDir = pathURI.isRelativeFile(pathRet.path) ? path.dirname(file) : configs.srcDirname;
             var absFile = path.join(absDir, pathRet.path);
-            copyFiles.push(path.relative(configs._srcPath, absFile));
+            copyFiles.push(path.relative(configs.srcDirname, absFile));
             var destFile = copy(absFile, {
                 dest: configs._resDestPath,
                 version: true,

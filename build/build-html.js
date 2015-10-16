@@ -21,7 +21,7 @@ var pathURI = require('../libs/path-uri.js');
  */
 module.exports = function (file, callback) {
     var configs = global.configs;
-    var srcPath = configs._srcPath;
+    var srcPath = configs.srcDirname;
     var destPath = configs._destPath;
 
     fs.readFile(file, 'utf8', function (err, code) {

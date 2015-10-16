@@ -42,7 +42,7 @@ var parsePathURIs = function (fileUris) {
  */
 module.exports = function (file, code) {
     var configs = global.configs;
-    var srcPath = configs._srcPath;
+    var srcPath = configs.srcDirname;
     var jsBase = configs._jsBase;
     var mainJS = '';
     var depCSS = {};

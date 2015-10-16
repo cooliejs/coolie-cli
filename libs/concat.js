@@ -57,7 +57,7 @@ module.exports = function (file, html) {
         var matchFile;
 
         if (pathURI.isRelativeRoot(source)) {
-            matchFile = path.join(configs._srcPath, source);
+            matchFile = path.join(configs.srcDirname, source);
         } else {
             matchFile = path.join(fileDirname, source);
         }
@@ -72,7 +72,7 @@ module.exports = function (file, html) {
 
     var srcName = encryption.md5(md5List).slice(0, configs.dest.versionLength) + '.' + type;
     var srcPath = path.join(type === 'css' ? configs._cssPath : configs._jsPath, srcName);
-    var srcRelative = pathURI.relative(configs._srcPath, srcPath);
+    var srcRelative = pathURI.relative(configs.srcDirname, srcPath);
     var url = pathURI.toURIPath(srcRelative);
     var destPath = path.join(configs._destPath, srcRelative);
     var bufferList = [];
@@ -90,7 +90,7 @@ module.exports = function (file, html) {
             process.exit(1);
         }
 
-        var relative = pathURI.relative(configs._srcPath, f);
+        var relative = pathURI.relative(configs.srcDirname, f);
         var uri = pathURI.toURIPath(relative);
 
         urls.push(uri);

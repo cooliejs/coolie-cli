@@ -47,11 +47,11 @@ module.exports = function (fromFile, options) {
     options = dato.extend({}, defaults, options);
 
     var configs = global.configs;
-    var fromTo = pathURI.relative(configs._srcPath, fromFile);
+    var fromTo = pathURI.relative(configs.srcDirname, fromFile);
 
     if (REG_POINT.test(fromTo)) {
         if (pathURI.isRelativeRoot(fromFile)) {
-            fromFile = path.join(configs._srcPath, fromFile);
+            fromFile = path.join(configs.srcDirname, fromFile);
         } else if (pathURI.isRelativeFile(fromFile) && options.srcFile) {
             fromFile = path.join(path.dirname(options.srcFile), fromFile);
         } else if (options.dest) {
@@ -78,7 +78,7 @@ module.exports = function (fromFile, options) {
         return toFile;
     }
 
-    var releativeTo = pathURI.relative(configs._srcPath, fromFile);
+    var releativeTo = pathURI.relative(configs.srcDirname, fromFile);
 
     if (options.version) {
         var version = encryption.etag(fromFile).slice(0, configs.dest.versionLength);

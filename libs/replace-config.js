@@ -51,7 +51,7 @@ var coolieFn = function () {
  */
 module.exports = function (code, versionMap) {
     var configs = global.configs;
-    var srcPath = configs._srcPath;
+    var srcPath = configs.srcDirname;
     var coolieConfigJSPath = configs._coolieConfigJSPath;
     var coolieString = coolieFn.toString()
         .replace(REG_FUNCTION_START, '')

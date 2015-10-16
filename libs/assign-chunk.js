@@ -73,7 +73,7 @@ module.exports = function (versionMap, callback) {
 
         if (mainInfo.async) {
             srcName = path.join(configs._asyncDirname, mainInfo.gid + '.js');
-            srcName = path.relative(configs._srcPath, srcName);
+            srcName = path.relative(configs.srcDirname, srcName);
         }
 
         main.destName = pathURI.replaceVersion(srcName, version);

@@ -38,7 +38,7 @@ exports.toSystemPath = function (p) {
 exports.toRootURL = function (p) {
     var configs = global.configs;
 
-    return '/' + exports.relative(configs._srcPath, exports.toURIPath(p));
+    return '/' + exports.relative(configs.srcDirname, exports.toURIPath(p));
 };
 
 

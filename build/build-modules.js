@@ -55,7 +55,7 @@ module.exports = function (srcPath) {
     var cssPath = path.join(srcPath, configs.css.dest);
     var coolieConfigJSPath = configs._noCoolieJS ? null : path.join(srcPath, configs.js['coolie-config.js']);
 
-    configs._srcPath = srcPath;
+    configs.srcDirname = srcPath;
     configs._destPath = destPath;
     configs._jsPath = jsPath;
     configs._mainFiles = {};
@@ -337,13 +337,13 @@ module.exports = function (srcPath) {
                     buildHTML(file, function (err, depCSS, depJS, mainJS) {
                         var htmlRelative = pathURI.relative(srcPath, file);
                         var url = pathURI.toURIPath(htmlRelative);
-                        var mainFile = path.join(configs._srcPath, mainJS);
+                        var mainFile = path.join(configs.srcDirname, mainJS);
                         var async = {};
 
                         if (configs._mainFiles[mainFile] && !configs._mainFiles[mainFile].async) {
                             configs._mainFiles[mainFile].asyncList.forEach(function (asyncInfo) {
                                 var file = asyncInfo.id;
-                                var relative = path.relative(configs._srcPath, file);
+                                var relative = path.relative(configs.srcDirname, file);
                                 var name = path.toURI(relative);
 
                                 async[name] = asyncRelationshipMap[file];
