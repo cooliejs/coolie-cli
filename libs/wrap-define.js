@@ -32,7 +32,7 @@ var fse = require('fs-extra');
  * @param filter
  */
 var createURL = function (file, code, configs, meta, filter) {
-    var dest = meta.type === 'css' ? configs._cssDestPath : configs._resDestPath;
+    var dest = meta.type === 'css' ? configs.destCSSDirname : configs._resDestPath;
     var destFile = '';
 
     // 直接复制
@@ -46,7 +46,7 @@ var createURL = function (file, code, configs, meta, filter) {
         var extname = path.extname(file);
         var version = encryption.etag(file).slice(0, configs.dest.versionLength);
 
-        destFile = path.join(configs._cssDestPath, version + extname);
+        destFile = path.join(configs.destCSSDirname, version + extname);
 
         if (code !== null && typeis.function(filter)) {
             code = filter(destFile);
