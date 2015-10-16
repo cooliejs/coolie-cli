@@ -21,10 +21,7 @@ module.exports = function (coolie) {
                 //"./html/**"
                 "./html/replace.html"
             ],
-            "minify": true,
-            hook: function (meta) {
-
-            }
+            "minify": true
         },
         "css": {
             "dest": "./static/css/",
@@ -45,9 +42,11 @@ module.exports = function (coolie) {
 
         // 挂载构建 HTML
         hookReaplceHTML: function (file, code) {
-            console.log('==============================================');
+        },
+
+        hookReplaceHTMLResource: function (file, tag) {
             console.log(file);
-            console.log(code);
+            console.log(tag);
         }
     };
 };

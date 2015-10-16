@@ -75,6 +75,12 @@ module.exports = function (file, code) {
                 return htmlAttr.remove(tag, coolieIgnore);
             }
 
+            var hookRet = configs.hookReplaceHTMLResource(file, tag);
+
+            if (hookRet) {
+                return tag = hookRet;
+            }
+
             item.replaceAttrs.forEach(function (attr) {
                 var value = htmlAttr.get(tag, attr);
 
