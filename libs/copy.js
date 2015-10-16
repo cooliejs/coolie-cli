@@ -16,7 +16,7 @@ var path = require('ydr-utils').path;
 var fse = require('fs-extra');
 var REG_POINT = path.sep === '/' ? /^\.{1,2}\// : /^\.{1,2}\\/;
 var defaults = {
-    // 原始文件
+    // 所在的原始文件
     srcFile: '',
     // 原始代码片段
     srcCode: '',

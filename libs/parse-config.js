@@ -56,7 +56,10 @@ module.exports = function (srcPath) {
     var coolieJSONFile = path.join(srcPath, "./coolie.json");
     var config = {};
     var check = {};
-    var coolie = {};
+    var coolie = {
+        htmlAttr: require('./html-attr.js'),
+        copy: require('./copy.js')
+    };
 
     // 检查文件
     check.file = function () {
