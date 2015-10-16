@@ -2,10 +2,10 @@
 
 
 module.exports = function (coolie) {
-    coolie.config({
+    coolie.config = {
         "js": {
             "main": [
-                "./static/js/app/async.js"
+                "./static/js/app/**.js"
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
@@ -38,9 +38,5 @@ module.exports = function (coolie) {
             "host": "",
             "versionLength": 8
         }
-    });
-
-    coolie.main = function () {
-
-    };
+    }
 };

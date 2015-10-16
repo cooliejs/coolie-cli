@@ -42,21 +42,24 @@ var coolieFn = function () {
     };
 };
 
+
 /**
  * 解析 config
  * @param srcPath 起始目录
  * @returns {Object}
  */
 module.exports = function (srcPath) {
-    var coolieJSFile = path.join(srcPath, "./coolie.js");
+    var coolieJSFile = path.join(srcPath, "./coolie.config.js");
     var coolieJSONFile = path.join(srcPath, "./coolie.json");
     var config = {};
     var check = {};
+    var coolie = {};
 
     // 检查文件
     check.file = function () {
         if (typeis.file(coolieJSFile)) {
-            config = require(coolieJSFile).config;
+            require(coolieJSFile)(coolie);
+            config = coolie.config;
         } else {
             if (!typeis.file(coolieJSONFile)) {
                 log("coolie.json", pathURI.toSystemPath(coolieJSONFile) + '\nis NOT a file', "error");
