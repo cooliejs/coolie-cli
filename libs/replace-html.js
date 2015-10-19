@@ -155,7 +155,7 @@ module.exports = function (file, code) {
         code: code
     });
 
-    if (ret) {
+    if (hookRet) {
         code = hookRet;
     }
 

@@ -42,10 +42,12 @@ module.exports = function (coolie) {
         }
     });
 
+    // 挂载：替换 HTML
     coolie.hook.replaceHTML(function (file, meta) {
         var code = meta.code;
         var REG_INCLUDE = /\{\{include (.*?)}}/g;
 
+        // 正则匹配 {{include *}} 标记并替换
         code = code.replace(REG_INCLUDE, function (input, inludeName) {
             var includeFile = coolie.pathURI.join(coolie.configs.srcDirname, 'html', inludeName);
             var includeCode = '';
@@ -59,9 +61,12 @@ module.exports = function (coolie) {
             return includeCode;
         });
 
+        // 返回处理后的代码
         return code;
     });
 
+
+    // 挂载：替换 HTML 内的资源
     coolie.hook.replaceHTMLResource(function (file, meta) {
         var code = meta.code;
         var tagName = meta.tagName;
@@ -70,19 +75,25 @@ module.exports = function (coolie) {
             return;
         }
 
+        // 读取 data-original 属性
         var dataOriginal = coolie.htmlAttr.get(code, 'data-original');
 
+        // 属性不为空或者属性为 true
         if (!dataOriginal || dataOriginal === true) {
             return code;
         }
 
+        // 转换为绝对文件地址
         var dataOriginalFile = coolie.pathURI.toAbsolute(dataOriginal, file);
+        // 复制文件
         var toFile = coolie.copy(dataOriginalFile, {
             version: true,
             dest: coolie.configs.destResourceDirname
         });
+        // 替换的 URI
         var toURI = coolie.pathURI.toRootURL(toFile, coolie.configs.destDirname);
 
+        // 重设 data-original 属性值
         return coolie.htmlAttr.set(code, 'data-original', toURI);
     });
 };
