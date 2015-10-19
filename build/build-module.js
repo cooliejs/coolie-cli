@@ -54,7 +54,6 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
     var depName2IdMap = {};
     // 单独的文件，没有依赖
     var isSingle = type !== 'js';
-    var coolie = global.coolie;
     var configs = global.configs;
     // 是否为入口模块
     var isMain = mainFile === moduleFile;
