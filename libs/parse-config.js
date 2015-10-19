@@ -41,9 +41,6 @@ var coolieFn = function () {
         }
     };
 };
-var noop = function () {
-    // ignore
-};
 
 
 /**
@@ -56,6 +53,13 @@ module.exports = function (srcPath) {
     var coolieJSONFile = path.join(srcPath, "./coolie.json");
     var config = {};
     var check = {};
+    var pushHook = function (type) {
+        return function (callback) {
+            if (typeis.function(callback)) {
+                config[type + 'Callbacks'].push(callback);
+            }
+        };
+    };
     var coolie = {
         config: function (_config) {
             config = _config;
@@ -63,14 +67,12 @@ module.exports = function (srcPath) {
         htmlAttr: require('./html-attr.js'),
         copy: require('./copy.js'),
         pathURI: require('./path-uri.js'),
-        hookReplaceHTMLResource: function () {
-
-        }
-    };
-    var pushHook = function (type) {
-        config.hookReplaceHTMLCallbacks = config.hookReplaceHTMLCallbacks || [];
-        return function (callback) {
-        };
+        hookReplaceHTMLCallbacks: [],
+        hookReplaceHTMLResourceCallbacks: [],
+        hookReplaceCSSResourceCallbacks: [],
+        hookReplaceHTML: pushHook('hookReplaceHTML'),
+        hookReplaceHTMLResource: pushHook('hookReplaceHTMLResource'),
+        hookReplaceCSSResource: pushHook('hookReplaceCSSResource')
     };
 
     global.coolie = coolie;
