@@ -41,15 +41,18 @@ module.exports = function (coolie) {
         }
     });
 
-    coolie.hookReplaceHTMLResource(function (file, tag, tagName) {
+    coolie.hookReplaceHTMLResource(function (file, meta) {
+        var code = meta.code;
+        var tagName = meta.tagName;
+
         if (tagName !== 'img') {
             return;
         }
 
-        var dataOriginal = coolie.htmlAttr.get(tag, 'data-original');
+        var dataOriginal = coolie.htmlAttr.get(code, 'data-original');
 
         if (!dataOriginal || dataOriginal === true) {
-            return tag;
+            return code;
         }
 
         var dataOriginalFile = coolie.pathURI.toAbsolute(dataOriginal, file);
@@ -58,6 +61,7 @@ module.exports = function (coolie) {
             dest: coolie.configs.destResourceDirname
         });
         var toURI = coolie.pathURI.toRootURL(toFile, coolie.configs.destDirname);
-        return coolie.htmlAttr.set(tag, 'data-original', toURI);
+
+        return coolie.htmlAttr.set(code, 'data-original', toURI);
     });
 };
