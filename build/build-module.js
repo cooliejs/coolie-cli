@@ -23,6 +23,7 @@ var replaceDefine = require('../libs/replace-define.js');
 var wrapDefine = require('../libs/wrap-define.js');
 var globalId = require('../libs/global-id.js');
 var copy = require('../libs/copy.js');
+var hook = require('../libs/hook.js');
 
 
 /**
@@ -53,15 +54,15 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
     var depName2IdMap = {};
     // 单独的文件，没有依赖
     var isSingle = type !== 'js';
-    // 相对目录
+    var coolie = global.coolie;
     var configs = global.configs;
     // 是否为入口模块
     var isMain = mainFile === moduleFile;
 
-    //configs.hookBuildModule(dato.extend({
-    //    main: mainFile,
-    //    file: moduleFile
-    //}, meta));
+    hook.exec('hookBuildModule', moduleFile, dato.extend({
+        main: mainFile,
+        file: moduleFile
+    }, meta));
 
     howdo
         // 1. 读取文件内容

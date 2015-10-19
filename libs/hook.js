@@ -32,13 +32,13 @@ exports.bind = function (type) {
 /**
  * 执行挂载
  * @param type
- * @param args
  * @returns {undefined}
  */
-exports.exec = function (type, args) {
+exports.exec = function (type/*arguments*/) {
     var coolie = global.coolie;
     var list = callbacks[type];
     var ret = undefined;
+    var args = dato.toArray(arguments).slice(1);
 
     list = list || [];
     dato.each(list, function (index, callback) {

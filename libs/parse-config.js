@@ -67,6 +67,7 @@ module.exports = function (srcPath) {
         htmlAttr: require('./html-attr.js'),
         copy: require('./copy.js'),
         pathURI: require('./path-uri.js'),
+        hookBuildModule: hook.bind('hookBuildModule'),
         hookReplaceHTML: hook.bind('hookReplaceHTML'),
         hookReplaceHTMLResource: hook.bind('hookReplaceHTMLResource'),
         hookReplaceCSSResource: hook.bind('hookReplaceCSSResource')
