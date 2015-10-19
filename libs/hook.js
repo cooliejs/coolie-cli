@@ -1,5 +1,5 @@
 /**
- * 挂载
+ * 挂载（外挂）
  * @author ydr.me
  * @create 2015-10-19 14:18
  */
@@ -10,18 +10,42 @@
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 
+var callbacks = {};
+
+
+/**
+ * 注册挂载
+ * @param type
+ * @param callback
+ * @returns {Object}
+ */
+exports.regist = function (type, callback) {
+    callbacks[type] = callbacks[type] || [];
+    callbacks[type].push(callback);
+
+    return exports;
+};
+
+
+/**
+ * 执行挂载
+ * @param type
+ * @param args
+ * @returns {undefined}
+ */
 exports.exec = function (type, args) {
     var coolie = global.coolie;
-    var configs = global.configs;
-    var list = configs['_' + type + 'Callbacks'];
+    var list = callbacks[type];
     var ret = undefined;
 
     list = list || [];
     dato.each(list, function (index, callback) {
         var _ret = callback.apply(coolie, args);
 
+        // 如果返回 false，则终端
         if (_ret === false) {
-            return _ret;
+            ret = _ret;
+            return ret;
         }
 
         if (typeis.undefined(_ret)) {

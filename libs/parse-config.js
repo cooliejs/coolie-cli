@@ -9,10 +9,13 @@
 
 var path = require("path");
 var fs = require("fs-extra");
-var log = require("./log.js");
-var pathURI = require("./path-uri.js");
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
+
+var pathURI = require("./path-uri.js");
+var log = require("./log.js");
+var hook = require("./hook.js");
+
 var coolieConfigJSFile;
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /}$/;
