@@ -60,13 +60,6 @@ module.exports = function (srcPath) {
         _hookReplaceCSSResourceCallbacks: []
     };
     var check = {};
-    var pushHook = function (type) {
-        return function (callback) {
-            if (typeis.function(callback)) {
-                config['_' + type + 'Callbacks'].push(callback);
-            }
-        };
-    };
     var coolie = {
         config: function (_config) {
             config = _config;
@@ -74,9 +67,9 @@ module.exports = function (srcPath) {
         htmlAttr: require('./html-attr.js'),
         copy: require('./copy.js'),
         pathURI: require('./path-uri.js'),
-        hookReplaceHTML: pushHook('hookReplaceHTML'),
-        hookReplaceHTMLResource: pushHook('hookReplaceHTMLResource'),
-        hookReplaceCSSResource: pushHook('hookReplaceCSSResource')
+        hookReplaceHTML: hook.bind('hookReplaceHTML'),
+        hookReplaceHTMLResource: hook.bind('hookReplaceHTMLResource'),
+        hookReplaceCSSResource: hook.bind('hookReplaceCSSResource')
     };
 
     global.coolie = coolie;

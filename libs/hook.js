@@ -16,14 +16,16 @@ var callbacks = {};
 /**
  * 注册挂载
  * @param type
- * @param callback
- * @returns {Object}
+ * @returns {Function}
  */
-exports.regist = function (type, callback) {
-    callbacks[type] = callbacks[type] || [];
-    callbacks[type].push(callback);
+exports.bind = function (type) {
+    return function (callback) {
+        callbacks[type] = callbacks[type] || [];
 
-    return exports;
+        if (typeis.function(callback)) {
+            callbacks[type].push(callback);
+        }
+    };
 };
 
 
