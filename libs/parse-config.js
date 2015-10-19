@@ -51,12 +51,16 @@ var coolieFn = function () {
 module.exports = function (srcPath) {
     var coolieJSFile = path.join(srcPath, "./coolie.config.js");
     var coolieJSONFile = path.join(srcPath, "./coolie.json");
-    var config = {};
+    var config = {
+        _hookReplaceHTMLCallbacks: [],
+        _hookReplaceHTMLResourceCallbacks: [],
+        _hookReplaceCSSResourceCallbacks: []
+    };
     var check = {};
     var pushHook = function (type) {
         return function (callback) {
             if (typeis.function(callback)) {
-                config[type + 'Callbacks'].push(callback);
+                config['_' + type + 'Callbacks'].push(callback);
             }
         };
     };
@@ -67,9 +71,6 @@ module.exports = function (srcPath) {
         htmlAttr: require('./html-attr.js'),
         copy: require('./copy.js'),
         pathURI: require('./path-uri.js'),
-        hookReplaceHTMLCallbacks: [],
-        hookReplaceHTMLResourceCallbacks: [],
-        hookReplaceCSSResourceCallbacks: [],
         hookReplaceHTML: pushHook('hookReplaceHTML'),
         hookReplaceHTMLResource: pushHook('hookReplaceHTMLResource'),
         hookReplaceCSSResource: pushHook('hookReplaceCSSResource')
