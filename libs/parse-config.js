@@ -63,6 +63,14 @@ module.exports = function (srcPath) {
         htmlAttr: require('./html-attr.js'),
         copy: require('./copy.js'),
         pathURI: require('./path-uri.js'),
+        hookReplaceHTMLResource: function () {
+
+        }
+    };
+    var pushHook = function (type) {
+        config.hookReplaceHTMLCallbacks = config.hookReplaceHTMLCallbacks || [];
+        return function (callback) {
+        };
     };
 
     global.coolie = coolie;
@@ -394,14 +402,6 @@ module.exports = function (srcPath) {
     };
 
 
-    // 检查 hook
-    check.hook = function () {
-        config.hookReplaceHTMLCallbacks = [];
-        config.hookReplaceHTMLResourceCallbacks = [];
-        config.hookReplaceCSSResourceCallbacks = [];
-    };
-
-
     check.file();
     check.js();
     check.html();
@@ -409,7 +409,6 @@ module.exports = function (srcPath) {
     check.resource();
     check.dest();
     check.copy();
-    check.hook();
 
     return config;
 };
