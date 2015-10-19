@@ -58,29 +58,49 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
     // 是否为入口模块
     var isMain = mainFile === moduleFile;
 
-    hook.exec('buildModule', moduleFile, dato.extend({
-        main: mainFile,
-        file: moduleFile
-    }, meta));
-
     howdo
         // 1. 读取文件内容
         .task(function (next) {
+            var retHook;
+
             if (isSingle) {
-                wrapDefine(moduleFile, meta, next);
-            } else {
-                if (configs._bufferMap[moduleFile]) {
-                    return next(null, configs._bufferMap[moduleFile].toString());
+                retHook = hook.exec('buildModule', moduleFile, dato.extend({
+                    main: mainFile,
+                    file: moduleFile
+                }, meta));
+
+                if (retHook) {
+                    meta = retHook;
                 }
 
-                try {
-                    next(null, fs.readFileSync(moduleFile, 'utf8'));
-                } catch (err) {
-                    log('build module', pathURI.toSystemPath(moduleFile), 'error');
-                    log('read file', pathURI.toSystemPath(moduleFile), 'error');
-                    log('read file', err.message, 'error');
-                    process.exit(1);
+                wrapDefine(moduleFile, meta, next);
+            } else {
+                var code = configs._bufferMap[moduleFile];
+
+                if (code) {
+                    code = code.toString();
+                } else {
+                    try {
+                        code = fs.readFileSync(moduleFile, 'utf8');
+                    } catch (err) {
+                        log('build module', pathURI.toSystemPath(moduleFile), 'error');
+                        log('read file', pathURI.toSystemPath(moduleFile), 'error');
+                        log('read file', err.message, 'error');
+                        process.exit(1);
+                    }
                 }
+
+                meta.code = code;
+                retHook = hook.exec('buildModule', moduleFile, dato.extend({
+                    main: mainFile,
+                    file: moduleFile
+                }, meta));
+
+                if (retHook) {
+                    meta.code = retHook;
+                }
+
+                next(null, meta.code);
             }
         })
 
