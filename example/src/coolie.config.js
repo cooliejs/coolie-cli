@@ -6,7 +6,7 @@ module.exports = function (coolie) {
     coolie.config({
         "js": {
             "main": [
-                //"./static/js/app/**.js"
+                "./static/js/app/html.js"
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
@@ -41,6 +41,10 @@ module.exports = function (coolie) {
             "versionLength": 8
         }
     });
+
+    coolie.hook.buildModule = function (file, meta) {
+        console.log(meta);
+    };
 
     // 挂载：替换 HTML
     coolie.hook.replaceHTML(function (file, meta) {
