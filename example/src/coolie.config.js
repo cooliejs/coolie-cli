@@ -38,31 +38,26 @@ module.exports = function (coolie) {
             "dirname": "../dest/",
             "host": "",
             "versionLength": 8
-        },
-
-        // 挂载构建 HTML
-        hookReaplceHTML: function (file, code) {
-        },
-
-        // 挂载替换 html 资源
-        hookReplaceHTMLResource: function (file, tag, tagName) {
-            if (tagName !== 'img') {
-                return;
-            }
-
-            var dataOriginal = coolie.htmlAttr.get(tag, 'data-original');
-
-            if (!dataOriginal || dataOriginal === true) {
-                return tag;
-            }
-
-            var dataOriginalFile = coolie.pathURI.toAbsolute(dataOriginal, file);
-            var toFile = coolie.copy(dataOriginalFile, {
-                version: true,
-                dest: coolie.configs.destResourceDirname
-            });
-            var toURI = coolie.pathURI.toRootURL(toFile, coolie.configs.destDirname);
-            return coolie.htmlAttr.set(tag, 'data-original', toURI);
         }
+    });
+
+    coolie.hookReplaceHTMLResource(function (file, tag, tagName) {
+        if (tagName !== 'img') {
+            return;
+        }
+
+        var dataOriginal = coolie.htmlAttr.get(tag, 'data-original');
+
+        if (!dataOriginal || dataOriginal === true) {
+            return tag;
+        }
+
+        var dataOriginalFile = coolie.pathURI.toAbsolute(dataOriginal, file);
+        var toFile = coolie.copy(dataOriginalFile, {
+            version: true,
+            dest: coolie.configs.destResourceDirname
+        });
+        var toURI = coolie.pathURI.toRootURL(toFile, coolie.configs.destDirname);
+        return coolie.htmlAttr.set(tag, 'data-original', toURI);
     });
 };

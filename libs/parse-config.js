@@ -62,7 +62,7 @@ module.exports = function (srcPath) {
         },
         htmlAttr: require('./html-attr.js'),
         copy: require('./copy.js'),
-        pathURI: require('./path-uri.js')
+        pathURI: require('./path-uri.js'),
     };
 
     global.coolie = coolie;
@@ -396,11 +396,9 @@ module.exports = function (srcPath) {
 
     // 检查 hook
     check.hook = function () {
-          dato.extend({
-              hookReplaceHTML: noop,
-              hookReplaceHTMLResource: noop,
-              hookReplaceCSSResource: noop
-          }, config);
+        config.hookReplaceHTMLCallbacks = [];
+        config.hookReplaceHTMLResourceCallbacks = [];
+        config.hookReplaceCSSResourceCallbacks = [];
     };
 
 
