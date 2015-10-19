@@ -9,6 +9,7 @@
 var fs = require('fs-extra');
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
+
 var log = require('./log.js');
 var htmlAttr = require('./html-attr.js');
 var pathURI = require('./path-uri.js');
@@ -16,6 +17,8 @@ var htmlminify = require('./htmlminify.js');
 var replaceHTMLResource = require('./replace-html-resource.js');
 var concat = require('./concat.js');
 var copy = require('./copy.js');
+var hook = require('./hook.js');
+
 var REG_SCRIPT = /<script[^>]*?>[\s\S]*?<\/script>/gi;
 var REG_COOLIE = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/i;
 
@@ -148,7 +151,13 @@ module.exports = function (file, code) {
     });
 
     // 挂载
-    configs.hookReaplceHTML(file, code);
+    var hookRet = hook.exec('hookReaplceHTML', file, {
+        code: code
+    });
+
+    if (ret) {
+        code = hookRet;
+    }
 
     // 资源替换
     code = replaceHTMLResource(file, code);

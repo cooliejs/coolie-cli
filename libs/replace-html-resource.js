@@ -17,6 +17,7 @@ var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 var base64 = require('./base64.js');
 var copy = require('./copy.js');
+var hook = require('./hook.js');
 
 var coolieIgnore = 'coolieignore';
 var linkRelList = [
@@ -75,7 +76,10 @@ module.exports = function (file, code) {
                 return htmlAttr.remove(tag, coolieIgnore);
             }
 
-            var hookRet = configs.hookReplaceHTMLResource(file, tag, tagName);
+            var hookRet = hook.exec('hookReplaceHTMLResource', file, {
+                code: tag,
+                tagName: tagName
+            });
 
             if (hookRet) {
                 tag = hookRet;
