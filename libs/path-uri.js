@@ -85,12 +85,14 @@ exports.isRelativeRoot = function (p) {
  * 路径转成绝对路径
  * @param p
  * @param parentFile
- * @param rootDirname
+ * @param [rootDirname]
  * @returns {string}
  */
 exports.toAbsolute = function (p, parentFile, rootDirname) {
+    var configs = global.configs;
+
     p = path.toSystem(p);
-    rootDirname = path.toSystem(rootDirname);
+    rootDirname = rootDirname ? path.toSystem(rootDirname) : configs.srcDirname;
 
     // 相对文件
     if (exports.isRelativeFile(p)) {

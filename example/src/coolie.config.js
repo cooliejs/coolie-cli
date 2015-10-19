@@ -56,7 +56,7 @@ module.exports = function (coolie) {
                 return tag;
             }
 
-            var dataOriginalFile = coolie.pathURI.toAbsolute(dataOriginal, file, coolie.configs.srcDirname);
+            var dataOriginalFile = coolie.pathURI.toAbsolute(dataOriginal, file);
             var toFile = coolie.copy(dataOriginalFile, {
                 version: true,
                 dest: coolie.configs.destResourceDirname
