@@ -53,7 +53,7 @@ module.exports = function (coolie) {
             try{
 
             }catch(err){
-
+                coolie.log.error('read file', includeFile);
             }
 
             return '';

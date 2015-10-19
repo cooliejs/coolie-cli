@@ -45,10 +45,10 @@ var map = {
 
 /**
  * 输出日志
- * @param {Boolean} isTextAlignLeft 是否事件左对齐
+ * @param {Boolean} [isTextAlignLeft=true] 是否事件左对齐
  * @param {String} event 事件名称，如“build”
  * @param {String} message 事件消息
- * @param {String} type 显示类型
+ * @param {String} [type="normal"] 显示类型
  *
  * @example
  * 事件长度20个字符
@@ -88,7 +88,7 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
 
 /**
  * 打印错误日志
- * @param isTextAlignLeft
+ * @param [isTextAlignLeft=true]
  * @param event
  * @param message
  */
@@ -99,7 +99,7 @@ module.exports.error = function (isTextAlignLeft, event, message) {
 
 /**
  * 打印信息日志
- * @param isTextAlignLeft
+ * @param [isTextAlignLeft=true]
  * @param event
  * @param message
  */
@@ -110,7 +110,7 @@ module.exports.info = function (isTextAlignLeft, event, message) {
 
 /**
  * 打印警告日志
- * @param isTextAlignLeft
+ * @param [isTextAlignLeft=true]
  * @param event
  * @param message
  */
@@ -121,7 +121,7 @@ module.exports.warn = function (isTextAlignLeft, event, message) {
 
 /**
  * 打印普通日志
- * @param isTextAlignLeft
+ * @param [isTextAlignLeft=true]
  * @param event
  * @param message
  */
