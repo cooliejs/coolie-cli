@@ -76,7 +76,7 @@ module.exports = function (file, code) {
                 return htmlAttr.remove(tag, coolieIgnore);
             }
 
-            var hookRet = hook.exec('hookReplaceHTMLResource', file, {
+            var hookRet = hook.exec('replaceHTMLResource', file, {
                 code: tag,
                 tagName: tagName
             });

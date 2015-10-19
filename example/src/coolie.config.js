@@ -42,7 +42,7 @@ module.exports = function (coolie) {
         }
     });
 
-    coolie.hookReplaceHTML(function (file, meta) {
+    coolie.hook.replaceHTML(function (file, meta) {
         var code = meta.code;
         var REG_INCLUDE = /\{\{include (.*?)}}/g;
 
@@ -62,7 +62,7 @@ module.exports = function (coolie) {
         return code;
     });
 
-    coolie.hookReplaceHTMLResource(function (file, meta) {
+    coolie.hook.replaceHTMLResource(function (file, meta) {
         var code = meta.code;
         var tagName = meta.tagName;
 
