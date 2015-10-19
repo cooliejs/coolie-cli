@@ -1,5 +1,7 @@
 "use strict";
 
+var fs = require('fs');
+
 module.exports = function (coolie) {
     coolie.config({
         "js": {
@@ -43,14 +45,19 @@ module.exports = function (coolie) {
     coolie.hookReplaceHTML(function (file, meta) {
         var code = meta.code;
         var REG_INCLUDE = /\{\{include (.*?)}}/g;
-        var matches = null;
 
-        while((matches = REG_INCLUDE.exec(code)) !== null){
-            var includeFile = matches[1];
-            includeFile = coolie.pathURI.join(coolie.configs.srcDirname, 'html', includeFile);
+        code.replace(REG_INCLUDE, function (input, inludeName) {
+            var includeFile = coolie.pathURI.join(coolie.configs.srcDirname, 'html', inludeName);
+            var includeCode =  '';
 
-            console.log(includeFile);
-        }
+            try{
+
+            }catch(err){
+
+            }
+
+            return '';
+        });
 
         return code;
     });

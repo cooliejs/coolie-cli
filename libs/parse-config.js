@@ -61,6 +61,7 @@ module.exports = function (srcPath) {
             config = _config;
         },
         htmlAttr: require('./html-attr.js'),
+        log: require('./log.js'),
         copy: require('./copy.js'),
         pathURI: require('./path-uri.js'),
         hookBuildModule: hook.bind('hookBuildModule'),

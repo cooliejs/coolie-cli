@@ -87,6 +87,52 @@ module.exports = function log(isTextAlignLeft, event, message, type) {
 
 
 /**
+ * 打印错误日志
+ * @param isTextAlignLeft
+ * @param event
+ * @param message
+ */
+module.exports.error = function (isTextAlignLeft, event, message) {
+    log(isTextAlignLeft,  event, message, 'error');
+};
+
+
+/**
+ * 打印信息日志
+ * @param isTextAlignLeft
+ * @param event
+ * @param message
+ */
+module.exports.info = function (isTextAlignLeft, event, message) {
+    log(isTextAlignLeft,  event, message, 'info');
+};
+
+
+/**
+ * 打印警告日志
+ * @param isTextAlignLeft
+ * @param event
+ * @param message
+ */
+module.exports.warn = function (isTextAlignLeft, event, message) {
+    log(isTextAlignLeft,  event, message, 'warn');
+};
+
+
+/**
+ * 打印普通日志
+ * @param isTextAlignLeft
+ * @param event
+ * @param message
+ */
+module.exports.normal = function (isTextAlignLeft, event, message) {
+    log(isTextAlignLeft,  event, message, 'normal');
+};
+
+
+
+
+/**
  * 分割颜色
  * @param color
  * @param message
