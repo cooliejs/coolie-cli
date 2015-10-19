@@ -54,11 +54,7 @@ var coolieFn = function () {
 module.exports = function (srcPath) {
     var coolieJSFile = path.join(srcPath, "./coolie.config.js");
     var coolieJSONFile = path.join(srcPath, "./coolie.json");
-    var config = {
-        _hookReplaceHTMLCallbacks: [],
-        _hookReplaceHTMLResourceCallbacks: [],
-        _hookReplaceCSSResourceCallbacks: []
-    };
+    var config = {};
     var check = {};
     var coolie = {
         config: function (_config) {

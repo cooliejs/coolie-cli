@@ -1,6 +1,5 @@
 "use strict";
 
-
 module.exports = function (coolie) {
     coolie.config({
         "js": {
@@ -42,7 +41,19 @@ module.exports = function (coolie) {
     });
 
     coolie.hookReplaceHTML(function (file, meta) {
+        var code = meta.code;
+        var REG_INCLUDE = /\{\{include (.*?)}}/;
+        var matches = null;
 
+        while((matches = code.match(REG_INCLUDE)) !== null){
+            console.log(matches);
+        }
+
+        //var includeFile = matches[1];
+        //includeFile = coolie.pathURI.join(coolie.configs.srcDirname, 'html', includeFile);
+        //
+        //console.log(includeFile);
+        return code;
     });
 
     coolie.hookReplaceHTMLResource(function (file, meta) {
