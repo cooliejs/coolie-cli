@@ -42,17 +42,16 @@ module.exports = function (coolie) {
 
     coolie.hookReplaceHTML(function (file, meta) {
         var code = meta.code;
-        var REG_INCLUDE = /\{\{include (.*?)}}/;
+        var REG_INCLUDE = /\{\{include (.*?)}}/g;
         var matches = null;
 
-        while((matches = code.match(REG_INCLUDE)) !== null){
-            console.log(matches);
+        while((matches = REG_INCLUDE.exec(code)) !== null){
+            var includeFile = matches[1];
+            includeFile = coolie.pathURI.join(coolie.configs.srcDirname, 'html', includeFile);
+
+            console.log(includeFile);
         }
 
-        //var includeFile = matches[1];
-        //includeFile = coolie.pathURI.join(coolie.configs.srcDirname, 'html', includeFile);
-        //
-        //console.log(includeFile);
         return code;
     });
 

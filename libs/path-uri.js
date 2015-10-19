@@ -193,3 +193,10 @@ exports.relative = function (from, to) {
 
     return path.relative(from, to);
 };
+
+
+/**
+ * 合并路径
+ * @type function
+ */
+exports.join = path.join;
