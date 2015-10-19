@@ -41,6 +41,10 @@ module.exports = function (coolie) {
         }
     });
 
+    coolie.hookReplaceHTML(function (file, meta) {
+
+    });
+
     coolie.hookReplaceHTMLResource(function (file, meta) {
         var code = meta.code;
         var tagName = meta.tagName;

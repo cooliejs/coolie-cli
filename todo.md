@@ -13,3 +13,4 @@
 
 13、img data-original 脱离
 14、html include 功能
+15、命令名称规范化
