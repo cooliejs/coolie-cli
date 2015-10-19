@@ -46,17 +46,17 @@ module.exports = function (coolie) {
         var code = meta.code;
         var REG_INCLUDE = /\{\{include (.*?)}}/g;
 
-        code.replace(REG_INCLUDE, function (input, inludeName) {
+        code = code.replace(REG_INCLUDE, function (input, inludeName) {
             var includeFile = coolie.pathURI.join(coolie.configs.srcDirname, 'html', inludeName);
-            var includeCode =  '';
+            var includeCode = '';
 
-            try{
-
-            }catch(err){
+            try {
+                includeCode = fs.readFileSync(includeFile, 'utf-8');
+            } catch (err) {
                 coolie.log.error('read file', includeFile);
             }
 
-            return '';
+            return includeCode;
         });
 
         return code;

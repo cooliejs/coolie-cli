@@ -151,7 +151,7 @@ module.exports = function (file, code) {
     });
 
     // 挂载
-    var hookRet = hook.exec('hookReplaceHTML', file, {
+    var hookRet = hook.exec('replaceHTML', file, {
         code: code
     });
 

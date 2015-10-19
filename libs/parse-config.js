@@ -64,10 +64,12 @@ module.exports = function (srcPath) {
         log: require('./log.js'),
         copy: require('./copy.js'),
         pathURI: require('./path-uri.js'),
-        hookBuildModule: hook.bind('hookBuildModule'),
-        hookReplaceHTML: hook.bind('hookReplaceHTML'),
-        hookReplaceHTMLResource: hook.bind('hookReplaceHTMLResource'),
-        hookReplaceCSSResource: hook.bind('hookReplaceCSSResource')
+        hook: {
+            buildModule: hook.bind('buildModule'),
+            replaceHTML: hook.bind('replaceHTML'),
+            replaceHTMLResource: hook.bind('replaceHTMLResource'),
+            replaceCSSResource: hook.bind('replaceCSSResource')
+        }
     };
 
     global.coolie = coolie;
