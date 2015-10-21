@@ -29,16 +29,16 @@ var linkRelList = [
     /msapplication-TileImage/
 ];
 var regList = [{
-    reg: /<(link)\b[\s\S]*?>/gi,
+    reg: /<(link)\b[\s\S]*?>(?!["'])/gi,
     replaceAttrs: ['href']
 }, {
-    reg: /<(embed|audio|video|source|img)\b[\s\S]*?>/gi,
+    reg: /<(embed|audio|video|source|img)\b[\s\S]*?>(?!["'])/gi,
     replaceAttrs: ['src']
 }, {
-    reg: /<(object)\b[\s\S]*?>/gi,
+    reg: /<(object)\b[\s\S]*>(?!["'])/gi,
     replaceAttrs: ['data']
 }, {
-    reg: /<(source)\b[\s\S]*?>/gi,
+    reg: /<(source)\b[\s\S]*?>(?!["'])/gi,
     replaceAttrs: ['srcset']
 }];
 
@@ -55,6 +55,10 @@ module.exports = function (file, code) {
     regList.forEach(function (item) {
         code = code.replace(item.reg, function (tag, tagName) {
             var find = true;
+
+            console.log('==============');
+            console.log(tag);
+            console.log('==============');
 
             switch (tagName) {
                 case 'link':
