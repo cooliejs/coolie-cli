@@ -11,10 +11,10 @@ module.exports = function (coolie) {
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
             "chunk": [
-                [
-                    "./static/js/libs1/**"
-                ],
-                "./static/js/libs2/**"
+                //[
+                //    "./static/js/libs1/**"
+                //],
+                //"./static/js/libs2/**"
             ]
         },
         "html": {
@@ -84,11 +84,11 @@ module.exports = function (coolie) {
 
         // 属性不为空或者属性为 true
         if (!dataOriginal || dataOriginal === true) {
-            return code;
+            return;
         }
 
         // 转换为绝对文件地址
-        var dataOriginalFile = coolie.pathURI.toAbsolute(dataOriginal, file);
+        var dataOriginalFile = coolie.pathURI.toAbsoluteFile(dataOriginal, file);
         // 复制文件
         var toFile = coolie.copy(dataOriginalFile, {
             version: true,

@@ -56,10 +56,6 @@ module.exports = function (file, code) {
         code = code.replace(item.reg, function (tag, tagName) {
             var find = true;
 
-            console.log('==============');
-            console.log(tag);
-            console.log('==============');
-
             switch (tagName) {
                 case 'link':
                     find = false;

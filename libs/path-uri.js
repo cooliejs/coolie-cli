@@ -88,9 +88,10 @@ exports.isRelativeRoot = function (p) {
  * @param [rootDirname]
  * @returns {string}
  */
-exports.toAbsolute = function (p, parentFile, rootDirname) {
+exports.toAbsoluteFile = function (p, parentFile, rootDirname) {
     var configs = global.configs;
 
+    p = p.replace(REG_SUFFIX, '');
     p = path.toSystem(p);
     rootDirname = rootDirname ? path.toSystem(rootDirname) : configs.srcDirname;
 
