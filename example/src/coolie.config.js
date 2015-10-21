@@ -43,7 +43,7 @@ module.exports = function (coolie) {
     });
 
     coolie.hook.buildModule(function (file, meta) {
-        console.log(meta);
+
     });
 
     // 挂载：替换 HTML
