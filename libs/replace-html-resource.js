@@ -79,7 +79,8 @@ module.exports = function (file, meta) {
 
             var hookRet = hook.exec('replaceHTMLResource', file, {
                 code: tag,
-                tagName: tagName
+                tagName: tagName,
+                type: meta.type
             });
 
             if (hookRet) {

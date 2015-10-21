@@ -43,11 +43,11 @@ module.exports = function (coolie) {
     });
 
     coolie.hook.buildModule(function (file, meta) {
-        console.log(meta);
     });
 
     // 挂载：替换 HTML
     coolie.hook.replaceHTML(function (file, meta) {
+        console.log('replaceHTML', meta.type);
         var code = meta.code;
         var REG_INCLUDE = /\{\{include (.*?)}}/g;
 
@@ -72,6 +72,7 @@ module.exports = function (coolie) {
 
     // 挂载：替换 HTML 内的资源
     coolie.hook.replaceHTMLResource(function (file, meta) {
+        console.log('replaceHTMLResource', meta.type);
         var code = meta.code;
         var tagName = meta.tagName;
 

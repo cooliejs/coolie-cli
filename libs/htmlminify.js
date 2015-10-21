@@ -153,11 +153,9 @@ module.exports = function (file, meta, callback) {
 
     // 构建第二步：JS 模块里的 html 文件
     if (configs._buildStep === 2) {
-        // <img>
-        code = code.replace(REG_IMG, function (html) {
-            return replaceHTMLResource(file, {
-                code: html
-            });
+        code = replaceHTMLResource(file, {
+            code: code,
+            type: meta.type
         });
     }
 
@@ -165,21 +163,21 @@ module.exports = function (file, meta, callback) {
     code = code.replace(REG_LINES, '')
         .replace(REG_SPACES, ' ');
 
-    // 替换: style="background 属性
-    code = code.replace(REG_TAG_START, function (tag) {
-        var style1 = htmlAttr.get(tag, 'style');
-        var isIgnore = htmlAttr.get(tag, coolieIgnore);
-
-        tag = htmlAttr.remove(tag, coolieIgnore);
-
-        if (!style1 || isIgnore) {
-            return tag;
-        }
-
-        var style2 = cssminify(file, style1, null);
-
-        return htmlAttr.set(tag, 'style', style2.code);
-    });
+    //// 替换: style="background 属性
+    //code = code.replace(REG_TAG_START, function (tag) {
+    //    var style1 = htmlAttr.get(tag, 'style');
+    //    var isIgnore = htmlAttr.get(tag, coolieIgnore);
+    //
+    //    tag = htmlAttr.remove(tag, coolieIgnore);
+    //
+    //    if (!style1 || isIgnore) {
+    //        return tag;
+    //    }
+    //
+    //    var style2 = cssminify(file, style1, null);
+    //
+    //    return htmlAttr.set(tag, 'style', style2.code);
+    //});
 
     // 恢复预格式
     dato.each(preMap, function (key, val) {
