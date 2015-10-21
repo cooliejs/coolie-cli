@@ -21,6 +21,8 @@ var destDirname = path.join(__dirname, '../../example/dest/');
 
 copy(file, {
     srcDirname: srcDirname,
-    destDirname: destDirname
+    destDirname: destDirname,
+    copyPath: false,
+    version: true
 });
 

@@ -20,30 +20,42 @@ var copyFilesMap = {};
 var copyLength = 0;
 var REG_POINT = path.sep === '/' ? /^\.{1,2}\// : /^\.{1,2}\\/;
 var defaults = {
+    srcDirname: '',
+    destDirname: '',
+    // 是否复制路径
+    // src/a/b/c/file.html
+    // true: dest/a/b/c/file.html
+    // false: dest/file.html
+    copyPath: true,
     // 所在的原始文件
-    srcFile: '',
+    embedFile: '',
     // 原始代码片段
-    srcCode: '',
+    embedCode: '',
     // 是否构建版本
     version: false,
+    versionLength: 32,
     // 是否压缩
     minify: false,
-    // 指定目标地址
-    dest: null,
     // 打印类型
     // 0：不打印
     // 1：源文件
     // 2：目标文件
-    logType: 2,
-    srcDirname: '',
-    destDirname: '',
-    versionLength: 32
+    logType: 2
 };
 
 /**
  * 复制单个文件
  * @param file {String} 起始地址
- * @param [options] {Object} 配置
+ * @param options {Object} 配置
+ * @param options.srcDirname {String} 原始根目录
+ * @param options.destDirname {String} 目标根目录
+ * @param options.copyPath {Boolean} 是否复制路径
+ * @param options.embedFile {String} 被嵌入的文件
+ * @param options.embedCode {String} 被嵌入的文件代码
+ * @param options.version {Boolean} 是否版本控制
+ * @param options.versionLength {Number} 版本长度
+ * @param options.minify {Boolean} 是否压缩
+ * @param options.logType {Number} 日志类型
  */
 module.exports = function (file, options) {
     if (pathURI.isURL(file)) {
@@ -57,20 +69,18 @@ module.exports = function (file, options) {
     if (REG_POINT.test(fromTo)) {
         if (pathURI.isRelativeRoot(file)) {
             file = path.join(options.srcDirname, file);
-        } else if (pathURI.isRelativeFile(file) && options.srcFile) {
-            file = path.join(path.dirname(options.srcFile), file);
-        } else if (options.dest) {
-            file = path.join(options.dest, file);
+        } else if (pathURI.isRelativeFile(file) && options.embedFile) {
+            file = path.join(path.dirname(options.embedFile), file);
         }
     }
 
     if (!typeis.file(file)) {
-        if (options.srcFile) {
-            log('copy file', pathURI.toSystemPath(options.srcFile), 'error');
+        if (options.embedFile) {
+            log('copy file', pathURI.toSystemPath(options.embedFile), 'error');
         }
 
-        if (options.srcCode) {
-            log('source code', options.srcCode, 'error');
+        if (options.embedCode) {
+            log('source code', options.embedCode, 'error');
         }
 
         log('copy error', pathURI.toSystemPath(file) + ' is NOT a local file', 'error');
@@ -89,17 +99,11 @@ module.exports = function (file, options) {
         var version = encryption.etag(file).slice(0, options.versionLength);
         var extname = path.extname(file);
 
-        if (options.dest) {
-            toFile = path.join(options.dest, version + extname);
-        } else {
-            toFile = path.join(options.destDirname, path.dirname(releativeTo), version + extname);
-        }
+        toFile = path.join(options.destDirname, options.copyPath ? path.dirname(releativeTo) : '', version + extname);
     } else {
-        if (options.dest) {
-            toFile = path.join(options.dest, releativeTo);
-        } else {
-            toFile = path.join(options.destDirname, releativeTo);
-        }
+        var releativeName = path.basename(releativeTo);
+
+        toFile = path.join(options.destDirname, options.copyPath ? releativeTo : releativeName);
     }
 
     try {
