@@ -51,12 +51,13 @@ var coolieIgnore = 'coolieignore';
 /**
  * html minify
  * @param file
- * @param code
+ * @param meta
  * @param [callback]
  */
-module.exports = function (file, code, callback) {
+module.exports = function (file, meta, callback) {
     var preMap = {};
     var configs = global.configs;
+    var code = meta.code;
 
     if (configs.html.minify === false && configs._buildStep === 4) {
         if (callback) {

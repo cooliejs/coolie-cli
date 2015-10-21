@@ -168,7 +168,9 @@ module.exports = function (file, meta) {
     return {
         depJS: depJS,
         depCSS: depCSS,
-        code: htmlminify(file, code),
+        code: htmlminify(file, {
+            code: code
+        }),
         mainJS: mainJS
     };
 };

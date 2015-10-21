@@ -181,19 +181,25 @@ module.exports = function wrapDefine(file, meta, callback) {
             switch (meta.outType) {
                 case 'url':
                     uri = createURL(file, code, configs, meta, function (destFile) {
-                        return htmlminify(file, code);
+                        return htmlminify(file, {
+                            code: code
+                        });
                     });
                     next(null, pathURI.joinURI(configs.dest.host, uri));
                     break;
 
                 case 'base64':
-                    code = htmlminify(file, code);
+                    code = htmlminify(file, {
+                        code: code
+                    });
                     code = unicode(code);
                     next(null, base64(new Buffer(code, 'utf8'), extname));
                     break;
 
                 default :
-                    htmlminify(file, code, next);
+                    htmlminify(file, {
+                        code: code
+                    }, next);
                     break;
             }
             break;
