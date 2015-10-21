@@ -46,14 +46,14 @@ var regList = [{
 /**
  * 替换资源版本
  * @param file {String} 待替换的文件
- * @param configs {Object} 配置
- * @param configs.code {String} 代码
- * @param configs.srcDirname {String} 构建工程原始根目录
- * @param configs.destResourceDirname {String} 目标资源文件保存目录
+ * @param options {Object} 配置
+ * @param options.code {String} 代码
+ * @param options.srcDirname {String} 构建工程原始根目录
+ * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @returns {String}
  */
-module.exports = function (file, configs) {
-    var code = configs.code;
+module.exports = function (file, options) {
+    var code = options.code;
 
     // 标签替换，如 <img src="
     regList.forEach(function (item) {
@@ -83,7 +83,7 @@ module.exports = function (file, configs) {
             var hookRet = hook.exec('replaceHTMLResource', file, {
                 code: tag,
                 tagName: tagName,
-                type: configs.type
+                type: options.type
             });
 
             if (hookRet) {
@@ -106,7 +106,7 @@ module.exports = function (file, configs) {
                     return tag;
                 }
 
-                var absFile = pathURI.toAbsoluteFile(pathRet.path, file, configs.srcDirname);
+                var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
 
                 //try {
                 //    absFile = path.join(absDir, pathRet.path);

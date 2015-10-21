@@ -35,31 +35,30 @@ var defaults = {
 
 /**
  * 复制单个文件
- * @param fromFile {String} 起始地址
+ * @param file {String} 起始地址
  * @param [options] {Object} 配置
  */
-module.exports = function (fromFile, options) {
-    // 如果不是相对路径文件
-    if (!pathURI.isRelatived(fromFile)) {
+module.exports = function (file, options) {
+    if (pathURI.isURL(file)) {
         return;
     }
 
     options = dato.extend({}, defaults, options);
 
     var configs = global.configs;
-    var fromTo = pathURI.relative(configs.srcDirname, fromFile);
+    var fromTo = pathURI.relative(configs.srcDirname, file);
 
     if (REG_POINT.test(fromTo)) {
-        if (pathURI.isRelativeRoot(fromFile)) {
-            fromFile = path.join(configs.srcDirname, fromFile);
-        } else if (pathURI.isRelativeFile(fromFile) && options.srcFile) {
-            fromFile = path.join(path.dirname(options.srcFile), fromFile);
+        if (pathURI.isRelativeRoot(file)) {
+            file = path.join(configs.srcDirname, file);
+        } else if (pathURI.isRelativeFile(file) && options.srcFile) {
+            file = path.join(path.dirname(options.srcFile), file);
         } else if (options.dest) {
-            fromFile = path.join(options.dest, fromFile);
+            file = path.join(options.dest, file);
         }
     }
 
-    if (!typeis.file(fromFile)) {
+    if (!typeis.file(file)) {
         if (options.srcFile) {
             log('copy file', pathURI.toSystemPath(options.srcFile), 'error');
         }
@@ -68,21 +67,21 @@ module.exports = function (fromFile, options) {
             log('source code', options.srcCode, 'error');
         }
 
-        log('copy error', pathURI.toSystemPath(fromFile) + ' is NOT a local file', 'error');
+        log('copy error', pathURI.toSystemPath(file) + ' is NOT a local file', 'error');
         process.exit(1);
     }
 
-    var toFile = configs._copyFilesMap[fromFile];
+    var toFile = configs._copyFilesMap[file];
 
     if (toFile) {
         return toFile;
     }
 
-    var releativeTo = pathURI.relative(configs.srcDirname, fromFile);
+    var releativeTo = pathURI.relative(configs.srcDirname, file);
 
     if (options.version) {
-        var version = encryption.etag(fromFile).slice(0, configs.dest.versionLength);
-        var extname = path.extname(fromFile);
+        var version = encryption.etag(file).slice(0, configs.dest.versionLength);
+        var extname = path.extname(file);
 
         if (options.dest) {
             toFile = path.join(options.dest, version + extname);
@@ -98,13 +97,13 @@ module.exports = function (fromFile, options) {
     }
 
     try {
-        fse.copySync(fromFile, toFile);
-        configs._copyFilesMap[fromFile] = toFile;
+        fse.copySync(file, toFile);
+        configs._copyFilesMap[file] = toFile;
         configs._copyLength++;
 
         switch (options.logType) {
             case 1:
-                log('√', pathURI.toRootURL(fromFile, configs.srcDirname), 'success');
+                log('√', pathURI.toRootURL(file, configs.srcDirname), 'success');
                 break;
 
             case 2:
@@ -112,7 +111,7 @@ module.exports = function (fromFile, options) {
                 break;
         }
     } catch (err) {
-        log('copy from', pathURI.toSystemPath(fromFile), 'error');
+        log('copy from', pathURI.toSystemPath(file), 'error');
         log('copy to', pathURI.toSystemPath(toFile), 'error');
         log('copy error', err.message, 'error');
         process.exit(1);
