@@ -110,6 +110,7 @@ module.exports = function (mainFile, callback) {
         name: mainName,
         type: 'js',
         main: true,
+        mainFile: mainFile,
         async: configs._asyncMap[mainFile],
         chunk: false,
         gid: configs._moduleIdMap[mainFile]

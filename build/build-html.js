@@ -33,7 +33,8 @@ module.exports = function (file, callback) {
         }
 
         var ret = replaceHtml(file, {
-            code: code
+            code: code,
+            file: file
         });
 
         //log('build html', pathURI.toSystemPath(file), 'warning');

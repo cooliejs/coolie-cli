@@ -65,7 +65,7 @@ module.exports = function (mainFile, meta, moduleFile, callback) {
 
             if (isSingle) {
                 retHook = hook.exec('buildModule', moduleFile, dato.extend({
-                    main: mainFile,
+                    mainFile: mainFile,
                     file: moduleFile
                 }, meta));
 
