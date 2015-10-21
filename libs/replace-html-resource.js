@@ -46,11 +46,12 @@ var regList = [{
 /**
  * 构建资源版本
  * @param file {String} 待替换的文件
- * @param code {String} 代码
+ * @param meta {Object} 属性
  * @returns {String}
  */
-module.exports = function (file, code) {
+module.exports = function (file, meta) {
     var configs = global.configs;
+    var code = meta.code;
 
     regList.forEach(function (item) {
         code = code.replace(item.reg, function (tag, tagName) {

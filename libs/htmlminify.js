@@ -154,7 +154,9 @@ module.exports = function (file, code, callback) {
     if (configs._buildStep === 2) {
         // <img>
         code = code.replace(REG_IMG, function (html) {
-            return replaceHTMLResource(file, html, 'src');
+            return replaceHTMLResource(file, {
+                code: html
+            });
         });
     }
 

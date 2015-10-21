@@ -40,10 +40,11 @@ var parsePathURIs = function (fileUris) {
 /**
  * 提取 CSS 依赖并合并依赖
  * @param file {String} HTML 文件路径
- * @param code {String} HTML 文件内容
+ * @param meta {Object} 属性
  * @returns {{depCSS: Object, code: String, mainJS: String}}
  */
-module.exports = function (file, code) {
+module.exports = function (file, meta) {
+    var code = meta.code;
     var configs = global.configs;
     var srcPath = configs.srcDirname;
     var jsBase = configs._jsBase;
@@ -83,7 +84,7 @@ module.exports = function (file, code) {
     //    });
     //
     //    if (find) {
-    //        return replaceHTMLResource(file, $0, 'href');
+    //        return replaceHTMLResource(file, {code: $0});
     //    }
     //
     //    return $0;
@@ -160,7 +161,9 @@ module.exports = function (file, code) {
     }
 
     // 资源替换
-    code = replaceHTMLResource(file, code);
+    code = replaceHTMLResource(file, {
+        code: code
+    });
 
     return {
         depJS: depJS,
