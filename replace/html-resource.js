@@ -12,12 +12,12 @@ var path = require('ydr-utils').path;
 var string = require('ydr-utils').string;
 var dato = require('ydr-utils').dato;
 
-var htmlAttr = require('./html-attr.js');
+var htmlAttr = require('../utils/html-attr.js');
 var log = require('../utils/log.js');
-var pathURI = require('./path-uri.js');
-var base64 = require('./base64.js');
-var copy = require('./copy.js');
-var hook = require('./hook.js');
+var pathURI = require('../utils/path-uri.js');
+var base64 = require('../utils/base64.js');
+var copy = require('../utils/copy.js');
+var hook = require('../utils/hook.js');
 
 var coolieIgnore = 'coolieignore';
 var linkRelList = [
@@ -44,15 +44,18 @@ var regList = [{
 
 
 /**
- * 构建资源版本
+ * 替换资源版本
  * @param file {String} 待替换的文件
- * @param meta {Object} 属性
+ * @param configs {Object} 配置
+ * @param configs.code {String} 代码
+ * @param configs.srcDirname {String} 构建工程原始根目录
+ * @param configs.destResourceDirname {String} 目标资源文件保存目录
  * @returns {String}
  */
-module.exports = function (file, meta) {
-    var configs = global.configs;
-    var code = meta.code;
+module.exports = function (file, configs) {
+    var code = configs.code;
 
+    // 标签替换，如 <img src="
     regList.forEach(function (item) {
         code = code.replace(item.reg, function (tag, tagName) {
             var find = true;
@@ -80,7 +83,7 @@ module.exports = function (file, meta) {
             var hookRet = hook.exec('replaceHTMLResource', file, {
                 code: tag,
                 tagName: tagName,
-                type: meta.type
+                type: configs.type
             });
 
             if (hookRet) {
@@ -98,40 +101,41 @@ module.exports = function (file, meta) {
 
                 var pathRet = pathURI.parseURI2Path(value);
 
-                if (!value || !pathURI.isRelatived(pathRet.path) || pathURI.isBase64(pathRet.original)) {
+                // 不存在路径 || URL
+                if (!value || pathURI.isURL(pathRet.path)) {
                     return tag;
                 }
 
-                var isRelativeToFile = pathURI.isRelativeFile(pathRet.path);
-                var absDir = isRelativeToFile ? path.dirname(file) : configs.srcDirname;
-                var absFile;
+                var absFile = pathURI.toAbsoluteFile(pathRet.path, file, configs.srcDirname);
 
-                try {
-                    absFile = path.join(absDir, pathRet.path);
-                } catch (err) {
-                    log('replace file', pathURI.toSystemPath(file), 'error');
-                    log('replace resource', tag, 'error');
-                    log('replace error', err.message, 'error');
-                    log('replace ' + item.attr, value === true ? '<EMPTY>' : value, 'error');
-                    process.exit(1);
-                }
+                //try {
+                //    absFile = path.join(absDir, pathRet.path);
+                //} catch (err) {
+                //    log('replace file', pathURI.toSystemPath(file), 'error');
+                //    log('replace resource', tag, 'error');
+                //    log('replace error', err.message, 'error');
+                //    log('replace ' + item.attr, value === true ? '<EMPTY>' : value, 'error');
+                //    process.exit(1);
+                //}
 
-                var resFile = copy(absFile, {
-                    version: true,
-                    dest: configs.destResourceDirname,
-                    logType: 1,
-                    srcFile: file,
-                    srcCode: tag
-                });
-                var resRelative = pathURI.relative(configs.destDirname, resFile);
-                var url = pathURI.joinURI(configs.dest.host, resRelative);
-
-                tag = htmlAttr.set(tag, attr, url + pathRet.suffix);
+                //var resFile = copy(absFile, {
+                //    version: true,
+                //    dest: configs.destResourceDirname,
+                //    logType: 1,
+                //    srcFile: file,
+                //    srcCode: tag
+                //});
+                //var resRelative = pathURI.relative(configs.destDirname, resFile);
+                //var url = pathURI.joinURI(configs.dest.host, resRelative);
+                //
+                //tag = htmlAttr.set(tag, attr, url + pathRet.suffix);
             });
 
             return tag;
         });
     });
+
+    // @todo 属性内替换，如 style="background
 
     return code;
 };

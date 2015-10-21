@@ -130,6 +130,16 @@ exports.isBase64 = function (uri) {
 
 
 /**
+ * 判断路径是否为 URL
+ * @param p {String} 路径
+ * @returns {boolean}
+ */
+exports.isURL = function (p) {
+    return REG_ABSOLUTE.test(p) || REG_BASE_64.test(p);
+};
+
+
+/**
  * URI 合并
  * @param p1
  * @param p2
@@ -159,9 +169,9 @@ exports.parseURI2Path = function (uri) {
     ret.extname = path.extname(uri2);
     // 无后缀文件名
     ret.basename = path.basename(uri2);
-    // 实际文件
+    // 实际路径
     ret.path = uri2;
-    // 实际文件
+    // 原始信息
     ret.original = uri;
 
     return ret;
