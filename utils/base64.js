@@ -1,5 +1,5 @@
-/*!
- * 文件描述
+/**
+ * base64 文本或二进制
  * @author ydr.me
  * @create 2015-05-08 10:59
  */
@@ -9,11 +9,11 @@
 
 var fs = require('fs');
 var path = require('ydr-utils').path;
-var log = require('./log.js');
-var pathURI = require('./path-uri.js');
 var dato = require('ydr-utils').dato;
 var mime = require('ydr-utils').mime;
 var typeis = require('ydr-utils').typeis;
+
+var log = require('./log.js');
 
 
 /**
@@ -44,8 +44,8 @@ module.exports = function (file, extname, callback) {
         try {
             binary = fs.readFileSync(file, 'binary');
         } catch (err) {
-            log('base64', pathURI.toSystemPath(file), 'error');
-            log('read file', pathURI.toSystemPath(file), 'error');
+            log('base64', path.toSystem(file), 'error');
+            log('read file', path.toSystem(file), 'error');
             log('read file', err.message, 'error');
             process.exit(1);
         }
@@ -61,7 +61,7 @@ module.exports = function (file, extname, callback) {
     try {
         base64 = new Buffer(binary, 'binary').toString('base64');
     } catch (err) {
-        log('base64 file', pathURI.toSystemPath(file), 'error');
+        log('base64 file', path.toSystem(file), 'error');
         log('base64 error', err.message, 'error');
         process.exit(1);
     }
