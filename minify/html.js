@@ -30,7 +30,7 @@ var REG_LINE_COMMENTS = /<!--.*?-->/g;
 // - @create 2014-09-25 19:20
 // -->
 var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
-var REG_TEXTAREAS = /(<textarea\b[\s\S]*?>)([\s\S]*?)<\/textarea>/ig;
+var REG_PRE = /(<(textarea|pre|code|style|script)\b[\s\S]*?>)([\s\S]*?)<\/textarea>/ig;
 var REG_PRES = /(<pre\b[\s\S]*?>)([\s\S]*?)<\/pre>/ig;
 var REG_STYLES = /(<style\b[\s\S]*?>)([\s\S]*?)<\/style>/ig;
 var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
@@ -55,58 +55,33 @@ var coolieIgnore = 'coolieignore';
  * @param file {String} 文件地址
  * @param options {Object} 配置
  * @param options.code {String} 代码
+ * @param options.versionLength {Number} 版本长度
+ * @param options.srcDirname {String} 构建工程原始根目录
+ * @param options.destDirname {String} 目标根目录
+ * @param options.destHost {String} 目标文件 URL 域
+ * @param options.destResourceDirname {String} 目标资源文件保存目录
+ * @param [options.minifyCSS] {Boolean} 是否压缩 css
+ * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @returns {String}
  */
 module.exports = function (file, options) {
     var preMap = {};
     var code = options.code;
 
-    // 保存 <textarea>
-    code = code.replace(REG_TEXTAREAS, function ($0, $1, $2) {
+    // 保存 <textarea|....>
+    code = code.replace(REG_PRE, function (source, tag, tagName, tagCode) {
         var key = _generateKey();
 
-        preMap[key] = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ') + $2 + '</textarea>';
+        preMap[key] = tag.replace(REG_LINES, '').replace(REG_SPACES, ' ') + tagCode + '</textarea>';
 
         return key;
     });
-
-    // 保存 <pre>
-    code = code.replace(REG_PRES, function ($0, $1, $2) {
-        var key = _generateKey();
-
-        preMap[key] = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ') + $2 + '</pre>';
-
-        return key;
-    });
-
-
-    // 保存 <style>
-    code = code.replace(REG_STYLES, function ($0, $1, $2) {
-        var key = _generateKey();
-        var tag = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ');
-        var isIgnore = htmlAttr.get(tag, coolieIgnore);
-        var type = htmlAttr.get(tag, 'type');
-        var code2 = '';
-
-        // 忽略 || 非样式内容
-        if (isIgnore || type && type !== 'text/css') {
-            code2 = $2;
-        } else {
-            code2 = cssminify(file, $2, null);
-        }
-
-        tag = htmlAttr.remove(tag, coolieIgnore);
-        preMap[key] = tag + code2 + '</style>';
-
-        return key;
-    });
-
 
     // 保存条件注释
-    code = code.replace(REG_CONDITIONS_COMMENTS, function ($0) {
+    code = code.replace(REG_CONDITIONS_COMMENTS, function (source) {
         var key = _generateKey();
 
-        preMap[key] = $0;
+        preMap[key] = source;
 
         return key;
     });
@@ -118,32 +93,32 @@ module.exports = function (file, options) {
         .replace(REG_LINE_COMMENTS, '');
 
 
-    // 保存 <script>
-    code = code.replace(REG_SCRIPTS, function ($0, scriptTag, scriptCode) {
-        var key = _generateKey();
-        var tag = scriptTag.replace(REG_LINES, '').replace(REG_SPACES, ' ');
-        var type = htmlAttr.get(tag, 'type');
-        var isIgnore = htmlAttr.get(tag, coolieIgnore);
-        var code2 = scriptCode;
-
-        if (!isIgnore && (type === false || JS_TYPES.indexOf(type) > -1)) {
-            code2 = jsminify(file, {
-                code: scriptCode
-            });
-        }
-
-        tag = htmlAttr.remove(tag, coolieIgnore);
-        preMap[key] = (tag + code2 + '</script>');
-
-        // 消除歧义
-        // <script>var a = {b:{}};</script>
-        //                     ^ 该`}}`在对应的模板引擎里会出错
-        if (!isIgnore && (type === false || JS_TYPES.indexOf(type) > -1)) {
-            preMap[key] = preMap[key].replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
-        }
-
-        return key;
-    });
+    //// 保存 <script>
+    //code = code.replace(REG_SCRIPTS, function ($0, scriptTag, scriptCode) {
+    //    var key = _generateKey();
+    //    var tag = scriptTag.replace(REG_LINES, '').replace(REG_SPACES, ' ');
+    //    var type = htmlAttr.get(tag, 'type');
+    //    var isIgnore = htmlAttr.get(tag, coolieIgnore);
+    //    var code2 = scriptCode;
+    //
+    //    if (!isIgnore && (type === false || JS_TYPES.indexOf(type) > -1)) {
+    //        code2 = jsminify(file, {
+    //            code: scriptCode
+    //        });
+    //    }
+    //
+    //    tag = htmlAttr.remove(tag, coolieIgnore);
+    //    preMap[key] = (tag + code2 + '</script>');
+    //
+    //    // 消除歧义
+    //    // <script>var a = {b:{}};</script>
+    //    //                     ^ 该`}}`在对应的模板引擎里会出错
+    //    if (!isIgnore && (type === false || JS_TYPES.indexOf(type) > -1)) {
+    //        preMap[key] = preMap[key].replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
+    //    }
+    //
+    //    return key;
+    //});
 
     // 再删除多余空白
     code = code.replace(REG_LINES, '')
