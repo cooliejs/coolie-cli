@@ -55,18 +55,11 @@ var coolieIgnore = 'coolieignore';
  * @param file {String} 文件地址
  * @param options {Object} 配置
  * @param options.code {String} 代码
+ * @returns {String}
  */
 module.exports = function (file, options) {
     var preMap = {};
     var code = options.code;
-
-    if (configs.html.minify === false && configs._buildStep === 4) {
-        if (callback) {
-            return callback(null, code);
-        } else {
-            return code;
-        }
-    }
 
     // 保存 <textarea>
     code = code.replace(REG_TEXTAREAS, function ($0, $1, $2) {
@@ -99,8 +92,7 @@ module.exports = function (file, options) {
         if (isIgnore || type && type !== 'text/css') {
             code2 = $2;
         } else {
-            var cssInfo = cssminify(file, $2, null);
-            code2 = cssInfo.code;
+            code2 = cssminify(file, $2, null);
         }
 
         tag = htmlAttr.remove(tag, coolieIgnore);
@@ -127,15 +119,17 @@ module.exports = function (file, options) {
 
 
     // 保存 <script>
-    code = code.replace(REG_SCRIPTS, function ($0, $1, $2) {
+    code = code.replace(REG_SCRIPTS, function ($0, scriptTag, scriptCode) {
         var key = _generateKey();
-        var tag = $1.replace(REG_LINES, '').replace(REG_SPACES, ' ');
+        var tag = scriptTag.replace(REG_LINES, '').replace(REG_SPACES, ' ');
         var type = htmlAttr.get(tag, 'type');
         var isIgnore = htmlAttr.get(tag, coolieIgnore);
-        var code2 = $2;
+        var code2 = scriptCode;
 
         if (!isIgnore && (type === false || JS_TYPES.indexOf(type) > -1)) {
-            code2 = jsminify(file, $2);
+            code2 = jsminify(file, {
+                code: scriptCode
+            });
         }
 
         tag = htmlAttr.remove(tag, coolieIgnore);
@@ -176,11 +170,7 @@ module.exports = function (file, options) {
         code = code.replace(key, val);
     });
 
-    if (callback) {
-        callback(null, code);
-    } else {
-        return code;
-    }
+    return code;
 };
 
 
