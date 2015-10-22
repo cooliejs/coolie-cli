@@ -14,6 +14,8 @@ var mime = require('ydr-utils').mime;
 var typeis = require('ydr-utils').typeis;
 
 var log = require('./log.js');
+var reader = require('./reader.js');
+var unicode = require('./unicode.js');
 
 
 /**
@@ -38,17 +40,10 @@ module.exports = function (file, extname, callback) {
 
     var binary;
 
-    if (typeis.string(file)) {
+    // 文件
+    if (typeis.file(file)) {
         extname = extname || path.extname(file);
-
-        try {
-            binary = fs.readFileSync(file, 'binary');
-        } catch (err) {
-            log('base64', path.toSystem(file), 'error');
-            log('read file', path.toSystem(file), 'error');
-            log('read file', err.message, 'error');
-            process.exit(1);
-        }
+        binary = reader(file, 'binary');
     } else {
         binary = file;
     }

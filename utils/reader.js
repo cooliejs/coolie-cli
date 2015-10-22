@@ -28,13 +28,15 @@ module.exports = function (file, encoding) {
         return process.exit(1);
     }
 
-    var bf = bufferMap[file];
+    encoding = encoding || 'binary';
+    bufferMap[encoding] = bufferMap[encoding] || {};
+    var bf = bufferMap[encoding][file];
 
     if (!bf) {
         try {
             var ret = fs.readFileSync(file, encoding);
 
-            bf = bufferMap[file] = new Buffer(ret, encoding);
+            bf = bufferMap[encoding][file] = new Buffer(ret, encoding);
         } catch (err) {
             log('read file', path.toSystem(file), 'error');
             log('read file', err.message, 'error');
@@ -42,6 +44,6 @@ module.exports = function (file, encoding) {
         }
     }
 
-    return encoding ? bf.toString(encoding) : bf;
+    return encoding === 'binary' ? bf : bf.toString(encoding);
 };
 
