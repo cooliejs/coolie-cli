@@ -38,6 +38,20 @@ var parsePathURIs = function (fileUris) {
 
 
 /**
+ * 解析为 URI
+ * @param fileUris
+ * @returns {*|Array}
+ */
+var parsePathURIs = function (fileUris) {
+    fileUris = fileUris || [];
+
+    return fileUris.map(function (uri) {
+        return path.toURI(uri);
+    });
+};
+
+
+/**
  * 提取 CSS 依赖并合并依赖
  * @param file {String} HTML 文件路径
  * @param meta {Object} 属性
