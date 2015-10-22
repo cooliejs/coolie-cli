@@ -12,10 +12,10 @@ var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
 var mime = require('ydr-utils').mime;
 var typeis = require('ydr-utils').typeis;
+var string = require('ydr-utils').string;
+var debug = require('ydr-utils').debug;
 
-var log = require('./log.js');
 var reader = require('./reader.js');
-var unicode = require('./unicode.js');
 
 
 /**
@@ -56,8 +56,8 @@ module.exports = function (file, extname, callback) {
     try {
         base64 = new Buffer(binary, 'binary').toString('base64');
     } catch (err) {
-        log('base64 file', path.toSystem(file), 'error');
-        log('base64 error', err.message, 'error');
+        debug.error('base64 file', path.toSystem(file));
+        debug.error('base64 error', err.message);
         process.exit(1);
     }
 

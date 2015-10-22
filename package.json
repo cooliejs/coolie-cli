@@ -57,7 +57,7 @@
     "howdo": "^1.1.4",
     "open": "0.0.5",
     "uglify-js": "^2.4.23",
-    "ydr-utils": "^22.43.3"
+    "ydr-utils": "^27.0.0"
   },
   "gitHead": "cafbb7d49d7a1407b2d321530e8075fb02fe202c",
   "_id": "coolie@0.23.5",
