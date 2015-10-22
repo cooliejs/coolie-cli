@@ -51,15 +51,11 @@ module.exports = function (file, options) {
     var code = options.code;
 
     if (!cssminify) {
-        var cleancss = new CleanCSS(dato.extend({}, defaults, options.cleanCSSOptions));
-
-        cssminify = function (file, code) {
-            return cleancss.minify.call(cleancss, code).styles;
-        };
+        cssminify = new CleanCSS(dato.extend({}, defaults, options.cleanCSSOptions));
     }
 
     try {
-        return cssminify(file, code, null);
+        return cssminify.minify(code).styles;
     } catch (err) {
         debug.error('cssminify', pathURI.toSystemPath(file));
         debug.error('cssminify', err.message);

@@ -18,6 +18,6 @@ var ret = minifyCSS(file, {
     code: code
 });
 
-console.log(code);
+console.log(ret);
 
 
