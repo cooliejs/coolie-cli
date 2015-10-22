@@ -26,7 +26,7 @@ var REG_SPACES = /\s+/g;
  * @param file {String} 文件
  * @param options {Object} 配置
  * @param options.code {String} 代码
- * @param [options.minify] {Boolean} 是否压缩 style
+ * @param [options.minifyCSS] {Boolean} 是否压缩 style
  * @param options.versionLength {Number} 版本长度
  * @param options.srcDirname {String} 构建工程原始根目录
  * @param options.destDirname {String} 目标根目录
@@ -59,7 +59,7 @@ module.exports = function (file, options) {
                 destResourceDirname: options.destResourceDirname
             });
 
-            if (options.minify) {
+            if (options.minifyCSS) {
                 styleCode = minifyCSS(file, {
                     code: styleCode
                 });
@@ -81,7 +81,7 @@ module.exports = function (file, options) {
             destResourceDirname: options.destResourceDirname
         });
 
-        if (options.minify) {
+        if (options.minifyCSS) {
             styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
         }
 

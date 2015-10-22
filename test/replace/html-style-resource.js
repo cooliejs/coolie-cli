@@ -25,7 +25,7 @@ var ret = replaceHTMLStyleResource(file, {
     destHost: '/',
     destResourceDirname: destResourceDirname,
     code: code,
-    minify: true
+    minifyCSS: true
 });
 
 console.log(ret);

@@ -43,6 +43,7 @@ var regs = [{
  * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param [options.destCSSFile] {String} 目标样式文件，如果存在，则相对
+ * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @returns {String}
  */
 module.exports = function (file, options) {
