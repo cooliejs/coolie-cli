@@ -9,8 +9,7 @@
 
 var fs = require('fs');
 var typeis = require('ydr-utils').typeis;
-
-var log = require('./log.js');
+var debug = require('ydr-utils').debug;
 
 var bufferMap = {};
 
@@ -23,8 +22,8 @@ var bufferMap = {};
  */
 module.exports = function (file, encoding) {
     if (!typeis.file(file)) {
-        log('read file', path.toSystem(file), 'error');
-        log('read file', 'no such file', 'error');
+        debug.error('read file', path.toSystem(file));
+        debug.error('read file', 'no such file');
         return process.exit(1);
     }
 
@@ -38,8 +37,8 @@ module.exports = function (file, encoding) {
 
             bf = bufferMap[encoding][file] = new Buffer(ret, encoding);
         } catch (err) {
-            log('read file', path.toSystem(file), 'error');
-            log('read file', err.message, 'error');
+            debug.error('read file', path.toSystem(file));
+            debug.error('read file', err.message);
             return process.exit(1);
         }
     }

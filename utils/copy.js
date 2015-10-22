@@ -11,9 +11,9 @@ var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var encryption = require('ydr-utils').encryption;
 var path = require('ydr-utils').path;
+var debug = require('ydr-utils').debug;
 var fse = require('fs-extra');
 
-var log = require('./log.js');
 var pathURI = require('./path-uri.js');
 
 var copyFilesMap = {};
@@ -76,14 +76,14 @@ module.exports = function (file, options) {
 
     if (!typeis.file(file)) {
         if (options.embedFile) {
-            log('copy file', pathURI.toSystemPath(options.embedFile), 'error');
+            debug.error('copy file', pathURI.toSystemPath(options.embedFile));
         }
 
         if (options.embedCode) {
-            log('source code', options.embedCode, 'error');
+            debug.error('source code', options.embedCode);
         }
 
-        log('copy error', pathURI.toSystemPath(file) + ' is NOT a local file', 'error');
+        debug.error('copy error', pathURI.toSystemPath(file) + ' is NOT a local file');
         process.exit(1);
     }
 
@@ -113,17 +113,17 @@ module.exports = function (file, options) {
 
         switch (options.logType) {
             case 1:
-                log('√', pathURI.toRootURL(file, options.srcDirname), 'success');
+                debug.success('√', pathURI.toRootURL(file, options.srcDirname));
                 break;
 
             case 2:
-                log('√', pathURI.toRootURL(toFile, options.srcDirname), 'success');
+                debug.success('√', pathURI.toRootURL(toFile, options.srcDirname));
                 break;
         }
     } catch (err) {
-        log('copy from', pathURI.toSystemPath(file), 'error');
-        log('copy to', pathURI.toSystemPath(toFile), 'error');
-        log('copy error', err.message, 'error');
+        debug.error('copy from', pathURI.toSystemPath(file));
+        debug.error('copy to', pathURI.toSystemPath(toFile));
+        debug.error('copy error', err.message);
         process.exit(1);
     }
 

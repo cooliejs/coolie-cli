@@ -9,6 +9,7 @@
 
 
 var path = require('ydr-utils').path;
+
 var REG_PATH = path.sep === '/' ? /\\/ : /\//g;
 var REG_URL = /\\/g;
 var REG_ABSOLUTE = /^((http|ftp)s?|\/\/)/i;
