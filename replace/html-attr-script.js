@@ -7,8 +7,10 @@
 
 'use strict';
 
+var dato = require('ydr-utils').dato;
 
 var htmlAttr = require('../utils/html-attr.js');
+var minifyJS = require('../minify/js.js');
 
 var JS_TYPES = [
     'javascript',
@@ -23,7 +25,13 @@ var COOLIE_IGNORE = 'coolieignore';
 var REG_SCRIPT = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
 
 
-
+/**
+ * 替换 html script
+ * @param file {String} 文件
+ * @param options {Object} 配置
+ * @param options.code {String} 代码
+ * @returns {*}
+ */
 module.exports = function (file, options) {
     var code = options.code;
 
@@ -35,7 +43,25 @@ module.exports = function (file, options) {
             return source;
         }
 
+        var type = htmlAttr.get(scriptTag, 'type');
+        var find = !type;
 
+        if (!find) {
+            dato.each(JS_TYPES, function (index, _type) {
+                if (type === _type) {
+                    find = true;
+                    return false;
+                }
+            });
+        }
+
+        if (find) {
+            scriptCode = minifyJS(file, {
+                code: scriptCode
+            });
+        }
+
+        return scriptTag + scriptCode + '</script>';
     });
 
     return code;
