@@ -10,14 +10,15 @@
 
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
-
-var cssminify = require('./cssminify.js');
-var jsminify = require('./jsminify.js');
-var htmlAttr = require('./html-attr.js');
-var sign = require('./sign.js');
-var replaceHTMLResource = require('./replace-html-resource.js');
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
+
+var cssminify = require('./css.js');
+var jsminify = require('./js.js');
+var htmlAttr = require('../utils/html-attr.js');
+var sign = require('../utils/sign.js');
+var replaceHTMLResource = require('../replace/html-resource.js');
+
 var REG_LINES = /[\n\r]/g;
 var REG_SPACES = /\s{2,}|\t/g;
 // 单行注释
@@ -35,8 +36,6 @@ var REG_STYLES = /(<style\b[\s\S]*?>)([\s\S]*?)<\/style>/ig;
 var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
 //<!--[if IE 6]><![endif]-->
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
-var REG_IMG = /<img\b[\s\S]*?>/gi;
-var REG_TAG_START = /<[a-z][a-z\d]*?\b[\s\S]*?>/ig;
 // 有歧义的代码片段
 var REG_AMBIGUITY_SLICE = /}};?<\/script>$/;
 var JS_TYPES = [
@@ -53,14 +52,13 @@ var coolieIgnore = 'coolieignore';
 
 /**
  * html minify
- * @param file
- * @param meta
- * @param [callback]
+ * @param file {String} 文件地址
+ * @param options {Object} 配置
+ * @param options.code {String} 代码
  */
-module.exports = function (file, meta, callback) {
+module.exports = function (file, options) {
     var preMap = {};
-    var configs = global.configs;
-    var code = meta.code;
+    var code = options.code;
 
     if (configs.html.minify === false && configs._buildStep === 4) {
         if (callback) {
@@ -153,15 +151,6 @@ module.exports = function (file, meta, callback) {
         return key;
     });
 
-
-    // 构建第二步：JS 模块里的 html 文件
-    if (configs._buildStep === 2) {
-        code = replaceHTMLResource(file, {
-            code: code,
-            type: meta.type
-        });
-    }
-
     // 再删除多余空白
     code = code.replace(REG_LINES, '')
         .replace(REG_SPACES, ' ');
@@ -186,10 +175,6 @@ module.exports = function (file, meta, callback) {
     dato.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
-
-    if (configs._buildStep === 4) {
-        code += sign('html');
-    }
 
     if (callback) {
         callback(null, code);

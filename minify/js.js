@@ -62,16 +62,16 @@ var compressorOptions = {
 
 /**
  * 脚本压缩
- * @param file
+ * @param file {String} 待压缩的文件
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param [options.uglifyOptions] {Object} 代码压缩配置
  */
 module.exports = function (file, options) {
-    var ret;
+    var code = options.code;
 
     try {
-        ret = uglifyJS.minify(code, {
+        return uglifyJS.minify(code, {
             fromString: true,
             // 是否警告提示
             warnings: false,
@@ -79,9 +79,7 @@ module.exports = function (file, options) {
             mangle: true,
             // 是否压缩
             compress: dato.extend({}, compressorOptions, options.uglifyOptions)
-        });
-
-        return ret.code;
+        }).code;
     } catch (err) {
         debug.error('jsminify', pathURI.toSystemPath(file));
         debug.error('jsminify', err.message);
