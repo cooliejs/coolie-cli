@@ -19,10 +19,13 @@ var destDirname = path.join(__dirname, '../../example/dest/');
 var destResourceDirname = path.join(destDirname, 'res');
 
 var ret = replaceHTMLResource(file, {
+    versionLength: 16,
     srcDirname: srcDirname,
+    destDirname: destDirname,
+    destHost: '/',
     destResourceDirname: destResourceDirname,
     code: code
 });
 
-//console.log(ret);
+console.log(ret);
 

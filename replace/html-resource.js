@@ -11,9 +11,9 @@ var fs = require('fs-extra');
 var path = require('ydr-utils').path;
 var string = require('ydr-utils').string;
 var dato = require('ydr-utils').dato;
+var debug = require('ydr-utils').debug;
 
 var htmlAttr = require('../utils/html-attr.js');
-var log = require('../utils/log.js');
 var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
@@ -48,7 +48,10 @@ var regList = [{
  * @param file {String} 待替换的文件
  * @param options {Object} 配置
  * @param options.code {String} 代码
+ * @param options.versionLength {Number} 版本长度
  * @param options.srcDirname {String} 构建工程原始根目录
+ * @param options.destDirname {String} 目标根目录
+ * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @returns {String}
  */
@@ -111,24 +114,26 @@ module.exports = function (file, options) {
                 //try {
                 //    absFile = path.join(absDir, pathRet.path);
                 //} catch (err) {
-                //    log('replace file', pathURI.toSystemPath(file), 'error');
-                //    log('replace resource', tag, 'error');
-                //    log('replace error', err.message, 'error');
-                //    log('replace ' + item.attr, value === true ? '<EMPTY>' : value, 'error');
+                //    debug.error('replace file', pathURI.toSystemPath(file));
+                //    debug.error('replace resource', tag);
+                //    debug.error('replace error', err.message);
+                //    debug.error('replace ' + item.attr, value === true ? '<EMPTY>' : value);
                 //    process.exit(1);
                 //}
 
-                //var resFile = copy(absFile, {
-                //    version: true,
-                //    dest: configs.destResourceDirname,
-                //    logType: 1,
-                //    srcFile: file,
-                //    srcCode: tag
-                //});
-                //var resRelative = pathURI.relative(configs.destDirname, resFile);
-                //var url = pathURI.joinURI(configs.dest.host, resRelative);
-                //
-                //tag = htmlAttr.set(tag, attr, url + pathRet.suffix);
+                var resFile = copy(absFile, {
+                    version: true,
+                    copyPath: false,
+                    versionLength: options.versionLength,
+                    destDirname: options.destResourceDirname,
+                    logType: 1,
+                    embedFile: file,
+                    embedCode: tag
+                });
+                var resRelative = pathURI.relative(options.destDirname, resFile);
+                var url = pathURI.joinURI(options.destHost, resRelative);
+
+                tag = htmlAttr.set(tag, attr, url + pathRet.suffix);
             });
 
             return tag;
