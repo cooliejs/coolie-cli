@@ -50,13 +50,13 @@
   "licenses": "MIT",
   "dependencies": {
     "adm-zip": "^0.4.7",
-    "clean-css": "^3.1.9",
+    "clean-css": "^3.4.6",
     "colors": "^1.0.3",
     "fs-extra": "^0.11.1",
     "glob": "^5.0.1",
     "howdo": "^1.1.4",
     "open": "0.0.5",
-    "uglify-js": "^2.4.23",
+    "uglify-js": "^2.5.0",
     "ydr-utils": "^27.2.0"
   },
   "gitHead": "cafbb7d49d7a1407b2d321530e8075fb02fe202c",
