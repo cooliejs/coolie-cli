@@ -39,10 +39,10 @@ module.exports = function (file, options) {
 
     // <style...>
     code = code.replace(REG_STYLE_TAG, function (source, styleTag, styleCode) {
-        source = htmlAttr.remove(styleTag, COOLIE_IGNOE);
         var ignore = htmlAttr.get(styleTag, COOLIE_IGNOE);
 
         if (ignore) {
+            source = htmlAttr.remove(styleTag, COOLIE_IGNOE);
             return source;
         }
 
@@ -72,10 +72,10 @@ module.exports = function (file, options) {
 
     // style=""
     code = code.replace(REG_TAG, function (source, tagName, before, quote, styleCode, after) {
-        source = htmlAttr.remove(source, COOLIE_IGNOE);
         var ignore = htmlAttr.get(source, COOLIE_IGNOE);
 
         if (ignore) {
+            source = htmlAttr.remove(source, COOLIE_IGNOE);
             return source;
         }
 

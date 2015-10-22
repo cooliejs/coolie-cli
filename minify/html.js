@@ -55,13 +55,6 @@ var coolieIgnore = 'coolieignore';
  * @param file {String} 文件地址
  * @param options {Object} 配置
  * @param options.code {String} 代码
- * @param options.versionLength {Number} 版本长度
- * @param options.srcDirname {String} 构建工程原始根目录
- * @param options.destDirname {String} 目标根目录
- * @param options.destHost {String} 目标文件 URL 域
- * @param options.destResourceDirname {String} 目标资源文件保存目录
- * @param [options.minifyCSS] {Boolean} 是否压缩 css
- * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @returns {String}
  */
 module.exports = function (file, options) {
