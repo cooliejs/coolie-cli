@@ -17,7 +17,7 @@ var log = require('./log.js');
  * @type {RegExp}
  * @link https://github.com/seajs/seajs/blob/master/dist/sea-debug.js
  */
-var REG_REQUIRE = /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'|\/\*[\S\s]*?\*\/|\/(?:\\\/|[^\/\r\n])+\/(?=[^\/])|\/\/.*|\.\s*require|(?:^|[^$])\brequire\.async\s*\(\s*(["'])(.+?)\1\s*\)/g;
+var REG_REQUIRE = /"(?:\\"|[^"])*"|'(?:\\'|[^'])*'|\/\*[\S\s]*?\*\/|\/(?:\\\/|[^\/\r\n])+\/(?=[^\/])|\/\/.*|\.\s*require|(?:^|[^$])\brequire\.async\s*\(\s*(["'])(.+?)\1/g;
 
 
 /**
@@ -89,15 +89,14 @@ module.exports = function (file, code) {
     code.replace(REG_SLASH, '').replace(REG_REQUIRE, function ($0, $1, $2) {
         if ($2) {
             var matches = $2.match(REG_REQUIRE_TYPE);
-            var pipeline = (matches[2] ? matches[2].toLowerCase() : 'js').split('|');
             var name = cleanURL(matches[1], !!matches[2]);
             var dep = {
                 id: path.join(path.dirname(file), name),
                 raw: matches[1],
                 name: name,
-                type: pipeline[0],
-                outType: pipeline[1] || 'js',
-                pipeline: pipeline
+                type: 'js',
+                outType: 'js',
+                pipeline: []
             };
 
             requires.push(dep);

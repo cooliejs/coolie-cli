@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "0.23.0",
+  "version": "0.23.5",
   "description": "The front-end development builder.",
   "preferGlobal": true,
   "bin": {
@@ -27,7 +27,8 @@
     "node",
     "browerify",
     "webpack",
-    "fis"
+    "fis",
+    "async"
   ],
   "author": {
     "name": "cloudcome",
@@ -57,5 +58,12 @@
     "open": "0.0.5",
     "uglify-js": "^2.4.23",
     "ydr-utils": "^22.43.3"
-  }
+  },
+  "scripts": {},
+  "maintainers": [
+    {
+      "name": "cloudcome",
+      "email": "cloudcome@163.com"
+    }
+  ]
 }

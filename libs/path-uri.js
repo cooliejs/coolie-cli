@@ -13,7 +13,7 @@ var REG_PATH = path.sep === '/' ? /\\/ : /\//g;
 var REG_URL = /\\/g;
 var REG_ABSOLUTE = /^((http|ftp)s?|\/\/)/i;
 var REG_RELATIVE_ROOT = /^\//;
-var REG_BASE_64 = /^data:.*?base64,/i;
+var REG_BASE_64 = /^data:/i;
 var REG_FIRST = /^\//;
 var REG_LAST = /\/$/;
 var REG_SUFFIX = /(\?.*|#.*)$/;
