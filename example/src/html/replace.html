@@ -8,5 +8,16 @@
 
 {{include /template/some.tpl}}
 
-<div style="background: url(../favicon.ico)"></div>
+<div style="background: url(../favicon.ico);
+magin: 10px;"></div>
 <div style="background: url(/favicon.ico)"></div>
+
+<style>
+    body{
+        background: url("../favicon.ico");
+    }
+
+    .div{
+        background: url("/favicon.ico");
+    }
+</style>

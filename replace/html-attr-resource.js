@@ -1,5 +1,5 @@
 /**
- * 替换 html 文件内的静态资源
+ * 替换 html attr 静态资源
  * @author ydr.me
  * @create 2015-10-21 17:39
  */
@@ -41,7 +41,6 @@ var regList = [{
     reg: /<(source)\b[\s\S]*?>(?!["'])/gi,
     replaceAttrs: ['srcset']
 }];
-
 
 /**
  * 替换资源版本
@@ -139,9 +138,6 @@ module.exports = function (file, options) {
             return tag;
         });
     });
-
-    // @todo 属性内替换，如 style="background
-
 
     return code;
 };
