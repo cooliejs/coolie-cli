@@ -59,6 +59,7 @@ var coolieFn = function () {
  * @param options.versionLength {Number} 版本长度
  * @param options.destDirname {String} 目标目录
  * @param options.destJSDirname {String} JS 保存目录
+ * @returns {{destCoolieConfigJSPath: string, srcCoolieConfigBaseDirname: string}}
  */
 module.exports = function (file, options) {
     var code = options.code;
@@ -74,14 +75,11 @@ module.exports = function (file, options) {
     try {
         fn(coolieConfig, callbacks);
 
-        /**
-         * adapt to coolie@0.9.0
-         */
-        var basePath = path.join(path.dirname(coolieConfigJSPath), coolieConfig.base);
+        var srcCoolieConfigBaseDirname = path.join(path.dirname(coolieConfigJSPath), coolieConfig.base);
         var versionMap2 = {};
 
         dato.each(versionMap, function (_file, _version) {
-            var relative = pathURI.relative(basePath, _file);
+            var relative = pathURI.relative(srcCoolieConfigBaseDirname, _file);
 
             relative = pathURI.toURIPath(relative);
             versionMap2[relative] = _version;
@@ -89,8 +87,8 @@ module.exports = function (file, options) {
 
         version = JSON.stringify(versionMap2);
 
-        coolieConfig.async = path.toURI(path.relative(basePath, options.srcCoolieConfigAsyncDirname)) + '/';
-        coolieConfig.chunk = path.toURI(path.relative(basePath, options.srcCoolieConfigChunkDirname)) + '/';
+        coolieConfig.async = path.toURI(path.relative(srcCoolieConfigBaseDirname, options.srcCoolieConfigAsyncDirname)) + '/';
+        coolieConfig.chunk = path.toURI(path.relative(srcCoolieConfigBaseDirname, options.srcCoolieConfigChunkDirname)) + '/';
 
         debug.success('√', 'base: "' + coolieConfig.base + '"');
         debug.success('√', 'async: "' + coolieConfig.async + '"');
@@ -129,7 +127,12 @@ module.exports = function (file, options) {
             debug.error('write file', err.message);
         }
 
-        return destCoolieConfigJSPath;
+        return {
+            // 目标 coolie-config js 路径
+            destCoolieConfigJSPath: destCoolieConfigJSPath,
+            // 原始 coolie-config:base 目录
+            srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname
+        };
     } catch (err) {
         debug.error('coolie-config.js', pathURI.toSystemPath(coolieConfigJSPath));
         debug.error('coolie-config.js', err.message);
