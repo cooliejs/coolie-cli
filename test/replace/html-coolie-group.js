@@ -15,6 +15,8 @@ var file = path.join(__dirname, '../../example/src/html/index3.html');
 var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
 var destResourceDirname = path.join(destDirname, 'res');
+var destCSSDirname = path.join(destDirname, 'static/css/');
+var destJSDirname = path.join(destDirname, 'static/js/');
 
 var code = fs.readFileSync(file, 'utf8');
 var ret = replaceHTMLCoolieGroup(file, {
@@ -22,7 +24,9 @@ var ret = replaceHTMLCoolieGroup(file, {
     srcDirname: srcDirname,
     destDirname: destDirname,
     destResourceDirname: destResourceDirname,
-    destHost: '/'
+    destHost: '/',
+    destCSSDirname: destCSSDirname,
+    destJSDirname: destJSDirname
 });
 
 console.log(ret);

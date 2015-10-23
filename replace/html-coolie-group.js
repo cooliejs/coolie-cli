@@ -8,7 +8,11 @@
 
 'use strict';
 
+var path = require('ydr-utils').path;
 var encryption = require('ydr-utils').encryption;
+var debug = require('ydr-utils').debug;
+var dato = require('ydr-utils').dato;
+var fse = require('fs-extra');
 
 var reader = require('../utils/reader.js');
 var pathURI = require('../utils/path-uri.js');
@@ -24,6 +28,10 @@ var REG_LINK = /<link\b[\s\S]*?href\s*?=\s*?(["'])([\s\S]*?)\1/gi;
 var REG_SCRIPT = /<script\b[\s\S]*?src\s*?=\s*?(["'])([\s\S]*?)\1/gi;
 // 编码
 var ENCODING = 'utf8';
+// 缓存
+var cacheFilesList = [];
+// 结果缓存
+var cacheResultList = [];
 
 /**
  * 合并 coolie 组，合并、压缩、版本控制代码
@@ -32,6 +40,7 @@ var ENCODING = 'utf8';
  * @param options.code {String} 代码
  * @param options.minifyJS {Boolean} 是否压缩 JS
  * @param [options.uglifyJSOptions] {Object} 代码压缩配置
+ * @param options.destJSDirname {String} 目标 JS 文件目录
  * @param options.minifyCSS {Boolean} 是否压缩 CSS
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param options.versionLength {Number} 版本长度
@@ -39,7 +48,7 @@ var ENCODING = 'utf8';
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
- * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
+ * @param options.destCSSDirname {String} 目标 CSS 文件目录
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @returns {*}
  */
@@ -50,7 +59,11 @@ module.exports = function (file, options) {
         var files = [];
         var bfList = [];
         var md5List = [];
+        var findCache = -1;
         var version = '';
+        var concatFile = '';
+        var concatURI = '';
+        var concatRet = '';
 
         // css
         if (REG_LINK.test(coolieCode)) {
@@ -61,6 +74,7 @@ module.exports = function (file, options) {
                         uglifyJSOptions: options.uglifyJSOptions
                     }) + '\n';
 
+                files.push(cssFile);
                 cssCode = replaceCSSResource(cssFile, {
                     code: cssCode,
                     versionLength: options.versionLength,
@@ -75,9 +89,29 @@ module.exports = function (file, options) {
                 bfList.push(new Buffer(cssCode, ENCODING));
             });
 
-            version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
+            findCache = hasCache(files);
 
-            return '<link rel="stylesheet" src="' + version + '">';
+            if (findCache > -1) {
+                return cacheResultList[findCache];
+            }
+
+            version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
+            concatFile = path.join(pathURI.toURIPath(options.destCSSDirname), version + '.css');
+            concatURI = pathURI.toRootURL(concatFile, options.destDirname);
+
+            try {
+                fse.outputFileSync(concatFile, Buffer.concat(bfList));
+                debug.success('√', concatURI);
+            } catch (err) {
+                debug.error('write css', path.toSystem(concatFile));
+                debug.error('write css', err.message);
+            }
+
+            concatRet = '<link rel="stylesheet" src="' + concatURI + '">';
+            cacheFilesList.push(files);
+            cacheResultList.push(concatRet);
+
+            return concatRet;
         }
         // js
         else {
@@ -88,18 +122,68 @@ module.exports = function (file, options) {
                         uglifyJSOptions: options.uglifyJSOptions
                     }) + '\n';
 
+                files.push(jsFile);
                 md5List.push(encryption.md5(jsCode));
                 bfList.push(new Buffer(jsCode, ENCODING));
             });
 
+            findCache = hasCache(files);
+
+            if (findCache > -1) {
+                return cacheResultList[findCache];
+            }
+
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
+            concatFile = path.join(pathURI.toURIPath(options.destJSDirname), version + '.js');
+            concatURI = pathURI.toRootURL(concatFile, options.destDirname);
 
-            return '<script src="' + version + '"></script>';
+            try {
+                fse.outputFileSync(concatFile, Buffer.concat(bfList));
+                debug.success('√', concatURI);
+            } catch (err) {
+                debug.error('write css', path.toSystem(concatFile));
+                debug.error('write css', err.message);
+            }
+
+            concatRet = '<script src="' + concatURI + '"></script>';
+            cacheFilesList.push(files);
+            cacheResultList.push(concatRet);
+
+            return concatRet;
         }
-
     });
 
     return code;
 };
 
+
+/**
+ * 获取缓存信息
+ * @returns {Array}
+ */
+module.exports.getCache = function () {
+    return cacheFilesList;
+};
+
+
+/**
+ * 判断是否命中缓存
+ * @param files
+ * @returns {Number}
+ */
+function hasCache(files) {
+    var find = -1;
+
+    dato.each(cacheFilesList, function (index, cache) {
+        var compare = dato.compare(cache, files);
+
+        // 没有不同 && 没有独有
+        if (!compare.different.length && !compare.only[0].length && !compare.only[1].length) {
+            find = index;
+            return false;
+        }
+    });
+
+    return find;
+}
 
