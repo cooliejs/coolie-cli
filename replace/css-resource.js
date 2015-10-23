@@ -33,7 +33,7 @@ var regs = [{
 
 
 /**
- * 构建 css 资源版本
+ * 构建 css 资源版本，建议在 css minify 之后处理
  * @param file {String} 待替换的文件
  * @param options {Object} 配置
  * @param options.code {String} 代码

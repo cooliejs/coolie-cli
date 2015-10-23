@@ -8,12 +8,21 @@
 
 'use strict';
 
+var encryption = require('ydr-utils').encryption;
 
 var reader = require('../utils/reader.js');
+var pathURI = require('../utils/path-uri.js');
+var minifyJS = require('../minify/js.js');
+var minifyCSS = require('../minify/css.js');
 
 // <!--coolie-->
 var REG_COOLIE_GROUP = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
-
+// <link href>
+var REG_LINK = /<link\b[\s\S]*?href\s*?=\s*?(["'])([\s\S]*?)\1/gi;
+// <script src>
+var REG_SCRIPT = /<script\b[\s\S]*?src\s*?=\s*?(["'])([\s\S]*?)\1/gi;
+// 编码
+var ENCODING = 'utf8';
 
 /**
  * 合并 coolie 组，合并、压缩、版本控制代码
@@ -21,6 +30,7 @@ var REG_COOLIE_GROUP = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/g
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param options.minifyJS {Boolean} 是否压缩 JS
+ * @param [options.uglifyJSOptions] {Object} 代码压缩配置
  * @param options.minifyCSS {Boolean} 是否压缩 CSS
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param options.versionLength {Number} 版本长度
@@ -35,7 +45,38 @@ var REG_COOLIE_GROUP = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/g
 module.exports = function (file, options) {
     var code = options.code;
 
-    code.replace(REG_COOLIE_GROUP, function (source, coolieCode) {
+    code = code.replace(REG_COOLIE_GROUP, function (source, coolieCode) {
+        var files = [];
+        var bfList = [];
+        var md5List = [];
+        var version = '';
+
+        // css
+        if (REG_LINK.test(coolieCode)) {
+            coolieCode.replace(REG_LINK, function (source, quote, href) {
+                files.push(pathURI.toAbsoluteFile(href, file, options.srcDirname));
+            });
+
+            console.log(files);
+            return '===========css===========';
+        }
+        // js
+        else {
+            coolieCode.replace(REG_SCRIPT, function (source, quote, src) {
+                var jsFile = pathURI.toAbsoluteFile(src, file, options.srcDirname);
+                var jsCode = minifyJS(jsFile, {
+                        code: reader(jsFile, ENCODING),
+                        uglifyJSOptions: options.uglifyJSOptions
+                    }) + '\n';
+                md5List.push(encryption.md5(jsCode));
+                bfList.push(new Buffer(jsCode, ENCODING));
+                files.push(jsFile);
+            });
+
+            version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
+
+            return '<script src="' + version + '"></script>';
+        }
 
     });
 
