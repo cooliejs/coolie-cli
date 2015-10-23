@@ -13,12 +13,6 @@ var debug = require('ydr-utils').debug;
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
 
-var cssminify = require('./css.js');
-var jsminify = require('./js.js');
-var htmlAttr = require('../utils/html-attr.js');
-var sign = require('../utils/sign.js');
-var replaceHTMLAttrResource = require('../replace/html-attr-resource.js');
-
 var REG_LINES = /[\n\r]/g;
 var REG_SPACES = /\s{2,}|\t/g;
 // 单行注释
@@ -30,25 +24,14 @@ var REG_LINE_COMMENTS = /<!--.*?-->/g;
 // - @create 2014-09-25 19:20
 // -->
 var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
-var REG_PRE = /(<(textarea|pre|code|style|script)\b[\s\S]*?>)([\s\S]*?)<\/textarea>/ig;
-var REG_PRES = /(<pre\b[\s\S]*?>)([\s\S]*?)<\/pre>/ig;
-var REG_STYLES = /(<style\b[\s\S]*?>)([\s\S]*?)<\/style>/ig;
-var REG_SCRIPTS = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
-//<!--[if IE 6]><![endif]-->
-var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/i;
-// 有歧义的代码片段
-var REG_AMBIGUITY_SLICE = /}};?<\/script>$/;
-var JS_TYPES = [
-    'javascript',
-    'text/javascript',
-    'text/ecmascript',
-    'text/ecmascript-6',
-    'text/jsx',
-    'application/javascript',
-    'application/ecmascript'
+var keepSourceList = [
+    // <textarea>
+    /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi,
+    //<!--[if IE 6]><![endif]-->
+    /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi,
+    // <!--coolie-->
+    /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi
 ];
-var coolieIgnore = 'coolieignore';
-
 
 /**
  * html minify
@@ -61,30 +44,21 @@ module.exports = function (file, options) {
     var preMap = {};
     var code = options.code;
 
-    // 保存 <textarea|....>
-    code = code.replace(REG_PRE, function (source, tag, tagName, tagCode) {
-        var key = _generateKey();
+    // 保留原始格式
+    dato.each(keepSourceList, function (index, reg) {
+        code = code.replace(reg, function (source) {
+            var key = _generateKey();
 
-        preMap[key] = tag.replace(REG_LINES, '').replace(REG_SPACES, ' ') + tagCode + '</textarea>';
+            preMap[key] = source;
 
-        return key;
+            return key;
+        });
     });
-
-    // 保存条件注释
-    code = code.replace(REG_CONDITIONS_COMMENTS, function (source) {
-        var key = _generateKey();
-
-        preMap[key] = source;
-
-        return key;
-    });
-
 
     // 先删除 html 注释
     code = code
         .replace(REG_YUI_COMMENTS, '')
         .replace(REG_LINE_COMMENTS, '');
-
 
     // 再删除多余空白
     code = code
