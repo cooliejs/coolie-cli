@@ -11,6 +11,7 @@ var dato = require('ydr-utils').dato;
 var encryption = require('ydr-utils').encryption;
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
+var fse = require('fs-extra');
 
 var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
@@ -56,12 +57,12 @@ var coolieFn = function () {
  * @param options.srcDirname {String} 构建根目录
  * @param options.versionMap {Object} 版本配置 {file: version}
  * @param options.versionLength {Number} 版本长度
- * @returns {Object}
+ * @param options.destDirname {String} 目标目录
+ * @param options.destJSDirname {String} JS 保存目录
  */
 module.exports = function (file, options) {
     var code = options.code;
     var versionMap = options.versionMap;
-    var srcPath = options.srcDirname;
     var coolieConfigJSPath = options.srcCoolieConfigJSPath;
     var coolieString = coolieFn.toString()
         .replace(REG_FUNCTION_START, '')
@@ -79,13 +80,11 @@ module.exports = function (file, options) {
         var basePath = path.join(path.dirname(coolieConfigJSPath), coolieConfig.base);
         var versionMap2 = {};
 
-        dato.each(versionMap, function (file, ver) {
-            file = path.join(srcPath, file);
-
-            var relative = pathURI.relative(basePath, file);
+        dato.each(versionMap, function (_file, _version) {
+            var relative = pathURI.relative(basePath, _file);
 
             relative = pathURI.toURIPath(relative);
-            versionMap2[relative] = ver;
+            versionMap2[relative] = _version;
         });
 
         version = JSON.stringify(versionMap2);
@@ -114,13 +113,23 @@ module.exports = function (file, options) {
 
         code2 += ';';
 
-        return {
-            config: coolieConfig,
-            code: minifyJS(coolieConfigJSPath, {
-                code: code2
-            }),
-            version: encryption.md5(code2).slice(0, options.versionLength)
-        };
+        var destCoolieConfigJSPath = encryption.md5(code2).slice(0, options.versionLength) + '.js';
+        code2 = minifyJS(coolieConfigJSPath, {
+            code: code2
+        });
+
+        destCoolieConfigJSPath = path.join(options.destJSDirname, destCoolieConfigJSPath);
+        var destCoolieConfigJSURI = pathURI.toRootURL(destCoolieConfigJSPath, options.destDirname);
+
+        try {
+            fse.outputFileSync(destCoolieConfigJSPath, code2, 'utf8');
+            debug.success('√', destCoolieConfigJSURI);
+        } catch (err) {
+            debug.error('coolie-config.js', destCoolieConfigJSPath);
+            debug.error('write file', err.message);
+        }
+
+        return destCoolieConfigJSPath;
     } catch (err) {
         debug.error('coolie-config.js', pathURI.toSystemPath(coolieConfigJSPath));
         debug.error('coolie-config.js', err.message);

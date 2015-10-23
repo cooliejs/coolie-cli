@@ -20,6 +20,7 @@ var destDirname = path.join(__dirname, '../../example/dest/');
 var srcCoolieConfigJSPath = path.join(srcDirname, 'static/js/coolie-config.js');
 var srcCoolieConfigAsyncDirname = path.join(srcDirname, 'static/js/async/');
 var srcCoolieConfigChunkDirname = path.join(srcDirname, 'static/js/chunk/');
+var destJSDirname = path.join(destDirname, 'static/js/');
 var testFile1 = path.join(srcDirname, 'static/js/index3-1.js');
 var testFile2 = path.join(srcDirname, 'static/js/app/user/index.js');
 var versionMap= {};
@@ -28,12 +29,13 @@ versionMap[testFile1] = encryption.lastModified(testFile1);
 versionMap[testFile2] = encryption.lastModified(testFile2);
 
 var ret = replaceCoolieConfig(file, {
-    versionLength: 16,
+    versionLength: 32,
     srcDirname: srcDirname,
-    destDirname: destDirname,
     srcCoolieConfigJSPath: srcCoolieConfigJSPath,
     srcCoolieConfigAsyncDirname: srcCoolieConfigAsyncDirname,
     srcCoolieConfigChunkDirname: srcCoolieConfigChunkDirname,
+    destDirname: destDirname,
+    destJSDirname: destJSDirname,
     versionMap: versionMap,
     destHost: '/',
     code: code
