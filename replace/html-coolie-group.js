@@ -39,7 +39,7 @@ var ENCODING = 'utf8';
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
- * @param [options.destCSSFile] {String} 目标样式文件，如果存在，则相对
+ * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @returns {*}
  */
@@ -69,7 +69,7 @@ module.exports = function (file, options) {
                     destHost: options.destHost,
                     destResourceDirname: options.destResourceDirname,
                     minifyResource: true,
-                    destCSSFile: null
+                    destCSSDirname: options.destCSSDirname
                 });
                 md5List.push(encryption.md5(cssCode));
                 bfList.push(new Buffer(cssCode, ENCODING));
