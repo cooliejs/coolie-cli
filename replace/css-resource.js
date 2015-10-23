@@ -42,7 +42,7 @@ var regs = [{
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
- * @param [options.destCSSFile] {String} 目标样式文件，如果存在，则引用资源相对路径
+ * @param [options.destCSSDirname] {String} 目标样式文件，如果存在，则引用资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @returns {String}
  */
@@ -76,8 +76,8 @@ module.exports = function (file, options) {
             var url = '';
 
             // 有目标文件，css 里的资源相对于 css 文件本身
-            if (options.destCSSFile) {
-                url = pathURI.relative(path.dirname(options.destCSSFile), destFile);
+            if (options.destCSSDirname) {
+                url = pathURI.relative(options.destCSSDirname, destFile);
             }
             // 否则，css 里的资源相对于根目录
             else {

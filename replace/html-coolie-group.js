@@ -14,6 +14,7 @@ var reader = require('../utils/reader.js');
 var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
 var minifyCSS = require('../minify/css.js');
+var replaceCSSResource = require('../replace/css-resource.js');
 
 // <!--coolie-->
 var REG_COOLIE_GROUP = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
@@ -54,11 +55,29 @@ module.exports = function (file, options) {
         // css
         if (REG_LINK.test(coolieCode)) {
             coolieCode.replace(REG_LINK, function (source, quote, href) {
-                files.push(pathURI.toAbsoluteFile(href, file, options.srcDirname));
+                var cssFile = pathURI.toAbsoluteFile(href, file, options.srcDirname);
+                var cssCode = minifyCSS(cssFile, {
+                        code: reader(cssFile, ENCODING),
+                        uglifyJSOptions: options.uglifyJSOptions
+                    }) + '\n';
+
+                cssCode = replaceCSSResource(cssFile, {
+                    code: cssCode,
+                    versionLength: options.versionLength,
+                    srcDirname: options.srcDirname,
+                    destDirname: options.destDirname,
+                    destHost: options.destHost,
+                    destResourceDirname: options.destResourceDirname,
+                    minifyResource: true,
+                    destCSSFile: null
+                });
+                md5List.push(encryption.md5(cssCode));
+                bfList.push(new Buffer(cssCode, ENCODING));
             });
 
-            console.log(files);
-            return '===========css===========';
+            version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
+
+            return '<link rel="stylesheet" src="' + version + '">';
         }
         // js
         else {
@@ -68,9 +87,9 @@ module.exports = function (file, options) {
                         code: reader(jsFile, ENCODING),
                         uglifyJSOptions: options.uglifyJSOptions
                     }) + '\n';
+
                 md5List.push(encryption.md5(jsCode));
                 bfList.push(new Buffer(jsCode, ENCODING));
-                files.push(jsFile);
             });
 
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);

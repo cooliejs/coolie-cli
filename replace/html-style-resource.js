@@ -52,7 +52,7 @@ module.exports = function (file, options) {
         if (!type || type === STYLE_TAG_TYPE) {
             styleCode = replaceCSSResource(file, {
                 code: styleCode,
-                destCSSFile: null,
+                destCSSDirname: null,
                 versionLength: options.versionLength,
                 srcDirname: options.srcDirname,
                 destDirname: options.destDirname,
