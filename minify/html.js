@@ -17,7 +17,7 @@ var cssminify = require('./css.js');
 var jsminify = require('./js.js');
 var htmlAttr = require('../utils/html-attr.js');
 var sign = require('../utils/sign.js');
-var replaceHTMLResource = require('../replace/html-resource.js');
+var replaceHTMLAttrResource = require('../replace/html-attr-resource.js');
 
 var REG_LINES = /[\n\r]/g;
 var REG_SPACES = /\s{2,}|\t/g;
@@ -86,35 +86,9 @@ module.exports = function (file, options) {
         .replace(REG_LINE_COMMENTS, '');
 
 
-    //// 保存 <script>
-    //code = code.replace(REG_SCRIPTS, function ($0, scriptTag, scriptCode) {
-    //    var key = _generateKey();
-    //    var tag = scriptTag.replace(REG_LINES, '').replace(REG_SPACES, ' ');
-    //    var type = htmlAttr.get(tag, 'type');
-    //    var isIgnore = htmlAttr.get(tag, coolieIgnore);
-    //    var code2 = scriptCode;
-    //
-    //    if (!isIgnore && (type === false || JS_TYPES.indexOf(type) > -1)) {
-    //        code2 = jsminify(file, {
-    //            code: scriptCode
-    //        });
-    //    }
-    //
-    //    tag = htmlAttr.remove(tag, coolieIgnore);
-    //    preMap[key] = (tag + code2 + '</script>');
-    //
-    //    // 消除歧义
-    //    // <script>var a = {b:{}};</script>
-    //    //                     ^ 该`}}`在对应的模板引擎里会出错
-    //    if (!isIgnore && (type === false || JS_TYPES.indexOf(type) > -1)) {
-    //        preMap[key] = preMap[key].replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
-    //    }
-    //
-    //    return key;
-    //});
-
     // 再删除多余空白
-    code = code.replace(REG_LINES, '')
+    code = code
+        .replace(REG_LINES, '')
         .replace(REG_SPACES, ' ');
 
     // 恢复预格式

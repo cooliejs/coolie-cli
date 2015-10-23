@@ -23,6 +23,9 @@ var JS_TYPES = [
 ];
 var COOLIE_IGNORE = 'coolieignore';
 var REG_SCRIPT = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
+// 有歧义的代码片段
+var REG_AMBIGUITY_SLICE = /}};?<\/script>$/;
+
 
 
 /**
@@ -61,7 +64,9 @@ module.exports = function (file, options) {
             });
         }
 
-        return scriptTag + scriptCode + '</script>';
+        var ret =  scriptTag + scriptCode + '</script>';
+
+        return ret.replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
     });
 
     return code;
