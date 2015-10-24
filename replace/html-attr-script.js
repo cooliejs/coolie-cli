@@ -38,7 +38,7 @@ var REG_SPACE = /\s+/g;
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param options.srcDirname {String} 构建根目录
- * @param options.srcCoolieConfigBaseDirname {String} 构建根目录
+ * @param options.srcCoolieConfigBaseDirname {String} coolie-config:base 目录
  * @returns {*}
  */
 module.exports = function (file, options) {
