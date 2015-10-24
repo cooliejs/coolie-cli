@@ -18,7 +18,6 @@ var REG_BASE_64 = /^data:/i;
 var REG_FIRST = /^\//;
 var REG_LAST = /\/$/;
 var REG_SUFFIX = /(\?.*|#.*)$/;
-var REG_EXT = /\.([^.]+)$/;
 
 
 /**
@@ -186,11 +185,10 @@ exports.parseURI2Path = function (uri) {
  * @returns {*}
  */
 exports.replaceVersion = function (uri, version) {
-    var p = exports.parseURI2Path(uri);
+    var dir = path.dirname(uri);
+    var extname = path.extname(uri);
 
-    return p.path.replace(REG_EXT, function ($0, $1) {
-            return '.' + version + '.' + $1;
-        }) + p.suffix;
+    return exports.joinURI(dir, version + extname);
 };
 
 
@@ -205,10 +203,3 @@ exports.relative = function (from, to) {
 
     return path.relative(from, to);
 };
-
-
-/**
- * 合并路径
- * @type function
- */
-exports.join = path.join;
