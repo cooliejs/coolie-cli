@@ -22,6 +22,7 @@ var REG_DEFINE = /^\bdefine\b\s*?\b\(\s*?function\b[^(]*\(([^,)]*)/;
  * @param options {Object} 配置
  * @param options.code {String} 代码，压缩后的代码
  * @param options.depName2IdMap {Object} 依赖对应表 [{name: id}]
+ * @param options.async {Boolean} 是否异步模块
  */
 module.exports = function (file, options) {
     var code = options.code;
@@ -36,9 +37,11 @@ module.exports = function (file, options) {
     }
 
     dato.each(depName2IdMap, function (depName, depId) {
-        var reg = _buildReg(requireVar, depName);
+        var reg = _buildReg(requireVar, depName, options.async);
 
-        code = code.replace(reg, requireVar + '("' + depId + '")');
+        code = options.async ?
+            code.replace(reg, requireVar + '.async("' + depId + '"') :
+            code.replace(reg, requireVar + '("' + depId + '")');
     });
 
     return code;
@@ -47,7 +50,7 @@ module.exports = function (file, options) {
 
 /**
  * 提取 define 里的 require 变量
- * define("index.js",["1"],function(s,e,i){"use strict";s("../libs/all.js");console.log("app/index.js")});
+ * define(function(s,e,i){"use strict";s("../libs/all.js");console.log("app/index.js")});
  * @private
  */
 function _getRequireVar(str) {
@@ -59,11 +62,17 @@ function _getRequireVar(str) {
  * 生成正则
  * @param requireVar
  * @param dep
+ * @param async
  * @returns {RegExp}
  * @private
  */
-function _buildReg(requireVar, dep) {
+function _buildReg(requireVar, dep, async) {
     dep = string.escapeRegExp(dep);
+
+    if (async) {
+        // require.async("..."
+        return new RegExp('\\b' + string.escapeRegExp(requireVar) + '\\.async\\([\'"]' + dep + '[\'"]', 'g');
+    }
 
     // require("...");
     // require("...", "...");
