@@ -9,19 +9,20 @@
 
 var path = require('path');
 
-var replaceCMDDefine = require('../../replace/cmd-define.js');
+var replaceAMDRequire = require('../../replace/amd-require.js');
 var globalId = require('../../utils/global-id.js');
 
 var file = __filename;
-var code = 'define(function(){});';
-var depFileList = [file];
+var code = 'define(function(s,e,i){"use strict";s("../libs/all.js");console.log("app/index.js")});';
 
 // 预先注入几个文件
 globalId.get(file);
 
-var ret = replaceCMDDefine(file, {
+var ret = replaceAMDRequire(file, {
     code: code,
-    depFileList: depFileList
+    depName2IdMap: {
+        '../libs/all.js': 'n'
+    }
 });
 
 console.log(ret);

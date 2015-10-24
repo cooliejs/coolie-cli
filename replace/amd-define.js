@@ -1,5 +1,5 @@
 /**
- * replace cmd js define
+ * replace amd js define
  * @author ydr.me
  * @create 2015-10-23 15:02
  */
