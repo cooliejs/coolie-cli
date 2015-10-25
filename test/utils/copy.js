@@ -9,6 +9,8 @@
 
 var path = require('path');
 var fs = require('fs');
+var assert = require('assert');
+var typeis = require('ydr-utils').typeis;
 
 var copy = require('../../utils/copy.js');
 var file = path.join(__dirname, '../../example/src/html/replace.html');
@@ -19,10 +21,17 @@ var destDirname = path.join(__dirname, '../../example/dest/');
 //var destResourceDirname = path.join(destDirname, 'res');
 
 
-copy(file, {
-    srcDirname: srcDirname,
-    destDirname: destDirname,
-    copyPath: false,
-    version: true
+describe('utils/copy', function () {
+    it('copy', function () {
+        var ret = copy(file, {
+            srcDirname: srcDirname,
+            destDirname: destDirname,
+            copyPath: false,
+            version: true
+        });
+
+        assert.equal(typeis.file(ret), true);
+    });
 });
+
 
