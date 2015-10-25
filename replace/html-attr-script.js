@@ -44,6 +44,7 @@ var REG_SPACE = /\s+/g;
  * @param options.destHost {String} 目标根域
  * @param options.destCoolieConfigJSPath {String} 目标 coolie-config.js 路径
  * @param options.versionMap {Object} 版本 map，{file: version}
+ * @param [options.minifyJS] {Boolean} 是否压缩 JS
  * @returns {String}
  */
 module.exports = function (file, options) {

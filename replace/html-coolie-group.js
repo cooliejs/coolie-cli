@@ -50,6 +50,9 @@ var cacheResultList = [];
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param options.destCSSDirname {String} 目标 CSS 文件目录
  * @param [options.minifyResource] {Boolean} 压缩资源文件
+ * @param [options.minifyJS] {Boolean} 是否压缩 JS
+ * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
+ * @param [options.replaceCSSResource] {Boolean} 是否替换 CSS 内引用资源
  * @returns {*}
  */
 module.exports = function (file, options) {
@@ -69,17 +72,29 @@ module.exports = function (file, options) {
         if (REG_LINK.test(coolieCode)) {
             coolieCode.replace(REG_LINK, function (source, quote, href) {
                 var cssFile = pathURI.toAbsoluteFile(href, file, options.srcDirname);
-                var cssCode = minifyCSS(cssFile, {
-                        code: reader(cssFile, ENCODING),
-                        uglifyJSOptions: options.uglifyJSOptions,
+                var cssCode = reader(cssFile, ENCODING);
+
+                if (options.replaceCSSResource) {
+                    cssCode = replaceCSSResource(cssFile, {
+                        code: cssCode,
                         versionLength: options.versionLength,
                         srcDirname: options.srcDirname,
                         destDirname: options.destDirname,
                         destHost: options.destHost,
                         destResourceDirname: options.destResourceDirname,
                         destCSSDirname: options.destCSSDirname,
-                        minifyResource: options.minifyResource
-                    }) + '\n';
+                        minifyResource: options.minifyResource,
+                        returnObject: false
+                    });
+                }
+
+                if (options.minifyCSS) {
+                    cssCode = minifyCSS(cssFile, {
+                            code: cssCode,
+                            cleanCSSOptions: options.cleanCSSOptions,
+                            replaceCSSResource: false
+                        }) + '\n';
+                }
 
                 files.push(cssFile);
                 md5List.push(encryption.md5(cssCode));

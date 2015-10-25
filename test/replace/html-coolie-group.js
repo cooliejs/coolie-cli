@@ -29,7 +29,8 @@ describe('replace/html-coolie-group.js', function () {
             destResourceDirname: destResourceDirname,
             destHost: '/',
             destCSSDirname: destCSSDirname,
-            destJSDirname: destJSDirname
+            destJSDirname: destJSDirname,
+            replaceCSSResource: true
         });
 
         assert.equal(/<!--coolie-->/g.test(ret), false);
