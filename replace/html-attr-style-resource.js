@@ -7,6 +7,7 @@
 
 'use strict';
 
+var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 var path = require('ydr-utils').path;
 
@@ -17,6 +18,17 @@ var COOLIE_IGNOE = 'coolieignore';
 var REG_TAG = /<([a-z][a-z\d]*)\b([\s\S]*?)style\s*?=\s*?(["'])([\s\S]*?)\3([\s\S]*?)>/gi;
 var REG_LINES = /[\n\r]/g;
 var REG_SPACES = /\s+/g;
+var defaults = {
+    code: '',
+    versionLength: 32,
+    srcDirname: null,
+    destDirname: null,
+    destHost: '/',
+    destResourceDirname: null,
+    minifyResource: true,
+    minifyCSS: true
+};
+
 
 /**
  * 替换 html style 资源
@@ -32,6 +44,7 @@ var REG_SPACES = /\s+/g;
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
  */
 module.exports = function (file, options) {
+    options = dato.extend({}, defaults, options);
     var code = options.code;
 
     // style=""

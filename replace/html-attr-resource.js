@@ -41,6 +41,16 @@ var regList = [{
     reg: /<(source)\b[\s\S]*?>(?!["'])/gi,
     replaceAttrs: ['srcset']
 }];
+var defaults = {
+    code: '',
+    versionLength: 32,
+    srcDirname: null,
+    destDirname: null,
+    destHost: '/',
+    destResourceDirname: null,
+    minifyResource: true
+};
+
 
 /**
  * 替换资源版本
@@ -56,6 +66,7 @@ var regList = [{
  * @returns {String}
  */
 module.exports = function (file, options) {
+    options = dato.extend({}, defaults, options);
     var code = options.code;
 
     // 标签替换，如 <img src="
