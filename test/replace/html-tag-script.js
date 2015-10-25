@@ -11,7 +11,7 @@ var path = require('path');
 var fs = require('fs');
 var assert = require('assert');
 
-var replaceHTMLAttrScript = require('../../replace/html-attr-script.js');
+var replaceHTMLTagScript = require('../../replace/html-tag-script.js');
 var file = path.join(__dirname, '../../example/src/html/replace.html');
 
 var code = fs.readFileSync(file, 'utf8');
@@ -27,7 +27,7 @@ versionMap[srcMainPath] = '00023123123123123312312';
 
 describe('replace/html-attr-script.js', function () {
     it('e', function () {
-        var ret = replaceHTMLAttrScript(file, {
+        var ret = replaceHTMLTagScript(file, {
             code: code,
             srcDirname: srcDirname,
             srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname,

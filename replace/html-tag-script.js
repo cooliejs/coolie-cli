@@ -1,5 +1,5 @@
 /**
- * html attr script replace
+ * html <script> replace
  * @author ydr.me
  * @create 2015-10-22 18:41
  */

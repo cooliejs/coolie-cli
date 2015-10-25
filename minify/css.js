@@ -54,6 +54,7 @@ var cssminify = null;
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.replaceCSSResource] {Boolean} 是否替换 css 内引用文件
+ * @returns {String}
  */
 module.exports = function (file, options) {
     var code = options.code;
