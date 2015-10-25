@@ -19,25 +19,31 @@ var reader = require('./reader.js');
 
 
 /**
- * 文件 base64 编码
- * @param file {String|Object} 文件或者文件二进制编码
- * @param [extname]
- * @param [callback]
- * @returns {*}
+ * 内容 base64 编码
+ * @param source {String} 字符串
+ * @param [extname] {String} 后缀
+ * @returns {string}
  */
-module.exports = function (file, extname, callback) {
-    var args = arguments;
+exports.string = function (source, extname) {
+    var ret = string.base64(source);
+    var prefix = '';
 
-    if (args.length === 2) {
-        // file, callback
-        if (typeis.function(args[1])) {
-            callback = args[1];
-            extname = null;
-        } else {
-            callback = null;
-        }
+    if (extname) {
+        // data:image/png;base64,
+        prefix = 'data:' + mime.get(extname) + ';base64,';
     }
 
+    return prefix + ret;
+};
+
+
+/**
+ * 文件 base64 编码
+ * @param file {String|Object} 文件或者文件二进制编码
+ * @param [extname] {String} 后缀
+ * @returns {*}
+ */
+exports.file = function (file, extname) {
     var binary;
 
     // 文件
@@ -45,7 +51,8 @@ module.exports = function (file, extname, callback) {
         extname = extname || path.extname(file);
         binary = reader(file, 'binary');
     } else {
-        binary = file;
+        debug.error('base64 file', path.toSystem(file) + ' is NOT a local file');
+        return process.exit(1);
     }
 
     // data:image/png;base64,
@@ -58,14 +65,10 @@ module.exports = function (file, extname, callback) {
     } catch (err) {
         debug.error('base64 file', path.toSystem(file));
         debug.error('base64 error', err.message);
-        process.exit(1);
+        return process.exit(1);
     }
 
-    if (callback) {
-        callback(null, prefix + base64);
-    } else {
-        return prefix + base64;
-    }
+    return prefix + base64;
 };
 
 
