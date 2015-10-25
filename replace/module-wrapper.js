@@ -113,6 +113,7 @@ var wrapDefine = function (file, code, options) {
  * @param options.destResourceDirname {String} 目标资源目录
  * @param options.destHost {String} 目标域
  * @param options.versionLength {Number} 版本号长度
+ * @param [options.minifyResource] {Boolean} 是否压缩静态资源
  * @return {String}
  */
 module.exports = function (file, options) {
@@ -155,7 +156,14 @@ module.exports = function (file, options) {
 
         case 'css':
             code = replaceCSSResource(file, {
-                code: code
+                code: code,
+                versionLength: options.versionLength,
+                srcDirname: options.srcDirname,
+                destDirname: options.destDirname,
+                destHost: options.destHost,
+                destResourceDirname: options.destResourceDirname,
+                destCSSDirname: options.destCSSDirname,
+                minifyResource: options.minifyResource
             });
             switch (options.outType) {
                 case 'url':

@@ -13,6 +13,15 @@ var debug = require('ydr-utils').debug;
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
 
+// 替换 <img src="">
+var replaceHTMLAttrResource = require('../replace/html-attr-resource.js');
+// 替换 <script>
+var replaceHTMLAttrScript = require('../replace/html-attr-script.js');
+// 替换 <div style=""
+var replaceHTMLStyleResource = require('../replace/html-style-resource.js');
+// 替换 <!--coolie-->...<!--/coolie-->
+var replaceHTMLCoolieGroup = require('../replace/html-coolie-group.js');
+
 var REG_LINES = /[\n\r]/g;
 var REG_SPACES = /\s{2,}|\t/g;
 // 单行注释

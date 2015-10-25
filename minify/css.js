@@ -46,6 +46,13 @@ var cssminify = null;
  * @param options {Object} 配置
  * @param options.code {String} 样式文件的代码
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
+ * @param options.versionLength {Number} 版本长度
+ * @param options.srcDirname {String} 构建工程原始根目录
+ * @param options.destDirname {String} 目标根目录
+ * @param options.destHost {String} 目标文件 URL 域
+ * @param options.destResourceDirname {String} 目标资源文件保存目录
+ * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
+ * @param [options.minifyResource] {Boolean} 压缩资源文件
  */
 module.exports = function (file, options) {
     var code = options.code;
@@ -55,7 +62,19 @@ module.exports = function (file, options) {
     }
 
     try {
-        return cssminify.minify(code).styles;
+        code = cssminify.minify(code).styles;
+        code = replaceCSSResource(file, {
+            code: code,
+            versionLength: options.versionLength,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destResourceDirname: options.destResourceDirname,
+            destCSSDirname: options.destCSSDirname,
+            minifyResource: options.minifyResource
+        });
+
+        return code;
     } catch (err) {
         debug.error('cssminify', pathURI.toSystemPath(file));
         debug.error('cssminify', err.message);

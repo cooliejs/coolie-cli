@@ -21,8 +21,12 @@ var destResourceDirname = path.join(destDirname, 'static/res/');
 var destCSSDirname = path.join(destDirname, 'static/css/');
 var destJSDirname = path.join(destDirname, 'static/js/');
 
-var jsonPath = path.join(srcDirname, 'coolie.json');
-var cssPath = path.join(srcDirname, 'static/css/1.css');
+var jsonPath = path.join(srcDirname, 'static/js/libs2/some.json');
+var cssPath = path.join(srcDirname, 'static/js/libs2/some.css');
+var textPath = path.join(srcDirname, 'static/js/libs2/some.txt');
+var htmlPath = path.join(srcDirname, 'static/js/libs2/some.html');
+var imagePath = path.join(srcDirname, 'static/js/libs2/some.jpg');
+var jsPath = path.join(srcDirname, 'static/js/libs2/some.js');
 
 var options = {
     srcDirname: srcDirname,
@@ -36,55 +40,93 @@ var options = {
 
 globalId.get(jsonPath);
 globalId.get(cssPath);
+globalId.get(textPath);
+globalId.get(htmlPath);
+globalId.get(imagePath);
+globalId.get(jsPath);
 
 describe('module-wrapper', function () {
     describe('json', function () {
         var options2 = dato.extend({}, options);
-        options2.code = fs.readFileSync(jsonPath, 'utf8');
+        var file = jsonPath;
+
+        options2.code = fs.readFileSync(file, 'utf8');
         options2.inType = 'json';
         it('=>url', function () {
             var options3 = dato.extend({}, options2);
             options3.outType = 'url';
-            var code = replaceModuleWrapper(jsonPath, options3);
+            var code = replaceModuleWrapper(file, options3);
             //console.log(code);
             assert.equal(/\/static\/res\//.test(code), true);
         });
         it('=>base64', function () {
             var options3 = dato.extend({}, options2);
             options3.outType = 'base64';
-            var code = replaceModuleWrapper(jsonPath, options3);
+            var code = replaceModuleWrapper(file, options3);
             //console.log(code);
             assert.equal(/"data:application\/json;base64,/.test(code), true);
         });
         it('=>js', function () {
             var options3 = dato.extend({}, options2);
             options3.outType = 'js';
-            var code = replaceModuleWrapper(jsonPath, options3);
+            var code = replaceModuleWrapper(file, options3);
             //console.log(code);
             assert.equal(code.indexOf('r.exports={') > -1, true);
         });
     });
     describe('css', function () {
         var options2 = dato.extend({}, options);
+        var file = cssPath;
+
         options2.inType = 'css';
-        options2.code = fs.readFileSync(cssPath, 'utf8');
+        options2.code = fs.readFileSync(file, 'utf8');
         it('=>url', function () {
             var options3 = dato.extend({}, options2);
             options3.outType = 'url';
             var code = replaceModuleWrapper(cssPath, options3);
+            //console.log(code);
             assert.equal(/\/static\/css\//.test(code), true);
         });
         it('=>base64', function () {
             var options3 = dato.extend({}, options2);
             options3.outType = 'base64';
-            var code = replaceModuleWrapper(cssPath, options3);
+            var code = replaceModuleWrapper(file, options3);
+            //console.log(code);
             assert.equal(/data:text\/css;base64,/.test(code), true);
         });
         it('=>js', function () {
             var options3 = dato.extend({}, options2);
             options3.outType = 'js';
-            var code = replaceModuleWrapper(jsonPath, options3);
-            console.log(code);
+            var code = replaceModuleWrapper(file, options3);
+            //console.log(code);
+            assert.equal(code.indexOf('r.exports="') > -1, true);
+        });
+    });
+    describe('text', function () {
+        var options2 = dato.extend({}, options);
+        var file = textPath;
+
+        options2.inType = 'text';
+        options2.code = fs.readFileSync(file, 'utf8');
+        it('=>url', function () {
+            var options3 = dato.extend({}, options2);
+            options3.outType = 'url';
+            var code = replaceModuleWrapper(file, options3);
+            //console.log(code);
+            assert.equal(/\/static\/res\//.test(code), true);
+        });
+        it('=>base64', function () {
+            var options3 = dato.extend({}, options2);
+            options3.outType = 'base64';
+            var code = replaceModuleWrapper(file, options3);
+            //console.log(code);
+            assert.equal(/data:text\/plain;base64,/.test(code), true);
+        });
+        it('=>js', function () {
+            var options3 = dato.extend({}, options2);
+            options3.outType = 'js';
+            var code = replaceModuleWrapper(file, options3);
+            //console.log(code);
             assert.equal(code.indexOf('r.exports="') > -1, true);
         });
     });
