@@ -32,6 +32,23 @@ var ENCODING = 'utf8';
 var cacheFilesList = [];
 // 结果缓存
 var cacheResultList = [];
+var defaults = {
+    code: '',
+    destJSDirname: null,
+    versionLength: 32,
+    srcDirname: null,
+    destDirname: null,
+    destHost: '/',
+    destResourceDirname:null,
+    destCSSDirname:null,
+    minifyResource:true,
+    minifyJS:true,
+    uglifyJSOptions:null,
+    minifyCSS:true,
+    cleanCSSOptions: true,
+    replaceCSSResource:true
+};
+
 
 /**
  * 合并 coolie 组，合并、压缩、版本控制代码
@@ -39,8 +56,6 @@ var cacheResultList = [];
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param options.destJSDirname {String} 目标 JS 文件目录
- * @param options.minifyCSS {Boolean} 是否压缩 CSS
- * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param options.versionLength {Number} 版本长度
  * @param options.srcDirname {String} 构建工程原始根目录
  * @param options.destDirname {String} 目标根目录
@@ -51,6 +66,7 @@ var cacheResultList = [];
  * @param [options.minifyJS] {Boolean} 是否压缩 JS
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
+ * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.replaceCSSResource] {Boolean} 是否替换 CSS 内引用资源
  * @returns {*}
  */
