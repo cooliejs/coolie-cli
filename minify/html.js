@@ -89,6 +89,7 @@ var defaults = {
  * @param [options.destDirname] {String} 目标根目录
  * @param [options.destHost] {String} 目标域
  * @param [options.destResourceDirname] {String} 目标资源目录
+ * @param [options.destCSSDirname] {String} 目标 CSS 目录
  * @param [options.minifyResource] {Boolean} 是否压缩引用资源
  * @param [options.srcCoolieConfigBaseDirname] {String} 原始 coolie-config:base 目录
  * @param [options.destCoolieConfigJSPath] {String} 原始 coolie-config.js 路径
@@ -98,6 +99,7 @@ var defaults = {
  * @param [options.uglifyJSOptions=null] {Boolean} 压缩 JS 配置
  * @param [options.cleanCSSOptions=null] {Boolean} 压缩 CSS 配置
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 引用资源
+ * @param [options.versionMap] {Object} 版本信息
  * @returns {String}
  */
 module.exports = function (file, options) {
@@ -132,8 +134,14 @@ module.exports = function (file, options) {
         code = code.replace(REG_LINES, '');
     }
 
+    // 恢复预格式
+    dato.each(preMap, function (key, val) {
+        code = code.replace(key, val);
+    });
+
     if (options.replaceHTMLAttrResource) {
         code = replaceHTMLAttrResource(file, {
+            code: code,
             versionLength: options.versionLength,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
@@ -198,11 +206,6 @@ module.exports = function (file, options) {
             replaceCSSResource: options.replaceCSSResource
         });
     }
-
-    // 恢复预格式
-    dato.each(preMap, function (key, val) {
-        code = code.replace(key, val);
-    });
 
     return code;
 };

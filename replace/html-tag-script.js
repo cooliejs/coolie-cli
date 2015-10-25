@@ -68,6 +68,7 @@ module.exports = function (file, options) {
         var ignore = htmlAttr.get(source, COOLIE_IGNORE);
         var sourceOriginal = source;
 
+
         if (ignore) {
             source = htmlAttr.remove(source, COOLIE_IGNORE);
             return source;

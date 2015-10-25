@@ -94,16 +94,16 @@ module.exports = function (file, options) {
                 return htmlAttr.remove(tag, coolieIgnore);
             }
 
-            var hookRet = hook.exec('replaceHTMLResource', file, {
-                code: tag,
-                tagName: tagName,
-                type: options.type
-            });
-
-            if (hookRet) {
-                tag = hookRet;
-                return tag;
-            }
+            //var hookRet = hook.exec('replaceHTMLResource', file, {
+            //    code: tag,
+            //    tagName: tagName,
+            //    type: options.type
+            //});
+            //
+            //if (hookRet) {
+            //    tag = hookRet;
+            //    return tag;
+            //}
 
             item.replaceAttrs.forEach(function (attr) {
                 var value = htmlAttr.get(tag, attr);
