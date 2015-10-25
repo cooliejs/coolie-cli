@@ -31,6 +31,17 @@ var REG_SCRIPT = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
 var REG_AMBIGUITY_SLICE = /}};?<\/script>$/;
 var REG_LINE = /[\n\r]/g;
 var REG_SPACE = /\s+/g;
+var defaults = {
+    code: '',
+    srcDirname: null,
+    srcCoolieConfigBaseDirname: null,
+    destDirname: null,
+    destHost: '/',
+    destCoolieConfigJSPath: null,
+    versionMap: {},
+    minifyJS: true,
+    uglifyJSOptions: null
+};
 
 
 /**
@@ -45,9 +56,11 @@ var REG_SPACE = /\s+/g;
  * @param options.destCoolieConfigJSPath {String} 目标 coolie-config.js 路径
  * @param options.versionMap {Object} 版本 map，{file: version}
  * @param [options.minifyJS] {Boolean} 是否压缩 JS
+ * @param [options.uglifyJSOptions] {Object} uglify-js 配置
  * @returns {String}
  */
 module.exports = function (file, options) {
+    options = dato.extend(true, {}, defaults, options);
     options.versionMap = options.versionMap || {};
     var code = options.code;
 
@@ -126,9 +139,10 @@ module.exports = function (file, options) {
             });
         }
 
-        if (find) {
+        if (find && options.minifyJS) {
             scriptCode = minifyJS(file, {
-                code: scriptCode
+                code: scriptCode,
+                uglifyJSOptions: options.uglifyJSOptions
             });
         }
 

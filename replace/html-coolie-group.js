@@ -71,6 +71,7 @@ var defaults = {
  * @returns {*}
  */
 module.exports = function (file, options) {
+    options = dato.extend({}, defaults, options);
     var code = options.code;
 
     code = code.replace(REG_COOLIE_GROUP, function (source, coolieCode) {

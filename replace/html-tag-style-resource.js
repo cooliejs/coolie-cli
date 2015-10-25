@@ -17,6 +17,16 @@ var minifyCSS = require('../minify/css.js');
 var COOLIE_IGNOE = 'coolieignore';
 var REG_STYLE_TAG = /(<style\b[\s\S]*?>)([\s\S]*?)<\/style>/ig;
 var STYLE_TAG_TYPE = 'text/css';
+var defaults = {
+    code: '',
+    versionLength: 32,
+    srcDirname: null,
+    destDirname: null,
+    destHost: '/',
+    destResourceDirname: null,
+    minifyCSS: true,
+    minifyResource: true
+};
 
 /**
  * 替换 html style 资源
@@ -29,6 +39,7 @@ var STYLE_TAG_TYPE = 'text/css';
  * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param [options.minifyCSS] {Boolean} 是否压缩 css
+ * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  */
 module.exports = function (file, options) {
@@ -60,7 +71,9 @@ module.exports = function (file, options) {
 
             if (options.minifyCSS) {
                 styleCode = minifyCSS(file, {
-                    code: styleCode
+                    code: styleCode,
+                    cleanCSSOptions: options.cleanCSSOptions,
+                    replaceCSSResource: false
                 });
             }
         }
