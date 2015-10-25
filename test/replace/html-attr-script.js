@@ -9,6 +9,7 @@
 
 var path = require('path');
 var fs = require('fs');
+var assert = require('assert');
 
 var replaceHTMLAttrScript = require('../../replace/html-attr-script.js');
 var file = path.join(__dirname, '../../example/src/html/replace.html');
@@ -16,24 +17,31 @@ var file = path.join(__dirname, '../../example/src/html/replace.html');
 var code = fs.readFileSync(file, 'utf8');
 var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
-var destCoolieConfigJSPath = path.join(destDirname, 'static/js/eb21eac7c7c8278c7bf0c208efbfd663.js');
+var destCoolieConfigJSURI = 'static/js/eb21eac7c7c8278c7bf0c208efbfd663.js';
+var destCoolieConfigJSPath = path.join(destDirname, destCoolieConfigJSURI);
 var srcCoolieConfigBaseDirname = path.join(srcDirname, 'static/js/app/');
 var srcMainPath = path.join(srcDirname, 'static/js/app/index.js');
 var versionMap = {};
 
 versionMap[srcMainPath] = '00023123123123123312312';
 
-var ret = replaceHTMLAttrScript(file, {
-    code: code,
-    srcDirname: srcDirname,
-    srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname,
-    destDirname: destDirname,
-    versionMap: versionMap,
-    destHost: 'http://abc.com',
-    destCoolieConfigJSPath: destCoolieConfigJSPath
-});
+describe('replace/html-attr-script.js', function () {
+    it('e', function () {
+        var ret = replaceHTMLAttrScript(file, {
+            code: code,
+            srcDirname: srcDirname,
+            srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname,
+            destDirname: destDirname,
+            versionMap: versionMap,
+            destHost: 'http://abc.com',
+            destCoolieConfigJSPath: destCoolieConfigJSPath
+        });
+        var expect = '<script src="/static/js/coolie.min.js" data-config="http://abc.com/' +
+            destCoolieConfigJSURI + '" data-main="./' + versionMap[srcMainPath] + '.js" ></script>';
 
-console.log(ret);
+        assert.equal(ret.indexOf(expect) > -1, true);
+    });
+});
 
 
 
