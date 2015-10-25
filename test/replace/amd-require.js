@@ -8,27 +8,37 @@
 'use strict';
 
 var path = require('path');
+var assert = require('assert');
 
 var replaceAMDRequire = require('../../replace/amd-require.js');
 
 var file = __filename;
-var code1 = 'define(function(s,e,i){"use strict";s("../libs/all.js");console.log("app/index.js")});';
-var code2 = 'define(function(s,e,i){"use strict";s.async("../libs/all.js");console.log("app/index.js")});';
 
-var ret1 = replaceAMDRequire(file, {
-    code: code1,
-    depName2IdMap: {
-        '../libs/all.js': 'n'
-    }
-});
-var ret2 = replaceAMDRequire(file, {
-    code: code2,
-    async: true,
-    depName2IdMap: {
-        '../libs/all.js': 'n'
-    }
-});
+describe('replace/amd-require', function () {
+    it('async:false', function () {
+        var code = 'define(function(s,e,i){s("../libs/all.js");console.log("app/index.js")});';
+        var ret = replaceAMDRequire(file, {
+            code: code,
+            depName2IdMap: {
+                '../libs/all.js': 'n'
+            }
+        });
+        var expect = 'define(function(s,e,i){s("n");console.log("app/index.js")});';
 
-console.log(ret1);
-console.log(ret2);
+        assert(ret, expect);
+    });
+    it('async:true', function () {
+        var code = 'define(function(s,e,i){s.async("../libs/all.js");console.log("app/index.js")});';
+        var ret =  replaceAMDRequire(file, {
+            code: code,
+            async: true,
+            depName2IdMap: {
+                '../libs/all.js': 'n'
+            }
+        });
+        var expect = 'define(function(s,e,i){s.async("n");console.log("app/index.js")});';
+
+        assert(ret, expect);
+    });
+});
 

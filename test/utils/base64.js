@@ -14,7 +14,7 @@ var base64 = require('../../utils/base64.js');
 
 var base64File = path.join(__dirname, './base64.js');
 
-describe('utils/base64', function () {
+describe('utils/base64.js', function () {
     it('base64.string', function () {
         var ret1 = base64.string('1');
         var ret2 = base64.string('1', '.txt');

@@ -8,16 +8,22 @@
 'use strict';
 
 var path = require('path');
+var assert = require('assert');
 
 var globalId = require('../../utils/global-id.js');
 
 var file1 = 'abc';
 var file2 = 'def';
 
-var gid1 = globalId.get(file1);
-var gid2 = globalId.get(file2);
-var gid3 = globalId.get(file1);
+describe('utils/global-id.js', function () {
+    it('increase id', function () {
+        var gid1 = globalId.get(file1);
+        var gid2 = globalId.get(file2);
+        var gid3 = globalId.get(file1);
 
-console.log(gid1);
-console.log(gid2);
-console.log(gid3);
+        assert.equal(gid1, '1');
+        assert.equal(gid2, '2');
+        assert.equal(gid3, '1');
+    });
+});
+

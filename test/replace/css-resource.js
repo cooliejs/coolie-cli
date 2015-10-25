@@ -9,6 +9,8 @@
 
 var path = require('path');
 var fs = require('fs');
+var typeis = require('ydr-utils').typeis;
+var assert = require('assert');
 
 var replaceCSSResource = require('../../replace/css-resource.js');
 var file = path.join(__dirname, '../../example/src/static/css/1.css');
@@ -18,16 +20,23 @@ var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
 var destResourceDirname = path.join(destDirname, 'res');
 
-var ret = replaceCSSResource(file, {
-    versionLength: 16,
-    srcDirname: srcDirname,
-    destDirname: destDirname,
-    destResourceDirname: destResourceDirname,
-    destHost: '/',
-    code: code
+
+describe('replace/css-resource.js', function () {
+    it('e', function () {
+        var ret = replaceCSSResource(file, {
+            versionLength: 16,
+            srcDirname: srcDirname,
+            destDirname: destDirname,
+            destResourceDirname: destResourceDirname,
+            destHost: '/',
+            code: code,
+            returnObject: true
+        });
+
+        ret.deps.forEach(function (file) {
+            assert.equal(typeis.file(file), true);
+        });
+    });
 });
-
-console.log(ret);
-
 
 

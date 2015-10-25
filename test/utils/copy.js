@@ -21,7 +21,7 @@ var destDirname = path.join(__dirname, '../../example/dest/');
 //var destResourceDirname = path.join(destDirname, 'res');
 
 
-describe('utils/copy', function () {
+describe('utils/copy.js', function () {
     it('copy', function () {
         var ret = copy(file, {
             srcDirname: srcDirname,

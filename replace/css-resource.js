@@ -8,7 +8,6 @@
 'use strict';
 
 
-
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
 
@@ -44,10 +43,12 @@ var regs = [{
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
- * @returns {String}
+ * @param [options.returnObject] {Boolean} 是否对象
+ * @returns {String|Object}
  */
 module.exports = function (file, options) {
-    //var copyFiles = [];
+    var deps = [];
+    var depsMap = {};
     var code = options.code;
 
     regs.forEach(function (item) {
@@ -62,7 +63,11 @@ module.exports = function (file, options) {
 
             var absDir = pathURI.isRelativeFile(pathRet.path) ? path.dirname(file) : options.srcDirname;
             var absFile = path.join(absDir, pathRet.path);
-            //copyFiles.push(path.relative(options.srcDirname, absFile));
+
+            if (!depsMap[absFile]) {
+                deps.push(absFile);
+            }
+
             var destFile = copy(absFile, {
                 destDirname: options.destResourceDirname,
                 copyPath: false,
@@ -89,6 +94,13 @@ module.exports = function (file, options) {
             return item.before + url + item.after;
         });
     });
+
+    if (options.returnObject) {
+        return {
+            code: code,
+            deps: deps
+        };
+    }
 
     return code;
 };
