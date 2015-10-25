@@ -1,5 +1,5 @@
 /**
- * html style resource
+ * html <style> resource
  * @author ydr.me
  * @create 2015-10-22 17:41
  */
@@ -17,9 +17,6 @@ var minifyCSS = require('../minify/css.js');
 var COOLIE_IGNOE = 'coolieignore';
 var REG_STYLE_TAG = /(<style\b[\s\S]*?>)([\s\S]*?)<\/style>/ig;
 var STYLE_TAG_TYPE = 'text/css';
-var REG_TAG = /<([a-z][a-z\d]*)\b([\s\S]*?)style\s*?=\s*?(["'])([\s\S]*?)\3([\s\S]*?)>/gi;
-var REG_LINES = /[\n\r]/g;
-var REG_SPACES = /\s+/g;
 
 /**
  * 替换 html style 资源
@@ -57,7 +54,8 @@ module.exports = function (file, options) {
                 srcDirname: options.srcDirname,
                 destDirname: options.destDirname,
                 destHost: options.destHost,
-                destResourceDirname: options.destResourceDirname
+                destResourceDirname: options.destResourceDirname,
+                returnObject: false
             });
 
             if (options.minifyCSS) {
@@ -68,32 +66,6 @@ module.exports = function (file, options) {
         }
 
         return styleTag + styleCode + '</style>';
-    });
-
-    // style=""
-    code = code.replace(REG_TAG, function (source, tagName, before, quote, styleCode, after) {
-        var ignore = htmlAttr.get(source, COOLIE_IGNOE);
-
-        if (ignore) {
-            source = htmlAttr.remove(source, COOLIE_IGNOE);
-            return source;
-        }
-
-        styleCode = replaceCSSResource(file, {
-            code: styleCode,
-            destCSSFile: null,
-            versionLength: options.versionLength,
-            srcDirname: options.srcDirname,
-            destDirname: options.destDirname,
-            destHost: options.destHost,
-            destResourceDirname: options.destResourceDirname
-        });
-
-        if (options.minifyCSS) {
-            styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
-        }
-
-        return '<' + tagName + before + 'style=' + quote + styleCode + quote + after + '>';
     });
 
     return code;
