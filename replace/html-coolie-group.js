@@ -74,6 +74,14 @@ module.exports = function (file, options) {
                 var cssFile = pathURI.toAbsoluteFile(href, file, options.srcDirname);
                 var cssCode = reader(cssFile, ENCODING);
 
+                if (options.minifyCSS) {
+                    cssCode = minifyCSS(cssFile, {
+                            code: cssCode,
+                            cleanCSSOptions: options.cleanCSSOptions,
+                            replaceCSSResource: false
+                        }) + '\n';
+                }
+
                 if (options.replaceCSSResource) {
                     cssCode = replaceCSSResource(cssFile, {
                         code: cssCode,
@@ -86,14 +94,6 @@ module.exports = function (file, options) {
                         minifyResource: options.minifyResource,
                         returnObject: false
                     });
-                }
-
-                if (options.minifyCSS) {
-                    cssCode = minifyCSS(cssFile, {
-                            code: cssCode,
-                            cleanCSSOptions: options.cleanCSSOptions,
-                            replaceCSSResource: false
-                        }) + '\n';
                 }
 
                 files.push(cssFile);
@@ -129,10 +129,14 @@ module.exports = function (file, options) {
         else {
             coolieCode.replace(REG_SCRIPT, function (source, quote, src) {
                 var jsFile = pathURI.toAbsoluteFile(src, file, options.srcDirname);
-                var jsCode = minifyJS(jsFile, {
-                        code: reader(jsFile, ENCODING),
-                        uglifyJSOptions: options.uglifyJSOptions
-                    }) + '\n';
+                var jsCode = reader(jsFile, ENCODING);
+
+                if (options.minifyJS) {
+                    jsCode = minifyJS(jsFile, {
+                            code: jsCode,
+                            uglifyJSOptions: options.uglifyJSOptions
+                        }) + '\n';
+                }
 
                 files.push(jsFile);
                 md5List.push(encryption.md5(jsCode));
