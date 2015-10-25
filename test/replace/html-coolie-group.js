@@ -9,6 +9,7 @@
 
 var path = require('path');
 var fs = require('fs');
+var assert = require('assert');
 
 var replaceHTMLCoolieGroup = require('../../replace/html-coolie-group.js');
 var file = path.join(__dirname, '../../example/src/html/index3.html');
@@ -18,18 +19,22 @@ var destResourceDirname = path.join(destDirname, 'res');
 var destCSSDirname = path.join(destDirname, 'static/css/');
 var destJSDirname = path.join(destDirname, 'static/js/');
 
-var code = fs.readFileSync(file, 'utf8');
-var ret = replaceHTMLCoolieGroup(file, {
-    code: code,
-    srcDirname: srcDirname,
-    destDirname: destDirname,
-    destResourceDirname: destResourceDirname,
-    destHost: '/',
-    destCSSDirname: destCSSDirname,
-    destJSDirname: destJSDirname
-});
+describe('replace/html-coolie-group.js', function () {
+    it('e', function () {
+        var code = fs.readFileSync(file, 'utf8');
+        var ret = replaceHTMLCoolieGroup(file, {
+            code: code,
+            srcDirname: srcDirname,
+            destDirname: destDirname,
+            destResourceDirname: destResourceDirname,
+            destHost: '/',
+            destCSSDirname: destCSSDirname,
+            destJSDirname: destJSDirname
+        });
 
-console.log(ret);
+        assert.equal(/<!--coolie-->/g.test(ret), false);
+    });
+});
 
 
 

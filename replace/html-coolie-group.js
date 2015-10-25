@@ -71,20 +71,17 @@ module.exports = function (file, options) {
                 var cssFile = pathURI.toAbsoluteFile(href, file, options.srcDirname);
                 var cssCode = minifyCSS(cssFile, {
                         code: reader(cssFile, ENCODING),
-                        uglifyJSOptions: options.uglifyJSOptions
+                        uglifyJSOptions: options.uglifyJSOptions,
+                        versionLength: options.versionLength,
+                        srcDirname: options.srcDirname,
+                        destDirname: options.destDirname,
+                        destHost: options.destHost,
+                        destResourceDirname: options.destResourceDirname,
+                        destCSSDirname: options.destCSSDirname,
+                        minifyResource: options.minifyResource
                     }) + '\n';
 
                 files.push(cssFile);
-                cssCode = replaceCSSResource(cssFile, {
-                    code: cssCode,
-                    versionLength: options.versionLength,
-                    srcDirname: options.srcDirname,
-                    destDirname: options.destDirname,
-                    destHost: options.destHost,
-                    destResourceDirname: options.destResourceDirname,
-                    minifyResource: true,
-                    destCSSDirname: options.destCSSDirname
-                });
                 md5List.push(encryption.md5(cssCode));
                 bfList.push(new Buffer(cssCode, ENCODING));
             });

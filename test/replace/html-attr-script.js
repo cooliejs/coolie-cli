@@ -36,10 +36,10 @@ describe('replace/html-attr-script.js', function () {
             destHost: 'http://abc.com',
             destCoolieConfigJSPath: destCoolieConfigJSPath
         });
-        var expect = '<script src="/static/js/coolie.min.js" data-config="http://abc.com/' +
+        var expect1 = '<script src="/static/js/coolie.min.js" data-config="http://abc.com/' +
             destCoolieConfigJSURI + '" data-main="./' + versionMap[srcMainPath] + '.js" ></script>';
 
-        assert.equal(ret.indexOf(expect) > -1, true);
+        assert.equal(ret.indexOf(expect1) > -1, true);
     });
 });
 
