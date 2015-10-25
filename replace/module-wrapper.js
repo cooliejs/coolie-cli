@@ -19,6 +19,7 @@ var debug = require('ydr-utils').debug;
 var minifyCSS = require('../minify/css.js');
 var minifyHTML = require('../minify/html.js');
 var minifyJSON = require('../minify/json.js');
+var replaceCSSResource = require('../replace/css-resource.js');
 var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
@@ -35,21 +36,24 @@ var REG_HUA_END = /}$/;
  */
 var createURL = function (file, options) {
     var code = options.code;
-    var dest = options.inType === 'css' ? options.destCSSDirname : options.destResourceDirname;
     var destFile = '';
+    var destDirname = options.inType === 'css' ? options.destCSSDirname : options.destResourceDirname;
 
     // 直接复制
     if (code === null) {
         destFile = copy(file, {
-            dest: dest,
+            srcDirname: options.srcDirname,
+            destDirname: destDirname,
             version: true,
+            versionLength: options.versionLength,
+            copyPath: false,
             logType: 1
         });
     } else {
         var extname = path.extname(file);
         var version = encryption.etag(file).slice(0, options.versionLength);
 
-        destFile = path.join(options.destCSSDirname, version + extname);
+        destFile = path.join(destDirname, version + extname);
 
         if (code !== null && typeis.function(options.filter)) {
             code = options.filter(destFile);
@@ -64,9 +68,9 @@ var createURL = function (file, options) {
         }
     }
 
-    var relativeTo = pathURI.relative(options.destDirname, destFile);
+    var uri = pathURI.toRootURL(destFile, options.destDirname);
 
-    return pathURI.joinURI(options.destHost, relativeTo);
+    return pathURI.joinURI(options.destHost, uri);
 };
 
 
@@ -150,6 +154,9 @@ module.exports = function (file, options) {
             }
 
         case 'css':
+            code = replaceCSSResource(file, {
+                code: code
+            });
             switch (options.outType) {
                 case 'url':
                     options2.filter = function (destFile) {
