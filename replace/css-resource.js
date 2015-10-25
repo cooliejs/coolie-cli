@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * css 引用资源替换
  * @author ydr.me
  * @create 2015-10-22 16:02
  */
@@ -10,6 +10,7 @@
 
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
+var dato = require('ydr-utils').dato;
 
 var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
@@ -29,6 +30,17 @@ var regs = [{
     reg: REG_SRC,
     after: '")'
 }];
+var defaults = {
+    code: '',
+    versionLength: 32,
+    srcDirname: null,
+    destDirname: null,
+    destHost: '/',
+    destResourceDirname: null,
+    destCSSDirname: null,
+    minifyResource: true,
+    returnObject: false
+};
 
 
 /**
@@ -47,6 +59,7 @@ var regs = [{
  * @returns {String|Object}
  */
 module.exports = function (file, options) {
+    options = dato.extend({}, defaults, options);
     var deps = [];
     var depsMap = {};
     var code = options.code;

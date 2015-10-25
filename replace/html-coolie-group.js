@@ -49,7 +49,7 @@ var cacheResultList = [];
  * @param options.destCSSDirname {String} 目标 CSS 文件目录
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.minifyJS] {Boolean} 是否压缩 JS
- * @param [options.uglifyJSOptions] {Object} 代码压缩配置
+ * @param [options.uglifyJSOptions] {Object} uglify-js 配置
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
  * @param [options.replaceCSSResource] {Boolean} 是否替换 CSS 内引用资源
  * @returns {*}

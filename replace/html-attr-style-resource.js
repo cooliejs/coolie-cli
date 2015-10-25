@@ -29,6 +29,7 @@ var REG_SPACES = /\s+/g;
  * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param [options.minifyResource] {Boolean} 压缩资源文件
+ * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
  */
 module.exports = function (file, options) {
     var code = options.code;
