@@ -62,7 +62,12 @@ var defaults = {
     minifyResource: true,
     srcCoolieConfigBaseDirname: null,
     destCoolieConfigJSPath: null,
-    minifyJS: true
+    minifyJS: true,
+    minifyCSS: true,
+    minifminifyResourceyCSS: true,
+    uglifyJSOptions: null,
+    cleanCSSOptions: null,
+    replaceCSSResource: true
 };
 
 /**
@@ -88,6 +93,11 @@ var defaults = {
  * @param [options.srcCoolieConfigBaseDirname] {String} 原始 coolie-config:base 目录
  * @param [options.destCoolieConfigJSPath] {String} 原始 coolie-config.js 路径
  * @param [options.minifyJS=true] {Boolean} 是否压缩 JS
+ * @param [options.minifyCSS=true] {Boolean} 是否压缩 CSS
+ * @param [options.minifyResource=true] {Boolean} 是否压缩引用资源
+ * @param [options.uglifyJSOptions=null] {Boolean} 压缩 JS 配置
+ * @param [options.cleanCSSOptions=null] {Boolean} 压缩 CSS 配置
+ * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 引用资源
  * @returns {String}
  */
 module.exports = function (file, options) {
@@ -149,6 +159,43 @@ module.exports = function (file, options) {
     if(options.replaceHTMLTagStyleResource){
         code = replaceHTMLTagStyleResource(file, {
             code: code,
+            versionLength: options.versionLength,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destResourceDirname: options.destResourceDirname,
+            minifyCSS: options.minifyCSS,
+            minifyResource: options.minifyResource
+        });
+    }
+
+    if(options.replaceHTMLAttrStyleResource){
+        code = replaceHTMLAttrStyleResource(file, {
+            code: code,
+            versionLength: options.versionLength,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destResourceDirname: options.destResourceDirname,
+            minifyResource: options.minifyResource
+        });
+    }
+
+    if(options.replaceHTMLCoolieGroup){
+        code = replaceHTMLCoolieGroup(file, {
+            code: code,
+            destJSDirname: options.destJSDirname,
+            cleanCSSOptions: options.cleanCSSOptions,
+            versionLength: options.versionLength,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destResourceDirname: options.destResourceDirname,
+            destCSSDirname: options.destCSSDirname,
+            minifyJS: options.minifyJS,
+            uglifyJSOptions: options.uglifyJSOptions,
+            minifyCSS: options.minifyCSS,
+            replaceCSSResource: options.replaceCSSResource
         });
     }
 

@@ -38,8 +38,6 @@ var cacheResultList = [];
  * @param file {String} 所在的 html 文件
  * @param options {Object} 配置
  * @param options.code {String} 代码
- * @param options.minifyJS {Boolean} 是否压缩 JS
- * @param [options.uglifyJSOptions] {Object} 代码压缩配置
  * @param options.destJSDirname {String} 目标 JS 文件目录
  * @param options.minifyCSS {Boolean} 是否压缩 CSS
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
@@ -51,6 +49,7 @@ var cacheResultList = [];
  * @param options.destCSSDirname {String} 目标 CSS 文件目录
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.minifyJS] {Boolean} 是否压缩 JS
+ * @param [options.uglifyJSOptions] {Object} 代码压缩配置
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
  * @param [options.replaceCSSResource] {Boolean} 是否替换 CSS 内引用资源
  * @returns {*}
