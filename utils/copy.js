@@ -55,7 +55,7 @@ var defaults = {
  * @param options.version {Boolean} 是否版本控制
  * @param options.versionLength {Number} 版本长度
  * @param options.minify {Boolean} 是否压缩
- * @param options.logType {Number} 日志类型
+ * @param [options.logType=2] {Number} 日志类型
  */
 module.exports = function (file, options) {
     if (pathURI.isURL(file)) {
@@ -113,6 +113,9 @@ module.exports = function (file, options) {
 
         switch (options.logType) {
             case 1:
+                //console.log('===================================');
+                //console.log(file);
+                //console.log(options.srcDirname);
                 debug.success('√', pathURI.toRootURL(file, options.srcDirname));
                 break;
 

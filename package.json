@@ -59,7 +59,9 @@
     "uglify-js": "^2.5.0",
     "ydr-utils": "^27.2.0"
   },
-  "scripts": {},
+  "scripts": {
+    "test": "mocha -c --recursive --ui bdd test"
+  },
   "maintainers": [
     {
       "name": "cloudcome",

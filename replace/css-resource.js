@@ -82,6 +82,7 @@ module.exports = function (file, options) {
             }
 
             var destFile = copy(absFile, {
+                srcDirname: options.srcDirname,
                 destDirname: options.destResourceDirname,
                 copyPath: false,
                 version: true,

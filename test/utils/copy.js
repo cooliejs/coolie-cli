@@ -26,7 +26,7 @@ describe('utils/copy.js', function () {
         var ret = copy(file, {
             srcDirname: srcDirname,
             destDirname: destDirname,
-            copyPath: false,
+            copyPath: true,
             version: true
         });
 
