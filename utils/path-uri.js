@@ -10,16 +10,13 @@
 
 var path = require('ydr-utils').path;
 
-var REG_PATH = path.sep === '/' ? /\\/ : /\//g;
-var REG_URL = /\\/g;
 var REG_ABSOLUTE = /^((http|ftp)s?|\/\/)/i;
 var REG_RELATIVE_ROOT = /^\//;
 var REG_BASE_64 = /^data:/i;
 var REG_FIRST = /^\//;
 var REG_LAST = /\/$/;
 var REG_SUFFIX = /(\?.*|#.*)$/;
-var REG_RELATIVE = /^.{1,2}\//;
-
+var REG_RELATIVE = /^\.{1,2}\//;
 
 
 /**
@@ -29,7 +26,10 @@ var REG_RELATIVE = /^.{1,2}\//;
  * @returns {String}
  */
 exports.toRootURL = function (p, root) {
-    var relative = exports.relative(path.toURI(root), path.toURI(p));
+    p = path.toURI(p);
+    root = path.toURI(root);
+
+    var relative = path.relative(root, p);
 
     if (!REG_RELATIVE.test(relative)) {
         relative = '/' + relative;
@@ -40,21 +40,13 @@ exports.toRootURL = function (p, root) {
 
 
 /**
- * 转换路径为 URL 格式
- * @param p
- * @returns {string}
- */
-path.toURI = function (p) {
-    return String(p).replace(REG_URL, '/');
-};
-
-
-/**
  * 是否为相对路径
  * @param p
  * @returns {boolean}
  */
 exports.isRelatived = function (p) {
+    p = path.toURI(p);
+
     return !REG_ABSOLUTE.test(p);
 };
 
@@ -65,6 +57,8 @@ exports.isRelatived = function (p) {
  * @returns {boolean}
  */
 exports.isRelativeFile = function (p) {
+    p = path.toURI(p);
+
     return !REG_ABSOLUTE.test(p) && !REG_RELATIVE_ROOT.test(p);
 };
 
@@ -75,6 +69,8 @@ exports.isRelativeFile = function (p) {
  * @returns {boolean}
  */
 exports.isRelativeRoot = function (p) {
+    p = path.toURI(p);
+
     return !REG_ABSOLUTE.test(p) && REG_RELATIVE_ROOT.test(p);
 };
 
@@ -87,11 +83,8 @@ exports.isRelativeRoot = function (p) {
  * @returns {string}
  */
 exports.toAbsoluteFile = function (p, parentFile, rootDirname) {
-    var configs = global.configs;
-
     p = p.replace(REG_SUFFIX, '');
-    p = path.toSystem(p);
-    rootDirname = rootDirname ? path.toSystem(rootDirname) : configs.srcDirname;
+    rootDirname = rootDirname ? rootDirname : __dirname;
 
     // 相对文件
     if (exports.isRelativeFile(p)) {
@@ -106,14 +99,16 @@ exports.toAbsoluteFile = function (p, parentFile, rootDirname) {
 
 
 /**
- * 判断路径后缀是否为图片
- * @param extname
+ * 判断路径是否为图片
+ * @param p {String} 路径
  * @returns {boolean}
  */
-exports.isImage = function (extname) {
+exports.isImage = function (p) {
+    var extname = path.extname(p);
+
     extname = extname.toLowerCase();
 
-    return ['.png', '.gif', '.jpg', '.jpeg'].indexOf(extname) > -1;
+    return ['.png', '.gif', '.jpg', '.jpeg', '.webp'].indexOf(extname) > -1;
 };
 
 
@@ -123,6 +118,8 @@ exports.isImage = function (extname) {
  * @returns {boolean}
  */
 exports.isBase64 = function (uri) {
+    uri = path.toURI(uri);
+
     return REG_BASE_64.test(uri);
 };
 
@@ -146,7 +143,7 @@ exports.joinURI = function (p1, p2) {
     p1 = path.toURI(p1);
     p2 = path.toURI(p2);
 
-    return p1.replace(REG_LAST, '') + '/' + p2.replace(REG_FIRST, '');
+    return path.join(p1, p2);
 };
 
 
@@ -189,15 +186,3 @@ exports.replaceVersion = function (uri, version) {
     return exports.joinURI(dir, version + extname);
 };
 
-
-/**
- * 路径相对转换
- * @param from
- * @param to
- */
-exports.relative = function (from, to) {
-    from = path.toSystem(from);
-    to = path.toSystem(to);
-
-    return path.relative(from, to);
-};
