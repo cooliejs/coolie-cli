@@ -10,11 +10,11 @@
 var pkg = require('../package.json');
 
 module.exports = function (type) {
-    var banner = 'coolie@' + pkg.version;
+    var banner = pkg.name + '@' + pkg.version;
 
     switch (type) {
         case 'html':
-            return '\n<!--' + banner + '-->';
+            return '<!--' + banner + '-->';
 
         case 'css':
         case 'js':
