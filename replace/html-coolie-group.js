@@ -80,9 +80,14 @@ module.exports = function (file, options) {
         var md5List = [];
         var findCache = -1;
         var version = '';
+        // 合并后的文件
         var concatFile = '';
+        // 合并后的 uri
         var concatURI = '';
+        // 合并结果
         var concatRet = '';
+        // 相对于原始目录
+        var concatRelative = '';
 
         // css
         if (REG_LINK.test(coolieCode)) {
@@ -126,13 +131,15 @@ module.exports = function (file, options) {
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
             concatFile = path.join(pathURI.toURIPath(options.destCSSDirname), version + '.css');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
+            concatRelative = pathURI.toRootURL(concatFile, options.srcDirname);
 
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
-                debug.success('√', concatURI);
+                debug.success('√', concatRelative);
             } catch (err) {
                 debug.error('write css', path.toSystem(concatFile));
                 debug.error('write css', err.message);
+                return process.exit(1);
             }
 
             concatRet = '<link rel="stylesheet" src="' + concatURI + '">';
@@ -168,13 +175,15 @@ module.exports = function (file, options) {
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
             concatFile = path.join(pathURI.toURIPath(options.destJSDirname), version + '.js');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
+            concatRelative = pathURI.toRootURL(concatFile, options.srcDirname);
 
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
-                debug.success('√', concatURI);
+                debug.success('√', concatRelative);
             } catch (err) {
-                debug.error('write css', path.toSystem(concatFile));
-                debug.error('write css', err.message);
+                debug.error('write js', path.toSystem(concatFile));
+                debug.error('write js', err.message);
+                return process.exit(1);
             }
 
             concatRet = '<script src="' + concatURI + '"></script>';
