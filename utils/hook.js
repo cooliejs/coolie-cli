@@ -37,7 +37,7 @@ exports.bind = function (type) {
 exports.exec = function (type/*arguments*/) {
     var coolie = global.coolie;
     var list = callbacks[type];
-    var ret = undefined;
+    var ret = null;
     var args = dato.toArray(arguments).slice(1);
 
     list = list || [];
