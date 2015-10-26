@@ -117,7 +117,7 @@ module.exports = function (file, options) {
         });
 
         destCoolieConfigJSPath = path.join(options.destJSDirname, destCoolieConfigJSPath);
-        var destCoolieConfigJSURI = pathURI.toRootURL(destCoolieConfigJSPath, options.destDirname);
+        var destCoolieConfigJSURI = pathURI.toRootURL(destCoolieConfigJSPath, options.srcDirname);
 
         try {
             fse.outputFileSync(destCoolieConfigJSPath, code2, 'utf8');

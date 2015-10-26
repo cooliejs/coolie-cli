@@ -18,6 +18,7 @@ var REG_BASE_64 = /^data:/i;
 var REG_FIRST = /^\//;
 var REG_LAST = /\/$/;
 var REG_SUFFIX = /(\?.*|#.*)$/;
+var REG_RELATIVE = /^.{1,2}\//;
 
 
 /**
@@ -37,7 +38,13 @@ exports.toSystemPath = function (p) {
  * @returns {String}
  */
 exports.toRootURL = function (p, root) {
-    return '/' + exports.relative(root, exports.toURIPath(p));
+    var relative = exports.relative(exports.toURIPath(root), exports.toURIPath(p));
+
+    if (!REG_RELATIVE.test(relative)) {
+        relative = '/' + relative;
+    }
+
+    return relative;
 };
 
 
