@@ -58,10 +58,6 @@ var defaults = {
  * @param [options.logType=2] {Number} 日志类型
  */
 module.exports = function (file, options) {
-    if (pathURI.isURL(file)) {
-        return;
-    }
-
     options = dato.extend({}, defaults, options);
 
     var fromTo = pathURI.relative(options.srcDirname, file);
@@ -76,15 +72,15 @@ module.exports = function (file, options) {
 
     if (!typeis.file(file)) {
         if (options.embedFile) {
-            debug.error('copy file', pathURI.toSystemPath(options.embedFile));
+            debug.error('embed file', pathURI.toSystemPath(options.embedFile));
         }
 
         if (options.embedCode) {
-            debug.error('source code', options.embedCode);
+            debug.error('embed code', options.embedCode);
         }
 
         debug.error('copy error', pathURI.toSystemPath(file) + ' is NOT a local file');
-        process.exit(1);
+        return process.exit(1);
     }
 
     var toFile = copyFilesMap[file];
@@ -113,9 +109,6 @@ module.exports = function (file, options) {
 
         switch (options.logType) {
             case 1:
-                //console.log('===================================');
-                //console.log(file);
-                //console.log(options.srcDirname);
                 debug.success('√', pathURI.toRootURL(file, options.srcDirname));
                 break;
 
@@ -127,7 +120,7 @@ module.exports = function (file, options) {
         debug.error('copy from', pathURI.toSystemPath(file));
         debug.error('copy to', pathURI.toSystemPath(toFile));
         debug.error('copy error', err.message);
-        process.exit(1);
+        return process.exit(1);
     }
 
     return toFile;

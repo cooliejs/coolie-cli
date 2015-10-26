@@ -30,6 +30,7 @@ describe('utils/copy.js', function () {
             version: true
         });
 
+        console.log(ret);
         assert.equal(typeis.file(ret), true);
     });
 });
