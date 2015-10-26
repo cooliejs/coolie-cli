@@ -153,6 +153,7 @@ module.exports = function (file, options) {
                     });
                     return wrapDefine(file, code, options);
             }
+            break;
 
         case 'css':
             code = replaceCSSResource(file, {
@@ -191,6 +192,7 @@ module.exports = function (file, options) {
                     });
                     return wrapDefine(file, code, options);
             }
+            break;
 
         case 'text':
             switch (options.outType) {
@@ -207,6 +209,7 @@ module.exports = function (file, options) {
                 default :
                     return wrapDefine(file, code, options);
             }
+            break;
 
         case 'html':
             switch (options.outType) {
@@ -236,11 +239,11 @@ module.exports = function (file, options) {
                     });
                     return wrapDefine(file, code, options);
             }
+            break;
 
         case 'image':
             switch (options.outType) {
                 case 'base64':
-                    code = minifyCSS(file, options2);
                     code =  base64.file(file);
                     return wrapDefine(file, code, options);
 
@@ -248,6 +251,7 @@ module.exports = function (file, options) {
                     uri = createURL(file, options2);
                     return wrapDefine(file, uri, options);
             }
+            break;
 
         default :
             debug.error('module wrapper', '`' + options.inType + '` module type is undefined');
