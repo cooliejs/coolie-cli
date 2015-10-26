@@ -17,7 +17,7 @@ var file = path.join(__dirname, '../../example/src/html/replace.html');
 var code = fs.readFileSync(file, 'utf8');
 var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
-var destResourceDirname = path.join(destDirname, 'res');
+var destResourceDirname = path.join(destDirname, 'static/res/');
 
 describe('replace/html-attr-resource.js', function () {
     it('e', function () {
@@ -29,8 +29,8 @@ describe('replace/html-attr-resource.js', function () {
             destResourceDirname: destResourceDirname,
             code: code
         });
-        var REG_LINK = /<link[\s\S]*?href="\/res\/.*\.ico"/;
-        var REG_IMG = /<img[\s\S]*?src="\/res\/.*\.ico"/;
+        var REG_LINK = /<link[\s\S]*?href="\/static\/res\//;
+        var REG_IMG = /<img[\s\S]*?src="\/static\/res\//;
 
         assert.equal(REG_LINK.test(ret), true);
         assert.equal(REG_IMG.test(ret), true);

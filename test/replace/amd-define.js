@@ -28,9 +28,9 @@ describe('replace/amd-define.js', function () {
             code: code,
             depFileList: depFileList
         });
-        var expect = 'define("1",["2"],function(){});';
+        var reg = /define\("[a-z\d]+",\["[a-z\d]+"],function\(\)\{}\);/;
 
-        assert.equal(ret, expect);
+        assert.equal(reg.test(ret), true);
     });
 });
 

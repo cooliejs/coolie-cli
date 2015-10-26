@@ -8,14 +8,21 @@
 
 var path = require('path');
 var fs = require('fs');
+var assert = require('assert');
 
 var minifyJS = require('../../minify/js.js');
 var file = path.join(__dirname, '../../example/src/static/js/index3-1.js');
 
-var code = fs.readFileSync(file, 'utf8');
-var ret = minifyJS(file, {
-    code: code
+describe('minify/js.js', function () {
+    it('e', function () {
+        var code = 'function abc(){var abcdef = 1;alert(abcdef);}';
+        var ret = minifyJS(file, {
+            code: code
+        });
+        var expect = 'function abc(){var a=1;alert(a)}';
+
+        assert.equal(ret, expect);
+    });
 });
 
-console.log(ret);
 

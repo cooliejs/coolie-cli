@@ -1,6 +1,8 @@
 'use strict';
 
 
+var assert = require('assert');
+
 var json = {
     a: 1,
     b: 2
@@ -8,10 +10,16 @@ var json = {
 var jsonString = JSON.stringify(json, null, 4);
 
 
-var minifyJSON = require('../../minify/json.js');
+describe('minify/json.js', function () {
+    it('e', function () {
+        var minifyJSON = require('../../minify/json.js');
+        var ret = minifyJSON(__filename, {
+            code: jsonString
+        });
+        var expect = '{"a":1,"b":2}';
 
-var ret = minifyJSON(__filename, {
-    code: jsonString
+        assert.equal(ret, expect);
+    });
 });
 
-console.log(ret);
+

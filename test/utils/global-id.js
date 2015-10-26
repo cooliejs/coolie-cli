@@ -21,9 +21,8 @@ describe('utils/global-id.js', function () {
         var gid2 = globalId.get(file2);
         var gid3 = globalId.get(file1);
 
-        assert.equal(gid1, '1');
-        assert.equal(gid2, '2');
-        assert.equal(gid3, '1');
+        assert.equal(gid1, gid3);
+        assert.notEqual(gid2, gid3);
     });
 });
 

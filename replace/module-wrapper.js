@@ -144,7 +144,7 @@ module.exports = function (file, options) {
                         code: code
                     });
                     code = string.toUnicode(code);
-                    code = base64(new Buffer(code, 'utf8'), extname);
+                    code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
                 default :
@@ -182,7 +182,7 @@ module.exports = function (file, options) {
                         code: code
                     });
                     code = string.toUnicode(code);
-                    code = base64(new Buffer(code, 'utf8'), extname);
+                    code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
                 default :
@@ -201,7 +201,7 @@ module.exports = function (file, options) {
 
                 case 'base64':
                     code = string.toUnicode(code);
-                    code = base64(new Buffer(code, 'utf8'), extname);
+                    code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
                 default :
@@ -227,7 +227,7 @@ module.exports = function (file, options) {
                         type: 'module'
                     });
                     code = string.toUnicode(code);
-                    code = base64(new Buffer(code, 'utf8'), extname);
+                    code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
                 default :
@@ -241,7 +241,8 @@ module.exports = function (file, options) {
             switch (options.outType) {
                 case 'base64':
                     code = minifyCSS(file, options2);
-                    return wrapDefine(file, base64(file), options);
+                    code =  base64.file(file);
+                    return wrapDefine(file, code, options);
 
                 default :
                     uri = createURL(file, options2);
