@@ -81,7 +81,7 @@ module.exports = function (file, options) {
         dato.each(versionMap, function (_file, _version) {
             var relative = pathURI.relative(srcCoolieConfigBaseDirname, _file);
 
-            relative = pathURI.toURIPath(relative);
+            relative = path.toURI(relative);
             versionMap2[relative] = _version;
         });
 
@@ -134,7 +134,7 @@ module.exports = function (file, options) {
             srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname
         };
     } catch (err) {
-        debug.error('coolie-config.js', pathURI.toSystemPath(coolieConfigJSPath));
+        debug.error('coolie-config.js', path.toSystem(coolieConfigJSPath));
         debug.error('coolie-config.js', err.message);
     }
 };

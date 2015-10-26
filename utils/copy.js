@@ -72,14 +72,14 @@ module.exports = function (file, options) {
 
     if (!typeis.file(file)) {
         if (options.embedFile) {
-            debug.error('embed file', pathURI.toSystemPath(options.embedFile));
+            debug.error('embed file', path.toSystem(options.embedFile));
         }
 
         if (options.embedCode) {
             debug.error('embed code', options.embedCode);
         }
 
-        debug.error('copy error', pathURI.toSystemPath(file) + ' is NOT a local file');
+        debug.error('copy error', path.toSystem(file) + ' is NOT a local file');
         return process.exit(1);
     }
 
@@ -117,8 +117,8 @@ module.exports = function (file, options) {
                 break;
         }
     } catch (err) {
-        debug.error('copy from', pathURI.toSystemPath(file));
-        debug.error('copy to', pathURI.toSystemPath(toFile));
+        debug.error('copy from', path.toSystem(file));
+        debug.error('copy to', path.toSystem(toFile));
         debug.error('copy error', err.message);
         return process.exit(1);
     }

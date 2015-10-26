@@ -129,7 +129,7 @@ module.exports = function (file, options) {
             }
 
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
-            concatFile = path.join(pathURI.toURIPath(options.destCSSDirname), version + '.css');
+            concatFile = path.join(path.toURI(options.destCSSDirname), version + '.css');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
             concatRelative = pathURI.toRootURL(concatFile, options.srcDirname);
 
@@ -173,7 +173,7 @@ module.exports = function (file, options) {
             }
 
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
-            concatFile = path.join(pathURI.toURIPath(options.destJSDirname), version + '.js');
+            concatFile = path.join(path.toURI(options.destJSDirname), version + '.js');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
             concatRelative = pathURI.toRootURL(concatFile, options.srcDirname);
 

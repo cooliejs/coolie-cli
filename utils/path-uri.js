@@ -21,15 +21,6 @@ var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_RELATIVE = /^.{1,2}\//;
 
 
-/**
- * 修正 path 路径为系统分隔符
- * @param p
- * @returns {String}
- */
-exports.toSystemPath = function (p) {
-    return p.replace(REG_PATH, path.sep);
-};
-
 
 /**
  * 转换为根 uri
@@ -38,7 +29,7 @@ exports.toSystemPath = function (p) {
  * @returns {String}
  */
 exports.toRootURL = function (p, root) {
-    var relative = exports.relative(exports.toURIPath(root), exports.toURIPath(p));
+    var relative = exports.relative(path.toURI(root), path.toURI(p));
 
     if (!REG_RELATIVE.test(relative)) {
         relative = '/' + relative;
@@ -53,7 +44,7 @@ exports.toRootURL = function (p, root) {
  * @param p
  * @returns {string}
  */
-exports.toURIPath = function (p) {
+path.toURI = function (p) {
     return String(p).replace(REG_URL, '/');
 };
 
@@ -152,8 +143,8 @@ exports.isURL = function (p) {
  * @param p2
  */
 exports.joinURI = function (p1, p2) {
-    p1 = exports.toURIPath(p1);
-    p2 = exports.toURIPath(p2);
+    p1 = path.toURI(p1);
+    p2 = path.toURI(p2);
 
     return p1.replace(REG_LAST, '') + '/' + p2.replace(REG_FIRST, '');
 };
@@ -205,8 +196,8 @@ exports.replaceVersion = function (uri, version) {
  * @param to
  */
 exports.relative = function (from, to) {
-    from = exports.toSystemPath(from);
-    to = exports.toSystemPath(to);
+    from = path.toSystem(from);
+    to = path.toSystem(to);
 
     return path.relative(from, to);
 };

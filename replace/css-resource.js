@@ -103,7 +103,7 @@ module.exports = function (file, options) {
                 url = pathURI.joinURI(options.destHost, pathURI.relative(options.destDirname, destFile));
             }
 
-            url = pathURI.toURIPath(url) + pathRet.suffix;
+            url = path.toURI(url) + pathRet.suffix;
 
             return item.before + url + item.after;
         });

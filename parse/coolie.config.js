@@ -81,7 +81,7 @@ module.exports = function (srcPath) {
             require(coolieJSFile)(coolie);
         } else {
             if (!typeis.file(coolieJSONFile)) {
-                log("coolie.json", pathURI.toSystemPath(coolieJSONFile) + '\nis NOT a file', "error");
+                log("coolie.json", path.toSystem(coolieJSONFile) + '\nis NOT a file', "error");
                 process.exit(1);
             }
 
@@ -200,8 +200,8 @@ module.exports = function (srcPath) {
         try {
             code = fs.readFileSync(coolieConfigJSFile, 'utf8');
         } catch (err) {
-            log("parse config", pathURI.toSystemPath(coolieConfigJSFile), "error");
-            log("read file", pathURI.toSystemPath(coolieConfigJSFile), "error");
+            log("parse config", path.toSystem(coolieConfigJSFile), "error");
+            log("read file", path.toSystem(coolieConfigJSFile), "error");
             log("read file", err.message, "error");
             process.exit(1);
         }
@@ -218,7 +218,7 @@ module.exports = function (srcPath) {
             basePath = coolieConfig.base;
             //basePath = path.join(path.dirname(config.js['coolie.js']), coolieConfig.base);
         } catch (err) {
-            log("parse config", pathURI.toSystemPath(coolieJSONFile), "error");
+            log("parse config", path.toSystem(coolieJSONFile), "error");
             log("parse config", err.message, "error");
             process.exit(1);
         }
@@ -228,7 +228,7 @@ module.exports = function (srcPath) {
         try {
             basePath = path.join(coolieConfigJSDir, basePath);
         } catch (err) {
-            log("parse config", pathURI.toSystemPath(coolieJSONFile), "error");
+            log("parse config", path.toSystem(coolieJSONFile), "error");
             log("parse config", err.message, "error");
             process.exit(1);
         }

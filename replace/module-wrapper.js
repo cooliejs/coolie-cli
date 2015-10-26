@@ -62,7 +62,7 @@ var createURL = function (file, options) {
         try {
             fse.outputFileSync(destFile, code, 'utf-8');
         } catch (err) {
-            log('write file', pathURI.toSystemPath(file), 'error');
+            log('write file', path.toSystem(file), 'error');
             log('write file', err.message, 'error');
             process.exit(1);
         }
