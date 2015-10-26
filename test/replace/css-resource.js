@@ -18,7 +18,8 @@ var file = path.join(__dirname, '../../example/src/static/css/1.css');
 var code = fs.readFileSync(file, 'utf8');
 var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
-var destResourceDirname = path.join(destDirname, 'res');
+var destResourceDirname = path.join(destDirname, '/static/res');
+var destCSSDirname = path.join(destDirname, '/static/css');
 
 
 describe('replace/css-resource.js', function () {
@@ -28,10 +29,13 @@ describe('replace/css-resource.js', function () {
             srcDirname: srcDirname,
             destDirname: destDirname,
             destResourceDirname: destResourceDirname,
+            destCSSDirname: destCSSDirname,
             destHost: '/',
             code: code,
             returnObject: true
         });
+
+        console.log(ret);
 
         ret.deps.forEach(function (file) {
             assert.equal(typeis.file(file), true);
