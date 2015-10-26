@@ -15,7 +15,7 @@ var htmlAttr = require('../utils/html-attr.js');
 var replaceCSSResource = require('./css-resource.js');
 
 var COOLIE_IGNOE = 'coolieignore';
-var REG_TAG = /<([a-z][a-z\d]*)\b([\s\S]*?)style\s*?=\s*?(["'])([\s\S]*?)\3([\s\S]*?)>/gi;
+var REG_TAG = /<([a-z][a-z\d]*?)\b[\s\S]*?>/gi;
 var REG_LINES = /[\n\r]/g;
 var REG_SPACES = /\s+/g;
 var defaults = {
@@ -49,17 +49,21 @@ module.exports = function (file, options) {
     var code = options.code;
 
     // style=""
-    code = code.replace(REG_TAG, function (source, tagName, before, quote, styleCode, after) {
+    code = code.replace(REG_TAG, function (source, tagName) {
         var ignore = htmlAttr.get(source, COOLIE_IGNOE);
 
-        if (ignore) {
+        debug.normal('source', source);
+
+        var styleCode = htmlAttr.get(source, 'style');
+
+        if (ignore || (!styleCode || styleCode === true)) {
             source = htmlAttr.remove(source, COOLIE_IGNOE);
             return source;
         }
 
         styleCode = replaceCSSResource(file, {
             code: styleCode,
-            destCSSFile: null,
+            destCSSDirname: null,
             versionLength: options.versionLength,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
@@ -71,7 +75,9 @@ module.exports = function (file, options) {
             styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
         }
 
-        return '<' + tagName + before + 'style=' + quote + styleCode + quote + after + '>';
+        source = htmlAttr.set(source, 'style', styleCode);
+
+        return source;
     });
 
     return code;

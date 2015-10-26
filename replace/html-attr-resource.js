@@ -121,21 +121,11 @@ module.exports = function (file, options) {
                 }
 
                 var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
-
-                //try {
-                //    absFile = path.join(absDir, pathRet.path);
-                //} catch (err) {
-                //    debug.error('replace file', pathURI.toSystemPath(file));
-                //    debug.error('replace resource', tag);
-                //    debug.error('replace error', err.message);
-                //    debug.error('replace ' + item.attr, value === true ? '<EMPTY>' : value);
-                //    process.exit(1);
-                //}
-
                 var resFile = copy(absFile, {
                     version: true,
                     copyPath: false,
                     versionLength: options.versionLength,
+                    srcDirname: options.srcDirname,
                     destDirname: options.destResourceDirname,
                     logType: 1,
                     embedFile: file,

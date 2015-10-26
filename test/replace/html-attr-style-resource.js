@@ -17,7 +17,7 @@ var file = path.join(__dirname, '../../example/src/html/replace.html');
 var code = fs.readFileSync(file, 'utf8');
 var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
-var destResourceDirname = path.join(destDirname, 'res');
+var destResourceDirname = path.join(destDirname, 'static/res');
 
 describe('replace/html-attr-style-resource.js', function () {
     it('e', function () {
