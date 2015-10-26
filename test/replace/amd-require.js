@@ -16,7 +16,7 @@ var file = __filename;
 
 describe('replace/amd-require.js', function () {
     it('async:false', function () {
-        var code = 'define(function(s,e,i){s("../libs/all.js");console.log("app/index.js")});';
+        var code = 'define(function(s,e,i){s("../libs/all.js", "js|js");console.log("app/index.js")});';
         var ret = replaceAMDRequire(file, {
             code: code,
             depName2IdMap: {

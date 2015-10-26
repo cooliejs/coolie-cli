@@ -11,7 +11,6 @@ var debug = require('ydr-utils').debug;
 var dato = require('ydr-utils').dato;
 
 var pathURI = require('../utils/path-uri.js');
-var globalId = require('../utils/global-id.js');
 
 // define(a, b, function( => define(function(
 var REG_DEFINE_FUNCTION = /([^.\["]|^)\bdefine\(([^,)]*?,){0,2}function\(/;
@@ -34,17 +33,15 @@ var REG_DEFINE_5 = /([^.\["]|^)\bdefine\((.*?)\)/;
  * @param file {String} 模块绝对路径
  * @param options {Object} 配置
  * @param options.code {String} 模块压缩后的代码
- * @param options.depFileList {Array} 依赖的文件列表
+ * @param options.gid {String} 模块的 gid
+ * @param options.depGidList {Array} 依赖的 gid 列表
  * @returns {string}
  */
 module.exports = function (file, options) {
     var code = options.code;
     var depsCode = '';
-    var id = globalId.get(file, true);
 
-    options.depFileList.forEach(function (depFile) {
-        var depId = globalId.get(depFile, true);
-
+    options.depGidList.forEach(function (depId) {
         if (depsCode) {
             depsCode += ',';
         }
@@ -60,7 +57,7 @@ module.exports = function (file, options) {
         code = code.replace(REG_DEFINE_4, '$1define($2)');
     }
 
-    return code.replace(REG_DEFINE_5, '$1define("' + id + '",[' + depsCode + '],$2)');
+    return code.replace(REG_DEFINE_5, '$1define("' + options.gid + '",[' + depsCode + '],$2)');
 };
 
 

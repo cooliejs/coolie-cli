@@ -18,7 +18,7 @@ describe('replace/amd-define.js', function () {
         var file1 = __filename;
         var file2 = path.join(__dirname, './amd-require.js');
         var code = 'define(function(){});';
-        var depFileList = [file2];
+        var depGidList = ['n'];
 
         // 预先注入几个文件
         globalId.get(file1);
@@ -26,7 +26,8 @@ describe('replace/amd-define.js', function () {
 
         var ret = replaceAMDDefine(file1, {
             code: code,
-            depFileList: depFileList
+            gid: '0',
+            depGidList: depGidList
         });
         var reg = /define\("[a-z\d]+",\["[a-z\d]+"],function\(\)\{}\);/;
 
