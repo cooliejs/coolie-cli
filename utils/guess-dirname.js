@@ -14,12 +14,12 @@ var path = require('ydr-utils').path;
 
 /**
  * 递增猜目录
- * @param beginPath {String} 起始目录
+ * @param beginDirname {String} 起始目录
  * @param dirname {String} 目录名称
  * @returns {string}
  */
-module.exports = function (beginPath, dirname) {
-    var guessPath = path.join(beginPath, dirname + '/');
+module.exports = function (beginDirname, dirname) {
+    var guessPath = path.join(beginDirname, dirname + '/');
 
     if (!typeis.directory(guessPath)) {
         return guessPath;
@@ -27,11 +27,11 @@ module.exports = function (beginPath, dirname) {
 
     var index = 0;
 
-    guessPath = path.join(beginPath, dirname + index+ '/');
+    guessPath = path.join(beginDirname, dirname + index+ '/');
 
     while (typeis.directory(guessPath)) {
         index++;
-        guessPath = path.join(beginPath, dirname + index+ '/');
+        guessPath = path.join(beginDirname, dirname + index+ '/');
     }
 
     return guessPath;
