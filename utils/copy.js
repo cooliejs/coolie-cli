@@ -60,7 +60,7 @@ var defaults = {
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
 
-    var fromTo = pathURI.relative(options.srcDirname, file);
+    var fromTo = path.relative(options.srcDirname, file);
 
     if (REG_POINT.test(fromTo)) {
         if (pathURI.isRelativeRoot(file)) {
@@ -89,7 +89,7 @@ module.exports = function (file, options) {
         return toFile;
     }
 
-    var releativeTo = pathURI.relative(options.srcDirname, file);
+    var releativeTo = path.relative(options.srcDirname, file);
 
     if (options.version) {
         var version = encryption.etag(file).slice(0, options.versionLength);

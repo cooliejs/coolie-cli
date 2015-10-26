@@ -131,7 +131,7 @@ module.exports = function (file, options) {
                     embedFile: file,
                     embedCode: tag
                 });
-                var resRelative = pathURI.relative(options.destDirname, resFile);
+                var resRelative = path.relative(options.destDirname, resFile);
                 var url = pathURI.joinURI(options.destHost, resRelative);
 
                 tag = htmlAttr.set(tag, attr, url + pathRet.suffix);

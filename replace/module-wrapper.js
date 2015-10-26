@@ -24,7 +24,7 @@ var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
 var reader = require('../utils/reader.js');
-var globaId = require('../utils/global-id.js');
+var globalId = require('../utils/global-id.js');
 
 var REG_HUA_START = /^.*?:/;
 var REG_HUA_END = /}$/;
@@ -33,6 +33,16 @@ var REG_HUA_END = /}$/;
  * 生成模块 url
  * @param file {String|Null} image 的 code 为 null
  * @param options {Object} 配置
+ * @param options.code {String} 模块代码
+ * @param options.inType {String} 模块入口类型
+ * @param options.outType {String} 模块出口类型
+ * @param options.srcDirname {String} 原始根目录
+ * @param options.versionLength {Number} 版本号长度
+ * @param options.destCSSDirname {String} 目标 CSS 目录
+ * @param options.destResourceDirname {String} 目标资源目录
+ * @param options.destDirname {String} 目标目录
+ * @param options.destHost {String} 目标域
+ * @param options.filter {Function} 过滤器
  */
 var createURL = function (file, options) {
     var code = options.code;
@@ -62,8 +72,8 @@ var createURL = function (file, options) {
         try {
             fse.outputFileSync(destFile, code, 'utf-8');
         } catch (err) {
-            log('write file', path.toSystem(file), 'error');
-            log('write file', err.message, 'error');
+            debug.error('write file', path.toSystem(file));
+            debug.error('write file', err.message);
             process.exit(1);
         }
     }
@@ -94,9 +104,22 @@ var wrapDefine = function (file, code, options) {
             .replace(REG_HUA_END, '');
     }
 
-    return 'define("' + globaId.get(file, true) + '",[],function(y,d,r){' +
+    return 'define("' + globalId.get(file) + '",[],function(y,d,r){' +
         'r.exports=' + text + '' +
         '});';
+};
+
+var defaults = {
+    code: null,
+    inType: 'js',
+    outType: 'js',
+    srcDirname: null,
+    destDirname: null,
+    destCSSDirname: null,
+    destResourceDirname: null,
+    destHost: '/',
+    versionLength: 32,
+    minifyResource: true
 };
 
 
@@ -117,6 +140,7 @@ var wrapDefine = function (file, code, options) {
  * @return {String}
  */
 module.exports = function (file, options) {
+    options = dato.extend({}, defaults, options);
     var uri;
     var extname = path.extname(file);
     var code = options.code ?
@@ -244,7 +268,7 @@ module.exports = function (file, options) {
         case 'image':
             switch (options.outType) {
                 case 'base64':
-                    code =  base64.file(file);
+                    code = base64.file(file);
                     return wrapDefine(file, code, options);
 
                 default :

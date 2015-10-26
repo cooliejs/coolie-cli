@@ -14,6 +14,9 @@ var path = require('path');
 var buildModule = require('../../build/module.js');
 
 var srcDirname = path.join(__dirname, '../../example/src/');
+var destDirname = path.join(__dirname, '../../example/dest/');
+var destCSSDirname = path.join(destDirname, 'static/css/');
+var destResourceDirname = path.join(destDirname, 'static/res/');
 
 describe('build/module.js', function () {
     var mainFile = path.join(srcDirname, 'static/js/app/index.js');
@@ -41,12 +44,18 @@ describe('build/module.js', function () {
             outType: 'css',
             async: false,
             chunk: false,
-            main: mainFile
+            main: mainFile,
+            srcDirname: srcDirname,
+            destDirname: destDirname,
+            destCSSDirname: destCSSDirname,
+            destResourceDirname: destResourceDirname,
+            destHost: '/'
         });
 
         var REG_CODE = /^define\("[a-z\d]*?",.*?\);$/;
 
-        assert.equal(ret.dependencies.length > 1, true);
+        //console.log(ret);
+        assert.equal(ret.dependencies.length === 0, true);
         assert.equal(REG_CODE.test(ret.code), true);
     });
 });

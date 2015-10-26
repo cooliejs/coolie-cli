@@ -20,6 +20,7 @@ var globalId = require('../utils/global-id.js');
 var minifyJS = require('../minify/js.js');
 var replaceAMDRequire = require('../replace/amd-require.js');
 var replaceAMDDefine = require('../replace/amd-define.js');
+var replaceModuleWrapper = require('../replace/module-wrapper.js');
 
 var defaults = {
     inType: 'js',
@@ -27,7 +28,13 @@ var defaults = {
     async: false,
     chunk: false,
     main: null,
-    uglifyJSOptions: null
+    uglifyJSOptions: null,
+    srcDirname: null,
+    destDirname: null,
+    destResourceDirname: null,
+    destHost: '/',
+    versionLength: 32,
+    minifyResource: true
 };
 
 /**
@@ -40,6 +47,12 @@ var defaults = {
  * @param options.chunk {Boolean} 是否为分块模块
  * @param options.main {String} 入口模块
  * @param options.uglifyJSOptions {Object} uglify-js 配置
+ * @param options.srcDirname {String} 原始根目录
+ * @param options.destDirname {String} 目标根目录
+ * @param options.destResourceDirname {String} 目标资源目录
+ * @param options.destHost {String} 目标域
+ * @param options.versionLength {Number} 版本号长度
+ * @param options.minifyResource {Boolean} 压缩静态资源
  * @returns {{dependencies: Array, code: String}}
  */
 module.exports = function (file, options) {
@@ -96,7 +109,17 @@ module.exports = function (file, options) {
             break;
 
         default:
-
+            code = replaceModuleWrapper(file, {
+                inType: options.inType,
+                outType: options.outType,
+                srcDirname: options.srcDirname,
+                destDirname: options.destDirname,
+                destCSSDirname: null,
+                destResourceDirname: options.destResourceDirname,
+                destHost: options.destHost,
+                versionLength: options.versionLength,
+                minifyResource: options.minifyResource
+            });
             break;
     }
 

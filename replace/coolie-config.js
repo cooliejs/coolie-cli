@@ -79,7 +79,7 @@ module.exports = function (file, options) {
         var versionMap2 = {};
 
         dato.each(versionMap, function (_file, _version) {
-            var relative = pathURI.relative(srcCoolieConfigBaseDirname, _file);
+            var relative = path.relative(srcCoolieConfigBaseDirname, _file);
 
             relative = path.toURI(relative);
             versionMap2[relative] = _version;
