@@ -105,18 +105,19 @@ module.exports = function (file, options) {
             var mainCode = Buffer.concat(bfList).toString('utf8');
             var version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
             var destMainPath = path.join(options.destCoolieConfigBaseDirname, version + '.js');
-            var destMainURI = pathURI.toRootURL(destMainPath, options.srcDirname);
+            //var destMainURI = pathURI.toRootURL(destMainPath, options.srcDirname);
 
             try {
                 fse.outputFileSync(destMainPath, mainCode, 'utf8');
             } catch (err) {
+                debug.error('write main', path.toSystem(mainFile));
                 debug.error('write main', path.toSystem(destMainPath));
                 debug.error('write file', err.message);
                 return process.exit(1);
             }
 
             debug.success('√', srcMainURI);
-            debug.success('√', destMainURI);
+            //debug.success('√', destMainURI);
         }
     };
 
