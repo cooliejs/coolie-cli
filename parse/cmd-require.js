@@ -58,6 +58,44 @@ var REG_JS = /\.js($|\?)/i;
 
 
 /**
+ * 支持的模块类型
+ * @type {{js: string[], json: string[], css: string[], text: string[], html: string[], image: string[]}}
+ */
+var supportMap = {
+    js: {
+        url: true,
+        base64: true,
+        js: true
+    },
+    json: {
+        url: true,
+        base64: true,
+        js: true
+    },
+    css: {
+        url: true,
+        base64: true,
+        js: true
+    },
+    text: {
+        url: true,
+        base64: true,
+        js: true
+    },
+    html: {
+        url: true,
+        base64: true,
+        js: true
+    },
+    image: {
+        url: true,
+        base64: true,
+        js: true
+    }
+};
+
+
+/**
  * 清理 url
  * @param url {String} 原始 URL
  * @param [isSingleURL=false] 是否为独立 URL
@@ -96,14 +134,31 @@ module.exports = function (file, options) {
             var pipeline = options.async ? ['js', 'js'] : (matches[2] ? matches[2].toLowerCase() : 'js').split('|');
             var name = cleanURL(matches[1], !!matches[2]);
             var id = path.join(path.dirname(file), name);
+            var inType = pipeline[0];
             var outType = pipeline[1] || 'js';
+            var findInType = supportMap[inType];
+
+            if (!findInType) {
+                debug.error('parse cmd require', path.toSystem(file));
+                debug.error('parse cmd require', 'can not support `' + inType + '` module');
+                return process.exit(1);
+            }
+
+            var findOutType = findInType[outType];
+
+            if (!findOutType) {
+                debug.error('parse cmd require', path.toSystem(file));
+                debug.error('parse cmd require', 'can not support `' + inType + '` => `' + outType + '`');
+                return process.exit(1);
+            }
+
             var dep = {
                 id: id + '|' + outType,
                 file: id,
                 gid: globalId.get(id, outType),
                 raw: matches[1],
                 name: name,
-                inType: pipeline[0],
+                inType: inType,
                 outType: outType
             };
 

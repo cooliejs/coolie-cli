@@ -280,6 +280,11 @@ module.exports = function (file, options) {
 
         case 'image':
             switch (options.outType) {
+                case 'url':
+                    uri = createURL(file, options2);
+                    uri = pathURI.joinURI(options.destHost, uri);
+                    return wrapDefine(file, uri, options);
+
                 case 'base64':
                     code = base64.file(file);
                     return wrapDefine(file, code, options);
