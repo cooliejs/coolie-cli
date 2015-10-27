@@ -80,7 +80,15 @@ module.exports = function (file, options) {
         if (!depFileMap[item.gid]) {
             depFileMap[item.gid] = true;
             depGidList.push(item.gid);
-            dependencies.push(item);
+            dependencies.push({
+                id: item.id,
+                file: item.file,
+                gid: item.gid,
+                raw: item.raw,
+                name: item.name,
+                inType: item.inType,
+                outType: item.outType
+            });
         }
     });
 

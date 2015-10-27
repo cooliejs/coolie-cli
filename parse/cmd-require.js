@@ -127,7 +127,7 @@ var cleanURL = function (url, isSingleURL) {
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param options.async {Boolean} 是否为异步 require
- * @returns {Array} 依赖数组
+ * @returns {[{id: String, file: String, gid: String, raw: String, name: String, inType: String, outType: String}]} 依赖数组
  */
 module.exports = function (file, options) {
     var requires = [];

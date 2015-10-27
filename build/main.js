@@ -45,7 +45,7 @@ var defaults = {
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.cleanCSSOptions {Object} clean-css 配置
  * @param options.destCoolieConfigBaseDirname {String} coolie-config:base 目录
- * @returns {Array}
+ * @returns {[{id: String, file: String, buffer: Buffer, md5: String}]}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
