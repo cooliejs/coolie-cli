@@ -101,7 +101,6 @@ module.exports = function (file, options) {
             var mainCode = Buffer.concat(bfList).toString('utf8');
             var version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
             var destMainPath = path.join(options.destCoolieConfigBaseDirname, version + '.js');
-            //var destMainURI = pathURI.toRootURL(destMainPath, options.srcDirname);
 
             try {
                 fse.outputFileSync(destMainPath, mainCode, 'utf8');
@@ -113,7 +112,6 @@ module.exports = function (file, options) {
             }
 
             debug.success('√', srcMainURI);
-            //debug.success('√', destMainURI);
         }
     };
 
