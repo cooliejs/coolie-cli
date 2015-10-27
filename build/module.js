@@ -12,7 +12,6 @@ var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 var encryption = require('ydr-utils').encryption;
-//var fse = require('fs-extra');
 
 var parseCMDRequire = require('../parse/cmd-require.js');
 var reader = require('../utils/reader.js');
@@ -75,6 +74,8 @@ module.exports = function (file, options) {
     var depGidList = [];
     var dependencies = [];
 
+    debug.success('requires', JSON.stringify(requires, null, 2));
+
     dato.each(requires, function (index, item) {
         depName2IdMap[item.raw] = item.gid;
 
@@ -94,6 +95,7 @@ module.exports = function (file, options) {
             });
 
             // 1. 替换 require()
+            debug.success('depName2IdMap', JSON.stringify(depName2IdMap, null, 2));
             code = replaceAMDRequire(file, {
                 code: code,
                 async: options.async,

@@ -161,7 +161,7 @@ module.exports = function (file, options) {
                 id: id + '|' + outType,
                 file: id,
                 gid: globalId.get(id, outType),
-                raw: matches[1],
+                raw: $2,
                 name: name,
                 inType: inType,
                 outType: outType

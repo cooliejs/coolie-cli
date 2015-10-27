@@ -55,7 +55,7 @@ var fileIdMap = {};
  */
 exports.get = function (file, outType) {
     if (outType) {
-        file += '|' + String(file);
+        file += '|' + String(outType);
     }
 
     var gid = fileIdMap[file];

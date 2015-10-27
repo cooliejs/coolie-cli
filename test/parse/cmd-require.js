@@ -32,7 +32,7 @@ describe('parse/cmd-require.js', function () {
         assert.equal(requires[2].inType, 'css');
         assert.equal(requires[2].outType, 'url');
     });
-    it('async', function () {
+    xit('async', function () {
         var code = 'define(function(){require.async("a.js");require.async("./a.js");require.async("b.js", function(){alert("done")})});';
         var requires = parseCMDRequire(file, {
             code: code,

@@ -37,7 +37,7 @@ describe('build/module.js', function () {
         assert.equal(REG_CODE.test(ret.code), true);
     });
 
-    it('sync:css', function () {
+    xit('sync:css', function () {
         var file = path.join(srcDirname, 'static/js/libs2/some.css');
 
         var ret = buildModule(file, {
