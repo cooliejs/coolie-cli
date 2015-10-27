@@ -10,8 +10,10 @@
 var string = require('ydr-utils').string;
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
+var path = require('ydr-utils').path;
 
 var pathURI = require('../utils/path-uri.js');
+var parseDefineRequireVarible = require('../parse/define-require-varible.js');
 
 var REG_DEFINE = /^\bdefine\b\s*?\b\(\s*?function\b[^(]*\(([^,)]*)/;
 
@@ -28,9 +30,12 @@ module.exports = function (file, options) {
     var code = options.code;
     var depName2IdMap = options.depName2IdMap;
     var depLength = Object.keys(depName2IdMap).length;
-    var requireVar = _getRequireVar(code);
+    var requireVar = parseDefineRequireVarible(file, {
+        code: code
+    });
 
     if (!requireVar && depLength) {
+        debug.error('replace require', path.toSystem(file));
         debug.error('replace require', 'can not found `require` variable, but used');
         debug.error('replace require', 'code must be compressed, before replace amd define');
         return process.exit(1);
@@ -46,16 +51,6 @@ module.exports = function (file, options) {
 
     return code;
 };
-
-
-/**
- * 提取 define 里的 require 变量
- * define(function(s,e,i){"use strict";s("../libs/all.js");console.log("app/index.js")});
- * @private
- */
-function _getRequireVar(str) {
-    return (str.match(REG_DEFINE) || ['', ''])[1].trim();
-}
 
 
 /**
