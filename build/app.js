@@ -11,11 +11,14 @@ var debug = require('ydr-utils').debug;
 var dato = require('ydr-utils').dato;
 
 var parseMain = require('../parse/main.js');
+var parseChunk = require('../parse/chunk.js');
 var buildMain = require('./main.js');
 
 var defaults = {
     main: [],
     chunk: [],
+    // >= 2 的模块才会被 chunk 化
+    minDependingCount2Chunk: 2,
     srcDirname: null,
     destDirname: null,
     destResourceDirname: null,
@@ -35,6 +38,7 @@ var defaults = {
  * @param options {Object} 配置
  * @param options.main {String|Array} main 配置
  * @param options.chunk {String|Array} chunk 配置
+ * @param options.minDependingCount2Chunk {Number} 最小引用次数分离 chunk
  * @param options.srcDirname {String} 原始目录
  * @param options.destDirname {String} 目标目录
  * @param options.destResourceDirname {String} 目标资源目录
@@ -48,16 +52,25 @@ var defaults = {
  */
 module.exports = function (options) {
     options = dato.extend(true, {}, defaults, options);
-    var mainAsyncMap = parseMain({
+    var mainMap = parseMain({
         main: options.main,
         srcDirname: options.srcDirname,
         globOptions: options.globOptions
     });
+    // chunk => index
+    var chunkFileMap = parseChunk({
+        chunk: options.chunk,
+        srcDirname: options.srcDirname,
+        globOptions: options.globOptions
+    });
+    // chunk 模块引用计数
+    var chunkDependingCountMap = {};
+    var dependenciesMap = {};
+    var chunkMap = {};
 
-    dato.each(mainAsyncMap, function (mainFile, mainMeta) {
-        buildMain(mainFile, {
+    dato.each(mainMap, function (mainFile, mainMeta) {
+        var dependencies = buildMain(mainFile, {
             async: mainMeta.async,
-            chunk: false,
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
@@ -68,6 +81,19 @@ module.exports = function (options) {
             cleanCSSOptions: options.cleanCSSOptions,
             destCoolieConfigBaseDirname: options.destCoolieConfigBaseDirname
         });
+
+        dato.each(dependencies, function (index, dependency) {
+            var isChunk = chunkFileMap[dependency];
+
+            if(isChunk){
+                chunkDependingCountMap[dependency] = chunkDependingCountMap[dependency] || 0;
+                chunkDependingCountMap[dependency]++;
+            }
+        });
+    });
+
+    dato.each(chunkDependingCountMap, function (chunkFile, dependingCount) {
+
     });
 };
 

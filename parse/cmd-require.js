@@ -96,13 +96,14 @@ module.exports = function (file, options) {
             var pipeline = options.async ? ['js', 'js'] : (matches[2] ? matches[2].toLowerCase() : 'js').split('|');
             var name = cleanURL(matches[1], !!matches[2]);
             var id = path.join(path.dirname(file), name);
+            var outType = pipeline[1] || 'js';
             var dep = {
                 id: id,
-                gid: globalId.get(id),
+                gid: globalId.get(id, outType),
                 raw: matches[1],
                 name: name,
                 inType: pipeline[0],
-                outType: pipeline[1] || 'js'
+                outType: outType
             };
 
             requires.push(dep);

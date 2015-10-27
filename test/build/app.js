@@ -24,6 +24,12 @@ describe('build/app.js', function () {
             main: [
                 'static/js/app/**'
             ],
+            chunk: [
+                [
+                    './static/js/libs1/**'
+                ],
+                './static/js/libs2/**'
+            ],
             srcDirname: srcDirname,
             destDirname: destDirname,
             destResourceDirname: destResourceDirname,

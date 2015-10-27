@@ -86,9 +86,19 @@ var createURL = function (file, options) {
 
 /**
  * 包裹 define
- * @param file
- * @param code
- * @param options
+ * @param file {String} 文件
+ * @param code {String} 代码
+ * @param options {Object} 配置
+ * @param options.inType {String} 模块入口类型
+ * @param options.outType {String} 模块出口类型
+ * @param options.srcDirname {String} 构建目录
+ * @param options.destDirname {String} 目标目录
+ * @param options.destCSSDirname {String} 目标 css 目录
+ * @param options.destResourceDirname {String} 目标资源目录
+ * @param options.destHost {String} 目标域
+ * @param options.versionLength {Number} 版本号长度
+ * @param [options.minifyResource] {Boolean} 是否压缩静态资源
+ * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @returns {string}
  */
 var wrapDefine = function (file, code, options) {
@@ -104,7 +114,7 @@ var wrapDefine = function (file, code, options) {
             .replace(REG_HUA_END, '');
     }
 
-    return 'define("' + globalId.get(file) + '",[],function(y,d,r){' +
+    return 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){' +
         'r.exports=' + text + '' +
         '});';
 };

@@ -99,7 +99,9 @@ module.exports = function (file, options) {
                 depName2IdMap: depName2IdMap
             });
 
-            var gid = options.main === file ? '0' : globalId.get(file);
+            // 同一个文件，不同的模块出口类型，返回的模块是不一样的
+            // 例：image|js !== image|url
+            var gid = options.main === file ? '0' : globalId.get(file, options.outType);
             // 2. 替换 define()
             code = replaceAMDDefine(file, {
                 code: code,

@@ -38,12 +38,12 @@ var options = {
     versionLength: 32
 };
 
-globalId.get(jsonPath);
-globalId.get(cssPath);
-globalId.get(textPath);
-globalId.get(htmlPath);
-globalId.get(imagePath);
-globalId.get(jsPath);
+globalId.get(jsonPath, 'js');
+globalId.get(cssPath, 'js');
+globalId.get(textPath, 'js');
+globalId.get(htmlPath, 'js');
+globalId.get(imagePath, 'js');
+globalId.get(jsPath, 'js');
 
 describe('module-wrapper', function () {
     describe('json', function () {

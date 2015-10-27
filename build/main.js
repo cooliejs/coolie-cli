@@ -45,6 +45,7 @@ var defaults = {
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.cleanCSSOptions {Object} clean-css 配置
  * @param options.destCoolieConfigBaseDirname {String} coolie-config:base 目录
+ * @returns {Array}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
@@ -56,6 +57,7 @@ module.exports = function (file, options) {
     var buildMap = {};
     var bfList = [];
     var md5List = [];
+    var dependencies = [file];
     var build = function (file, options) {
         var ret = buildModule(file, {
             inType: options.inType,
@@ -81,6 +83,7 @@ module.exports = function (file, options) {
                     return;
                 }
 
+                dependencies.push(dependency.id);
                 buildMap[dependency.id] = true;
                 dependencyLength++;
                 var options3 = dato.extend({}, options, {
@@ -99,25 +102,26 @@ module.exports = function (file, options) {
             var version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
             var destMainPath = path.join(options.destCoolieConfigBaseDirname, version + '.js');
 
-            try {
-                fse.outputFileSync(destMainPath, mainCode, 'utf8');
-            } catch (err) {
-                debug.error('write main', path.toSystem(mainFile));
-                debug.error('write main', path.toSystem(destMainPath));
-                debug.error('write file', err.message);
-                return process.exit(1);
-            }
+            //try {
+            //    fse.outputFileSync(destMainPath, mainCode, 'utf8');
+            //} catch (err) {
+            //    debug.error('write main', path.toSystem(mainFile));
+            //    debug.error('write main', path.toSystem(destMainPath));
+            //    debug.error('write file', err.message);
+            //    return process.exit(1);
+            //}
 
             debug.success('√', srcMainURI);
         }
     };
-
-    bfList.push(new Buffer(sign('js'), 'utf8'));
     var options2 = dato.extend({}, options, {
         inType: 'js',
         outType: 'js'
     });
+    bfList.push(new Buffer(sign('js'), 'utf8'));
     build(mainFile, options2);
+
+    return dependencies;
 };
 
 

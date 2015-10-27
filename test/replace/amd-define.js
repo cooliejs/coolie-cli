@@ -21,8 +21,8 @@ describe('replace/amd-define.js', function () {
         var depGidList = ['n'];
 
         // 预先注入几个文件
-        globalId.get(file1);
-        globalId.get(file2);
+        globalId.get(file1, 'js');
+        globalId.get(file2, 'js');
 
         var ret = replaceAMDDefine(file1, {
             code: code,

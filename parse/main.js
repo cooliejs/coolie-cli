@@ -34,7 +34,7 @@ var defaults = {
 module.exports = function (options) {
     options = dato.extend({}, defaults, options);
 
-    var mainAsyncMap = {};
+    var mainMap = {};
 
     // 入口文件
     var mainFiles = glob({
@@ -50,20 +50,20 @@ module.exports = function (options) {
             async: true
         });
 
-        mainAsyncMap[mainFile] = {
+        mainMap[mainFile] = {
             async: false,
             requireAsyncList: requireAsyncList
         };
 
         dato.each(requireAsyncList, function (index, ayncMeta) {
-            mainAsyncMap[ayncMeta.id] = {
+            mainMap[ayncMeta.id] = {
                 async: true,
                 requireAsyncList: []
             };
         });
     });
 
-    return mainAsyncMap;
+    return mainMap;
 };
 
 
