@@ -63,7 +63,7 @@ module.exports = function (file, options) {
  */
 function _buildReg(requireVar, dep, async) {
     dep = string.escapeRegExp(dep);
-    dep = dep.replace(REG_SEG, '["\']\\*?,\\*?["\']');
+    dep = dep.replace(REG_SEG, '["\']\\s*?,\\s*?["\']');
     requireVar = string.escapeRegExp(requireVar);
 
     if (async) {

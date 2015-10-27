@@ -32,12 +32,12 @@ describe('build/module.js', function () {
 
         var REG_CODE = /^define\("0",.*?\);$/;
 
-        console.log(ret.code);
+        //console.log(ret.code);
         assert.equal(ret.dependencies.length > 1, true);
         assert.equal(REG_CODE.test(ret.code), true);
     });
 
-    xit('sync:css', function () {
+    it('sync:css', function () {
         var file = path.join(srcDirname, 'static/js/libs2/some.css');
 
         var ret = buildModule(file, {
