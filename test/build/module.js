@@ -21,7 +21,7 @@ var destResourceDirname = path.join(destDirname, 'static/res/');
 describe('build/module.js', function () {
     var mainFile = path.join(srcDirname, 'static/js/app/index.js');
 
-    xit('sync:js|js', function () {
+    it('sync:js|js', function () {
         var ret = buildModule(mainFile, {
             inType: 'js',
             outType: 'js',
@@ -37,7 +37,7 @@ describe('build/module.js', function () {
         assert.equal(REG_CODE.test(ret.code), true);
     });
 
-    xit('sync:css|text', function () {
+    it('sync:css|text', function () {
         var file = path.join(srcDirname, 'static/js/libs2/some.css');
 
         var ret = buildModule(file, {

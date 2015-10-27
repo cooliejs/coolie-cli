@@ -27,7 +27,6 @@ var defaults = {
     outType: 'js',
     async: false,
     main: null,
-    uglifyJSOptions: null,
     srcDirname: null,
     destDirname: null,
     destJSDirname: null,
@@ -35,7 +34,13 @@ var defaults = {
     destResourceDirname: null,
     destHost: '/',
     versionLength: 32,
-    minifyResource: true
+    minifyResource: true,
+    uglifyJSOptions: null,
+    cleanCSSOptions: null,
+    removeHTMLYUIComments: true,
+    removeHTMLLineComments: true,
+    joinHTMLSpaces: true,
+    removeHTMLBreakLines: true
 };
 
 /**
@@ -46,7 +51,6 @@ var defaults = {
  * @param options.outType {String} 模块出口类型
  * @param options.async {Boolean} 是否为异步模块
  * @param options.main {String} 入口模块
- * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.srcDirname {String} 原始根目录
  * @param options.destDirname {String} 目标根目录
  * @param options.destJSDirname {String} 目标 JS 目录
@@ -55,7 +59,12 @@ var defaults = {
  * @param options.destHost {String} 目标域
  * @param options.versionLength {Number} 版本号长度
  * @param options.minifyResource {Boolean} 压缩静态资源
+ * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.cleanCSSOptions {Object} clean-css 配置
+ * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
+ * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
+ * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
+ * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
  * @returns {{dependencies: Array, code: String, md5: String}}
  */
 module.exports = function (file, options) {
@@ -128,12 +137,18 @@ module.exports = function (file, options) {
                 outType: options.outType,
                 srcDirname: options.srcDirname,
                 destDirname: options.destDirname,
+                destJSDirname: options.destJSDirname,
                 destCSSDirname: options.destCSSDirname,
                 destResourceDirname: options.destResourceDirname,
                 destHost: options.destHost,
                 versionLength: options.versionLength,
                 minifyResource: options.minifyResource,
-                cleanCSSOptions: options.cleanCSSOptions
+                cleanCSSOptions: options.cleanCSSOptions,
+                uglifyJSOptions: options.uglifyJSOptions,
+                removeHTMLYUIComments: options.removeHTMLYUIComments,
+                removeHTMLLineComments: options.removeHTMLLineComments,
+                joinHTMLSpaces: options.joinHTMLSpaces,
+                removeHTMLBreakLines: options.removeHTMLBreakLines
             });
             break;
     }

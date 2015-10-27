@@ -19,13 +19,15 @@ var buildModule = require('./module.js');
 var defaults = {
     async: false,
     main: null,
-    uglifyJSOptions: null,
     srcDirname: null,
     destDirname: null,
+    destJSDirname: null,
+    destCSSDirname: null,
     destResourceDirname: null,
     destHost: '/',
     versionLength: 32,
     minifyResource: true,
+    uglifyJSOptions: null,
     cleanCSSOptions: null,
     destCoolieConfigBaseDirname: null
 };
@@ -35,13 +37,15 @@ var defaults = {
  * @param file {String} 入口路径
  * @param options {Object} 配置
  * @param options.async {Boolean} 是否为异步模块
- * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.srcDirname {String} 原始目录
  * @param options.destDirname {String} 目标目录
+ * @param options.destJSDirname {String} 目标 JS 目录
+ * @param options.destCSSDirname {String} 目标 CSS 目录
  * @param options.destResourceDirname {String} 目标资源目录
  * @param options.destHost {String} 目标域
  * @param options.versionLength {Number} 版本号长度
  * @param options.minifyResource {Boolean} 是否压缩资源
+ * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.cleanCSSOptions {Object} clean-css 配置
  * @param options.destCoolieConfigBaseDirname {String} coolie-config:base 目录
  * @returns {[{id: String, file: String, buffer: Buffer, md5: String}]}
