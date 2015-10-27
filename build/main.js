@@ -57,7 +57,7 @@ module.exports = function (file, options) {
     var buildMap = {};
     var bfList = [];
     var md5List = [];
-    var dependencies = [file];
+    var dependencies = [];
     var build = function (file, options) {
         var ret = buildModule(file, {
             inType: options.inType,
@@ -74,8 +74,12 @@ module.exports = function (file, options) {
             cleanCSSOptions: options.cleanCSSOptions
         });
 
-        bfList.push(new Buffer('\n' + ret.code, 'utf8'));
-        md5List.push(ret.md5);
+        dependencies.push({
+            id: file + '|' + options.outType,
+            file: file,
+            buffer: new Buffer('\n' + ret.code, 'utf8'),
+            md5: ret.md5
+        });
 
         if (ret.dependencies.length) {
             dato.each(ret.dependencies, function (index, dependency) {
@@ -83,7 +87,6 @@ module.exports = function (file, options) {
                     return;
                 }
 
-                dependencies.push(dependency.id);
                 buildMap[dependency.id] = true;
                 dependencyLength++;
                 var options3 = dato.extend({}, options, {
@@ -98,9 +101,9 @@ module.exports = function (file, options) {
 
         if (buildLength === dependencyLength) {
             var srcMainURI = pathURI.toRootURL(mainFile, options.srcDirname);
-            var mainCode = Buffer.concat(bfList).toString('utf8');
-            var version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
-            var destMainPath = path.join(options.destCoolieConfigBaseDirname, version + '.js');
+            //var mainCode = Buffer.concat(bfList).toString('utf8');
+            //var version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
+            //var destMainPath = path.join(options.destCoolieConfigBaseDirname, version + '.js');
 
             //try {
             //    fse.outputFileSync(destMainPath, mainCode, 'utf8');
@@ -118,7 +121,6 @@ module.exports = function (file, options) {
         inType: 'js',
         outType: 'js'
     });
-    bfList.push(new Buffer(sign('js'), 'utf8'));
     build(mainFile, options2);
 
     return dependencies;
