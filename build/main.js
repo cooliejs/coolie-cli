@@ -9,8 +9,12 @@
 
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
+var encryption = require('ydr-utils').encryption;
+var path = require('ydr-utils').path;
+var fse = require('fs-extra');
 
 var pathURI = require('../utils/path-uri.js');
+var sign = require('../utils/sign.js');
 var buildModule = require('./module.js');
 
 var defaults = {
@@ -26,7 +30,8 @@ var defaults = {
     destHost: '/',
     versionLength: 32,
     minifyResource: true,
-    cleanCSSOptions: null
+    cleanCSSOptions: null,
+    destCoolieConfigBaseDirname: null
 };
 
 /**
@@ -45,6 +50,7 @@ var defaults = {
  * @param options.versionLength {Number} 版本号长度
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.cleanCSSOptions {Object} clean-css 配置
+ * @param options.destCoolieConfigBaseDirname {String} coolie-config:base 目录
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
@@ -54,6 +60,8 @@ module.exports = function (file, options) {
     // 构建长度
     var buildLength = 0;
     var buildMap = {};
+    var bfList = [];
+    var md5List = [];
     var build = function (file, options) {
         var ret = buildModule(file, {
             inType: options.inType,
@@ -71,7 +79,8 @@ module.exports = function (file, options) {
             cleanCSSOptions: options.cleanCSSOptions
         });
 
-        buildLength++;
+        bfList.push(new Buffer('\n' + ret.code, 'utf8'));
+        md5List.push(ret.md5);
 
         if (ret.dependencies.length) {
             dato.each(ret.dependencies, function (index, dependency) {
@@ -89,13 +98,29 @@ module.exports = function (file, options) {
             });
         }
 
-        var mainURI = pathURI.toRootURL(mainFile, options.srcDirname);
+        buildLength++;
 
-        if(buildLength === dependencyLength){
-            debug.success('√', mainURI);
+        if (buildLength === dependencyLength) {
+            var srcMainURI = pathURI.toRootURL(mainFile, options.srcDirname);
+            var mainCode = Buffer.concat(bfList).toString('utf8');
+            var version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
+            var destMainPath = path.join(options.destCoolieConfigBaseDirname, version + '.js');
+            var destMainURI = pathURI.toRootURL(destMainPath, options.srcDirname);
+
+            try {
+                fse.outputFileSync(destMainPath, mainCode, 'utf8');
+            } catch (err) {
+                debug.error('write main', path.toSystem(destMainPath));
+                debug.error('write file', err.message);
+                return process.exit(1);
+            }
+
+            debug.success('√', srcMainURI);
+            debug.success('√', destMainURI);
         }
     };
 
+    bfList.push(new Buffer(sign('js'), 'utf8'));
     build(mainFile, options);
 };
 

@@ -15,6 +15,7 @@ var buildMain = require('../../build/main.js');
 var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
 var destResourceDirname = path.join(destDirname, 'static/res/');
+var destCoolieConfigBaseDirname = path.join(destDirname, 'static/js/app/');
 
 
 describe('build/module.js', function () {
@@ -30,7 +31,8 @@ describe('build/module.js', function () {
             srcDirname: srcDirname,
             destDirname: destDirname,
             destResourceDirname: destResourceDirname,
-            destHost: '/'
+            destHost: '/',
+            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname
         });
     });
 });

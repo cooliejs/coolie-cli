@@ -11,6 +11,7 @@
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
+var encryption = require('ydr-utils').encryption;
 //var fse = require('fs-extra');
 
 var parseCMDRequire = require('../parse/cmd-require.js');
@@ -54,7 +55,7 @@ var defaults = {
  * @param options.versionLength {Number} 版本号长度
  * @param options.minifyResource {Boolean} 压缩静态资源
  * @param options.cleanCSSOptions {Object} clean-css 配置
- * @returns {{dependencies: Array, code: String}}
+ * @returns {{dependencies: Array, code: String, md5: String}}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
@@ -125,10 +126,11 @@ module.exports = function (file, options) {
             break;
     }
 
-    var fileURI = pathURI.toRootURL(file, options.srcDirname);
+    //var fileURI = pathURI.toRootURL(file, options.srcDirname);
     return {
         dependencies: dependencies,
-        code: code
+        code: code,
+        md5: encryption.md5(code)
     };
 };
 

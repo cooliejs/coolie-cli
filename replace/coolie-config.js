@@ -52,8 +52,8 @@ var coolieFn = function () {
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param options.srcCoolieConfigJSPath {String} coolie-config.js 路径
- * @param options.srcCoolieConfigAsyncDirname {String} coolie-config.js base 目录
- * @param options.srcCoolieConfigChunkDirname {String} coolie-config.js base 目录
+ * @param options.srcCoolieConfigAsyncDirname {String} coolie-config.js async 目录
+ * @param options.srcCoolieConfigChunkDirname {String} coolie-config.js chunk 目录
  * @param options.srcDirname {String} 构建根目录
  * @param options.versionMap {Object} 版本配置 {file: version}
  * @param options.versionLength {Number} 版本长度
@@ -68,6 +68,7 @@ module.exports = function (file, options) {
     var coolieString = coolieFn.toString()
         .replace(REG_FUNCTION_START, '')
         .replace(REG_FUNCTION_END, '');
+    /*jshint evil: true*/
     var fn = new Function('config, callbacks', coolieString + code);
     var base;
     var version = JSON.stringify(versionMap);
@@ -79,7 +80,7 @@ module.exports = function (file, options) {
         var versionMap2 = {};
 
         dato.each(versionMap, function (_file, _version) {
-            var relative = path.relative(srcCoolieConfigBaseDirname, _file);
+            var relative = pathURI.relative(srcCoolieConfigBaseDirname, _file);
 
             relative = path.toURI(relative);
             versionMap2[relative] = _version;
