@@ -18,8 +18,6 @@ var sign = require('../utils/sign.js');
 var buildModule = require('./module.js');
 
 var defaults = {
-    inType: 'js',
-    outType: 'js',
     async: false,
     chunk: false,
     main: null,
@@ -38,8 +36,6 @@ var defaults = {
  * 构建入口模块
  * @param file {String} 入口路径
  * @param options {Object} 配置
- * @param options.inType {String} 模块入口类型
- * @param options.outType {String} 模块出口类型
  * @param options.async {Boolean} 是否为异步模块
  * @param options.chunk {Boolean} 是否为异步模块
  * @param options.uglifyJSOptions {Object} uglify-js 配置
@@ -90,11 +86,11 @@ module.exports = function (file, options) {
 
                 buildMap[dependency.id] = true;
                 dependencyLength++;
-                var options2 = dato.extend({}, options, {
+                var options3 = dato.extend({}, options, {
                     inType: dependency.inType,
                     outType: dependency.outType
                 });
-                build(dependency.id, options2);
+                build(dependency.id, options3);
             });
         }
 
@@ -122,7 +118,11 @@ module.exports = function (file, options) {
     };
 
     bfList.push(new Buffer(sign('js'), 'utf8'));
-    build(mainFile, options);
+    var options2 = dato.extend({}, options, {
+        inType: 'js',
+        outType: 'js'
+    });
+    build(mainFile, options2);
 };
 
 
