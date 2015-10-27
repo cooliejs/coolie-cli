@@ -18,7 +18,8 @@ var defaults = {
     globConfig: {
         dot: false,
         nodir: true
-    }
+    },
+    srcDirname: null
 };
 
 /**
