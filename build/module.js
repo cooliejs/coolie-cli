@@ -18,7 +18,7 @@ var reader = require('../utils/reader.js');
 var globalId = require('../utils/global-id.js');
 var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
-var replaceCMDRequire = require('../replace/cmd-require.js');
+var replaceAMDRequire = require('../replace/amd-require.js');
 var replaceAMDDefine = require('../replace/amd-define.js');
 var replaceModuleWrapper = require('../replace/module-wrapper.js');
 
@@ -74,8 +74,6 @@ module.exports = function (file, options) {
     var depGidList = [];
     var dependencies = [];
 
-    debug.success('requires', JSON.stringify(requires, null, 2));
-
     dato.each(requires, function (index, item) {
         depName2IdMap[item.raw] = item.gid;
 
@@ -88,19 +86,17 @@ module.exports = function (file, options) {
 
     switch (options.inType) {
         case 'js':
-            // 1. 替换 require()
-            debug.success('depName2IdMap', JSON.stringify(depName2IdMap, null, 2));
-            code = replaceCMDRequire(file, {
-                code: code,
-                async: options.async,
-                depName2IdMap: depName2IdMap
-            });
-            console.log(code);
-
-            // 2. 压缩代码
+            // 1. 压缩代码
             code = minifyJS(file, {
                 code: code,
                 uglifyJSOptions: options.uglifyJSOptions
+            });
+
+            // 2. 替换 require()
+            code = replaceAMDRequire(file, {
+                code: code,
+                async: options.async,
+                depName2IdMap: depName2IdMap
             });
 
             // 同一个文件，不同的模块出口类型，返回的模块是不一样的

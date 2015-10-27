@@ -10,14 +10,14 @@
 var path = require('path');
 var assert = require('assert');
 
-var replaceCMDRequire = require('../../replace/cmd-require.js');
+var replaceAMDRequire = require('../../replace/amd-require.js');
 
 var file = __filename;
 
 describe('replace/amd-require.js', function () {
     it('async:false', function () {
         var code = 'define(function(require){require("../libs/x.js");require(\'../libs/all.js\', \'js|js\');console.log("app/index.js")});';
-        var ret = replaceCMDRequire(file, {
+        var ret = replaceAMDRequire(file, {
             code: code,
             depName2IdMap: {
                 '../libs/x.js': 'm',
@@ -32,7 +32,7 @@ describe('replace/amd-require.js', function () {
 
     it('async:true', function () {
         var code = 'define(function(require){require.async("../libs/all.js");console.log("app/index.js")});';
-        var ret =  replaceCMDRequire(file, {
+        var ret =  replaceAMDRequire(file, {
             code: code,
             async: true,
             depName2IdMap: {
