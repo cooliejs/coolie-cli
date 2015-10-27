@@ -17,7 +17,7 @@ var debug = require('ydr-utils').debug;
 var defaults = {
     glob: [],
     srcDirname: __dirname,
-    globConfigs: {
+    globOptions: {
         dot: false,
         nodir: true
     },
@@ -29,7 +29,7 @@ var defaults = {
  * @param options {Object} 配置
  * @param options.glob {String|Array} 规则字符串或数组
  * @param options.srcDirname {String} 原始目录
- * @param options.globConfigs {Object} glob 配置
+ * @param options.globOptions {Object} glob 配置
  * @param options.progress {Function} 过程回调
  * @returns {Array}
  */
@@ -45,7 +45,7 @@ module.exports = function (options) {
         var _files = [];
 
         try {
-            _files = glob.sync(p2, options.globConfigs);
+            _files = glob.sync(p2, options.globOptions);
         } catch (err) {
             debug.error('glob', p);
             debug.error('glob', err.message);
