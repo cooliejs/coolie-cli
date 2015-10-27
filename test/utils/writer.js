@@ -30,7 +30,8 @@ describe('utils/writer.js', function () {
             versionLength: 8
         });
 
-        assert.equal(typeis.file(ret), true);
+        assert.equal(typeis.file(ret.path), true);
+        assert.equal(typeis.string(ret.version), true);
     });
 });
 

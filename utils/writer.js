@@ -38,7 +38,7 @@ var defaults = {
  * @param options.bufferList {Array} 配置
  * @param options.versionList {Array} 配置
  * @param options.versionLength {Number} 配置
- * @returns {String}
+ * @returns {{file: String, version: String}}
  */
 module.exports = function (options) {
     options = dato.extend({}, defaults, options);
@@ -64,7 +64,10 @@ module.exports = function (options) {
         return process.exit(1);
     }
 
-    return outputPath;
+    return {
+        path: outputPath,
+        version: version
+    };
 };
 
 

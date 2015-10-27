@@ -16,9 +16,9 @@ var fse = require('fs-extra');
 var parseMain = require('../parse/main.js');
 var parseChunk = require('../parse/chunk.js');
 var buildMain = require('./main.js');
-var sign = require('../utils/sign.js');
 var pathURI = require('../utils/path-uri.js');
 var writer = require('../utils/writer.js');
+var arrayString = require('../utils/array-string.js');
 
 var defaults = {
     main: [],
@@ -71,7 +71,6 @@ var defaults = {
 module.exports = function (options) {
     options = dato.extend(true, {}, defaults, options);
 
-
     // 1、分析 main
     var mainMap = parseMain({
         main: options.main,
@@ -123,15 +122,17 @@ module.exports = function (options) {
                         buffer: dependency.buffer,
                         md5: dependency.md5,
                         count: 0,
-                        mainIndex: mainIndex
+                        mainIndexList: []
                     };
                 chunkDependingCountMap[dependency.id].count++;
+                chunkDependingCountMap[dependency.id].mainIndexList.push(mainIndex);
             } else {
                 singleModuleMap[mainIndex] = singleModuleMap[mainIndex] || {
                         bufferList: [],
                         md5List: [],
                         mainIndex: mainIndex,
-                        chunkMap: {}
+                        chunkMap: {},
+                        chunkList: []
                     };
                 singleModuleMap[mainIndex].bufferList.push(dependency.buffer);
                 singleModuleMap[mainIndex].md5List.push(dependency.md5);
@@ -145,7 +146,8 @@ module.exports = function (options) {
     // [{chunkIndex, Number, id: String, file: String, buffer: Buffer, md5: String, count: Number, mainIndex: Number}]
     dato.each(chunkDependingCountMap, function (chunkId, chunkMeta) {
         var chunkIndex = chunkMeta.chunkIndex;
-        var mainIndex = chunkMeta.mainIndex;
+        var mainIndexList = chunkMeta.mainIndexList;
+        var mainIndex0 = mainIndexList[0];
 
         // 被多次引用
         if (chunkMeta.count >= options.minDependingCount2Chunk) {
@@ -155,18 +157,26 @@ module.exports = function (options) {
                 };
             chunkGroupMap[chunkIndex].bufferList.push(chunkMeta.buffer);
             chunkGroupMap[chunkIndex].md5List.push(chunkMeta.md5);
+
+            dato.each(mainIndexList, function (index, _mainIndex) {
+                if (!singleModuleMap[_mainIndex].chunkMap[chunkIndex]) {
+                    singleModuleMap[_mainIndex].chunkMap[chunkIndex] = true;
+                    singleModuleMap[_mainIndex].chunkList.push(chunkIndex);
+                }
+            });
         }
         // 只被一次引用
         else {
-            singleModuleMap[mainIndex].bufferList.push(chunkMeta.buffer);
-            singleModuleMap[mainIndex].md5List.push(chunkMeta.md5);
+            singleModuleMap[mainIndex0].bufferList.push(chunkMeta.buffer);
+            singleModuleMap[mainIndex0].md5List.push(chunkMeta.md5);
         }
     });
 
     // 5、chunk 新建
+    var chunkVersionMap = {};
     // [{bufferList: Array, md5List: Array}]
     dato.each(chunkGroupMap, function (groupIndex, groupMeta) {
-        writer({
+        var ret = writer({
             srcDirname: options.srcDirname,
             destDirname: options.destCoolieConfigChunkDirname,
             fileNameTemplate: groupIndex + '.${version}.js',
@@ -175,11 +185,17 @@ module.exports = function (options) {
             versionList: groupMeta.md5List,
             versionLength: options.versionLength
         });
+
+        chunkVersionMap[pathURI.removeVersion(ret.path)] = ret.version;
     });
 
-    // 6、模块重建
-    // [{bufferList: Array, md5List: Array}]
+    // 6、single 重建
+    // [{bufferList: Array, md5List: Array, chunkList: Array}]
     dato.each(singleModuleMap, function (singleIndex, singleMeta) {
+        if (singleMeta.chunkList.length) {
+            singleMeta.bufferList.push(new Buffer('\ncoolie.chunk(' + arrayString.stringify(singleMeta.chunkList) + ');'));
+        }
+
         writer({
             srcDirname: options.srcDirname,
             destDirname: options.destCoolieConfigBaseDirname,
@@ -190,6 +206,10 @@ module.exports = function (options) {
             versionLength: options.versionLength
         });
     });
+
+    return {
+        chunkVersionMap: chunkVersionMap
+    };
 };
 
 

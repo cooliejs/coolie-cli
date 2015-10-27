@@ -22,7 +22,7 @@ var destCoolieConfigAsyncDirname = path.join(destDirname, 'static/js/async/');
 
 describe('build/app.js', function () {
     it('e', function () {
-        buildAPP({
+        var ret = buildAPP({
             main: [
                 'static/js/app/html1.js',
                 'static/js/app/html2.js'
@@ -40,5 +40,7 @@ describe('build/app.js', function () {
             destCoolieConfigChunkDirname: destCoolieConfigChunkDirname,
             destCoolieConfigAsyncDirname: destCoolieConfigAsyncDirname
         });
+
+        console.log(JSON.stringify(ret, null, 4));
     });
 });

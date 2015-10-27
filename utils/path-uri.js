@@ -15,6 +15,7 @@ var REG_RELATIVE_ROOT = /^\//;
 var REG_BASE_64 = /^data:/i;
 var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_RELATIVE = /^\.{1,2}\//;
+var REG_END = /\.[a-z\d]+\.([^.]+)$/i;
 
 
 /**
@@ -188,5 +189,15 @@ exports.replaceVersion = function (uri, version) {
     var extname = path.extname(uri);
 
     return exports.joinURI(dir, version + extname);
+};
+
+
+/**
+ * 版本替换
+ * @param file
+ * @returns {*}
+ */
+exports.removeVersion = function (file) {
+    return file.replace(REG_END, '.$1');
 };
 
