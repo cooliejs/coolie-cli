@@ -126,11 +126,12 @@ module.exports = function (options) {
                         mainIndex: mainIndex
                     };
                 chunkDependingCountMap[dependency.id].count++;
-            }else{
+            } else {
                 singleModuleMap[mainIndex] = singleModuleMap[mainIndex] || {
                         bufferList: [],
                         md5List: [],
-                        mainIndex: mainIndex
+                        mainIndex: mainIndex,
+                        chunkMap: {}
                     };
                 singleModuleMap[mainIndex].bufferList.push(dependency.buffer);
                 singleModuleMap[mainIndex].md5List.push(dependency.md5);
@@ -143,19 +144,22 @@ module.exports = function (options) {
     var chunkGroupMap = {};
     // [{chunkIndex, Number, id: String, file: String, buffer: Buffer, md5: String, count: Number, mainIndex: Number}]
     dato.each(chunkDependingCountMap, function (chunkId, chunkMeta) {
+        var chunkIndex = chunkMeta.chunkIndex;
+        var mainIndex = chunkMeta.mainIndex;
+
         // 被多次引用
         if (chunkMeta.count >= options.minDependingCount2Chunk) {
-            chunkGroupMap[chunkMeta.chunkIndex] = chunkGroupMap[chunkMeta.chunkIndex] || {
+            chunkGroupMap[chunkIndex] = chunkGroupMap[chunkIndex] || {
                     bufferList: [],
                     md5List: []
                 };
-            chunkGroupMap[chunkMeta.chunkIndex].bufferList.push(chunkMeta.buffer);
-            chunkGroupMap[chunkMeta.chunkIndex].md5List.push(chunkMeta.md5);
+            chunkGroupMap[chunkIndex].bufferList.push(chunkMeta.buffer);
+            chunkGroupMap[chunkIndex].md5List.push(chunkMeta.md5);
         }
         // 只被一次引用
-        else{
-            singleModuleMap[chunkMeta.mainIndex].bufferList.push(chunkMeta.buffer);
-            singleModuleMap[chunkMeta.mainIndex].md5List.push(chunkMeta.md5);
+        else {
+            singleModuleMap[mainIndex].bufferList.push(chunkMeta.buffer);
+            singleModuleMap[mainIndex].md5List.push(chunkMeta.md5);
         }
     });
 
