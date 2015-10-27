@@ -30,6 +30,8 @@ var defaults = {
     uglifyJSOptions: null,
     srcDirname: null,
     destDirname: null,
+    destJSDirname: null,
+    destCSSDirname: null,
     destResourceDirname: null,
     destHost: '/',
     versionLength: 32,
@@ -47,6 +49,8 @@ var defaults = {
  * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.srcDirname {String} 原始根目录
  * @param options.destDirname {String} 目标根目录
+ * @param options.destJSDirname {String} 目标 JS 目录
+ * @param options.destCSSDirname {String} 目标 CSS 目录
  * @param options.destResourceDirname {String} 目标资源目录
  * @param options.destHost {String} 目标域
  * @param options.versionLength {Number} 版本号长度
@@ -124,7 +128,7 @@ module.exports = function (file, options) {
                 outType: options.outType,
                 srcDirname: options.srcDirname,
                 destDirname: options.destDirname,
-                destCSSDirname: null,
+                destCSSDirname: options.destCSSDirname,
                 destResourceDirname: options.destResourceDirname,
                 destHost: options.destHost,
                 versionLength: options.versionLength,

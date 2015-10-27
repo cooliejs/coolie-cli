@@ -129,7 +129,13 @@ var defaults = {
     destResourceDirname: null,
     destHost: '/',
     versionLength: 32,
-    minifyResource: true
+    minifyResource: true,
+    cleanCSSOptions: null,
+    removeHTMLYUIComments: true,
+    removeHTMLLineComments: true,
+    joinHTMLSpaces: true,
+    removeHTMLBreakLines: true,
+    uglifyJSOptions: null
 };
 
 
@@ -142,12 +148,18 @@ var defaults = {
  * @param options.outType {String} 模块出口类型
  * @param options.srcDirname {String} 构建目录
  * @param options.destDirname {String} 目标目录
- * @param options.destCSSDirname {String} 目标 css 目录
+ * @param options.destJSDirname {String} 目标 JS 目录
+ * @param options.destCSSDirname {String} 目标 CSS 目录
  * @param options.destResourceDirname {String} 目标资源目录
  * @param options.destHost {String} 目标域
  * @param options.versionLength {Number} 版本号长度
  * @param [options.minifyResource] {Boolean} 是否压缩静态资源
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
+ * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
+ * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
+ * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
+ * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @param [options.uglifyJSOptions] {Object} uglify-js 配置
  * @return {String}
  */
 module.exports = function (file, options) {
@@ -257,7 +269,26 @@ module.exports = function (file, options) {
                     options2.filter = function () {
                         return minifyHTML(file, {
                             code: code,
-                            type: 'module'
+                            replaceHTMLAttrResource: true,
+                            replaceHTMLTagScript: true,
+                            replaceHTMLTagStyleResource: true,
+                            replaceHTMLAttrStyleResource: true,
+                            replaceHTMLCoolieGroup: true,
+                            removeHTMLYUIComments: options.removeHTMLYUIComments,
+                            removeHTMLLineComments: options.removeHTMLLineComments,
+                            joinHTMLSpaces: options.joinHTMLSpaces,
+                            removeHTMLBreakLines: options.removeHTMLBreakLines,
+                            srcDirname: options.srcDirname,
+                            destDirname: options.destDirname,
+                            destHost: options.destHost,
+                            destResourceDirname: options.destResourceDirname,
+                            destCSSDirname: options.destCSSDirname,
+                            minifyJS: true,
+                            minifyCSS: true,
+                            minifyResource: true,
+                            uglifyJSOptions: options.uglifyJSOptions,
+                            cleanCSSOptions: options.cleanCSSOptions,
+                            replaceCSSResource: true
                         });
                     };
                     uri = createURL(file, options2);
@@ -267,7 +298,26 @@ module.exports = function (file, options) {
                 case 'base64':
                     code = minifyHTML(file, {
                         code: code,
-                        type: 'module'
+                        replaceHTMLAttrResource: true,
+                        replaceHTMLTagScript: true,
+                        replaceHTMLTagStyleResource: true,
+                        replaceHTMLAttrStyleResource: true,
+                        replaceHTMLCoolieGroup: true,
+                        removeHTMLYUIComments: options.removeHTMLYUIComments,
+                        removeHTMLLineComments: options.removeHTMLLineComments,
+                        joinHTMLSpaces: options.joinHTMLSpaces,
+                        removeHTMLBreakLines: options.removeHTMLBreakLines,
+                        srcDirname: options.srcDirname,
+                        destDirname: options.destDirname,
+                        destHost: options.destHost,
+                        destResourceDirname: options.destResourceDirname,
+                        destCSSDirname: options.destCSSDirname,
+                        minifyJS: true,
+                        minifyCSS: true,
+                        minifyResource: true,
+                        uglifyJSOptions: options.uglifyJSOptions,
+                        cleanCSSOptions: options.cleanCSSOptions,
+                        replaceCSSResource: true
                     });
                     code = string.toUnicode(code);
                     code = base64.string(code, extname);
@@ -276,7 +326,27 @@ module.exports = function (file, options) {
                 // text
                 default :
                     code = minifyHTML(file, {
-                        code: code
+                        code: code,
+                        replaceHTMLAttrResource: true,
+                        replaceHTMLTagScript: true,
+                        replaceHTMLTagStyleResource: true,
+                        replaceHTMLAttrStyleResource: true,
+                        replaceHTMLCoolieGroup: true,
+                        removeHTMLYUIComments: options.removeHTMLYUIComments,
+                        removeHTMLLineComments: options.removeHTMLLineComments,
+                        joinHTMLSpaces: options.joinHTMLSpaces,
+                        removeHTMLBreakLines: options.removeHTMLBreakLines,
+                        srcDirname: options.srcDirname,
+                        destDirname: options.destDirname,
+                        destHost: options.destHost,
+                        destResourceDirname: options.destResourceDirname,
+                        destCSSDirname: options.destCSSDirname,
+                        minifyJS: true,
+                        minifyCSS: true,
+                        minifyResource: true,
+                        uglifyJSOptions: options.uglifyJSOptions,
+                        cleanCSSOptions: options.cleanCSSOptions,
+                        replaceCSSResource: true
                     });
                     return wrapDefine(file, code, options);
             }

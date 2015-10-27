@@ -51,9 +51,6 @@ module.exports = function (file, options) {
     // style=""
     code = code.replace(REG_TAG, function (source, tagName) {
         var ignore = htmlAttr.get(source, COOLIE_IGNOE);
-
-        debug.normal('source', source);
-
         var styleCode = htmlAttr.get(source, 'style');
 
         if (ignore || (!styleCode || styleCode === true)) {

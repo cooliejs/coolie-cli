@@ -14,7 +14,6 @@ var path = require('ydr-utils').path;
 var fse = require('fs-extra');
 
 var pathURI = require('../utils/path-uri.js');
-var sign = require('../utils/sign.js');
 var buildModule = require('./module.js');
 
 var defaults = {

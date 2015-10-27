@@ -21,7 +21,7 @@ var destResourceDirname = path.join(destDirname, 'static/res/');
 describe('build/module.js', function () {
     var mainFile = path.join(srcDirname, 'static/js/app/index.js');
 
-    it('sync:js', function () {
+    xit('sync:js|js', function () {
         var ret = buildModule(mainFile, {
             inType: 'js',
             outType: 'js',
@@ -37,12 +37,34 @@ describe('build/module.js', function () {
         assert.equal(REG_CODE.test(ret.code), true);
     });
 
-    it('sync:css', function () {
+    xit('sync:css|text', function () {
         var file = path.join(srcDirname, 'static/js/libs2/some.css');
 
         var ret = buildModule(file, {
             inType: 'css',
-            outType: 'css',
+            outType: 'text',
+            async: false,
+            chunk: false,
+            main: mainFile,
+            srcDirname: srcDirname,
+            destDirname: destDirname,
+            destResourceDirname: destResourceDirname,
+            destHost: '/'
+        });
+
+        var REG_CODE = /^define\("[a-z\d]*?",.*?\);$/;
+
+        console.log(ret.code);
+        assert.equal(ret.dependencies.length === 0, true);
+        assert.equal(REG_CODE.test(ret.code), true);
+    });
+
+    it('sync:html|base64', function () {
+        var file = path.join(srcDirname, 'static/js/libs2/some.html');
+
+        var ret = buildModule(file, {
+            inType: 'html',
+            outType: 'base64',
             async: false,
             chunk: false,
             main: mainFile,

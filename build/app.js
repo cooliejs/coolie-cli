@@ -8,11 +8,15 @@
 'use strict';
 
 var debug = require('ydr-utils').debug;
+var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
+var encryption = require('ydr-utils').encryption;
+var fse = require('fs-extra');
 
 var parseMain = require('../parse/main.js');
 var parseChunk = require('../parse/chunk.js');
 var buildMain = require('./main.js');
+var sign = require('../utils/sign.js');
 
 var defaults = {
     main: [],
@@ -88,36 +92,55 @@ module.exports = function (options) {
             destCoolieConfigBaseDirname: options.destCoolieConfigBaseDirname
         });
 
+        // [{id: String, file: String, buffer: Buffer, md5: String}]
         dato.each(dependencies, function (index, dependency) {
             var isChunk = chunkFileMap[dependency.file];
 
             if (isChunk) {
-                chunkDependingCountMap[dependency.id] = chunkDependingCountMap[dependency.id] || 0;
-                chunkDependingCountMap[dependency.id]++;
+                chunkDependingCountMap[dependency.id] = chunkDependingCountMap[dependency.id] || {
+                        index: index,
+                        id: dependency.id,
+                        file: dependency.file,
+                        buffer: dependency.buffer,
+                        md5: dependency.md5,
+                        count: 0
+                    };
+                chunkDependingCountMap[dependency.id].count++;
             }
         });
     });
 
-    console.log(chunkDependingCountMap);
-
     // 4、chunk 分组
     var chunkGroupMap = {};
-    dato.each(chunkDependingCountMap, function (chunkFile, dependingCount) {
-        var chunkIndex = chunkGroupMap[chunkFile];
-
-        chunkGroupMap[chunkIndex] = chunkGroupMap[chunkIndex] || [];
-
-        if (dependingCount >= options.minDependingCount2Chunk) {
-            chunkGroupMap[chunkIndex].push(chunkFile);
+    // [{index, Number, id: String, file: String, buffer: Buffer, md5: String, count: Number}]
+    dato.each(chunkDependingCountMap, function (chunkId, chunkMeta) {
+        if (chunkMeta.count >= options.minDependingCount2Chunk) {
+            chunkGroupMap[chunkMeta.index] = chunkGroupMap[chunkMeta.index] || {
+                    bufferList: [],
+                    versionList: []
+                };
+            chunkGroupMap[chunkMeta.index].bufferList.push(chunkMeta.buffer);
+            chunkGroupMap[chunkMeta.index].versionList.push(chunkMeta.md5);
         }
     });
-    //
-    //
-    //// 5、chunk 新建
-    //dato.each(chunkGroupMap, function (groupIndex, groupFiles) {
-    //
-    //});
-    //
+
+    // 5、chunk 新建
+    // [{bufferList: Array, versionList: Array}]
+    dato.each(chunkGroupMap, function (groupIndex, groupMeta) {
+        var chunkVersion = groupMeta.versionList.join('').slice(0, options.versionLength);
+        var chunkPath = path.join(options.destCoolieConfigChunkDirname, groupIndex + '.' + chunkVersion + '.js')
+        groupMeta.bufferList.unshift(new Buffer(sign('js'), 'utf8'));
+        var buffer = Buffer.concat(groupMeta.bufferList);
+
+        try {
+            fse.outputFileSync(chunkPath, buffer);
+        } catch (err) {
+            debug.error('write chunk', path.toSystem(chunkPath));
+            debug.error('write file', err.message);
+            return process.exit(1);
+        }
+    });
+
     //// 6、模块重建
 };
 

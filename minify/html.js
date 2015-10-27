@@ -50,10 +50,10 @@ var defaults = {
     replaceHTMLTagStyleResource: false,
     replaceHTMLAttrStyleResource: false,
     replaceHTMLCoolieGroup: false,
-    removeYUIComments: true,
-    removeLineComments: true,
-    joinSpaces: true,
-    removeBreakLines: true,
+    removeHTMLYUIComments: true,
+    removeHTMLLineComments: true,
+    joinHTMLSpaces: true,
+    removeHTMLBreakLines: true,
     versionLength: 32,
     srcDirname: null,
     destDirname: null,
@@ -80,17 +80,16 @@ var defaults = {
  * @param [options.replaceHTMLTagStyleResource=false] {Boolean} 是否替换 html 内的 <style>
  * @param [options.replaceHTMLAttrStyleResource=false] {Boolean} 是否替换 html 内的 <div style="">
  * @param [options.replaceHTMLCoolieGroup=false] {Boolean} 是否替换 html 内的 <\!--coolie-->
- * @param [options.removeYUIComments=true] {Boolean} 是否去除 YUI 注释
- * @param [options.removeLineComments=true] {Boolean} 是否去除行注释
- * @param [options.joinSpaces=true] {Boolean} 是否合并空白
- * @param [options.removeBreakLines=true] {Boolean} 是否删除断行
- * @param [options.versionLength=32] {Boolean} 是否删除断行
+ * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
+ * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
+ * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
+ * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @param [options.versionLength=32] {Number} 版本号长度
  * @param [options.srcDirname] {String} 原始根目录
  * @param [options.destDirname] {String} 目标根目录
  * @param [options.destHost] {String} 目标域
  * @param [options.destResourceDirname] {String} 目标资源目录
  * @param [options.destCSSDirname] {String} 目标 CSS 目录
- * @param [options.minifyResource] {Boolean} 是否压缩引用资源
  * @param [options.srcCoolieConfigBaseDirname] {String} 原始 coolie-config:base 目录
  * @param [options.destCoolieConfigJSPath] {String} 原始 coolie-config.js 路径
  * @param [options.minifyJS=true] {Boolean} 是否压缩 JS
@@ -99,7 +98,7 @@ var defaults = {
  * @param [options.uglifyJSOptions=null] {Boolean} 压缩 JS 配置
  * @param [options.cleanCSSOptions=null] {Boolean} 压缩 CSS 配置
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 引用资源
- * @param [options.versionMap] {Object} 版本信息
+ * @param [options.mainVersionMap] {Object} 入口模块版本信息
  * @returns {String}
  */
 module.exports = function (file, options) {
@@ -118,19 +117,19 @@ module.exports = function (file, options) {
         });
     });
 
-    if (options.removeYUIComments) {
+    if (options.removeHTMLYUIComments) {
         code = code.replace(REG_YUI_COMMENTS, '');
     }
 
-    if (options.removeLineComments) {
+    if (options.removeHTMLLineComments) {
         code = code.replace(REG_LINE_COMMENTS, '');
     }
 
-    if (options.joinSpaces) {
+    if (options.joinHTMLSpaces) {
         code = code.replace(REG_SPACES, ' ');
     }
 
-    if (options.removeBreakLines) {
+    if (options.removeHTMLBreakLines) {
         code = code.replace(REG_LINES, '');
     }
 
