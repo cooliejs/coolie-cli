@@ -13,6 +13,7 @@ var debug = require('ydr-utils').debug;
 
 var htmlAttr = require('../utils/html-attr.js');
 var pathURI = require('../utils/path-uri.js');
+var copy = require('../utils/copy.js');
 var minifyJS = require('../minify/js.js');
 
 var JS_TYPES = [
@@ -35,10 +36,12 @@ var defaults = {
     code: '',
     srcDirname: null,
     srcCoolieConfigBaseDirname: null,
+    destJSDirname: null,
     destDirname: null,
     destHost: '/',
     destCoolieConfigJSPath: null,
-    versionMap: {},
+    mainVersionMap: {},
+    versionLength: 32,
     minifyJS: true,
     uglifyJSOptions: null
 };
@@ -53,21 +56,21 @@ var defaults = {
  * @param options.srcCoolieConfigBaseDirname {String} coolie-config:base 目录
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标根域
+ * @param options.destJSDirname {String} 目标 JS 目录
  * @param options.destCoolieConfigJSPath {String} 目标 coolie-config.js 路径
- * @param options.versionMap {Object} 版本 map，{file: version}
+ * @param options.mainVersionMap {Object} 入口文件版本 map，{file: version}
+ * @param options.versionLength {Number} 版本号长度
  * @param [options.minifyJS] {Boolean} 是否压缩 JS
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
  * @returns {String}
  */
 module.exports = function (file, options) {
     options = dato.extend(true, {}, defaults, options);
-    options.versionMap = options.versionMap || {};
     var code = options.code;
 
     code = code.replace(REG_SCRIPT, function (source, scriptTag, scriptCode) {
         var ignore = htmlAttr.get(source, COOLIE_IGNORE);
-        var sourceOriginal = source;
-
+        var originalSource = source;
 
         if (ignore) {
             source = htmlAttr.remove(source, COOLIE_IGNORE);
@@ -79,30 +82,33 @@ module.exports = function (file, options) {
         var src = htmlAttr.get(scriptTag, 'src');
 
         // 有 coolie 属性
-        if (hasCoolie) {
+        if (src && hasCoolie) {
             var dataMain = htmlAttr.get(source, 'data-main');
             var dataConfig = htmlAttr.get(source, 'data-config');
 
             if (!dataMain || dataMain === true) {
                 debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', sourceOriginal);
+                debug.error('coolie script', originalSource);
                 debug.error('coolie script', '`data-main` is empty');
                 return process.exit(1);
             }
 
             if (!dataConfig || dataConfig === true) {
                 debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', sourceOriginal);
+                debug.error('coolie script', originalSource);
                 debug.error('coolie script', '`data-config` is empty');
                 return process.exit(1);
             }
 
             var mainPath = path.join(options.srcCoolieConfigBaseDirname, dataMain);
-            var mainVersion = options.versionMap[mainPath];
+            var mainVersion = options.mainVersionMap[mainPath];
 
             if (!mainVersion) {
                 debug.error('coolie script', 'can not found `data-main` version');
+                debug.error('coolie `data-main`', dataMain);
                 debug.error('coolie script', path.toSystem(mainPath));
+                debug.error('html file', path.toSystem(file));
+                debug.error('html code', originalSource);
                 return process.exit(1);
             }
 
@@ -121,11 +127,31 @@ module.exports = function (file, options) {
             source = htmlAttr.set(source, 'data-config', coolieConfigURI);
             source = htmlAttr.remove(source, COOLIE);
             source = source.replace(REG_LINE, '').replace(REG_SPACE, ' ');
-            return source;
         }
 
         // 有 src 属性
         if (src) {
+            var isRelatived = pathURI.isRelatived(src);
+
+            if(!isRelatived){
+                return source;
+            }
+
+            var srcPath = pathURI.toAbsoluteFile(src, file, options.srcDirname);
+            var copyPath = copy(srcPath, {
+                srcDirname: options.srcDirname,
+                destDirname: options.destJSDirname,
+                copyPath: false,
+                embedFile: file,
+                embedCode: originalSource,
+                version: true,
+                versionLength: options.versionLength,
+                minify: options.minifyJS,
+                logType: 1
+            });
+            var copyURI = pathURI.toRootURL(copyPath, options.destDirname);
+
+            source = htmlAttr.set(source, 'src', copyURI);
             return source;
         }
 

@@ -19,11 +19,12 @@ var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
 var destCoolieConfigJSURI = 'static/js/eb21eac7c7c8278c7bf0c208efbfd663.js';
 var destCoolieConfigJSPath = path.join(destDirname, destCoolieConfigJSURI);
+var destJSDirname = path.join(destDirname, 'static/js/');
 var srcCoolieConfigBaseDirname = path.join(srcDirname, 'static/js/app/');
 var srcMainPath = path.join(srcDirname, 'static/js/app/index.js');
-var versionMap = {};
+var mainVersionMap = {};
 
-versionMap[srcMainPath] = '00023123123123123312312';
+mainVersionMap[srcMainPath] = '00023123123123123312312';
 
 describe('replace/html-attr-script.js', function () {
     it('e', function () {
@@ -32,7 +33,8 @@ describe('replace/html-attr-script.js', function () {
             srcDirname: srcDirname,
             srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname,
             destDirname: destDirname,
-            versionMap: versionMap,
+            destJSDirname: destJSDirname,
+            mainVersionMap: mainVersionMap,
             destHost: 'http://abc.com',
             destCoolieConfigJSPath: destCoolieConfigJSPath
         });
@@ -41,7 +43,7 @@ describe('replace/html-attr-script.js', function () {
         console.log(ret);
         console.log('\n===========================');
         assert.equal(ret.indexOf('http://abc.com/' + destCoolieConfigJSURI) > -1, true);
-        assert.equal(ret.indexOf(versionMap[srcMainPath]) > -1, true);
+        assert.equal(ret.indexOf(mainVersionMap[srcMainPath]) > -1, true);
     });
 });
 
