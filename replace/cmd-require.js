@@ -15,6 +15,8 @@ var path = require('ydr-utils').path;
 var pathURI = require('../utils/path-uri.js');
 var parseDefineRequireVarible = require('../parse/define-require-varible.js');
 
+var REG_SEG = /["'](\s*?,\s*?)["']/;
+
 
 /**
  * 替换 require
@@ -61,6 +63,7 @@ module.exports = function (file, options) {
  */
 function _buildReg(requireVar, dep, async) {
     dep = string.escapeRegExp(dep);
+    dep = dep.replace(REG_SEG, '["\']$1["\']');
     requireVar = string.escapeRegExp(requireVar);
 
     if (async) {
