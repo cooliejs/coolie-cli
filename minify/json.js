@@ -7,6 +7,7 @@
 
 'use strict';
 
+var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
 
 var pathURI = require('../utils/path-uri.js');
@@ -24,7 +25,7 @@ module.exports = function (file, options) {
     try {
         json = JSON.parse(code);
     } catch (err) {
-        debug.error('jsonminify', pathURI.toSystemPath(file));
+        debug.error('jsonminify', path.toSystem(file));
         debug.error('jsonminify', err.message);
         process.exit(1);
     }

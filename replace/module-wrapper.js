@@ -137,6 +137,7 @@ var defaults = {
  * @param options.destHost {String} 目标域
  * @param options.versionLength {Number} 版本号长度
  * @param [options.minifyResource] {Boolean} 是否压缩静态资源
+ * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @return {String}
  */
 module.exports = function (file, options) {
@@ -195,6 +196,7 @@ module.exports = function (file, options) {
                     options2.filter = function (destFile) {
                         return minifyCSS(file, {
                             code: code,
+                            cleanCSSOptions: options.cleanCSSOptions,
                             destDirname: path.dirname(destFile)
                         });
                     };
@@ -204,7 +206,8 @@ module.exports = function (file, options) {
 
                 case 'base64':
                     code = minifyCSS(file, {
-                        code: code
+                        code: code,
+                        cleanCSSOptions: options.cleanCSSOptions
                     });
                     code = string.toUnicode(code);
                     code = base64.string(code, extname);

@@ -81,7 +81,7 @@ module.exports = function (file, options) {
 
         return code;
     } catch (err) {
-        debug.error('cssminify', pathURI.toSystemPath(file));
+        debug.error('cssminify', path.toSystem(file));
         debug.error('cssminify', err.message);
         process.exit(1);
     }

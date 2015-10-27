@@ -11,6 +11,7 @@
 var uglifyJS = require('uglify-js');
 var debug = require('ydr-utils').debug;
 var dato = require('ydr-utils').dato;
+var path = require('ydr-utils').path;
 
 var pathURI = require('../utils/path-uri.js');
 
@@ -81,7 +82,7 @@ module.exports = function (file, options) {
             compress: dato.extend({}, compressorOptions, options.uglifyJSOptions)
         }).code;
     } catch (err) {
-        debug.error('jsminify', pathURI.toSystemPath(file));
+        debug.error('jsminify', path.toSystem(file));
         debug.error('jsminify', err.message);
         process.exit(1);
     }

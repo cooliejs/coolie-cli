@@ -10,11 +10,9 @@
 
 var path = require('ydr-utils').path;
 
-var REG_ABSOLUTE = /^((http|ftp)s?|\/\/)/i;
+var REG_ABSOLUTE = /^((?:(?:http|ftp)s?:|)\/\/)/i;
 var REG_RELATIVE_ROOT = /^\//;
 var REG_BASE_64 = /^data:/i;
-var REG_FIRST = /^\//;
-var REG_LAST = /\/$/;
 var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_RELATIVE = /^\.{1,2}\//;
 
@@ -143,7 +141,13 @@ exports.joinURI = function (p1, p2) {
     p1 = path.toURI(p1);
     p2 = path.toURI(p2);
 
-    return path.join(p1, p2);
+    var protocol = (p1.match(REG_ABSOLUTE) || ['', ''])[1];
+
+    p1 = p1.replace(REG_ABSOLUTE, '');
+
+    var p3 = path.join(p1, p2);
+
+    return protocol + p3;
 };
 
 

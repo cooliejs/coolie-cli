@@ -11,12 +11,12 @@
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
-var fs = require('fs-extra');
-
+//var fse = require('fs-extra');
 
 var parseCMDRequire = require('../parse/cmd-require.js');
 var reader = require('../utils/reader.js');
 var globalId = require('../utils/global-id.js');
+var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
 var replaceAMDRequire = require('../replace/amd-require.js');
 var replaceAMDDefine = require('../replace/amd-define.js');
@@ -53,6 +53,7 @@ var defaults = {
  * @param options.destHost {String} 目标域
  * @param options.versionLength {Number} 版本号长度
  * @param options.minifyResource {Boolean} 压缩静态资源
+ * @param options.cleanCSSOptions {Object} clean-css 配置
  * @returns {{dependencies: Array, code: String}}
  */
 module.exports = function (file, options) {
@@ -118,11 +119,13 @@ module.exports = function (file, options) {
                 destResourceDirname: options.destResourceDirname,
                 destHost: options.destHost,
                 versionLength: options.versionLength,
-                minifyResource: options.minifyResource
+                minifyResource: options.minifyResource,
+                cleanCSSOptions: options.cleanCSSOptions
             });
             break;
     }
 
+    var fileURI = pathURI.toRootURL(file, options.srcDirname);
     return {
         dependencies: dependencies,
         code: code

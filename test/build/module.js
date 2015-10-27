@@ -21,20 +21,20 @@ var destResourceDirname = path.join(destDirname, 'static/res/');
 describe('build/module.js', function () {
     var mainFile = path.join(srcDirname, 'static/js/app/index.js');
 
-    //it('sync:js', function () {
-    //    var ret = buildModule(mainFile, {
-    //        inType: 'js',
-    //        outType: 'js',
-    //        async: false,
-    //        chunk: false,
-    //        main: file
-    //    });
-    //
-    //    var REG_CODE = /^define\("0",.*?\);$/;
-    //
-    //    assert.equal(ret.dependencies.length > 1, true);
-    //    assert.equal(REG_CODE.test(ret.code), true);
-    //});
+    it('sync:js', function () {
+        var ret = buildModule(mainFile, {
+            inType: 'js',
+            outType: 'js',
+            async: false,
+            chunk: false,
+            main: mainFile
+        });
+
+        var REG_CODE = /^define\("0",.*?\);$/;
+
+        assert.equal(ret.dependencies.length > 1, true);
+        assert.equal(REG_CODE.test(ret.code), true);
+    });
 
     it('sync:css', function () {
         var file = path.join(srcDirname, 'static/js/libs2/some.css');
@@ -47,7 +47,6 @@ describe('build/module.js', function () {
             main: mainFile,
             srcDirname: srcDirname,
             destDirname: destDirname,
-            destCSSDirname: destCSSDirname,
             destResourceDirname: destResourceDirname,
             destHost: '/'
         });
