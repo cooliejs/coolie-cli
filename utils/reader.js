@@ -8,6 +8,7 @@
 'use strict';
 
 var fs = require('fs');
+var path = require('ydr-utils').path;
 var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 

@@ -12,7 +12,5 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var html = require('../libs2/some.html', 'html');
-
-    alert(html + '呵呵');
+    require('../libs2/some.html', 'html|url');
 });

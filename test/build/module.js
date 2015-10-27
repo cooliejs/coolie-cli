@@ -53,7 +53,7 @@ describe('build/module.js', function () {
 
         var REG_CODE = /^define\("[a-z\d]*?",.*?\);$/;
 
-        //console.log(ret);
+        console.log(ret);
         assert.equal(ret.dependencies.length === 0, true);
         assert.equal(REG_CODE.test(ret.code), true);
     });

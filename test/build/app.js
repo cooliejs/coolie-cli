@@ -17,12 +17,15 @@ var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
 var destResourceDirname = path.join(destDirname, 'static/res/');
 var destCoolieConfigBaseDirname = path.join(destDirname, 'static/js/app/');
+var destCoolieConfigChunkDirname = path.join(destDirname, 'static/js/chunk/');
+var destCoolieConfigAsyncDirname = path.join(destDirname, 'static/js/async/');
 
 describe('build/app.js', function () {
     it('e', function () {
         buildAPP({
             main: [
-                'static/js/app/**'
+                'static/js/app/html1.js',
+                'static/js/app/html2.js'
             ],
             chunk: [
                 [
@@ -33,7 +36,9 @@ describe('build/app.js', function () {
             srcDirname: srcDirname,
             destDirname: destDirname,
             destResourceDirname: destResourceDirname,
-            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname
+            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname,
+            destCoolieConfigChunkDirname: destCoolieConfigChunkDirname,
+            destCoolieConfigAsyncDirname: destCoolieConfigAsyncDirname
         });
     });
 });

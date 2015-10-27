@@ -34,5 +34,7 @@ describe('build/module.js', function () {
             destHost: '/',
             destCoolieConfigBaseDirname: destCoolieConfigBaseDirname
         });
+
+        console.log(ret);
     });
 });

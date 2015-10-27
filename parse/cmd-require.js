@@ -98,7 +98,8 @@ module.exports = function (file, options) {
             var id = path.join(path.dirname(file), name);
             var outType = pipeline[1] || 'js';
             var dep = {
-                id: id,
+                id: id + '|' + outType,
+                file: id,
                 gid: globalId.get(id, outType),
                 raw: matches[1],
                 name: name,

@@ -49,14 +49,21 @@ var defaults = {
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.cleanCSSOptions {Object} clean-css 配置
  * @param options.destCoolieConfigBaseDirname {String} coolie-config:base 目录
+ * @param options.destCoolieConfigChunkDirname {String} coolie-config:chunk 目录
+ * @param options.destCoolieConfigAsyncDirname {String} coolie-config:async 目录
  */
 module.exports = function (options) {
     options = dato.extend(true, {}, defaults, options);
+
+
+    // 1、分析 main
     var mainMap = parseMain({
         main: options.main,
         srcDirname: options.srcDirname,
         globOptions: options.globOptions
     });
+
+    // 2、分析 chunk
     // chunk => index
     var chunkFileMap = parseChunk({
         chunk: options.chunk,
@@ -65,9 +72,8 @@ module.exports = function (options) {
     });
     // chunk 模块引用计数
     var chunkDependingCountMap = {};
-    var dependenciesMap = {};
-    var chunkMap = {};
 
+    // 3、chunk 计数统计
     dato.each(mainMap, function (mainFile, mainMeta) {
         var dependencies = buildMain(mainFile, {
             async: mainMeta.async,
@@ -85,16 +91,34 @@ module.exports = function (options) {
         dato.each(dependencies, function (index, dependency) {
             var isChunk = chunkFileMap[dependency];
 
-            if(isChunk){
+            if (isChunk) {
                 chunkDependingCountMap[dependency] = chunkDependingCountMap[dependency] || 0;
                 chunkDependingCountMap[dependency]++;
             }
         });
     });
 
+    console.log(chunkDependingCountMap);
+
+    // 4、chunk 分组
+    var chunkGroupMap = {};
     dato.each(chunkDependingCountMap, function (chunkFile, dependingCount) {
+        var chunkIndex = chunkGroupMap[chunkFile];
+
+        chunkGroupMap[chunkIndex] = chunkGroupMap[chunkIndex] || [];
+
+        if (dependingCount >= options.minDependingCount2Chunk) {
+            chunkGroupMap[chunkIndex].push(chunkFile);
+        }
+    });
+
+
+    // 5、chunk 新建
+    dato.each(chunkGroupMap, function (groupIndex, groupFiles) {
 
     });
+
+    // 6、模块重建
 };
 
 

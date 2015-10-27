@@ -40,7 +40,7 @@ module.exports = function (options) {
         globOptions: options.globOptions,
         glob: options.chunk,
         progress: function (indexGlob, indexFile, file) {
-            chunkFileMap[file] = indexGlob;
+            chunkFileMap[file] = indexGlob + '';
         }
     });
 

@@ -90,7 +90,7 @@ module.exports = function (file, options) {
                     inType: dependency.inType,
                     outType: dependency.outType
                 });
-                build(dependency.id, options3);
+                build(dependency.file, options3);
             });
         }
 
