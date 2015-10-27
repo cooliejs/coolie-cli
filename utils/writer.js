@@ -12,6 +12,7 @@ var string = require('ydr-utils').string;
 var debug = require('ydr-utils').debug;
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
+var encryption = require('ydr-utils').encryption;
 
 var sign = require('./sign.js');
 var pathURI = require('./path-uri.js');
@@ -22,7 +23,7 @@ var defaults = {
     fileNameTemplate: '${version}.js',
     signType: 'js',
     bufferList: [],
-    md5List: [],
+    versionList: [],
     versionLength: 32
 };
 
@@ -35,14 +36,14 @@ var defaults = {
  * @param options.fileNameTemplate {String} 配置
  * @param options.signType {String} 配置
  * @param options.bufferList {Array} 配置
- * @param options.md5List {Array} 配置
+ * @param options.versionList {Array} 配置
  * @param options.versionLength {Number} 配置
  * @returns {String}
  */
 module.exports = function (options) {
     options = dato.extend({}, defaults, options);
 
-    var version = options.md5List.join('').slice(0, options.versionLength);
+    var version = encryption.md5(options.versionList.join('')).slice(0, options.versionLength);
     var outputPath = path.join(options.destDirname, string.assign(options.fileNameTemplate, {
         version: version
     }));
