@@ -57,7 +57,7 @@ module.exports = function (options) {
 
     try {
         fse.outputFileSync(outputPath, buffer);
-        debug.success('√ ', outputURI);
+        debug.success('√', outputURI);
     } catch (err) {
         debug.error('write file', path.toSystem(outputPath));
         debug.error('write file', err.message);

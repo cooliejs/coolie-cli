@@ -18,6 +18,7 @@ var parseChunk = require('../parse/chunk.js');
 var buildMain = require('./main.js');
 var sign = require('../utils/sign.js');
 var pathURI = require('../utils/path-uri.js');
+var writer = require('../utils/writer.js');
 
 var defaults = {
     main: [],
@@ -89,6 +90,8 @@ module.exports = function (options) {
     var singleModuleMap = {};
     // chunk 模块引用计数
     var chunkDependingCountMap = {};
+    // 入口文件计数
+    var mainIndex = 0;
 
     // 3、chunk 计数统计
     dato.each(mainMap, function (mainFile, mainMeta) {
@@ -114,62 +117,74 @@ module.exports = function (options) {
 
             if (chunkIndex) {
                 chunkDependingCountMap[dependency.id] = chunkDependingCountMap[dependency.id] || {
-                        index: chunkIndex,
+                        chunkIndex: chunkIndex,
                         id: dependency.id,
                         file: dependency.file,
                         buffer: dependency.buffer,
                         md5: dependency.md5,
-                        count: 0
+                        count: 0,
+                        mainIndex: mainIndex
                     };
                 chunkDependingCountMap[dependency.id].count++;
             }else{
-                singleModuleMap[index] = singleModuleMap[index] || {
+                singleModuleMap[mainIndex] = singleModuleMap[mainIndex] || {
                         bufferList: [],
-                        md5List: []
+                        md5List: [],
+                        mainIndex: mainIndex
                     };
-                singleModuleMap[index].bufferList.push(dependency.buffer);
-                singleModuleMap[index].md5List.push(dependency.md5);
+                singleModuleMap[mainIndex].bufferList.push(dependency.buffer);
+                singleModuleMap[mainIndex].md5List.push(dependency.md5);
             }
         });
+        mainIndex++;
     });
 
     // 4、chunk 分组
     var chunkGroupMap = {};
-    // [{index, Number, id: String, file: String, buffer: Buffer, md5: String, count: Number}]
+    // [{chunkIndex, Number, id: String, file: String, buffer: Buffer, md5: String, count: Number, mainIndex: Number}]
     dato.each(chunkDependingCountMap, function (chunkId, chunkMeta) {
+        // 被多次引用
         if (chunkMeta.count >= options.minDependingCount2Chunk) {
-            chunkGroupMap[chunkMeta.index] = chunkGroupMap[chunkMeta.index] || {
+            chunkGroupMap[chunkMeta.chunkIndex] = chunkGroupMap[chunkMeta.chunkIndex] || {
                     bufferList: [],
                     md5List: []
                 };
-            chunkGroupMap[chunkMeta.index].bufferList.push(chunkMeta.buffer);
-            chunkGroupMap[chunkMeta.index].md5List.push(chunkMeta.md5);
+            chunkGroupMap[chunkMeta.chunkIndex].bufferList.push(chunkMeta.buffer);
+            chunkGroupMap[chunkMeta.chunkIndex].md5List.push(chunkMeta.md5);
+        }
+        // 只被一次引用
+        else{
+            singleModuleMap[chunkMeta.mainIndex].bufferList.push(chunkMeta.buffer);
+            singleModuleMap[chunkMeta.mainIndex].md5List.push(chunkMeta.md5);
         }
     });
 
     // 5、chunk 新建
     // [{bufferList: Array, md5List: Array}]
     dato.each(chunkGroupMap, function (groupIndex, groupMeta) {
-        var chunkVersion = groupMeta.md5List.join('').slice(0, options.versionLength);
-        var chunkPath = path.join(options.destCoolieConfigChunkDirname, groupIndex + '.' + chunkVersion + '.js')
-        groupMeta.bufferList.unshift(new Buffer(sign('js'), 'utf8'));
-        var buffer = Buffer.concat(groupMeta.bufferList);
-        var chunkURI = pathURI.toRootURL(chunkPath, options.srcDirname);
-
-        try {
-            fse.outputFileSync(chunkPath, buffer);
-            debug.success('chunk ' + groupIndex, chunkURI);
-        } catch (err) {
-            debug.error('write chunk', path.toSystem(chunkPath));
-            debug.error('write file', err.message);
-            return process.exit(1);
-        }
+        writer({
+            srcDirname: options.srcDirname,
+            destDirname: options.destCoolieConfigChunkDirname,
+            fileNameTemplate: groupIndex + '.${version}.js',
+            signType: 'js',
+            bufferList: groupMeta.bufferList,
+            versionList: groupMeta.md5List,
+            versionLength: options.versionLength
+        });
     });
 
     // 6、模块重建
     // [{bufferList: Array, md5List: Array}]
     dato.each(singleModuleMap, function (singleIndex, singleMeta) {
-
+        writer({
+            srcDirname: options.srcDirname,
+            destDirname: options.destCoolieConfigBaseDirname,
+            fileNameTemplate: '${version}.js',
+            signType: 'js',
+            bufferList: singleMeta.bufferList,
+            versionList: singleMeta.md5List,
+            versionLength: options.versionLength
+        });
     });
 };
 
