@@ -26,7 +26,7 @@ describe('replace/amd-require.js', function () {
         });
         var expect = 'define(function(require){require("m");require("n");console.log("app/index.js")});';
 
-        //console.log(ret);
+        console.log(ret);
         assert.equal(ret, expect);
     });
 
@@ -41,7 +41,7 @@ describe('replace/amd-require.js', function () {
         });
         var expect = 'define(function(require){require.async("n");console.log("app/index.js")});';
 
-        //console.log(ret);
+        console.log(ret);
         assert.equal(ret, expect);
     });
 });

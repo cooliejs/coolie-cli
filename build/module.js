@@ -18,7 +18,7 @@ var reader = require('../utils/reader.js');
 var globalId = require('../utils/global-id.js');
 var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
-var replaceAMDRequire = require('../replace/amd-require.js');
+var replaceCMDRequire = require('../replace/cmd-require.js');
 var replaceAMDDefine = require('../replace/amd-define.js');
 var replaceModuleWrapper = require('../replace/module-wrapper.js');
 
@@ -90,11 +90,12 @@ module.exports = function (file, options) {
         case 'js':
             // 1. 替换 require()
             debug.success('depName2IdMap', JSON.stringify(depName2IdMap, null, 2));
-            code = replaceAMDRequire(file, {
+            code = replaceCMDRequire(file, {
                 code: code,
                 async: options.async,
                 depName2IdMap: depName2IdMap
             });
+            console.log(code);
 
             // 2. 压缩代码
             code = minifyJS(file, {

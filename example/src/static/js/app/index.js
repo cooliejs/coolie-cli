@@ -27,6 +27,7 @@ define(function (require, exports, module) {
     require('../libs2/some.json', 'json|url');
     require('../libs2/some.json', 'json|text');
     require('../libs2/some.json', 'json|base64');
+    var s = "require('../libs2/some.json', 'json|base64')";
 
 
     // css

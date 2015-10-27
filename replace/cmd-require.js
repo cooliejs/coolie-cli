@@ -13,6 +13,7 @@ var debug = require('ydr-utils').debug;
 var path = require('ydr-utils').path;
 
 var pathURI = require('../utils/path-uri.js');
+var parseDefineRequireVarible = require('../parse/define-require-varible.js');
 
 
 /**
@@ -26,13 +27,24 @@ var pathURI = require('../utils/path-uri.js');
 module.exports = function (file, options) {
     var code = options.code;
     var depName2IdMap = options.depName2IdMap;
+    var depLength = Object.keys(depName2IdMap).length;
+    var requireVar = parseDefineRequireVarible(file, {
+        code: code
+    });
+
+    if (!requireVar && depLength) {
+        debug.error('replace require', path.toSystem(file));
+        debug.error('replace require', 'can not found `require` variable, but used');
+        debug.error('replace require', 'code must be compressed, before replace amd define');
+        return process.exit(1);
+    }
 
     dato.each(depName2IdMap, function (depName, depId) {
-        var reg = _buildReg(depName, options.async);
+        var reg = _buildReg(requireVar, depName, options.async);
 
         code = options.async ?
-            code.replace(reg, 'require.async("' + depId + '"') :
-            code.replace(reg, 'require("' + depId + '")');
+            code.replace(reg, requireVar + '.async("' + depId + '"') :
+            code.replace(reg, requireVar + '("' + depId + '")');
     });
 
     return code;
@@ -41,22 +53,24 @@ module.exports = function (file, options) {
 
 /**
  * 生成正则
+ * @param requireVar
  * @param dep
  * @param async
  * @returns {RegExp}
  * @private
  */
-function _buildReg(dep, async) {
+function _buildReg(requireVar, dep, async) {
     dep = string.escapeRegExp(dep);
+    requireVar = string.escapeRegExp(requireVar);
 
     if (async) {
         // require.async("..."
-        return new RegExp('\\brequire\\.async\\([\'"]' + dep + '[\'"]', 'g');
+        return new RegExp('\\b' + requireVar + '\\.async\\(([\'"])' + dep + '\\1', 'g');
     }
 
     // require("...");
     // require("...", "...");
-    return new RegExp('\\brequire\\(([\'"])' + dep + '(\\1)\\)', 'g');
+    return new RegExp(requireVar + '\\(([\'"])' + dep + '\\1\\)', 'g');
 }
 
 
