@@ -14,6 +14,16 @@ var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
 
 
+var defaults = {
+    glob: [],
+    srcDirname: __dirname,
+    globConfigs: {
+        dot: false,
+        nodir: true
+    },
+    progress: null
+};
+
 /**
  * glob 分析
  * @param options {Object} 配置
@@ -26,6 +36,7 @@ var debug = require('ydr-utils').debug;
 module.exports = function (options) {
     var files = [];
 
+    options = dato.extend(true, {}, defaults, options);
     options.glob = typeis.array(options.glob) ? options.glob : [options.glob];
 
     dato.each(options.glob, function (indexGlob, p) {
