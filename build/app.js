@@ -17,6 +17,7 @@ var parseMain = require('../parse/main.js');
 var parseChunk = require('../parse/chunk.js');
 var buildMain = require('./main.js');
 var sign = require('../utils/sign.js');
+var pathURI = require('../utils/path-uri.js');
 
 var defaults = {
     main: [],
@@ -34,7 +35,13 @@ var defaults = {
     uglifyJSOptions: null,
     versionLength: 32,
     minifyResource: true,
-    destCoolieConfigBaseDirname: null
+    destCoolieConfigBaseDirname: null,
+    destCoolieConfigChunkDirname: null,
+    destCoolieConfigAsyncDirname: null,
+    removeHTMLYUIComments: true,
+    removeHTMLLineComments: true,
+    joinHTMLSpaces: true,
+    removeHTMLBreakLines: true
 };
 
 /**
@@ -55,6 +62,10 @@ var defaults = {
  * @param options.destCoolieConfigBaseDirname {String} coolie-config:base 目录
  * @param options.destCoolieConfigChunkDirname {String} coolie-config:chunk 目录
  * @param options.destCoolieConfigAsyncDirname {String} coolie-config:async 目录
+ * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
+ * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
+ * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
+ * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
  */
 module.exports = function (options) {
     options = dato.extend(true, {}, defaults, options);
@@ -74,6 +85,8 @@ module.exports = function (options) {
         srcDirname: options.srcDirname,
         globOptions: options.globOptions
     });
+    // 独立模块
+    var singleModuleMap = {};
     // chunk 模块引用计数
     var chunkDependingCountMap = {};
 
@@ -89,16 +102,19 @@ module.exports = function (options) {
             versionLength: options.versionLength,
             minifyResource: options.minifyResource,
             cleanCSSOptions: options.cleanCSSOptions,
-            destCoolieConfigBaseDirname: options.destCoolieConfigBaseDirname
+            removeHTMLYUIComments: options.removeHTMLYUIComments,
+            removeHTMLLineComments: options.removeHTMLLineComments,
+            joinHTMLSpaces: options.joinHTMLSpaces,
+            removeHTMLBreakLines: options.removeHTMLBreakLines
         });
 
         // [{id: String, file: String, buffer: Buffer, md5: String}]
         dato.each(dependencies, function (index, dependency) {
-            var isChunk = chunkFileMap[dependency.file];
+            var chunkIndex = chunkFileMap[dependency.file];
 
-            if (isChunk) {
+            if (chunkIndex) {
                 chunkDependingCountMap[dependency.id] = chunkDependingCountMap[dependency.id] || {
-                        index: index,
+                        index: chunkIndex,
                         id: dependency.id,
                         file: dependency.file,
                         buffer: dependency.buffer,
@@ -106,6 +122,13 @@ module.exports = function (options) {
                         count: 0
                     };
                 chunkDependingCountMap[dependency.id].count++;
+            }else{
+                singleModuleMap[index] = singleModuleMap[index] || {
+                        bufferList: [],
+                        md5List: []
+                    };
+                singleModuleMap[index].bufferList.push(dependency.buffer);
+                singleModuleMap[index].md5List.push(dependency.md5);
             }
         });
     });
@@ -117,23 +140,25 @@ module.exports = function (options) {
         if (chunkMeta.count >= options.minDependingCount2Chunk) {
             chunkGroupMap[chunkMeta.index] = chunkGroupMap[chunkMeta.index] || {
                     bufferList: [],
-                    versionList: []
+                    md5List: []
                 };
             chunkGroupMap[chunkMeta.index].bufferList.push(chunkMeta.buffer);
-            chunkGroupMap[chunkMeta.index].versionList.push(chunkMeta.md5);
+            chunkGroupMap[chunkMeta.index].md5List.push(chunkMeta.md5);
         }
     });
 
     // 5、chunk 新建
-    // [{bufferList: Array, versionList: Array}]
+    // [{bufferList: Array, md5List: Array}]
     dato.each(chunkGroupMap, function (groupIndex, groupMeta) {
-        var chunkVersion = groupMeta.versionList.join('').slice(0, options.versionLength);
+        var chunkVersion = groupMeta.md5List.join('').slice(0, options.versionLength);
         var chunkPath = path.join(options.destCoolieConfigChunkDirname, groupIndex + '.' + chunkVersion + '.js')
         groupMeta.bufferList.unshift(new Buffer(sign('js'), 'utf8'));
         var buffer = Buffer.concat(groupMeta.bufferList);
+        var chunkURI = pathURI.toRootURL(chunkPath, options.srcDirname);
 
         try {
             fse.outputFileSync(chunkPath, buffer);
+            debug.success('chunk ' + groupIndex, chunkURI);
         } catch (err) {
             debug.error('write chunk', path.toSystem(chunkPath));
             debug.error('write file', err.message);
@@ -141,7 +166,11 @@ module.exports = function (options) {
         }
     });
 
-    //// 6、模块重建
+    // 6、模块重建
+    // [{bufferList: Array, md5List: Array}]
+    dato.each(singleModuleMap, function (singleIndex, singleMeta) {
+
+    });
 };
 
 

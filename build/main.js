@@ -29,7 +29,10 @@ var defaults = {
     minifyResource: true,
     uglifyJSOptions: null,
     cleanCSSOptions: null,
-    destCoolieConfigBaseDirname: null
+    removeHTMLYUIComments: true,
+    removeHTMLLineComments: true,
+    joinHTMLSpaces: true,
+    removeHTMLBreakLines: true
 };
 
 /**
@@ -47,7 +50,10 @@ var defaults = {
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.cleanCSSOptions {Object} clean-css 配置
- * @param options.destCoolieConfigBaseDirname {String} coolie-config:base 目录
+ * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
+ * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
+ * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
+ * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
  * @returns {[{id: String, file: String, buffer: Buffer, md5: String}]}
  */
 module.exports = function (file, options) {
@@ -58,8 +64,6 @@ module.exports = function (file, options) {
     // 构建长度
     var buildLength = 0;
     var buildMap = {};
-    var bfList = [];
-    var md5List = [];
     var dependencies = [];
     var build = function (file, options) {
         var ret = buildModule(file, {
@@ -104,18 +108,6 @@ module.exports = function (file, options) {
 
         if (buildLength === dependencyLength) {
             var srcMainURI = pathURI.toRootURL(mainFile, options.srcDirname);
-            //var mainCode = Buffer.concat(bfList).toString('utf8');
-            //var version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
-            //var destMainPath = path.join(options.destCoolieConfigBaseDirname, version + '.js');
-
-            //try {
-            //    fse.outputFileSync(destMainPath, mainCode, 'utf8');
-            //} catch (err) {
-            //    debug.error('write main', path.toSystem(mainFile));
-            //    debug.error('write main', path.toSystem(destMainPath));
-            //    debug.error('write file', err.message);
-            //    return process.exit(1);
-            //}
 
             debug.success('√', srcMainURI);
         }
