@@ -22,7 +22,7 @@ describe('build/module.js', function () {
     var mainFile = path.join(srcDirname, 'static/js/app/index.js');
 
     it('main', function () {
-        var ret = buildMain(mainFile, {
+        var dependencies = buildMain(mainFile, {
             inType: 'js',
             outType: 'js',
             async: false,
@@ -35,6 +35,6 @@ describe('build/module.js', function () {
             destCoolieConfigBaseDirname: destCoolieConfigBaseDirname
         });
 
-        console.log(ret);
+        assert.equal(dependencies.length, 5);
     });
 });

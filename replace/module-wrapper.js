@@ -182,6 +182,7 @@ module.exports = function (file, options) {
                     code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
+                // text
                 default :
                     code = minifyJSON(file, {
                         code: code
@@ -223,6 +224,7 @@ module.exports = function (file, options) {
                     code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
+                // text
                 default :
                     code = minifyCSS(file, {
                         code: code
@@ -243,6 +245,7 @@ module.exports = function (file, options) {
                     code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
+                // text
                 default :
                     return wrapDefine(file, code, options);
             }
@@ -270,6 +273,7 @@ module.exports = function (file, options) {
                     code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
+                // text
                 default :
                     code = minifyHTML(file, {
                         code: code
@@ -280,15 +284,11 @@ module.exports = function (file, options) {
 
         case 'image':
             switch (options.outType) {
-                case 'url':
-                    uri = createURL(file, options2);
-                    uri = pathURI.joinURI(options.destHost, uri);
-                    return wrapDefine(file, uri, options);
-
                 case 'base64':
                     code = base64.file(file);
                     return wrapDefine(file, code, options);
 
+                // url
                 default :
                     uri = createURL(file, options2);
                     return wrapDefine(file, uri, options);

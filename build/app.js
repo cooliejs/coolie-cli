@@ -89,11 +89,11 @@ module.exports = function (options) {
         });
 
         dato.each(dependencies, function (index, dependency) {
-            var isChunk = chunkFileMap[dependency];
+            var isChunk = chunkFileMap[dependency.file];
 
             if (isChunk) {
-                chunkDependingCountMap[dependency] = chunkDependingCountMap[dependency] || 0;
-                chunkDependingCountMap[dependency]++;
+                chunkDependingCountMap[dependency.id] = chunkDependingCountMap[dependency.id] || 0;
+                chunkDependingCountMap[dependency.id]++;
             }
         });
     });
@@ -111,14 +111,14 @@ module.exports = function (options) {
             chunkGroupMap[chunkIndex].push(chunkFile);
         }
     });
-
-
-    // 5、chunk 新建
-    dato.each(chunkGroupMap, function (groupIndex, groupFiles) {
-
-    });
-
-    // 6、模块重建
+    //
+    //
+    //// 5、chunk 新建
+    //dato.each(chunkGroupMap, function (groupIndex, groupFiles) {
+    //
+    //});
+    //
+    //// 6、模块重建
 };
 
 
