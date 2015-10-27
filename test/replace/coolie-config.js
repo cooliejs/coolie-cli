@@ -40,7 +40,7 @@ describe('replace/coolie-config.js', function () {
             srcCoolieConfigChunkDirname: srcCoolieConfigChunkDirname,
             destDirname: destDirname,
             destJSDirname: destJSDirname,
-            versionMap: versionMap,
+            mainVersionMap: versionMap,
             destHost: '/',
             code: code
         });

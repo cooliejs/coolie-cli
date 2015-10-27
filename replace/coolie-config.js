@@ -63,7 +63,7 @@ var coolieFn = function () {
  */
 module.exports = function (file, options) {
     var code = options.code;
-    var versionMap = options.versionMap;
+    var versionMap = options.mainVersionMap;
     var coolieConfigJSPath = options.srcCoolieConfigJSPath;
     var coolieString = coolieFn.toString()
         .replace(REG_FUNCTION_START, '')
@@ -80,7 +80,7 @@ module.exports = function (file, options) {
         var versionMap2 = {};
 
         dato.each(versionMap, function (_file, _version) {
-            var relative = pathURI.relative(srcCoolieConfigBaseDirname, _file);
+            var relative = path.relative(srcCoolieConfigBaseDirname, _file);
 
             relative = path.toURI(relative);
             versionMap2[relative] = _version;

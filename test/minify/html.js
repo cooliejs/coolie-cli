@@ -21,11 +21,11 @@ var destCoolieConfigJSPath = path.join(srcDirname, 'static/js/dwdqwdqwdqwdqwdqwd
 var destDirname = path.join(__dirname, '../../example/dest/');
 var destResourceDirname = path.join(destDirname, 'static/res/');
 var destCSSDirname = path.join(destDirname, 'static/css/');
-var versionMap = {};
+var mainVersionMap = {};
 
 describe('minify/html.js', function () {
     it('e', function () {
-        versionMap[srcMainPath] = 'abcdef123123kdgqoiwdqw';
+        mainVersionMap[srcMainPath] = 'abcdef123123kdgqoiwdqw';
         var code = fs.readFileSync(file, 'utf8');
         var ret = minifyHTML(file, {
             code: code,
@@ -44,7 +44,7 @@ describe('minify/html.js', function () {
             minifyJS: true,
             minifyCSS: true,
             replaceCSSResource: true,
-            versionMap: versionMap
+            mainVersionMap: mainVersionMap
         });
 
         assert.equal(/\/static\/res\/[a-z\d]{32}?\./.test(ret), true);

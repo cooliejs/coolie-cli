@@ -159,7 +159,7 @@ module.exports = function (file, options) {
             destDirname: options.destDirname,
             destHost: options.destHost,
             destCoolieConfigJSPath: options.destCoolieConfigJSPath,
-            versionMap: options.versionMap,
+            mainVersionMap: options.mainVersionMap,
             minifyJS: options.minifyJS
         });
     }
