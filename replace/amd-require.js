@@ -15,7 +15,7 @@ var path = require('ydr-utils').path;
 var pathURI = require('../utils/path-uri.js');
 var parseDefineRequireVarible = require('../parse/define-require-varible.js');
 
-var REG_SEG = /["'](\s*?,\s*?)["']/;
+var REG_SEG = /["']\s*?,\s*?["']/;
 
 
 /**
@@ -63,7 +63,7 @@ module.exports = function (file, options) {
  */
 function _buildReg(requireVar, dep, async) {
     dep = string.escapeRegExp(dep);
-    dep = dep.replace(REG_SEG, '["\']$1["\']');
+    dep = dep.replace(REG_SEG, '["\']\\*?,\\*?["\']');
     requireVar = string.escapeRegExp(requireVar);
 
     if (async) {
