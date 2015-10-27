@@ -32,7 +32,7 @@ describe('build/module.js', function () {
 
         var REG_CODE = /^define\("0",.*?\);$/;
 
-        //console.log(ret.code);
+        console.log(ret.code);
         assert.equal(ret.dependencies.length > 1, true);
         assert.equal(REG_CODE.test(ret.code), true);
     });
@@ -54,6 +54,7 @@ describe('build/module.js', function () {
 
         var REG_CODE = /^define\("[a-z\d]*?",.*?\);$/;
 
+        console.log(ret.code);
         assert.equal(ret.dependencies.length === 0, true);
         assert.equal(REG_CODE.test(ret.code), true);
     });
