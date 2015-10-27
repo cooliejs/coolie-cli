@@ -58,6 +58,14 @@ module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
     // 读取入口模块内容
     var code = reader(file, 'utf8');
+
+    if (options.inType === 'js') {
+        code = minifyJS(file, {
+            code: code,
+            uglifyJSOptions: options.uglifyJSOptions
+        });
+    }
+
     //[{ id: '/Users/cloudcome/development/github/nodejs-coolie/example/src/static/js/libs1/path1/path2/index.js|js',
     //file: '/Users/cloudcome/development/github/nodejs-coolie/example/src/static/js/libs1/path1/path2/index.js',
     //gid: '1',
@@ -88,12 +96,6 @@ module.exports = function (file, options) {
 
     switch (options.inType) {
         case 'js':
-            // 1. 压缩代码
-            code = minifyJS(file, {
-                code: code,
-                uglifyJSOptions: options.uglifyJSOptions
-            });
-
             // 1. 替换 require()
             debug.success('depName2IdMap', JSON.stringify(depName2IdMap, null, 2));
             code = replaceAMDRequire(file, {

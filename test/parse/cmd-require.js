@@ -20,7 +20,7 @@ describe('parse/cmd-require.js', function () {
             async: false
         });
 
-        console.log(JSON.stringify(requires, null, 4));
+        //console.log(JSON.stringify(requires, null, 4));
         assert.equal(requires.length, 3);
         assert.equal(requires[0].name, 'a.js');
         assert.equal(requires[1].name, './a.js');
