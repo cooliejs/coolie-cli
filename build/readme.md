@@ -1,10 +1,10 @@
 # 构建脚本
 
-分析出所有入口文件
+分析出所有入口文件 √
 =>
-分析所有`require.async`
+分析所有`require.async` √
 =>
-遍历构建
+遍历构建 
 =>
 如果符合 chunk，则独立出来，标记 main 依赖了哪些 chunk，chunk 计数
 替换`require.async`/`require`/`define`

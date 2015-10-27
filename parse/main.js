@@ -34,7 +34,7 @@ var defaults = {
 module.exports = function (options) {
     options = dato.extend({}, defaults, options);
 
-    var chunkMap = {};
+    var mainAsyncMap = {};
 
     // 入口文件
     var mainFiles = glob({
@@ -45,13 +45,25 @@ module.exports = function (options) {
 
     dato.each(mainFiles, function (index, mainFile) {
         var code = reader(mainFile, 'utf8');
-        chunkMap[mainFile]= parseCMDRequire(mainFile, {
+        var requireAsyncList = parseCMDRequire(mainFile, {
             code: code,
             async: true
         });
+
+        mainAsyncMap[mainFile] = {
+            async: false,
+            requireAsyncList: requireAsyncList
+        };
+
+        dato.each(requireAsyncList, function (index, ayncMeta) {
+            mainAsyncMap[ayncMeta.id] = {
+                async: true,
+                requireAsyncList: []
+            };
+        });
     });
 
-    return chunkMap;
+    return mainAsyncMap;
 };
 
 
