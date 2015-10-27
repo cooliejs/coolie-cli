@@ -54,14 +54,14 @@ var fileIdMap = {};
  * @returns {*}
  */
 exports.get = function (file, outType) {
+    if (outType) {
+        file += '|' + String(file);
+    }
+
     var gid = fileIdMap[file];
 
     if (gid) {
         return gid;
-    }
-
-    if (outType) {
-        file += '|' + String(file);
     }
 
     fileIdMap[file] = gid = increase.add().get();

@@ -65,26 +65,31 @@ var supportMap = {
     js: {
         url: true,
         base64: true,
+        text: true,
         js: true
     },
     json: {
         url: true,
         base64: true,
+        text: true,
         js: true
     },
     css: {
         url: true,
         base64: true,
+        text: true,
         js: true
     },
     text: {
         url: true,
         base64: true,
+        text: true,
         js: true
     },
     html: {
         url: true,
         base64: true,
+        text: true,
         js: true
     },
     image: {

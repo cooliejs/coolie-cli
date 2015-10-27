@@ -59,7 +59,8 @@ module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
     // 读取入口模块内容
     var code = reader(file, 'utf8');
-    //[{ id: '/Users/cloudcome/development/github/nodejs-coolie/example/src/static/js/libs1/path1/path2/index.js',
+    //[{ id: '/Users/cloudcome/development/github/nodejs-coolie/example/src/static/js/libs1/path1/path2/index.js|js',
+    //file: '/Users/cloudcome/development/github/nodejs-coolie/example/src/static/js/libs1/path1/path2/index.js',
     //gid: '1',
     //raw: '../libs1/path1/path2/',
     //name: '../libs1/path1/path2/index.js',
