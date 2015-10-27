@@ -19,7 +19,6 @@ var buildModule = require('./module.js');
 
 var defaults = {
     async: false,
-    chunk: false,
     main: null,
     uglifyJSOptions: null,
     srcDirname: null,
@@ -37,7 +36,6 @@ var defaults = {
  * @param file {String} 入口路径
  * @param options {Object} 配置
  * @param options.async {Boolean} 是否为异步模块
- * @param options.chunk {Boolean} 是否为异步模块
  * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.srcDirname {String} 原始目录
  * @param options.destDirname {String} 目标目录
@@ -63,7 +61,6 @@ module.exports = function (file, options) {
             inType: options.inType,
             outType: options.outType,
             async: options.async,
-            chunk: options.chunk,
             main: mainFile,
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,

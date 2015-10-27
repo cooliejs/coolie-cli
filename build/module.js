@@ -27,7 +27,6 @@ var defaults = {
     inType: 'js',
     outType: 'js',
     async: false,
-    chunk: false,
     main: null,
     uglifyJSOptions: null,
     srcDirname: null,
@@ -45,7 +44,6 @@ var defaults = {
  * @param options.inType {String} 模块入口类型
  * @param options.outType {String} 模块出口类型
  * @param options.async {Boolean} 是否为异步模块
- * @param options.chunk {Boolean} 是否为分块模块
  * @param options.main {String} 入口模块
  * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.srcDirname {String} 原始根目录
