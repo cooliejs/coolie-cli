@@ -208,7 +208,8 @@ module.exports = function (options) {
     });
 
     return {
-        chunkVersionMap: chunkVersionMap
+        chunkVersionMap: chunkVersionMap,
+        asyncVersionMap: asyncVersionMap
     };
 };
 

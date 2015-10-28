@@ -25,7 +25,6 @@ var replaceModuleWrapper = require('../replace/module-wrapper.js');
 var defaults = {
     inType: 'js',
     outType: 'js',
-    async: false,
     main: null,
     srcDirname: null,
     destDirname: null,
@@ -49,7 +48,6 @@ var defaults = {
  * @param options {Object} 模块属性
  * @param options.inType {String} 模块入口类型
  * @param options.outType {String} 模块出口类型
- * @param options.async {Boolean} 是否为异步模块
  * @param options.main {String} 入口模块
  * @param options.srcDirname {String} 原始根目录
  * @param options.destDirname {String} 目标根目录
@@ -78,20 +76,34 @@ module.exports = function (file, options) {
     //name: '../libs1/path1/path2/index.js',
     //inType: 'js',
     //outType: 'js' }]
-    var requires = parseCMDRequire(file, {
+
+    // 分析 require.async()
+    var asyncRequires = parseCMDRequire(file, {
         code: code,
-        async: options.async
+        async: true
     });
-    var depName2IdMap = {};
-    var depFileMap = {};
+    var asyncName2IdMap = {};
+
+    dato.each(asyncRequires, function (index, item) {
+        asyncName2IdMap[item.raw] = item.gid;
+    });
+
+
+    // 分析 require()
+    var syncRequires = parseCMDRequire(file, {
+        code: code,
+        async: false
+    });
+    var syncName2IdMap = {};
+    var syncDepFileMap = {};
     var depGidList = [];
     var dependencies = [];
 
-    dato.each(requires, function (index, item) {
-        depName2IdMap[item.raw] = item.gid;
+    dato.each(syncRequires, function (index, item) {
+        syncName2IdMap[item.raw] = item.gid;
 
-        if (!depFileMap[item.gid]) {
-            depFileMap[item.gid] = true;
+        if (!syncDepFileMap[item.gid]) {
+            syncDepFileMap[item.gid] = true;
             depGidList.push(item.gid);
             dependencies.push({
                 id: item.id,
@@ -105,6 +117,8 @@ module.exports = function (file, options) {
         }
     });
 
+
+    // 分析模块类型
     switch (options.inType) {
         case 'js':
             // 1. 压缩代码
@@ -113,17 +127,24 @@ module.exports = function (file, options) {
                 uglifyJSOptions: options.uglifyJSOptions
             });
 
-            // 2. 替换 require()
+            // 2. 替换 require.async()
             code = replaceAMDRequire(file, {
                 code: code,
-                async: options.async,
-                depName2IdMap: depName2IdMap
+                async: true,
+                name2IdMap: asyncName2IdMap
+            });
+
+            // 3. 替换 require()
+            code = replaceAMDRequire(file, {
+                code: code,
+                async: false,
+                name2IdMap: syncName2IdMap
             });
 
             // 同一个文件，不同的模块出口类型，返回的模块是不一样的
             // 例：image|js !== image|url
             var gid = options.main === file ? '0' : globalId.get(file, options.outType);
-            // 3. 替换 define()
+            // 4. 替换 define()
             code = replaceAMDDefine(file, {
                 code: code,
                 gid: gid,
@@ -153,7 +174,6 @@ module.exports = function (file, options) {
             break;
     }
 
-    //var fileURI = pathURI.toRootURL(file, options.srcDirname);
     return {
         dependencies: dependencies,
         code: code,

@@ -23,13 +23,13 @@ var REG_SEG = /["']\s*?,\s*?["']/;
  * @param file {String} 文件路径
  * @param options {Object} 配置
  * @param options.code {String} 代码，压缩后的代码
- * @param options.depName2IdMap {Object} 依赖对应表 [{name: id}]
+ * @param options.name2IdMap {Object} 依赖对应表 {name: id}
  * @param options.async {Boolean} 是否异步模块
  */
 module.exports = function (file, options) {
     var code = options.code;
-    var depName2IdMap = options.depName2IdMap;
-    var depLength = Object.keys(depName2IdMap).length;
+    var name2IdMap = options.name2IdMap;
+    var depLength = Object.keys(name2IdMap).length;
     var requireVar = parseDefineRequireVarible(file, {
         code: code
     });
@@ -41,7 +41,7 @@ module.exports = function (file, options) {
         return process.exit(1);
     }
 
-    dato.each(depName2IdMap, function (depName, depId) {
+    dato.each(name2IdMap, function (depName, depId) {
         var reg = _buildReg(requireVar, depName, options.async);
 
         code = options.async ?

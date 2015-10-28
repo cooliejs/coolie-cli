@@ -9,6 +9,7 @@
 
 var path = require('path');
 var assert = require('assert');
+var typeis = require('ydr-utils').typeis;
 
 var parseCoolieConfig = require('../../parse/coolie.config.js');
 
@@ -20,7 +21,8 @@ describe('parse/coolie.config.js', function () {
             srcDirname: srcDirname
         });
 
-        console.log(JSON.stringify(ret, null, 4));
+        //console.log(JSON.stringify(ret, null, 4));
+        assert.equal(typeis.directory(ret.destDirname), true);
     });
 });
 

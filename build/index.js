@@ -9,6 +9,9 @@
 
 var dato = require('ydr-utils').dato;
 
+var parseCoolieConfig = require('../parse/coolie.config.js');
+var buildAPP = require('./app.js');
+
 var defaults = {};
 
 
@@ -21,7 +24,26 @@ var defaults = {};
 module.exports = function (options) {
     options = dato.extend({}, defaults, options);
 
+    // 1. 分析配置文件
+    var configs = parseCoolieConfig({
+        srcDirname: options.srcDirname
+    });
 
+    // 2. 构建入口文件
+    buildAPP({
+        main: configs.js.main,
+        chunk: configs.js.chunk,
+        srcDirname: configs.srcDirname,
+        destDirname: configs.destDirname,
+        destResourceDirname: configs.destResourceDirname,
+        destHost: configs.dest.host,
+        uglifyJSOptions: configs.js.minify,
+        versionLength: configs.dest.versionLength,
+        minifyResource: configs.resource.minify,
+        destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
+        destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
+        destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname
+    });
 };
 
 

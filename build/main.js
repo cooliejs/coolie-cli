@@ -14,6 +14,7 @@ var path = require('ydr-utils').path;
 var fse = require('fs-extra');
 
 var pathURI = require('../utils/path-uri.js');
+var replaceAMDRequire = require('../replace/amd-require.js');
 var buildModule = require('./module.js');
 
 var defaults = {
@@ -47,6 +48,7 @@ var defaults = {
  * @param options.destResourceDirname {String} 目标资源目录
  * @param options.destHost {String} 目标域
  * @param options.versionLength {Number} 版本号长度
+ * @param options.asyncName2IdMap {Object} async 模块版本号配置 {name: id}
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.cleanCSSOptions {Object} clean-css 配置
@@ -71,6 +73,7 @@ module.exports = function (file, options) {
             outType: options.outType,
             async: options.async,
             main: mainFile,
+            isMain: options.isMain,
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
@@ -80,6 +83,15 @@ module.exports = function (file, options) {
             minifyResource: options.minifyResource,
             cleanCSSOptions: options.cleanCSSOptions
         });
+
+        // 异步模块，先替换 require.async
+        if (options.async && options.isMain) {
+            //ret.code = replaceAMDRequire(file, {
+            //    code: ret.code,
+            //    name2IdMap: options.asyncName2IdMap,
+            //    async: true
+            //});
+        }
 
         dependencies.push({
             id: file + '|' + options.outType,
@@ -98,7 +110,9 @@ module.exports = function (file, options) {
                 dependencyLength++;
                 var options3 = dato.extend({}, options, {
                     inType: dependency.inType,
-                    outType: dependency.outType
+                    outType: dependency.outType,
+                    isMain: false,
+                    async: false
                 });
                 build(dependency.file, options3);
             });
@@ -114,8 +128,10 @@ module.exports = function (file, options) {
     };
     var options2 = dato.extend({}, options, {
         inType: 'js',
-        outType: 'js'
+        outType: 'js',
+        isMain: true
     });
+
     build(mainFile, options2);
 
     return dependencies;

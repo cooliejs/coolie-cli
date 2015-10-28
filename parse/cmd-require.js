@@ -57,41 +57,55 @@ var REG_SUFFIX = /[\?#].*?$/;
 var REG_JS = /\.js($|\?)/i;
 
 
-/**
- * 支持的模块类型
- * @type {{js: string[], json: string[], css: string[], text: string[], html: string[], image: string[]}}
- */
 var supportMap = {
     js: {
-        url: true,
-        base64: true,
-        text: true,
-        js: true
+        supports: {
+            url: 1,
+            base64: 1,
+            text: 1,
+            js: 2
+        },
+        default: 'js'
     },
     json: {
-        url: true,
-        base64: true,
-        text: true,
-        js: true
+        supports: {
+            url: 1,
+            base64: 1,
+            text: 1,
+            js: 2
+        },
+        default: 'js'
     },
     css: {
-        url: true,
-        base64: true,
-        text: true
+        supports: {
+            url: 1,
+            base64: 1,
+            text: 2
+        },
+        default: 'text'
     },
     text: {
-        url: true,
-        base64: true,
-        text: true
+        supports: {
+            url: 1,
+            base64: 1,
+            text: 2
+        },
+        default: 'text'
     },
     html: {
-        url: true,
-        base64: true,
-        text: true
+        supports: {
+            url: 1,
+            base64: 1,
+            text: 2
+        },
+        default: 'text'
     },
     image: {
-        url: true,
-        base64: true
+        supports: {
+            url: 2,
+            base64: 1
+        },
+        default: 'url'
     }
 };
 
@@ -145,12 +159,8 @@ module.exports = function (file, options) {
                 return process.exit(1);
             }
 
-            var findOutType = findInType[outType];
-
-            if (!findOutType) {
-                debug.error('parse cmd require', path.toSystem(file));
-                debug.error('parse cmd require', 'can not support `' + inType + '` => `' + outType + '`');
-                return process.exit(1);
+            if (!findInType.supports[outType]) {
+                outType = findInType.default;
             }
 
             var dep = {
