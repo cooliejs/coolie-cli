@@ -18,7 +18,6 @@ var replaceAMDRequire = require('../replace/amd-require.js');
 var buildModule = require('./module.js');
 
 var defaults = {
-    async: false,
     main: null,
     srcDirname: null,
     destDirname: null,
@@ -40,7 +39,6 @@ var defaults = {
  * 构建入口模块
  * @param file {String} 入口路径
  * @param options {Object} 配置
- * @param options.async {Boolean} 是否为异步模块
  * @param options.srcDirname {String} 原始目录
  * @param options.destDirname {String} 目标目录
  * @param options.destJSDirname {String} 目标 JS 目录
@@ -71,9 +69,7 @@ module.exports = function (file, options) {
         var ret = buildModule(file, {
             inType: options.inType,
             outType: options.outType,
-            async: options.async,
             main: mainFile,
-            isMain: options.isMain,
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
@@ -83,15 +79,6 @@ module.exports = function (file, options) {
             minifyResource: options.minifyResource,
             cleanCSSOptions: options.cleanCSSOptions
         });
-
-        // 异步模块，先替换 require.async
-        if (options.async && options.isMain) {
-            //ret.code = replaceAMDRequire(file, {
-            //    code: ret.code,
-            //    name2IdMap: options.asyncName2IdMap,
-            //    async: true
-            //});
-        }
 
         dependencies.push({
             id: file + '|' + options.outType,
@@ -110,9 +97,7 @@ module.exports = function (file, options) {
                 dependencyLength++;
                 var options3 = dato.extend({}, options, {
                     inType: dependency.inType,
-                    outType: dependency.outType,
-                    isMain: false,
-                    async: false
+                    outType: dependency.outType
                 });
                 build(dependency.file, options3);
             });
@@ -128,8 +113,7 @@ module.exports = function (file, options) {
     };
     var options2 = dato.extend({}, options, {
         inType: 'js',
-        outType: 'js',
-        isMain: true
+        outType: 'js'
     });
 
     build(mainFile, options2);

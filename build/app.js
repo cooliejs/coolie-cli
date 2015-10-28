@@ -17,6 +17,7 @@ var parseMain = require('../parse/main.js');
 var parseChunk = require('../parse/chunk.js');
 var buildMain = require('./main.js');
 var pathURI = require('../utils/path-uri.js');
+var globalId = require('../utils/global-id.js');
 var writer = require('../utils/writer.js');
 var arrayString = require('../utils/array-string.js');
 
@@ -95,7 +96,6 @@ module.exports = function (options) {
     // 3、chunk 计数统计
     dato.each(mainMap, function (mainFile, mainMeta) {
         var dependencies = buildMain(mainFile, {
-            async: mainMeta.async,
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
@@ -132,7 +132,9 @@ module.exports = function (options) {
                         md5List: [],
                         mainIndex: mainIndex,
                         chunkMap: {},
-                        chunkList: []
+                        chunkList: [],
+                        async: mainMeta.async,
+                        file: dependency.file
                     };
                 singleModuleMap[mainIndex].bufferList.push(dependency.buffer);
                 singleModuleMap[mainIndex].md5List.push(dependency.md5);
@@ -190,21 +192,32 @@ module.exports = function (options) {
     });
 
     // 6、single 重建
-    // [{bufferList: Array, md5List: Array, chunkList: Array}]
+    var asyncVersionMap = {};
+    // [{bufferList: Array, md5List: Array, chunkList: Array, chunkMap: Object, async: Boolean, mainIndex: Number, file: String}]
     dato.each(singleModuleMap, function (singleIndex, singleMeta) {
         if (singleMeta.chunkList.length) {
             singleMeta.bufferList.push(new Buffer('\ncoolie.chunk(' + arrayString.stringify(singleMeta.chunkList) + ');'));
         }
 
-        writer({
+        var asyncId = '';
+
+        if (singleMeta.async) {
+            asyncId = globalId.get(singleMeta.file, 'js');
+        }
+
+        var ret = writer({
             srcDirname: options.srcDirname,
-            destDirname: options.destCoolieConfigBaseDirname,
-            fileNameTemplate: '${version}.js',
+            destDirname: singleMeta.async ? options.destCoolieConfigAsyncDirname : options.destCoolieConfigBaseDirname,
+            fileNameTemplate: (singleMeta.async ? asyncId + '.' : '') + '${version}.js',
             signType: 'js',
             bufferList: singleMeta.bufferList,
             versionList: singleMeta.md5List,
             versionLength: options.versionLength
         });
+
+        if (asyncId) {
+            asyncVersionMap[pathURI.removeVersion(ret.path)] = ret.version;
+        }
     });
 
     return {

@@ -24,7 +24,8 @@ var defaults = {
     signType: 'js',
     bufferList: [],
     versionList: [],
-    versionLength: 32
+    versionLength: 32,
+    log: false
 };
 
 
@@ -38,6 +39,7 @@ var defaults = {
  * @param options.bufferList {Array} 配置
  * @param options.versionList {Array} 配置
  * @param options.versionLength {Number} 配置
+ * @param options.log {Boolean} 是否显示日志
  * @returns {{file: String, version: String}}
  */
 module.exports = function (options) {
@@ -57,7 +59,10 @@ module.exports = function (options) {
 
     try {
         fse.outputFileSync(outputPath, buffer);
-        debug.success('√', outputURI);
+
+        if (options.log) {
+            debug.success('write file', outputURI);
+        }
     } catch (err) {
         debug.error('write file', path.toSystem(outputPath));
         debug.error('write file', err.message);

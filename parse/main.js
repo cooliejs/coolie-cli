@@ -56,7 +56,7 @@ module.exports = function (options) {
         };
 
         dato.each(requireAsyncList, function (index, ayncMeta) {
-            mainMap[ayncMeta.id] = {
+            mainMap[ayncMeta.file] = {
                 async: true,
                 requireAsyncList: []
             };

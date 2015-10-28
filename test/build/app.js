@@ -25,7 +25,8 @@ describe('build/app.js', function () {
         var ret = buildAPP({
             main: [
                 'static/js/app/html1.js',
-                'static/js/app/html2.js'
+                'static/js/app/html2.js',
+                'static/js/app/async.js'
             ],
             chunk: [
                 [
