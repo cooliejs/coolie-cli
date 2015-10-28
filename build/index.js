@@ -8,9 +8,11 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
+var debug = require('ydr-utils').debug;
 
 var parseCoolieConfig = require('../parse/coolie.config.js');
 var buildAPP = require('./app.js');
+var buildCopy = require('./copy.js');
 
 var defaults = {};
 
@@ -19,22 +21,44 @@ var defaults = {};
  * 构建主程序
  * @param options {Object} 配置
  * @param options.srcDirname {String} 构建根目录
- * @param options.srcCoolieConfigPath {Object} coolie.config.js 路径
  */
 module.exports = function (options) {
     options = dato.extend({}, defaults, options);
 
+    var stepIndex = 0;
+    var stepLength = 5;
+    var beginTime = Date.now();
+
     // 1. 分析配置文件
+    console.log();
+    debug.primary(++stepIndex + '/' + stepLength, 'parse coolie config');
     var configs = parseCoolieConfig({
         srcDirname: options.srcDirname
     });
+    var srcDirname = configs.srcDirname;
+    var destDirname = configs.destDirname;
 
-    // 2. 构建入口文件
-    buildAPP({
+    // 2. 复制文件
+    console.log();
+    debug.primary(++stepIndex + '/' + stepLength, 'copy files');
+    var copiedList = buildCopy({
+        srcDirname: srcDirname,
+        destDirname: destDirname,
+        copy: configs.copy
+    });
+    if (!copiedList.length) {
+        debug.warn('copy files', 'no files are copied');
+    }
+
+
+    // 3. 构建入口文件
+    console.log();
+    debug.primary(++stepIndex + '/' + stepLength, 'build main module');
+    var appConfigs = buildAPP({
         main: configs.js.main,
         chunk: configs.js.chunk,
-        srcDirname: configs.srcDirname,
-        destDirname: configs.destDirname,
+        srcDirname: srcDirname,
+        destDirname: destDirname,
         destResourceDirname: configs.destResourceDirname,
         destHost: configs.dest.host,
         uglifyJSOptions: configs.js.minify,
@@ -44,6 +68,13 @@ module.exports = function (options) {
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
         destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname
     });
+
+    // 3.
+
+    var pastTime = Date.now() - beginTime;
+    console.log();
+    debug.success('copy files', copiedList.length);
+    debug.success('build success', 'past ' + pastTime + 'ms');
 };
 
 
