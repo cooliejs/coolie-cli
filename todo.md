@@ -16,3 +16,4 @@
 15、命令名称规范化
 16、coolie module hot replacement
 17、version 只保存 async、chunk 模块，入口模块已写在 data-main 里
+18、coolie.json => coolie.config.js

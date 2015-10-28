@@ -19,22 +19,22 @@ var path = require('ydr-utils').path;
  * @returns {string}
  */
 module.exports = function (beginDirname, dirname) {
-    var guessPath = path.join(beginDirname, dirname + '/');
+    var guessDirname = path.join(beginDirname, dirname + '/');
 
-    if (!typeis.directory(guessPath)) {
-        return guessPath;
+    if (!typeis.directory(guessDirname)) {
+        return guessDirname;
     }
 
     var index = 0;
 
-    guessPath = path.join(beginDirname, dirname + index+ '/');
+    guessDirname = path.join(beginDirname, dirname + index+ '/');
 
-    while (typeis.directory(guessPath)) {
+    while (typeis.directory(guessDirname)) {
         index++;
-        guessPath = path.join(beginDirname, dirname + index+ '/');
+        guessDirname = path.join(beginDirname, dirname + index+ '/');
     }
 
-    return guessPath;
+    return guessDirname;
 };
 
 

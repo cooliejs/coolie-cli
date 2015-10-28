@@ -137,13 +137,13 @@ describe('utils/path-uri.js', function () {
         assert.equal(ret.basename, 'd');
     });
 
-    it('replaceVersion', function () {
+    it('.replaceVersion', function () {
         var ret = pathURI.replaceVersion('a.js', 'xxxx');
 
         assert.equal(ret, 'xxxx.js');
     });
 
-    it('removeVersion', function () {
+    it('.removeVersion', function () {
         var ret = pathURI.removeVersion('a.xxxx.js');
 
         assert.equal(ret, 'a.js');
