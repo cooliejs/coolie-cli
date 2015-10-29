@@ -59,8 +59,9 @@ var defaults = {
     srcDirname: null,
     destDirname: null,
     destJSDirname: null,
-    destHost: '/',
+    destCSSDirname: null,
     destResourceDirname: null,
+    destHost: '/',
     srcCoolieConfigBaseDirname: null,
     destCoolieConfigJSPath: null,
     minifyJS: true,
@@ -90,9 +91,9 @@ var defaults = {
  * @param [options.srcDirname] {String} 原始根目录
  * @param [options.destDirname] {String} 目标根目录
  * @param [options.destJSDirname] {String} 目标 JS 目录
- * @param [options.destHost] {String} 目标域
- * @param [options.destResourceDirname] {String} 目标资源目录
  * @param [options.destCSSDirname] {String} 目标 CSS 目录
+ * @param [options.destResourceDirname] {String} 目标资源目录
+ * @param [options.destHost] {String} 目标域
  * @param [options.srcCoolieConfigBaseDirname] {String} 原始 coolie-config:base 目录
  * @param [options.destCoolieConfigJSPath] {String} 目标 coolie-config.js 路径
  * @param [options.minifyJS=true] {Boolean} 是否压缩 JS

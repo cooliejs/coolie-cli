@@ -43,8 +43,9 @@ describe('minify/html.js', function () {
             srcDirname: srcDirname,
             destDirname: destDirname,
             destJSDirname: destJSDirname,
-            destHost: '/',
+            destCSSDirname: destCSSDirname,
             destResourceDirname: destResourceDirname,
+            destHost: '/',
             srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname,
             destCoolieConfigJSPath: destCoolieConfigJSPath,
             minifyJS: true,
@@ -57,8 +58,8 @@ describe('minify/html.js', function () {
         });
 
         console.log(ret);
-        assert.equal(/\/static\/res\/[a-z\d]{32}?\./.test(ret), true);
-        assert.equal(/\/static\/css\/[a-z\d]{32}?\./.test(ret), true);
+        assert.equal(/\/static\/res\/[a-z\d]{32}\./.test(ret), true);
+        assert.equal(/\/static\/css\/[a-z\d]{32}\./.test(ret), true);
         assert.equal(ret.indexOf('~/static/js/dwdqwdqwdqwdqwdqwdqw312.js') > -1, true);
     });
 });
