@@ -59,7 +59,7 @@ var coolieFn = function () {
  * @param options.versionMap {Object} 版本配置 {file: version}
  * @param options.versionLength {Number} 版本长度
  * @param options.destJSDirname {String} JS 保存目录
- * @returns {}
+ * @returns {String}
  */
 module.exports = function (file, options) {
     var code = reader(file, 'utf8');
@@ -125,7 +125,7 @@ module.exports = function (file, options) {
             debug.error('write file', err.message);
         }
 
-        return versionMap2;
+        return destCoolieConfigJSPath;
     } catch (err) {
         debug.error('coolie-config.js', path.toSystem(file));
         debug.error('coolie-config.js', err.message);

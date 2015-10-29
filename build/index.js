@@ -59,7 +59,7 @@ module.exports = function (options) {
     // 3. 构建入口文件
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'build main module');
-    var appConfigs = buildAPP({
+    var buildAPPRet = buildAPP({
         glob: configs.js.main,
         chunk: configs.js.chunk,
         srcDirname: srcDirname,
@@ -78,7 +78,7 @@ module.exports = function (options) {
     // 3. 重写 coolie-config.js
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'override coolie-config.js');
-    replaceCoolieConfig(configs.srcCoolieConfigJSPath, {
+    var destCoolieConfigJSPath = replaceCoolieConfig(configs.srcCoolieConfigJSPath, {
         versionLength: configs.dest.versionLength,
         destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
@@ -86,7 +86,7 @@ module.exports = function (options) {
         srcDirname: srcDirname,
         destDirname: destDirname,
         destJSDirname: configs.destJSDirname,
-        versionMap: dato.extend({}, appConfigs.chunkVersionMap, appConfigs.asyncVersionMap),
+        versionMap: dato.extend({}, buildAPPRet.chunkVersionMap, buildAPPRet.asyncVersionMap),
         destHost: configs.dest.host
     });
 
@@ -94,29 +94,29 @@ module.exports = function (options) {
     // 4. 构建 html
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'build html');
-    //buildHTML({
-    //    glob: [],
-    //    removeHTMLYUIComments: true,
-    //    removeHTMLLineComments: true,
-    //    joinHTMLSpaces: true,
-    //    removeHTMLBreakLines: true,
-    //    versionLength: 32,
-    //    srcDirname: null,
-    //    destDirname: null,
-    //    destJSDirname: null,
-    //    destCSSDirname: null,
-    //    destResourceDirname: null,
-    //    destHost: '/',
-    //    srcCoolieConfigBaseDirname: null,
-    //    destCoolieConfigJSPath: null,
-    //    minifyJS: true,
-    //    minifyCSS: true,
-    //    minifyResource: true,
-    //    uglifyJSOptions: null,
-    //    cleanCSSOptions: null,
-    //    replaceCSSResource: true,
-    //    mainVersionMap: null
-    //});
+    buildHTML({
+        glob: configs.html.src,
+        removeHTMLYUIComments: true,
+        removeHTMLLineComments: true,
+        joinHTMLSpaces: true,
+        removeHTMLBreakLines: true,
+        versionLength: configs.dest.versionLength,
+        srcDirname: srcDirname,
+        destDirname: destDirname,
+        destJSDirname: configs.destJSDirname,
+        destCSSDirname: configs.destCSSDirname,
+        destResourceDirname: configs.destResourceDirname,
+        destHost: configs.dest.host,
+        srcCoolieConfigBaseDirname: configs.srcCoolieConfigBaseDirname,
+        destCoolieConfigJSPath: destCoolieConfigJSPath,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyResource: true,
+        uglifyJSOptions: null,
+        cleanCSSOptions: null,
+        replaceCSSResource: true,
+        mainVersionMap: buildAPPRet.mainVersionMap
+    });
 
     // 5. 生成资源地图
 

@@ -18,16 +18,17 @@ var file = path.join(__dirname, '../../example/src/static/js/coolie-config.js');
 
 var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
-var destCoolieConfigBaseDirname = path.join(destDirname, 'static/js/async/');
+var destCoolieConfigBaseDirname = path.join(destDirname, 'static/js/app/');
 var destCoolieConfigAsyncDirname = path.join(destDirname, 'static/js/async/');
 var destCoolieConfigChunkDirname = path.join(destDirname, 'static/js/chunk/');
 var destJSDirname = path.join(destDirname, 'static/js/');
-var testFile1 = path.join(srcDirname, 'static/js/index3-1.js');
-var testFile2 = path.join(srcDirname, 'static/js/app/user/index.js');
+var testFile1 = path.join(destDirname, 'static/js/index3-1.js');
+var testFile2 = path.join(destDirname, 'static/js/app/user/index.js');
 
 describe('replace/coolie-config.js', function () {
     it('e', function () {
         var versionMap = {};
+
         versionMap[testFile1] = encryption.lastModified(testFile1);
         versionMap[testFile2] = encryption.lastModified(testFile2);
 
@@ -43,7 +44,7 @@ describe('replace/coolie-config.js', function () {
             destHost: '/'
         });
 
-        assert.equal(typeis(ret), 'object');
+        assert.equal(typeis.file(ret), true);
     });
 });
 

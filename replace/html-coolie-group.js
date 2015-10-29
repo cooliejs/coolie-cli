@@ -86,8 +86,7 @@ module.exports = function (file, options) {
         var concatURI = '';
         // 合并结果
         var concatRet = '';
-        // 相对于原始目录
-        var concatRelative = '';
+
 
         // css
         if (REG_LINK.test(coolieCode)) {
@@ -131,11 +130,10 @@ module.exports = function (file, options) {
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
             concatFile = path.join(path.toURI(options.destCSSDirname), version + '.css');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
-            concatRelative = pathURI.toRootURL(concatFile, options.srcDirname);
 
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
-                debug.success('√', concatRelative);
+                debug.success('√', concatURI);
             } catch (err) {
                 debug.error('write css', path.toSystem(concatFile));
                 debug.error('write css', err.message);
@@ -175,11 +173,10 @@ module.exports = function (file, options) {
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
             concatFile = path.join(path.toURI(options.destJSDirname), version + '.js');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
-            concatRelative = pathURI.toRootURL(concatFile, options.srcDirname);
 
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
-                debug.success('√', concatRelative);
+                debug.success('√', concatURI);
             } catch (err) {
                 debug.error('write js', path.toSystem(concatFile));
                 debug.error('write js', err.message);
