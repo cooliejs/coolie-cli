@@ -32,13 +32,13 @@ var defaults = {
 /**
  *
  * @param options {Object} 配置
- * @param options.srcDirname {String} 配置
- * @param options.destDirname {String} 配置
- * @param options.fileNameTemplate {String} 配置
- * @param options.signType {String} 配置
- * @param options.bufferList {Array} 配置
- * @param options.versionList {Array} 配置
- * @param options.versionLength {Number} 配置
+ * @param options.srcDirname {String} 原始目录
+ * @param options.destDirname {String} 目标目录
+ * @param options.fileNameTemplate {String} 文件名称模板
+ * @param options.signType {String} 签名类型
+ * @param options.bufferList {Array} buffer 列表
+ * @param options.versionList {Array} 版本列表
+ * @param options.versionLength {Number} 版本配置
  * @param options.log {Boolean} 是否显示日志
  * @returns {{file: String, version: String}}
  */

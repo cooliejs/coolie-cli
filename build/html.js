@@ -8,11 +8,14 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
+var path = require('ydr-utils').path;
+var debug = require('ydr-utils').debug;
+var fse = require('fs-extra');
 
 
 var minifyHTML = require('../minify/html.js');
-var writer = require('../utils/writer.js');
 var glob = require('../utils/glob.js');
+var pathURI = require('../utils/path-uri.js');
 
 /**
  * html 构建
@@ -42,8 +45,9 @@ module.exports = function (options) {
     });
 
     // 2. 压缩 html
+    var htmlMap = {};
     dato.each(htmlFiles, function (index, htmlFile) {
-        minifyHTML(htmlFile, {
+        var code = minifyHTML(htmlFile, {
             replaceHTMLAttrResource: true,
             replaceHTMLTagScript: true,
             replaceHTMLTagStyleResource: true,
@@ -68,9 +72,25 @@ module.exports = function (options) {
             replaceCSSResource: options.replaceCSSResource,
             mainVersionMap: options.mainVersionMap
         });
+
+        htmlMap[htmlFile] = new Buffer(code, 'utf8');
     });
 
     // 3. 生成 html
+    dato.each(htmlMap, function (file, buffer) {
+        var relative = path.relative(options.srcDirname, file);
+        var htmlURI = pathURI.toRootURL(file, options.srcDirname);
+        var destFile = path.join(options.destDirname, relative);
+
+        try {
+            fse.outputFileSync(destFile, buffer);
+            debug.success('√', htmlURI);
+        } catch (err) {
+            debug.error('write html', path.toSystem(file));
+            debug.error('write file', err.message);
+            return process.exit(1);
+        }
+    });
 
     return htmlFiles;
 };

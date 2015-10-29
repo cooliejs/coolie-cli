@@ -157,6 +157,7 @@ module.exports = function (file, options) {
             });
             var copyURI = pathURI.toRootURL(copyPath, options.destDirname);
 
+            copyURI = pathURI.joinURI(options.destHost, copyURI);
             source = htmlAttr.set(source, 'src', copyURI);
             return source;
         }

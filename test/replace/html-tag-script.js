@@ -12,7 +12,7 @@ var fs = require('fs');
 var assert = require('assert');
 
 var replaceHTMLTagScript = require('../../replace/html-tag-script.js');
-var file = path.join(__dirname, '../../example/src/html/replace.html');
+var file = path.join(__dirname, '../../example/src/html/user/index.html');
 
 var code = fs.readFileSync(file, 'utf8');
 var srcDirname = path.join(__dirname, '../../example/src/');
@@ -21,7 +21,7 @@ var destCoolieConfigJSURI = 'static/js/eb21eac7c7c8278c7bf0c208efbfd663.js';
 var destCoolieConfigJSPath = path.join(destDirname, destCoolieConfigJSURI);
 var destJSDirname = path.join(destDirname, 'static/js/');
 var srcCoolieConfigBaseDirname = path.join(srcDirname, 'static/js/app/');
-var srcMainPath = path.join(srcDirname, 'static/js/app/index.js');
+var srcMainPath = path.join(srcDirname, 'static/js/app/user/index.js');
 var mainVersionMap = {};
 
 mainVersionMap[srcMainPath] = '00023123123123123312312';
@@ -35,7 +35,7 @@ describe('replace/html-attr-script.js', function () {
             destDirname: destDirname,
             destJSDirname: destJSDirname,
             mainVersionMap: mainVersionMap,
-            destHost: 'http://abc.com',
+            destHost: 'http://abc.com/',
             destCoolieConfigJSPath: destCoolieConfigJSPath
         });
 
