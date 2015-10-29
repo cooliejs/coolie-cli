@@ -17,7 +17,9 @@ var buildCopy = require('./copy.js');
 var buildHTML = require('./html.js');
 var replaceCoolieConfig = require('../replace/coolie-config.js');
 
-var defaults = {};
+var defaults = {
+    srcDirname: process.cwd()
+};
 
 
 /**
@@ -94,7 +96,7 @@ module.exports = function (options) {
     // 4. 构建 html
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'build html');
-    buildHTML({
+    var buildHTMLRet = buildHTML({
         glob: configs.html.src,
         removeHTMLYUIComments: true,
         removeHTMLLineComments: true,
@@ -121,12 +123,10 @@ module.exports = function (options) {
     // 5. 生成资源地图
 
 
-    // 6. 构建统计
-
     var pastTime = Date.now() - beginTime;
     console.log();
     debug.primary('build success', 'past ' + pastTime + 'ms');
-    debug.success('copy files', copiedList.length);
+    console.log();
 };
 
 

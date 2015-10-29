@@ -2,7 +2,7 @@
   "clean": true,
   "js": {
     "main": [
-      "./static/js/app/async.js"
+      "./static/js/app/**"
     ],
     "coolie-config.js": "./static/js/coolie-config.js",
     "dest": "./static/js/",

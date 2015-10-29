@@ -105,7 +105,7 @@ module.exports = function (file, options) {
             var mainVersion = options.mainVersionMap[mainPath];
 
             if (!typeis.file(mainPath)) {
-                debug.error('coolie script', '`' + path.toSystem(mainPath) + '` is NOT a file');
+                debug.error('coolie main', '`' + path.toSystem(mainPath) + '` is NOT a file');
                 return process.exit(1);
             }
 

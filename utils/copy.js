@@ -17,7 +17,7 @@ var fse = require('fs-extra');
 var pathURI = require('./path-uri.js');
 
 var copyFilesMap = {};
-var copyLength = 0;
+var copiedLength = 0;
 var REG_POINT = path.sep === '/' ? /^\.{1,2}\// : /^\.{1,2}\\/;
 var defaults = {
     srcDirname: '',
@@ -105,7 +105,7 @@ module.exports = function (file, options) {
     try {
         fse.copySync(file, toFile);
         copyFilesMap[file] = toFile;
-        copyLength++;
+        copiedLength++;
 
         switch (options.logType) {
             case 1:
@@ -131,7 +131,7 @@ module.exports = function (file, options) {
  * 获取复制文件的个数
  * @returns {number}
  */
-module.exports.getCopLength = function () {
-    return copyLength;
+module.exports.getCopiedLength = function () {
+    return copiedLength;
 };
 
