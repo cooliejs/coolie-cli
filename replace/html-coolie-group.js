@@ -159,7 +159,6 @@ module.exports = function (file, options) {
                         }) + '\n';
                 }
 
-                debug.normal('concat', jsFile);
                 files.push(jsFile);
                 md5List.push(encryption.md5(jsCode));
                 bfList.push(new Buffer(jsCode, ENCODING));

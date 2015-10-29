@@ -36,12 +36,12 @@ var REG_LINE_COMMENTS = /<!--.*?-->/g;
 // -->
 var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
 var keepSourceList = [
+    // <!--coolie-->
+    /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi,
     // <textarea>
     /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi,
     //<!--[if IE 6]><![endif]-->
-    /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi,
-    // <!--coolie-->
-    /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi
+    /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi
 ];
 
 var defaults = {
@@ -112,10 +112,11 @@ module.exports = function (file, options) {
 
     // 保留原始格式
     dato.each(keepSourceList, function (index, reg) {
+        preMap[index] = {};
         code = code.replace(reg, function (source) {
             var key = _generateKey();
 
-            preMap[key] = source;
+            preMap[index][key] = source;
 
             return key;
         });
@@ -137,8 +138,11 @@ module.exports = function (file, options) {
         code = code.replace(REG_LINES, '');
     }
 
-    // 恢复预格式
-    dato.each(preMap, function (key, val) {
+    // 恢复标签
+    dato.each(preMap[1], function (key, val) {
+        code = code.replace(key, val);
+    });
+    dato.each(preMap[2], function (key, val) {
         code = code.replace(key, val);
     });
 
@@ -168,6 +172,28 @@ module.exports = function (file, options) {
         });
     }
 
+    // 恢复 coolie group
+    dato.each(preMap[0], function (key, val) {
+        code = code.replace(key, val);
+    });
+    if(options.replaceHTMLCoolieGroup){
+        code = replaceHTMLCoolieGroup(file, {
+            code: code,
+            destJSDirname: options.destJSDirname,
+            cleanCSSOptions: options.cleanCSSOptions,
+            versionLength: options.versionLength,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destResourceDirname: options.destResourceDirname,
+            destCSSDirname: options.destCSSDirname,
+            minifyJS: options.minifyJS,
+            uglifyJSOptions: options.uglifyJSOptions,
+            minifyCSS: options.minifyCSS,
+            replaceCSSResource: options.replaceCSSResource
+        });
+    }
+
     if(options.replaceHTMLTagStyleResource){
         code = replaceHTMLTagStyleResource(file, {
             code: code,
@@ -190,24 +216,6 @@ module.exports = function (file, options) {
             destHost: options.destHost,
             destResourceDirname: options.destResourceDirname,
             minifyResource: options.minifyResource
-        });
-    }
-
-    if(options.replaceHTMLCoolieGroup){
-        code = replaceHTMLCoolieGroup(file, {
-            code: code,
-            destJSDirname: options.destJSDirname,
-            cleanCSSOptions: options.cleanCSSOptions,
-            versionLength: options.versionLength,
-            srcDirname: options.srcDirname,
-            destDirname: options.destDirname,
-            destHost: options.destHost,
-            destResourceDirname: options.destResourceDirname,
-            destCSSDirname: options.destCSSDirname,
-            minifyJS: options.minifyJS,
-            uglifyJSOptions: options.uglifyJSOptions,
-            minifyCSS: options.minifyCSS,
-            replaceCSSResource: options.replaceCSSResource
         });
     }
 

@@ -25,7 +25,7 @@ var mainVersionMap = {};
 mainVersionMap[path.join(srcCoolieConfigBaseDirname, 'index.js')] = Math.random().toString(32).slice(2);
 mainVersionMap[path.join(srcCoolieConfigBaseDirname, 'async.js')] = Math.random().toString(32).slice(2);
 mainVersionMap[path.join(srcCoolieConfigBaseDirname, 'user/index.js')] = Math.random().toString(32).slice(2);
-describe('minify/html.js', function () {
+describe('build/html.js', function () {
     it('e', function () {
         var ret = buildHTML({
             glob: [
