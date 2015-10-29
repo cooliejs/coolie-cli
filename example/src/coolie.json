@@ -1,4 +1,5 @@
 {
+  "clean": true,
   "js": {
     "main": [
       "./static/js/app/async.js"

@@ -16,12 +16,11 @@ var typeis = require('ydr-utils').typeis;
 var replaceCoolieConfig = require('../../replace/coolie-config.js');
 var file = path.join(__dirname, '../../example/src/static/js/coolie-config.js');
 
-var code = fs.readFileSync(file, 'utf8');
 var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
-var srcCoolieConfigJSPath = path.join(srcDirname, 'static/js/coolie-config.js');
-var srcCoolieConfigAsyncDirname = path.join(srcDirname, 'static/js/async/');
-var srcCoolieConfigChunkDirname = path.join(srcDirname, 'static/js/chunk/');
+var destCoolieConfigBaseDirname = path.join(destDirname, 'static/js/async/');
+var destCoolieConfigAsyncDirname = path.join(destDirname, 'static/js/async/');
+var destCoolieConfigChunkDirname = path.join(destDirname, 'static/js/chunk/');
 var destJSDirname = path.join(destDirname, 'static/js/');
 var testFile1 = path.join(srcDirname, 'static/js/index3-1.js');
 var testFile2 = path.join(srcDirname, 'static/js/app/user/index.js');
@@ -34,19 +33,17 @@ describe('replace/coolie-config.js', function () {
 
         var ret = replaceCoolieConfig(file, {
             versionLength: 32,
+            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname,
+            destCoolieConfigAsyncDirname: destCoolieConfigAsyncDirname,
+            destCoolieConfigChunkDirname: destCoolieConfigChunkDirname,
             srcDirname: srcDirname,
-            srcCoolieConfigJSPath: srcCoolieConfigJSPath,
-            srcCoolieConfigAsyncDirname: srcCoolieConfigAsyncDirname,
-            srcCoolieConfigChunkDirname: srcCoolieConfigChunkDirname,
             destDirname: destDirname,
             destJSDirname: destJSDirname,
-            mainVersionMap: versionMap,
-            destHost: '/',
-            code: code
+            versionMap: versionMap,
+            destHost: '/'
         });
 
-        assert.equal(typeis.file(ret.destCoolieConfigJSPath), true);
-        assert.equal(typeis.directory(ret.srcCoolieConfigBaseDirname), true);
+        assert.equal(typeis(ret), 'object');
     });
 });
 

@@ -14,6 +14,7 @@ var debug = require('ydr-utils').debug;
 var fse = require('fs-extra');
 
 var pathURI = require('../utils/path-uri.js');
+var reader = require('../utils/reader.js');
 var minifyJS = require('../minify/js.js');
 
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
@@ -50,21 +51,19 @@ var coolieFn = function () {
  * 构建配置文件
  * @param file {String} 文件内容
  * @param options {Object} 配置
- * @param options.code {String} 代码
- * @param options.srcCoolieConfigJSPath {String} coolie-config.js 路径
- * @param options.srcCoolieConfigAsyncDirname {String} coolie-config.js async 目录
- * @param options.srcCoolieConfigChunkDirname {String} coolie-config.js chunk 目录
+ * @param options.destCoolieConfigBaseDirname {String} 目标 coolie-config.js:base 目录
+ * @param options.destCoolieConfigAsyncDirname {String} 目标 coolie-config.js:async 目录
+ * @param options.destCoolieConfigChunkDirname {String} 目标 coolie-config.js:chunk 目录
  * @param options.srcDirname {String} 构建根目录
+ * @param options.destDirname {String} 目标目录
  * @param options.versionMap {Object} 版本配置 {file: version}
  * @param options.versionLength {Number} 版本长度
- * @param options.destDirname {String} 目标目录
  * @param options.destJSDirname {String} JS 保存目录
- * @returns {{destCoolieConfigJSPath: string, srcCoolieConfigBaseDirname: string}}
+ * @returns {}
  */
 module.exports = function (file, options) {
-    var code = options.code;
-    var versionMap = options.mainVersionMap;
-    var coolieConfigJSPath = options.srcCoolieConfigJSPath;
+    var code = reader(file, 'utf8');
+    var versionMap = options.versionMap;
     var coolieString = coolieFn.toString()
         .replace(REG_FUNCTION_START, '')
         .replace(REG_FUNCTION_END, '');
@@ -76,20 +75,18 @@ module.exports = function (file, options) {
     try {
         fn(coolieConfig, callbacks);
 
-        var srcCoolieConfigBaseDirname = path.join(path.dirname(coolieConfigJSPath), coolieConfig.base);
         var versionMap2 = {};
 
         dato.each(versionMap, function (_file, _version) {
-            var relative = path.relative(srcCoolieConfigBaseDirname, _file);
+            var relative = path.relative(options.destCoolieConfigBaseDirname, _file);
 
             relative = path.toURI(relative);
             versionMap2[relative] = _version;
         });
 
         version = JSON.stringify(versionMap2);
-
-        coolieConfig.async = path.toURI(path.relative(srcCoolieConfigBaseDirname, options.srcCoolieConfigAsyncDirname)) + '/';
-        coolieConfig.chunk = path.toURI(path.relative(srcCoolieConfigBaseDirname, options.srcCoolieConfigChunkDirname)) + '/';
+        coolieConfig.async = path.toURI(path.relative(options.destCoolieConfigBaseDirname, options.destCoolieConfigAsyncDirname)) + '/';
+        coolieConfig.chunk = path.toURI(path.relative(options.destCoolieConfigBaseDirname, options.destCoolieConfigChunkDirname)) + '/';
 
         debug.success('√', 'base: "' + coolieConfig.base + '"');
         debug.success('√', 'async: "' + coolieConfig.async + '"');
@@ -113,7 +110,7 @@ module.exports = function (file, options) {
         code2 += ';';
 
         var destCoolieConfigJSPath = encryption.md5(code2).slice(0, options.versionLength) + '.js';
-        code2 = minifyJS(coolieConfigJSPath, {
+        code2 = minifyJS(file, {
             code: code2
         });
 
@@ -128,14 +125,9 @@ module.exports = function (file, options) {
             debug.error('write file', err.message);
         }
 
-        return {
-            // 目标 coolie-config js 路径
-            destCoolieConfigJSPath: destCoolieConfigJSPath,
-            // 原始 coolie-config:base 目录
-            srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname
-        };
+        return versionMap2;
     } catch (err) {
-        debug.error('coolie-config.js', path.toSystem(coolieConfigJSPath));
+        debug.error('coolie-config.js', path.toSystem(file));
         debug.error('coolie-config.js', err.message);
     }
 };

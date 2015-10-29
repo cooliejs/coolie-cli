@@ -149,6 +149,7 @@ module.exports = function (options) {
             }
 
             coolieConfigJSFile = path.join(srcDirname, configs.js['coolie-config.js']);
+            configs.srcCoolieConfigJSPath = coolieConfigJSFile;
 
             if (!typeis.file(coolieConfigJSFile)) {
                 debug.error('parse coolie.config', coolieConfigJSFile +
@@ -407,7 +408,17 @@ module.exports = function (options) {
 
     // 猜想 chunk 目录
     check.chunk = function () {
-        var srcChunkDirname = guessDirname(srcDirname, 'chunk');
+        if (configs.clean) {
+            try {
+                fse.emptyDirSync(configs.destDirname);
+            } catch (err) {
+                debug.error('clean dest dirname', path.toSystem(configs.destDirname));
+                debug.error('clean dest dirname', err.message);
+                return process.exit(1);
+            }
+        }
+
+        var srcChunkDirname = guessDirname(configs.destJSDirname, 'chunk');
         var relative = path.relative(srcDirname, srcChunkDirname);
 
         configs.destCoolieConfigChunkDirname = path.join(configs.destDirname, relative);
@@ -415,7 +426,7 @@ module.exports = function (options) {
 
     // 猜想 async 目录
     check.async = function () {
-        var srcAsyncDirname = guessDirname(srcDirname, 'async');
+        var srcAsyncDirname = guessDirname(configs.destJSDirname, 'async');
         var relative = path.relative(srcDirname, srcAsyncDirname);
 
         configs.destCoolieConfigAsyncDirname = path.join(configs.destDirname, relative);
@@ -434,11 +445,10 @@ module.exports = function (options) {
 
     dato.extend(configs, {
         srcDirname: srcDirname,
-        srcCoolieConfigJSPath: srcCoolieConfigJSPath,
-        srcCoolieJSONPath: srcCoolieJSONPath
+        configPath: srcCoolieConfigJSPath ? srcCoolieConfigJSPath : srcCoolieJSONPath
     });
 
-    debug.success('coolie config', path.toSystem(srcCoolieConfigJSPath ? srcCoolieConfigJSPath : srcCoolieJSONPath));
+    debug.success('coolie config', path.toSystem(configs.configPath));
     debug.success('src dirname', configs.srcDirname);
     debug.success('dest dirname', configs.destDirname);
     //debug.success('coolie configs', JSON.stringify(configs, null, 4));

@@ -9,10 +9,12 @@
 
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
+var fse = require('fs-extra');
 
 var parseCoolieConfig = require('../parse/coolie.config.js');
 var buildAPP = require('./app.js');
 var buildCopy = require('./copy.js');
+var replaceCoolieConfig = require('../replace/coolie-config.js');
 
 var defaults = {};
 
@@ -69,12 +71,25 @@ module.exports = function (options) {
         destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname
     });
 
-    // 3.
+    // 3. 重写 coolie-config.js
+    console.log();
+    debug.primary(++stepIndex + '/' + stepLength, 'override coolie-config.js');
+    replaceCoolieConfig(configs.srcCoolieConfigJSPath, {
+        versionLength: configs.dest.versionLength,
+        destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
+        destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
+        destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname,
+        srcDirname: srcDirname,
+        destDirname: destDirname,
+        destJSDirname: configs.destJSDirname,
+        versionMap: dato.extend({}, appConfigs.chunkVersionMap, appConfigs.asyncVersionMap),
+        destHost: configs.dest.host
+    });
 
     var pastTime = Date.now() - beginTime;
     console.log();
+    debug.primary('build success', 'past ' + pastTime + 'ms');
     debug.success('copy files', copiedList.length);
-    debug.success('build success', 'past ' + pastTime + 'ms');
 };
 
 
