@@ -45,6 +45,7 @@ var keepSourceList = [
 ];
 
 var defaults = {
+    code: '',
     replaceHTMLAttrResource: false,
     replaceHTMLTagScript: false,
     replaceHTMLTagStyleResource: false,
@@ -57,6 +58,7 @@ var defaults = {
     versionLength: 32,
     srcDirname: null,
     destDirname: null,
+    destJSDirname: null,
     destHost: '/',
     destResourceDirname: null,
     srcCoolieConfigBaseDirname: null,
@@ -87,11 +89,12 @@ var defaults = {
  * @param [options.versionLength=32] {Number} 版本号长度
  * @param [options.srcDirname] {String} 原始根目录
  * @param [options.destDirname] {String} 目标根目录
+ * @param [options.destJSDirname] {String} 目标 JS 目录
  * @param [options.destHost] {String} 目标域
  * @param [options.destResourceDirname] {String} 目标资源目录
  * @param [options.destCSSDirname] {String} 目标 CSS 目录
  * @param [options.srcCoolieConfigBaseDirname] {String} 原始 coolie-config:base 目录
- * @param [options.destCoolieConfigJSPath] {String} 原始 coolie-config.js 路径
+ * @param [options.destCoolieConfigJSPath] {String} 目标 coolie-config.js 路径
  * @param [options.minifyJS=true] {Boolean} 是否压缩 JS
  * @param [options.minifyCSS=true] {Boolean} 是否压缩 CSS
  * @param [options.minifyResource=true] {Boolean} 是否压缩引用资源
@@ -157,6 +160,7 @@ module.exports = function (file, options) {
             srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
             destDirname: options.destDirname,
             destHost: options.destHost,
+            destJSDirname: options.destJSDirname,
             destCoolieConfigJSPath: options.destCoolieConfigJSPath,
             mainVersionMap: options.mainVersionMap,
             minifyJS: options.minifyJS
