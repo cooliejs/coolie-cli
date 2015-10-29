@@ -33,7 +33,7 @@ module.exports = function (coolie) {
         "dest": {
             "dirname": "../dest/",
             "host": "",
-            "versionLength": 8
+            "versionLength": 32
         }
     });
 

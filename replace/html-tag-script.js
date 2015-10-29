@@ -129,7 +129,7 @@ module.exports = function (file, options) {
                 coolieConfigURI = '~' + coolieConfigURI;
             }
 
-            source = htmlAttr.set(source, 'data-main', pathURI.replaceVersion(dataMain, mainVersion));
+            source = htmlAttr.set(source, 'data-main', mainVersion + '.js');
             source = htmlAttr.set(source, 'data-config', coolieConfigURI);
             source = htmlAttr.remove(source, COOLIE);
             source = source.replace(REG_LINE, '').replace(REG_SPACE, ' ');

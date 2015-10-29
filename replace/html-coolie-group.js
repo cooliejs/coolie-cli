@@ -140,7 +140,7 @@ module.exports = function (file, options) {
                 return process.exit(1);
             }
 
-            concatRet = '<link rel="stylesheet" src="' + concatURI + '">';
+            concatRet = '<link rel="stylesheet" href="' + concatURI + '">';
             cacheFilesList.push(files);
             cacheResultList.push(concatRet);
 

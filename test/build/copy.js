@@ -15,7 +15,7 @@ var copy = require('../../build/copy.js');
 var srcDirname = path.join(__dirname, '.');
 var destDirname = path.join(__dirname, '../../example/dest/__test__');
 
-describe('/build/copy.js', function () {
+describe('build/copy.js', function () {
     it('e', function () {
         var list = copy({
             srcDirname: srcDirname,
