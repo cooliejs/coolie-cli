@@ -15,7 +15,6 @@ var buildHTML = require('../../build/html.js');
 var srcDirname = path.join(__dirname, '../../example/src/');
 var file = path.join(srcDirname, 'html/index.html');
 var srcCoolieConfigBaseDirname = path.join(srcDirname, 'static/js/app/');
-var srcMainPath = path.join(srcCoolieConfigBaseDirname, 'index.js');
 var destDirname = path.join(__dirname, '../../example/dest/');
 var destCoolieConfigJSPath = path.join(destDirname, 'static/js/dwdqwdqwdqwdqwdqwdqw312.js');
 var destResourceDirname = path.join(destDirname, 'static/res/');
@@ -23,12 +22,14 @@ var destJSDirname = path.join(destDirname, 'static/js/');
 var destCSSDirname = path.join(destDirname, 'static/css/');
 var mainVersionMap = {};
 
-mainVersionMap[srcMainPath] = 'abcdef123123kdgqoiwdqw';
+mainVersionMap[path.join(srcCoolieConfigBaseDirname, 'index.js')] = Math.random().toString(32).slice(2);
+mainVersionMap[path.join(srcCoolieConfigBaseDirname, 'async.js')] = Math.random().toString(32).slice(2);
+mainVersionMap[path.join(srcCoolieConfigBaseDirname, 'user/index.js')] = Math.random().toString(32).slice(2);
 describe('minify/html.js', function () {
     it('e', function () {
         var ret = buildHTML({
             glob: [
-                './html/index.html'
+                './html/**'
             ],
             removeHTMLYUIComments: true,
             removeHTMLLineComments: true,
@@ -52,7 +53,7 @@ describe('minify/html.js', function () {
             mainVersionMap: mainVersionMap
         });
 
-        assert.equal(ret.length, 1);
+        assert.equal(ret.length > 0, true);
     });
 });
 

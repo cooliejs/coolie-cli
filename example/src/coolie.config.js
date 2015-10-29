@@ -4,23 +4,18 @@ var fs = require('fs');
 
 module.exports = function (coolie) {
     coolie.config({
+        clean: true,
         "js": {
             "main": [
-                "./static/js/app/html.js"
+                "./static/js/app/**"
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
-            "chunk": [
-                //[
-                //    "./static/js/libs1/**"
-                //],
-                //"./static/js/libs2/**"
-            ]
+            "chunk": []
         },
         "html": {
             "src": [
-                //"./html/**"
-                "./html/replace.html"
+                "./html/**"
             ],
             "minify": true
         },

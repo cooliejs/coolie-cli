@@ -39,14 +39,14 @@ var defaults = {
     srcDirname: null,
     destDirname: null,
     destHost: '/',
-    destResourceDirname:null,
-    destCSSDirname:null,
-    minifyResource:true,
-    minifyJS:true,
-    uglifyJSOptions:null,
-    minifyCSS:true,
+    destResourceDirname: null,
+    destCSSDirname: null,
+    minifyResource: true,
+    minifyJS: true,
+    uglifyJSOptions: null,
+    minifyCSS: true,
     cleanCSSOptions: true,
-    replaceCSSResource:true
+    replaceCSSResource: true
 };
 
 
@@ -159,6 +159,7 @@ module.exports = function (file, options) {
                         }) + '\n';
                 }
 
+                debug.normal('concat', jsFile);
                 files.push(jsFile);
                 md5List.push(encryption.md5(jsCode));
                 bfList.push(new Buffer(jsCode, ENCODING));
