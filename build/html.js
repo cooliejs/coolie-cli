@@ -16,6 +16,31 @@ var fse = require('fs-extra');
 var minifyHTML = require('../minify/html.js');
 var glob = require('../utils/glob.js');
 var pathURI = require('../utils/path-uri.js');
+var reader = require('../utils/reader.js');
+
+var defaults = {
+    glob: [],
+    removeHTMLYUIComments: true,
+    removeHTMLLineComments: true,
+    joinHTMLSpaces: true,
+    removeHTMLBreakLines: true,
+    versionLength: 32,
+    srcDirname: null,
+    destDirname: null,
+    destJSDirname: null,
+    destCSSDirname: null,
+    destResourceDirname: null,
+    destHost: '/',
+    srcCoolieConfigBaseDirname: null,
+    destCoolieConfigJSPath: null,
+    minifyJS: true,
+    minifyCSS: true,
+    minifyResource: true,
+    uglifyJSOptions: null,
+    cleanCSSOptions: null,
+    replaceCSSResource: true,
+    mainVersionMap: null
+};
 
 /**
  * html 构建
@@ -40,8 +65,11 @@ var pathURI = require('../utils/path-uri.js');
  * @param [options.cleanCSSOptions=null] {Boolean} 压缩 CSS 配置
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 引用资源
  * @param [options.mainVersionMap] {Object} 入口模块版本信息
+ * @returns {Array}
  */
 module.exports = function (options) {
+    options = dato.extend({}, defaults, options);
+
     // 1. 找出 html
     var htmlFiles = glob({
         glob: options.glob,
@@ -51,7 +79,9 @@ module.exports = function (options) {
     // 2. 压缩 html
     var htmlMap = {};
     dato.each(htmlFiles, function (index, htmlFile) {
-        var code = minifyHTML(htmlFile, {
+        var code = reader(htmlFile, 'utf8');
+        var ret = minifyHTML(htmlFile, {
+            code: code,
             replaceHTMLAttrResource: true,
             replaceHTMLTagScript: true,
             replaceHTMLTagStyleResource: true,
@@ -64,8 +94,10 @@ module.exports = function (options) {
             versionLength: options.versionLength,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
-            destHost: options.destHost,
+            destJSDirname: options.destJSDirname,
+            destCSSDirname: options.destCSSDirname,
             destResourceDirname: options.destResourceDirname,
+            destHost: options.destHost,
             srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
             destCoolieConfigJSPath: options.destCoolieConfigJSPath,
             minifyJS: options.minifyJS,
@@ -77,7 +109,7 @@ module.exports = function (options) {
             mainVersionMap: options.mainVersionMap
         });
 
-        htmlMap[htmlFile] = new Buffer(code, 'utf8');
+        htmlMap[htmlFile] = new Buffer(ret, 'utf8');
     });
 
     // 3. 生成 html
