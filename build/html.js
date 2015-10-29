@@ -20,18 +20,22 @@ var pathURI = require('../utils/path-uri.js');
 /**
  * html 构建
  * @param options {Object} 配置
- * @param options.srcDirname {String} 原始目录
- * @param options.destDirname {String} 目标目录
- * @param options.glob {String|Array} 文件
- * @param options.versionLength {Number} 版本号长度
- * @param options.destHost {String} 目标域
- * @param options.destResourceDirname {String} 目标资源路径
- * @param options.minifyJS {Boolean} 是否压缩 JS
- * @param options.minifyCSS {Boolean} 是否压缩 JS
- * @param options.minifyResource {Boolean} 是否压缩资源
- * @param options.srcCoolieConfigBaseDirname {String} 原始 coolie-config.js:base 目录
- * @param options.destCoolieConfigJSPath {String} 目标 coolie-config.js 目录
- * @param options.destCoolieConfigJSPath {String} 目标 coolie-config.js 目录
+ * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
+ * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
+ * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
+ * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @param [options.versionLength=32] {Number} 版本号长度
+ * @param [options.srcDirname] {String} 原始根目录
+ * @param [options.destDirname] {String} 目标根目录
+ * @param [options.destJSDirname] {String} 目标 JS 目录
+ * @param [options.destCSSDirname] {String} 目标 CSS 目录
+ * @param [options.destResourceDirname] {String} 目标资源目录
+ * @param [options.destHost] {String} 目标域
+ * @param [options.srcCoolieConfigBaseDirname] {String} 原始 coolie-config:base 目录
+ * @param [options.destCoolieConfigJSPath] {String} 目标 coolie-config.js 路径
+ * @param [options.minifyJS=true] {Boolean} 是否压缩 JS
+ * @param [options.minifyCSS=true] {Boolean} 是否压缩 CSS
+ * @param [options.minifyResource=true] {Boolean} 是否压缩引用资源
  * @param [options.uglifyJSOptions=null] {Boolean} 压缩 JS 配置
  * @param [options.cleanCSSOptions=null] {Boolean} 压缩 CSS 配置
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 引用资源
@@ -53,10 +57,10 @@ module.exports = function (options) {
             replaceHTMLTagStyleResource: true,
             replaceHTMLAttrStyleResource: true,
             replaceHTMLCoolieGroup: true,
-            removeHTMLYUIComments: true,
-            removeHTMLLineComments: true,
-            joinHTMLSpaces: true,
-            removeHTMLBreakLines: true,
+            removeHTMLYUIComments: options.removeHTMLYUIComments,
+            removeHTMLLineComments: options.removeHTMLLineComments,
+            joinHTMLSpaces: options.joinHTMLSpaces,
+            removeHTMLBreakLines: options.removeHTMLBreakLines,
             versionLength: options.versionLength,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
