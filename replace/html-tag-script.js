@@ -10,6 +10,7 @@
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
+var typeis = require('ydr-utils').typeis;
 
 var htmlAttr = require('../utils/html-attr.js');
 var pathURI = require('../utils/path-uri.js');
@@ -103,16 +104,21 @@ module.exports = function (file, options) {
             var mainPath = path.join(options.srcCoolieConfigBaseDirname, dataMain);
             var mainVersion = options.mainVersionMap[mainPath];
 
+            if (!typeis.file(mainPath)) {
+                debug.error('coolie script', '`' + path.toSystem(mainPath) + '` is NOT a file');
+                return process.exit(1);
+            }
+
             if (!mainVersion) {
                 debug.error('coolie script', 'can not found `data-main` version');
                 debug.error('coolie `data-main`', dataMain);
-                debug.error('coolie script', path.toSystem(mainPath));
+                debug.error('main file', path.toSystem(mainPath));
                 debug.error('html file', path.toSystem(file));
                 debug.error('html code', originalSource);
                 return process.exit(1);
             }
 
-            var coolieConfigURI = '/' + path.relative(options.destDirname, options.destCoolieConfigJSPath);
+            var coolieConfigURI = pathURI.toRootURL(options.destCoolieConfigJSPath, options.destDirname);
 
             // 绝对路径，相对他域
             if (pathURI.isURL(options.destHost)) {
@@ -133,7 +139,7 @@ module.exports = function (file, options) {
         if (src) {
             var isRelatived = pathURI.isRelatived(src);
 
-            if(!isRelatived){
+            if (!isRelatived) {
                 return source;
             }
 

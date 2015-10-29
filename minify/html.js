@@ -59,15 +59,15 @@ var defaults = {
     destDirname: null,
     destHost: '/',
     destResourceDirname: null,
-    minifyResource: true,
     srcCoolieConfigBaseDirname: null,
     destCoolieConfigJSPath: null,
     minifyJS: true,
     minifyCSS: true,
-    minifminifyResourceyCSS: true,
+    minifyResource: true,
     uglifyJSOptions: null,
     cleanCSSOptions: null,
-    replaceCSSResource: true
+    replaceCSSResource: true,
+    mainVersionMap: null
 };
 
 /**
