@@ -22,7 +22,7 @@ var writer = require('../utils/writer.js');
 var arrayString = require('../utils/array-string.js');
 
 var defaults = {
-    main: [],
+    glob: [],
     chunk: [],
     // >= 2 的模块才会被 chunk 化
     minDependingCount2Chunk: 2,
@@ -49,7 +49,7 @@ var defaults = {
 /**
  * 遍历构建入口
  * @param options {Object} 配置
- * @param options.main {String|Array} main 配置
+ * @param options.glob {String|Array} main 配置
  * @param options.chunk {String|Array} chunk 配置
  * @param options.minDependingCount2Chunk {Number} 最小引用次数分离 chunk
  * @param options.srcDirname {String} 原始目录
@@ -74,7 +74,7 @@ module.exports = function (options) {
 
     // 1、分析 main
     var mainMap = parseMain({
-        main: options.main,
+        glob: options.glob,
         srcDirname: options.srcDirname,
         globOptions: options.globOptions
     });
@@ -128,6 +128,7 @@ module.exports = function (options) {
                 chunkDependingCountMap[dependency.id].mainIndexList.push(mainIndex);
             } else {
                 singleModuleMap[mainIndex] = singleModuleMap[mainIndex] || {
+                        srcFile: mainFile,
                         bufferList: [],
                         md5List: [],
                         mainIndex: mainIndex,
@@ -192,8 +193,9 @@ module.exports = function (options) {
     });
 
     // 6、single 重建
+    var mainVersionMap = {};
     var asyncVersionMap = {};
-    // [{bufferList: Array, md5List: Array, chunkList: Array, chunkMap: Object, async: Boolean, mainIndex: Number, file: String}]
+    // [{srcFile: String, bufferList: Array, md5List: Array, chunkList: Array, chunkMap: Object, async: Boolean, mainIndex: Number, file: String}]
     dato.each(singleModuleMap, function (singleIndex, singleMeta) {
         if (singleMeta.chunkList.length) {
             singleMeta.bufferList.push(new Buffer('\ncoolie.chunk(' + arrayString.stringify(singleMeta.chunkList) + ');'));
@@ -217,10 +219,13 @@ module.exports = function (options) {
 
         if (asyncId) {
             asyncVersionMap[pathURI.removeVersion(ret.path)] = ret.version;
+        } else {
+            mainVersionMap[singleMeta.srcFile] = ret.version;
         }
     });
 
     return {
+        mainVersionMap: mainVersionMap,
         chunkVersionMap: chunkVersionMap,
         asyncVersionMap: asyncVersionMap
     };

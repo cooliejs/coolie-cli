@@ -14,6 +14,7 @@ var fse = require('fs-extra');
 var parseCoolieConfig = require('../parse/coolie.config.js');
 var buildAPP = require('./app.js');
 var buildCopy = require('./copy.js');
+var buildHTML = require('./html.js');
 var replaceCoolieConfig = require('../replace/coolie-config.js');
 
 var defaults = {};
@@ -31,6 +32,7 @@ module.exports = function (options) {
     var stepLength = 5;
     var beginTime = Date.now();
 
+
     // 1. 分析配置文件
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'parse coolie config');
@@ -39,6 +41,7 @@ module.exports = function (options) {
     });
     var srcDirname = configs.srcDirname;
     var destDirname = configs.destDirname;
+
 
     // 2. 复制文件
     console.log();
@@ -57,7 +60,7 @@ module.exports = function (options) {
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'build main module');
     var appConfigs = buildAPP({
-        main: configs.js.main,
+        glob: configs.js.main,
         chunk: configs.js.chunk,
         srcDirname: srcDirname,
         destDirname: destDirname,
@@ -70,6 +73,7 @@ module.exports = function (options) {
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
         destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname
     });
+
 
     // 3. 重写 coolie-config.js
     console.log();
@@ -85,6 +89,39 @@ module.exports = function (options) {
         versionMap: dato.extend({}, appConfigs.chunkVersionMap, appConfigs.asyncVersionMap),
         destHost: configs.dest.host
     });
+
+
+    // 4. 构建 html
+    console.log();
+    debug.primary(++stepIndex + '/' + stepLength, 'build html');
+    //buildHTML({
+    //    glob: [],
+    //    removeHTMLYUIComments: true,
+    //    removeHTMLLineComments: true,
+    //    joinHTMLSpaces: true,
+    //    removeHTMLBreakLines: true,
+    //    versionLength: 32,
+    //    srcDirname: null,
+    //    destDirname: null,
+    //    destJSDirname: null,
+    //    destCSSDirname: null,
+    //    destResourceDirname: null,
+    //    destHost: '/',
+    //    srcCoolieConfigBaseDirname: null,
+    //    destCoolieConfigJSPath: null,
+    //    minifyJS: true,
+    //    minifyCSS: true,
+    //    minifyResource: true,
+    //    uglifyJSOptions: null,
+    //    cleanCSSOptions: null,
+    //    replaceCSSResource: true,
+    //    mainVersionMap: null
+    //});
+
+    // 5. 生成资源地图
+
+
+    // 6. 构建统计
 
     var pastTime = Date.now() - beginTime;
     console.log();

@@ -16,7 +16,7 @@ var reader = require('../utils/reader.js');
 var parseCMDRequire = require('./cmd-require.js');
 
 var defaults = {
-    main: [],
+    glob: [],
     globOptions: {
         dot: false,
         nodir: true
@@ -27,7 +27,7 @@ var defaults = {
 /**
  * 分析出所有入口模块，包括同步、异步模块
  * @param options {Object} 配置
- * @param options.main {String|Array} 配置
+ * @param options.glob {String|Array} 配置
  * @param options.globOptions {Object} glob 配置
  * @param options.srcDirname {String} 原始目录
  */
@@ -38,7 +38,7 @@ module.exports = function (options) {
 
     // 入口文件
     var mainFiles = glob({
-        glob: options.main,
+        glob: options.glob,
         globOptions: options.globOptions,
         srcDirname: options.srcDirname
     });

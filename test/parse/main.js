@@ -17,7 +17,7 @@ var srcDirname = path.join(__dirname, '../../example/src/');
 describe('parse/main.js', function () {
     it('e', function () {
         var mainMap = parseMain({
-            main: [
+            glob: [
                 "./static/js/app/**"
             ],
             srcDirname: srcDirname

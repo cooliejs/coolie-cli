@@ -23,7 +23,7 @@ var destCoolieConfigAsyncDirname = path.join(destDirname, 'static/js/async/');
 describe('build/app.js', function () {
     it('e', function () {
         var ret = buildAPP({
-            main: [
+            glob: [
                 'static/js/app/html1.js',
                 'static/js/app/html2.js',
                 'static/js/app/async.js'
