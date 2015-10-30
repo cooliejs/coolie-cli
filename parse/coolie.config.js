@@ -86,6 +86,11 @@ module.exports = function (options) {
      */
     coolie.use = function (middleware) {
         if (options.middleware) {
+            if(!middleware.middlewareName){
+                debug.warn('invalid middleware', 'some middleware\'s name is missing');
+                debug.warn('middleware', middleware.toString().slice(0, 140) + '\n...');
+            }
+
             options.middleware.use(middleware);
         }
 
