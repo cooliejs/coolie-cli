@@ -55,6 +55,7 @@ var coolieFn = function () {
  * 解析 config
  * @param options {Object} 配置
  * @param options.srcDirname {Object} coolie.config.js 路径
+ * @param options.middleware {Object} 中间件
  * @returns {Object}
  */
 module.exports = function (options) {
@@ -63,16 +64,36 @@ module.exports = function (options) {
     var srcCoolieJSONPath = path.join(srcDirname, './coolie.json');
     var configs = {};
     var check = {};
-    var coolie = {
-        config: function (_configs) {
-            configs = _configs;
+    var coolie = {};
+
+    /**
+     * 配置 coolie 构建参数
+     * @param _configs
+     * @returns {{}}
+     */
+    coolie.config = function (_configs) {
+        configs = _configs;
+        return coolie;
+    };
+
+
+    /**
+     * coolie 中间件
+     * @param middleware {Function}
+     * @returns {{coolie}}
+     */
+    coolie.use = function (middleware) {
+        if (options.middleware) {
+            options.middleware.use(middleware);
         }
+
+        return coolie;
     };
 
-    coolie.hook = {
-        beforeReplaceHTML: hook.bind('beforeReplaceHTML')
-    };
-
+    /**
+     * coolie 工具函数
+     * @type {{getAbsolutePath: Function, getHTMLTagAttr: Function, setHTMLTagAttr: Function, copyResourceFile: Function}}
+     */
     coolie.utils = {
         /**
          * 获取绝对路径
@@ -127,6 +148,9 @@ module.exports = function (options) {
         }
     };
 
+    /**
+     * coolie debug
+     */
     coolie.debug = debug;
 
     // 检查文件

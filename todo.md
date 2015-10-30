@@ -11,9 +11,8 @@
 11、支持文件流 require('./style.css', 'css|url'); √
 12、单页面应用的前端构建，资源增量加载，页面模块和页面单一依赖的模块抽离 √
 
-13、img data-original 脱离
-14、html include 功能
-15、命令名称规范化
-16、coolie module hot replacement
-17、version 只保存 async、chunk 模块，入口模块已写在 data-main 里
-18、coolie.json => coolie.config.js
+13、img data-original 脱离 【插件】
+14、html include 功能 【插件】
+15、命令名称规范化 √
+16、version 只保存 async、chunk 模块，入口模块已写在 data-main 里 √
+17、coolie.json => coolie.config.js √

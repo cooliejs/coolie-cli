@@ -20,6 +20,7 @@ var reader = require('../utils/reader.js');
 var hook = require('../utils/hook.js');
 
 var defaults = {
+    middleware: true,
     glob: [],
     removeHTMLYUIComments: true,
     removeHTMLLineComments: true,
@@ -46,6 +47,7 @@ var defaults = {
 /**
  * html 构建
  * @param options {Object} 配置
+ * @param options.middleware {Object} 中间件
  * @param options.glob {String|Array} html glob
  * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
@@ -82,10 +84,13 @@ module.exports = function (options) {
     var htmlMap = {};
     dato.each(htmlFiles, function (index, htmlFile) {
         var code = reader(htmlFile, 'utf8');
-        var hookRet = hook.exec('beforeReplaceHTML', htmlFile, code);
 
-        if (hookRet !== false) {
-            code = hookRet;
+        if(options.middleware){
+            code = options.middleware.exec({
+                file: htmlFile,
+                type: 'html',
+                code: code
+            }).code;
         }
 
         var ret = minifyHTML(htmlFile, {

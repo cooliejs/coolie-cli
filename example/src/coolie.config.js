@@ -44,18 +44,18 @@ module.exports = function (coolie) {
 
 
     // {{include some.html}} 插值
-    coolie.hook.beforeReplaceHTML(function (file, code, next) {
+    coolie.use(function (options, next) {
         var REG_INCLUDE = /\{\{include (.*?)}}/g;
 
         // 正则匹配 {{include *}} 标记并替换
-        code = code.replace(REG_INCLUDE, function (input, inludeName) {
-            var includeFile = coolie.utils.getAbsolutePath(inludeName, file);
+        options.code = options.code.replace(REG_INCLUDE, function (input, inludeName) {
+            var includeFile = coolie.utils.getAbsolutePath(inludeName, options.file);
             var includeCode = '';
 
             try {
                 includeCode = fs.readFileSync(includeFile, 'utf-8');
             } catch (err) {
-                coolie.debug.error('embed file', file);
+                coolie.debug.error('embed file', options.file);
                 coolie.debug.error('read file', includeFile);
                 coolie.debug.error('read file', err.message);
                 return process.exit(1);
@@ -64,15 +64,16 @@ module.exports = function (coolie) {
             return includeCode;
         });
 
-        // 返回处理后的代码
-        next(file, code);
+        // 交给下一个中间件
+        next();
     });
 
 
     // <img data-original="/img.png"> 引用资源替换
-    var REG_IMG = /<img[\s\S]*?>/gi;
-    coolie.hook.beforeReplaceHTML(function (file, code, next) {
-        code = code.replace(REG_IMG, function (htmlTag) {
+    coolie.use(function (options, next) {
+        var REG_IMG = /<img[\s\S]*?>/gi;
+
+        options.code = options.code.replace(REG_IMG, function (htmlTag) {
             // 读取 data-original 属性
             var dataOriginal = coolie.utils.getHTMLTagAttr(htmlTag, 'data-original');
 
@@ -82,7 +83,7 @@ module.exports = function (coolie) {
             }
 
             // 转换为绝对文件地址
-            var dataOriginalFile = coolie.utils.getAbsolutePath(dataOriginal, file);
+            var dataOriginalFile = coolie.utils.getAbsolutePath(dataOriginal, options.file);
 
             // 复制文件
             var toURI = coolie.utils.copyResourceFile(dataOriginalFile);
@@ -91,7 +92,7 @@ module.exports = function (coolie) {
             return coolie.utils.setHTMLTagAttr(htmlTag, 'data-original', toURI);
         });
 
-        // 返回处理后的代码
-        next(file, code);
+        // 交给下一个中间件
+        next();
     });
 };

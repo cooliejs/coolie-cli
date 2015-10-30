@@ -9,6 +9,7 @@
 
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
+var Middleware = require('ydr-utils').Middleware;
 var fse = require('fs-extra');
 
 var parseCoolieConfig = require('../parse/coolie.config.js');
@@ -20,6 +21,9 @@ var replaceCoolieConfig = require('../replace/coolie-config.js');
 var defaults = {
     srcDirname: process.cwd()
 };
+var middleware = new Middleware({
+    async: false
+});
 
 
 /**
@@ -97,6 +101,7 @@ module.exports = function (options) {
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'build html');
     var buildHTMLRet = buildHTML({
+        middleware: middleware,
         glob: configs.html.src,
         removeHTMLYUIComments: true,
         removeHTMLLineComments: true,
