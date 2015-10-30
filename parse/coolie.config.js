@@ -93,7 +93,6 @@ module.exports = function (options) {
 
             if (!middleware.middlewareName) {
                 debug.warn('invalid middleware', 'some middleware\'s name is missing');
-                debug.warn('middleware function', middleware.toString().slice(0, 140) + '\n...');
                 debug.normal('coolie tips', 'please install coolie middleware from NPM, all names are `coolie-*`');
             }
 

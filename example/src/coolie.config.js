@@ -44,7 +44,7 @@ module.exports = function (coolie) {
 
 
     // {{include some.html}} 插值
-    coolie.use(require('./coolie-include-html.js'));
+    //coolie.use(require('./coolie-include-html.js'));
 
 
     // <img data-original="/img.png"> 引用资源替换
@@ -52,6 +52,7 @@ module.exports = function (coolie) {
         var REG_IMG = /<img[\s\S]*?>/gi;
 
         options.code = options.code.replace(REG_IMG, function (htmlTag) {
+            console.log(htmlTag);
             // 读取 data-original 属性
             var dataOriginal = coolie.utils.getHTMLTagAttr(htmlTag, 'data-original');
 
