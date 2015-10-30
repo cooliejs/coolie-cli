@@ -88,14 +88,13 @@ module.exports = function (options) {
         if (options.middleware) {
             if (!typeis.function(middleware)) {
                 debug.warn('invalid middleware', 'some middleware is not a function');
-                debug.warn('coolie tips', 'please install coolie middleware from NPM,\n' +
-                    'all names are `coolie-*`');
+                debug.normal('coolie tips', 'please install coolie middleware from NPM, all names are `coolie-*`');
             }
 
             if (!middleware.middlewareName) {
                 debug.warn('invalid middleware', 'some middleware\'s name is missing');
-                debug.warn('middleware', middleware.toString().slice(0, 140) + '\n...');
-                debug.normal('coolie tips', 'please install coolie middleware (`coolie-*`) from NPM');
+                debug.warn('middleware function', middleware.toString().slice(0, 140) + '\n...');
+                debug.normal('coolie tips', 'please install coolie middleware from NPM, all names are `coolie-*`');
             }
 
             options.middleware.use(middleware);

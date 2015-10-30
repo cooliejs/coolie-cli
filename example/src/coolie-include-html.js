@@ -20,15 +20,12 @@ module.exports = function includeHTML(options) {
     // 正则匹配 {{include *}} 标记并替换
     options.code = options.code.replace(REG_INCLUDE, function (input, inludeName) {
         var includeFile = coolie.utils.getAbsolutePath(inludeName, options.file);
-        var includeCode = '';
 
         if (!includeFile) {
             return input;
         }
 
-        includeCode = fs.readFileSync(includeFile, 'utf-8');
-
-        return includeCode123;
+        return fs.readFileSync(includeFile, 'utf-8');
     });
 
     return options;
