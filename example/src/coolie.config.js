@@ -44,13 +44,18 @@ module.exports = function (coolie) {
 
 
     // {{include some.html}} 插值
-    coolie.use(function (options) {
+    coolie.use(function replaceIncludeHTMLTemplate(options) {
         var REG_INCLUDE = /\{\{include (.*?)}}/g;
 
+        this.middlewareName = 'replace include html template';
         // 正则匹配 {{include *}} 标记并替换
         options.code = options.code.replace(REG_INCLUDE, function (input, inludeName) {
             var includeFile = coolie.utils.getAbsolutePath(inludeName, options.file);
             var includeCode = '';
+
+            if (!includeFile) {
+                return input;
+            }
 
             try {
                 includeCode = fs.readFileSync(includeFile, 'utf-8');
@@ -61,7 +66,7 @@ module.exports = function (coolie) {
                 return process.exit(1);
             }
 
-            return includeCode;
+            return includeCode123;
         });
 
         return options;

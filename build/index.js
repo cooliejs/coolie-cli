@@ -25,6 +25,11 @@ var middleware = new Middleware({
     async: false
 });
 
+middleware.on('error', function (err) {
+    debug.error('middleware name', err.middlewareName);
+    debug.error('middleware error', err.stack);
+    return process.exit(1);
+});
 
 /**
  * 构建主程序
