@@ -121,7 +121,7 @@ module.exports = function (options) {
 
         /**
          * 获取 html 标签属性
-         * @param attrName {String} 标签属性名
+         * @param html {String} 标签
          * @param attrName {String} 标签名称
          * @returns {String}
          */
@@ -173,11 +173,17 @@ module.exports = function (options) {
             require(srcCoolieConfigJSPath)(coolie);
         } else {
             srcCoolieConfigJSPath = null;
-            debug.warn('coolie tips', 'you can use `coolie.config.js` to replace `coolie.json`');
+            debug.warn('coolie tips', 'please use `coolie.config.js` to replace `coolie.json`');
+
+            if (!srcCoolieJSONPath) {
+                debug.error('coolie.json', 'can not found `coolie.config.js` file in\n' +
+                    path.toSystem(srcDirname));
+                return process.exit(1);
+            }
 
             if (!typeis.file(srcCoolieJSONPath)) {
-                srcCoolieJSONPath = null;
                 debug.error('coolie.json', path.toSystem(srcCoolieJSONPath) + '\nis NOT a file');
+                srcCoolieJSONPath = null;
                 return process.exit(1);
             }
 

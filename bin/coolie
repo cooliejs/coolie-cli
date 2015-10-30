@@ -10,22 +10,16 @@ var string = require('ydr-utils').string;
 
 var pkg = require('../package.json');
 var bannerPath = path.join(__dirname, '../utils/banner.txt');
-var bannerText = fs.readFileSync(bannerPath, 'utf8');
+var build = require('../build/index.js');
 
+var CWD = process.cwd();
+var bannerText = fs.readFileSync(bannerPath, 'utf8');
 var showBanner = function () {
     console.log(bannerText);
-    //console.log('╔═════════════════════════════════════════╗');
-    //console.log('║  ', 'coolie@' + string.padRight(pkg.version, 8, ' '), '                      ║');
-    //console.log('║  ', pkg.description, '   ║');
-    //console.log('╚═════════════════════════════════════════╝');
-    //console.log();
 };
 
 command.alias({
-    h: 'help',
-    H: 'help',
-    v: 'version',
-    V: 'version'
+    d: 'dirname'
 });
 
 command.if('help', function () {
@@ -33,15 +27,17 @@ command.if('help', function () {
     var options = {
         eventAlign: 'left'
     };
-    console.log('1. usage');
-    debug.success('   build', 'build a front-end project in current dirname', options);
+    console.log('1. Command');
+    debug.success('   build', 'build a front-end project', options);
     debug.success('   book', 'open coolie book in default browser', options);
-    debug.success('   install <name>', 'install some package in current dirname, like coolie', options);
-    debug.success('   init', 'init `coolie-config.js` in current dirname', options);
+    debug.success('   install <name>', 'install a coolie module', options);
+    debug.success('   init', 'initialize `coolie-config.js`', options);
     debug.success('   help', 'show help info', options);
+    debug.success('   version', 'show version info', options);
     console.log();
-    console.log('2. options');
-    debug.normal('   -d', '--dirname', options);
+    console.log('2. Options');
+    debug.success('   -d --dirname', 'specified a directory', options);
+    //debug.success('   -u --use', 'use a coolie middleware', options);
     console.log();
 });
 
@@ -49,11 +45,29 @@ command.if('book', function () {
 
 });
 
-command.if('install', function () {
+command.if('build', function (args) {
+    var srcDirname = '';
 
+    if (args.dirname) {
+        if (path.isAbsolute(args.dirname)) {
+            srcDirname = args.dirname;
+        } else {
+            srcDirname = path.join(CWD, args.dirname);
+        }
+    } else {
+        srcDirname = CWD;
+    }
+
+    build({
+        srcDirname: srcDirname
+    });
 });
 
 command.if('init', function () {
+
+});
+
+command.if('version', function () {
 
 });
 
@@ -61,5 +75,6 @@ command.else(function () {
     command.exec('help');
 });
 
-command.parse(process.argv);
+var ret = command.parse(process.argv);
+console.log(ret);
 
