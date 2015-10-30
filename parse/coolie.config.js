@@ -9,13 +9,16 @@
 
 
 var fse = require('fs-extra');
+var glob = require('glob');
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 
 var pathURI = require('../utils/path-uri.js');
+var htmlAttr = require('../utils/html-attr.js');
 var hook = require('../utils/hook.js');
+var copy = require('../utils/copy.js');
 var guessDirname = require('../utils/guess-dirname.js');
 
 var coolieConfigJSFile;
@@ -65,6 +68,64 @@ module.exports = function (options) {
             configs = _configs;
         }
     };
+
+    coolie.hook = {
+        beforeReplaceHTML: hook.bind('beforeReplaceHTML')
+    };
+
+    coolie.utils = {
+        /**
+         * 获取绝对路径
+         * @param path {String} 相对路径
+         * @param parentFile {String} 父级文件
+         * @returns {string}
+         */
+        getAbsolutePath: function (path, parentFile) {
+            return pathURI.toAbsoluteFile(path, parentFile, configs.srcDirname);
+        },
+
+        /**
+         * 获取 html 标签属性
+         * @param attrName {String} 标签属性名
+         * @param attrName {String} 标签名称
+         * @returns {String}
+         */
+        getHTMLTagAttr: function (html, attrName) {
+            return htmlAttr.get(html, attrName);
+        },
+
+        /**
+         * 设置 html 标签属性
+         * @param html {String} html 标签
+         * @param attrName {String} 标签属性名
+         * @param attrValue {String} 标签属性值
+         * @returns {String}
+         */
+        setHTMLTagAttr: function (html, attrName, attrValue) {
+            return htmlAttr.set(html, attrName, attrValue);
+        },
+
+        /**
+         * 复制资源文件
+         * @param srcResourceFile
+         * @returns {String}
+         */
+        copyResourceFile: function (srcResourceFile) {
+            var destResourceFile = copy(srcResourceFile, {
+                srcDirname: srcDirname,
+                destDirname: configs.destResourceDirname,
+                copyPath: false,
+                version: true,
+                versionLength: configs.dest.versionLength,
+                minify: true,
+                logType: 2
+            });
+
+            return pathURI.toRootURL(destResourceFile, configs.destDirname);
+        }
+    };
+
+    coolie.debug = debug;
 
     // 检查文件
     check.file = function () {

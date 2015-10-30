@@ -17,6 +17,7 @@ var minifyHTML = require('../minify/html.js');
 var glob = require('../utils/glob.js');
 var pathURI = require('../utils/path-uri.js');
 var reader = require('../utils/reader.js');
+var hook = require('../utils/hook.js');
 
 var defaults = {
     glob: [],
@@ -45,6 +46,7 @@ var defaults = {
 /**
  * html 构建
  * @param options {Object} 配置
+ * @param options.glob {String|Array} html glob
  * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
@@ -80,6 +82,14 @@ module.exports = function (options) {
     var htmlMap = {};
     dato.each(htmlFiles, function (index, htmlFile) {
         var code = reader(htmlFile, 'utf8');
+        var hookRet = hook.exec('beforeReplaceHTML', htmlFile, {
+            code: code
+        });
+
+        if (hookRet !== false) {
+            code = hookRet;
+        }
+
         var ret = minifyHTML(htmlFile, {
             code: code,
             replaceHTMLAttrResource: true,

@@ -20,8 +20,8 @@ var copyFilesMap = {};
 var copiedLength = 0;
 var REG_POINT = path.sep === '/' ? /^\.{1,2}\// : /^\.{1,2}\\/;
 var defaults = {
-    srcDirname: '',
-    destDirname: '',
+    srcDirname: null,
+    destDirname: null,
     // 是否复制路径
     // src/a/b/c/file.html
     // true: dest/a/b/c/file.html

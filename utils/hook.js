@@ -44,7 +44,7 @@ exports.exec = function (type/*arguments*/) {
     dato.each(list, function (index, callback) {
         var _ret = callback.apply(coolie, args);
 
-        // 如果返回 false，则终端
+        // 如果返回 false，则中断
         if (_ret === false) {
             ret = _ret;
             return ret;
