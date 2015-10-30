@@ -86,9 +86,16 @@ module.exports = function (options) {
      */
     coolie.use = function (middleware) {
         if (options.middleware) {
-            if(!middleware.middlewareName){
+            if (!typeis.function(middleware)) {
+                debug.warn('invalid middleware', 'some middleware is not a function');
+                debug.warn('coolie tips', 'please install coolie middleware from NPM,\n' +
+                    'all names are `coolie-*`');
+            }
+
+            if (!middleware.middlewareName) {
                 debug.warn('invalid middleware', 'some middleware\'s name is missing');
                 debug.warn('middleware', middleware.toString().slice(0, 140) + '\n...');
+                debug.normal('coolie tips', 'please install coolie middleware (`coolie-*`) from NPM');
             }
 
             options.middleware.use(middleware);
