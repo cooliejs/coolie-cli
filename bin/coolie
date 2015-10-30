@@ -45,6 +45,18 @@ command.if('help', function () {
     console.log();
 });
 
+command.if('book', function () {
+
+});
+
+command.if('install', function () {
+
+});
+
+command.if('init', function () {
+
+});
+
 command.else(function () {
     command.exec('help');
 });

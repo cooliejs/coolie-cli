@@ -11,7 +11,12 @@ module.exports = function (coolie) {
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
-            "chunk": []
+            "chunk": [
+                [
+                    "./static/js/libs1/**"
+                ],
+                "./static/js/libs2/**"
+            ]
         },
         "html": {
             "src": [
@@ -41,9 +46,8 @@ module.exports = function (coolie) {
     //});
     //
     //// 挂载：替换 HTML
-    //coolie.hook.replaceHTML(function (file, meta) {
-    //    console.log('replaceHTML', meta.type);
-    //    var code = meta.code;
+    //coolie.beforeReplaceHTML(function (file, options) {
+    //    var code = options.code;
     //    var REG_INCLUDE = /\{\{include (.*?)}}/g;
     //
     //    // 正则匹配 {{include *}} 标记并替换
