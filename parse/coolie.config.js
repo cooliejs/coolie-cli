@@ -99,10 +99,12 @@ module.exports = function (options) {
          * 获取绝对路径
          * @param path {String} 相对路径
          * @param parentFile {String} 父级文件
-         * @returns {string}
+         * @returns {string|null}
          */
         getAbsolutePath: function (path, parentFile) {
-            return pathURI.toAbsoluteFile(path, parentFile, configs.srcDirname);
+            var p = pathURI.toAbsoluteFile(path, parentFile, configs.srcDirname);
+
+            return typeis.file(p) ? p : null;
         },
 
         /**

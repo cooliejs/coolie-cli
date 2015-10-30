@@ -43,7 +43,8 @@ module.exports = function (options) {
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'parse coolie config');
     var configs = parseCoolieConfig({
-        srcDirname: options.srcDirname
+        srcDirname: options.srcDirname,
+        middleware: middleware
     });
     var srcDirname = configs.srcDirname;
     var destDirname = configs.destDirname;

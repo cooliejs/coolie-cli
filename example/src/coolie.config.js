@@ -44,7 +44,7 @@ module.exports = function (coolie) {
 
 
     // {{include some.html}} 插值
-    coolie.use(function (options, next) {
+    coolie.use(function (options) {
         var REG_INCLUDE = /\{\{include (.*?)}}/g;
 
         // 正则匹配 {{include *}} 标记并替换
@@ -64,13 +64,12 @@ module.exports = function (coolie) {
             return includeCode;
         });
 
-        // 交给下一个中间件
-        next();
+        return options;
     });
 
 
     // <img data-original="/img.png"> 引用资源替换
-    coolie.use(function (options, next) {
+    coolie.use(function (options) {
         var REG_IMG = /<img[\s\S]*?>/gi;
 
         options.code = options.code.replace(REG_IMG, function (htmlTag) {
@@ -85,6 +84,10 @@ module.exports = function (coolie) {
             // 转换为绝对文件地址
             var dataOriginalFile = coolie.utils.getAbsolutePath(dataOriginal, options.file);
 
+            if (!dataOriginalFile) {
+                return htmlTag;
+            }
+
             // 复制文件
             var toURI = coolie.utils.copyResourceFile(dataOriginalFile);
 
@@ -92,7 +95,6 @@ module.exports = function (coolie) {
             return coolie.utils.setHTMLTagAttr(htmlTag, 'data-original', toURI);
         });
 
-        // 交给下一个中间件
-        next();
+        return options;
     });
 };
