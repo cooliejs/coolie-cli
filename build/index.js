@@ -26,8 +26,10 @@ var middleware = new Middleware({
 });
 
 middleware.on('error', function (err) {
+    debug.error('middleware error', '');
     debug.error('middleware name', err.middlewareName);
-    debug.error('middleware error', err.stack);
+    debug.error(err.name, err.message);
+    console.log();
     return process.exit(1);
 });
 

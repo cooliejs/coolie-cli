@@ -44,33 +44,7 @@ module.exports = function (coolie) {
 
 
     // {{include some.html}} 插值
-    coolie.use(function replaceIncludeHTMLTemplate(options) {
-        var REG_INCLUDE = /\{\{include (.*?)}}/g;
-
-        this.middlewareName = 'replace include html template';
-        // 正则匹配 {{include *}} 标记并替换
-        options.code = options.code.replace(REG_INCLUDE, function (input, inludeName) {
-            var includeFile = coolie.utils.getAbsolutePath(inludeName, options.file);
-            var includeCode = '';
-
-            if (!includeFile) {
-                return input;
-            }
-
-            try {
-                includeCode = fs.readFileSync(includeFile, 'utf-8');
-            } catch (err) {
-                coolie.debug.error('embed file', options.file);
-                coolie.debug.error('read file', includeFile);
-                coolie.debug.error('read file', err.message);
-                return process.exit(1);
-            }
-
-            return includeCode123;
-        });
-
-        return options;
-    });
+    coolie.use(require('./coolie-include-html.js'));
 
 
     // <img data-original="/img.png"> 引用资源替换
