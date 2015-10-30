@@ -49,7 +49,7 @@ module.exports = function (coolie) {
 
     // <img data-original="/img.png"> 引用资源替换
     coolie.use(function (options) {
-        var REG_IMG = /<img[\s\S]*?>/gi;
+        var REG_IMG = /<img[\s\S]*?>(?!["'])/gi;
 
         options.code = options.code.replace(REG_IMG, function (htmlTag) {
             console.log(htmlTag);
