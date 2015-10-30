@@ -107,11 +107,11 @@ module.exports = function (options) {
 
         /**
          * 复制资源文件
-         * @param srcResourceFile
-         * @returns {String}
+         * @param srcResourcePath {String} 原始资源文件路径
+         * @returns {String} 资源的 URI
          */
-        copyResourceFile: function (srcResourceFile) {
-            var destResourceFile = copy(srcResourceFile, {
+        copyResourceFile: function (srcResourcePath) {
+            var destResourcePath = copy(srcResourcePath, {
                 srcDirname: srcDirname,
                 destDirname: configs.destResourceDirname,
                 copyPath: false,
@@ -121,7 +121,9 @@ module.exports = function (options) {
                 logType: 2
             });
 
-            return pathURI.toRootURL(destResourceFile, configs.destDirname);
+            var destResourceURI = pathURI.toRootURL(destResourcePath, configs.destDirname);
+
+            return pathURI.joinURI(configs.dest.host, destResourceURI);
         }
     };
 

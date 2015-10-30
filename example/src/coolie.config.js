@@ -44,8 +44,7 @@ module.exports = function (coolie) {
 
 
     // {{include some.html}} 插值
-    coolie.hook.beforeReplaceHTML(function (file, options) {
-        var code = options.code;
+    coolie.hook.beforeReplaceHTML(function (file, code, next) {
         var REG_INCLUDE = /\{\{include (.*?)}}/g;
 
         // 正则匹配 {{include *}} 标记并替换
@@ -66,15 +65,13 @@ module.exports = function (coolie) {
         });
 
         // 返回处理后的代码
-        return code;
+        next(file, code);
     });
 
 
     // <img data-original="/img.png"> 引用资源替换
     var REG_IMG = /<img[\s\S]*?>/gi;
-    coolie.hook.beforeReplaceHTML(function (file, options) {
-        var code = options.code;
-
+    coolie.hook.beforeReplaceHTML(function (file, code, next) {
         code = code.replace(REG_IMG, function (htmlTag) {
             // 读取 data-original 属性
             var dataOriginal = coolie.utils.getHTMLTagAttr(htmlTag, 'data-original');
@@ -95,6 +92,6 @@ module.exports = function (coolie) {
         });
 
         // 返回处理后的代码
-        return code;
+        next(file, code);
     });
 };

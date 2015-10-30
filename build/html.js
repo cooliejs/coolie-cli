@@ -82,9 +82,7 @@ module.exports = function (options) {
     var htmlMap = {};
     dato.each(htmlFiles, function (index, htmlFile) {
         var code = reader(htmlFile, 'utf8');
-        var hookRet = hook.exec('beforeReplaceHTML', htmlFile, {
-            code: code
-        });
+        var hookRet = hook.exec('beforeReplaceHTML', htmlFile, code);
 
         if (hookRet !== false) {
             code = hookRet;
