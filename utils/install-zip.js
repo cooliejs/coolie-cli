@@ -33,7 +33,7 @@ module.exports = function (options, callback) {
     var tempStream = fs.createWriteStream(tempFile);
     var unzipDirname = path.join(destDirname, './' + name);
 
-    debug.normal('download ' + name, url);
+    debug.success('install ' + name, url);
     request.down({
         url: url,
         query: {
@@ -51,10 +51,10 @@ module.exports = function (options, callback) {
         }
 
         stream.pipe(tempStream).on('error', function (err) {
-            debug.success('download ' + name, err.message);
+            debug.success('install ' + name, err.message);
             process.exit(1);
         }).on('close', function () {
-            debug.normal('unzip ' + name, tempFile);
+            debug.ignore('unzip ' + name, tempFile);
 
             var zip = new AdmZip(tempFile);
             var unzipError = null;

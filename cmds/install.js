@@ -8,9 +8,10 @@
 'use strict';
 
 var debug = require('ydr-utils').debug;
+var request = require('ydr-utils').request;
 
 var pkg = require('../package.json');
-var downZip = require('../utils/down-zip.js');
+var downZip = require('../utils/install-zip.js');
 
 /**
  * 下载
@@ -19,11 +20,15 @@ var downZip = require('../utils/down-zip.js');
  * @param options.destDirname {String} 目标目录
  */
 module.exports = function (options) {
-    var url = pkg.coolie[options.name];
+    var module = pkg.coolie.modules[options.name];
 
-    if (!url) {
+    if (!module) {
         debug.error('coolie install', 'can not found ' + options.name);
         return process.exit(1);
+    }
+
+    if(module.type === 'file'){
+
     }
 
     downZip({

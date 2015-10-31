@@ -66,7 +66,9 @@ module.exports = function (options) {
     var check = {};
     var coolie = {};
 
-    options.middleware.bindContext(coolie);
+    if (options.middleware) {
+        options.middleware.bindContext(coolie);
+    }
 
     /**
      * 配置 coolie 构建参数

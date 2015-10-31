@@ -20,7 +20,7 @@ var reader = require('../utils/reader.js');
 var hook = require('../utils/hook.js');
 
 var defaults = {
-    middleware: true,
+    middleware: null,
     glob: [],
     removeHTMLYUIComments: true,
     removeHTMLLineComments: true,
