@@ -8,11 +8,12 @@
 'use strict';
 
 
-var path = require('ydr-utils').path;
 var fs = require('fs');
+var path = require('ydr-utils').path;
 var request = require('ydr-utils').request;
 var random = require('ydr-utils').random;
 var debug = require('ydr-utils').debug;
+var typeis = require('ydr-utils').typeis;
 var AdmZip = require('adm-zip');
 
 var pkg = require('../package.json');
@@ -23,7 +24,7 @@ var pkg = require('../package.json');
  * @param options.url {String} 目标地址
  * @param options.destDirname {String} 目录
  * @param options.name {String} 文件名
- * @param callback {Function} 回调
+ * @param [callback] {Function} 回调
  */
 module.exports = function (options, callback) {
     var destDirname = options.destDirname;
@@ -32,6 +33,12 @@ module.exports = function (options, callback) {
     var tempFile = path.join(destDirname, random.guid() + '.zip');
     var tempStream = fs.createWriteStream(tempFile);
     var unzipDirname = path.join(destDirname, './' + name);
+
+    if (!typeis.function(callback)) {
+        callback = function () {
+            // ignore
+        };
+    }
 
     debug.success('install ' + name, url);
     request.down({

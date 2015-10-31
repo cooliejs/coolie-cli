@@ -9,6 +9,7 @@
 var path = require('path');
 var fse = require('fs-extra');
 var request = require('ydr-utils').request;
+var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 
 var pkg = require('../package.json');
@@ -23,6 +24,12 @@ var REG_VERSION = /^ \* @version ([\d.]+)/m;
  * @param callback {Function} 回调
  */
 module.exports = function (options, callback) {
+    if (!typeis.function(callback)) {
+        callback = function () {
+            // ignore
+        };
+    }
+
     debug.success('install coolie', options.url);
     request.get({
         url: options.url,

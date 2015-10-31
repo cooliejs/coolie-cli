@@ -11,7 +11,8 @@ var debug = require('ydr-utils').debug;
 var request = require('ydr-utils').request;
 
 var pkg = require('../package.json');
-var downZip = require('../utils/install-zip.js');
+var installZip = require('../utils/install-zip.js');
+var installFile = require('../utils/install-file.js');
 
 /**
  * 下载
@@ -27,14 +28,17 @@ module.exports = function (options) {
         return process.exit(1);
     }
 
-    if(module.type === 'file'){
-
+    if (module.type === 'file') {
+        installFile({
+            url: module.url,
+            destDirname: options.destDirname
+        });
+    } else {
+        installZip({
+            url: module.url,
+            destDirname: options.destDirname,
+            name: options.name
+        });
     }
-
-    downZip({
-        url: url,
-        destDirname: options.destDirname,
-        name: options.name
-    });
 };
 

@@ -20,11 +20,10 @@ var CWD = process.cwd();
 var bannerText = fs.readFileSync(bannerPath, 'utf8');
 var showBanner = function () {
     console.log(bannerText);
-    console.log('');
-    console.log('╔═════════════════════════════════════════╗');
-    console.log('║  ', 'coolie@' + string.padRight(pkg.version, 8, ' '), '                      ║');
-    console.log('║  ', pkg.description, '   ║');
-    console.log('╚═════════════════════════════════════════╝');
+    console.log('╔════════════════════════════════════════════════════╗');
+    console.log('║  ', 'coolie@' + string.padRight(pkg.version, 8, ' '), '                                 ║');
+    console.log('║  ', pkg.description, '              ║');
+    console.log('╚════════════════════════════════════════════════════╝');
     console.log('');
 };
 /**
