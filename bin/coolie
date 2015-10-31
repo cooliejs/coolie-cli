@@ -13,6 +13,7 @@ var cmdBuild = require('../cmds/build.js');
 var cmdVersion = require('../cmds/version.js');
 var cmdInit = require('../cmds/init.js');
 var cmdBook = require('../cmds/book.js');
+var cmdInstall = require('../cmds/install.js');
 
 var bannerPath = path.join(__dirname, '../data/banner.txt');
 var CWD = process.cwd();
@@ -60,14 +61,27 @@ command.if('help', function () {
     console.log();
 });
 
+command.if('build', function (args) {
+    console.log(bannerText);
+    cmdBuild({
+        srcDirname: parseSrcDirname(args)
+    });
+});
+
 command.if('book', function () {
     console.log(bannerText);
     cmdBook();
 });
 
-command.if('build', function (args) {
+command.if('install', function (args, names) {
     console.log(bannerText);
-    cmdBuild({
+
+    if (!names.length) {
+        debug.success('coolie tips', 'try `coolie install coolie`');
+        return process.exit(1);
+    }
+
+    cmdInit({
         srcDirname: parseSrcDirname(args)
     });
 });
@@ -89,6 +103,5 @@ command.else(function () {
     command.exec('help');
 });
 
-var ret = command.parse(process.argv);
-console.log(ret);
+command.parse(process.argv);
 
