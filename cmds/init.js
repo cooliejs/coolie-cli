@@ -14,13 +14,17 @@ var path = require('ydr-utils').path;
 
 var coolieConfigJSPath = path.join(__dirname, '../data/coolie.config.js');
 
+var writeFile = function (name, destDirname) {
+
+}
+
 /**
  * 生成配置文件
  * @param options {Object} 配置
- * @param options.srcDirname {String} 根目录
+ * @param options.destDirname {String} 根目录
  */
 module.exports = function (options) {
-    var destPath = path.join(options.srcDirname, 'coolie.config.js');
+    var destPath = path.join(options.destDirname, 'coolie.config.js');
 
     if (typeis.file(destPath)) {
         debug.error('init error', path.toSystem(destPath) + ' is exist');

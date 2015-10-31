@@ -101,7 +101,7 @@ command.if('install', function (args, names) {
 command.if('init', function (args) {
     showBanner();
     cmdInit({
-        srcDirname: parseDirname(args)
+        destDirname: parseDirname(args)
     });
 });
 
