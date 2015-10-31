@@ -23,7 +23,7 @@ var bannerText = fs.readFileSync(bannerPath, 'utf8');
  * @param args
  * @returns {string}
  */
-var parseSrcDirname = function (args) {
+var parseDirname = function (args) {
     var srcDirname = '';
 
     if (args.dirname) {
@@ -64,7 +64,7 @@ command.if('help', function () {
 command.if('build', function (args) {
     console.log(bannerText);
     cmdBuild({
-        srcDirname: parseSrcDirname(args)
+        srcDirname: parseDirname(args)
     });
 });
 
@@ -81,15 +81,15 @@ command.if('install', function (args, names) {
         return process.exit(1);
     }
 
-    cmdInit({
-        srcDirname: parseSrcDirname(args)
+    cmdInstall({
+        destDirname: parseDirname(args)
     });
 });
 
 command.if('init', function (args) {
     console.log(bannerText);
     cmdInit({
-        srcDirname: parseSrcDirname(args)
+        srcDirname: parseDirname(args)
     });
 });
 
