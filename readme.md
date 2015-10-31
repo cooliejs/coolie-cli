@@ -56,3 +56,7 @@ npm install -g coolie
 
 # Version
 [版本日志](./version.md)
+
+
+# API
+[版本日志](./api.md)
