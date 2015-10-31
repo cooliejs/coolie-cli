@@ -15,8 +15,8 @@ var howdo = require('howdo');
 var pkg = require('../package.json');
 
 module.exports = function () {
-    debug.success('local version', pkg.version);
-    debug.success('check version', 'wait a moment...');
+    debug.success('local coolie cli', pkg.version);
+    debug.ignore('check version', 'wait a moment...');
     howdo
         // 获取 coolie.cli 版本
         .task(function (done) {
@@ -25,7 +25,7 @@ module.exports = function () {
                     return done(err);
                 }
 
-                debug.success('coolie cli', version);
+                debug.success('online coolie cli', version);
             });
         })
         // 获取 coolie.js 版本
@@ -48,7 +48,7 @@ module.exports = function () {
                     return done(new Error('parse error'));
                 }
 
-                debug.success('coolie.js', json.version);
+                debug.success('online coolie.js', json.version);
             });
         })
         .together()

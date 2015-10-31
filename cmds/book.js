@@ -8,18 +8,19 @@
 'use strict';
 
 var openHelper = require('open');
+var debug = require('ydr-utils').debug;
+
 var pkg = require('../package.json');
-var log = require('../libs/log.js');
 
 module.exports = function () {
-    openHelper(pkg.book + '?from=coolie.cli@' + pkg.version, function (err) {
+    openHelper(pkg.coolie.book + '?from=coolie.cli@' + pkg.version, function (err) {
         if (err) {
-            log('coolie book', pkg.book, 'error');
-            log('coolie book', err.message, 'error');
-            process.exit(1);
+            debug.error('coolie book', pkg.coolie.book);
+            debug.error('coolie book', err.message);
+            return process.exit(1);
         }
 
-        log('coolie book', pkg.book, 'success');
+        debug.success('coolie book', pkg.coolie.book);
     });
 };
 
