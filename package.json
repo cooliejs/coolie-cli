@@ -38,6 +38,7 @@
   "homepage": "http://coolie.ydr.me/",
   "coolie": {
     "coolie.js": "https://raw.githubusercontent.com/cloudcome/coolie/master/coolie.min.js",
+    "package.json": "https://raw.githubusercontent.com/cloudcome/coolie/master/package.json",
     "book": "http://coolie.ydr.me/",
     "alien.zip": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/alien.zip",
     "donkey.zip": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/donkey.zip"
@@ -58,7 +59,7 @@
     "howdo": "^2.0.2",
     "open": "0.0.5",
     "uglify-js": "^2.5.0",
-    "ydr-utils": "^30.2.0"
+    "ydr-utils": "^30.3.0"
   },
   "scripts": {
     "test": "mocha -c --recursive --ui bdd test -t 0"

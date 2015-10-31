@@ -1,36 +1,43 @@
-/*!
- * cmd version
+/**
+ * 检查版本
  * @author ydr.me
- * @create 2015-08-12 09:20
+ * @create 2015-10-31 13:58
  */
 
 
 'use strict';
 
 var request = require('ydr-utils').request;
-var log = require('../libs/log.js');
-var pkg = require('../package.json');
+var npm = require('ydr-utils').npm;
+var debug = require('ydr-utils').debug;
 var howdo = require('howdo');
-var currentVersion = pkg.version;
-var coolieCliURL = 'http://registry.npmjs.com/coolie';
-var coolieJSURL = 'https://raw.githubusercontent.com/cloudcome/coolie/master/package.json';
+
+var pkg = require('../package.json');
 
 module.exports = function () {
-    log('local version', currentVersion, 'success');
-    log('check version', 'wait a moment...');
-
+    debug.success('local version', pkg.version);
+    debug.success('check version', 'wait a moment...');
     howdo
-        // 检查 coolie cli 版本
-        .task(function () {
+        // 获取 coolie.cli 版本
+        .task(function (done) {
+            npm.getLatestVersion(pkg.name, function (err, version) {
+                if (err) {
+                    return done(err);
+                }
+
+                debug.success('coolie cli', version);
+            });
+        })
+        // 获取 coolie.js 版本
+        .task(function (done) {
             request.get({
-                url: coolieCliURL,
+                url: pkg.coolie['package.json'],
                 query: {
                     _: Date.now()
                 }
             }, function (err, data) {
                 if (err) {
-                    log('check version', 'connect npmjs.com error', 'error');
-                    process.exit(1);
+                    return done(err);
                 }
 
                 var json = {};
@@ -38,41 +45,18 @@ module.exports = function () {
                 try {
                     json = JSON.parse(data);
                 } catch (err) {
-                    log('check version', 'parse json string error', 'error');
-                    process.exit(1);
+                    return done(new Error('parse error'));
                 }
 
-                log('coolie.cli', json['dist-tags'].latest, 'success');
+                debug.success('coolie.js', json.version);
             });
         })
-        // 检查 coolie.js 版本
-        .task(function () {
-            request.get({
-                url: coolieJSURL,
-                query: {
-                    _: Date.now()
-                }
-            }, function (err, data) {
-                if (err) {
-                    log('check version', 'connect github.com error', 'error');
-                    process.exit(1);
-                }
-
-                var json = {};
-
-                try {
-                    json = JSON.parse(data);
-                } catch (err) {
-                    log('check version', 'parse json string error', 'error');
-                    process.exit(1);
-                }
-
-                log('coolie.js', json.version, 'success');
-            });
-        })
-        .together(function () {
-            //
+        .together()
+        .catch(function (err) {
+            debug.error('error', err.message);
+            return process.exit(1);
         });
 };
+
 
 

@@ -10,7 +10,8 @@ var string = require('ydr-utils').string;
 
 var pkg = require('../package.json');
 var bannerPath = path.join(__dirname, '../utils/banner.txt');
-var build = require('../build/index.js');
+var cmdBuild = require('../cmds/build.js');
+var cmdVersion = require('../cmds/version.js');
 
 var CWD = process.cwd();
 var bannerText = fs.readFileSync(bannerPath, 'utf8');
@@ -58,7 +59,7 @@ command.if('build', function (args) {
         srcDirname = CWD;
     }
 
-    build({
+    cmdBuild({
         srcDirname: srcDirname
     });
 });
@@ -67,9 +68,7 @@ command.if('init', function () {
 
 });
 
-command.if('version', function () {
-
-});
+command.if('version', cmdVersion);
 
 command.else(function () {
     command.exec('help');
