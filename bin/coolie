@@ -81,8 +81,11 @@ command.if('install', function (args, names) {
         return process.exit(1);
     }
 
-    cmdInstall({
-        destDirname: parseDirname(args)
+    names.forEach(function (name) {
+        cmdInstall({
+            destDirname: parseDirname(args),
+            name: name
+        });
     });
 });
 

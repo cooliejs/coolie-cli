@@ -37,11 +37,22 @@
   },
   "homepage": "http://coolie.ydr.me/",
   "coolie": {
-    "coolie.js": "https://raw.githubusercontent.com/cloudcome/coolie/master/coolie.min.js",
     "package.json": "https://raw.githubusercontent.com/cloudcome/coolie/master/package.json",
     "book": "http://coolie.ydr.me/",
-    "alien.zip": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/alien.zip",
-    "donkey.zip": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/donkey.zip"
+    "modules": {
+      "coolie": {
+        "type": "file",
+        "url": "https://raw.githubusercontent.com/cloudcome/coolie/master/coolie.min.js"
+      },
+      "alien": {
+        "type": "zip",
+        "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/alien.zip"
+      },
+      "donkey": {
+        "type": "zip",
+        "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/donkey.zip"
+      }
+    }
   },
   "repository": {
     "type": "git",

@@ -22,7 +22,7 @@ module.exports = function (options) {
     var url = pkg.coolie[options.name];
 
     if (!url) {
-        debug.error('coolie install', 'can not found ' + name);
+        debug.error('coolie install', 'can not found ' + options.name);
         return process.exit(1);
     }
 
