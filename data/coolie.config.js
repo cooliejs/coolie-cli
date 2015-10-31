@@ -10,6 +10,7 @@
 'use strict';
 
 module.exports = function (coolie) {
+    // coolie 配置
     coolie.config({
         // 是否在构建之前清空目标目录
         clean: true,

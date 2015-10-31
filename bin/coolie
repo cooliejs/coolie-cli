@@ -12,11 +12,29 @@ var pkg = require('../package.json');
 var bannerPath = path.join(__dirname, '../data/banner.txt');
 var cmdBuild = require('../cmds/build.js');
 var cmdVersion = require('../cmds/version.js');
+var cmdInit = require('../cmds/init.js');
 
 var CWD = process.cwd();
 var bannerText = fs.readFileSync(bannerPath, 'utf8');
-var showBanner = function () {
-    console.log(bannerText);
+/**
+ * 解析 原始目录
+ * @param args
+ * @returns {string}
+ */
+var parseSrcDirname = function (args) {
+    var srcDirname = '';
+
+    if (args.dirname) {
+        if (path.isAbsolute(args.dirname)) {
+            srcDirname = args.dirname;
+        } else {
+            srcDirname = path.join(CWD, args.dirname);
+        }
+    } else {
+        srcDirname = CWD;
+    }
+
+    return srcDirname;
 };
 
 command.alias({
@@ -24,10 +42,10 @@ command.alias({
 });
 
 command.if('help', function () {
-    showBanner();
     var options = {
         eventAlign: 'left'
     };
+    console.log(bannerText);
     console.log('1. Command');
     debug.success('   build', 'build a front-end project', options);
     debug.success('   book', 'open coolie book in default browser', options);
@@ -47,28 +65,20 @@ command.if('book', function () {
 });
 
 command.if('build', function (args) {
-    var srcDirname = '';
-
-    if (args.dirname) {
-        if (path.isAbsolute(args.dirname)) {
-            srcDirname = args.dirname;
-        } else {
-            srcDirname = path.join(CWD, args.dirname);
-        }
-    } else {
-        srcDirname = CWD;
-    }
-
     cmdBuild({
-        srcDirname: srcDirname
+        srcDirname: parseSrcDirname(args)
     });
 });
 
-command.if('init', function () {
-
+command.if('init', function (args) {
+    cmdInit({
+        srcDirname: parseSrcDirname(args)
+    });
 });
 
-command.if('version', cmdVersion);
+command.if('version', function () {
+    cmdVersion();
+});
 
 command.else(function () {
     command.exec('help');

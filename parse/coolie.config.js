@@ -172,7 +172,6 @@ module.exports = function (options) {
         if (typeis.file(srcCoolieConfigJSPath)) {
             require(srcCoolieConfigJSPath)(coolie);
         } else {
-            srcCoolieConfigJSPath = null;
             debug.warn('coolie tips', 'please use `coolie.config.js` to replace `coolie.json`');
 
             if (!srcCoolieJSONPath) {
@@ -182,7 +181,8 @@ module.exports = function (options) {
             }
 
             if (!typeis.file(srcCoolieJSONPath)) {
-                debug.error('coolie.json', path.toSystem(srcCoolieJSONPath) + '\nis NOT a file');
+                debug.error('coolie.config.js', path.toSystem(srcCoolieConfigJSPath) + ' is NOT a file');
+                srcCoolieConfigJSPath = null;
                 srcCoolieJSONPath = null;
                 return process.exit(1);
             }
