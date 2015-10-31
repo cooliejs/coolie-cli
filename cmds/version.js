@@ -13,8 +13,10 @@ var debug = require('ydr-utils').debug;
 var howdo = require('howdo');
 
 var pkg = require('../package.json');
+var banner = require('./banner.js');
 
 module.exports = function () {
+    banner();
     debug.success('local coolie cli', pkg.version);
     debug.ignore('check version', 'wait a moment...');
     howdo

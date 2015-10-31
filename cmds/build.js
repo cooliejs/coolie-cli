@@ -17,6 +17,7 @@ var buildAPP = require('../build/app.js');
 var buildCopy = require('../build/copy.js');
 var buildHTML = require('../build/html.js');
 var replaceCoolieConfig = require('../replace/coolie-config.js');
+var banner = require('./banner.js');
 
 var defaults = {
     srcDirname: process.cwd()
@@ -39,6 +40,7 @@ middleware.on('error', function (err) {
  * @param options.srcDirname {String} 构建根目录
  */
 module.exports = function (options) {
+    banner();
     options = dato.extend({}, defaults, options);
 
     var stepIndex = 0;

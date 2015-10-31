@@ -11,8 +11,10 @@ var openHelper = require('open');
 var debug = require('ydr-utils').debug;
 
 var pkg = require('../package.json');
+var banner = require('./banner.js');
 
 module.exports = function () {
+    banner();
     openHelper(pkg.coolie.book + '?from=coolie.cli@' + pkg.version, function (err) {
         if (err) {
             debug.error('coolie book', pkg.coolie.book);

@@ -13,6 +13,7 @@ var debug = require('ydr-utils').debug;
 var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
 
+var banner = require('./banner.js');
 
 /**
  * 生成文件
@@ -49,6 +50,7 @@ var writeFile = function (name, destDirname, callback) {
  * @param options.destDirname {String} 根目录
  */
 module.exports = function (options) {
+    banner();
     howdo
         .task(function (done) {
             writeFile('coolie.config.js', options.destDirname, done);

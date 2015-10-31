@@ -14,18 +14,10 @@ var cmdVersion = require('../cmds/version.js');
 var cmdInit = require('../cmds/init.js');
 var cmdBook = require('../cmds/book.js');
 var cmdInstall = require('../cmds/install.js');
+var cmdHelp = require('../cmds/help.js');
 
-var bannerPath = path.join(__dirname, '../data/banner.txt');
 var CWD = process.cwd();
-var bannerText = fs.readFileSync(bannerPath, 'utf8');
-var showBanner = function () {
-    console.log(bannerText);
-    console.log('╔════════════════════════════════════════════════════╗');
-    console.log('║  ', 'coolie@' + string.padRight(pkg.version, 8, ' '), '                                 ║');
-    console.log('║  ', pkg.description, '              ║');
-    console.log('╚════════════════════════════════════════════════════╝');
-    console.log('');
-};
+
 /**
  * 解析 原始目录
  * @param args
@@ -52,39 +44,20 @@ command.alias({
 });
 
 command.if('help', function () {
-    var options = {
-        eventAlign: 'left'
-    };
-    showBanner();
-    console.log('1. Command');
-    debug.success('   build', 'build a front-end project', options);
-    debug.success('   book', 'open coolie book in default browser', options);
-    debug.success('   install <name>', 'install a coolie module', options);
-    debug.success('   init', 'initialize `coolie-config.js`', options);
-    debug.success('   help', 'show help info', options);
-    debug.success('   version', 'show version info', options);
-    console.log();
-    console.log('2. Options');
-    debug.success('   -d --dirname', 'specified a directory', options);
-    //debug.success('   -u --use', 'use a coolie middleware', options);
-    console.log();
+    cmdHelp();
 });
 
 command.if('build', function (args) {
-    showBanner();
     cmdBuild({
         srcDirname: parseDirname(args)
     });
 });
 
 command.if('book', function () {
-    showBanner();
     cmdBook();
 });
 
 command.if('install', function (args, names) {
-    showBanner();
-
     if (!names.length) {
         debug.success('coolie tips', 'try `coolie install coolie`');
         return process.exit(1);
@@ -99,14 +72,12 @@ command.if('install', function (args, names) {
 });
 
 command.if('init', function (args) {
-    showBanner();
     cmdInit({
         destDirname: parseDirname(args)
     });
 });
 
 command.if('version', function () {
-    showBanner();
     cmdVersion();
 });
 

@@ -14,6 +14,8 @@ var pkg = require('../package.json');
 var installZip = require('../utils/install-zip.js');
 var installFile = require('../utils/install-file.js');
 
+var banner = require('./banner.js');
+
 /**
  * 下载
  * @param options {Object} 配置
@@ -21,6 +23,7 @@ var installFile = require('../utils/install-file.js');
  * @param options.destDirname {String} 目标目录
  */
 module.exports = function (options) {
+    banner();
     var module = pkg.coolie.modules[options.name];
 
     if (!module) {
