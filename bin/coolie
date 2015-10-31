@@ -18,6 +18,15 @@ var cmdInstall = require('../cmds/install.js');
 var bannerPath = path.join(__dirname, '../data/banner.txt');
 var CWD = process.cwd();
 var bannerText = fs.readFileSync(bannerPath, 'utf8');
+var showBanner = function () {
+    console.log(bannerText);
+    console.log('');
+    console.log('╔═════════════════════════════════════════╗');
+    console.log('║  ', 'coolie@' + string.padRight(pkg.version, 8, ' '), '                      ║');
+    console.log('║  ', pkg.description, '   ║');
+    console.log('╚═════════════════════════════════════════╝');
+    console.log('');
+};
 /**
  * 解析 原始目录
  * @param args
@@ -47,6 +56,7 @@ command.if('help', function () {
     var options = {
         eventAlign: 'left'
     };
+    showBanner();
     console.log('1. Command');
     debug.success('   build', 'build a front-end project', options);
     debug.success('   book', 'open coolie book in default browser', options);
@@ -62,19 +72,19 @@ command.if('help', function () {
 });
 
 command.if('build', function (args) {
-    console.log(bannerText);
+    showBanner();
     cmdBuild({
         srcDirname: parseDirname(args)
     });
 });
 
 command.if('book', function () {
-    console.log(bannerText);
+    showBanner();
     cmdBook();
 });
 
 command.if('install', function (args, names) {
-    console.log(bannerText);
+    showBanner();
 
     if (!names.length) {
         debug.success('coolie tips', 'try `coolie install coolie`');
@@ -90,19 +100,18 @@ command.if('install', function (args, names) {
 });
 
 command.if('init', function (args) {
-    console.log(bannerText);
+    showBanner();
     cmdInit({
         srcDirname: parseDirname(args)
     });
 });
 
 command.if('version', function () {
-    console.log(bannerText);
+    showBanner();
     cmdVersion();
 });
 
 command.else(function () {
-    console.log(bannerText);
     command.exec('help');
 });
 

@@ -90,12 +90,12 @@ module.exports = function (options) {
         if (options.middleware) {
             if (!typeis.function(middleware)) {
                 debug.warn('invalid middleware', 'some middleware is not a function');
-                debug.normal('coolie tips', 'please install coolie middleware from NPM, all names are `coolie-*`');
+                debug.warn('coolie tips', 'please install coolie middleware with `npm`, all names are `coolie-*`');
             }
 
             if (!middleware.middlewareName) {
                 debug.warn('invalid middleware', 'some middleware\'s name is missing');
-                debug.normal('coolie tips', 'please install coolie middleware from NPM, all names are `coolie-*`');
+                debug.warn('coolie tips', 'please install coolie middleware with `npm`, all names are `coolie-*`');
             }
 
             options.middleware.use(middleware);
@@ -173,17 +173,11 @@ module.exports = function (options) {
     check.file = function () {
         if (typeis.file(srcCoolieConfigJSPath)) {
             require(srcCoolieConfigJSPath)(coolie);
-        } else {
-            debug.warn('coolie tips', 'please use `coolie.config.js` to replace `coolie.json`');
-
-            if (!srcCoolieJSONPath) {
-                debug.error('coolie.json', 'can not found `coolie.config.js` file in\n' +
-                    path.toSystem(srcDirname));
-                return process.exit(1);
-            }
+        } else if (typeis.file(srcCoolieJSONPath)) {
+            debug.warn('!!!!!!!!!!', 'please use `coolie.config.js` to replace `coolie.json`');
 
             if (!typeis.file(srcCoolieJSONPath)) {
-                debug.error('coolie.config.js', path.toSystem(srcCoolieConfigJSPath) + ' is NOT a file');
+                debug.error('coolie.json', path.toSystem(srcCoolieJSONPath) + ' is NOT a file');
                 srcCoolieConfigJSPath = null;
                 srcCoolieJSONPath = null;
                 return process.exit(1);
@@ -205,6 +199,10 @@ module.exports = function (options) {
                 debug.error('read coolie.json', err.message);
                 return process.exit(1);
             }
+        } else {
+            debug.warn('!!!!!!!!!!', 'use `coolie init` to write a config file');
+            debug.error('coolie.config.js', path.toSystem(srcCoolieConfigJSPath) + ' is NOT a file');
+            return process.exit(1);
         }
     };
 

@@ -18,7 +18,7 @@ describe('utils/install-file.js', function () {
     it('e', function (done) {
         installFile({
             url: pkg.coolie.modules.coolie.url,
-            destDirname: path.join(__dirname, '../../examples/dest/')
+            destDirname: path.join(__dirname, '../../example/dest/')
         }, function (err, file) {
             assert.equal(typeis.file(file), true);
             done();
