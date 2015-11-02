@@ -3,7 +3,7 @@
 
 __The front-end development builder.__
 
-__前端开发构建工具。__
+__前端开发构建工具。__配合[coolie.js](https://github.com/cloudcome/coolie)（模块加载器）完成前端工程化构建。
 
 
 - coolie book <http://coolie.ydr.me/>
@@ -44,7 +44,7 @@ npm install -g coolie
    build             >> build a front-end project
    book              >> open coolie book in default browser
    install <name>    >> install a coolie module
-   init              >> initialize `coolie-config.js`
+   init              >> initialize `coolie-config.js` and `coolie.config.js`
    help              >> show help info
    version           >> show version info
 
@@ -55,8 +55,13 @@ npm install -g coolie
 
 
 # Version
-[版本日志](./version.md)
+[版本日志](http://coolie.ydr.me/version/)
 
 
 # API
-[版本日志](./api.md)
+[接口文档](http://coolie.ydr.me/develop/api/)
+
+
+# Middleware
+- [如何使用 coolie 中间件](http://coolie.ydr.me/advance/middleware/)
+- [如何开发 coolie 中间件](http://coolie.ydr.me/develop/middleware/)
