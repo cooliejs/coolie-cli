@@ -200,7 +200,7 @@ module.exports = function (options) {
                 return process.exit(1);
             }
         } else {
-            debug.warn('!!!!!!!!!!', 'use `coolie init` to write a config file');
+            debug.warn('!!!!!!!!!!', 'use `coolie init` to generate `coolie.config.js`');
             debug.error('coolie.config.js', path.toSystem(srcCoolieConfigJSPath) + ' is NOT a file');
             return process.exit(1);
         }
