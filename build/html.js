@@ -17,7 +17,6 @@ var minifyHTML = require('../minify/html.js');
 var glob = require('../utils/glob.js');
 var pathURI = require('../utils/path-uri.js');
 var reader = require('../utils/reader.js');
-var hook = require('../utils/hook.js');
 
 var defaults = {
     middleware: null,
@@ -69,20 +68,20 @@ var defaults = {
  * @param [options.cleanCSSOptions=null] {Boolean} 压缩 CSS 配置
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 引用资源
  * @param [options.mainVersionMap] {Object} 入口模块版本信息
- * @returns {Array}
+ * @returns {Object}
  */
 module.exports = function (options) {
     options = dato.extend({}, defaults, options);
 
     // 1. 找出 html
-    var htmlFiles = glob({
+    var htmlList = glob({
         glob: options.glob,
         srcDirname: options.srcDirname
     });
 
     // 2. 压缩 html
-    var htmlMap = {};
-    dato.each(htmlFiles, function (index, htmlFile) {
+    var htmlMainMap = {};
+    dato.each(htmlList, function (index, htmlFile) {
         var code = reader(htmlFile, 'utf8');
 
         if(options.middleware){
@@ -119,13 +118,14 @@ module.exports = function (options) {
             uglifyJSOptions: options.uglifyJSOptions,
             cleanCSSOptions: options.cleanCSSOptions,
             replaceCSSResource: options.replaceCSSResource,
-            mainVersionMap: options.mainVersionMap,
-            returnObject: true
+            mainVersionMap: options.mainVersionMap
         });
 
         var relative = path.relative(options.srcDirname, htmlFile);
         var htmlURI = pathURI.toRootURL(htmlFile, options.srcDirname);
         var destFile = path.join(options.destDirname, relative);
+
+        htmlMainMap[htmlFile] = ret.mainList;
 
         try {
             fse.outputFileSync(destFile, ret.code, 'utf8');
@@ -137,7 +137,10 @@ module.exports = function (options) {
         }
     });
 
-    return htmlFiles;
+    return {
+        htmlList: htmlList,
+        htmlMainMap: htmlMainMap
+    };
 };
 
 

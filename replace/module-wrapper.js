@@ -318,7 +318,7 @@ module.exports = function (file, options) {
                         uglifyJSOptions: options.uglifyJSOptions,
                         cleanCSSOptions: options.cleanCSSOptions,
                         replaceCSSResource: true
-                    });
+                    }).code;
                     code = string.toUnicode(code);
                     code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
@@ -347,7 +347,7 @@ module.exports = function (file, options) {
                         uglifyJSOptions: options.uglifyJSOptions,
                         cleanCSSOptions: options.cleanCSSOptions,
                         replaceCSSResource: true
-                    });
+                    }).code;
                     return wrapDefine(file, code, options);
             }
             break;
