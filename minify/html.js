@@ -103,12 +103,13 @@ var defaults = {
  * @param [options.cleanCSSOptions=null] {Boolean} 压缩 CSS 配置
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 引用资源
  * @param [options.mainVersionMap] {Object} 入口模块版本信息
- * @returns {String}
+ * @returns {Object}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
     var preMap = {};
     var code = options.code;
+    var mainList = [];
 
     // 保留原始格式
     dato.each(keepSourceList, function (index, reg) {
@@ -159,7 +160,7 @@ module.exports = function (file, options) {
     }
 
     if (options.replaceHTMLTagScript) {
-        code = replaceHTMLTagScript(file, {
+        var replaceHTMLTagScriptRet = replaceHTMLTagScript(file, {
             code: code,
             srcDirname: options.srcDirname,
             srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
@@ -168,15 +169,19 @@ module.exports = function (file, options) {
             destJSDirname: options.destJSDirname,
             destCoolieConfigJSPath: options.destCoolieConfigJSPath,
             mainVersionMap: options.mainVersionMap,
-            minifyJS: options.minifyJS
+            minifyJS: options.minifyJS,
+            returnObject: options.returnObject
         });
+
+        code = replaceHTMLTagScriptRet.code;
+        mainList = replaceHTMLTagScriptRet.mainList;
     }
 
     // 恢复 coolie group
     dato.each(preMap[0], function (key, val) {
         code = code.replace(key, val);
     });
-    if(options.replaceHTMLCoolieGroup){
+    if (options.replaceHTMLCoolieGroup) {
         code = replaceHTMLCoolieGroup(file, {
             code: code,
             destJSDirname: options.destJSDirname,
@@ -194,7 +199,7 @@ module.exports = function (file, options) {
         });
     }
 
-    if(options.replaceHTMLTagStyleResource){
+    if (options.replaceHTMLTagStyleResource) {
         code = replaceHTMLTagStyleResource(file, {
             code: code,
             versionLength: options.versionLength,
@@ -207,7 +212,7 @@ module.exports = function (file, options) {
         });
     }
 
-    if(options.replaceHTMLAttrStyleResource){
+    if (options.replaceHTMLAttrStyleResource) {
         code = replaceHTMLAttrStyleResource(file, {
             code: code,
             versionLength: options.versionLength,
@@ -219,7 +224,10 @@ module.exports = function (file, options) {
         });
     }
 
-    return code;
+    return {
+        code: code,
+        mainList: mainList
+    };
 };
 
 

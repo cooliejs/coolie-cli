@@ -289,7 +289,7 @@ module.exports = function (file, options) {
                             uglifyJSOptions: options.uglifyJSOptions,
                             cleanCSSOptions: options.cleanCSSOptions,
                             replaceCSSResource: true
-                        });
+                        }).code;
                     };
                     uri = createURL(file, options2);
                     uri = pathURI.joinURI(options.destHost, uri);

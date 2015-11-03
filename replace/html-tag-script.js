@@ -63,11 +63,12 @@ var defaults = {
  * @param options.versionLength {Number} 版本号长度
  * @param [options.minifyJS] {Boolean} 是否压缩 JS
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
- * @returns {String}
+ * @returns {Object}
  */
 module.exports = function (file, options) {
     options = dato.extend(true, {}, defaults, options);
     var code = options.code;
+    var mainList = [];
 
     code = code.replace(REG_SCRIPT, function (source, scriptTag, scriptCode) {
         var ignore = htmlAttr.get(source, COOLIE_IGNORE);
@@ -103,6 +104,8 @@ module.exports = function (file, options) {
 
             var mainPath = path.join(options.srcCoolieConfigBaseDirname, dataMain);
             var mainVersion = options.mainVersionMap[mainPath];
+
+            mainList.push(mainPath);
 
             if (!typeis.file(mainPath)) {
                 debug.error('coolie main', '`' + path.toSystem(mainPath) + '` is NOT a file');
@@ -185,5 +188,8 @@ module.exports = function (file, options) {
         return ret.replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
     });
 
-    return code;
+    return {
+        code: code,
+        mainList: mainList
+    };
 };

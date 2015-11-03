@@ -119,23 +119,19 @@ module.exports = function (options) {
             uglifyJSOptions: options.uglifyJSOptions,
             cleanCSSOptions: options.cleanCSSOptions,
             replaceCSSResource: options.replaceCSSResource,
-            mainVersionMap: options.mainVersionMap
+            mainVersionMap: options.mainVersionMap,
+            returnObject: true
         });
 
-        htmlMap[htmlFile] = new Buffer(ret, 'utf8');
-    });
-
-    // 3. 生成 html
-    dato.each(htmlMap, function (file, buffer) {
-        var relative = path.relative(options.srcDirname, file);
-        var htmlURI = pathURI.toRootURL(file, options.srcDirname);
+        var relative = path.relative(options.srcDirname, htmlFile);
+        var htmlURI = pathURI.toRootURL(htmlFile, options.srcDirname);
         var destFile = path.join(options.destDirname, relative);
 
         try {
-            fse.outputFileSync(destFile, buffer);
+            fse.outputFileSync(destFile, ret.code, 'utf8');
             debug.success('√', htmlURI);
         } catch (err) {
-            debug.error('write html', path.toSystem(file));
+            debug.error('write html', path.toSystem(htmlFile));
             debug.error('write file', err.message);
             return process.exit(1);
         }
