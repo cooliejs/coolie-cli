@@ -46,6 +46,7 @@ module.exports = function (options) {
     var stepIndex = 0;
     var stepLength = 5;
     var beginTime = Date.now();
+    var coolieMap = {};
 
 
     // 1. 分析配置文件
@@ -87,7 +88,11 @@ module.exports = function (options) {
         minifyResource: configs.resource.minify,
         destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
-        destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname
+        destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname,
+        removeHTMLYUIComments: !!configs.html.minify,
+        removeHTMLLineComments: !!configs.html.minify,
+        joinHTMLSpaces: !!configs.html.minify,
+        removeHTMLBreakLines: !!configs.html.minify
     });
 
 
