@@ -10,7 +10,6 @@
 var debug = require('ydr-utils').debug;
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
-var encryption = require('ydr-utils').encryption;
 var fse = require('fs-extra');
 
 var parseMain = require('../parse/main.js');

@@ -46,12 +46,15 @@ module.exports = function (options) {
     var stepIndex = 0;
     var stepLength = 5;
     var beginTime = Date.now();
-    var coolieMap = {};
 
 
     // 1. 分析配置文件
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'parse coolie config');
+    /**
+     * 配置
+     * @type {{js: Object, dest: Object, resource: Object, html: Object}}
+     */
     var configs = parseCoolieConfig({
         srcDirname: options.srcDirname,
         middleware: middleware
