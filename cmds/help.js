@@ -21,13 +21,15 @@ module.exports = function () {
     debug.success('   build', 'build a front-end project', options);
     debug.success('   book', 'open coolie book in default browser', options);
     debug.success('   install <name>', 'install a coolie module', options);
-    debug.success('   init', 'initialize `coolie-config.js` and `coolie.config.js`', options);
+    debug.success('   init', 'initialize `coolie.js` or `coolie cli` config file', options);
     //debug.success('   create', 'create a sample, default is node', options);
     debug.success('   help', 'show help info', options);
     debug.success('   version', 'show version info', options);
     console.log();
     console.log('2. Options');
     debug.success('   -d --dirname', 'specified a directory', options);
+    debug.success('   -j --coolie.js', 'initialize `coolie.js` config file', options);
+    debug.success('   -c --"coolie cli"', 'initialize `coolie cli` config file', options);
     //debug.success('   -n --node', 'create a node sample', options);
     //debug.success('   -s --static', 'create a static sample', options);
     console.log();

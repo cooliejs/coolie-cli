@@ -40,7 +40,14 @@ var parseDirname = function (args) {
 };
 
 command.alias({
-    d: 'dirname'
+    d: 'dirname',
+    j: 'coolie.js',
+    c: 'coolie cli'
+});
+
+command.type({
+    'coolie.js': Boolean,
+    'coolie cli': Boolean
 });
 
 command.if('help', function () {
@@ -73,7 +80,9 @@ command.if('install', function (args, names) {
 
 command.if('init', function (args) {
     cmdInit({
-        destDirname: parseDirname(args)
+        destDirname: parseDirname(args),
+        'coolie.js': args['coolie.js'],
+        'coolie cli': args['coolie cli']
     });
 });
 
