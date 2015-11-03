@@ -19,6 +19,7 @@ var pathURI = require('../utils/path-uri.js');
  * @param options {Object} 配置
  * @param options.srcDirname {String} 原始目录
  * @param options.destDirname {String} 目标目录
+ * @param options.configs {Object} 构建配置
  */
 module.exports = function (options) {
     var coolieMapPath = path.join(options.destDirname, './coolie-map.json');
