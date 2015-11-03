@@ -91,6 +91,8 @@ module.exports = function (options) {
     var chunkDependingCountMap = {};
     // 入口文件计数
     var mainIndex = 0;
+    // 模块依赖 map
+    var appMap = {};
 
     // 3、chunk 计数统计
     dato.each(mainMap, function (mainFile, mainMeta) {
@@ -107,6 +109,10 @@ module.exports = function (options) {
             removeHTMLLineComments: options.removeHTMLLineComments,
             joinHTMLSpaces: options.joinHTMLSpaces,
             removeHTMLBreakLines: options.removeHTMLBreakLines
+        });
+
+        appMap[mainFile] = dependencies.map(function (dependency) {
+            return dependency.file;
         });
 
         // [{id: String, file: String, buffer: Buffer, md5: String}]
@@ -226,7 +232,8 @@ module.exports = function (options) {
     return {
         mainVersionMap: mainVersionMap,
         chunkVersionMap: chunkVersionMap,
-        asyncVersionMap: asyncVersionMap
+        asyncVersionMap: asyncVersionMap,
+        appMap: appMap
     };
 };
 

@@ -61,7 +61,6 @@ module.exports = function (options) {
     });
     var srcDirname = configs.srcDirname;
     var destDirname = configs.destDirname;
-
     console.log(configs);
 
 
@@ -99,7 +98,7 @@ module.exports = function (options) {
         joinHTMLSpaces: !!configs.html.minify,
         removeHTMLBreakLines: !!configs.html.minify
     });
-
+    console.log(buildAPPRet);
 
     // 3. 重写 coolie-config.js
     console.log();
