@@ -16,6 +16,7 @@ var parseCoolieConfig = require('../parse/coolie.config.js');
 var buildAPP = require('../build/app.js');
 var buildCopy = require('../build/copy.js');
 var buildHTML = require('../build/html.js');
+var buildMap = require('../build/map.js');
 var replaceCoolieConfig = require('../replace/coolie-config.js');
 var banner = require('./banner.js');
 
@@ -145,7 +146,12 @@ module.exports = function (options) {
     });
 
     // 5. 生成资源地图
-
+    buildMap({
+        srcDirname: srcDirname,
+        destDirname: destDirname,
+        configs: configs,
+        buildAPPResult: buildAPPRet
+    });
 
     var pastTime = Date.now() - beginTime;
     console.log();
