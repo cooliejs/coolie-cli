@@ -182,7 +182,7 @@ module.exports = function (file, options) {
         code = code.replace(key, val);
     });
     if (options.replaceHTMLCoolieGroup) {
-        code = replaceHTMLCoolieGroup(file, {
+        var replaceHTMLCoolieGroupRet  = replaceHTMLCoolieGroup(file, {
             code: code,
             destJSDirname: options.destJSDirname,
             cleanCSSOptions: options.cleanCSSOptions,
@@ -197,6 +197,8 @@ module.exports = function (file, options) {
             minifyCSS: options.minifyCSS,
             replaceCSSResource: options.replaceCSSResource
         });
+
+        code = replaceHTMLCoolieGroupRet.code;
     }
 
     if (options.replaceHTMLTagStyleResource) {

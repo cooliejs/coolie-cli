@@ -68,7 +68,7 @@ var defaults = {
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.replaceCSSResource] {Boolean} 是否替换 CSS 内引用资源
- * @returns {*}
+ * @returns {Object}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
@@ -86,7 +86,6 @@ module.exports = function (file, options) {
         var concatURI = '';
         // 合并结果
         var concatRet = '';
-
 
         // css
         if (REG_LINK.test(coolieCode)) {
@@ -191,7 +190,9 @@ module.exports = function (file, options) {
         }
     });
 
-    return code;
+    return {
+        code: code
+    };
 };
 
 
