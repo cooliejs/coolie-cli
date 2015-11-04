@@ -32,7 +32,14 @@ module.exports = function (options) {
     var coolieMap = {
         //'html/index.html': {
         //    main: [{
-        //        type: 'sync',
+        //        src: 'static/js/app/index.js',
+        //        dest: 'static/js/app/{{version}}.js',
+        //        deps: [
+        //            'static/js/aa.js',
+        //            'static/js/bb.js'
+        //        ]
+        //    }],
+        //    async: [{
         //        src: 'static/js/app/index.js',
         //        dest: 'static/js/app/{{version}}.js',
         //        deps: [
