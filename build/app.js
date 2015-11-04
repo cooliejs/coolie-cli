@@ -67,6 +67,7 @@ var defaults = {
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @returns {Object}
  */
 module.exports = function (options) {
     options = dato.extend(true, {}, defaults, options);
@@ -233,7 +234,8 @@ module.exports = function (options) {
         mainVersionMap: mainVersionMap,
         chunkVersionMap: chunkVersionMap,
         asyncVersionMap: asyncVersionMap,
-        appMap: appMap
+        appMap: appMap,
+        mainMap: mainMap
     };
 };
 

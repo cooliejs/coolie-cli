@@ -91,7 +91,6 @@ module.exports = function (options) {
 
             deps.shift();
             coolieMap[mainURI].main.push({
-                type: 'sync',
                 src: parseURI(mainJS),
                 dest: parseURI(destMainJSPath),
                 deps: parseURI(deps)
