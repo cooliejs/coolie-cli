@@ -81,10 +81,12 @@ module.exports = function (options) {
 
     // 2. 压缩 html
     var htmlMainMap = {};
+    var htmlJSMap = {};
+    var htmlCSSMap = {};
     dato.each(htmlList, function (index, htmlFile) {
         var code = reader(htmlFile, 'utf8');
 
-        if(options.middleware){
+        if (options.middleware) {
             code = options.middleware.exec({
                 file: htmlFile,
                 type: 'html',
@@ -126,6 +128,8 @@ module.exports = function (options) {
         var destFile = path.join(options.destDirname, relative);
 
         htmlMainMap[htmlFile] = ret.mainList;
+        htmlJSMap[htmlFile] = ret.jsList;
+        htmlCSSMap[htmlFile] = ret.cssList;
 
         try {
             fse.outputFileSync(destFile, ret.code, 'utf8');
@@ -139,7 +143,9 @@ module.exports = function (options) {
 
     return {
         htmlList: htmlList,
-        htmlMainMap: htmlMainMap
+        htmlMainMap: htmlMainMap,
+        htmlJSMap: htmlJSMap,
+        htmlCSSMap: htmlCSSMap
     };
 };
 

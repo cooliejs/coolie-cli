@@ -110,6 +110,8 @@ module.exports = function (file, options) {
     var preMap = {};
     var code = options.code;
     var mainList = [];
+    var jsList = [];
+    var cssList = [];
 
     // 保留原始格式
     dato.each(keepSourceList, function (index, reg) {
@@ -182,7 +184,7 @@ module.exports = function (file, options) {
         code = code.replace(key, val);
     });
     if (options.replaceHTMLCoolieGroup) {
-        var replaceHTMLCoolieGroupRet  = replaceHTMLCoolieGroup(file, {
+        var replaceHTMLCoolieGroupRet = replaceHTMLCoolieGroup(file, {
             code: code,
             destJSDirname: options.destJSDirname,
             cleanCSSOptions: options.cleanCSSOptions,
@@ -199,6 +201,8 @@ module.exports = function (file, options) {
         });
 
         code = replaceHTMLCoolieGroupRet.code;
+        jsList = replaceHTMLCoolieGroupRet.jsList;
+        cssList = replaceHTMLCoolieGroupRet.cssList;
     }
 
     if (options.replaceHTMLTagStyleResource) {
@@ -228,7 +232,9 @@ module.exports = function (file, options) {
 
     return {
         code: code,
-        mainList: mainList
+        mainList: mainList,
+        jsList: jsList,
+        cssList: cssList
     };
 };
 
