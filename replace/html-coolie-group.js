@@ -73,6 +73,8 @@ var defaults = {
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
     var code = options.code;
+    var cssList = [];
+    var jsList = [];
 
     code = code.replace(REG_COOLIE_GROUP, function (source, coolieCode) {
         var files = [];
@@ -129,6 +131,10 @@ module.exports = function (file, options) {
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
             concatFile = path.join(path.toURI(options.destCSSDirname), version + '.css');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
+            jsList.push({
+                uri: concatURI,
+                files: files
+            });
 
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
@@ -139,7 +145,7 @@ module.exports = function (file, options) {
                 return process.exit(1);
             }
 
-            concatRet = '<link rel="stylesheet" href="' + concatURI + '">';
+            concatRet = '<link rel="stylesheet" href="' + pathURI.joinURI(options.destHost, concatURI) + '">';
             cacheFilesList.push(files);
             cacheResultList.push(concatRet);
 
@@ -172,6 +178,10 @@ module.exports = function (file, options) {
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
             concatFile = path.join(path.toURI(options.destJSDirname), version + '.js');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
+            cssList.push({
+                uri: concatURI,
+                files: files
+            });
 
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
@@ -182,7 +192,7 @@ module.exports = function (file, options) {
                 return process.exit(1);
             }
 
-            concatRet = '<script src="' + concatURI + '"></script>';
+            concatRet = '<script src="' + pathURI.joinURI(options.destHost, concatURI) + '"></script>';
             cacheFilesList.push(files);
             cacheResultList.push(concatRet);
 
@@ -191,7 +201,9 @@ module.exports = function (file, options) {
     });
 
     return {
-        code: code
+        code: code,
+        jsList: jsList,
+        cssList: cssList
     };
 };
 
