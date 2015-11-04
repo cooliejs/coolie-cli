@@ -81,7 +81,7 @@ module.exports = function (options) {
     // 3. 构建入口文件
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'build main module');
-    var buildAPPRet = buildAPP({
+    var buildAPPResult = buildAPP({
         glob: configs.js.main,
         chunk: configs.js.chunk,
         srcDirname: srcDirname,
@@ -99,7 +99,7 @@ module.exports = function (options) {
         joinHTMLSpaces: !!configs.html.minify,
         removeHTMLBreakLines: !!configs.html.minify
     });
-    console.log(buildAPPRet);
+    console.log(buildAPPResult);
 
     // 3. 重写 coolie-config.js
     console.log();
@@ -112,7 +112,7 @@ module.exports = function (options) {
         srcDirname: srcDirname,
         destDirname: destDirname,
         destJSDirname: configs.destJSDirname,
-        versionMap: dato.extend({}, buildAPPRet.chunkVersionMap, buildAPPRet.asyncVersionMap),
+        versionMap: dato.extend({}, buildAPPResult.chunkVersionMap, buildAPPResult.asyncVersionMap),
         destHost: configs.dest.host
     });
 
@@ -120,7 +120,7 @@ module.exports = function (options) {
     // 4. 构建 html
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'build html');
-    var buildHTMLRet = buildHTML({
+    var buildHTMLResult = buildHTML({
         middleware: middleware,
         glob: configs.html.src,
         removeHTMLYUIComments: true,
@@ -142,16 +142,19 @@ module.exports = function (options) {
         uglifyJSOptions: null,
         cleanCSSOptions: null,
         replaceCSSResource: true,
-        mainVersionMap: buildAPPRet.mainVersionMap
+        mainVersionMap: buildAPPResult.mainVersionMap
     });
-    console.log(buildHTMLRet);
 
     // 5. 生成资源地图
     buildMap({
         srcDirname: srcDirname,
         destDirname: destDirname,
         configs: configs,
-        buildAPPResult: buildAPPRet
+        destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
+        destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
+        destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname,
+        buildAPPResult: buildAPPResult,
+        buildHTMLResult: buildHTMLResult
     });
 
     var pastTime = Date.now() - beginTime;
