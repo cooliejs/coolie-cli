@@ -144,7 +144,7 @@ module.exports = function (options) {
         replaceCSSResource: true,
         mainVersionMap: buildAPPResult.mainVersionMap
     });
-
+    console.log(buildHTMLResult);
 
     // 5. 生成资源地图
     buildMap({

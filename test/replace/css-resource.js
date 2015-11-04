@@ -33,7 +33,7 @@ describe('replace/css-resource.js', function () {
             destHost: '/',
             code: code,
             returnObject: true
-        });
+        }).code;
 
         console.log(ret);
 

@@ -67,7 +67,7 @@ module.exports = function (file, options) {
                 destHost: options.destHost,
                 destResourceDirname: options.destResourceDirname,
                 returnObject: false
-            });
+            }).code;
 
             if (options.minifyCSS) {
                 styleCode = minifyCSS(file, {

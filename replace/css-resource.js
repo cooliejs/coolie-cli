@@ -38,8 +38,7 @@ var defaults = {
     destHost: '/',
     destResourceDirname: null,
     destCSSDirname: null,
-    minifyResource: true,
-    returnObject: false
+    minifyResource: true
 };
 
 
@@ -55,8 +54,7 @@ var defaults = {
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
- * @param [options.returnObject] {Boolean} 是否对象
- * @returns {String|Object}
+ * @returns {Object}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
@@ -109,14 +107,10 @@ module.exports = function (file, options) {
         });
     });
 
-    if (options.returnObject) {
-        return {
-            code: code,
-            deps: deps
-        };
-    }
-
-    return code;
+    return {
+        code: code,
+        dependencies: deps
+    };
 };
 
 

@@ -66,7 +66,7 @@ module.exports = function (file, options) {
             destDirname: options.destDirname,
             destHost: options.destHost,
             destResourceDirname: options.destResourceDirname
-        });
+        }).code;
 
         if (options.minifyCSS) {
             styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');

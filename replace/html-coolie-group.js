@@ -88,6 +88,7 @@ module.exports = function (file, options) {
         var concatURI = '';
         // 合并结果
         var concatRet = '';
+        var cssFileResMap = {};
 
         // css
         if (REG_LINK.test(coolieCode)) {
@@ -104,7 +105,7 @@ module.exports = function (file, options) {
                 }
 
                 if (options.replaceCSSResource) {
-                    cssCode = replaceCSSResource(cssFile, {
+                    var replaceCSSResourceRet = replaceCSSResource(cssFile, {
                         code: cssCode,
                         versionLength: options.versionLength,
                         srcDirname: options.srcDirname,
@@ -115,6 +116,9 @@ module.exports = function (file, options) {
                         minifyResource: options.minifyResource,
                         returnObject: false
                     });
+
+                    cssCode = replaceCSSResourceRet.code;
+                    cssFileResMap[cssFile] = replaceCSSResourceRet.dependencies;
                 }
 
                 files.push(cssFile);
@@ -133,7 +137,12 @@ module.exports = function (file, options) {
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
             cssList.push({
                 destPath: concatFile,
-                dependencies: files
+                dependencies: files.map(function (file) {
+                    return {
+                        file: file,
+                        resources: cssFileResMap[file]
+                    };
+                })
             });
 
             try {

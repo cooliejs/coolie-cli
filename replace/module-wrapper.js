@@ -213,7 +213,7 @@ module.exports = function (file, options) {
                 destResourceDirname: options.destResourceDirname,
                 destCSSDirname: options.destCSSDirname,
                 minifyResource: options.minifyResource
-            });
+            }).code;
             switch (options.outType) {
                 case 'url':
                     options2.filter = function (destFile) {

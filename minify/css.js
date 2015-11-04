@@ -76,7 +76,7 @@ module.exports = function (file, options) {
                 destResourceDirname: options.destResourceDirname,
                 destCSSDirname: options.destCSSDirname,
                 minifyResource: options.minifyResource
-            });
+            }).code;
         }
 
         return code;
