@@ -37,7 +37,7 @@ describe('replace/html-attr-script.js', function () {
             mainVersionMap: mainVersionMap,
             destHost: 'http://abc.com/',
             destCoolieConfigJSPath: destCoolieConfigJSPath
-        });
+        }).code;
 
         console.log('===========================\n');
         console.log(ret);

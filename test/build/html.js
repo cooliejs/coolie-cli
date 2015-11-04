@@ -53,7 +53,7 @@ describe('build/html.js', function () {
             mainVersionMap: mainVersionMap
         });
 
-        assert.equal(ret.length > 0, true);
+        assert.equal(ret.htmlList.length > 0, true);
     });
 });
 

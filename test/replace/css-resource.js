@@ -33,11 +33,11 @@ describe('replace/css-resource.js', function () {
             destHost: '/',
             code: code,
             returnObject: true
-        }).code;
+        });
 
         console.log(ret);
 
-        ret.deps.forEach(function (file) {
+        ret.dependencies.forEach(function (file) {
             assert.equal(typeis.file(file), true);
         });
     });

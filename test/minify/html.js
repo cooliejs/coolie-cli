@@ -55,7 +55,7 @@ describe('minify/html.js', function () {
             cleanCSSOptions: null,
             replaceCSSResource: true,
             mainVersionMap: mainVersionMap
-        });
+        }).code;
 
         console.log(ret);
         assert.equal(/\/static\/res\/[a-z\d]{32}\./.test(ret), true);
