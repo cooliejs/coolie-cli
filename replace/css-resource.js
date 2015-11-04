@@ -76,6 +76,7 @@ module.exports = function (file, options) {
             var absFile = path.join(absDir, pathRet.path);
 
             if (!depsMap[absFile]) {
+                depsMap[absFile] = true;
                 deps.push(absFile);
             }
 

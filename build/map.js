@@ -134,24 +134,24 @@ module.exports = function (options) {
     });
 
     // 集合 css
-    //dato.each(options.buildHTMLResult.htmlCSSMap, function (htmlFile, jsList) {
-    //    var htmlURI = parseURI(htmlFile);
-    //
-    //    dato.each(jsList, function (index, cssItem) {
-    //        var coolieHTMLCSSItem = {
-    //            dest: parseURI(cssItem.destFile),
-    //            dependencies: []
-    //        };
-    //
-    //        dato.each(cssItem.dependencies, function (index, depCSSItem) {
-    //            coolieHTMLCSSItem.dependencies.push({
-    //                src: parseURI(depCSSItem.file),
-    //                resources: parseURI(depCSSItem.resources)
-    //            });
-    //        });
-    //        coolieMap[htmlURI].css.push(coolieHTMLCSSItem);
-    //    });
-    //});
+    dato.each(options.buildHTMLResult.htmlCSSMap, function (htmlFile, cssList) {
+        var htmlURI = parseURI(htmlFile);
+
+        dato.each(cssList, function (index, cssItem) {
+            var coolieHTMLCSSItem = {
+                dest: parseURI(cssItem.destPath),
+                deps: []
+            };
+
+            dato.each(cssItem.dependencies, function (index, depCSSItem) {
+                coolieHTMLCSSItem.deps.push({
+                    src: parseURI(depCSSItem.srcPath),
+                    res: parseURI(depCSSItem.resources)
+                });
+            });
+            coolieMap[htmlURI].css.push(coolieHTMLCSSItem);
+        });
+    });
 
     try {
         fse.writeJSONSync(coolieMapPath, coolieMap);

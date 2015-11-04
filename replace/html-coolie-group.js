@@ -139,7 +139,7 @@ module.exports = function (file, options) {
                 destPath: concatFile,
                 dependencies: files.map(function (file) {
                     return {
-                        file: file,
+                        srcPath: file,
                         resources: cssFileResMap[file]
                     };
                 })

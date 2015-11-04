@@ -62,7 +62,6 @@ module.exports = function (options) {
     });
     var srcDirname = configs.srcDirname;
     var destDirname = configs.destDirname;
-    console.log(configs);
 
 
     // 2. 复制文件
@@ -144,7 +143,7 @@ module.exports = function (options) {
         replaceCSSResource: true,
         mainVersionMap: buildAPPResult.mainVersionMap
     });
-    console.log(buildHTMLResult);
+
 
     // 5. 生成资源地图
     buildMap({
