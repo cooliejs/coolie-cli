@@ -90,12 +90,12 @@ module.exports = function (options) {
         if (options.middleware) {
             if (!typeis.function(middleware)) {
                 debug.warn('invalid middleware', 'some middleware is not a function');
-                debug.warn('coolie tips', 'please install coolie middleware with `npm`, all names are `coolie-*`');
+                debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie- *"');
             }
 
             if (!middleware.middlewareName) {
-                debug.warn('invalid middleware', 'some middleware\'s name is missing');
-                debug.warn('coolie tips', 'please install coolie middleware with `npm`, all names are `coolie-*`');
+                debug.warn('invalid middleware', 'some middleware has lost its name');
+                debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie- *"');
             }
 
             options.middleware.use(middleware);
@@ -155,7 +155,7 @@ module.exports = function (options) {
                 version: true,
                 versionLength: configs.dest.versionLength,
                 minify: true,
-                logType: 2
+                logType: 1
             });
 
             var destResourceURI = pathURI.toRootURL(destResourcePath, configs.destDirname);
@@ -200,7 +200,7 @@ module.exports = function (options) {
                 return process.exit(1);
             }
         } else {
-            debug.warn('!!!!!!!!!!', 'use `coolie init` to generate `coolie.config.js`');
+            debug.warn('!!!!!!!!!!', 'use `coolie init` command to generate `coolie.config.js`');
             debug.error('coolie.config.js', path.toSystem(srcCoolieConfigJSPath) + ' is NOT a file');
             return process.exit(1);
         }
@@ -217,11 +217,6 @@ module.exports = function (options) {
     check.js = function () {
         if (typeis(configs.js) !== 'object') {
             debug.error('parse coolie.config', '`js` property must be an object');
-            process.exit(1);
-        }
-
-        if (configs.js.src) {
-            debug.error('parse coolie.config', 'please change `js.src` to `js.main`');
             process.exit(1);
         }
 
