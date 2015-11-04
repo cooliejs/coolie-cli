@@ -113,7 +113,7 @@ module.exports = function (file, options) {
                 break;
 
             case 2:
-                debug.success('√√√√', pathURI.toRootURL(toFile, options.srcDirname));
+                debug.success('√', pathURI.toRootURL(toFile, options.srcDirname));
                 break;
         }
     } catch (err) {
