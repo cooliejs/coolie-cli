@@ -57,7 +57,7 @@ module.exports = function (options) {
         //        dest: 'static/css/{{version}}.css',
         //        deps: [{
         //            src: 'static/css/aa.css',
-        //            resource: [
+        //            res: [
         //                'static/img/1.png',
         //                'static/img/2.png'
         //            ]
@@ -90,15 +90,15 @@ module.exports = function (options) {
 
         dato.each(mainList, function (index, mainJS) {
             htmlMainURIMap[mainJS] = mainURI;
-            var deps = options.buildAPPResult.appMap[mainJS] || [];
+            var dependencies = options.buildAPPResult.appMap[mainJS] || [];
             var mainVersion = options.buildAPPResult.mainVersionMap[mainJS];
             var destMainJSPath = path.join(options.destCoolieConfigBaseDirname, mainVersion + '.js');
 
-            deps.shift();
+            dependencies.shift();
             coolieMap[mainURI].main.push({
                 src: parseURI(mainJS),
                 dest: parseURI(destMainJSPath),
-                deps: parseURI(deps)
+                deps: parseURI(dependencies)
             });
         });
     });
@@ -110,13 +110,13 @@ module.exports = function (options) {
         dato.each (asyncList, function (index, asyncMain) {
             var noVersionAsyncMainPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.js');
             var asyncMainVersion = options.buildAPPResult.asyncVersionMap[noVersionAsyncMainPath];
-            var deps = options.buildAPPResult.appMap[asyncMain.file] || [];
+            var dependencies = options.buildAPPResult.appMap[asyncMain.file] || [];
             var destAsyncMainJSPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.' + asyncMainVersion + '.js');
 
             coolieMap[mainURI].async.push({
                 src: parseURI(asyncMain.file),
                 dest: parseURI(destAsyncMainJSPath),
-                deps: parseURI(deps)
+                deps: parseURI(dependencies)
             });
         });
     });
@@ -127,23 +127,31 @@ module.exports = function (options) {
 
         dato.each(jsList, function (index, jsItem) {
             coolieMap[htmlURI].js.push({
-                dest: parseURI(jsItem.destFile),
-                deps: parseURI(jsItem.depFiles)
+                dest: parseURI(jsItem.destPath),
+                deps: parseURI(jsItem.dependencies)
             });
         });
     });
 
     // 集合 css
-    dato.each(options.buildHTMLResult.htmlCSSMap, function (htmlFile, jsList) {
-        var htmlURI = parseURI(htmlFile);
-
-        dato.each(jsList, function (index, cssItem) {
-            coolieMap[htmlURI].css.push({
-                dest: parseURI(cssItem.destFile),
-                deps: parseURI(cssItem.depFiles)
-            });
-        });
-    });
+    //dato.each(options.buildHTMLResult.htmlCSSMap, function (htmlFile, jsList) {
+    //    var htmlURI = parseURI(htmlFile);
+    //
+    //    dato.each(jsList, function (index, cssItem) {
+    //        var coolieHTMLCSSItem = {
+    //            dest: parseURI(cssItem.destFile),
+    //            dependencies: []
+    //        };
+    //
+    //        dato.each(cssItem.dependencies, function (index, depCSSItem) {
+    //            coolieHTMLCSSItem.dependencies.push({
+    //                src: parseURI(depCSSItem.file),
+    //                resources: parseURI(depCSSItem.resources)
+    //            });
+    //        });
+    //        coolieMap[htmlURI].css.push(coolieHTMLCSSItem);
+    //    });
+    //});
 
     try {
         fse.writeJSONSync(coolieMapPath, coolieMap);

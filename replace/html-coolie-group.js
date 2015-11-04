@@ -132,8 +132,8 @@ module.exports = function (file, options) {
             concatFile = path.join(path.toURI(options.destCSSDirname), version + '.css');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
             cssList.push({
-                destFile: concatFile,
-                depFiles: files
+                destPath: concatFile,
+                dependencies: files
             });
 
             try {
@@ -179,8 +179,8 @@ module.exports = function (file, options) {
             concatFile = path.join(path.toURI(options.destJSDirname), version + '.js');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
             jsList.push({
-                destFile: concatFile,
-                depFiles: files
+                destPath: concatFile,
+                dependencies: files
             });
 
             try {
