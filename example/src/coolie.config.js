@@ -4,7 +4,7 @@ var fs = require('fs');
 
 module.exports = function (coolie) {
     coolie.config({
-        //clean: true,
+        clean: true,
         "js": {
             "main": [
                 "./static/js/app/**"

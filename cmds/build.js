@@ -99,7 +99,7 @@ module.exports = function (options) {
         joinHTMLSpaces: !!configs.html.minify,
         removeHTMLBreakLines: !!configs.html.minify
     });
-    console.log(buildAPPResult);
+
 
     // 3. 重写 coolie-config.js
     console.log();
@@ -144,6 +144,7 @@ module.exports = function (options) {
         replaceCSSResource: true,
         mainVersionMap: buildAPPResult.mainVersionMap
     });
+    console.log(buildHTMLResult);
 
     // 5. 生成资源地图
     buildMap({

@@ -105,8 +105,17 @@ module.exports = function (options) {
     dato.each(htmlMainURIMap, function (mainJS, mainURI) {
         var asyncList = options.buildAPPResult.mainMap[mainJS].requireAsyncList;
 
-        dato.each (asyncList, function (index, async) {
+        dato.each (asyncList, function (index, asyncMain) {
+            var noVersionAsyncMainPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.js');
+            var asyncMainVersion = options.buildAPPResult.asyncVersionMap[noVersionAsyncMainPath];
+            var deps = options.buildAPPResult.appMap[asyncMain.file] || [];
+            var destAsyncMainJSPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.' + asyncMainVersion + '.js');
 
+            coolieMap[mainURI].async.push({
+                src: parseURI(asyncMain.file),
+                dest: parseURI(destAsyncMainJSPath),
+                deps: parseURI(deps)
+            });
         });
     });
 
