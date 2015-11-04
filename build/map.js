@@ -113,6 +113,7 @@ module.exports = function (options) {
             var dependencies = options.buildAPPResult.appMap[asyncMain.file] || [];
             var destAsyncMainJSPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.' + asyncMainVersion + '.js');
 
+            dependencies.shift();
             coolieMap[mainURI].async.push({
                 src: parseURI(asyncMain.file),
                 dest: parseURI(destAsyncMainJSPath),
@@ -155,7 +156,6 @@ module.exports = function (options) {
 
     try {
         fse.writeJSONSync(coolieMapPath, coolieMap);
-        debug.warn('coolie.map.json', JSON.stringify(coolieMap, null, 4));
         debug.success('√', pathURI.toRootURL(coolieMapPath, options.srcDirname));
         return coolieMapPath;
     } catch (err) {

@@ -45,7 +45,7 @@ module.exports = function (options) {
     options = dato.extend({}, defaults, options);
 
     var stepIndex = 0;
-    var stepLength = 5;
+    var stepLength = 6;
     var beginTime = Date.now();
 
 
@@ -146,6 +146,8 @@ module.exports = function (options) {
 
 
     // 5. 生成资源地图
+    console.log();
+    debug.primary(++stepIndex + '/' + stepLength, 'generate a resource relationship map');
     buildMap({
         srcDirname: srcDirname,
         destDirname: destDirname,
