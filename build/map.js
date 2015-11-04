@@ -77,6 +77,7 @@ module.exports = function (options) {
 
     var htmlMainURIMap = {};
 
+    // 集合 main
     dato.each(options.buildHTMLResult.htmlMainMap, function (mainFile, mainList) {
         var mainURI = parseURI(mainFile);
 
@@ -102,6 +103,7 @@ module.exports = function (options) {
         });
     });
 
+    // 集合 async
     dato.each(htmlMainURIMap, function (mainJS, mainURI) {
         var asyncList = options.buildAPPResult.mainMap[mainJS].requireAsyncList;
 
@@ -115,6 +117,30 @@ module.exports = function (options) {
                 src: parseURI(asyncMain.file),
                 dest: parseURI(destAsyncMainJSPath),
                 deps: parseURI(deps)
+            });
+        });
+    });
+
+    // 集合 js
+    dato.each(options.buildHTMLResult.htmlJSMap, function (htmlFile, jsList) {
+        var htmlURI = parseURI(htmlFile);
+
+        dato.each(jsList, function (index, jsItem) {
+            coolieMap[htmlURI].js.push({
+                dest: parseURI(jsItem.destFile),
+                deps: parseURI(jsItem.depFiles)
+            });
+        });
+    });
+
+    // 集合 css
+    dato.each(options.buildHTMLResult.htmlCSSMap, function (htmlFile, jsList) {
+        var htmlURI = parseURI(htmlFile);
+
+        dato.each(jsList, function (index, cssItem) {
+            coolieMap[htmlURI].css.push({
+                dest: parseURI(cssItem.destFile),
+                deps: parseURI(cssItem.depFiles)
             });
         });
     });
