@@ -75,16 +75,20 @@ module.exports = function (options) {
         return isArray ? _path3 : _path3[0];
     };
 
+    var htmlMainURIMap = {};
+
     dato.each(options.buildHTMLResult.htmlMainMap, function (mainFile, mainList) {
         var mainURI = parseURI(mainFile);
 
         coolieMap[mainURI] = {
             main: [],
+            async: [],
             js: [],
             css: []
         };
 
         dato.each(mainList, function (index, mainJS) {
+            htmlMainURIMap[mainJS] = mainURI;
             var deps = options.buildAPPResult.appMap[mainJS] || [];
             var mainVersion = options.buildAPPResult.mainVersionMap[mainJS];
             var destMainJSPath = path.join(options.destCoolieConfigBaseDirname, mainVersion + '.js');
@@ -95,6 +99,14 @@ module.exports = function (options) {
                 dest: parseURI(destMainJSPath),
                 deps: parseURI(deps)
             });
+        });
+    });
+
+    dato.each(htmlMainURIMap, function (mainJS, mainURI) {
+        var asyncList = options.buildAPPResult.mainMap[mainJS].requireAsyncList;
+
+        dato.each (asyncList, function (index, async) {
+
         });
     });
 
