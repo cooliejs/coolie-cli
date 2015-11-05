@@ -13,6 +13,8 @@ var debug = require('ydr-utils').debug;
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
 
+var sign = require('../utils/sign.js');
+
 // 替换 <img src="">
 var replaceHTMLAttrResource = require('../replace/html-attr-resource.js');
 // 替换 <script>
@@ -70,7 +72,10 @@ var defaults = {
     uglifyJSOptions: null,
     cleanCSSOptions: null,
     replaceCSSResource: true,
-    mainVersionMap: null
+    mainVersionMap: null,
+    signHTML: false,
+    signJS: false,
+    signCSS: false
 };
 
 /**
@@ -103,6 +108,9 @@ var defaults = {
  * @param [options.cleanCSSOptions=null] {Boolean} 压缩 CSS 配置
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 引用资源
  * @param [options.mainVersionMap] {Object} 入口模块版本信息
+ * @param [options.signHTML] {Boolean} 是否签名 html 文件
+ * @param [options.signJS] {Boolean} 是否签名 js 文件
+ * @param [options.signCSS] {Boolean} 是否签名 css 文件
  * @returns {Object}
  */
 module.exports = function (file, options) {
@@ -197,7 +205,9 @@ module.exports = function (file, options) {
             minifyJS: options.minifyJS,
             uglifyJSOptions: options.uglifyJSOptions,
             minifyCSS: options.minifyCSS,
-            replaceCSSResource: options.replaceCSSResource
+            replaceCSSResource: options.replaceCSSResource,
+            signJS: options.signJS,
+            signCSS: options.signCSS
         });
 
         code = replaceHTMLCoolieGroupRet.code;
@@ -228,6 +238,10 @@ module.exports = function (file, options) {
             destResourceDirname: options.destResourceDirname,
             minifyResource: options.minifyResource
         });
+    }
+
+    if(options.signHTML){
+        code = sign('html') + code;
     }
 
     return {
