@@ -112,7 +112,8 @@ module.exports = function (options) {
         destDirname: destDirname,
         destJSDirname: configs.destJSDirname,
         versionMap: dato.extend({}, buildAPPResult.chunkVersionMap, buildAPPResult.asyncVersionMap),
-        destHost: configs.dest.host
+        destHost: configs.dest.host,
+        sign: true
     });
 
 

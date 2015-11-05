@@ -15,6 +15,7 @@ var fse = require('fs-extra');
 
 var pathURI = require('../utils/path-uri.js');
 var reader = require('../utils/reader.js');
+var sign = require('../utils/sign.js');
 var minifyJS = require('../minify/js.js');
 
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
@@ -59,6 +60,7 @@ var coolieFn = function () {
  * @param options.versionMap {Object} 版本配置 {file: version}
  * @param options.versionLength {Number} 版本长度
  * @param options.destJSDirname {String} JS 保存目录
+ * @param options.sign {Boolean} 是否签名
  * @returns {String}
  */
 module.exports = function (file, options) {
@@ -94,7 +96,13 @@ module.exports = function (file, options) {
         debug.success('√', 'version: "' + JSON.stringify(versionMap2, null, 2) + '"');
         debug.success('√', 'callbacks: ' + callbacks.length);
 
-        var code2 = 'coolie.config({' +
+        var code2 = '';
+
+        if (options.sign) {
+            code2 += sign('js') + '\n';
+        }
+
+        code2 += 'coolie.config({' +
             'base:"' + coolieConfig.base + '",' +
             'async:"' + coolieConfig.async + '",' +
             'chunk:"' + coolieConfig.chunk + '",' +

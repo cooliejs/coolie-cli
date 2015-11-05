@@ -240,8 +240,8 @@ module.exports = function (file, options) {
         });
     }
 
-    if(options.signHTML){
-        code = sign('html') + code;
+    if (options.signHTML) {
+        code = code + sign('html');
     }
 
     return {
