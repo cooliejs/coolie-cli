@@ -27,6 +27,7 @@ npm install -g coolie
 
 # CMDS
 ```
+
                                oooo   o8o
                                `888   `"'
   .ooooo.   .ooooo.   .ooooo.   888  oooo   .ooooo.
@@ -41,15 +42,17 @@ npm install -g coolie
 ╚═══════════════════════════════════════════════════╝
 
 1. Command
-   build             >> build a front-end project
-   book              >> open coolie book in default browser
-   install <name>    >> install a coolie module
-   init              >> initialize `coolie-config.js` and `coolie.config.js`
-   help              >> show help info
-   version           >> show version info
+   build                  >> build a front-end project
+   book                   >> open coolie book in default browser
+   install <module>       >> install a coolie module
+   init                   >> initial configuration file
+   help                   >> show help information
+   version                >> show version information
 
 2. Options
-   -d --dirname      >> specified a directory
+   -d --dirname           >> specified a directory
+   -j --coolie.js         >> initial configuration file of `coolie.js`
+   -c --"coolie cli"      >> initial configuration file of `coolie cli`
    
 ```
 
