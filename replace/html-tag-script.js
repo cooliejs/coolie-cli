@@ -136,7 +136,7 @@ module.exports = function (file, options) {
             }
             // 相对本域
             else {
-                coolieConfigURI = '~' + coolieConfigURI;
+                coolieConfigURI = '~' + pathURI.joinURI(options.destHost, coolieConfigURI);
             }
 
             source = htmlAttr.set(source, 'data-main', mainVersion + '.js');
