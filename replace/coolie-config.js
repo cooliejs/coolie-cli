@@ -96,13 +96,7 @@ module.exports = function (file, options) {
         debug.success('√', 'version: "' + JSON.stringify(versionMap2, null, 2) + '"');
         debug.success('√', 'callbacks: ' + callbacks.length);
 
-        var code2 = '';
-
-        if (options.sign) {
-            code2 += sign('js') + '\n';
-        }
-
-        code2 += 'coolie.config({' +
+        var code2 = 'coolie.config({' +
             'base:"' + coolieConfig.base + '",' +
             'async:"' + coolieConfig.async + '",' +
             'chunk:"' + coolieConfig.chunk + '",' +
@@ -118,15 +112,19 @@ module.exports = function (file, options) {
         code2 += ';';
 
         var destCoolieConfigJSPath = encryption.md5(code2).slice(0, options.versionLength) + '.js';
-        code2 = minifyJS(file, {
+        var code3 = minifyJS(file, {
             code: code2
         });
+
+        if (options.sign) {
+            code3 = sign('js') + '\n' + code3;
+        }
 
         destCoolieConfigJSPath = path.join(options.destJSDirname, destCoolieConfigJSPath);
         var destCoolieConfigJSURI = pathURI.toRootURL(destCoolieConfigJSPath, options.srcDirname);
 
         try {
-            fse.outputFileSync(destCoolieConfigJSPath, code2, 'utf8');
+            fse.outputFileSync(destCoolieConfigJSPath, code3, 'utf8');
             debug.success('√', destCoolieConfigJSURI);
         } catch (err) {
             debug.error('coolie-config.js', destCoolieConfigJSPath);

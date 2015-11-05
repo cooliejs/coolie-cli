@@ -241,7 +241,7 @@ module.exports = function (file, options) {
     }
 
     if (options.signHTML) {
-        code = code + sign('html');
+        code = code + '\n' + sign('html');
     }
 
     return {
