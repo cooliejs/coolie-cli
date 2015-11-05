@@ -164,6 +164,7 @@ module.exports = function (file, options) {
                 });
                 var destVersion = encryption.md5(destCode);
                 var destPath = path.join(options.destJSDirname, destVersion + '.js');
+
                 destURI = pathURI.toRootURL(destPath, options.destDirname);
                 destURI = pathURI.joinURI(options.destHost, destURI);
 
@@ -174,7 +175,7 @@ module.exports = function (file, options) {
                 try {
                     fse.writeFileSync(destPath, destCode, 'utf8');
                     minifyJSMap[srcPath] = destURI;
-                    debug.success('√', pathURI.toRootURL(destPath, options.srcDirname));
+                    debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
                 } catch (err) {
                     debug.error('write file', path.toSystem(destPath));
                     debug.error('write file', err.message);

@@ -180,7 +180,7 @@ module.exports = function (file, options) {
             destCoolieConfigJSPath: options.destCoolieConfigJSPath,
             mainVersionMap: options.mainVersionMap,
             minifyJS: options.minifyJS,
-            returnObject: options.returnObject
+            signJS: options.signJS
         });
 
         code = replaceHTMLTagScriptRet.code;
