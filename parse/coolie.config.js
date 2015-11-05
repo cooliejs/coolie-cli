@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * parse coolie.config.js
  * @author ydr.me
  * @create 2015-10-26 14:27
  */
