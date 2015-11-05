@@ -98,7 +98,7 @@ module.exports = function (file, options) {
         // css
         if (REG_LINK.test(coolieCode)) {
             if (options.signCSS) {
-                bfList.push(new Buffer(sign('css') + '\n'), ENCODING);
+                bfList.push(new Buffer(sign('css') + '\n', ENCODING));
             }
 
             coolieCode.replace(REG_LINK, function (source, quote, href) {
@@ -172,7 +172,7 @@ module.exports = function (file, options) {
         // js
         else {
             if (options.signJS) {
-                bfList.push(new Buffer(sign('js') + '\n'), ENCODING);
+                bfList.push(new Buffer(sign('js') + '\n', ENCODING));
             }
 
             coolieCode.replace(REG_SCRIPT, function (source, quote, src) {
