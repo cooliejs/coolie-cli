@@ -30,6 +30,7 @@ module.exports = function (options) {
     }
 
     install({
+        name: options.name,
         url: module.url,
         destDirname: options.destDirname,
         type: module.type

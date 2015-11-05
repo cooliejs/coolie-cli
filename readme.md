@@ -55,13 +55,13 @@ npm install -g coolie
 
 
 # Version
-[版本日志](http://coolie.ydr.me/version/)
+[coolie 版本日志](http://coolie.ydr.me/version/)
 
 
 # API
-[接口文档](http://coolie.ydr.me/develop/api/)
+[coolie 接口文档](http://coolie.ydr.me/develop/api/)
 
 
 # Middleware
-- [如何使用 coolie 中间件](http://coolie.ydr.me/advance/middleware/)
-- [如何开发 coolie 中间件](http://coolie.ydr.me/develop/middleware/)
+- [使用 coolie 中间件](http://coolie.ydr.me/advance/middleware/)
+- [开发 coolie 中间件](http://coolie.ydr.me/develop/middleware/)

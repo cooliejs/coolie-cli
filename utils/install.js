@@ -72,10 +72,9 @@ module.exports = function (options, callback) {
 
             try {
                 zip.extractAllTo(unzipDirname, true);
-                debug.success('unzip ' + name, unzipDirname);
             } catch (err) {
                 unzipError = err;
-                debug.error('unzip ' + name, tempFile);
+                debug.error('unzip ' + name, unzipDirname);
                 debug.error('unzip ' + name, err.message);
             }
 
@@ -85,7 +84,7 @@ module.exports = function (options, callback) {
 
             if (options.type === 'file') {
                 // 目标目录 + 临时目录 + 所有文件
-                var globFile = path.join(options.destDirname, tempName, '**');
+                var globFile = path.join(options.destDirname, tempName, './**/*');
                 var files = glob.sync(globFile);
 
                 dato.each(files, function (index, file) {
@@ -101,10 +100,19 @@ module.exports = function (options, callback) {
                         return process.exit(1);
                     }
                 });
+
+                try {
+                    fse.removeSync(unzipDirname);
+                } catch (err) {
+                    debug.error('remove tempfile', unzipDirname);
+                    debug.error('remove tempfile', err.message);
+                }
+            } else {
+                debug.success(name + ' directory', path.toSystem(unzipDirname));
             }
 
             try {
-                fse.unlinkSync(tempFile);
+                fse.removeSync(tempFile);
             } catch (err) {
                 debug.error('remove tempfile', tempFile);
                 debug.error('remove tempfile', err.message);
