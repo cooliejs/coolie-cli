@@ -15,6 +15,7 @@ var dato = require('ydr-utils').dato;
 var fse = require('fs-extra');
 
 var reader = require('../utils/reader.js');
+var sign = require('../utils/sign.js');
 var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
 var minifyCSS = require('../minify/css.js');
@@ -46,7 +47,9 @@ var defaults = {
     uglifyJSOptions: null,
     minifyCSS: true,
     cleanCSSOptions: true,
-    replaceCSSResource: true
+    replaceCSSResource: true,
+    signJS: false,
+    signCSS: false
 };
 
 
@@ -68,6 +71,8 @@ var defaults = {
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.replaceCSSResource] {Boolean} 是否替换 CSS 内引用资源
+ * @param [options.signJS] {Boolean} 是否签名 js 文件
+ * @param [options.signCSS] {Boolean} 是否签名 css 文件
  * @returns {Object}
  */
 module.exports = function (file, options) {
@@ -92,6 +97,10 @@ module.exports = function (file, options) {
 
         // css
         if (REG_LINK.test(coolieCode)) {
+            if (options.signCSS) {
+                bfList.push(new Buffer(sign('css') + '\n'), ENCODING);
+            }
+
             coolieCode.replace(REG_LINK, function (source, quote, href) {
                 var cssFile = pathURI.toAbsoluteFile(href, file, options.srcDirname);
                 var cssCode = reader(cssFile, ENCODING);
@@ -162,6 +171,10 @@ module.exports = function (file, options) {
         }
         // js
         else {
+            if (options.signJS) {
+                bfList.push(new Buffer(sign('js') + '\n'), ENCODING);
+            }
+
             coolieCode.replace(REG_SCRIPT, function (source, quote, src) {
                 var jsFile = pathURI.toAbsoluteFile(src, file, options.srcDirname);
                 var jsCode = reader(jsFile, ENCODING);
