@@ -42,7 +42,7 @@
     "modules": {
       "coolie": {
         "type": "file",
-        "url": "https://raw.githubusercontent.com/cloudcome/coolie/master/coolie.min.js"
+        "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/coolie.zip"
       },
       "alien": {
         "type": "zip",
