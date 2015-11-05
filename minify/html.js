@@ -8,7 +8,6 @@
 'use strict';
 
 
-var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;

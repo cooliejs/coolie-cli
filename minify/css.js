@@ -14,7 +14,6 @@ var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
 
-var pathURI = require('../utils/path-uri.js');
 var replaceCSSResource = require('../replace/css-resource.js');
 
 var defaults = {

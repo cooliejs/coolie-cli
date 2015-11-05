@@ -13,8 +13,6 @@ var debug = require('ydr-utils').debug;
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 
-var pathURI = require('../utils/path-uri.js');
-
 var compressorOptions = {
     // 连续单语句，逗号分开
     // 如： alert(1);alert(2); => alert(1),alert(2)
