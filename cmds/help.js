@@ -7,9 +7,16 @@
 
 'use strict';
 
+var fs = require('fs');
 var debug = require('ydr-utils').debug;
+var path = require('ydr-utils').path;
+var string = require('ydr-utils').string;
 
 var banner = require('./banner.js');
+
+var bannerPath = path.join(__dirname, '../data/banner.txt');
+var bannerText = fs.readFileSync(bannerPath, 'utf8');
+
 
 module.exports = function () {
     var options = {
@@ -17,6 +24,7 @@ module.exports = function () {
         eventLength: 25
     };
 
+    console.log(bannerText);
     banner();
     console.log('1. Command');
     debug.success('   build', 'build a front-end project', options);
