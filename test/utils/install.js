@@ -11,12 +11,12 @@ var assert = require('assert');
 var fse = require('fs-extra');
 var typeis = require('ydr-utils').typeis;
 
-var downZip = require('../../utils/install-zip.js');
+var install = require('../../utils/install.js');
 var pkg = require('../../package.json');
 
 describe('utils/down-zip.js', function () {
     it('alien', function (done) {
-        downZip({
+        install({
             destDirname: __dirname,
             name: 'alien',
             url: pkg.coolie.modules.alien.url
