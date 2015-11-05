@@ -10,8 +10,6 @@
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
 
-var pathURI = require('../utils/path-uri.js');
-
 /**
  * 压缩 JSON string
  * @param file {String} 文件
