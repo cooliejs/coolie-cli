@@ -17,7 +17,6 @@ var debug = require('ydr-utils').debug;
 
 var pathURI = require('../utils/path-uri.js');
 var htmlAttr = require('../utils/html-attr.js');
-var hook = require('../utils/hook.js');
 var copy = require('../utils/copy.js');
 var guessDirname = require('../utils/guess-dirname.js');
 
@@ -90,12 +89,12 @@ module.exports = function (options) {
         if (options.middleware) {
             if (!typeis.function(middleware)) {
                 debug.warn('invalid middleware', 'some middleware is not a function');
-                debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie- *"');
+                debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie-*"');
             }
 
             if (!middleware.middlewareName) {
                 debug.warn('invalid middleware', 'some middleware has lost its name');
-                debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie- *"');
+                debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie-*"');
             }
 
             options.middleware.use(middleware);
