@@ -8,8 +8,8 @@
 
 'use strict';
 
-var path = require('path');
 var fs = require('fs');
+var path = require('ydr-utils').path;
 var string = require('ydr-utils').string;
 
 var pkg = require('../package.json');
