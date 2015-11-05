@@ -7,7 +7,7 @@
 
 'use strict';
 
-var path = require('path');
+var path = require('ydr-utils').path;
 var assert = require('assert');
 
 var base64 = require('../../utils/base64.js');

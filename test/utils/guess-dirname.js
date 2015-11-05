@@ -8,7 +8,7 @@
 'use strict';
 
 var assert = require('assert');
-var path = require('path');
+var path = require('ydr-utils').path;
 var typeis = require('ydr-utils').typeis;
 
 var guessDirname = require('../../utils/guess-dirname.js');

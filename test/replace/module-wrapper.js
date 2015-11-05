@@ -7,7 +7,7 @@
 
 'use strict';
 
-var path = require('path');
+var path = require('ydr-utils').path;
 var assert = require('assert');
 var fs = require('fs');
 var dato = require('ydr-utils').dato;
