@@ -17,6 +17,7 @@ var minifyHTML = require('../minify/html.js');
 var glob = require('../utils/glob.js');
 var pathURI = require('../utils/path-uri.js');
 var reader = require('../utils/reader.js');
+var sign = require('../utils/sign.js');
 
 var defaults = {
     middleware: null,
@@ -126,13 +127,14 @@ module.exports = function (options) {
         var relative = path.relative(options.srcDirname, htmlFile);
         var htmlURI = pathURI.toRootURL(htmlFile, options.srcDirname);
         var destFile = path.join(options.destDirname, relative);
+        var destCode = ret.code + sign('html');
 
         htmlMainMap[htmlFile] = ret.mainList;
         htmlJSMap[htmlFile] = ret.jsList;
         htmlCSSMap[htmlFile] = ret.cssList;
 
         try {
-            fse.outputFileSync(destFile, ret.code, 'utf8');
+            fse.outputFileSync(destFile, destCode, 'utf8');
             debug.success('√', htmlURI);
         } catch (err) {
             debug.error('write html', path.toSystem(htmlFile));
