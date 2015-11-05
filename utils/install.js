@@ -93,7 +93,7 @@ module.exports = function (options, callback) {
                     var destPath = path.join(options.destDirname, basename);
 
                     try {
-                        fse.moveSync(file, destPath);
+                        fse.copySync(file, destPath);
                         debug.success(name + ' file', path.toSystem(destPath));
                     } catch (err) {
                         debug.error(name + ' file', path.toSystem(destPath));
