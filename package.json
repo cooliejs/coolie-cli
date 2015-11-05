@@ -45,11 +45,11 @@
         "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/coolie.zip"
       },
       "alien": {
-        "type": "zip",
+        "type": "directory",
         "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/alien.zip"
       },
       "donkey": {
-        "type": "zip",
+        "type": "directory",
         "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/donkey.zip"
       }
     }

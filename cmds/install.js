@@ -11,9 +11,7 @@ var debug = require('ydr-utils').debug;
 var request = require('ydr-utils').request;
 
 var pkg = require('../package.json');
-var installZip = require('../utils/install-zip.js');
-var installFile = require('../utils/install-file.js');
-
+var install = require('../utils/install.js');
 var banner = require('./banner.js');
 
 /**
@@ -31,17 +29,10 @@ module.exports = function (options) {
         return process.exit(1);
     }
 
-    if (module.type === 'file') {
-        installFile({
-            url: module.url,
-            destDirname: options.destDirname
-        });
-    } else {
-        installZip({
-            url: module.url,
-            destDirname: options.destDirname,
-            name: options.name
-        });
-    }
+    install({
+        url: module.url,
+        destDirname: options.destDirname,
+        type: module.type
+    });
 };
 
