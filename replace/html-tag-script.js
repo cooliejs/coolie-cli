@@ -7,14 +7,18 @@
 
 'use strict';
 
+var fse = require('fs-extra');
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
 var typeis = require('ydr-utils').typeis;
+var encryption = require('ydr-utils').encryption;
 
 var htmlAttr = require('../utils/html-attr.js');
 var pathURI = require('../utils/path-uri.js');
 var copy = require('../utils/copy.js');
+var sign = require('../utils/sign.js');
+var reader = require('../utils/reader.js');
 var minifyJS = require('../minify/js.js');
 
 var JS_TYPES = [
@@ -44,8 +48,10 @@ var defaults = {
     mainVersionMap: {},
     versionLength: 32,
     minifyJS: true,
-    uglifyJSOptions: null
+    uglifyJSOptions: null,
+    signJS: false
 };
+var minifyJSMap = {};
 
 
 /**
@@ -63,6 +69,7 @@ var defaults = {
  * @param options.versionLength {Number} 版本号长度
  * @param [options.minifyJS] {Boolean} 是否压缩 JS
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
+ * @param [options.signJS] {Boolean} 是否签名 JS 文件
  * @returns {Object}
  */
 module.exports = function (file, options) {
@@ -147,21 +154,35 @@ module.exports = function (file, options) {
             }
 
             var srcPath = pathURI.toAbsoluteFile(src, file, options.srcDirname);
-            var copyPath = copy(srcPath, {
-                srcDirname: options.srcDirname,
-                destDirname: options.destJSDirname,
-                copyPath: false,
-                embedFile: file,
-                embedCode: originalSource,
-                version: true,
-                versionLength: options.versionLength,
-                minify: options.minifyJS,
-                logType: 1
-            });
-            var copyURI = pathURI.toRootURL(copyPath, options.destDirname);
+            var destURI = minifyJSMap[srcPath];
 
-            copyURI = pathURI.joinURI(options.destHost, copyURI);
-            source = htmlAttr.set(source, 'src', copyURI);
+            if (!destURI) {
+                var srcCode = reader(srcPath, 'utf8');
+                var destCode = minifyJS(srcPath, {
+                    code: srcCode,
+                    uglifyJSOptions: options.uglifyJSOptions
+                });
+                var destVersion = encryption.md5(destCode);
+                var destPath = path.join(options.destJSDirname, destVersion + '.js');
+                destURI = pathURI.toRootURL(destPath, options.destDirname);
+                destURI = pathURI.joinURI(options.destHost, destURI);
+
+                if (options.signJS) {
+                    destCode = sign('js') + '\n' + destCode;
+                }
+
+                try {
+                    fse.writeFileSync(destPath, destCode, 'utf8');
+                    minifyJSMap[srcPath] = destURI;
+                    debug.success('√', pathURI.toRootURL(destPath, options.srcDirname));
+                } catch (err) {
+                    debug.error('write file', path.toSystem(destPath));
+                    debug.error('write file', err.message);
+                    return process.exit(1);
+                }
+            }
+
+            source = htmlAttr.set(source, 'src', destURI);
             return source;
         }
 
