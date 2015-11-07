@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "The front-end development builder.",
   "preferGlobal": true,
   "bin": {
@@ -70,10 +70,10 @@
     "howdo": "^2.0.2",
     "open": "0.0.5",
     "uglify-js": "^2.5.0",
-    "ydr-utils": "^30.6.0"
+    "ydr-utils": "^30.10.0"
   },
   "scripts": {
-    "test": "mocha -c --recursive --ui bdd test -t 0"
+    "test": "node node_modules/mocha/bin/mocha -c --recursive --ui bdd test -t 0"
   },
   "maintainers": [
     {
@@ -81,5 +81,8 @@
       "email": "cloudcome@163.com"
     }
   ],
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "^2.3.3"
+  }
 }
