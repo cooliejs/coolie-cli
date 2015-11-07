@@ -9,7 +9,7 @@
 
 
 var copy = require('../utils/copy.js');
-var glob = require('../utils/glob.js');
+var path = require('ydr-utils').path;
 
 
 /**
@@ -21,8 +21,7 @@ var glob = require('../utils/glob.js');
  * @returns {Array}
  */
 module.exports = function (options) {
-    var copiedList = glob({
-        glob: options.copy,
+    var copiedList = path.glob(options.copy, {
         srcDirname: options.srcDirname
     });
 

@@ -14,7 +14,6 @@ var fse = require('fs-extra');
 
 
 var minifyHTML = require('../minify/html.js');
-var glob = require('../utils/glob.js');
 var pathURI = require('../utils/path-uri.js');
 var reader = require('../utils/reader.js');
 
@@ -74,8 +73,7 @@ module.exports = function (options) {
     options = dato.extend({}, defaults, options);
 
     // 1. 找出 html
-    var htmlList = glob({
-        glob: options.glob,
+    var htmlList = path.glob(options.glob, {
         srcDirname: options.srcDirname
     });
 
