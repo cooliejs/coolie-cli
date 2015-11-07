@@ -1,5 +1,12 @@
-# coolie.cli
-[![coolie](https://img.shields.io/npm/v/coolie.svg?style=flat)](https://www.npmjs.com/package/coolie)
+# coolie cli
+
+[![Build Status][travis-img]][travis-url] 
+[![coolie][shields-img]][shields-url]
+
+[travis-img]: https://travis-ci.org/cloudcome/nodejs-coolie.svg?branch=master
+[travis-url]: https://travis-ci.org/cloudcome/nodejs-coolie
+[shields-img]: https://img.shields.io/npm/v/coolie.svg
+[shields-url]: https://www.npmjs.com/package/coolie
 
 __The front-end development builder.__
 
@@ -14,7 +21,7 @@ __前端开发构建工具。__配合[coolie.js](https://github.com/cloudcome/co
 - JS 文件的分析、合并、压缩、版本管理
 - CSS 文件的分析、合并、压缩、版本管理
 - HTML 文件分析、压缩、版本管理
-- 入口模块的分析、分块构建、增量构建、合并、压缩、版本管理
+- 入口模块的分析、分块构建、异步模块构建、增量构建、合并、压缩、版本管理
 - 静态资源的分析、压缩、版本管理
 
 
