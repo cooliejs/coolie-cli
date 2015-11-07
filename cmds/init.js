@@ -8,7 +8,7 @@
 'use strict';
 
 var howdo = require('howdo');
-var fs = require('fs');
+var fse = require('fs-extra');
 var debug = require('ydr-utils').debug;
 var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
@@ -31,8 +31,16 @@ var writeFile = function (name, destDirname, callback) {
         return callback();
     }
 
-    fs.createReadStream(srcPath)
-        .pipe(fs.createWriteStream(destPath))
+    try {
+        fse.ensureFileSync(destPath);
+    } catch (err) {
+        debug.error(name, path.toSystem(destPath));
+        debug.error('init error', err.message);
+        process.exit(1);
+    }
+
+    fse.createReadStream(srcPath)
+        .pipe(fse.createWriteStream(destPath))
         .on('error', function (err) {
             debug.error(name, path.toSystem(destPath));
             debug.error('init error', err.message);

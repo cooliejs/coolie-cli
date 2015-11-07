@@ -11,12 +11,12 @@ module.exports = function (coolie) {
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
-            "chunk": [
-                [
-                    "./static/js/libs1/**"
-                ],
-                "./static/js/libs2/**"
-            ]
+            //"chunk": [
+            //    [
+            //        "./static/js/libs1/**"
+            //    ],
+            //    "./static/js/libs2/**"
+            //]
         },
         "html": {
             "src": [
