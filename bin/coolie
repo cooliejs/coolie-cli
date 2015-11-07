@@ -16,29 +16,6 @@ var cmdBook = require('../cmds/book.js');
 var cmdInstall = require('../cmds/install.js');
 var cmdHelp = require('../cmds/help.js');
 
-var CWD = process.cwd();
-
-/**
- * 解析 原始目录
- * @param args
- * @returns {string}
- */
-var parseDirname = function (args) {
-    var srcDirname = '';
-
-    if (args.dirname) {
-        if (path.isAbsolute(args.dirname)) {
-            srcDirname = args.dirname;
-        } else {
-            srcDirname = path.join(CWD, args.dirname);
-        }
-    } else {
-        srcDirname = CWD;
-    }
-
-    return srcDirname;
-};
-
 command.alias({
     d: 'dirname',
     j: 'coolie.js',
@@ -56,7 +33,7 @@ command.if('help', function () {
 
 command.if('build', function (args) {
     cmdBuild({
-        srcDirname: parseDirname(args)
+        srcDirname: command.dirname(args, 'dirname')
     });
 });
 
@@ -72,7 +49,7 @@ command.if('install', function (args, names) {
 
     names.forEach(function (name) {
         cmdInstall({
-            destDirname: parseDirname(args),
+            destDirname: command.dirname(args, 'dirname'),
             name: name
         });
     });
@@ -80,7 +57,7 @@ command.if('install', function (args, names) {
 
 command.if('init', function (args) {
     cmdInit({
-        destDirname: parseDirname(args),
+        destDirname: command.dirname(args, 'dirname'),
         'coolie.js': args['coolie.js'],
         'coolie cli': args['coolie cli']
     });
