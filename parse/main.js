@@ -9,9 +9,8 @@
 
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
+var path = require('ydr-utils').path;
 
-
-var glob = require('../utils/glob.js');
 var reader = require('../utils/reader.js');
 var parseCMDRequire = require('./cmd-require.js');
 
@@ -37,8 +36,7 @@ module.exports = function (options) {
     var mainMap = {};
 
     // 入口文件
-    var mainFiles = glob({
-        glob: options.glob,
+    var mainFiles = path.glob(options.glob, {
         globOptions: options.globOptions,
         srcDirname: options.srcDirname
     });
