@@ -7,7 +7,8 @@
 
 'use strict';
 
-var REG_DEFINE = /^\bdefine\b\s*?\b\(\s*?function\b[^(]*\(([^,)]*)/;
+//var REG_DEFINE = /^\bdefine\b\s*?\b\(\s*?function\b[^(]*\(([^,)]*)/;
+var REG_DEFINE = /\bdefine\s*?\(\s*?function\s*?\(\s*?([^),\s]+)/;
 
 
 /**
