@@ -62,7 +62,6 @@ exports.file = function (file, extname) {
 
     // data:image/png;base64,
     var prefix = 'data:' + mime.get(extname) + ';base64,';
-
     var base64;
 
     try {
