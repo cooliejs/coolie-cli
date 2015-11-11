@@ -22,7 +22,7 @@ define(function (require, exports, module) {
 
 
     // json
-    require('../libs2/some.json', 'json');
+    require('../libs2/some1.json', 'json');
     require('../libs2/some.json', 'json');
     require('../libs2/some.json', 'json|url');
     require('../libs2/some.json', 'json|text');

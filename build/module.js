@@ -63,12 +63,18 @@ var defaults = {
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
- * @returns {{dependencies: Array, code: String, md5: String}}
+ * @returns {void} | {{dependencies: Array, code: String, md5: String}}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
     // 读取入口模块内容
-    var code = reader(file, 'utf8');
+    try {
+        var code = reader(file, 'utf8');
+    } catch (err) {
+        console.log(options);
+        process.exit(1);
+    }
+
     //[{ id: '/Users/cloudcome/development/github/nodejs-coolie/example/src/static/js/libs1/path1/path2/index.js|js',
     //file: '/Users/cloudcome/development/github/nodejs-coolie/example/src/static/js/libs1/path1/path2/index.js',
     //gid: '1',
