@@ -10,6 +10,7 @@
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
+var debug = require('ydr-utils').debug;
 
 var reader = require('../utils/reader.js');
 var parseCMDRequire = require('./cmd-require.js');
@@ -42,7 +43,14 @@ module.exports = function (options) {
     });
 
     dato.each(mainFiles, function (index, mainFile) {
-        var code = reader(mainFile, 'utf8');
+        var code;
+        try {
+            code = reader(mainFile, 'utf8');
+        } catch (err) {
+            debug.error('parse main', path.toSystem(mainFile));
+            process.exit();
+        }
+
         var requireAsyncList = parseCMDRequire(mainFile, {
             code: code,
             async: true

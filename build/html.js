@@ -88,6 +88,7 @@ module.exports = function (options) {
             code = reader(htmlFile, 'utf8');
         } catch (err) {
             debug.error('build html', path.toSystem(htmlFile));
+            process.exit(1);
         }
 
         if (options.middleware) {
