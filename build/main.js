@@ -9,12 +9,10 @@
 
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
-var encryption = require('ydr-utils').encryption;
 var path = require('ydr-utils').path;
 var fse = require('fs-extra');
 
 var pathURI = require('../utils/path-uri.js');
-var replaceAMDRequire = require('../replace/amd-require.js');
 var buildModule = require('./module.js');
 
 var defaults = {
@@ -70,6 +68,7 @@ module.exports = function (file, options) {
             inType: options.inType,
             outType: options.outType,
             main: mainFile,
+            parent: options.parent,
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
@@ -97,7 +96,8 @@ module.exports = function (file, options) {
                 dependencyLength++;
                 var options3 = dato.extend({}, options, {
                     inType: dependency.inType,
-                    outType: dependency.outType
+                    outType: dependency.outType,
+                    parent: file
                 });
                 build(dependency.file, options3);
             });
@@ -113,7 +113,8 @@ module.exports = function (file, options) {
     };
     var options2 = dato.extend({}, options, {
         inType: 'js',
-        outType: 'js'
+        outType: 'js',
+        parent: null
     });
 
     build(mainFile, options2);

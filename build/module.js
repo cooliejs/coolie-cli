@@ -49,6 +49,7 @@ var defaults = {
  * @param options.inType {String} 模块入口类型
  * @param options.outType {String} 模块出口类型
  * @param options.main {String} 入口模块
+ * @param options.parent {String} 父级模块
  * @param options.srcDirname {String} 原始根目录
  * @param options.destDirname {String} 目标根目录
  * @param options.destJSDirname {String} 目标 JS 目录
@@ -67,11 +68,13 @@ var defaults = {
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
-    // 读取入口模块内容
+
+    // 读取模块内容
     try {
         var code = reader(file, 'utf8');
     } catch (err) {
-        console.log(options);
+        debug.error('main module', path.toSystem(options.main));
+        debug.error('parent module', path.toSystem(options.parent));
         process.exit(1);
     }
 
