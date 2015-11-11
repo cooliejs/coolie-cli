@@ -49,7 +49,12 @@ exports.file = function (file, extname) {
     // 文件
     if (typeis.file(file)) {
         extname = extname || path.extname(file);
-        binary = reader(file, 'binary');
+        try {
+            binary = reader(file, 'binary');
+        } catch (err) {
+            debug.error('base64 file', path.toSystem(file));
+            return process.exit(1);
+        }
     } else {
         debug.error('base64 file', path.toSystem(file) + ' is NOT a local file');
         return process.exit(1);
