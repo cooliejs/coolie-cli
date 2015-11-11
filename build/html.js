@@ -82,7 +82,13 @@ module.exports = function (options) {
     var htmlJSMap = {};
     var htmlCSSMap = {};
     dato.each(htmlList, function (index, htmlFile) {
-        var code = reader(htmlFile, 'utf8');
+        var code;
+
+        try {
+            code = reader(htmlFile, 'utf8');
+        } catch (err) {
+            debug.error('build html', path.toSystem(htmlFile));
+        }
 
         if (options.middleware) {
             code = options.middleware.exec({

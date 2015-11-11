@@ -95,6 +95,7 @@ module.exports = function (file, options) {
                 buildMap[dependency.id] = true;
                 dependencyLength++;
                 var options3 = dato.extend({}, options, {
+                    file: dependency.file,
                     inType: dependency.inType,
                     outType: dependency.outType,
                     parent: file
@@ -112,6 +113,7 @@ module.exports = function (file, options) {
         }
     };
     var options2 = dato.extend({}, options, {
+        file: file,
         inType: 'js',
         outType: 'js',
         parent: null
