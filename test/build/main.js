@@ -34,7 +34,7 @@ describe('build/module.js', function () {
             destCoolieConfigBaseDirname: destCoolieConfigBaseDirname
         });
 
-        assert.equal(dependencies.length, 5);
+        assert.equal(dependencies.length, 6);
     });
 
     it('async', function () {
