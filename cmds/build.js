@@ -88,6 +88,7 @@ module.exports = function (options) {
         destResourceDirname: configs.destResourceDirname,
         destHost: configs.dest.host,
         uglifyJSOptions: configs.js.minify,
+        cleanCSSOptions: configs.css.minify,
         versionLength: configs.dest.versionLength,
         minifyResource: configs.resource.minify,
         destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
