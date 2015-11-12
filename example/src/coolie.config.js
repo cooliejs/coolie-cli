@@ -22,7 +22,7 @@ module.exports = function (coolie) {
             "src": [
                 "./html/**"
             ],
-            "minify": true
+            "minify": false
         },
         "css": {
             "dest": "./static/css/",
