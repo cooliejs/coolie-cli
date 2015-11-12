@@ -94,10 +94,10 @@ module.exports = function (options) {
         destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
         destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname,
-        removeHTMLYUIComments: !!configs.html.minify,
-        removeHTMLLineComments: !!configs.html.minify,
-        joinHTMLSpaces: !!configs.html.minify,
-        removeHTMLBreakLines: !!configs.html.minify
+        removeHTMLYUIComments: configs.html.minify,
+        removeHTMLLineComments: configs.html.minify,
+        joinHTMLSpaces: configs.html.minify,
+        removeHTMLBreakLines: configs.html.minify
     });
 
 
@@ -124,10 +124,10 @@ module.exports = function (options) {
     var buildHTMLResult = buildHTML({
         middleware: middleware,
         glob: configs.html.src,
-        removeHTMLYUIComments: true,
-        removeHTMLLineComments: true,
-        joinHTMLSpaces: true,
-        removeHTMLBreakLines: true,
+        removeHTMLYUIComments: configs.html.minify,
+        removeHTMLLineComments: configs.html.minify,
+        joinHTMLSpaces: configs.html.minify,
+        removeHTMLBreakLines: configs.html.minify,
         versionLength: configs.dest.versionLength,
         srcDirname: srcDirname,
         destDirname: destDirname,
@@ -141,7 +141,7 @@ module.exports = function (options) {
         minifyCSS: true,
         minifyResource: true,
         uglifyJSOptions: null,
-        cleanCSSOptions: null,
+        cleanCSSOptions: configs.css.minfiy,
         replaceCSSResource: true,
         mainVersionMap: buildAPPResult.mainVersionMap
     });
