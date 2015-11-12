@@ -36,14 +36,9 @@ var REG_LINE_COMMENTS = /<!--.*?-->/g;
 // - @create 2014-09-25 19:20
 // -->
 var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
-var keepSourceList = [
-    // <!--coolie-->
-    /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi,
-    // <textarea>
-    /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi,
-    //<!--[if IE 6]><![endif]-->
-    /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi
-];
+var REG_COOLIE_COMMENTS = /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi;
+var REG_PRE_TAGNAME = /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi;
+var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi;
 
 var defaults = {
     code: '',
@@ -115,29 +110,37 @@ var defaults = {
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
     var preMap = {};
+    var commentsMap = {};
     var code = options.code;
     var mainList = [];
     var jsList = [];
     var cssList = [];
-
-    // 保留原始格式
-    dato.each(keepSourceList, function (index, reg) {
-        preMap[index] = {};
-        code = code.replace(reg, function (source) {
+    var replace = function (pack) {
+        return function(source){
             var key = _generateKey();
 
-            preMap[index][key] = source;
+            pack[key] = source;
 
             return key;
-        });
-    });
+        };
+    };
 
-    if (options.removeHTMLYUIComments) {
-        code = code.replace(REG_YUI_COMMENTS, '');
-    }
+    // 保留 <!--coolie-->
+    code = code.replace(REG_COOLIE_COMMENTS, replace(preMap));
+
+    // 保留条件注释
+    code = code.replace(REG_CONDITIONS_COMMENTS, replace(preMap));
 
     if (options.removeHTMLLineComments) {
         code = code.replace(REG_LINE_COMMENTS, '');
+    } else {
+        code = code.replace(REG_LINE_COMMENTS, replace(commentsMap));
+    }
+
+    if (options.removeHTMLYUIComments) {
+        code = code.replace(REG_YUI_COMMENTS, '');
+    } else {
+        code = code.replace(REG_YUI_COMMENTS, replace(commentsMap));
     }
 
     if (options.joinHTMLSpaces) {
@@ -148,11 +151,11 @@ module.exports = function (file, options) {
         code = code.replace(REG_LINES, '');
     }
 
-    // 恢复标签
-    dato.each(preMap[1], function (key, val) {
-        code = code.replace(key, val);
-    });
-    dato.each(preMap[2], function (key, val) {
+    // 保留 pre tagName
+    code = code.replace(REG_PRE_TAGNAME, replace(preMap));
+
+    // 恢复 coolie 注释 和 pre tagName
+    dato.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
 
@@ -239,6 +242,11 @@ module.exports = function (file, options) {
         });
     }
 
+    // 恢复注释
+    dato.each(commentsMap, function (key, val) {
+        code = code.replace(key, val);
+    });
+
     if (options.signHTML) {
         code = code + '\n' + sign('html');
     }
@@ -258,7 +266,7 @@ module.exports = function (file, options) {
  * @private
  */
 function _generateKey() {
-    return 'å' + random.string(10, 'aA0') + random.guid() + 'å';
+    return '≤' + random.string(10, 'aA0') + random.guid() + '≥';
 }
 
 

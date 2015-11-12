@@ -80,6 +80,7 @@ module.exports = function (file, options) {
             compress: dato.extend({}, compressorOptions, options.uglifyJSOptions)
         }).code;
     } catch (err) {
+        debug.error('js code', code);
         debug.error('jsminify', path.toSystem(file));
         debug.error('jsminify', err.message);
         process.exit(1);
