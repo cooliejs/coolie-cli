@@ -109,6 +109,7 @@ var defaults = {
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
+    var coolieMap = {};
     var preMap = {};
     var commentsMap = {};
     var code = options.code;
@@ -126,7 +127,7 @@ module.exports = function (file, options) {
     };
 
     // 保留 <!--coolie-->
-    code = code.replace(REG_COOLIE_COMMENTS, replace(preMap));
+    code = code.replace(REG_COOLIE_COMMENTS, replace(coolieMap));
 
     // 保留条件注释
     code = code.replace(REG_CONDITIONS_COMMENTS, replace(preMap));
@@ -154,7 +155,7 @@ module.exports = function (file, options) {
     // 保留 pre tagName
     code = code.replace(REG_PRE_TAGNAME, replace(preMap));
 
-    // 恢复 coolie 注释 和 pre tagName
+    // 恢复 条件注释 和 pre tagName
     dato.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
@@ -190,9 +191,10 @@ module.exports = function (file, options) {
     }
 
     // 恢复 coolie group
-    dato.each(preMap[0], function (key, val) {
+    dato.each(coolieMap, function (key, val) {
         code = code.replace(key, val);
     });
+
     if (options.replaceHTMLCoolieGroup) {
         var replaceHTMLCoolieGroupRet = replaceHTMLCoolieGroup(file, {
             code: code,
