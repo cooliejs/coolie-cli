@@ -16,3 +16,6 @@
 15、命令名称规范化 √
 16、version 只保存 async、chunk 模块，入口模块已写在 data-main 里 √
 17、coolie.json => coolie.config.js √
+18、viewsReplacement 模板层变量隐式替换
+19、支持任意模块的内的 require.async
+20、支持构建单个 cmd 文件
