@@ -185,6 +185,7 @@ module.exports = function (file, options) {
             destHost: options.destHost,
             destJSDirname: options.destJSDirname,
             destCoolieConfigJSPath: options.destCoolieConfigJSPath,
+            versionLength: options.versionLength,
             mainVersionMap: options.mainVersionMap,
             minifyJS: options.minifyJS,
             signJS: options.signJS
