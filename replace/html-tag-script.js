@@ -152,6 +152,11 @@ module.exports = function (file, options) {
             var destMainPath = path.join(options.destDirname, mainRelative);
             var destMainRelative = path.relative(destBaseDirname, destMainPath);
             var destMainRelativeDirname = path.dirname(destMainRelative);
+
+
+            console.log(destMainRelativeDirname);
+
+
             var destDataMain = path.join(destMainRelativeDirname, mainVersion + '.js');
 
             source = htmlAttr.set(source, 'data-main',  destDataMain);
