@@ -61,7 +61,7 @@ var minifyJSMap = {};
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param options.srcDirname {String} 构建根目录
- * @param options.srcCoolieConfigJSPath {String} coolie-config 路径
+ * @param options.srcCoolieConfigJSPath {String} coolie-config.js 路径
  * @param options.srcCoolieConfigBaseDirname {String} coolie-config:base 目录
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标根域
@@ -115,6 +115,7 @@ module.exports = function (file, options) {
             var mainVersion = options.mainVersionMap[mainPath];
 
             console.log(options.srcDirname);
+            console.log(options.srcCoolieConfigJSPath);
             console.log(options.srcCoolieConfigBaseDirname);
             console.log(path.relative(options.srcDirname, options.srcCoolieConfigBaseDirname));
             console.log(options.destDirname);

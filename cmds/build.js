@@ -135,6 +135,7 @@ module.exports = function (options) {
         destCSSDirname: configs.destCSSDirname,
         destResourceDirname: configs.destResourceDirname,
         destHost: configs.dest.host,
+        srcCoolieConfigJSPath: configs.srcCoolieConfigJSPath,
         srcCoolieConfigBaseDirname: configs.srcCoolieConfigBaseDirname,
         destCoolieConfigJSPath: destCoolieConfigJSPath,
         minifyJS: true,
