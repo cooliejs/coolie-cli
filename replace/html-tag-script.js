@@ -40,7 +40,6 @@ var REG_SPACE = /\s+/g;
 var defaults = {
     code: '',
     srcDirname: null,
-    srcCoolieConfigJSDirname: null,
     srcCoolieConfigBaseDirname: null,
     destJSDirname: null,
     destDirname: null,
@@ -61,9 +60,7 @@ var minifyJSMap = {};
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param options.srcDirname {String} 构建根目录
- * @param options.coolieConfigBase {String} coolie-config:base 值
- * @param options.srcCoolieConfigJSPath {String} 原始 coolie-config.js 路径
- * @param options.srcCoolieConfigBaseDirname {String} 原始 coolie-config:base 目录
+ * @param options.srcCoolieConfigBaseDirname {String} coolie-config:base 目录
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标根域
  * @param options.destJSDirname {String} 目标 JS 目录
@@ -142,24 +139,7 @@ module.exports = function (file, options) {
                 coolieConfigURI = '~' + pathURI.joinURI(options.destHost, coolieConfigURI);
             }
 
-            // base 路径的变化
-            var baseRelative =  path.relative(options.destDirname, options.destCoolieConfigJSPath);
-            var destBasePath = path.join(options.destDirname, baseRelative);
-            var destBaseDirname = path.dirname(destBasePath);
-
-            // 相对于的入口路径也必须变化
-            var mainRelative = path.relative(options.srcDirname, mainPath);
-            var destMainPath = path.join(options.destDirname, mainRelative);
-            var destMainRelative = path.relative(destBaseDirname, destMainPath);
-            var destMainRelativeDirname = path.dirname(destMainRelative);
-
-
-            console.log(destMainRelativeDirname);
-
-
-            var destDataMain = path.join(destMainRelativeDirname, mainVersion + '.js');
-
-            source = htmlAttr.set(source, 'data-main',  destDataMain);
+            source = htmlAttr.set(source, 'data-main', mainVersion + '.js');
             source = htmlAttr.set(source, 'data-config', coolieConfigURI);
             source = htmlAttr.remove(source, COOLIE);
             source = source.replace(REG_LINE, '').replace(REG_SPACE, ' ');
@@ -182,7 +162,7 @@ module.exports = function (file, options) {
                     code: srcCode,
                     uglifyJSOptions: options.uglifyJSOptions
                 });
-                var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
+                var destVersion = encryption.md5(destCode);
                 var destPath = path.join(options.destJSDirname, destVersion + '.js');
 
                 destURI = pathURI.toRootURL(destPath, options.destDirname);
