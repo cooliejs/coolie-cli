@@ -340,6 +340,7 @@ module.exports = function (options) {
             process.exit(1);
         }
 
+        configs.coolieConfigBase = coolieConfig.base;
         configs.srcCoolieConfigBaseDirname = basePath;
         var relativeBase = path.relative(srcDirname, configs.srcCoolieConfigBaseDirname);
         configs.destCoolieConfigBaseDirname = path.join(configs.destDirname, relativeBase);

@@ -59,6 +59,7 @@ var defaults = {
  * @param [options.destCSSDirname] {String} 目标 CSS 目录
  * @param [options.destResourceDirname] {String} 目标资源目录
  * @param [options.destHost] {String} 目标域
+ * @param [options.coolieConfigBase] {String} coolie-config:base 值
  * @param [options.srcCoolieConfigJSPath] {String} 原始 coolie-config.js 路径
  * @param [options.srcCoolieConfigBaseDirname] {String} 原始 coolie-config:base 目录
  * @param [options.destCoolieConfigJSPath] {String} 目标 coolie-config.js 路径
@@ -119,6 +120,7 @@ module.exports = function (options) {
             destCSSDirname: options.destCSSDirname,
             destResourceDirname: options.destResourceDirname,
             destHost: options.destHost,
+            coolieConfigBase: options.coolieConfigBase,
             srcCoolieConfigJSPath: options.srcCoolieConfigJSPath,
             srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
             destCoolieConfigJSPath: options.destCoolieConfigJSPath,

@@ -61,8 +61,9 @@ var minifyJSMap = {};
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param options.srcDirname {String} 构建根目录
- * @param options.srcCoolieConfigJSPath {String} coolie-config.js 路径
- * @param options.srcCoolieConfigBaseDirname {String} coolie-config:base 目录
+ * @param options.coolieConfigBase {String} coolie-config:base 值
+ * @param options.srcCoolieConfigJSPath {String} 原始 coolie-config.js 路径
+ * @param options.srcCoolieConfigBaseDirname {String} 原始 coolie-config:base 目录
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标根域
  * @param options.destJSDirname {String} 目标 JS 目录
@@ -114,14 +115,6 @@ module.exports = function (file, options) {
             var mainPath = path.join(options.srcCoolieConfigBaseDirname, dataMain);
             var mainVersion = options.mainVersionMap[mainPath];
 
-            console.log(options.srcDirname);
-            console.log(options.srcCoolieConfigJSPath);
-            console.log(options.srcCoolieConfigBaseDirname);
-            console.log(path.relative(options.srcDirname, options.srcCoolieConfigBaseDirname));
-            console.log(options.destDirname);
-            console.log(options.destCoolieConfigJSPath);
-            console.log('destBase',path.relative(options.destDirname, options.destCoolieConfigJSPath));
-            console.log('mainPath',mainPath);
             mainList.push(mainPath);
 
             if (!typeis.file(mainPath)) {
@@ -149,7 +142,19 @@ module.exports = function (file, options) {
                 coolieConfigURI = '~' + pathURI.joinURI(options.destHost, coolieConfigURI);
             }
 
-            source = htmlAttr.set(source, 'data-main', mainVersion + '.js');
+            // base 路径的变化
+            var baseRelative =  path.relative(options.destDirname, options.destCoolieConfigJSPath);
+            var destBasePath = path.join(options.destDirname, baseRelative);
+            var destBaseDirname = path.dirname(destBasePath);
+
+            // 相对于的入口路径也必须变化
+            var mainRelative = path.relative(options.srcDirname, mainPath);
+            var destMainPath = path.join(options.destDirname, mainRelative);
+            var destMainRelative = path.relative(destBaseDirname, destMainPath);
+            var destMainRelativeDirname = path.dirname(destMainRelative);
+            var destDataMain = path.join(destMainRelativeDirname, mainVersion + '.js');
+
+            source = htmlAttr.set(source, 'data-main',  destDataMain);
             source = htmlAttr.set(source, 'data-config', coolieConfigURI);
             source = htmlAttr.remove(source, COOLIE);
             source = source.replace(REG_LINE, '').replace(REG_SPACE, ' ');
