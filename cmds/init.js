@@ -44,7 +44,9 @@ var writeFile = function (name, destDirname, callback) {
     }
 
     var srcData = fse.readFileSync(srcPath, 'utf8');
-    var tpl = new Template(srcData);
+    var tpl = new Template(srcData, {
+        compress: false
+    });
     var destData = tpl.render({
         version: pkg.version,
         datetime: date.format('YYYY-MM-DD HH:mm:ss')
