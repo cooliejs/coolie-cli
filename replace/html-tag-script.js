@@ -162,7 +162,7 @@ module.exports = function (file, options) {
                     code: srcCode,
                     uglifyJSOptions: options.uglifyJSOptions
                 });
-                var destVersion = encryption.md5(destCode);
+                var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
                 var destPath = path.join(options.destJSDirname, destVersion + '.js');
 
                 destURI = pathURI.toRootURL(destPath, options.destDirname);
