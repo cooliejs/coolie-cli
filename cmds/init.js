@@ -12,8 +12,12 @@ var fse = require('fs-extra');
 var debug = require('ydr-utils').debug;
 var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
+var date = require('ydr-utils').date;
+var Template = require('ydr-utils').Template;
 
 var banner = require('./banner.js');
+var pkg = require('../package.json');
+
 
 /**
  * 生成文件
@@ -39,17 +43,23 @@ var writeFile = function (name, destDirname, callback) {
         process.exit(1);
     }
 
-    fse.createReadStream(srcPath)
-        .pipe(fse.createWriteStream(destPath))
-        .on('error', function (err) {
-            debug.error(name, path.toSystem(destPath));
-            debug.error('init error', err.message);
-            process.exit(1);
-        })
-        .on('close', function () {
-            debug.success('init success', path.toSystem(destPath));
-            callback();
-        });
+    var srcData = fse.readFileSync(srcPath, 'utf8');
+    var tpl = new Template(srcData);
+    var destData = tpl.render({
+        version: pkg.version,
+        datetime: date.format('YYYY-MM-DD HH:mm:ss')
+    });
+
+    try {
+        fse.outputFileSync(destPath, destData, 'utf8');
+    } catch (err) {
+        debug.error(name, path.toSystem(destPath));
+        debug.error('init error', err.message);
+        process.exit(1);
+    }
+
+    debug.success('init success', path.toSystem(destPath));
+    callback();
 };
 
 /**
