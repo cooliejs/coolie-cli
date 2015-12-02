@@ -3,6 +3,7 @@
 
 - img data-original 脱离 【插件】
 - html include 功能 【插件】
+- 中间件支持：任意模块的过滤传输，模板预编译
 - viewsReplacement 模板层变量隐式替换
 - 支持任意模块的内的 require.async
 - 支持构建单个 cmd 文件
