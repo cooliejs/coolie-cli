@@ -1,4 +1,4 @@
-/*!
+/**
  * path uri 转换
  * @author ydr.me
  * @create 2015-05-19 13:47
@@ -12,7 +12,7 @@ var path = require('ydr-utils').path;
 
 var REG_ABSOLUTE = /^((?:(?:http|ftp)s?:|)\/\/)/i;
 var REG_RELATIVE_ROOT = /^\//;
-var REG_BASE_64 = /^data:/i;
+var REG_BLANK = /^(data|about):/i;
 var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_RELATIVE = /^\.{1,2}\//;
 var REG_END = /\.[a-z\d]+\.([^.]+)$/i;
@@ -112,14 +112,14 @@ exports.isImage = function (p) {
 
 
 /**
- * 判断路径是否为 base64
+ * 判断路径是否为空
  * @param uri
  * @returns {boolean}
  */
-exports.isBase64 = function (uri) {
+exports.isBlank = function (uri) {
     uri = path.toURI(uri);
 
-    return REG_BASE_64.test(uri);
+    return REG_BLANK.test(uri.trim());
 };
 
 
@@ -129,7 +129,7 @@ exports.isBase64 = function (uri) {
  * @returns {boolean}
  */
 exports.isURL = function (p) {
-    return REG_ABSOLUTE.test(p) || REG_BASE_64.test(p);
+    return REG_ABSOLUTE.test(p) || REG_BLANK.test(p);
 };
 
 

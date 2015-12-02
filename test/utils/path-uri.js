@@ -93,12 +93,14 @@ describe('utils/path-uri.js', function () {
         assert.equal(ret2, false);
     });
 
-    it('.isBase64', function () {
-        var ret1 = pathURI.isBase64('a.png');
-        var ret2 = pathURI.isBase64('data:text/plain;base64,');
+    it('.isBlank', function () {
+        var ret1 = pathURI.isBlank('a.png');
+        var ret2 = pathURI.isBlank('data:text/plain;base64,');
+        var ret3 = pathURI.isBlank('about:blank');
 
         assert.equal(ret1, false);
         assert.equal(ret2, true);
+        assert.equal(ret3, true);
     });
 
     it('.isURL', function () {
