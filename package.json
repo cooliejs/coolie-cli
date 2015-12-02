@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "The front-end development builder.",
   "preferGlobal": true,
   "bin": {
