@@ -12,4 +12,5 @@
 - deasync 异步包装器，转换为同步
 - 配置文件里添加`@version {{version}}、@create {{datetime}}`
 - 增加 demo 命令
+- 配置是否压缩 JS
 
