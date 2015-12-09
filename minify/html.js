@@ -146,6 +146,9 @@ module.exports = function (file, options) {
         code = code.replace(REG_YUI_COMMENTS, replace(commentsMap));
     }
 
+    // 保留 pre tagName
+    code = code.replace(REG_PRE_TAGNAME, replace(preMap));
+
     if (options.joinHTMLSpaces) {
         code = code.replace(REG_SPACES, ' ');
     }
@@ -154,13 +157,11 @@ module.exports = function (file, options) {
         code = code.replace(REG_LINES, '');
     }
 
-    // 保留 pre tagName
-    code = code.replace(REG_PRE_TAGNAME, replace(preMap));
-
     // 恢复 条件注释 和 pre tagName
     dato.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
+
 
     if (options.replaceHTMLAttrResource) {
         code = replaceHTMLAttrResource(file, {
