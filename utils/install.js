@@ -17,6 +17,7 @@ var typeis = require('ydr-utils').typeis;
 var dato = require('ydr-utils').dato;
 var AdmZip = require('adm-zip');
 var glob = require('glob');
+var os = require('os');
 
 
 /**
@@ -33,7 +34,7 @@ module.exports = function (options, callback) {
     var url = options.url;
     var name = options.name;
     var tempName = random.guid();
-    var tempFile = path.join(destDirname, tempName + '.zip');
+    var tempFile = path.join(os.tmpdir(), tempName + '.zip');
     var unzipName = options.type === 'file' ? tempName : name;
     var tempStream = fse.createWriteStream(tempFile);
     var unzipDirname = path.join(destDirname, './' + unzipName);
