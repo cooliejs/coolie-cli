@@ -207,7 +207,11 @@ module.exports = function (file, options) {
 
         var ret = scriptTag + scriptCode + '</script>';
 
-        return ret.replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
+        if (find) {
+            ret = ret.replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
+        }
+
+        return ret;
     });
 
     return {
