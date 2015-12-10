@@ -58,6 +58,9 @@
           }
         ]
       }
+    ],
+    "res": [
+      "../src/favicon.ico"
     ]
   },
   "/html/index.html": {
@@ -86,6 +89,15 @@
           }
         ]
       }
+    ],
+    "res": [
+      "../src/favicon.ico",
+      "../src/apple-touch-icon-72.png",
+      "../src/apple-touch-icon-72.png",
+      "../src/apple-touch-icon-144.png",
+      "../src/static/img/100x100.png",
+      "../src/static/img/loading.gif",
+      "../src/static/img/loading.gif"
     ]
   },
   "/html/index1.html": {
@@ -109,6 +121,9 @@
           }
         ]
       }
+    ],
+    "res": [
+      "../src/static/img/girl.jpg"
     ]
   },
   "/html/index2.html": {
@@ -126,7 +141,13 @@
     ],
     "async": [],
     "js": [],
-    "css": []
+    "css": [],
+    "res": [
+      "../src/favicon.ico",
+      "../src/static/img/100x100.png",
+      "../src/static/img/loading.gif",
+      "../src/static/img/loading.gif"
+    ]
   },
   "/html/index3.html": {
     "main": [],
@@ -187,13 +208,25 @@
           }
         ]
       }
+    ],
+    "res": [
+      "../src/static/img/logo_03.png",
+      "../src/static/img/logo_03.png",
+      "../src/static/img/logo_03.png",
+      "../src/static/img/logo_03.png",
+      "../src/static/img/logo_03.png",
+      "../src/static/img/logo_03.png",
+      "../src/static/img/logo_03.png",
+      "../src/static/img/logo_03.png",
+      "../src/static/img/logo_03.png"
     ]
   },
   "/html/index4.html": {
     "main": [],
     "async": [],
     "js": [],
-    "css": []
+    "css": [],
+    "res": []
   },
   "/html/replace.html": {
     "main": [
@@ -209,13 +242,18 @@
     ],
     "async": [],
     "js": [],
-    "css": []
+    "css": [],
+    "res": [
+      "../src/favicon.ico",
+      "../src/favicon.ico"
+    ]
   },
   "/html/template/some.tpl": {
     "main": [],
     "async": [],
     "js": [],
-    "css": []
+    "css": [],
+    "res": []
   },
   "/html/user/index.html": {
     "main": [
@@ -246,6 +284,12 @@
           }
         ]
       }
+    ],
+    "res": [
+      "../src/favicon.ico",
+      "../src/static/img/100x100.png",
+      "../src/static/img/loading.gif",
+      "../src/static/img/loading.gif"
     ]
   }
 }

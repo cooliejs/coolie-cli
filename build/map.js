@@ -154,6 +154,13 @@ module.exports = function (options) {
         });
     });
 
+    // 集合 res
+    dato.each(options.buildHTMLResult.htmlRESMap, function (htmlFile, resList) {
+        var htmlURI = parseURI(htmlFile, options.srcDirname);
+
+        coolieMap[htmlURI].res = parseURI(resList);
+    });
+
     try {
         fse.writeJSONSync(coolieMapPath, coolieMap);
         debug.success('√', pathURI.toRootURL(coolieMapPath, options.srcDirname));
