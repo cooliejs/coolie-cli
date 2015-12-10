@@ -74,14 +74,14 @@ var writeFile = function (name, destDirname, callback) {
 module.exports = function (options) {
     banner();
 
-    if (!options['coolie cli'] && !options['coolie.js']) {
+    if (!options['coolie-cli'] && !options['coolie.js']) {
         debug.warn('coolie tips', 'missing config type');
         return;
     }
 
     howdo
         .task(function (done) {
-            if (!options['coolie cli']) {
+            if (!options['coolie-cli']) {
                 return done();
             }
 

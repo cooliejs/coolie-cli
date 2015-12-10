@@ -19,12 +19,12 @@ var cmdHelp = require('../cmds/help.js');
 command.alias({
     d: 'dirname',
     j: 'coolie.js',
-    c: 'coolie cli'
+    c: 'coolie-cli'
 });
 
 command.type({
     'coolie.js': Boolean,
-    'coolie cli': Boolean
+    'coolie-cli': Boolean
 });
 
 command.if('help', function () {
@@ -59,7 +59,7 @@ command.if('init', function (args) {
     cmdInit({
         destDirname: command.dirname(args, 'dirname'),
         'coolie.js': args['coolie.js'],
-        'coolie cli': args['coolie cli']
+        'coolie-cli': args['coolie-cli']
     });
 });
 
