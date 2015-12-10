@@ -1,4 +1,4 @@
-# coolie cli
+# coolie-cli
 
 [![Build Status][travis-img]][travis-url] 
 [![coolie][shields-img]][shields-url]
@@ -59,7 +59,7 @@ npm install -g coolie
 2. Options
    -d --dirname           >> specified a directory
    -j --coolie.js         >> initial configuration file of `coolie.js`
-   -c --"coolie cli"      >> initial configuration file of `coolie cli`
+   -c --coolie-cli        >> initial configuration file of `coolie-cli`
    
 ```
 

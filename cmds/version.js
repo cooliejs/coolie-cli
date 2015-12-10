@@ -17,7 +17,7 @@ var banner = require('./banner.js');
 
 module.exports = function () {
     banner();
-    debug.success('local coolie cli', pkg.version);
+    debug.success('local coolie-cli', pkg.version);
     debug.ignore('check version', 'wait a moment...');
     howdo
         // 获取 coolie.cli 版本
@@ -27,7 +27,7 @@ module.exports = function () {
                     return done(err);
                 }
 
-                debug.success('online coolie cli', version);
+                debug.success('online coolie-cli', version);
             });
         })
         // 获取 coolie.js 版本

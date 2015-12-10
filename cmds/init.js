@@ -69,7 +69,7 @@ var writeFile = function (name, destDirname, callback) {
  * @param options {Object} 配置
  * @param options.destDirname {String} 根目录
  * @param options['coolie.js'] {Boolean} 是否生成 coolie.js 的配置文件
- * @param options['coolie cli'] {Boolean} 是否生成 coolie cli 的配置文件
+ * @param options['coolie-cli'] {Boolean} 是否生成 coolie-cli 的配置文件
  */
 module.exports = function (options) {
     banner();

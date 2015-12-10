@@ -1,6 +1,6 @@
 /**
  * ======================================================
- * coolie cli 配置文件 `coolie.config.js`
+ * coolie-cli 配置文件 `coolie.config.js`
  * 使用 `coolie.init -c` 生成 `coolie.config.js` 文件模板
  * 当前配置文件所在的目录为构建的根目录
  *
