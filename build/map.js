@@ -65,11 +65,11 @@ module.exports = function (options) {
         //    }]
         //}
     };
-    var parseURI = function (_path) {
+    var parseURI = function (_path, root) {
         var isArray = typeis.array(_path);
         var _path2 = isArray ? _path : [_path];
         var _path3 = _path2.map(function (_path4) {
-            return pathURI.toRootURL(_path4, options.srcDirname);
+            return pathURI.toRootURL(_path4, root || options.destDirname);
         });
 
         return isArray ? _path3 : _path3[0];
@@ -79,9 +79,9 @@ module.exports = function (options) {
 
     // 集合 main
     dato.each(options.buildHTMLResult.htmlMainMap, function (mainFile, mainList) {
-        var mainURI = parseURI(mainFile);
+        var htmlURI = parseURI(mainFile, options.srcDirname);
 
-        coolieMap[mainURI] = {
+        coolieMap[htmlURI] = {
             main: [],
             async: [],
             js: [],
@@ -89,13 +89,13 @@ module.exports = function (options) {
         };
 
         dato.each(mainList, function (index, mainJS) {
-            htmlMainURIMap[mainJS] = mainURI;
+            htmlMainURIMap[mainJS] = htmlURI;
             var dependencies = options.buildAPPResult.appMap[mainJS] || [];
             var mainVersion = options.buildAPPResult.mainVersionMap[mainJS];
             var destMainJSPath = path.join(options.destCoolieConfigBaseDirname, mainVersion + '.js');
 
             dependencies.shift();
-            coolieMap[mainURI].main.push({
+            coolieMap[htmlURI].main.push({
                 src: parseURI(mainJS),
                 dest: parseURI(destMainJSPath),
                 deps: parseURI(dependencies)
@@ -124,7 +124,7 @@ module.exports = function (options) {
 
     // 集合 js
     dato.each(options.buildHTMLResult.htmlJSMap, function (htmlFile, jsList) {
-        var htmlURI = parseURI(htmlFile);
+        var htmlURI = parseURI(htmlFile, options.srcDirname);
 
         dato.each(jsList, function (index, jsItem) {
             coolieMap[htmlURI].js.push({
@@ -136,7 +136,7 @@ module.exports = function (options) {
 
     // 集合 css
     dato.each(options.buildHTMLResult.htmlCSSMap, function (htmlFile, cssList) {
-        var htmlURI = parseURI(htmlFile);
+        var htmlURI = parseURI(htmlFile, options.srcDirname);
 
         dato.each(cssList, function (index, cssItem) {
             var coolieHTMLCSSItem = {
