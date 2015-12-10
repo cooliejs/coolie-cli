@@ -84,6 +84,8 @@ module.exports = function (options) {
     var htmlMainMap = {};
     var htmlJSMap = {};
     var htmlCSSMap = {};
+    var htmlRESMap = {};
+
     dato.each(htmlList, function (index, htmlFile) {
         var code;
 
@@ -143,6 +145,7 @@ module.exports = function (options) {
         htmlMainMap[htmlFile] = ret.mainList;
         htmlJSMap[htmlFile] = ret.jsList;
         htmlCSSMap[htmlFile] = ret.cssList;
+        htmlRESMap[htmlFile] = ret.resList;
 
         try {
             fse.outputFileSync(destFile, ret.code, 'utf8');
@@ -158,7 +161,8 @@ module.exports = function (options) {
         htmlList: htmlList,
         htmlMainMap: htmlMainMap,
         htmlJSMap: htmlJSMap,
-        htmlCSSMap: htmlCSSMap
+        htmlCSSMap: htmlCSSMap,
+        htmlRESMap: htmlRESMap
     };
 };
 
