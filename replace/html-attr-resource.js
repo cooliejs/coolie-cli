@@ -62,11 +62,13 @@ var defaults = {
  * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param [options.minifyResource] {Boolean} 压缩资源文件
- * @returns {String}
+ * @returns {Object}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
     var code = options.code;
+    var resList = [];
+    var resMap = {};
 
     // 标签替换，如 <img src="
     regList.forEach(function (item) {
@@ -122,6 +124,10 @@ module.exports = function (file, options) {
                 var resRelative = path.relative(options.destDirname, resFile);
                 var url = pathURI.joinURI(options.destHost, resRelative);
 
+                if (!resMap[absFile]) {
+                    resList.push(absFile);
+                }
+
                 tag = htmlAttr.set(tag, attr, url + pathRet.suffix);
             });
 
@@ -129,6 +135,9 @@ module.exports = function (file, options) {
         });
     });
 
-    return code;
+    return {
+        code: code,
+        resList: resList
+    };
 };
 
