@@ -20,9 +20,9 @@ module.exports = function (coolie) {
         },
         "html": {
             "src": [
-                "./html/d.html"
+                "./html/**"
             ],
-            "minify": false
+            "minify": true
         },
         "css": {
             "dest": "./static/css/",
