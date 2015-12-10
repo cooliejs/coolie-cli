@@ -28,7 +28,7 @@ describe('replace/html-attr-resource.js', function () {
             destHost: '/',
             destResourceDirname: destResourceDirname,
             code: code
-        });
+        }).code;
         var REG_LINK = /<link[\s\S]*?href="\/static\/res\//;
         var REG_IMG = /<img[\s\S]*?src="\/static\/res\//;
 

@@ -118,8 +118,9 @@ module.exports = function (file, options) {
     var mainList = [];
     var jsList = [];
     var cssList = [];
+    var resList = [];
     var replace = function (pack) {
-        return function(source){
+        return function (source) {
             var key = _generateKey();
 
             pack[key] = source;
@@ -164,7 +165,7 @@ module.exports = function (file, options) {
 
 
     if (options.replaceHTMLAttrResource) {
-        code = replaceHTMLAttrResource(file, {
+        var replaceHTMLAttrResourceRet = replaceHTMLAttrResource(file, {
             code: code,
             versionLength: options.versionLength,
             srcDirname: options.srcDirname,
@@ -173,6 +174,9 @@ module.exports = function (file, options) {
             destResourceDirname: options.destResourceDirname,
             minifyResource: options.minifyResource
         });
+
+        code = replaceHTMLAttrResourceRet.code;
+        resList = replaceHTMLAttrResourceRet.resList;
     }
 
     if (options.replaceHTMLTagScript) {
@@ -263,7 +267,8 @@ module.exports = function (file, options) {
         code: code,
         mainList: mainList,
         jsList: jsList,
-        cssList: cssList
+        cssList: cssList,
+        resList: resList
     };
 };
 
