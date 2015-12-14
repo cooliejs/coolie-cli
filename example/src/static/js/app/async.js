@@ -4,7 +4,7 @@ define(function (require, exports, module) {
     require('../libs1/all.js');
     require('../libs2/some.css', 'css');
     require('../libs2/some.html', 'html|url');
-    require('../libs2/some.jpg', 'image');
+    require('../libs2/some.jpg', 'image|url');
     require('../libs2/some.json', 'json');
     require('../libs2/some.txt', 'text');
 

@@ -1,2 +1,2 @@
-/*coolie@1.0.19*/
+/*coolie@1.0.20*/
 alert("hello");

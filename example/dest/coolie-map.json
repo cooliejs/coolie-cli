@@ -3,7 +3,7 @@
     "main": [
       {
         "src": "../src/static/js/app/async.js",
-        "dest": "/static/js/app/56faa47e13ff3e4d576c9c7dab6c35ca.js",
+        "dest": "/static/js/app/6d7c5d1707c6857f4ee2e4ba252f8561.js",
         "deps": [
           "../src/static/js/libs1/all.js",
           "../src/static/js/libs2/some.css",
@@ -17,7 +17,7 @@
     "async": [
       {
         "src": "../src/static/js/pages/page1.js",
-        "dest": "/static/js/async/1.ed7e8b81cd6519439bf78132ae597e49.js",
+        "dest": "/static/js/async/1.5bf2e7f706cd2302390cea0f1e40a903.js",
         "deps": [
           "../src/static/js/libs2/some.txt"
         ]
@@ -29,7 +29,7 @@
       },
       {
         "src": "../src/static/js/pages/404.js",
-        "dest": "/static/js/async/3.d312c07a3b408c31b398d9d64fa3d3a4.js",
+        "dest": "/static/js/async/3.889c012e3f9e6c81a4ea0037361567f5.js",
         "deps": [
           "../src/static/js/libs1/path1/path2/index.js"
         ]
@@ -67,7 +67,7 @@
     "main": [
       {
         "src": "../src/static/js/app/index.js",
-        "dest": "/static/js/app/586b21fdc087d0b7820d47484177bb10.js",
+        "dest": "/static/js/app/47d90f71f7d78fe11965e665c6ad3eef.js",
         "deps": [
           "../src/static/js/libs2/some.html",
           "../src/static/js/libs2/some.json",
@@ -94,10 +94,7 @@
       "../src/favicon.ico",
       "../src/apple-touch-icon-72.png",
       "../src/apple-touch-icon-72.png",
-      "../src/apple-touch-icon-144.png",
-      "../src/static/img/100x100.png",
-      "../src/static/img/loading.gif",
-      "../src/static/img/loading.gif"
+      "../src/apple-touch-icon-144.png"
     ]
   },
   "/html/index1.html": {
@@ -122,15 +119,13 @@
         ]
       }
     ],
-    "res": [
-      "../src/static/img/girl.jpg"
-    ]
+    "res": []
   },
   "/html/index2.html": {
     "main": [
       {
         "src": "../src/static/js/app/index.js",
-        "dest": "/static/js/app/586b21fdc087d0b7820d47484177bb10.js",
+        "dest": "/static/js/app/47d90f71f7d78fe11965e665c6ad3eef.js",
         "deps": [
           "../src/static/js/libs2/some.json",
           "../src/static/js/libs2/some.json",
@@ -143,10 +138,7 @@
     "js": [],
     "css": [],
     "res": [
-      "../src/favicon.ico",
-      "../src/static/img/100x100.png",
-      "../src/static/img/loading.gif",
-      "../src/static/img/loading.gif"
+      "../src/favicon.ico"
     ]
   },
   "/html/index3.html": {
@@ -216,8 +208,6 @@
       "../src/static/img/logo_03.png",
       "../src/static/img/logo_03.png",
       "../src/static/img/logo_03.png",
-      "../src/static/img/logo_03.png",
-      "../src/static/img/logo_03.png",
       "../src/static/img/logo_03.png"
     ]
   },
@@ -232,7 +222,7 @@
     "main": [
       {
         "src": "../src/static/js/app/index.js",
-        "dest": "/static/js/app/586b21fdc087d0b7820d47484177bb10.js",
+        "dest": "/static/js/app/47d90f71f7d78fe11965e665c6ad3eef.js",
         "deps": [
           "../src/static/js/libs2/some.json",
           "../src/static/js/libs2/some.json",
@@ -244,7 +234,6 @@
     "js": [],
     "css": [],
     "res": [
-      "../src/favicon.ico",
       "../src/favicon.ico"
     ]
   },
@@ -259,7 +248,7 @@
     "main": [
       {
         "src": "../src/static/js/app/user/index.js",
-        "dest": "/static/js/app/058c828d223560e0aec3c8b817568d9e.js",
+        "dest": "/static/js/app/d3ba3fbecf98baebff3d648cb0164d2d.js",
         "deps": [
           "../src/static/js/libs1/path1/path2/index.js",
           "../src/static/js/libs1/all.js"
@@ -286,10 +275,7 @@
       }
     ],
     "res": [
-      "../src/favicon.ico",
-      "../src/static/img/100x100.png",
-      "../src/static/img/loading.gif",
-      "../src/static/img/loading.gif"
+      "../src/favicon.ico"
     ]
   }
 }

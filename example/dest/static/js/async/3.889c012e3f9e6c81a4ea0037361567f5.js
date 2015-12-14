@@ -1,3 +1,3 @@
-/*coolie@1.0.19*/
+/*coolie@1.0.20*/
 define("0",["a"],function(e,n,t){var i=e("a");document.getElementById("ret").innerHTML="404: "+i});
-define("a",[],function(e,i,n){n.exports="libs1/path1/path2/index.js"});
+coolie.chunk(["0"]);
