@@ -64,6 +64,11 @@ var coolieFn = function () {
  * @returns {String}
  */
 module.exports = function (file, options) {
+    if(!options.destCoolieConfigBaseDirname){
+        debug.ignore('overide config', '`coolie-config.js` is not defined');
+        return null;
+    }
+
     var code = reader(file, 'utf8');
     var versionMap = options.versionMap;
     var coolieString = coolieFn.toString()

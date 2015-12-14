@@ -72,15 +72,11 @@ var defaults = {
 module.exports = function (options) {
     options = dato.extend(true, {}, defaults, options);
 
-    if (!options.destCoolieConfigBaseDirname) {
-        return {
-            mainVersionMap: {},
-            chunkVersionMap: {},
-            asyncVersionMap: {},
-            appMap: {},
-            mainMap: {}
-        };
-    }
+    var mainVersionMap = {};
+    var chunkVersionMap = {};
+    var asyncVersionMap = {};
+    // 模块依赖 map
+    var appMap = {};
 
     // 1、分析 main
     var mainMap = parseMain({
@@ -88,6 +84,24 @@ module.exports = function (options) {
         srcDirname: options.srcDirname,
         globOptions: options.globOptions
     });
+    var mainLength = Object.keys(mainMap).length;
+
+    if(!mainLength){
+        debug.ignore('build app', 'no main modules');
+        return {
+            mainVersionMap: mainVersionMap,
+            chunkVersionMap: chunkVersionMap,
+            asyncVersionMap: asyncVersionMap,
+            appMap: appMap,
+            mainMap: mainMap
+        };
+    }
+
+    if (mainLength && !options.destCoolieConfigBaseDirname) {
+        debug.error('mainLength', mainLength);
+        debug.error('build app', '`coolie-config.js` is not defined');
+        return process.exit(1);
+    }
 
     // 2、分析 chunk
     // chunk => index
@@ -102,8 +116,6 @@ module.exports = function (options) {
     var chunkDependingCountMap = {};
     // 入口文件计数
     var mainIndex = 0;
-    // 模块依赖 map
-    var appMap = {};
 
     // 3、chunk 计数统计
     dato.each(mainMap, function (mainFile, mainMeta) {
@@ -192,7 +204,6 @@ module.exports = function (options) {
     });
 
     // 5、chunk 新建
-    var chunkVersionMap = {};
     // [{bufferList: Array, md5List: Array}]
     dato.each(chunkGroupMap, function (groupIndex, groupMeta) {
         var ret = writer({
@@ -209,8 +220,6 @@ module.exports = function (options) {
     });
 
     // 6、single 重建
-    var mainVersionMap = {};
-    var asyncVersionMap = {};
     // [{srcFile: String, bufferList: Array, md5List: Array, chunkList: Array, chunkMap: Object, async: Boolean, mainIndex: Number, file: String}]
     dato.each(singleModuleMap, function (singleIndex, singleMeta) {
         if (singleMeta.chunkList.length) {
