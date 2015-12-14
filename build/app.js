@@ -72,6 +72,16 @@ var defaults = {
 module.exports = function (options) {
     options = dato.extend(true, {}, defaults, options);
 
+    if (!options.destCoolieConfigBaseDirname) {
+        return {
+            mainVersionMap: {},
+            chunkVersionMap: {},
+            asyncVersionMap: {},
+            appMap: {},
+            mainMap: {}
+        };
+    }
+
     // 1、分析 main
     var mainMap = parseMain({
         glob: options.glob,
