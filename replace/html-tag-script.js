@@ -109,6 +109,13 @@ module.exports = function (file, options) {
                 return process.exit(1);
             }
 
+            if(!options.srcCoolieConfigBaseDirname){
+                debug.error('coolie script', path.toSystem(file));
+                debug.error('coolie script', originalSource);
+                debug.error('coolie script', '`coolie-config.js` is NOT defined, but used');
+                return process.exit(1);
+            }
+
             var mainPath = path.join(options.srcCoolieConfigBaseDirname, dataMain);
             var mainVersion = options.mainVersionMap[mainPath];
 
