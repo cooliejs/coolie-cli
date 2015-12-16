@@ -10,7 +10,6 @@
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 var Middleware = require('ydr-utils').Middleware;
-var fse = require('fs-extra');
 
 var parseCoolieConfig = require('../parse/coolie.config.js');
 var buildAPP = require('../build/app.js');

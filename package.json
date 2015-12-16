@@ -70,7 +70,7 @@
     "howdo": "^2.0.2",
     "open": "0.0.5",
     "uglify-js": "^2.5.0",
-    "ydr-utils": "^32.18.0"
+    "ydr-utils": "^35.2.4"
   },
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha -c --recursive --ui bdd test -t 0"
