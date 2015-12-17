@@ -183,7 +183,7 @@ var defaults = {
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
- * @return {Object}
+ * @return {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);

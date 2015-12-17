@@ -165,7 +165,7 @@ module.exports = function (file, options) {
             break;
 
         default:
-            code = replaceModuleWrapper(file, {
+            var replaceModuleWrapperRet = replaceModuleWrapper(file, {
                 inType: options.inType,
                 outType: options.outType,
                 srcDirname: options.srcDirname,
@@ -183,6 +183,7 @@ module.exports = function (file, options) {
                 joinHTMLSpaces: options.joinHTMLSpaces,
                 removeHTMLBreakLines: options.removeHTMLBreakLines
             });
+            code = replaceModuleWrapperRet.code;
             break;
     }
 
