@@ -267,8 +267,10 @@ module.exports = function (file, options) {
                             destDirname: options.destDirname,
                             destHost: options.destHost,
                             destResourceDirname: options.destResourceDirname,
-                            destCSSDirname: options.destCSSDirname,
-                            minifyResource: options.minifyResource
+                            // 模块里的 css 相对于根目录
+                            destCSSDirname: null,
+                            minifyResource: options.minifyResource,
+                            replaceCSSResource: true
                         });
                     };
                     var createURLRet = createURL(file, options2);
@@ -286,8 +288,10 @@ module.exports = function (file, options) {
                         destDirname: options.destDirname,
                         destHost: options.destHost,
                         destResourceDirname: options.destResourceDirname,
-                        destCSSDirname: options.destCSSDirname,
-                        minifyResource: options.minifyResource
+                        // 模块里的 css 相对于根目录
+                        destCSSDirname: null,
+                        minifyResource: options.minifyResource,
+                        replaceCSSResource: true
                     });
                     code = string.toUnicode(code);
                     code = base64.string(code, extname);
@@ -304,8 +308,10 @@ module.exports = function (file, options) {
                         destDirname: options.destDirname,
                         destHost: options.destHost,
                         destResourceDirname: options.destResourceDirname,
-                        destCSSDirname: options.destCSSDirname,
-                        minifyResource: options.minifyResource
+                        // 模块里的 css 相对于根目录
+                        destCSSDirname: null,
+                        minifyResource: options.minifyResource,
+                        replaceCSSResource: true
                     });
                     return wrapDefine(file, minifyCSSRet2, options);
             }
