@@ -70,6 +70,8 @@ var defaults = {
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
 
+    var resList = [];
+
     // 读取模块内容
     var code;
     try {
@@ -184,11 +186,13 @@ module.exports = function (file, options) {
                 removeHTMLBreakLines: options.removeHTMLBreakLines
             });
             code = replaceModuleWrapperRet.code;
+            resList = replaceModuleWrapperRet.resList;
             break;
     }
 
     return {
         dependencies: dependencies,
+        resList: resList,
         code: code,
         md5: encryption.md5(code)
     };
