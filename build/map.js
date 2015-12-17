@@ -68,8 +68,15 @@ module.exports = function (options) {
     var parseURI = function (_path, root) {
         var isArray = typeis.array(_path);
         var _path2 = isArray ? _path : [_path];
-        var _path3 = _path2.map(function (_path4) {
-            return pathURI.toRootURL(_path4, root || options.destDirname);
+        var _path3 = [];
+        var _map = {};
+
+        _path2.forEach(function (_path4) {
+            var uri = pathURI.toRootURL(_path4, root || options.destDirname);
+            if (!_map[uri]) {
+                _map[uri] = true;
+                _path3.push(uri);
+            }
         });
 
         return isArray ? _path3 : _path3[0];
@@ -107,7 +114,7 @@ module.exports = function (options) {
     dato.each(htmlMainURIMap, function (mainJS, mainURI) {
         var asyncList = options.buildAPPResult.mainMap[mainJS].requireAsyncList;
 
-        dato.each (asyncList, function (index, asyncMain) {
+        dato.each(asyncList, function (index, asyncMain) {
             var noVersionAsyncMainPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.js');
             var asyncMainVersion = options.buildAPPResult.asyncVersionMap[noVersionAsyncMainPath];
             var dependencies = options.buildAPPResult.appMap[asyncMain.file] || [];
