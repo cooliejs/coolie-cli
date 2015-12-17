@@ -286,6 +286,7 @@ module.exports = function (file, options) {
                             minifyJS: true,
                             minifyCSS: true,
                             minifyResource: true,
+                            versionLength: options.versionLength,
                             uglifyJSOptions: options.uglifyJSOptions,
                             cleanCSSOptions: options.cleanCSSOptions,
                             replaceCSSResource: true
