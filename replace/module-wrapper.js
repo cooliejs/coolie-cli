@@ -19,7 +19,6 @@ var debug = require('ydr-utils').debug;
 var minifyCSS = require('../minify/css.js');
 var minifyHTML = require('../minify/html.js');
 var minifyJSON = require('../minify/json.js');
-var replaceCSSResource = require('../replace/css-resource.js');
 var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
@@ -282,6 +281,7 @@ module.exports = function (file, options) {
                             code: code,
                             replaceHTMLAttrResource: true,
                             replaceHTMLTagScript: true,
+                            replaceHTMLTagLink: true,
                             replaceHTMLTagStyleResource: true,
                             replaceHTMLAttrStyleResource: true,
                             replaceHTMLCoolieGroup: true,

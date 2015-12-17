@@ -108,6 +108,7 @@ module.exports = function (options) {
             code: code,
             replaceHTMLAttrResource: true,
             replaceHTMLTagScript: true,
+            replaceHTMLTagLink: true,
             replaceHTMLTagStyleResource: true,
             replaceHTMLAttrStyleResource: true,
             replaceHTMLCoolieGroup: true,

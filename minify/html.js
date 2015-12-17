@@ -18,6 +18,8 @@ var sign = require('../utils/sign.js');
 var replaceHTMLAttrResource = require('../replace/html-attr-resource.js');
 // 替换 <script>
 var replaceHTMLTagScript = require('../replace/html-tag-script.js');
+// 替换 <script>
+var replaceHTMLTagLink = require('../replace/html-tag-link.js');
 // 替换 <style>
 var replaceHTMLTagStyleResource = require('../replace/html-tag-style-resource.js');
 // 替换 <div style=""
@@ -200,6 +202,23 @@ module.exports = function (file, options) {
 
         code = replaceHTMLTagScriptRet.code;
         mainList = replaceHTMLTagScriptRet.mainList;
+    }
+
+    if (options.replaceHTMLTagLink) {
+        var replaceHTMLTagLinkRet = replaceHTMLTagLink(file, {
+            code: code,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destCSSDirname: options.destCSSDirname,
+            destResourceDirname: options.destResourceDirname,
+            versionLength: options.versionLength,
+            minifyCSS: options.minifyCSS,
+            cleanCSSOptions: options.cleanCSSOptions,
+            signCSS: options.signCSS
+        });
+
+        code = replaceHTMLTagLinkRet.code;
     }
 
     // 恢复 coolie group
