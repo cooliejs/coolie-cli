@@ -24,10 +24,11 @@ var minifyCSS = require('../minify/css.js');
 
 var COOLIE_IGNORE = 'coolieignore';
 var CSS_TYPES = {
-    'text/css': true
+    'stylesheet': true
 };
 var REG_LINK = /<link\b[\s\S]*?>/ig;
 var minifyCSSmap = {};
+var resourceMap = {};
 var defaults = {
     code: '',
     srcDirname: null,
@@ -60,9 +61,9 @@ var defaults = {
  * @returns {Object}
  */
 module.exports = function (file, options) {
-    options = dato.extend(true, {}, defaults, options);
+    options = dato.extend({}, defaults, options);
     var code = options.code;
-    var resources= [];
+    var resources = [];
     var cssList = [];
 
     code = code.replace(REG_LINK, function (source) {
@@ -77,7 +78,7 @@ module.exports = function (file, options) {
         var href = htmlAttr.get(source, 'href');
 
         if (type === true || !type) {
-            type = 'text/css';
+            type = 'stylesheet';
         }
 
         if (href === true) {
@@ -95,12 +96,13 @@ module.exports = function (file, options) {
 
             var srcPath = pathURI.toAbsoluteFile(href, file, options.srcDirname);
             var destURI = minifyCSSmap[srcPath];
+            resources = resourceMap[srcPath];
 
             if (!destURI) {
                 var srcCode = reader(srcPath, 'utf8');
                 var destCode = srcCode;
 
-                if(options.minifyCSS){
+                if (options.minifyCSS) {
                     var minifyCSSRet = minifyCSS(srcPath, {
                         code: srcCode,
                         cleanCSSOptions: options.cleanCSSOptions,
@@ -126,17 +128,17 @@ module.exports = function (file, options) {
                     destCode = sign('css') + '\n' + destCode;
                 }
 
-                cssList.push({
-                    destPath: destPath,
-                    dependencies: [{
-                        srcPath: srcPath,
-                        resources: resources
-                    }]
-                });
-
                 try {
                     fse.outputFileSync(destPath, destCode, 'utf8');
+                    cssList.push({
+                        destPath: destPath,
+                        dependencies: [{
+                            srcPath: srcPath,
+                            resources: resources
+                        }]
+                    });
                     minifyCSSmap[srcPath] = destURI;
+                    resourceMap[srcPath] = resources;
                     debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
                 } catch (err) {
                     debug.error('write file', path.toSystem(destPath));

@@ -116,8 +116,8 @@ module.exports = function (file, options) {
                             destCSSDirname: options.destCSSDirname,
                             minifyResource: options.minifyResource,
                             replaceCSSResource: options.replaceCSSResource
-                        }) + '\n';
-                    cssCode = minifyCSSRet.code;
+                        });
+                    cssCode = minifyCSSRet.code + '\n';
                     cssFileResMap[cssFile] = minifyCSSRet.dependencies;
                 }
 

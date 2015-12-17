@@ -25,7 +25,7 @@ describe('minify/css.js', function () {
     it('one line', function () {
         var ret = minifyCSS(file, {
             code: code
-        });
+        }).code;
 
         assert.equal((ret.match(/\n/g) || []).length, 0);
     });
@@ -41,7 +41,7 @@ describe('minify/css.js', function () {
             destCSSDirname: destCSSDirname,
             minifyResource: true,
             replaceCSSResource: true
-        });
+        }).code;
 
         assert.equal(/\/res\//g.test(ret), true);
         assert.equal((ret.match(/\n/g) || []).length, 0);

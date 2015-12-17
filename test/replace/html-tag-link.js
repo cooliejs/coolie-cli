@@ -20,20 +20,20 @@ var destDirname = path.join(__dirname, '../../example/dest/');
 var destCSSDirname = path.join(destDirname, 'static/css');
 var destResourceDirname = path.join(destDirname, 'static/res');
 
-describe('replace/html-attr-script.js', function () {
+describe('replace/html-tag-link.js', function () {
     it('e', function () {
         var ret = replaceHTMLTagLink(file, {
             code: code,
             srcDirname: srcDirname,
             destDirname: destDirname,
             destCSSDirname: destCSSDirname,
-            destResourceDirname: destResourceDirname,
-            destHost: 'http://abc.com/'
+            destResourceDirname: destResourceDirname
         });
 
         console.log('===========================\n');
         console.log(JSON.stringify(ret, null, 4));
-        assert.equal(ret.code.indexOf('href="http://abc.com/static/css/') > -1, true);
+        assert.equal(/\n/.test(ret.code), false);
+        assert.equal(ret.resources.length > 0, true);
         console.log('\n===========================');
     });
 });
