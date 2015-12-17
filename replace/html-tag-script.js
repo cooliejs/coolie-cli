@@ -198,9 +198,9 @@ module.exports = function (file, options) {
             return source;
         }
 
-        var find = JS_TYPES[type];
+        var isJSType = JS_TYPES[type];
 
-        if (find && options.minifyJS) {
+        if (isJSType && options.minifyJS) {
             scriptCode = minifyJS(file, {
                 code: scriptCode,
                 uglifyJSOptions: options.uglifyJSOptions
@@ -209,7 +209,7 @@ module.exports = function (file, options) {
 
         var ret = scriptTag + scriptCode + '</script>';
 
-        if (find) {
+        if (isJSType) {
             ret = ret.replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
         }
 

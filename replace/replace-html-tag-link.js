@@ -23,9 +23,9 @@ var minifyCSS = require('../minify/css.js');
 
 
 var COOLIE_IGNORE = 'coolieignore';
-var CSS_TYPES = [
-    'text/css'
-];
+var CSS_TYPES = {
+    'text/css': true
+};
 var REG_LINK = /<link\b[\s\S]*?>/ig;
 var defaults = {
     code: '',
@@ -70,6 +70,16 @@ module.exports = function (file, options) {
 
         var type = htmlAttr.get(source, 'type');
         var href = htmlAttr.get(source, 'href');
+
+        if (type === true || !type) {
+            type = 'text/css';
+        }
+
+        var isCSSLink = CSS_TYPES[type];
+
+        if (!isCSSLink) {
+            return source;
+        }
     });
 };
 
