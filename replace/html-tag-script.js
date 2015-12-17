@@ -199,6 +199,10 @@ module.exports = function (file, options) {
                 try {
                     fse.outputFileSync(destPath, destCode, 'utf8');
                     minifyJSMap[srcPath] = destURI;
+                    jsList.push({
+                        destPath: destPath,
+                        dependencies: [srcPath]
+                    });
                     debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
                 } catch (err) {
                     debug.error('write file', path.toSystem(destPath));
@@ -230,6 +234,7 @@ module.exports = function (file, options) {
 
     return {
         code: code,
-        mainList: mainList
+        mainList: mainList,
+        jsList: jsList
     };
 };
