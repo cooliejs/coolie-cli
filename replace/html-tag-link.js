@@ -34,6 +34,7 @@ var defaults = {
     destDirname: null,
     destHost: '/',
     destCSSDirname: null,
+    destResourceDirname: null,
     versionLength: 32,
     minifyCSS: true,
     cleanCSSOptions: null,
@@ -50,6 +51,7 @@ var defaults = {
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标根域
  * @param options.destCSSDirname {String} 目标 CSS 目录
+ * @param options.destResourceDirname {String} 目标资源目录
  * @param options.versionLength {Number} 版本号长度
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
  * @param [options.minifyResource] {Boolean} 是否压缩静态资源
@@ -139,7 +141,10 @@ module.exports = function (file, options) {
         return source;
     });
 
-    return code;
+    return {
+        code: code,
+        resList: []
+    };
 };
 
 
