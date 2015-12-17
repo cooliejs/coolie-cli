@@ -8,8 +8,6 @@
 'use strict';
 
 var klass = require('ydr-utils').class;
-var debug = require('ydr-utils').debug;
-var path = require('ydr-utils').path;
 
 
 var Increase = klass.create({
