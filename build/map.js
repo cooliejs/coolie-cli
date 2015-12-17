@@ -62,7 +62,8 @@ module.exports = function (options) {
         //                'static/img/2.png'
         //            ]
         //        }]
-        //    }]
+        //    }],
+        //    res: []
         //}
     };
     var parseURI = function (_path, root) {
