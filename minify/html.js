@@ -253,7 +253,7 @@ module.exports = function (file, options) {
     }
 
     if (options.replaceHTMLTagStyleResource) {
-        code = replaceHTMLTagStyleResource(file, {
+        var replaceHTMLTagStyleResourceRet = replaceHTMLTagStyleResource(file, {
             code: code,
             versionLength: options.versionLength,
             srcDirname: options.srcDirname,
@@ -263,6 +263,9 @@ module.exports = function (file, options) {
             minifyCSS: options.minifyCSS,
             minifyResource: options.minifyResource
         });
+
+        code = replaceHTMLTagStyleResourceRet.code;
+        resList = resList.concat(replaceHTMLTagStyleResourceRet.resList);
     }
 
     if (options.replaceHTMLAttrStyleResource) {
