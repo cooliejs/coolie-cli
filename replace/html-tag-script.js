@@ -21,15 +21,15 @@ var sign = require('../utils/sign.js');
 var reader = require('../utils/reader.js');
 var minifyJS = require('../minify/js.js');
 
-var JS_TYPES = [
-    'javascript',
-    'text/javascript',
-    'text/ecmascript',
-    'text/ecmascript-6',
-    'text/jsx',
-    'application/javascript',
-    'application/ecmascript'
-];
+var JS_TYPES = {
+    'javascript': true,
+    'text/javascript': true,
+    'text/ecmascript': true,
+    'text/ecmascript-6': true,
+    'text/jsx': true,
+    'application/javascript': true,
+    'application/ecmascript': true
+};
 var COOLIE_IGNORE = 'coolieignore';
 var COOLIE = 'coolie';
 var REG_SCRIPT = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
@@ -90,6 +90,10 @@ module.exports = function (file, options) {
         var hasCoolie = htmlAttr.get(scriptTag, COOLIE);
         var src = htmlAttr.get(scriptTag, 'src');
 
+        if (type === true || !type) {
+            type = 'text/javascript';
+        }
+
         // 有 coolie 属性
         if (src && hasCoolie) {
             var dataMain = htmlAttr.get(source, 'data-main');
@@ -109,7 +113,7 @@ module.exports = function (file, options) {
                 return process.exit(1);
             }
 
-            if(!options.srcCoolieConfigBaseDirname){
+            if (!options.srcCoolieConfigBaseDirname) {
                 debug.error('coolie script', path.toSystem(file));
                 debug.error('coolie script', originalSource);
                 debug.error('coolie script', '`coolie-config.js` is NOT defined, but used');
@@ -194,16 +198,7 @@ module.exports = function (file, options) {
             return source;
         }
 
-        var find = !type;
-
-        if (!find) {
-            dato.each(JS_TYPES, function (index, _type) {
-                if (type === _type) {
-                    find = true;
-                    return false;
-                }
-            });
-        }
+        var find = JS_TYPES[type];
 
         if (find && options.minifyJS) {
             scriptCode = minifyJS(file, {

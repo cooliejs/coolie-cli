@@ -44,6 +44,7 @@ var defaults = {
     code: '',
     replaceHTMLAttrResource: false,
     replaceHTMLTagScript: false,
+    replaceHTMLTagLink: false,
     replaceHTMLTagStyleResource: false,
     replaceHTMLAttrStyleResource: false,
     replaceHTMLCoolieGroup: false,
@@ -79,6 +80,7 @@ var defaults = {
  * @param options.code {String} 代码
  * @param [options.replaceHTMLAttrResource=false] {Boolean} 是否替换 html 内的属性资源引用
  * @param [options.replaceHTMLTagScript=false] {Boolean} 是否替换 html 内的 <script>
+ * @param [options.replaceHTMLTagLink=false] {Boolean} 是否替换 html 内的 <link>
  * @param [options.replaceHTMLTagStyleResource=false] {Boolean} 是否替换 html 内的 <style>
  * @param [options.replaceHTMLAttrStyleResource=false] {Boolean} 是否替换 html 内的 <div style="">
  * @param [options.replaceHTMLCoolieGroup=false] {Boolean} 是否替换 html 内的 <\!--coolie-->
