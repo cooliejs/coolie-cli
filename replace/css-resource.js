@@ -80,7 +80,6 @@ module.exports = function (file, options) {
                 deps.push(absFile);
             }
 
-            console.log(options);
             var destFile = copy(absFile, {
                 srcDirname: options.srcDirname,
                 destDirname: options.destResourceDirname,
