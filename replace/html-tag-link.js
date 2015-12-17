@@ -114,7 +114,7 @@ module.exports = function (file, options) {
                 }
 
                 var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
-                var destPath = path.join(options.destJSDirname, destVersion + '.css');
+                var destPath = path.join(options.destCSSDirname, destVersion + '.css');
 
                 destURI = pathURI.toRootURL(destPath, options.destDirname);
                 destURI = pathURI.joinURI(options.destHost, destURI);

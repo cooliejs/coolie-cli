@@ -12,7 +12,7 @@ var fs = require('fs');
 var assert = require('assert');
 
 var replaceHTMLTagLink = require('../../replace/html-tag-link.js');
-var file = path.join(__dirname, '../../example/src/html/user/index.html');
+var file = path.join(__dirname, '../../example/src/html/css.html');
 
 var code = fs.readFileSync(file, 'utf8');
 var srcDirname = path.join(__dirname, '../../example/src/');
@@ -33,6 +33,7 @@ describe('replace/html-attr-script.js', function () {
 
         console.log('===========================\n');
         console.log(ret);
+        assert.equal(ret.indexOf('href="http://abc.com/static/css/') > -1, true);
         console.log('\n===========================');
     });
 });
