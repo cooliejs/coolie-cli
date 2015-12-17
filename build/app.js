@@ -27,6 +27,7 @@ var defaults = {
     minDependingCount2Chunk: 2,
     srcDirname: null,
     destDirname: null,
+    destCSSDirname: null,
     destResourceDirname: null,
     destHost: '/',
     globOptions: {
@@ -53,6 +54,7 @@ var defaults = {
  * @param options.minDependingCount2Chunk {Number} 最小引用次数分离 chunk
  * @param options.srcDirname {String} 原始目录
  * @param options.destDirname {String} 目标目录
+ * @param options.destCSSDirname {String} 目标 CSS 目录
  * @param options.destResourceDirname {String} 目标资源目录
  * @param options.destHost {String} 目标域
  * @param options.globOptions {Object} glob 配置
@@ -123,6 +125,7 @@ module.exports = function (options) {
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
+            destCSSDirname: options.destCSSDirname,
             destResourceDirname: options.destResourceDirname,
             destHost: options.destHost,
             versionLength: options.versionLength,

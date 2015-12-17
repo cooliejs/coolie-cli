@@ -12,6 +12,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    require('../libs2/some.html', 'html|url');
-    require('../libs2/some.html', 'html|text');
+    //require('../libs2/some.html', 'html|url');
+    //require('../libs2/some.html', 'html|text');
+    require('../libs2/some.html', 'html');
 });

@@ -142,7 +142,7 @@ module.exports = function (file, options) {
             }
 
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
-            concatFile = path.join(path.toURI(options.destCSSDirname), version + '.css');
+            concatFile = path.join(options.destCSSDirname, version + '.css');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
             cssList.push({
                 destPath: concatFile,

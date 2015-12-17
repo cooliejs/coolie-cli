@@ -72,6 +72,8 @@ module.exports = function (file, options) {
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
+            destJSDirname: options.destJSDirname,
+            destCSSDirname: options.destCSSDirname,
             destResourceDirname: options.destResourceDirname,
             destHost: options.destHost,
             versionLength: options.versionLength,

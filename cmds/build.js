@@ -84,6 +84,7 @@ module.exports = function (options) {
         chunk: configs.js.chunk,
         srcDirname: srcDirname,
         destDirname: destDirname,
+        destCSSDirname: configs.destCSSDirname,
         destResourceDirname: configs.destResourceDirname,
         destHost: configs.dest.host,
         uglifyJSOptions: configs.js.minify,
