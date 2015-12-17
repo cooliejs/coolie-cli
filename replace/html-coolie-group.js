@@ -106,29 +106,38 @@ module.exports = function (file, options) {
                 var cssCode = reader(cssFile, ENCODING);
 
                 if (options.minifyCSS) {
-                    cssCode = minifyCSS(cssFile, {
+                    var minifyCSSRet = minifyCSS(cssFile, {
                             code: cssCode,
                             cleanCSSOptions: options.cleanCSSOptions,
-                            replaceCSSResource: false
+                            versionLength: options.versionLength,
+                            srcDirname: options.srcDirname,
+                            destDirname: options.destDirname,
+                            destHost: options.destHost,
+                            destResourceDirname: options.destResourceDirname,
+                            destCSSDirname: options.destCSSDirname,
+                            minifyResource: options.minifyResource,
+                            replaceCSSResource: options.replaceCSSResource
                         }) + '\n';
+                    cssCode = minifyCSSRet.code;
+                    cssFileResMap[cssFile] = minifyCSSRet.dependencies;
                 }
 
-                if (options.replaceCSSResource) {
-                    var replaceCSSResourceRet = replaceCSSResource(cssFile, {
-                        code: cssCode,
-                        versionLength: options.versionLength,
-                        srcDirname: options.srcDirname,
-                        destDirname: options.destDirname,
-                        destHost: options.destHost,
-                        destResourceDirname: options.destResourceDirname,
-                        destCSSDirname: options.destCSSDirname,
-                        minifyResource: options.minifyResource,
-                        returnObject: false
-                    });
-
-                    cssCode = replaceCSSResourceRet.code;
-                    cssFileResMap[cssFile] = replaceCSSResourceRet.dependencies;
-                }
+                //if (options.replaceCSSResource) {
+                //    var replaceCSSResourceRet = replaceCSSResource(cssFile, {
+                //        code: cssCode,
+                //        versionLength: options.versionLength,
+                //        srcDirname: options.srcDirname,
+                //        destDirname: options.destDirname,
+                //        destHost: options.destHost,
+                //        destResourceDirname: options.destResourceDirname,
+                //        destCSSDirname: options.destCSSDirname,
+                //        minifyResource: options.minifyResource,
+                //        returnObject: false
+                //    });
+                //
+                //    cssCode = replaceCSSResourceRet.code;
+                //    cssFileResMap[cssFile] = replaceCSSResourceRet.dependencies;
+                //}
 
                 files.push(cssFile);
                 md5List.push(encryption.md5(cssCode));
