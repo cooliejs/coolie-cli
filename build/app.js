@@ -10,7 +10,6 @@
 var debug = require('ydr-utils').debug;
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
-var fse = require('fs-extra');
 
 var parseMain = require('../parse/main.js');
 var parseChunk = require('../parse/chunk.js');
@@ -88,7 +87,7 @@ module.exports = function (options) {
     });
     var mainLength = Object.keys(mainMap).length;
 
-    if(!mainLength){
+    if (!mainLength) {
         debug.ignore('build app', 'no main modules');
         return {
             mainVersionMap: mainVersionMap,
@@ -121,7 +120,7 @@ module.exports = function (options) {
 
     // 3、chunk 计数统计
     dato.each(mainMap, function (mainFile, mainMeta) {
-        var dependencies = buildMain(mainFile, {
+        var buildMainRet = buildMain(mainFile, {
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
@@ -136,9 +135,14 @@ module.exports = function (options) {
             joinHTMLSpaces: options.joinHTMLSpaces,
             removeHTMLBreakLines: options.removeHTMLBreakLines
         });
+        var dependencies = buildMainRet.dependencies;
+        var resList = buildMainRet.resList;
 
         appMap[mainFile] = dependencies.map(function (dependency) {
             return dependency.file;
+        });
+        dato.each(resList, function (index, res) {
+            appMap[mainFile].push(res);
         });
 
         // [{id: String, file: String, buffer: Buffer, md5: String}]
