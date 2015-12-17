@@ -33,7 +33,7 @@ describe('replace/html-tag-link.js', function () {
         console.log('===========================\n');
         console.log(JSON.stringify(ret, null, 4));
         assert.equal(/\n/.test(ret.code), false);
-        assert.equal(ret.resources.length > 0, true);
+        assert.equal(ret.cssList.length > 0, true);
         console.log('\n===========================');
     });
 });

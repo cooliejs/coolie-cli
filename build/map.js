@@ -147,7 +147,7 @@ module.exports = function (options) {
             dato.each(cssItem.dependencies, function (index, depCSSItem) {
                 coolieHTMLCSSItem.deps.push({
                     src: parseURI(depCSSItem.srcPath),
-                    res: parseURI(depCSSItem.resources)
+                    res: parseURI(depCSSItem.resList)
                 });
             });
             coolieMap[htmlURI].css.push(coolieHTMLCSSItem);
