@@ -20,7 +20,7 @@ module.exports = function (coolie) {
         },
         "html": {
             "src": [
-                "./html/style.html"
+                "./html/js.html"
             ],
             "minify": true
         },
