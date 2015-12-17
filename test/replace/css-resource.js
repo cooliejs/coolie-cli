@@ -37,7 +37,7 @@ describe('replace/css-resource.js', function () {
 
         console.log(ret);
 
-        ret.dependencies.forEach(function (file) {
+        ret.resList.forEach(function (file) {
             assert.equal(typeis.file(file), true);
         });
     });

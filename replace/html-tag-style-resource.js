@@ -41,7 +41,7 @@ var defaults = {
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 内的资源
- * @returns {Object}
+ * @returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
     var code = options.code;

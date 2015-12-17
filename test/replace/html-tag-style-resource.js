@@ -31,7 +31,8 @@ describe('replace/html-tag-style-resource.js', function () {
             minifyCSS: true
         });
 
-        assert.equal(/<style>.*<\/style>/m.test(ret), true);
+        console.log(ret);
+        assert.equal(/<style>.*<\/style>/m.test(ret.code), true);
     });
 });
 

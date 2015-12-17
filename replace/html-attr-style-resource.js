@@ -42,7 +42,7 @@ var defaults = {
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
- * returns {String}
+ * returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);

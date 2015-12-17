@@ -31,7 +31,8 @@ describe('replace/html-attr-style-resource.js', function () {
             minifyCSS: true
         });
 
-        assert.equal(/url\(\/static\/res\/.*?\)/.test(ret), true);
+        console.log(ret);
+        assert.equal(/url\(\/static\/res\/.*?\)/.test(ret.code), true);
     });
 });
 
