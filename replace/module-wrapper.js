@@ -142,6 +142,25 @@ var wrapDefine = function (file, ret, options) {
     return ret;
 };
 
+
+/**
+ * 添加 css 列表到资源列表
+ * @param cssList
+ * @param resList
+ */
+var addCSSres = function (cssList, resList) {
+    dato.each(cssList, function (index, item) {
+        dato.each(item.dependencies, function (index, dep) {
+            resList.push(dep.srcPath);
+            resList = resList.concat(dep.resList);
+        });
+    });
+
+    return resList;
+};
+
+
+
 var defaults = {
     code: null,
     inType: 'js',
@@ -333,11 +352,11 @@ module.exports = function (file, options) {
                             replaceCSSResource: true
                         });
                     };
-                    var createURLRet2 = createURL(file, options2);
-                    uri = createURLRet2.code;
+                    var createURLRet3 = createURL(file, options2);
+                    uri = createURLRet3.code;
                     uri = pathURI.joinURI(options.destHost, uri);
-                    createURLRet2.code = uri;
-                    return wrapDefine(file, createURLRet2, options);
+                    createURLRet3.code = uri;
+                    return wrapDefine(file, createURLRet3, options);
 
                 case 'base64':
                     var minifyHTMLRet = minifyHTML(file, {
@@ -397,6 +416,8 @@ module.exports = function (file, options) {
                         cleanCSSOptions: options.cleanCSSOptions,
                         replaceCSSResource: true
                     });
+                    console.log(JSON.stringify(minifyHTMLRet2, null, 4));
+                    minifyHTMLRet2.resList = addCSSres(minifyHTMLRet2.cssList, minifyHTMLRet2.resList);
                     return wrapDefine(file, minifyHTMLRet2, options);
             }
             break;

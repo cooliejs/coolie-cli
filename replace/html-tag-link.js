@@ -115,7 +115,7 @@ module.exports = function (file, options) {
                         replaceCSSResource: true
                     });
                     destCode = minifyCSSRet.code;
-                    resList = minifyCSSRet.dependencies;
+                    resList = minifyCSSRet.resList;
                 }
 
                 var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
@@ -156,7 +156,6 @@ module.exports = function (file, options) {
 
     return {
         code: code,
-        resources: resList,
         cssList: cssList
     };
 };
