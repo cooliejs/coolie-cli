@@ -29,7 +29,9 @@ describe('build/html.js', function () {
     it('e', function () {
         var ret = buildHTML({
             glob: [
-                './html/**'
+                './html/index.html',
+                './html/async.html',
+                './html/user/index.html'
             ],
             removeHTMLYUIComments: true,
             removeHTMLLineComments: true,

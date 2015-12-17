@@ -21,7 +21,7 @@ var destCoolieConfigBaseDirname = path.join(destDirname, 'static/js/app/');
 describe('build/module.js', function () {
     it('sync', function () {
         var mainFile = path.join(srcDirname, 'static/js/app/index.js');
-        var dependencies = buildMain(mainFile, {
+        var ret = buildMain(mainFile, {
             inType: 'js',
             outType: 'js',
             async: false,
@@ -34,12 +34,12 @@ describe('build/module.js', function () {
             destCoolieConfigBaseDirname: destCoolieConfigBaseDirname
         });
 
-        assert.equal(dependencies.length, 6);
+        assert.equal(ret.dependencies.length, 6);
     });
 
     it('async', function () {
         var mainFile = path.join(srcDirname, 'static/js/app/async.js');
-        var dependencies = buildMain(mainFile, {
+        var ret = buildMain(mainFile, {
             inType: 'js',
             outType: 'js',
             async: true,
@@ -53,6 +53,6 @@ describe('build/module.js', function () {
         });
 
         //console.log(dependencies[0].buffer.toString('utf8'));
-        assert.equal(dependencies.length, 7);
+        assert.equal(ret.dependencies.length, 7);
     });
 });
