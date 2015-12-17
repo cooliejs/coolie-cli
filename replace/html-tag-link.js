@@ -23,7 +23,7 @@ var minifyCSS = require('../minify/css.js');
 
 
 var COOLIE_IGNORE = 'coolieignore';
-var CSS_TYPES = {
+var CSS_RELS = {
     'stylesheet': true
 };
 var REG_LINK = /<link\b[\s\S]*?>/ig;
@@ -74,18 +74,18 @@ module.exports = function (file, options) {
             return source;
         }
 
-        var type = htmlAttr.get(source, 'type');
+        var rel = htmlAttr.get(source, 'rel');
         var href = htmlAttr.get(source, 'href');
 
-        if (type === true || !type) {
-            type = 'stylesheet';
+        if (rel === true || !rel) {
+            rel = 'stylesheet';
         }
 
         if (href === true) {
             href = '';
         }
 
-        var isCSSlink = CSS_TYPES[type];
+        var isCSSlink = CSS_RELS[rel];
 
         if (isCSSlink && href) {
             var isRelatived = pathURI.isRelatived(href);
