@@ -7,11 +7,9 @@
 
 'use strict';
 
-var debug = require('ydr-utils').debug;
-var path = require('ydr-utils').path;
+var dato = require('ydr-utils').dato;
 
 var htmlAttr = require('../utils/html-attr.js');
-var replaceCSSResource = require('./css-resource.js');
 var minifyCSS = require('../minify/css.js');
 
 var COOLIE_IGNOE = 'coolieignore';
@@ -24,6 +22,7 @@ var defaults = {
     destDirname: null,
     destHost: '/',
     destResourceDirname: null,
+    replaceCSSResource: true,
     minifyCSS: true,
     minifyResource: true
 };
@@ -41,9 +40,11 @@ var defaults = {
  * @param [options.minifyCSS] {Boolean} 是否压缩 css
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.minifyResource] {Boolean} 压缩资源文件
+ * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 内的资源
  */
 module.exports = function (file, options) {
     var code = options.code;
+    options = dato.extend({}, defaults, options);
 
     // <style...>
     code = code.replace(REG_STYLE_TAG, function (source, styleTag, styleCode) {
@@ -58,23 +59,18 @@ module.exports = function (file, options) {
 
         // 未配置 type 属性 || type 属性标准
         if (!type || type === STYLE_TAG_TYPE) {
-            styleCode = replaceCSSResource(file, {
-                code: styleCode,
-                destCSSDirname: null,
-                versionLength: options.versionLength,
-                srcDirname: options.srcDirname,
-                destDirname: options.destDirname,
-                destHost: options.destHost,
-                destResourceDirname: options.destResourceDirname,
-                returnObject: false
-            }).code;
-
             if (options.minifyCSS) {
                 styleCode = minifyCSS(file, {
                     code: styleCode,
                     cleanCSSOptions: options.cleanCSSOptions,
-                    replaceCSSResource: false
-                });
+                    replaceCSSResource: options.replaceCSSResource,
+                    destCSSDirname: null,
+                    versionLength: options.versionLength,
+                    srcDirname: options.srcDirname,
+                    destDirname: options.destDirname,
+                    destHost: options.destHost,
+                    destResourceDirname: options.destResourceDirname
+                }).code;
             }
         }
 

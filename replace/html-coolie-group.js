@@ -19,7 +19,6 @@ var sign = require('../utils/sign.js');
 var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
 var minifyCSS = require('../minify/css.js');
-var replaceCSSResource = require('../replace/css-resource.js');
 
 // <!--coolie-->
 var REG_COOLIE_GROUP = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;

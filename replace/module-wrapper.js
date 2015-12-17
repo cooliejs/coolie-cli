@@ -204,24 +204,20 @@ module.exports = function (file, options) {
             break;
 
         case 'css':
-            code = replaceCSSResource(file, {
-                code: code,
-                versionLength: options.versionLength,
-                srcDirname: options.srcDirname,
-                destDirname: options.destDirname,
-                destHost: options.destHost,
-                destResourceDirname: options.destResourceDirname,
-                destCSSDirname: options.destCSSDirname,
-                minifyResource: options.minifyResource
-            }).code;
             switch (options.outType) {
                 case 'url':
                     options2.filter = function (destFile) {
                         return minifyCSS(file, {
                             code: code,
                             cleanCSSOptions: options.cleanCSSOptions,
-                            destDirname: path.dirname(destFile)
-                        });
+                            versionLength: options.versionLength,
+                            srcDirname: options.srcDirname,
+                            destDirname: options.destDirname,
+                            destHost: options.destHost,
+                            destResourceDirname: options.destResourceDirname,
+                            destCSSDirname: options.destCSSDirname,
+                            minifyResource: options.minifyResource
+                        }).code;
                     };
                     uri = createURL(file, options2);
                     uri = pathURI.joinURI(options.destHost, uri);
@@ -230,8 +226,15 @@ module.exports = function (file, options) {
                 case 'base64':
                     code = minifyCSS(file, {
                         code: code,
-                        cleanCSSOptions: options.cleanCSSOptions
-                    });
+                        cleanCSSOptions: options.cleanCSSOptions,
+                        versionLength: options.versionLength,
+                        srcDirname: options.srcDirname,
+                        destDirname: options.destDirname,
+                        destHost: options.destHost,
+                        destResourceDirname: options.destResourceDirname,
+                        destCSSDirname: options.destCSSDirname,
+                        minifyResource: options.minifyResource
+                    }).code;
                     code = string.toUnicode(code);
                     code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
@@ -239,8 +242,16 @@ module.exports = function (file, options) {
                 // text
                 default :
                     code = minifyCSS(file, {
-                        code: code
-                    });
+                        code: code,
+                        cleanCSSOptions: options.cleanCSSOptions,
+                        versionLength: options.versionLength,
+                        srcDirname: options.srcDirname,
+                        destDirname: options.destDirname,
+                        destHost: options.destHost,
+                        destResourceDirname: options.destResourceDirname,
+                        destCSSDirname: options.destCSSDirname,
+                        minifyResource: options.minifyResource
+                    }).code;
                     return wrapDefine(file, code, options);
             }
             break;
