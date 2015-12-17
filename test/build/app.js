@@ -15,6 +15,8 @@ var buildAPP = require('../../build/app.js');
 
 var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');
+var destJSDirname = path.join(destDirname, 'static/js');
+var destCSSDirname = path.join(destDirname, 'static/css');
 var destResourceDirname = path.join(destDirname, 'static/res/');
 var destCoolieConfigBaseDirname = path.join(destDirname, 'static/js/app/');
 var destCoolieConfigChunkDirname = path.join(destDirname, 'static/js/chunk/');
@@ -36,6 +38,8 @@ describe('build/app.js', function () {
             ],
             srcDirname: srcDirname,
             destDirname: destDirname,
+            destJSDirname: destJSDirname,
+            destCSSDirname: destCSSDirname,
             destResourceDirname: destResourceDirname,
             destCoolieConfigBaseDirname: destCoolieConfigBaseDirname,
             destCoolieConfigChunkDirname: destCoolieConfigChunkDirname,
