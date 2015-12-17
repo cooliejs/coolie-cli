@@ -67,6 +67,13 @@ var createURL = function (file, options) {
 
         if (code !== null && typeis.function(options.filter)) {
             var filterRet = options.filter(destFile);
+
+            if (typeis.String(filterRet)) {
+                filterRet = {
+                    code: filterRet
+                };
+            }
+
             code = filterRet.code;
             resList = filterRet.resList || [];
         }
@@ -92,7 +99,9 @@ var createURL = function (file, options) {
 /**
  * 包裹 define
  * @param file {String} 文件
- * @param code {String} 代码
+ * @param ret {Object} 结果
+ * @param ret.code {String} 代码
+ * @param ret.resList {Array} 依赖资源
  * @param options {Object} 配置
  * @param options.inType {String} 模块入口类型
  * @param options.outType {String} 模块出口类型
@@ -104,15 +113,20 @@ var createURL = function (file, options) {
  * @param options.versionLength {Number} 版本号长度
  * @param [options.minifyResource] {Boolean} 是否压缩静态资源
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
- * @param [resList] {Array} 依赖的资源
  * @returns {Object}
  */
-var wrapDefine = function (file, code, options, resList) {
-    var text = code;
+var wrapDefine = function (file, ret, options) {
+    if (typeis.String(ret)) {
+        ret = {
+            code: ret
+        };
+    }
+
+    var text = ret.code;
 
     if (!(options.inType === 'json' && options.outType === 'js')) {
         var o = {
-            o: code
+            o: ret.code
         };
 
         text = JSON.stringify(o)
@@ -120,14 +134,12 @@ var wrapDefine = function (file, code, options, resList) {
             .replace(REG_HUA_END, '');
     }
 
-    code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){' +
+    ret.code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){' +
         'r.exports=' + text + '' +
         '});';
+    ret.resList = ret.resList || [];
 
-    return {
-        code: code,
-        resList: resList || []
-    };
+    return ret;
 };
 
 var defaults = {
@@ -189,15 +201,15 @@ module.exports = function (file, options) {
             switch (options.outType) {
                 case 'url':
                     options2.filter = function () {
-                        return {
-                            code: minifyJSON(file, {
-                                code: code
-                            })
-                        };
+                        return minifyJSON(file, {
+                            code: code
+                        });
                     };
-                    uri = createURL(file, options2);
+                    var createURLRet1 = createURL(file, options2);
+                    uri = createURLRet1.code;
                     uri = pathURI.joinURI(options.destHost, uri);
-                    return wrapDefine(file, uri, options);
+                    createURLRet1.code = uri;
+                    return wrapDefine(file, createURLRet1, options);
 
                 case 'base64':
                     code = minifyJSON(file, {
@@ -219,7 +231,7 @@ module.exports = function (file, options) {
         case 'css':
             switch (options.outType) {
                 case 'url':
-                    options2.filter = function (destFile) {
+                    options2.filter = function () {
                         return minifyCSS(file, {
                             code: code,
                             cleanCSSOptions: options.cleanCSSOptions,
@@ -230,14 +242,16 @@ module.exports = function (file, options) {
                             destResourceDirname: options.destResourceDirname,
                             destCSSDirname: options.destCSSDirname,
                             minifyResource: options.minifyResource
-                        }).code;
+                        });
                     };
-                    uri = createURL(file, options2);
+                    var createURLRet = createURL(file, options2);
+                    uri = createURLRet.code;
                     uri = pathURI.joinURI(options.destHost, uri);
-                    return wrapDefine(file, uri, options);
+                    createURLRet.code = uri;
+                    return wrapDefine(file, createURLRet, options);
 
                 case 'base64':
-                    code = minifyCSS(file, {
+                    var minifyCSSRet = minifyCSS(file, {
                         code: code,
                         cleanCSSOptions: options.cleanCSSOptions,
                         versionLength: options.versionLength,
@@ -247,14 +261,15 @@ module.exports = function (file, options) {
                         destResourceDirname: options.destResourceDirname,
                         destCSSDirname: options.destCSSDirname,
                         minifyResource: options.minifyResource
-                    }).code;
+                    });
                     code = string.toUnicode(code);
                     code = base64.string(code, extname);
-                    return wrapDefine(file, code, options);
+                    minifyCSSRet.code = code;
+                    return wrapDefine(file, minifyCSSRet, options);
 
                 // text
                 default :
-                    code = minifyCSS(file, {
+                    var minifyCSSRet2 = minifyCSS(file, {
                         code: code,
                         cleanCSSOptions: options.cleanCSSOptions,
                         versionLength: options.versionLength,
@@ -264,8 +279,8 @@ module.exports = function (file, options) {
                         destResourceDirname: options.destResourceDirname,
                         destCSSDirname: options.destCSSDirname,
                         minifyResource: options.minifyResource
-                    }).code;
-                    return wrapDefine(file, code, options);
+                    });
+                    return wrapDefine(file, minifyCSSRet2, options);
             }
             break;
 
@@ -315,14 +330,16 @@ module.exports = function (file, options) {
                             uglifyJSOptions: options.uglifyJSOptions,
                             cleanCSSOptions: options.cleanCSSOptions,
                             replaceCSSResource: true
-                        }).code;
+                        });
                     };
-                    uri = createURL(file, options2);
+                    var createURLRet2 = createURL(file, options2);
+                    uri = createURLRet2.code;
                     uri = pathURI.joinURI(options.destHost, uri);
-                    return wrapDefine(file, uri, options);
+                    createURLRet2.code = uri;
+                    return wrapDefine(file, createURLRet2, options);
 
                 case 'base64':
-                    code = minifyHTML(file, {
+                    var minifyHTMLRet = minifyHTML(file, {
                         code: code,
                         replaceHTMLAttrResource: true,
                         replaceHTMLTagScript: true,
@@ -346,14 +363,15 @@ module.exports = function (file, options) {
                         uglifyJSOptions: options.uglifyJSOptions,
                         cleanCSSOptions: options.cleanCSSOptions,
                         replaceCSSResource: true
-                    }).code;
+                    });
                     code = string.toUnicode(code);
                     code = base64.string(code, extname);
-                    return wrapDefine(file, code, options);
+                    minifyHTMLRet.code = code;
+                    return wrapDefine(file, minifyHTMLRet, options);
 
                 // text
                 default :
-                    code = minifyHTML(file, {
+                    var minifyHTMLRet2 = minifyHTML(file, {
                         code: code,
                         replaceHTMLAttrResource: true,
                         replaceHTMLTagScript: true,
@@ -377,8 +395,8 @@ module.exports = function (file, options) {
                         uglifyJSOptions: options.uglifyJSOptions,
                         cleanCSSOptions: options.cleanCSSOptions,
                         replaceCSSResource: true
-                    }).code;
-                    return wrapDefine(file, code, options);
+                    });
+                    return wrapDefine(file, minifyHTMLRet2, options);
             }
             break;
 
