@@ -67,7 +67,7 @@ module.exports = function (file, options) {
             destDirname: options.destDirname,
             destHost: options.destHost,
             destResourceDirname: options.destResourceDirname
-        }).code;
+        });
 
         styleCode = replaceCSSResourceRet.code;
         resList = replaceCSSResourceRet.resList;

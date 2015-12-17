@@ -265,7 +265,7 @@ module.exports = function (file, options) {
     }
 
     if (options.replaceHTMLAttrStyleResource) {
-        code = replaceHTMLAttrStyleResource(file, {
+        var replaceHTMLAttrStyleResourceRet = replaceHTMLAttrStyleResource(file, {
             code: code,
             versionLength: options.versionLength,
             srcDirname: options.srcDirname,
@@ -274,6 +274,8 @@ module.exports = function (file, options) {
             destResourceDirname: options.destResourceDirname,
             minifyResource: options.minifyResource
         });
+        code = replaceHTMLAttrStyleResourceRet.code;
+        resList = resList.concat(replaceHTMLAttrStyleResourceRet.resList);
     }
 
     // 恢复注释
