@@ -202,6 +202,7 @@ module.exports = function (file, options) {
 
         code = replaceHTMLTagScriptRet.code;
         mainList = replaceHTMLTagScriptRet.mainList;
+        jsList = jsList.concat(replaceHTMLTagScriptRet.jsList);
     }
 
     if (options.replaceHTMLTagLink) {
@@ -247,7 +248,7 @@ module.exports = function (file, options) {
         });
 
         code = replaceHTMLCoolieGroupRet.code;
-        jsList = replaceHTMLCoolieGroupRet.jsList;
+        jsList = jsList.concat(replaceHTMLCoolieGroupRet.jsList);
         cssList = cssList.concat(replaceHTMLCoolieGroupRet.cssList);
     }
 

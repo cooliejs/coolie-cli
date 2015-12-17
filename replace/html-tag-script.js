@@ -76,6 +76,7 @@ module.exports = function (file, options) {
     options = dato.extend(true, {}, defaults, options);
     var code = options.code;
     var mainList = [];
+    var jsList = [];
 
     code = code.replace(REG_SCRIPT, function (source, scriptTag, scriptCode) {
         var ignore = htmlAttr.get(source, COOLIE_IGNORE);
