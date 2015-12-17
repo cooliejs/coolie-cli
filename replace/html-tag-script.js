@@ -94,8 +94,15 @@ module.exports = function (file, options) {
             type = 'text/javascript';
         }
 
+        if (src === true) {
+            src = '';
+        }
+
+        var isJSscript = JS_TYPES[type];
+
+
         // 有 coolie 属性
-        if (src && hasCoolie) {
+        if (isJSscript && src && hasCoolie) {
             var dataMain = htmlAttr.get(source, 'data-main');
             var dataConfig = htmlAttr.get(source, 'data-config');
 
@@ -157,7 +164,7 @@ module.exports = function (file, options) {
         }
 
         // 有 src 属性
-        if (src) {
+        if (isJSscript && src) {
             var isRelatived = pathURI.isRelatived(src);
 
             if (!isRelatived) {
@@ -198,9 +205,8 @@ module.exports = function (file, options) {
             return source;
         }
 
-        var isJSType = JS_TYPES[type];
 
-        if (isJSType && options.minifyJS) {
+        if (isJSscript && options.minifyJS) {
             scriptCode = minifyJS(file, {
                 code: scriptCode,
                 uglifyJSOptions: options.uglifyJSOptions
@@ -209,7 +215,7 @@ module.exports = function (file, options) {
 
         var ret = scriptTag + scriptCode + '</script>';
 
-        if (isJSType) {
+        if (isJSscript) {
             ret = ret.replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
         }
 

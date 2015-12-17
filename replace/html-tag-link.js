@@ -75,11 +75,21 @@ module.exports = function (file, options) {
             type = 'text/css';
         }
 
-        var isCSSLink = CSS_TYPES[type];
-
-        if (!isCSSLink) {
-            return source;
+        if (href === true) {
+            href = '';
         }
+
+        var isCSSlink = CSS_TYPES[type];
+
+        if (isCSSlink && href) {
+            var isRelatived = pathURI.isRelatived(src);
+
+            if (!isRelatived) {
+                return source;
+            }
+        }
+
+        return source;
     });
 };
 
