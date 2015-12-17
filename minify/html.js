@@ -219,6 +219,7 @@ module.exports = function (file, options) {
         });
 
         code = replaceHTMLTagLinkRet.code;
+        cssList = cssList.concat(replaceHTMLTagLinkRet.cssList);
     }
 
     // 恢复 coolie group
@@ -247,7 +248,7 @@ module.exports = function (file, options) {
 
         code = replaceHTMLCoolieGroupRet.code;
         jsList = replaceHTMLCoolieGroupRet.jsList;
-        cssList = replaceHTMLCoolieGroupRet.cssList;
+        cssList = cssList.concat(replaceHTMLCoolieGroupRet.cssList);
     }
 
     if (options.replaceHTMLTagStyleResource) {

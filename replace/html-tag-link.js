@@ -62,7 +62,8 @@ var defaults = {
 module.exports = function (file, options) {
     options = dato.extend(true, {}, defaults, options);
     var code = options.code;
-    var dependencies= [];
+    var resources= [];
+    var cssList = [];
 
     code = code.replace(REG_LINK, function (source) {
         var ignore = htmlAttr.get(source, COOLIE_IGNORE);
@@ -112,7 +113,7 @@ module.exports = function (file, options) {
                         replaceCSSResource: true
                     });
                     destCode = minifyCSSRet.code;
-                    dependencies = minifyCSSRet.dependencies;
+                    resources = minifyCSSRet.dependencies;
                 }
 
                 var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
@@ -124,6 +125,14 @@ module.exports = function (file, options) {
                 if (options.signCSS) {
                     destCode = sign('css') + '\n' + destCode;
                 }
+
+                cssList.push({
+                    destPath: destPath,
+                    dependencies: [{
+                        srcPath: srcPath,
+                        resources: resources
+                    }]
+                });
 
                 try {
                     fse.outputFileSync(destPath, destCode, 'utf8');
@@ -145,7 +154,8 @@ module.exports = function (file, options) {
 
     return {
         code: code,
-        dependencies: dependencies
+        resources: resources,
+        cssList: cssList
     };
 };
 

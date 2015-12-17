@@ -32,7 +32,7 @@ describe('replace/html-attr-script.js', function () {
         });
 
         console.log('===========================\n');
-        console.log(ret);
+        console.log(JSON.stringify(ret, null, 4));
         assert.equal(ret.code.indexOf('href="http://abc.com/static/css/') > -1, true);
         console.log('\n===========================');
     });

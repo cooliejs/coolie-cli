@@ -3,7 +3,19 @@
     "main": [],
     "async": [],
     "js": [],
-    "css": [],
+    "css": [
+      {
+        "dest": "/static/css/915d7e0b.css",
+        "deps": [
+          {
+            "src": "../src/static/css/1.css",
+            "res": [
+              "../src/static/img/100x100.png"
+            ]
+          }
+        ]
+      }
+    ],
     "res": []
   }
 }
