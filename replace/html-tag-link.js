@@ -27,6 +27,7 @@ var CSS_RELS = {
     'stylesheet': true
 };
 var REG_LINK = /<link\b[\s\S]*?>/ig;
+var minifyPathmap = {};
 var minifyCSSmap = {};
 var resourceMap = {};
 var defaults = {
@@ -95,6 +96,7 @@ module.exports = function (file, options) {
             }
 
             var srcPath = pathURI.toAbsoluteFile(href, file, options.srcDirname);
+            var destPath = minifyPathmap[srcPath];
             var destURI = minifyCSSmap[srcPath];
             resList = resourceMap[srcPath];
 
@@ -119,8 +121,8 @@ module.exports = function (file, options) {
                 }
 
                 var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
-                var destPath = path.join(options.destCSSDirname, destVersion + '.css');
 
+                destPath = path.join(options.destCSSDirname, destVersion + '.css');
                 destURI = pathURI.toRootURL(destPath, options.destDirname);
                 destURI = pathURI.joinURI(options.destHost, destURI);
 
@@ -130,13 +132,7 @@ module.exports = function (file, options) {
 
                 try {
                     fse.outputFileSync(destPath, destCode, 'utf8');
-                    cssList.push({
-                        destPath: destPath,
-                        dependencies: [{
-                            srcPath: srcPath,
-                            resList: resList
-                        }]
-                    });
+                    minifyPathmap[srcPath] = destPath;
                     minifyCSSmap[srcPath] = destURI;
                     resourceMap[srcPath] = resList;
                     debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
@@ -146,6 +142,14 @@ module.exports = function (file, options) {
                     return process.exit(1);
                 }
             }
+
+            cssList.push({
+                destPath: destPath,
+                dependencies: [{
+                    srcPath: srcPath,
+                    resList: resList
+                }]
+            });
 
             source = htmlAttr.set(source, 'href', destURI);
             return source;
