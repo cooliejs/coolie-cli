@@ -180,7 +180,7 @@ module.exports = function (file, options) {
                 }
 
                 try {
-                    fse.writeFileSync(destPath, destCode, 'utf8');
+                    fse.outputFileSync(destPath, destCode, 'utf8');
                     minifyJSMap[srcPath] = destURI;
                     debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
                 } catch (err) {
