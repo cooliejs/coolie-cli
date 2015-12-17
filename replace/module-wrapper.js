@@ -47,6 +47,7 @@ var createURL = function (file, options) {
     var code = options.code;
     var destFile = '';
     var destDirname = options.inType === 'css' ? options.destCSSDirname : options.destResourceDirname;
+    var resList = [];
 
     // 直接复制
     if (code === null) {
@@ -65,7 +66,9 @@ var createURL = function (file, options) {
         destFile = path.join(destDirname, version + extname);
 
         if (code !== null && typeis.function(options.filter)) {
-            code = options.filter(destFile);
+            var filterRet = options.filter(destFile);
+            code = filterRet.code;
+            resList = filterRet.resList || [];
         }
 
         try {
@@ -79,7 +82,10 @@ var createURL = function (file, options) {
 
     var uri = pathURI.toRootURL(destFile, options.destDirname);
 
-    return pathURI.joinURI(options.destHost, uri);
+    return {
+        code: pathURI.joinURI(options.destHost, uri),
+        resList: resList
+    };
 };
 
 
@@ -98,9 +104,10 @@ var createURL = function (file, options) {
  * @param options.versionLength {Number} 版本号长度
  * @param [options.minifyResource] {Boolean} 是否压缩静态资源
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
- * @returns {string}
+ * @param [resList] {Array} 依赖的资源
+ * @returns {Object}
  */
-var wrapDefine = function (file, code, options) {
+var wrapDefine = function (file, code, options, resList) {
     var text = code;
 
     if (!(options.inType === 'json' && options.outType === 'js')) {
@@ -113,9 +120,14 @@ var wrapDefine = function (file, code, options) {
             .replace(REG_HUA_END, '');
     }
 
-    return 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){' +
+    code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){' +
         'r.exports=' + text + '' +
         '});';
+
+    return {
+        code: code,
+        resList: resList || []
+    };
 };
 
 var defaults = {
@@ -159,7 +171,7 @@ var defaults = {
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
- * @return {String}
+ * @return {Object}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
@@ -177,9 +189,11 @@ module.exports = function (file, options) {
             switch (options.outType) {
                 case 'url':
                     options2.filter = function () {
-                        return minifyJSON(file, {
-                            code: code
-                        });
+                        return {
+                            code: minifyJSON(file, {
+                                code: code
+                            })
+                        };
                     };
                     uri = createURL(file, options2);
                     uri = pathURI.joinURI(options.destHost, uri);
