@@ -63,7 +63,7 @@ var defaults = {
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
     var code = options.code;
-    var resources = [];
+    var resList = [];
     var cssList = [];
 
     code = code.replace(REG_LINK, function (source) {
@@ -96,7 +96,7 @@ module.exports = function (file, options) {
 
             var srcPath = pathURI.toAbsoluteFile(href, file, options.srcDirname);
             var destURI = minifyCSSmap[srcPath];
-            resources = resourceMap[srcPath];
+            resList = resourceMap[srcPath];
 
             if (!destURI) {
                 var srcCode = reader(srcPath, 'utf8');
@@ -115,7 +115,7 @@ module.exports = function (file, options) {
                         replaceCSSResource: true
                     });
                     destCode = minifyCSSRet.code;
-                    resources = minifyCSSRet.dependencies;
+                    resList = minifyCSSRet.dependencies;
                 }
 
                 var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
@@ -134,11 +134,11 @@ module.exports = function (file, options) {
                         destPath: destPath,
                         dependencies: [{
                             srcPath: srcPath,
-                            resources: resources
+                            resList: resList
                         }]
                     });
                     minifyCSSmap[srcPath] = destURI;
-                    resourceMap[srcPath] = resources;
+                    resourceMap[srcPath] = resList;
                     debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
                 } catch (err) {
                     debug.error('write file', path.toSystem(destPath));
@@ -156,7 +156,7 @@ module.exports = function (file, options) {
 
     return {
         code: code,
-        resources: resources,
+        resources: resList,
         cssList: cssList
     };
 };

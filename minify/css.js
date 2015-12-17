@@ -57,7 +57,7 @@ var cssminify = null;
  */
 module.exports = function (file, options) {
     var code = options.code;
-    var dependencies = [];
+    var resList = [];
 
     if (!cssminify) {
         cssminify = new CleanCSS(dato.extend({}, defaults, options.cleanCSSOptions));
@@ -78,12 +78,12 @@ module.exports = function (file, options) {
                 minifyResource: options.minifyResource
             });
             code = replaceCSSResourceRet.code;
-            dependencies = replaceCSSResourceRet.dependencies;
+            resList = replaceCSSResourceRet.resList;
         }
 
         return {
             code: code,
-            dependencies: dependencies
+            resList: resList
         };
     } catch (err) {
         debug.error('cssminify', path.toSystem(file));
