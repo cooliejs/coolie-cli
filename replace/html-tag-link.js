@@ -66,7 +66,6 @@ module.exports = function (file, options) {
 
     code = code.replace(REG_LINK, function (source) {
         var ignore = htmlAttr.get(source, COOLIE_IGNORE);
-        var originalSource = source;
 
         if (ignore) {
             source = htmlAttr.remove(source, COOLIE_IGNORE);
@@ -146,7 +145,7 @@ module.exports = function (file, options) {
 
     return {
         code: code,
-        dependencies: []
+        dependencies: dependencies
     };
 };
 
