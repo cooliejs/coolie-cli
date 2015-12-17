@@ -72,7 +72,7 @@ var defaults = {
  * @param [options.replaceCSSResource] {Boolean} 是否替换 CSS 内引用资源
  * @param [options.signJS] {Boolean} 是否签名 js 文件
  * @param [options.signCSS] {Boolean} 是否签名 css 文件
- * @returns {Object}
+ * @returns {{code: String, cssList: Array, jsList: Array}}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
@@ -118,25 +118,8 @@ module.exports = function (file, options) {
                             replaceCSSResource: options.replaceCSSResource
                         });
                     cssCode = minifyCSSRet.code + '\n';
-                    cssFileResMap[cssFile] = minifyCSSRet.dependencies;
+                    cssFileResMap[cssFile] = minifyCSSRet.resList;
                 }
-
-                //if (options.replaceCSSResource) {
-                //    var replaceCSSResourceRet = replaceCSSResource(cssFile, {
-                //        code: cssCode,
-                //        versionLength: options.versionLength,
-                //        srcDirname: options.srcDirname,
-                //        destDirname: options.destDirname,
-                //        destHost: options.destHost,
-                //        destResourceDirname: options.destResourceDirname,
-                //        destCSSDirname: options.destCSSDirname,
-                //        minifyResource: options.minifyResource,
-                //        returnObject: false
-                //    });
-                //
-                //    cssCode = replaceCSSResourceRet.code;
-                //    cssFileResMap[cssFile] = replaceCSSResourceRet.dependencies;
-                //}
 
                 files.push(cssFile);
                 md5List.push(encryption.md5(cssCode));
@@ -157,7 +140,7 @@ module.exports = function (file, options) {
                 dependencies: files.map(function (file) {
                     return {
                         srcPath: file,
-                        resources: cssFileResMap[file]
+                        resList: cssFileResMap[file]
                     };
                 })
             });

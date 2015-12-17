@@ -58,7 +58,7 @@ var defaults = {
  * @param [options.minifyResource] {Boolean} 是否压缩静态资源
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.signCSS] {Boolean} 是否签名 CSS 文件
- * @returns {Object}
+ * @returns {{code: String, cssList: Array}}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);

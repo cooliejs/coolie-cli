@@ -10,7 +10,6 @@
 var fs = require('fs-extra');
 var CleanCSS = require("clean-css");
 var dato = require('ydr-utils').dato;
-var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
 
@@ -53,7 +52,7 @@ var cssminify = null;
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.replaceCSSResource] {Boolean} 是否替换 css 内引用文件
- * @returns {Object}
+ * @returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
     var code = options.code;
