@@ -9,18 +9,18 @@ module.exports = function (coolie) {
             "main": [
                 //"./static/js/app/html1.js"
             ],
-            "coolie-config.js": "./static/js/coolie-config.js",
+            //"coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
             "chunk": [
-                [
-                    "./static/js/libs1/**" // => 0
-                ],
-                "./static/js/libs2/**"    // => 1
+                //[
+                //    "./static/js/libs1/**" // => 0
+                //],
+                //"./static/js/libs2/**"    // => 1
             ]
         },
         "html": {
             "src": [
-                "./html/css.html"
+                "./html/style.html"
             ],
             "minify": true
         },
