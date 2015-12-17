@@ -46,7 +46,7 @@ exports.toRootURL = function (p, root) {
 exports.isRelatived = function (p) {
     p = path.toURI(p);
 
-    return !REG_ABSOLUTE.test(p);
+    return !REG_ABSOLUTE.test(p) && !REG_BLANK.test(p);
 };
 
 

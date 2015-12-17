@@ -68,7 +68,7 @@ module.exports = function (file, options) {
 
             var pathRet = pathURI.parseURI2Path(resource);
 
-            if (!pathURI.isRelatived(pathRet.path) || pathURI.isBlank(pathRet.original)) {
+            if (!pathURI.isRelatived(pathRet.original)) {
                 return all;
             }
 

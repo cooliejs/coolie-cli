@@ -53,10 +53,11 @@ var cssminify = null;
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.replaceCSSResource] {Boolean} 是否替换 css 内引用文件
- * @returns {String}
+ * @returns {Object}
  */
 module.exports = function (file, options) {
     var code = options.code;
+    var dependencies = [];
 
     if (!cssminify) {
         cssminify = new CleanCSS(dato.extend({}, defaults, options.cleanCSSOptions));
@@ -66,7 +67,7 @@ module.exports = function (file, options) {
         code = cssminify.minify(code).styles;
 
         if (options.replaceCSSResource) {
-            code = replaceCSSResource(file, {
+            var replaceCSSResourceRet = replaceCSSResource(file, {
                 code: code,
                 versionLength: options.versionLength,
                 srcDirname: options.srcDirname,
@@ -75,10 +76,15 @@ module.exports = function (file, options) {
                 destResourceDirname: options.destResourceDirname,
                 destCSSDirname: options.destCSSDirname,
                 minifyResource: options.minifyResource
-            }).code;
+            });
+            code = replaceCSSResourceRet.code;
+            dependencies = replaceCSSResourceRet.dependencies;
         }
 
-        return code;
+        return {
+            code: code,
+            dependencies: dependencies
+        };
     } catch (err) {
         debug.error('cssminify', path.toSystem(file));
         debug.error('cssminify', err.message);
