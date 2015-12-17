@@ -41,9 +41,12 @@ var defaults = {
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 内的资源
+ * @returns {Object}
  */
 module.exports = function (file, options) {
     var code = options.code;
+    var resList = [];
+
     options = dato.extend({}, defaults, options);
 
     // <style...>
@@ -60,7 +63,7 @@ module.exports = function (file, options) {
         // 未配置 type 属性 || type 属性标准
         if (!type || type === STYLE_TAG_TYPE) {
             if (options.minifyCSS) {
-                styleCode = minifyCSS(file, {
+                var minifyCSSRet = minifyCSS(file, {
                     code: styleCode,
                     cleanCSSOptions: options.cleanCSSOptions,
                     replaceCSSResource: options.replaceCSSResource,
@@ -70,14 +73,20 @@ module.exports = function (file, options) {
                     destDirname: options.destDirname,
                     destHost: options.destHost,
                     destResourceDirname: options.destResourceDirname
-                }).code;
+                });
+
+                styleCode = minifyCSSRet.code;
+                resList = minifyCSSRet.resList;
             }
         }
 
         return styleTag + styleCode + '</style>';
     });
 
-    return code;
+    return {
+        code: code,
+        resList: resList
+    };
 };
 
 

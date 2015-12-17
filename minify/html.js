@@ -180,7 +180,7 @@ module.exports = function (file, options) {
         });
 
         code = replaceHTMLAttrResourceRet.code;
-        resList = replaceHTMLAttrResourceRet.resList;
+        resList = resList.concat(replaceHTMLAttrResourceRet.resList);
     }
 
     if (options.replaceHTMLTagScript) {
