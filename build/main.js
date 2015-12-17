@@ -10,7 +10,6 @@
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 var path = require('ydr-utils').path;
-var fse = require('fs-extra');
 
 var pathURI = require('../utils/path-uri.js');
 var buildModule = require('./module.js');
