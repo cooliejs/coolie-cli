@@ -62,6 +62,7 @@ var defaults = {
 module.exports = function (file, options) {
     options = dato.extend(true, {}, defaults, options);
     var code = options.code;
+    var dependencies= [];
 
     code = code.replace(REG_LINK, function (source) {
         var ignore = htmlAttr.get(source, COOLIE_IGNORE);
@@ -100,7 +101,7 @@ module.exports = function (file, options) {
                 var destCode = srcCode;
 
                 if(options.minifyCSS){
-                    destCode = minifyCSS(srcPath, {
+                    var minifyCSSRet = minifyCSS(srcPath, {
                         code: srcCode,
                         cleanCSSOptions: options.cleanCSSOptions,
                         versionLength: options.versionLength,
@@ -111,6 +112,8 @@ module.exports = function (file, options) {
                         minifyResource: options.minifyResource,
                         replaceCSSResource: true
                     });
+                    destCode = minifyCSSRet.code;
+                    dependencies = minifyCSSRet.dependencies;
                 }
 
                 var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
@@ -143,7 +146,7 @@ module.exports = function (file, options) {
 
     return {
         code: code,
-        resList: []
+        dependencies: []
     };
 };
 

@@ -29,11 +29,11 @@ describe('replace/html-attr-script.js', function () {
             destCSSDirname: destCSSDirname,
             destResourceDirname: destResourceDirname,
             destHost: 'http://abc.com/'
-        }).code;
+        });
 
         console.log('===========================\n');
         console.log(ret);
-        assert.equal(ret.indexOf('href="http://abc.com/static/css/') > -1, true);
+        assert.equal(ret.code.indexOf('href="http://abc.com/static/css/') > -1, true);
         console.log('\n===========================');
     });
 });
