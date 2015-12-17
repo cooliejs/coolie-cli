@@ -51,6 +51,7 @@ var defaults = {
     uglifyJSOptions: null,
     signJS: false
 };
+var minifyPathMap = {};
 var minifyJSMap = {};
 
 
@@ -174,6 +175,7 @@ module.exports = function (file, options) {
 
             var srcPath = pathURI.toAbsoluteFile(src, file, options.srcDirname);
             var destURI = minifyJSMap[srcPath];
+            var destPath = minifyPathMap[srcPath];
 
             if (!destURI) {
                 var srcCode = reader(srcPath, 'utf8');
@@ -187,8 +189,8 @@ module.exports = function (file, options) {
                 }
 
                 var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
-                var destPath = path.join(options.destJSDirname, destVersion + '.js');
 
+                destPath = path.join(options.destJSDirname, destVersion + '.js');
                 destURI = pathURI.toRootURL(destPath, options.destDirname);
                 destURI = pathURI.joinURI(options.destHost, destURI);
 
@@ -198,11 +200,8 @@ module.exports = function (file, options) {
 
                 try {
                     fse.outputFileSync(destPath, destCode, 'utf8');
+                    minifyPathMap[srcPath] = destPath;
                     minifyJSMap[srcPath] = destURI;
-                    jsList.push({
-                        destPath: destPath,
-                        dependencies: [srcPath]
-                    });
                     debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
                 } catch (err) {
                     debug.error('write file', path.toSystem(destPath));
@@ -210,6 +209,11 @@ module.exports = function (file, options) {
                     return process.exit(1);
                 }
             }
+
+            jsList.push({
+                destPath: destPath,
+                dependencies: [srcPath]
+            });
 
             source = htmlAttr.set(source, 'src', destURI);
             return source;
