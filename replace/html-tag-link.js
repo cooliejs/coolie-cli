@@ -31,9 +31,9 @@ var minifyCSSmap = {};
 var defaults = {
     code: '',
     srcDirname: null,
-    destCSSDirname: null,
     destDirname: null,
     destHost: '/',
+    destCSSDirname: null,
     versionLength: 32,
     minifyCSS: true,
     cleanCSSOptions: null,
@@ -50,8 +50,9 @@ var defaults = {
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标根域
  * @param options.destCSSDirname {String} 目标 CSS 目录
- * @param options.mainVersionMap {Object} 入口文件版本 map，{file: version}
+ * @param options.versionLength {Number} 版本号长度
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
+ * @param [options.minifyResource] {Boolean} 是否压缩静态资源
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.signCSS] {Boolean} 是否签名 CSS 文件
  * @returns {Object}
@@ -94,23 +95,35 @@ module.exports = function (file, options) {
 
             if (!destURI) {
                 var srcCode = reader(srcPath, 'utf8');
-                var destCode = minifyJS(srcPath, {
-                    code: srcCode,
-                    uglifyJSOptions: options.uglifyJSOptions
-                });
+                var destCode = srcCode;
+
+                if(options.minifyCSS){
+                    destCode = minifyCSS(srcPath, {
+                        code: srcCode,
+                        cleanCSSOptions: options.cleanCSSOptions,
+                        versionLength: options.versionLength,
+                        srcDirname: options.srcDirname,
+                        destDirname: options.destDirname,
+                        destHost: options.destHost,
+                        destResourceDirname: options.destResourceDirname,
+                        minifyResource: options.minifyResource,
+                        replaceCSSResource: true
+                    });
+                }
+
                 var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
-                var destPath = path.join(options.destJSDirname, destVersion + '.js');
+                var destPath = path.join(options.destJSDirname, destVersion + '.css');
 
                 destURI = pathURI.toRootURL(destPath, options.destDirname);
                 destURI = pathURI.joinURI(options.destHost, destURI);
 
-                if (options.signJS) {
-                    destCode = sign('js') + '\n' + destCode;
+                if (options.signCSS) {
+                    destCode = sign('css') + '\n' + destCode;
                 }
 
                 try {
                     fse.outputFileSync(destPath, destCode, 'utf8');
-                    minifyJSMap[srcPath] = destURI;
+                    minifyCSSmap[srcPath] = destURI;
                     debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
                 } catch (err) {
                     debug.error('write file', path.toSystem(destPath));
@@ -125,6 +138,8 @@ module.exports = function (file, options) {
 
         return source;
     });
+
+    return code;
 };
 
 
