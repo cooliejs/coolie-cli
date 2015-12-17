@@ -51,7 +51,7 @@ var defaults = {
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
- * @returns {[{id: String, file: String, buffer: Buffer, md5: String}]}
+ * @returns {{dependencies: {id: String, file: String, buffer: Buffer, md5: String}, resList: Array}}
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
@@ -62,6 +62,8 @@ module.exports = function (file, options) {
     var buildLength = 0;
     var buildMap = {};
     var dependencies = [];
+    var resList = [];
+    var resMap = {};
     var build = function (file, options) {
         var ret = buildModule(file, {
             inType: options.inType,
@@ -78,6 +80,13 @@ module.exports = function (file, options) {
             versionLength: options.versionLength,
             minifyResource: options.minifyResource,
             cleanCSSOptions: options.cleanCSSOptions
+        });
+
+        dato.each(ret.resList, function (index, res) {
+            if (!resMap[res]) {
+                resMap[res] = true;
+                resList.push(res);
+            }
         });
 
         dependencies.push({
@@ -122,7 +131,10 @@ module.exports = function (file, options) {
 
     build(mainFile, options2);
 
-    return dependencies;
+    return {
+        dependencies: dependencies,
+        resList: resList
+    };
 };
 
 
