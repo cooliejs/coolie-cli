@@ -47,6 +47,7 @@ var createURL = function (file, options) {
     var code = options.code;
     var destFile = '';
     var destDirname = options.inType === 'css' ? options.destCSSDirname : options.destResourceDirname;
+    var filterRet = {};
     var resList = [];
 
     // 直接复制
@@ -66,7 +67,7 @@ var createURL = function (file, options) {
         destFile = path.join(destDirname, version + extname);
 
         if (code !== null && typeis.function(options.filter)) {
-            var filterRet = options.filter(destFile);
+            filterRet = options.filter(destFile);
 
             if (typeis.String(filterRet)) {
                 filterRet = {
@@ -91,7 +92,10 @@ var createURL = function (file, options) {
 
     return {
         code: pathURI.joinURI(options.destHost, uri),
-        resList: resList
+        resList: resList,
+        mainList: filterRet.mainList,
+        jsList: filterRet.jsList,
+        cssList: filterRet.cssList
     };
 };
 
@@ -144,11 +148,14 @@ var wrapDefine = function (file, ret, options) {
 
 
 /**
- * 添加 css 列表到资源列表
- * @param cssList
- * @param resList
+ * 合并js/css到资源列表
+ * @param result
  */
-var addCSSres = function (cssList, resList) {
+var mergeRes = function (result) {
+    var resList = result.resList;
+    var jsList = result.jsList;
+    var cssList = result.cssList;
+
     dato.each(cssList, function (index, item) {
         dato.each(item.dependencies, function (index, dep) {
             resList.push(dep.srcPath);
@@ -156,9 +163,10 @@ var addCSSres = function (cssList, resList) {
         });
     });
 
+    resList = resList.concat(jsList);
+
     return resList;
 };
-
 
 
 var defaults = {
@@ -356,6 +364,7 @@ module.exports = function (file, options) {
                     uri = createURLRet3.code;
                     uri = pathURI.joinURI(options.destHost, uri);
                     createURLRet3.code = uri;
+                    createURLRet3.resList = mergeRes(createURLRet3);
                     return wrapDefine(file, createURLRet3, options);
 
                 case 'base64':
@@ -387,6 +396,7 @@ module.exports = function (file, options) {
                     code = string.toUnicode(code);
                     code = base64.string(code, extname);
                     minifyHTMLRet.code = code;
+                    minifyHTMLRet.resList = mergeRes(minifyHTMLRet);
                     return wrapDefine(file, minifyHTMLRet, options);
 
                 // text
@@ -416,8 +426,7 @@ module.exports = function (file, options) {
                         cleanCSSOptions: options.cleanCSSOptions,
                         replaceCSSResource: true
                     });
-                    console.log(JSON.stringify(minifyHTMLRet2, null, 4));
-                    minifyHTMLRet2.resList = addCSSres(minifyHTMLRet2.cssList, minifyHTMLRet2.resList);
+                    minifyHTMLRet2.resList = mergeRes(minifyHTMLRet2);
                     return wrapDefine(file, minifyHTMLRet2, options);
             }
             break;

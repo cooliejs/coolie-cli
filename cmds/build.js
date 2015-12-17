@@ -72,7 +72,7 @@ module.exports = function (options) {
         copy: configs.copy
     });
     if (!copiedList.length) {
-        debug.warn('copy files', 'no files are copied');
+        debug.ignore('copy files', 'no files are copied');
     }
 
 
