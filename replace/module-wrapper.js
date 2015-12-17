@@ -287,9 +287,10 @@ module.exports = function (file, options) {
         case 'text':
             switch (options.outType) {
                 case 'url':
-                    uri = createURL(file, options2);
-                    uri = pathURI.joinURI(options.destHost, uri);
-                    return wrapDefine(file, uri, options);
+                    var createURLRet2 = createURL(file, options2);
+                    uri = pathURI.joinURI(options.destHost, createURLRet2.code);
+                    createURLRet2.code = uri;
+                    return wrapDefine(file, createURLRet2, options);
 
                 case 'base64':
                     code = string.toUnicode(code);

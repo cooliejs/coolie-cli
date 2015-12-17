@@ -132,63 +132,63 @@ describe('module-wrapper', function () {
             assert.equal(replaceModuleWrapperRet.code.indexOf('r.exports="') > -1, true);
         });
     });
-    //
-    //describe('html', function () {
-    //    var options2 = dato.extend({}, options);
-    //    var file = htmlPath;
-    //
-    //    options2.inType = 'html';
-    //    options2.code = fs.readFileSync(file, 'utf8');
-    //    it('=>url', function () {
-    //        var options3 = dato.extend({}, options2);
-    //        options3.outType = 'url';
-    //        var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
-    //        console.log(replaceModuleWrapperRet);
-    //        assert.equal(/\/static\/res\//.test(code), true);
-    //    });
-    //    it('=>base64', function () {
-    //        var options3 = dato.extend({}, options2);
-    //        options3.outType = 'base64';
-    //        var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
-    //        console.log(replaceModuleWrapperRet);
-    //        assert.equal(/data:text\/html;base64,/.test(code), true);
-    //    });
-    //    it('=>js', function () {
-    //        var options3 = dato.extend({}, options2);
-    //        options3.outType = 'js';
-    //        var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
-    //        console.log(replaceModuleWrapperRet);
-    //        assert.equal(code.indexOf('r.exports="') > -1, true);
-    //    });
-    //});
-    //
-    //describe('image', function () {
-    //    var options2 = dato.extend({}, options);
-    //    var file = imagePath;
-    //
-    //    options2.inType = 'image';
-    //    it('=>url', function () {
-    //        var options3 = dato.extend({}, options2);
-    //        options3.outType = 'url';
-    //        var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
-    //        console.log(replaceModuleWrapperRet);
-    //        assert.equal(/\/static\/res\//.test(code), true);
-    //    });
-    //    it('=>base64', function () {
-    //        var options3 = dato.extend({}, options2);
-    //        options3.outType = 'base64';
-    //        var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
-    //        console.log(replaceModuleWrapperRet);
-    //        assert.equal(/data:image\/jpeg;base64,/.test(code), true);
-    //    });
-    //    it('=>js', function () {
-    //        var options3 = dato.extend({}, options2);
-    //        options3.outType = 'js';
-    //        var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
-    //        console.log(replaceModuleWrapperRet);
-    //        assert.equal(code.indexOf('r.exports="') > -1, true);
-    //    });
-    //});
+
+    describe('html', function () {
+        var options2 = dato.extend({}, options);
+        var file = htmlPath;
+
+        options2.inType = 'html';
+        options2.code = fs.readFileSync(file, 'utf8');
+        it('=>url', function () {
+            var options3 = dato.extend({}, options2);
+            options3.outType = 'url';
+            var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
+            console.log(replaceModuleWrapperRet);
+            assert.equal(/\/static\/res\//.test(replaceModuleWrapperRet.code), true);
+        });
+        it('=>base64', function () {
+            var options3 = dato.extend({}, options2);
+            options3.outType = 'base64';
+            var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
+            console.log(replaceModuleWrapperRet);
+            assert.equal(/data:text\/html;base64,/.test(replaceModuleWrapperRet.code), true);
+        });
+        it('=>js', function () {
+            var options3 = dato.extend({}, options2);
+            options3.outType = 'js';
+            var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
+            console.log(replaceModuleWrapperRet);
+            assert.equal(replaceModuleWrapperRet.code.indexOf('r.exports="') > -1, true);
+        });
+    });
+
+    describe('image', function () {
+        var options2 = dato.extend({}, options);
+        var file = imagePath;
+
+        options2.inType = 'image';
+        it('=>url', function () {
+            var options3 = dato.extend({}, options2);
+            options3.outType = 'url';
+            var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
+            console.log(replaceModuleWrapperRet);
+            assert.equal(/\/static\/res\//.test(replaceModuleWrapperRet.code), true);
+        });
+        it('=>base64', function () {
+            var options3 = dato.extend({}, options2);
+            options3.outType = 'base64';
+            var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
+            console.log(replaceModuleWrapperRet);
+            assert.equal(/data:image\/jpeg;base64,/.test(replaceModuleWrapperRet.code), true);
+        });
+        it('=>js', function () {
+            var options3 = dato.extend({}, options2);
+            options3.outType = 'js';
+            var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
+            console.log(replaceModuleWrapperRet);
+            assert.equal(replaceModuleWrapperRet.code.indexOf('r.exports="') > -1, true);
+        });
+    });
 });
 
 
