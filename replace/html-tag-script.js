@@ -176,10 +176,15 @@ module.exports = function (file, options) {
 
             if (!destURI) {
                 var srcCode = reader(srcPath, 'utf8');
-                var destCode = minifyJS(srcPath, {
-                    code: srcCode,
-                    uglifyJSOptions: options.uglifyJSOptions
-                });
+                var destCode = srcCode;
+
+                if (options.minifyJS) {
+                    destCode = minifyJS(srcPath, {
+                        code: srcCode,
+                        uglifyJSOptions: options.uglifyJSOptions
+                    });
+                }
+
                 var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
                 var destPath = path.join(options.destJSDirname, destVersion + '.js');
 

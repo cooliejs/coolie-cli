@@ -27,6 +27,7 @@ var CSS_TYPES = {
     'text/css': true
 };
 var REG_LINK = /<link\b[\s\S]*?>/ig;
+var minifyCSSmap = {};
 var defaults = {
     code: '',
     srcDirname: null,
@@ -82,11 +83,44 @@ module.exports = function (file, options) {
         var isCSSlink = CSS_TYPES[type];
 
         if (isCSSlink && href) {
-            var isRelatived = pathURI.isRelatived(src);
+            var isRelatived = pathURI.isRelatived(href);
 
             if (!isRelatived) {
                 return source;
             }
+
+            var srcPath = pathURI.toAbsoluteFile(href, file, options.srcDirname);
+            var destURI = minifyCSSmap[srcPath];
+
+            if (!destURI) {
+                var srcCode = reader(srcPath, 'utf8');
+                var destCode = minifyJS(srcPath, {
+                    code: srcCode,
+                    uglifyJSOptions: options.uglifyJSOptions
+                });
+                var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
+                var destPath = path.join(options.destJSDirname, destVersion + '.js');
+
+                destURI = pathURI.toRootURL(destPath, options.destDirname);
+                destURI = pathURI.joinURI(options.destHost, destURI);
+
+                if (options.signJS) {
+                    destCode = sign('js') + '\n' + destCode;
+                }
+
+                try {
+                    fse.outputFileSync(destPath, destCode, 'utf8');
+                    minifyJSMap[srcPath] = destURI;
+                    debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
+                } catch (err) {
+                    debug.error('write file', path.toSystem(destPath));
+                    debug.error('write file', err.message);
+                    return process.exit(1);
+                }
+            }
+
+            source = htmlAttr.set(source, 'href', destURI);
+            return source;
         }
 
         return source;
