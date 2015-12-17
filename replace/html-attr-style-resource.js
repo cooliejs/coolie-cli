@@ -47,6 +47,7 @@ var defaults = {
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
     var code = options.code;
+    var resList = [];
 
     // style=""
     code = code.replace(REG_TAG, function (source, tagName) {
@@ -58,7 +59,7 @@ module.exports = function (file, options) {
             return source;
         }
 
-        styleCode = replaceCSSResource(file, {
+        var replaceCSSResourceRet = replaceCSSResource(file, {
             code: styleCode,
             destCSSDirname: null,
             versionLength: options.versionLength,
@@ -67,6 +68,9 @@ module.exports = function (file, options) {
             destHost: options.destHost,
             destResourceDirname: options.destResourceDirname
         }).code;
+
+        styleCode = replaceCSSResourceRet.code;
+        resList = replaceCSSResourceRet.resList;
 
         if (options.minifyCSS) {
             styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
@@ -77,7 +81,10 @@ module.exports = function (file, options) {
         return source;
     });
 
-    return code;
+    return {
+        code: code,
+        resList: resList
+    };
 };
 
 

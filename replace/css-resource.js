@@ -110,7 +110,8 @@ module.exports = function (file, options) {
 
     return {
         code: code,
-        dependencies: deps
+        dependencies: deps,
+        resList: deps
     };
 };
 
