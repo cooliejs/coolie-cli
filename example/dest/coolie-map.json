@@ -3,7 +3,7 @@
     "main": [
       {
         "src": "../src/static/js/app/async.js",
-        "dest": "/static/js/app/82845682.js",
+        "dest": "/static/js/app/0e3a0348.js",
         "deps": [
           "../src/static/js/libs1/all.js",
           "../src/static/js/libs2/some.css",
@@ -11,6 +11,7 @@
           "../src/static/js/libs2/some.jpg",
           "../src/static/js/libs2/some.json",
           "../src/static/js/libs2/some.txt",
+          "../src/static/img/girl.jpg",
           "../src/static/css/1.css",
           "../src/static/img/100x100.png"
         ]
@@ -85,7 +86,19 @@
     "main": [],
     "async": [],
     "js": [],
-    "css": [],
+    "css": [
+      {
+        "dest": "/static/css/915d7e0b.css",
+        "deps": [
+          {
+            "src": "../src/static/css/1.css",
+            "res": [
+              "../src/static/img/100x100.png"
+            ]
+          }
+        ]
+      }
+    ],
     "res": []
   },
   "/html/index.html": {
@@ -100,7 +113,14 @@
       }
     ],
     "async": [],
-    "js": [],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
     "css": [
       {
         "dest": "/static/css/fd1dd123.css",
@@ -138,7 +158,14 @@
       }
     ],
     "async": [],
-    "js": [],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
     "css": [],
     "res": [
       "../src/favicon.ico",
@@ -242,7 +269,14 @@
       }
     ],
     "async": [],
-    "js": [],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
     "css": [],
     "res": [
       "../src/favicon.ico"
@@ -262,7 +296,14 @@
       }
     ],
     "async": [],
-    "js": [],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
     "css": [],
     "res": []
   },
@@ -294,7 +335,14 @@
       }
     ],
     "async": [],
-    "js": [],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
     "css": [
       {
         "dest": "/static/css/3ac7893e.css",

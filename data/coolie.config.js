@@ -19,11 +19,21 @@ module.exports = function (coolie) {
         // 是否在构建之前清空目标目录
         clean: true,
 
+        // 目标配置
+        dest: {
+            // 目标目录
+            dirname: '../dest/',
+            // 目标根域
+            host: '',
+            // 版本号长度
+            versionLength: 32
+        },
+
         // js 构建
         js: {
-            // 入口模块
+            // 入口模块，相对于当前目录
             main: [
-                './static/js/app/**'
+                './static/js/app/**/*.js'
             ],
             // coolie-config.js 路径
             'coolie-config.js': './static/js/coolie-config.js',
@@ -35,9 +45,9 @@ module.exports = function (coolie) {
 
         // html 构建
         html: {
-            // html 文件
+            // html 文件，相对于当前目录
             src: [
-                './views/**'
+                './views/**/*.html'
             ],
             // 是否压缩
             minify: true
@@ -45,7 +55,7 @@ module.exports = function (coolie) {
 
         // css 构建
         css: {
-            // css 文件保存目录
+            // css 文件保存目录，相对于 dest.dirname
             dest: './static/css/',
             // css 压缩配置
             minify: {
@@ -55,7 +65,7 @@ module.exports = function (coolie) {
 
         // 资源
         resource: {
-            // 资源保存目录
+            // 资源保存目录，相对于 dest.dirname
             dest: './static/res/',
             // 是否压缩
             minify: true
@@ -63,19 +73,9 @@ module.exports = function (coolie) {
 
         // 原样复制文件
         copy: [
-            '/favicon.ico',
-            'robots.txt'
-        ],
-
-        // 目标配置
-        dest: {
-            // 目标目录
-            dirname: '../dest/',
-            // 目标根域
-            host: '',
-            // 版本号长度
-            versionLength: 32
-        }
+            './favicon.ico',
+            './robots.txt'
+        ]
     });
 
     // 使用 coolie 中间件
