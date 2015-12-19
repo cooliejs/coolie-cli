@@ -17,6 +17,7 @@ var pathURI = require('../utils/path-uri.js');
 var reader = require('../utils/reader.js');
 var sign = require('../utils/sign.js');
 var minifyJS = require('../minify/js.js');
+var pkg = require('../package.json');
 
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /}$/;
@@ -64,7 +65,7 @@ var coolieFn = function () {
  * @returns {String}
  */
 module.exports = function (file, options) {
-    if(!options.destCoolieConfigBaseDirname){
+    if (!options.destCoolieConfigBaseDirname) {
         debug.ignore('overide config', '`coolie-config.js` is not defined');
         return null;
     }
@@ -107,6 +108,7 @@ module.exports = function (file, options) {
             'chunk:"' + coolieConfig.chunk + '",' +
             'debug:false,' +
             'cache:true,' +
+            //'builder:"' + pkg.version + '",' +
             'version:' + version + '})' +
             '.use()';
 
