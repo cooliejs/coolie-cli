@@ -21,7 +21,7 @@ module.exports = function (coolie) {
 
         // 目标配置
         dest: {
-            // 目标目录
+            // 目标目录，相对于当前目录
             dirname: '../dest/',
             // 目标根域
             host: '',
@@ -35,9 +35,9 @@ module.exports = function (coolie) {
             main: [
                 './static/js/app/**/*.js'
             ],
-            // coolie-config.js 路径
+            // coolie-config.js 路径，相对于当前目录
             'coolie-config.js': './static/js/coolie-config.js',
-            // js 文件保存目录
+            // js 文件保存目录，相对于 dest.dirname
             dest: './static/js/',
             // 分块配置
             chunk: []
@@ -71,7 +71,7 @@ module.exports = function (coolie) {
             minify: true
         },
 
-        // 原样复制文件
+        // 原样复制文件，相对于当前目录
         copy: [
             './favicon.ico',
             './robots.txt'
