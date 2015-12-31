@@ -7,7 +7,7 @@ module.exports = function (coolie) {
         clean: true,
         "js": {
             "main": [
-                "./static/js/app/**/*.js"
+                "./static/js/app/index.js"
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
@@ -20,7 +20,7 @@ module.exports = function (coolie) {
         },
         "html": {
             "src": [
-                "./html/**"
+                "./html/replace.html"
             ],
             "minify": true
         },
@@ -57,7 +57,7 @@ module.exports = function (coolie) {
     //
     //        // 属性不为空或者属性为 true
     //        if (!dataOriginal || dataOriginal === true) {
-    //            return;
+    //            return htmlTag;
     //        }
     //
     //        // 转换为绝对文件地址
