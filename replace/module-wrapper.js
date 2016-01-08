@@ -143,7 +143,7 @@ var wrapDefine = function (file, ret, options) {
     ret.code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){';
 
     if (isCSS2Style) {
-        ret.code += 'coolie.importStyle("' + text + '")';
+        ret.code += 'coolie.importStyle(' + text + ')';
     } else {
         ret.code += 'r.exports=' + text + '';
     }

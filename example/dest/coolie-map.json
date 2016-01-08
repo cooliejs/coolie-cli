@@ -3,7 +3,7 @@
     "main": [
       {
         "src": "../src/static/js/app/index.js",
-        "dest": "/static/js/app/18c8a141.js",
+        "dest": "/static/js/app/ad737abe.js",
         "deps": [
           "../src/static/js/libs2/some.css",
           "../src/static/js/libs2/some.jpg",
