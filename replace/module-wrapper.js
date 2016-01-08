@@ -298,7 +298,6 @@ module.exports = function (file, options) {
                         minifyResource: options.minifyResource,
                         replaceCSSResource: true
                     });
-                    code = string.toUnicode(code);
                     code = base64.string(code, extname);
                     minifyCSSRet.code = code;
                     return wrapDefine(file, minifyCSSRet, options);
@@ -331,7 +330,6 @@ module.exports = function (file, options) {
                     return wrapDefine(file, createURLRet2, options);
 
                 case 'base64':
-                    code = string.toUnicode(code);
                     code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
@@ -404,7 +402,6 @@ module.exports = function (file, options) {
                         cleanCSSOptions: options.cleanCSSOptions,
                         replaceCSSResource: true
                     });
-                    code = string.toUnicode(code);
                     code = base64.string(code, extname);
                     minifyHTMLRet.code = code;
                     minifyHTMLRet.resList = mergeRes(minifyHTMLRet);
