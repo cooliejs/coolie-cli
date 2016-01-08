@@ -138,8 +138,6 @@ var wrapDefine = function (file, ret, options) {
             .replace(REG_HUA_END, '');
     }
 
-    console.log(options.inType, options.outType);
-
     ret.code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){';
 
     if (isCSS2Style) {

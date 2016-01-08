@@ -12,6 +12,7 @@ define(function (require, exports, module) {
     //require('../../img/100x100.png', 'image|url');
     //require('../../img/100x100.png', 'image|text');
     //require('../../img/100x100.png', 'image|base64');
+    require('../../img/100x100.png', 'file');
 
 
     // text
