@@ -248,7 +248,6 @@ module.exports = function (file, options) {
                     code = minifyJSON(file, {
                         code: code
                     });
-                    code = string.toUnicode(code);
                     code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
