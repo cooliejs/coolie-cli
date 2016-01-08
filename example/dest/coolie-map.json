@@ -3,12 +3,11 @@
     "main": [
       {
         "src": "../src/static/js/app/index.js",
-        "dest": "/static/js/app/710bcf0d.js",
+        "dest": "/static/js/app/18c8a141.js",
         "deps": [
-          "../src/static/js/libs2/some.html",
-          "../src/static/js/libs2/some.json",
-          "../src/static/css/1.css",
-          "../src/static/img/100x100.png"
+          "../src/static/js/libs2/some.css",
+          "../src/static/js/libs2/some.jpg",
+          "../src/static/img/girl.jpg"
         ]
       }
     ],

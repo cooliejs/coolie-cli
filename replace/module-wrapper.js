@@ -127,15 +127,19 @@ var wrapDefine = function (file, ret, options) {
     }
 
     var text = ret.code;
+    var o = {};
+    var isJSON2JS = options.inType === 'json' && options.outType === 'js';
+    var isCSS2Style = options.inType === 'css' && options.outType === 'style';
 
-    if (!(options.inType === 'json' && options.outType === 'js')) {
-        var o = {
-            o: ret.code
-        };
-
+    if (!isJSON2JS) {
+        o.o = ret.code;
         text = JSON.stringify(o)
             .replace(REG_HUA_START, '')
             .replace(REG_HUA_END, '');
+    }
+
+    if (isCSS2Style) {
+        text = 'coolie.importStyle("' + text + '");';
     }
 
     ret.code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){' +
@@ -300,7 +304,7 @@ module.exports = function (file, options) {
 
                 // text
                 default :
-                    var minifyCSSRet2 = minifyCSS(file, {
+                    var minifyCSSRet3 = minifyCSS(file, {
                         code: code,
                         cleanCSSOptions: options.cleanCSSOptions,
                         versionLength: options.versionLength,
@@ -313,7 +317,7 @@ module.exports = function (file, options) {
                         minifyResource: options.minifyResource,
                         replaceCSSResource: true
                     });
-                    return wrapDefine(file, minifyCSSRet2, options);
+                    return wrapDefine(file, minifyCSSRet3, options);
             }
             break;
 
@@ -438,6 +442,7 @@ module.exports = function (file, options) {
             break;
 
         case 'image':
+        case 'file':
             switch (options.outType) {
                 case 'base64':
                     code = base64.file(file);
