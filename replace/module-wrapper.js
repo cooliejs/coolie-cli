@@ -138,13 +138,17 @@ var wrapDefine = function (file, ret, options) {
             .replace(REG_HUA_END, '');
     }
 
+    console.log(options.inType, options.outType);
+
+    ret.code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){';
+
     if (isCSS2Style) {
-        text = 'coolie.importStyle("' + text + '");';
+        ret.code += 'coolie.importStyle("' + text + '")';
+    } else {
+        ret.code += 'r.exports=' + text + '';
     }
 
-    ret.code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){' +
-        'r.exports=' + text + '' +
-        '});';
+    ret.code += '});';
     ret.resList = ret.resList || [];
 
     return ret;

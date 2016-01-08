@@ -57,13 +57,17 @@ var REG_SUFFIX = /[\?#].*?$/;
 var REG_JS = /\.js($|\?)/i;
 
 
+/**
+ * 支持的模块类型
+ * @type {{js: {supports: {url: number, base64: number, text: number, js: number}, default: string}, json: {supports: {url: number, base64: number, text: number, js: number}, default: string}, css: {supports: {url: number, base64: number, text: number, style: number}, default: string}, text: {supports: {url: number, base64: number, text: number}, default: string}, html: {supports: {url: number, base64: number, text: number}, default: string}, image: {supports: {url: number, base64: number}, default: string}, file: {supports: {url: number, base64: number}, default: string}}}
+ */
 var supportMap = {
     js: {
         supports: {
             url: 1,
             base64: 1,
             text: 1,
-            js: 2
+            js: 1
         },
         default: 'js'
     },
@@ -72,7 +76,7 @@ var supportMap = {
             url: 1,
             base64: 1,
             text: 1,
-            js: 2
+            js: 1
         },
         default: 'js'
     },
@@ -80,7 +84,8 @@ var supportMap = {
         supports: {
             url: 1,
             base64: 1,
-            text: 2
+            text: 1,
+            style: 1
         },
         default: 'text'
     },
@@ -88,7 +93,7 @@ var supportMap = {
         supports: {
             url: 1,
             base64: 1,
-            text: 2
+            text: 1
         },
         default: 'text'
     },
@@ -96,13 +101,20 @@ var supportMap = {
         supports: {
             url: 1,
             base64: 1,
-            text: 2
+            text: 1
         },
         default: 'text'
     },
     image: {
         supports: {
-            url: 2,
+            url: 1,
+            base64: 1
+        },
+        default: 'url'
+    },
+    file: {
+        supports: {
+            url: 1,
             base64: 1
         },
         default: 'url'
