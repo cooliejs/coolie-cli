@@ -32,7 +32,7 @@ npm install -g coolie
 ```
 
 
-# CMDS
+# 使用方法
 ```
 
                                oooo   o8o
