@@ -20,7 +20,6 @@ var buildResPath = require('../build/res-path.js');
  * coolie-cli API 出口
  * @param options {Object} 配置
  * @param [options.coolieAPI] {Object} coolie API
- * @param [options.middleware] {Object} 中间件
  * @param options.srcDirname {String} 原始路径
  * @param options.destDirname {String} 目标路径
  * @param options.destDirname {String} 目标路径
@@ -35,14 +34,13 @@ var buildResPath = require('../build/res-path.js');
  * @param options.signCSS {Boolean} 是否签名 css
  * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.cleanCSSOptions {Object} clean-css 配置
+ * @param middleware {Object} 中间件
  * @returns {{}}
  */
-module.exports = function (options) {
+module.exports = function (options, middleware) {
     var coolieAPI = options.coolieAPI || {};
 
-    if (options.middleware) {
-        options.middleware.bindContext(coolieAPI);
-    }
+    middleware.bindContext(coolieAPI);
 
     /**
      * 匹配 HTML 并转换
