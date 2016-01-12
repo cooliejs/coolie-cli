@@ -53,6 +53,7 @@ var coolieFn = function () {
 /**
  * 解析 config
  * @param options {Object} 配置
+ * @param [options.coolieAPI] {Object} coolie API
  * @param options.srcDirname {Object} coolie.config.js 路径
  * @param options.middleware {Object} 中间件
  * @returns {Object}
@@ -67,6 +68,7 @@ module.exports = function (options) {
 
     if (options.middleware) {
         options.middleware.bindContext(coolie);
+        options.coolieAPI = coolie;
     }
 
     /**

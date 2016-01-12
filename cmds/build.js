@@ -17,6 +17,7 @@ var buildAPP = require('../build/app.js');
 var buildCopy = require('../build/copy.js');
 var buildHTML = require('../build/html.js');
 var buildMap = require('../build/map.js');
+var buildAPI = require('../build/api.js');
 var replaceCoolieConfig = require('../replace/coolie-config.js');
 var banner = require('./banner.js');
 
@@ -69,6 +70,9 @@ module.exports = function (options) {
     });
     var srcDirname = configs.srcDirname;
     var destDirname = configs.destDirname;
+
+    buildAPI(configs);
+
 
 
     // 2. 复制文件

@@ -18,7 +18,9 @@ var buildResPath = require('../build/res-path.js');
 /**
  * coolie-cli API 出口
  * @param options {Object} 配置
+ * @param [options.coolieAPI] {Object} coolie API
  * @param options.srcDirname {String} 原始路径
+ * @param options.destDirname {String} 目标路径
  * @param options.destDirname {String} 目标路径
  * @param options.destHost {String} 目标域
  * @param options.destResourceDirname {String} 目标资源路径
@@ -34,7 +36,7 @@ var buildResPath = require('../build/res-path.js');
  * @returns {{}}
  */
 module.exports = function (options) {
-    var exports = {};
+    var coolieAPI = options.coolieAPI;
 
     /**
      * 匹配 HTML 并转换
@@ -43,7 +45,7 @@ module.exports = function (options) {
      * @param transform {Function} 转换方法，参考 posthtml
      * @returns {string}
      */
-    exports.matchHTML = function (html, conditions, transform) {
+    coolieAPI.matchHTML = function (html, conditions, transform) {
         return parseHTML(html).match(conditions, transform).exec();
     };
 
@@ -65,7 +67,7 @@ module.exports = function (options) {
      * @param [_options.cleanCSSOptions]
      * @returns {{url, srcFile, destFile, resList}|*}
      */
-    exports.buildCSSPath = function (url, file, _options) {
+    coolieAPI.buildCSSPath = function (url, file, _options) {
         _options = dato.extend({}, options, _options);
         return buildCSSPath(url, {
             file: file,
@@ -98,7 +100,7 @@ module.exports = function (options) {
      * @param [_options.uglifyJSOptions]
      * @returns {{srcFile, destFile, url}|*}
      */
-    exports.buildJSPath = function (url, file, _options) {
+    coolieAPI.buildJSPath = function (url, file, _options) {
         _options = dato.extend({}, options, _options);
         return buildJSPath(url, {
             file: file,
@@ -126,7 +128,7 @@ module.exports = function (options) {
      * @param [_options.versionLength]
      * @returns {{srcFile, destFile, url}|*}
      */
-    exports.buildResPath = function (url, file, _options) {
+    coolieAPI.buildResPath = function (url, file, _options) {
         _options = dato.extend({}, options, _options);
         return buildResPath(url, {
             file: file,
@@ -138,7 +140,7 @@ module.exports = function (options) {
         });
     };
 
-    return exports;
+    return coolieAPI;
 };
 
 
