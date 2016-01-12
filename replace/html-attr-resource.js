@@ -123,44 +123,22 @@ module.exports = function (file, options) {
                         return node;
                     }
 
-                    var value = node.attrs[attr];
-
-                    var ret = pathBuild(value, {
+                    var ret = pathBuild(node.attrs[attr], {
                         versionLength: options.versionLength,
                         srcDirname: options.srcDirname,
                         destDirname: options.destResourceDirname,
                         embedFile: file
                     });
 
-                    if(!ret){
+                    if (!ret) {
                         return node;
                     }
 
-                    //var pathRet = pathURI.parseURI2Path(value);
-                    //
-                    //// 不存在路径 || URL
-                    //if (!value || pathURI.isURL(pathRet.path)) {
-                    //    return node;
-                    //}
-                    //
-                    //var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
-                    //var resFile = copy(absFile, {
-                    //    version: true,
-                    //    copyPath: false,
-                    //    versionLength: options.versionLength,
-                    //    srcDirname: options.srcDirname,
-                    //    destDirname: options.destResourceDirname,
-                    //    logType: 1,
-                    //    embedFile: file
-                    //});
-                    //var resRelative = path.relative(options.destDirname, resFile);
-                    //var url = pathURI.joinURI(options.destHost, resRelative);
-                    //
-                    //if (!resMap[absFile]) {
-                    //    resList.push(absFile);
-                    //}
-                    //
-                    //node.attrs[attr] = url + pathRet.suffix;
+                    if (!resMap[ret.srcFile]) {
+                        resList.push(ret.srcFile);
+                    }
+
+                    node.attrs[attr] = ret.url;
                     return node;
                 });
             });

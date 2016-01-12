@@ -49,5 +49,9 @@ module.exports = function (value, options) {
     var resRelative = path.relative(options.destDirname, resFile);
     var url = pathURI.joinURI(options.destHost, resRelative);
 
-    return url + pathRet.suffix;
+    return {
+        srcFile: absFile,
+        destFile: resFile,
+        url: url + pathRet.suffix
+    };
 };
