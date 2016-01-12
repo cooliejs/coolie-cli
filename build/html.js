@@ -107,7 +107,9 @@ module.exports = function (options) {
         var ret = minifyHTML(htmlFile, {
             code: code,
             replaceHTMLAttrResource: true,
-            replaceHTMLTagScript: true,
+            replaceHTMLTagScriptCoolie: true,
+            replaceHTMLTagScriptAttr: true,
+            replaceHTMLTagScriptContent: true,
             replaceHTMLTagLink: true,
             replaceHTMLTagStyleResource: true,
             replaceHTMLAttrStyleResource: true,
