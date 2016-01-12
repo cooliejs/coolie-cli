@@ -8,6 +8,7 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
+var allocation = require('ydr-utils').allocation;
 
 var parseHTML = require('../parse/html.js');
 var buildCSSPath = require('../build/css-path.js');
@@ -41,7 +42,7 @@ module.exports = function (options) {
     /**
      * 匹配 HTML 并转换
      * @param html {String} 原始 HTML
-     * @param conditions {Object} 匹配条件，参考 posthtml
+     * @param [conditions] {Object} 匹配条件，参考 posthtml
      * @param transform {Function} 转换方法，参考 posthtml
      * @returns {string}
      */

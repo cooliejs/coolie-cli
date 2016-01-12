@@ -64,11 +64,7 @@ module.exports = function (options) {
     var check = {};
     var coolie = {};
 
-    if (options.middleware) {
-        options.middleware.bindContext(coolie);
-        configs.coolieAPI = coolie;
-    }
-
+    configs.coolieAPI = coolie;
 
     /**
      * 配置 coolie 构建参数
@@ -76,7 +72,7 @@ module.exports = function (options) {
      * @returns {{}}
      */
     coolie.config = function (_configs) {
-        configs = _configs;
+        dato.extend(configs, _configs);
         return coolie;
     };
 

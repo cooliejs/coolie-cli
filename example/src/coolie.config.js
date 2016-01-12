@@ -48,9 +48,20 @@ module.exports = function (coolie) {
 
 
     coolie.use(function (options) {
-        console.log(this);
-        console.log(options);
-        return options.code;
+        if (options.progress !== 'pre-html') {
+            return options;
+        }
+
+        options.code = coolie.matchHTML(options.code, function (node) {
+            if(!node.attrs || !node.attrs['data-original']){
+                return node;
+            }
+
+            var url = node.attrs['data-original'];
+
+        });
+
+        return options;
     });
 
 
