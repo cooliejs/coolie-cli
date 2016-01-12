@@ -214,13 +214,9 @@ module.exports = function (file, options) {
         var replaceHTMLTagScriptAttrRet = replaceHTMLTagScriptAttr(file, {
             code: code,
             srcDirname: options.srcDirname,
-            coolieConfigBase: options.coolieConfigBase,
-            srcCoolieConfigJSPath: options.srcCoolieConfigJSPath,
-            srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
             destDirname: options.destDirname,
             destHost: options.destHost,
             destJSDirname: options.destJSDirname,
-            destCoolieConfigJSPath: options.destCoolieConfigJSPath,
             versionLength: options.versionLength,
             mainVersionMap: options.mainVersionMap,
             minifyJS: options.minifyJS,
@@ -235,15 +231,6 @@ module.exports = function (file, options) {
         var replaceHTMLTagScriptContentRet = replaceHTMLTagScriptContent(file, {
             code: code,
             srcDirname: options.srcDirname,
-            coolieConfigBase: options.coolieConfigBase,
-            srcCoolieConfigJSPath: options.srcCoolieConfigJSPath,
-            srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
-            destDirname: options.destDirname,
-            destHost: options.destHost,
-            destJSDirname: options.destJSDirname,
-            destCoolieConfigJSPath: options.destCoolieConfigJSPath,
-            versionLength: options.versionLength,
-            mainVersionMap: options.mainVersionMap,
             minifyJS: options.minifyJS,
             signJS: options.signJS
         });
