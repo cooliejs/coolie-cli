@@ -8,26 +8,56 @@
 'use strict';
 
 var posthtml = require('posthtml');
-var allocation = require('ydr-utils').allocation;
+var klass = require('ydr-utils').class;
 var dato = require('ydr-utils').dato;
+
+
+var defaults = {};
+var ParseHTML = klass.create({
+    constructor: function (code, options) {
+        var the = this;
+
+        the.code = code;
+        the.parser = posthtml();
+        the._options = dato.extend({}, defaults, options);
+    },
+
+
+    /**
+     * 使用 post html 中间件
+     * @param middleware
+     * @returns {ParseHTML}
+     */
+    use: function (middleware) {
+        var the = this;
+        the.parser.use(middleware);
+        return the;
+    },
+
+
+    /**
+     * 获取解析后的 html
+     * @returns {string}
+     */
+    get: function () {
+        var the = this;
+
+        return the.parser.process(the.code, {
+            sync: true
+        }).html;
+    }
+});
+
+ParseHTML.defaults = defaults;
 
 
 /**
  * 解析 html
  * @param code
- * @returns {{String}}
+ * @param options
+ * @returns {Suite|Domain|Error}
  */
-module.exports = function (code/*use list*/) {
-    var args = allocation.args(arguments);
-    var useList = args.slice(1);
-    var parser = posthtml();
-
-    dato.each(useList, function (index, user) {
-        parser = parser.use(user);
-    });
-
-    return parser.process(code, {
-        sync: true
-    }).html;
+module.exports = function (code, options) {
+    return new ParseHTML(code, options);
 };
 

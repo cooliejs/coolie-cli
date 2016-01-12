@@ -19,8 +19,8 @@ var file = path.join(__dirname, 'test.html');
 var code = fs.readFileSync(file, 'utf8');
 
 describe('parse/html.js', function () {
-    it('1', function (done) {
-        parseHTML()
+    it('1', function () {
+        var ret = parseHTML(code)
             .use(function (tree) {
                 tree.match({
                     tag: 'meta'
@@ -37,16 +37,10 @@ describe('parse/html.js', function () {
                     }
                 });
             })
-            .process(code)
-            .then(function (ret) {
-                dato.each(ret.tree, function (index, tree) {
-                    //console.log(tree);
-                });
+            .get();
 
-                console.log('\n\n------------------------------------------');
-                console.log(ret.html);
-                done();
-            });
+        console.log('\n\n------------------------------------------');
+        console.log(ret);
     });
 });
 
