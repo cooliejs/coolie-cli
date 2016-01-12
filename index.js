@@ -11,6 +11,7 @@ var Middleware = require('ydr-utils').Middleware;
 var Emitter = require('ydr-utils').Emitter;
 
 var parseCoolieConfig = require('./parse/coolie.config.js');
+var buildAPI = require('./build/api.js');
 
 var middleware = new Middleware({
     async: false
@@ -29,7 +30,7 @@ module.exports = function (options) {
         emitter: emitter
     });
 
-    return configs;
+    return buildAPI(configs, middleware);
 };
 
 
