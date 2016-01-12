@@ -73,8 +73,6 @@ module.exports = function (options) {
 
     buildAPI(configs);
 
-    return console.log(configs);
-
 
     // 2. 复制文件
     console.log();
@@ -142,13 +140,13 @@ module.exports = function (options) {
         removeHTMLLineComments: configs.removeHTMLLineComments,
         joinHTMLSpaces: configs.joinHTMLSpaces,
         removeHTMLBreakLines: configs.removeHTMLBreakLines,
-        versionLength: configs.dest.versionLength,
+        versionLength: configs.versionLength,
         srcDirname: srcDirname,
         destDirname: destDirname,
         destJSDirname: configs.destJSDirname,
         destCSSDirname: configs.destCSSDirname,
         destResourceDirname: configs.destResourceDirname,
-        destHost: configs.dest.host,
+        destHost: configs.destHost,
         coolieConfigBase: configs.coolieConfigBase,
         srcCoolieConfigJSPath: configs.srcCoolieConfigJSPath,
         srcCoolieConfigBaseDirname: configs.srcCoolieConfigBaseDirname,
@@ -157,7 +155,7 @@ module.exports = function (options) {
         minifyCSS: true,
         minifyResource: true,
         uglifyJSOptions: null,
-        cleanCSSOptions: configs.css.minfiy,
+        cleanCSSOptions: configs.cleanCSSOptions,
         replaceCSSResource: true,
         mainVersionMap: buildAPPResult.mainVersionMap
     });
