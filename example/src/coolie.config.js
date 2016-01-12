@@ -47,18 +47,23 @@ module.exports = function (coolie) {
     //coolie.use(require('./coolie-include-html.js'));
 
 
-    coolie.use(function (options) {
+    coolie.use(function cooliePreHTMLDataResource (options) {
         if (options.progress !== 'pre-html') {
             return options;
         }
 
         options.code = coolie.matchHTML(options.code, function (node) {
-            if(!node.attrs || !node.attrs['data-original']){
+            if (!node.attrs || !node.attrs['data-original']) {
                 return node;
             }
 
             var url = node.attrs['data-original'];
-
+            var ret = coolie.buildResPath(url, options.file);
+            console.log('---------------------------');
+            console.log(ret);
+            console.log('---------------------------');
+            node.attrs['data-original'] = ret.url;
+            return node;
         });
 
         return options;

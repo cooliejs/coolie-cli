@@ -18,7 +18,7 @@ var defaults = {
     srcDirname: null,
     destDirname: null,
     destResourceDirname: null,
-    destHost: ''
+    destHost: '/'
 };
 
 
