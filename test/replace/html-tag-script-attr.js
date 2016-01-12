@@ -11,7 +11,7 @@ var path = require('ydr-utils').path;
 var fs = require('fs');
 var assert = require('assert');
 
-var replaceHTMLTagScript = require('../../replace/html-tag-script.js');
+var replaceHTMLTagScriptAttr = require('../../replace/html-tag-script-attr.js');
 var file = path.join(__dirname, '../../example/src/html/user/index.html');
 
 var code = fs.readFileSync(file, 'utf8');
@@ -26,9 +26,9 @@ var mainVersionMap = {};
 
 mainVersionMap[srcMainPath] = '00023123123123123312312';
 
-describe('replace/html-tag-script.js', function () {
+describe('replace/html-tag-script-attr.js', function () {
     it('e', function () {
-        var ret = replaceHTMLTagScript(file, {
+        var ret = replaceHTMLTagScriptAttr(file, {
             code: code,
             srcDirname: srcDirname,
             srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname,
