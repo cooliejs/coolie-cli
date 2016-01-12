@@ -1,5 +1,5 @@
 /**
- * 路径构建
+ * 资源路径
  * @author ydr.me
  * @create 2016-01-12 16:19
  */
@@ -23,7 +23,7 @@ var defaults = {
 
 
 /**
- * 路径构建
+ * 资源路径
  * @param value
  * @param options
  * @returns {*}

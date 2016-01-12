@@ -20,6 +20,7 @@ var copy = require('../utils/copy.js');
 var sign = require('../utils/sign.js');
 var reader = require('../utils/reader.js');
 var minifyCSS = require('../minify/css.js');
+var parseHTML = require('../parse/html.js');
 
 
 var COOLIE_IGNORE = 'coolieignore';
@@ -66,6 +67,17 @@ module.exports = function (file, options) {
     var code = options.code;
     var resList = [];
     var cssList = [];
+
+    code = parseHTML(code)
+        .use(function (tree) {
+            tree.match({
+                tag: 'link',
+                rel: 'stylesheet'
+            }, function (node) {
+                return node;
+            });
+        })
+        .get();
 
     code = code.replace(REG_LINK, function (source) {
         var ignore = htmlAttr.get(source, COOLIE_IGNORE);
