@@ -127,8 +127,9 @@ module.exports = function (file, options) {
                         file: file,
                         versionLength: options.versionLength,
                         srcDirname: options.srcDirname,
+                        destDirname: options.destDirname,
                         destResourceDirname: options.destResourceDirname,
-                        embedFile: file
+                        destHost: options.destHost
                     });
 
                     if (!ret) {

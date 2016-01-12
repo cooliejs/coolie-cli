@@ -15,8 +15,10 @@ var copy = require('./copy.js');
 var defaults = {
     versionLength: 32,
     srcDirname: null,
+    destDirname: null,
     destResourceDirname: null,
-    file: null
+    file: null,
+    destHost: ''
 };
 
 
