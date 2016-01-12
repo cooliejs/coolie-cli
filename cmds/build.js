@@ -102,8 +102,8 @@ module.exports = function (options) {
         destHost: configs.destHost,
         uglifyJSOptions: configs.uglifyJSOptions,
         cleanCSSOptions: configs.cleanCSSOptions,
-        versionLength: configs.dest.versionLength,
-        minifyResource: configs.resource.minify,
+        versionLength: configs.versionLength,
+        minifyResource: configs.minifyResource,
         destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
         destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname,
@@ -118,7 +118,7 @@ module.exports = function (options) {
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'override coolie-config.js');
     var destCoolieConfigJSPath = replaceCoolieConfig(configs.srcCoolieConfigJSPath, {
-        versionLength: configs.dest.versionLength,
+        versionLength: configs.versionLength,
         destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
         destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname,
@@ -126,7 +126,7 @@ module.exports = function (options) {
         destDirname: destDirname,
         destJSDirname: configs.destJSDirname,
         versionMap: dato.extend({}, buildAPPResult.chunkVersionMap, buildAPPResult.asyncVersionMap),
-        destHost: configs.dest.host,
+        destHost: configs.destHost,
         sign: true
     });
 
@@ -138,10 +138,10 @@ module.exports = function (options) {
         middleware: middleware,
         emitter: emitter,
         glob: configs.html.src,
-        removeHTMLYUIComments: configs.html.minify,
-        removeHTMLLineComments: configs.html.minify,
-        joinHTMLSpaces: configs.html.minify,
-        removeHTMLBreakLines: configs.html.minify,
+        removeHTMLYUIComments: configs.removeHTMLYUIComments,
+        removeHTMLLineComments: configs.removeHTMLLineComments,
+        joinHTMLSpaces: configs.joinHTMLSpaces,
+        removeHTMLBreakLines: configs.removeHTMLBreakLines,
         versionLength: configs.dest.versionLength,
         srcDirname: srcDirname,
         destDirname: destDirname,

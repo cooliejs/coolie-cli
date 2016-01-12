@@ -445,6 +445,8 @@ module.exports = function (options) {
         if (typeis.undefined(configs.resource.minify) !== false) {
             configs.resource.minify = true;
         }
+
+        configs.minifyResource = configs.resource.minify;
     };
 
 
