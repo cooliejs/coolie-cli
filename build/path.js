@@ -6,10 +6,11 @@
 
 'use strict';
 
+var dato = require('ydr-utils').dato;
+var path = require('ydr-utils').path;
 
-
-var pathURI = require('./path-uri.js');
-var copy = require('./copy.js');
+var pathURI = require('../utils/path-uri.js');
+var copy = require('../utils/copy.js');
 
 var defaults = {
     versionLength: 32,
@@ -18,7 +19,16 @@ var defaults = {
     file: null
 };
 
+
+/**
+ * 路径构建
+ * @param value
+ * @param options
+ * @returns {*}
+ */
 module.exports = function (value, options) {
+    options = dato.extend({}, defaults, options);
+
     var pathRet = pathURI.parseURI2Path(value);
 
     // 不存在路径 || URL
@@ -34,14 +44,10 @@ module.exports = function (value, options) {
         srcDirname: options.srcDirname,
         destDirname: options.destResourceDirname,
         logType: 1,
-        embedFile: file
+        embedFile: options.file
     });
     var resRelative = path.relative(options.destDirname, resFile);
     var url = pathURI.joinURI(options.destHost, resRelative);
 
-    if (!resMap[absFile]) {
-        resList.push(absFile);
-    }
-
-    node.attrs[attr] = url + pathRet.suffix;
+    return url + pathRet.suffix;
 };
