@@ -20,7 +20,7 @@ var copy = require('../utils/copy.js');
 var buildResPath = require('../build/res-path.js');
 var parseHTML = require('../parse/html.js');
 
-var COOLIE_IGNOE = 'coolieignore';
+var COOLIE_IGNORE = 'coolieignore';
 var linkRelList = [
     /apple-touch-icon/,
     /apple-touch-icon-precomposed/,
@@ -100,8 +100,8 @@ module.exports = function (file, options) {
                     return node;
                 }
 
-                if (node.attrs.hasOwnProperty(COOLIE_IGNOE)) {
-                    node.attrs[COOLIE_IGNOE] = null;
+                if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
+                    node.attrs[COOLIE_IGNORE] = null;
                     return node;
                 }
 

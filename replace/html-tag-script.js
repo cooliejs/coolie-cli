@@ -84,7 +84,14 @@ module.exports = function (file, options) {
     parseHTML(code).match({
         tag: 'script'
     }, function (node) {
+        if (!node.attrs || !node.attrs.style) {
+            return node;
+        }
 
+        if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
+            node.attrs[COOLIE_IGNORE] = null;
+            return node;
+        }
     });
 
 

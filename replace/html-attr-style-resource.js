@@ -15,7 +15,7 @@ var htmlAttr = require('../utils/html-attr.js');
 var parseHTML = require('../parse/html.js');
 var replaceCSSResource = require('./css-resource.js');
 
-var COOLIE_IGNOE = 'coolieignore';
+var COOLIE_IGNORE = 'coolieignore';
 var REG_TAG = /<([a-z][a-z\d]*?)\b[\s\S]*?>/gi;
 var REG_LINES = /[\n\r]/g;
 var REG_SPACES = /\s+/g;
@@ -55,8 +55,8 @@ module.exports = function (file, options) {
             return node;
         }
 
-        if (node.attrs.hasOwnProperty(COOLIE_IGNOE)) {
-            node.attrs[COOLIE_IGNOE] = null;
+        if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
+            node.attrs[COOLIE_IGNORE] = null;
             return node;
         }
 
