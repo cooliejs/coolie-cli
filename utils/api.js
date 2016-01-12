@@ -63,10 +63,11 @@ module.exports = function (options) {
      * @param [_options.versionLength]
      * @param [_options.signCSS]
      * @param [_options.cleanCSSOptions]
+     * @returns {{url, srcFile, destFile, resList}|*}
      */
     exports.buildCSSPath = function (url, file, _options) {
         _options = dato.extend({}, options, _options);
-        buildCSSPath(url, {
+        return buildCSSPath(url, {
             file: file,
             srcDirname: _options.srcDirname,
             destDirname: _options.destDirname,
@@ -94,10 +95,11 @@ module.exports = function (options) {
      * @param [_options.versionLength]
      * @param [_options.signJS]
      * @param [_options.uglifyJSOptions]
+     * @returns {{srcFile, destFile, url}|*}
      */
     exports.buildJSPath = function (url, file, _options) {
         _options = dato.extend({}, options, _options);
-        buildJSPath(url, {
+        return buildJSPath(url, {
             file: file,
             srcDirname: _options.srcDirname,
             destDirname: _options.destDirname,
@@ -118,21 +120,19 @@ module.exports = function (options) {
      * @param [_options.srcDirname]
      * @param [_options.destDirname]
      * @param [_options.destHost]
-     * @param [_options.destJSDirname]
-     * @param [_options.minifyJS]
+     * @param [_options.destResourceDirname]
      * @param [_options.versionLength]
-     * @param [_options.signJS]
-     * @param [_options.uglifyJSOptions]
+     * @returns {{srcFile, destFile, url}|*}
      */
     exports.buildResPath = function (url, file, _options) {
         _options = dato.extend({}, options, _options);
-        buildResPath(url, {
-            file: null,
-            versionLength: 32,
-            srcDirname: null,
-            destDirname: null,
-            destResourceDirname: null,
-            destHost: ''
+        return buildResPath(url, {
+            file: file,
+            versionLength: _options.versionLength,
+            srcDirname: _options.srcDirname,
+            destDirname: _options.destDirname,
+            destResourceDirname: _options.destResourceDirname,
+            destHost: _options.destHost
         });
     };
 
