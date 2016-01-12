@@ -83,14 +83,6 @@ module.exports = function (file, options) {
         process.exit(1);
     }
 
-    //[{ id: '/Users/cloudcome/development/github/nodejs-coolie/example/src/static/js/libs1/path1/path2/index.js|js',
-    //file: '/Users/cloudcome/development/github/nodejs-coolie/example/src/static/js/libs1/path1/path2/index.js',
-    //gid: '1',
-    //raw: '../libs1/path1/path2/',
-    //name: '../libs1/path1/path2/index.js',
-    //inType: 'js',
-    //outType: 'js' }]
-
     // 分析 require.async()
     var asyncRequires = parseCMDRequire(file, {
         code: code,

@@ -56,10 +56,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cloudcome/nodejs-coolie"
+    "url": "https://github.com/cooliejs/coolie-cli"
   },
   "bugs": {
-    "url": "https://github.com/cloudcome/nodejs-coolie/issues"
+    "url": "https://github.com/cooliejs/coolie-cli/issues"
   },
   "licenses": "MIT",
   "dependencies": {
