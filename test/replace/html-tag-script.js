@@ -26,7 +26,7 @@ var mainVersionMap = {};
 
 mainVersionMap[srcMainPath] = '00023123123123123312312';
 
-describe('replace/html-attr-script.js', function () {
+describe('replace/html-tag-script.js', function () {
     it('e', function () {
         var ret = replaceHTMLTagScript(file, {
             code: code,
@@ -39,9 +39,8 @@ describe('replace/html-attr-script.js', function () {
             destCoolieConfigJSPath: destCoolieConfigJSPath
         }).code;
 
-        console.log('===========================\n');
+        console.log('\n\n-------------------------------------------');
         console.log(ret);
-        console.log('\n===========================');
         assert.equal(ret.indexOf('http://abc.com/' + destCoolieConfigJSURI) > -1, true);
         assert.equal(ret.indexOf(mainVersionMap[srcMainPath]) > -1, true);
     });
