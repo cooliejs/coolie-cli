@@ -86,11 +86,11 @@ module.exports = function (file, options) {
     var code = options.code;
     var resList = [];
     var resMap = {};
-
     var parser = parseHTML(code);
 
     dato.each(replaceList, function (index, item) {
         var attr = item.attr;
+
         dato.each(item.tags, function (index, tag) {
             parser.use(function (tree) {
                 tree.match({
@@ -153,7 +153,6 @@ module.exports = function (file, options) {
                 });
             });
         });
-
     });
 
     //// 标签替换，如 <img src="
@@ -222,7 +221,7 @@ module.exports = function (file, options) {
     //});
 
     return {
-        code: code,
+        code: parser.get(),
         resList: resList
     };
 };
