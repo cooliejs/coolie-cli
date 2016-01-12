@@ -3,8 +3,8 @@
 [![Build Status][travis-img]][travis-url] 
 [![coolie][shields-img]][shields-url]
 
-[travis-img]: https://travis-ci.org/cloudcome/nodejs-coolie.svg?branch=master
-[travis-url]: https://travis-ci.org/cloudcome/nodejs-coolie
+[travis-img]: https://travis-ci.org/cloudcome/coolie-cli.svg?branch=master
+[travis-url]: https://travis-ci.org/cloudcome/coolie-cli
 [shields-img]: https://img.shields.io/npm/v/coolie.svg
 [shields-url]: https://www.npmjs.com/package/coolie
 
