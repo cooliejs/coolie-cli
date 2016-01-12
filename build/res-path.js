@@ -13,11 +13,11 @@ var pathURI = require('../utils/path-uri.js');
 var copy = require('../utils/copy.js');
 
 var defaults = {
+    file: null,
     versionLength: 32,
     srcDirname: null,
     destDirname: null,
     destResourceDirname: null,
-    file: null,
     destHost: ''
 };
 

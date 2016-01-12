@@ -22,11 +22,14 @@ var buildResPath = require('../build/res-path.js');
  * @param options.destDirname {String} 目标路径
  * @param options.destHost {String} 目标域
  * @param options.destResourceDirname {String} 目标资源路径
+ * @param options.destJSDirname {String} 目标 css 路径
  * @param options.destCSSDirname {String} 目标 css 路径
  * @param options.minifyCSS {Boolean} 是否压缩 css
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.versionLength {Number} 版本号长度
+ * @param options.signJS {Boolean} 是否签名 js
  * @param options.signCSS {Boolean} 是否签名 css
+ * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.cleanCSSOptions {Object} clean-css 配置
  * @returns {{}}
  */
@@ -79,7 +82,7 @@ module.exports = function (options) {
     };
 
     /**
-     * 构建 css 路径
+     * 构建 js 路径
      * @param url {String} url
      * @param file {String} 所在的文件路径
      * @param [_options] {Object}
@@ -104,6 +107,32 @@ module.exports = function (options) {
             uglifyJSOptions: _options.uglifyJSOptions,
             versionLength: _options.versionLength,
             signJS: _options.signJS
+        });
+    };
+
+    /**
+     * 构建 js 路径
+     * @param url {String} url
+     * @param file {String} 所在的文件路径
+     * @param [_options] {Object}
+     * @param [_options.srcDirname]
+     * @param [_options.destDirname]
+     * @param [_options.destHost]
+     * @param [_options.destJSDirname]
+     * @param [_options.minifyJS]
+     * @param [_options.versionLength]
+     * @param [_options.signJS]
+     * @param [_options.uglifyJSOptions]
+     */
+    exports.buildResPath = function (url, file, _options) {
+        _options = dato.extend({}, options, _options);
+        buildResPath(url, {
+            file: null,
+            versionLength: 32,
+            srcDirname: null,
+            destDirname: null,
+            destResourceDirname: null,
+            destHost: ''
         });
     };
 
