@@ -7,15 +7,23 @@
 
 'use strict';
 
+var path= require('ydr-utils').path;
+var encryption= require('ydr-utils').encryption;
 
 var pathURI = require('../utils/path-uri.js');
+var reader = require('../utils/reader.js');
+var sign = require('../utils/sign.js');
+
+var minifyPathmap= {};
+var minifyCSSmap= {};
+var resourceMap= {};
 
 module.exports = function (href, options) {
 
     var srcPath = pathURI.toAbsoluteFile(href, file, options.srcDirname);
     var destPath = minifyPathmap[srcPath];
     var destURI = minifyCSSmap[srcPath];
-    resList = resourceMap[srcPath];
+    var resList = resourceMap[srcPath];
 
     if (!destURI) {
         var srcCode = reader(srcPath, 'utf8');
