@@ -20,6 +20,7 @@ var copy = require('../utils/copy.js');
 var sign = require('../utils/sign.js');
 var reader = require('../utils/reader.js');
 var minifyJS = require('../minify/js.js');
+var parseHTML = require('../parse/html.js');
 
 var JS_TYPES = {
     'javascript': true,
@@ -78,6 +79,15 @@ module.exports = function (file, options) {
     var code = options.code;
     var mainList = [];
     var jsList = [];
+
+
+    parseHTML(code)
+        .match(function (node) {
+
+        });
+
+
+
 
     code = code.replace(REG_SCRIPT, function (source, scriptTag, scriptCode) {
         var ignore = htmlAttr.get(source, COOLIE_IGNORE);

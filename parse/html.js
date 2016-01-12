@@ -25,12 +25,29 @@ var ParseHTML = klass.create({
 
     /**
      * 使用 post html 中间件
-     * @param middleware
+     * @param middleware {Function} 中间件
      * @returns {ParseHTML}
      */
     use: function (middleware) {
         var the = this;
         the.parser.use(middleware);
+        return the;
+    },
+
+
+    /**
+     * 匹配替换
+     * @param conditions {Object} 匹配条件
+     * @param transform {Function} 转换方法
+     * @returns {ParseHTML}
+     */
+    match: function (conditions, transform) {
+        var the = this;
+
+        the.use(function (tree) {
+            tree.match(conditions, transform);
+        });
+
         return the;
     },
 
