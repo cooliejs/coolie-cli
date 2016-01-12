@@ -100,7 +100,7 @@ module.exports = function (file, options) {
                         return node;
                     }
 
-                    if (node.attrs[coolieIgnore]) {
+                    if (node.attrs.hasOwnProperty(coolieIgnore)) {
                         node.attrs[coolieIgnore] = null;
                         return node;
                     }
@@ -122,6 +122,7 @@ module.exports = function (file, options) {
                         return node;
                     }
 
+                    console.log(node);
                     var value = node.attrs[attr];
                     var pathRet = pathURI.parseURI2Path(value);
 
