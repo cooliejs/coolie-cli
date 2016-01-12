@@ -71,15 +71,15 @@ module.exports = function (file, options) {
             return node;
         }
 
-        if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
-            node.attrs[COOLIE_IGNORE] = null;
-            return node;
-        }
-
         var type = node.attrs.type || DEFAULT_JS_TYPE;
         var isJS = JS_TYPES[type];
 
         if (!isJS) {
+            return node;
+        }
+
+        if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
+            node.attrs[COOLIE_IGNORE] = null;
             return node;
         }
 

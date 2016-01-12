@@ -55,11 +55,6 @@ module.exports = function (file, options) {
     }, function (node) {
         node.attrs = node.attrs || {};
 
-        if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
-            node.attrs[COOLIE_IGNORE] = null;
-            return node;
-        }
-
         if (node.attrs.hasOwnProperty('src')) {
             return node;
         }
@@ -68,6 +63,11 @@ module.exports = function (file, options) {
         var isJS = JS_TYPES[type];
 
         if (!isJS) {
+            return node;
+        }
+
+        if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
+            node.attrs[COOLIE_IGNORE] = null;
             return node;
         }
 

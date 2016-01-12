@@ -91,11 +91,6 @@ module.exports = function (file, options) {
             return node;
         }
 
-        if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
-            node.attrs[COOLIE_IGNORE] = null;
-            return node;
-        }
-
         if (!node.attrs.hasOwnProperty('src')) {
             return node;
         }
@@ -108,6 +103,11 @@ module.exports = function (file, options) {
         }
 
         if (!node.attrs.hasOwnProperty(COOLIE)) {
+            return node;
+        }
+
+        if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
+            node.attrs[COOLIE_IGNORE] = null;
             return node;
         }
 
