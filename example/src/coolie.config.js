@@ -48,6 +48,7 @@ module.exports = function (coolie) {
 
 
     coolie.use(function (options) {
+        console.log(this);
         console.log(options);
         return options.code;
     });

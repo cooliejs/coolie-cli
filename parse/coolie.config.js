@@ -66,8 +66,9 @@ module.exports = function (options) {
 
     if (options.middleware) {
         options.middleware.bindContext(coolie);
-        options.coolieAPI = coolie;
+        configs.coolieAPI = coolie;
     }
+
 
     /**
      * 配置 coolie 构建参数
