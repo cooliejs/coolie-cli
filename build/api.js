@@ -15,17 +15,35 @@ var buildJSPath = require('../build/js-path.js');
 var buildResPath = require('../build/res-path.js');
 
 
+var defaults = {
+    coolieAPI: null,
+    srcDirname: null,
+    destDirname: null,
+    destHost: null,
+    destResourceDirname: null,
+    destJSDirname: null,
+    destCSSDirname: null,
+    minifyJS: true,
+    minifyCSS: true,
+    minifyResource: true,
+    versionLength: 32,
+    signJS: true,
+    signCSS: true,
+    uglifyJSOptions: null,
+    cleanCSSOptions: null
+};
+
 /**
  * coolie-cli API 出口
  * @param options {Object} 配置
  * @param [options.coolieAPI] {Object} coolie API
  * @param options.srcDirname {String} 原始路径
  * @param options.destDirname {String} 目标路径
- * @param options.destDirname {String} 目标路径
  * @param options.destHost {String} 目标域
  * @param options.destResourceDirname {String} 目标资源路径
  * @param options.destJSDirname {String} 目标 css 路径
  * @param options.destCSSDirname {String} 目标 css 路径
+ * @param options.minifyJS {Boolean} 是否压缩 js
  * @param options.minifyCSS {Boolean} 是否压缩 css
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.versionLength {Number} 版本号长度
@@ -37,6 +55,7 @@ var buildResPath = require('../build/res-path.js');
  * @returns {{}}
  */
 module.exports = function (options, middleware) {
+    options = dato.extend({}, defaults, options);
     var coolieAPI = options.coolieAPI || {};
 
     middleware.bindContext(coolieAPI);

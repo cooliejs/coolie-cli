@@ -7,5 +7,10 @@
 'use strict';
 
 
+var parseCoolieConfig = require('./parse/coolie.config.js');
 
-
+var configs = parseCoolieConfig({
+    srcDirname: options.srcDirname,
+    middleware: middleware,
+    emitter: emitter
+});
