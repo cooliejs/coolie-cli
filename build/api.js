@@ -56,7 +56,7 @@ var defaults = {
  */
 module.exports = function (options, middleware) {
     options = dato.extend({}, defaults, options);
-    var coolieAPI = options.coolieAPI || {};
+    var coolieAPI = options.coolieAPI;
 
     middleware.bindContext(coolieAPI);
 

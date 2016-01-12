@@ -7,6 +7,7 @@
 
 'use strict';
 
+var assert = require('assert');
 var path = require('ydr-utils').path;
 
 var index = require('../index.js');
@@ -15,11 +16,11 @@ var srcDirname= path.join(__dirname, '../example/src');
 
 describe('index.js', function () {
     it('e', function () {
-        var ret = index({
+        var coolie = index({
             srcDirname: srcDirname
         });
 
-        console.log(ret);
+        assert.equal(!!coolie.matchHTML, true);
     });
 });
 

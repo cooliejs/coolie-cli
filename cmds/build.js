@@ -103,8 +103,7 @@ module.exports = function (options) {
     });
     var srcDirname = configs.srcDirname;
     var destDirname = configs.destDirname;
-
-    buildAPI(configs, middleware);
+    var coolieAPI = buildAPI(configs, middleware);
 
 
     // 2. 复制文件
@@ -212,6 +211,8 @@ module.exports = function (options) {
     console.log();
     debug.primary('build success', 'past ' + pastTime + 'ms');
     console.log();
+
+    return coolieAPI;
 };
 
 
