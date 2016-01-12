@@ -85,7 +85,7 @@ module.exports = function (file, options) {
     var jsList = [];
 
 
-    parseHTML(code).match({
+    code = parseHTML(code).match({
         tag: 'script'
     }, function (node) {
         if (!node.attrs) {
@@ -186,9 +186,8 @@ module.exports = function (file, options) {
         });
 
         node.attrs.src = ret.url;
-
-        return ret;
-    });
+        return node;
+    }).exec();
 
     return {
         code: code,
