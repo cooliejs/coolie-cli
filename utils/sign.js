@@ -9,7 +9,7 @@
 
 var pkg = require('../package.json');
 
-module.exports = function (type) {
+var sign = module.exports = function (type) {
     var banner = pkg.name + '@' + pkg.version;
 
     switch (type) {
@@ -20,4 +20,16 @@ module.exports = function (type) {
         case 'js':
             return '/*' + banner + '*/';
     }
+};
+
+sign.html = function () {
+    return sign('html');
+};
+
+sign.js = function () {
+    return sign('js');
+};
+
+sign.css = function () {
+    return sign('css');
 };
