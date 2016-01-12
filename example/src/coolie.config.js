@@ -48,7 +48,7 @@ module.exports = function (coolie) {
 
 
 
-    coolie.use();
+    coolie.use(require('coolie-html-attr-resource')());
 
 
     // <img data-original="/img.png"> 引用资源替换

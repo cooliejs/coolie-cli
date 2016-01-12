@@ -77,6 +77,22 @@ module.exports = function (options) {
     };
 
 
+    if (options.middleware) {
+        options.middleware.catchError(function (err, middleware) {
+            var pkg = middleware.package;
+            err.message = ''.concat(
+                    'middleware name: ' + pkg.name + '\n',
+                    'middleware version: ' + pkg.version + '\n',
+                    'middleware author: ' + (pkg.author.name || pkg.author.email || pkg.author.url || pkg.author) + '\n',
+                    pkg.bugs && pkg.bugs.url ? 'middleware bugs: ' + pkg.bugs.url + '\n' : '',
+                    pkg.repository && pkg.repository.url ? 'middleware repository: ' + pkg.repository.url + '\n' : '',
+                    pkg.homepage ? 'middleware homepage: ' + pkg.homepage + '\n' : ''
+                ) + err.message;
+            return err;
+        });
+    }
+
+
     /**
      * coolie 中间件
      * @param middleware {Function}
@@ -89,7 +105,7 @@ module.exports = function (options) {
                 debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie-*"');
             }
 
-            if (!middleware.middlewareName) {
+            if (!middleware.package) {
                 debug.warn('invalid middleware', 'some middleware has lost its name');
                 debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie-*"');
             }
