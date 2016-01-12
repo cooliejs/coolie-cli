@@ -10,6 +10,7 @@
 var path = require('ydr-utils').path;
 var encryption = require('ydr-utils').encryption;
 var debug = require('ydr-utils').debug;
+var dato = require('ydr-utils').dato;
 var fse = require('fs-extra');
 
 var pathURI = require('../utils/path-uri.js');
@@ -31,7 +32,15 @@ var defaults = {
     signJS: true
 };
 
+
+/**
+ * js 路径构建
+ * @param src
+ * @param options
+ * @returns {*}
+ */
 module.exports = function (src, options) {
+    options = dato.extend({}, defaults, options);
     var isRelatived = pathURI.isRelatived(src);
 
     if (!isRelatived) {
@@ -74,6 +83,12 @@ module.exports = function (src, options) {
             return process.exit(1);
         }
     }
+
+    return {
+        srcFile: srcPath,
+        destFile: destPath,
+        url: destURI
+    };
 };
 
 
