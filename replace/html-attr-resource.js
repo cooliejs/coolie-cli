@@ -97,7 +97,7 @@ module.exports = function (file, options) {
                 tree.match({
                     tag: tag
                 }, function (node) {
-                    if (!node.attrs[attr]) {
+                    if (!node.attrs || !node.attrs[attr]) {
                         return node;
                     }
 

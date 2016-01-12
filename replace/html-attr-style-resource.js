@@ -12,6 +12,7 @@ var debug = require('ydr-utils').debug;
 var path = require('ydr-utils').path;
 
 var htmlAttr = require('../utils/html-attr.js');
+var parseHTML = require('../parse/html.js');
 var replaceCSSResource = require('./css-resource.js');
 
 var COOLIE_IGNOE = 'coolieignore';
@@ -49,37 +50,68 @@ module.exports = function (file, options) {
     var code = options.code;
     var resList = [];
 
-    // style=""
-    code = code.replace(REG_TAG, function (source, tagName) {
-        var ignore = htmlAttr.get(source, COOLIE_IGNOE);
-        var styleCode = htmlAttr.get(source, 'style');
+    parseHTML(code).use(function (tree) {
+        tree.match({
+            tag: /.*/
+        }, function (node) {
+            if (!node.attrs || !node.attrs.style) {
+                return node;
+            }
 
-        if (ignore || (!styleCode || styleCode === true)) {
-            source = htmlAttr.remove(source, COOLIE_IGNOE);
-            return source;
-        }
+            var styleCode = node.attrs.style;
+            var replaceCSSResourceRet = replaceCSSResource(file, {
+                code: styleCode,
+                destCSSDirname: null,
+                versionLength: options.versionLength,
+                srcDirname: options.srcDirname,
+                destDirname: options.destDirname,
+                destHost: options.destHost,
+                destResourceDirname: options.destResourceDirname
+            });
 
-        var replaceCSSResourceRet = replaceCSSResource(file, {
-            code: styleCode,
-            destCSSDirname: null,
-            versionLength: options.versionLength,
-            srcDirname: options.srcDirname,
-            destDirname: options.destDirname,
-            destHost: options.destHost,
-            destResourceDirname: options.destResourceDirname
+            styleCode = replaceCSSResourceRet.code;
+            resList = replaceCSSResourceRet.resList;
+
+            if (options.minifyCSS) {
+                styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
+            }
+
+            node.attrs.style = styleCode;
+            return node;
         });
+    }).get();
 
-        styleCode = replaceCSSResourceRet.code;
-        resList = replaceCSSResourceRet.resList;
-
-        if (options.minifyCSS) {
-            styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
-        }
-
-        source = htmlAttr.set(source, 'style', styleCode);
-
-        return source;
-    });
+    //// style=""
+    //code = code.replace(REG_TAG, function (source, tagName) {
+    //    var ignore = htmlAttr.get(source, COOLIE_IGNOE);
+    //    var styleCode = htmlAttr.get(source, 'style');
+    //
+    //    if (ignore || (!styleCode || styleCode === true)) {
+    //        source = htmlAttr.remove(source, COOLIE_IGNOE);
+    //        return source;
+    //    }
+    //
+    //    var replaceCSSResourceRet = replaceCSSResource(file, {
+    //        code: styleCode,
+    //        destCSSDirname: null,
+    //        versionLength: options.versionLength,
+    //        srcDirname: options.srcDirname,
+    //        destDirname: options.destDirname,
+    //        destHost: options.destHost,
+    //        destResourceDirname: options.destResourceDirname
+    //    });
+    //
+    //    styleCode = replaceCSSResourceRet.code;
+    //    resList = replaceCSSResourceRet.resList;
+    //
+    //    if (options.minifyCSS) {
+    //        styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
+    //    }
+    //
+    //    source = htmlAttr.set(source, 'style', styleCode);
+    //
+    //    return source;
+    //});
 
     return {
         code: code,
