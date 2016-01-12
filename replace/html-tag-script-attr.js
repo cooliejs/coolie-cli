@@ -21,6 +21,7 @@ var sign = require('../utils/sign.js');
 var reader = require('../utils/reader.js');
 var minifyJS = require('../minify/js.js');
 var parseHTML = require('../parse/html.js');
+var buildJSPath = require('../build/js-path.js');
 
 var JS_TYPES = {
     'javascript': true,
@@ -117,13 +118,13 @@ module.exports = function (file, options) {
 
             if (!dataMain) {
                 debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', '`'+DATA_MAIN+'` is empty');
+                debug.error('coolie script', '`' + DATA_MAIN + '` is empty');
                 return process.exit(1);
             }
 
             if (!dataConfig) {
                 debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', '`'+DATA_CONFIG+'` is empty');
+                debug.error('coolie script', '`' + DATA_CONFIG + '` is empty');
                 return process.exit(1);
             }
 
@@ -167,30 +168,24 @@ module.exports = function (file, options) {
             node.attrs[COOLIE] = null;
         }
 
+        var ret = buildJSPath(src, {
+            file: file,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destJSDirname: options.destJSDirname,
+            minifyJS: options.minifyJS,
+            uglifyJSOptions: options.uglifyJSOptions,
+            versionLength: options.versionLength,
+            signJS: options.signJS
+        });
 
-        var ret =
+        jsList.push({
+            destPath: ret.destFile,
+            dependencies: [ret.srcFile]
+        });
 
-            jsList.push({
-                destPath: destPath,
-                dependencies: [srcPath]
-            });
-
-            source = htmlAttr.set(source, 'src', destURI);
-            return source;
-
-
-        if (isJS && options.minifyJS) {
-            scriptCode = minifyJS(file, {
-                code: scriptCode,
-                uglifyJSOptions: options.uglifyJSOptions
-            });
-        }
-
-        var ret = scriptTag + scriptCode + '</script>';
-
-        if (isJSscript) {
-            ret = ret.replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
-        }
+        node.attrs.src = ret.url;
 
         return ret;
     });
