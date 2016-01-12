@@ -167,50 +167,7 @@ module.exports = function (file, options) {
             node.attrs[COOLIE] = null;
         }
 
-        // 有 src 属性
-        if (isJS && src) {
-            var isRelatived = pathURI.isRelatived(src);
 
-            if (!isRelatived) {
-                return source;
-            }
-
-            var srcPath = pathURI.toAbsoluteFile(src, file, options.srcDirname);
-            var destURI = minifyJSMap[srcPath];
-            var destPath = minifyPathMap[srcPath];
-
-            if (!destURI) {
-                var srcCode = reader(srcPath, 'utf8');
-                var destCode = srcCode;
-
-                if (options.minifyJS) {
-                    destCode = minifyJS(srcPath, {
-                        code: srcCode,
-                        uglifyJSOptions: options.uglifyJSOptions
-                    });
-                }
-
-                var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
-
-                destPath = path.join(options.destJSDirname, destVersion + '.js');
-                destURI = pathURI.toRootURL(destPath, options.destDirname);
-                destURI = pathURI.joinURI(options.destHost, destURI);
-
-                if (options.signJS) {
-                    destCode = sign('js') + '\n' + destCode;
-                }
-
-                try {
-                    fse.outputFileSync(destPath, destCode, 'utf8');
-                    minifyPathMap[srcPath] = destPath;
-                    minifyJSMap[srcPath] = destURI;
-                    debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
-                } catch (err) {
-                    debug.error('write file', path.toSystem(destPath));
-                    debug.error('write file', err.message);
-                    return process.exit(1);
-                }
-            }
 
             jsList.push({
                 destPath: destPath,
