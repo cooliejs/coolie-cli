@@ -20,7 +20,7 @@ var copy = require('../utils/copy.js');
 var pathBuild = require('../utils/path-build.js');
 var parseHTML = require('../parse/html.js');
 
-var coolieIgnore = 'coolieignore';
+var COOLIE_IGNOE = 'coolieignore';
 var linkRelList = [
     /apple-touch-icon/,
     /apple-touch-icon-precomposed/,
@@ -101,8 +101,8 @@ module.exports = function (file, options) {
                         return node;
                     }
 
-                    if (node.attrs.hasOwnProperty(coolieIgnore)) {
-                        node.attrs[coolieIgnore] = null;
+                    if (node.attrs.hasOwnProperty(COOLIE_IGNOE)) {
+                        node.attrs[COOLIE_IGNOE] = null;
                         return node;
                     }
 

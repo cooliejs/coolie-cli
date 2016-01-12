@@ -58,6 +58,11 @@ module.exports = function (file, options) {
                 return node;
             }
 
+            if (node.attrs.hasOwnProperty(COOLIE_IGNOE)) {
+                node.attrs[COOLIE_IGNOE] = null;
+                return node;
+            }
+
             var styleCode = node.attrs.style;
             var replaceCSSResourceRet = replaceCSSResource(file, {
                 code: styleCode,
