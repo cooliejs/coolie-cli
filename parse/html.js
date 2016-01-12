@@ -10,6 +10,7 @@
 var posthtml = require('posthtml');
 var klass = require('ydr-utils').class;
 var dato = require('ydr-utils').dato;
+var allocation = require('ydr-utils').allocation;
 
 
 var defaults = {};
@@ -37,12 +38,20 @@ var ParseHTML = klass.create({
 
     /**
      * 匹配替换
-     * @param conditions {Object} 匹配条件
+     * @param [conditions] {Object} 匹配条件，默认全部标签
      * @param transform {Function} 转换方法
      * @returns {ParseHTML}
      */
     match: function (conditions, transform) {
         var the = this;
+        var args = allocation.args(arguments);
+
+        if (args.length === 1) {
+            transform = args[0];
+            conditions = {
+                tag: /.*/
+            };
+        }
 
         the.use(function (tree) {
             tree.match(conditions, transform);

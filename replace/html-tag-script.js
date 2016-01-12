@@ -81,12 +81,11 @@ module.exports = function (file, options) {
     var jsList = [];
 
 
-    parseHTML(code)
-        .match(function (node) {
+    parseHTML(code).match({
+        tag: 'script'
+    }, function (node) {
 
-        });
-
-
+    });
 
 
     code = code.replace(REG_SCRIPT, function (source, scriptTag, scriptCode) {
