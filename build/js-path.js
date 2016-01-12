@@ -7,25 +7,38 @@
 
 'use strict';
 
+var path = require('ydr-utils').path;
 var encryption = require('ydr-utils').encryption;
+var debug = require('ydr-utils').debug;
 var fse = require('fs-extra');
 
 var pathURI = require('../utils/path-uri.js');
 var reader = require('../utils/reader.js');
+var sign = require('../utils/sign.js');
 var minifyJS = require('../minify/js.js');
 
 var minifyJSMap = {};
 var minifyPathMap = {};
+var defaults = {
+    file: null,
+    srcDirname: null,
+    destDirname: null,
+    destHost: null,
+    destJSDirname: null,
+    minifyJS: true,
+    uglifyJSOptions: null,
+    versionLength: 32,
+    signJS: true
+};
 
-module.exports = function (src) {
-    // 有 src 属性
+module.exports = function (src, options) {
     var isRelatived = pathURI.isRelatived(src);
 
     if (!isRelatived) {
-        return source;
+        return false;
     }
 
-    var srcPath = pathURI.toAbsoluteFile(src, file, options.srcDirname);
+    var srcPath = pathURI.toAbsoluteFile(src, options.file, options.srcDirname);
     var destURI = minifyJSMap[srcPath];
     var destPath = minifyPathMap[srcPath];
 
@@ -61,6 +74,6 @@ module.exports = function (src) {
             return process.exit(1);
         }
     }
-    ;
+};
 
 
