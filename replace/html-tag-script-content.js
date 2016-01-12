@@ -66,6 +66,10 @@ module.exports = function (file, options) {
             return node;
         }
 
+        if (!node.content) {
+            return node;
+        }
+
         if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
             node.attrs[COOLIE_IGNORE] = null;
             return node;
