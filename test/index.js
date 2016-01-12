@@ -18,6 +18,8 @@ describe('index.js', function () {
     it('e', function () {
         var coolie = index({
             srcDirname: srcDirname
+        }, function (next) {
+            next();
         });
 
         assert.equal(!!coolie.matchHTML, true);
