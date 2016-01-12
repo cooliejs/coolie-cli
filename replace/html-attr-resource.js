@@ -130,8 +130,6 @@ module.exports = function (file, options) {
                         return node;
                     }
 
-                    console.log(node);
-                    console.log('========================================');
                     var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
                     var resFile = copy(absFile, {
                         version: true,
