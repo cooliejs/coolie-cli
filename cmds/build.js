@@ -29,6 +29,8 @@ var middleware = new Middleware({
 });
 var emitter = new Emitter();
 
+
+// 重写 err
 middleware.catchError(function (err, middleware) {
     var pkg = middleware.package || {};
     var UNKNDOW = 'unkndow';
@@ -36,10 +38,17 @@ middleware.catchError(function (err, middleware) {
     pkg.author = pkg.author || {};
     pkg.bugs = pkg.bugs || {};
     pkg.repository = pkg.repository || {};
+
+    var author = ''.concat(
+        pkg.author.name || '',
+        pkg.author.nickname || '',
+        pkg.author.email ? '<' + pkg.author.email + '>' : ''
+    );
+
     err.coolieMiddlware = {
         name: pkg.name || UNKNDOW,
         version: pkg.version || UNKNDOW,
-        author: pkg.author.name || pkg.author.nickname || pkg.author.email || pkg.author || UNKNDOW,
+        author: author || pkg.author || UNKNDOW,
         bug: pkg.bugs.url || pkg.bugs || UNKNDOW,
         repository: pkg.repository.url || pkg.repository || UNKNDOW,
         homepage: pkg.homepage || UNKNDOW
@@ -48,9 +57,15 @@ middleware.catchError(function (err, middleware) {
 });
 
 middleware.on('error', function (err) {
-    debug.error('middleware error', '');
-    debug.error('middleware name', err.middlewareName);
-    debug.error(err.name, err.message);
+    var coolieMiddlware = err.coolieMiddlware;
+
+    debug.error('middleware name', coolieMiddlware.name);
+    debug.error('middleware version', coolieMiddlware.version);
+    debug.error('middleware author', coolieMiddlware.author);
+    debug.error('middleware bug', coolieMiddlware.bug);
+    debug.error('middleware repo', coolieMiddlware.repository);
+    debug.error('middleware home', coolieMiddlware.homepage);
+    debug.error('middleware error', err.message);
     console.log();
     return process.exit(1);
 });
