@@ -168,6 +168,7 @@ module.exports = function (file, options) {
         }
 
 
+        var ret =
 
             jsList.push({
                 destPath: destPath,
@@ -176,7 +177,6 @@ module.exports = function (file, options) {
 
             source = htmlAttr.set(source, 'src', destURI);
             return source;
-        }
 
 
         if (isJS && options.minifyJS) {
