@@ -8,7 +8,6 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
-var allocation = require('ydr-utils').allocation;
 
 var parseHTML = require('../parse/html.js');
 var buildCSSPath = require('../build/css-path.js');
