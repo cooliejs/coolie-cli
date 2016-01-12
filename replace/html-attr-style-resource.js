@@ -50,7 +50,7 @@ module.exports = function (file, options) {
     var code = options.code;
     var resList = [];
 
-    parseHTML(code).use(function (tree) {
+    code = parseHTML(code).use(function (tree) {
         tree.match({
             tag: /.*/
         }, function (node) {
@@ -85,38 +85,6 @@ module.exports = function (file, options) {
             return node;
         });
     }).get();
-
-    //// style=""
-    //code = code.replace(REG_TAG, function (source, tagName) {
-    //    var ignore = htmlAttr.get(source, COOLIE_IGNOE);
-    //    var styleCode = htmlAttr.get(source, 'style');
-    //
-    //    if (ignore || (!styleCode || styleCode === true)) {
-    //        source = htmlAttr.remove(source, COOLIE_IGNOE);
-    //        return source;
-    //    }
-    //
-    //    var replaceCSSResourceRet = replaceCSSResource(file, {
-    //        code: styleCode,
-    //        destCSSDirname: null,
-    //        versionLength: options.versionLength,
-    //        srcDirname: options.srcDirname,
-    //        destDirname: options.destDirname,
-    //        destHost: options.destHost,
-    //        destResourceDirname: options.destResourceDirname
-    //    });
-    //
-    //    styleCode = replaceCSSResourceRet.code;
-    //    resList = replaceCSSResourceRet.resList;
-    //
-    //    if (options.minifyCSS) {
-    //        styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
-    //    }
-    //
-    //    source = htmlAttr.set(source, 'style', styleCode);
-    //
-    //    return source;
-    //});
 
     return {
         code: code,
