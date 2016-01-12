@@ -31,12 +31,17 @@ module.exports = function (value, options) {
 
     var pathRet = pathURI.parseURI2Path(value);
 
-    // 不存在路径 || URL
-    if (!value || pathURI.isURL(pathRet.path)) {
+    // 非相对路径
+    if (!pathURI.isRelatived(pathRet.path)) {
         return false;
     }
 
     var absFile = pathURI.toAbsoluteFile(pathRet.path, options.file, options.srcDirname);
+    console.log('---------------------------------');
+    console.log(options);
+    console.log(absFile);
+    console.log('---------------------------------');
+
     var resFile = copy(absFile, {
         version: true,
         copyPath: false,
