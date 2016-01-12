@@ -1,0 +1,30 @@
+{
+  "/html/replace.html": {
+    "main": [
+      {
+        "src": "../src/static/js/app/index.js",
+        "dest": "/static/js/app/92920ae5.js",
+        "deps": [
+          "../src/static/img/100x100.png",
+          "../src/static/js/libs2/some.css",
+          "../src/static/js/libs2/some.jpg",
+          "../src/static/img/girl.jpg"
+        ]
+      }
+    ],
+    "async": [],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
+    "css": [],
+    "res": [
+      "../src/favicon.ico",
+      "../src/static/img/girl.jpg"
+    ]
+  }
+}
