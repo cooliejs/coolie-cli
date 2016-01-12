@@ -34,6 +34,8 @@ var JS_TYPES = {
 var DEFAULT_JS_TYPE = 'text/javascript';
 var COOLIE_IGNORE = 'coolieignore';
 var COOLIE = 'coolie';
+var DATA_MAIN = 'data-main';
+var DATA_CONFIG = 'data-config';
 var REG_SCRIPT = /(<script\b[\s\S]*?>)([\s\S]*?)<\/script>/ig;
 // 有歧义的代码片段
 var REG_AMBIGUITY_SLICE = /}};?<\/script>$/;
@@ -94,10 +96,14 @@ module.exports = function (file, options) {
             return node;
         }
 
+        if (!node.attrs.hasOwnProperty('src')) {
+            return node;
+        }
+
         var type = node.attrs.type || DEFAULT_JS_TYPE;
         var isJS = JS_TYPES[type];
 
-        if(!isJS){
+        if (!isJS) {
             return node;
         }
 
@@ -105,27 +111,24 @@ module.exports = function (file, options) {
         var src = node.attrs.src;
 
         // 有 coolie 属性
-        if (isJS && src && hasCoolie) {
-            var dataMain = htmlAttr.get(source, 'data-main');
-            var dataConfig = htmlAttr.get(source, 'data-config');
+        if (hasCoolie) {
+            var dataMain = node.attrs[DATA_MAIN];
+            var dataConfig = node.attrs[DATA_CONFIG];
 
-            if (!dataMain || dataMain === true) {
+            if (!dataMain) {
                 debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', originalSource);
-                debug.error('coolie script', '`data-main` is empty');
+                debug.error('coolie script', '`'+DATA_MAIN+'` is empty');
                 return process.exit(1);
             }
 
-            if (!dataConfig || dataConfig === true) {
+            if (!dataConfig) {
                 debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', originalSource);
-                debug.error('coolie script', '`data-config` is empty');
+                debug.error('coolie script', '`'+DATA_CONFIG+'` is empty');
                 return process.exit(1);
             }
 
             if (!options.srcCoolieConfigBaseDirname) {
                 debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', originalSource);
                 debug.error('coolie script', '`coolie-config.js` is NOT defined, but used');
                 return process.exit(1);
             }
@@ -145,7 +148,6 @@ module.exports = function (file, options) {
                 debug.error('coolie `data-main`', dataMain);
                 debug.error('main file', path.toSystem(mainPath));
                 debug.error('html file', path.toSystem(file));
-                debug.error('html code', originalSource);
                 return process.exit(1);
             }
 
@@ -160,10 +162,9 @@ module.exports = function (file, options) {
                 coolieConfigURI = '~' + pathURI.joinURI(options.destHost, coolieConfigURI);
             }
 
-            source = htmlAttr.set(source, 'data-main', mainVersion + '.js');
-            source = htmlAttr.set(source, 'data-config', coolieConfigURI);
-            source = htmlAttr.remove(source, COOLIE);
-            source = source.replace(REG_LINE, '').replace(REG_SPACE, ' ');
+            node.attrs[DATA_MAIN] = mainVersion + '.js';
+            node.attrs[DATA_CONFIG] = coolieConfigURI;
+            node.attrs[COOLIE] = null;
         }
 
         // 有 src 属性
@@ -222,164 +223,6 @@ module.exports = function (file, options) {
 
 
         if (isJS && options.minifyJS) {
-            scriptCode = minifyJS(file, {
-                code: scriptCode,
-                uglifyJSOptions: options.uglifyJSOptions
-            });
-        }
-
-        var ret = scriptTag + scriptCode + '</script>';
-
-        if (isJSscript) {
-            ret = ret.replace(REG_AMBIGUITY_SLICE, '}/**/}</script>');
-        }
-
-        return ret;
-    });
-
-
-    code = code.replace(REG_SCRIPT, function (source, scriptTag, scriptCode) {
-        var ignore = htmlAttr.get(source, COOLIE_IGNORE);
-        var originalSource = source;
-
-        if (ignore) {
-            source = htmlAttr.remove(source, COOLIE_IGNORE);
-            return source;
-        }
-
-        var type = htmlAttr.get(scriptTag, 'type');
-        var hasCoolie = htmlAttr.get(scriptTag, COOLIE);
-        var src = htmlAttr.get(scriptTag, 'src');
-
-        if (type === true || !type) {
-            type = 'text/javascript';
-        }
-
-        if (src === true) {
-            src = '';
-        }
-
-        var isJSscript = JS_TYPES[type];
-
-
-        // 有 coolie 属性
-        if (isJSscript && src && hasCoolie) {
-            var dataMain = htmlAttr.get(source, 'data-main');
-            var dataConfig = htmlAttr.get(source, 'data-config');
-
-            if (!dataMain || dataMain === true) {
-                debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', originalSource);
-                debug.error('coolie script', '`data-main` is empty');
-                return process.exit(1);
-            }
-
-            if (!dataConfig || dataConfig === true) {
-                debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', originalSource);
-                debug.error('coolie script', '`data-config` is empty');
-                return process.exit(1);
-            }
-
-            if (!options.srcCoolieConfigBaseDirname) {
-                debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', originalSource);
-                debug.error('coolie script', '`coolie-config.js` is NOT defined, but used');
-                return process.exit(1);
-            }
-
-            var mainPath = path.join(options.srcCoolieConfigBaseDirname, dataMain);
-            var mainVersion = options.mainVersionMap[mainPath];
-
-            mainList.push(mainPath);
-
-            if (!typeis.file(mainPath)) {
-                debug.error('coolie main', '`' + path.toSystem(mainPath) + '` is NOT a file');
-                return process.exit(1);
-            }
-
-            if (!mainVersion) {
-                debug.error('coolie script', 'can not found `data-main` version');
-                debug.error('coolie `data-main`', dataMain);
-                debug.error('main file', path.toSystem(mainPath));
-                debug.error('html file', path.toSystem(file));
-                debug.error('html code', originalSource);
-                return process.exit(1);
-            }
-
-            var coolieConfigURI = pathURI.toRootURL(options.destCoolieConfigJSPath, options.destDirname);
-
-            // 绝对路径，相对他域
-            if (pathURI.isURL(options.destHost)) {
-                coolieConfigURI = pathURI.joinURI(options.destHost, coolieConfigURI);
-            }
-            // 相对本域
-            else {
-                coolieConfigURI = '~' + pathURI.joinURI(options.destHost, coolieConfigURI);
-            }
-
-            source = htmlAttr.set(source, 'data-main', mainVersion + '.js');
-            source = htmlAttr.set(source, 'data-config', coolieConfigURI);
-            source = htmlAttr.remove(source, COOLIE);
-            source = source.replace(REG_LINE, '').replace(REG_SPACE, ' ');
-        }
-
-        // 有 src 属性
-        if (isJSscript && src) {
-            var isRelatived = pathURI.isRelatived(src);
-
-            if (!isRelatived) {
-                return source;
-            }
-
-            var srcPath = pathURI.toAbsoluteFile(src, file, options.srcDirname);
-            var destURI = minifyJSMap[srcPath];
-            var destPath = minifyPathMap[srcPath];
-
-            if (!destURI) {
-                var srcCode = reader(srcPath, 'utf8');
-                var destCode = srcCode;
-
-                if (options.minifyJS) {
-                    destCode = minifyJS(srcPath, {
-                        code: srcCode,
-                        uglifyJSOptions: options.uglifyJSOptions
-                    });
-                }
-
-                var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
-
-                destPath = path.join(options.destJSDirname, destVersion + '.js');
-                destURI = pathURI.toRootURL(destPath, options.destDirname);
-                destURI = pathURI.joinURI(options.destHost, destURI);
-
-                if (options.signJS) {
-                    destCode = sign('js') + '\n' + destCode;
-                }
-
-                try {
-                    fse.outputFileSync(destPath, destCode, 'utf8');
-                    minifyPathMap[srcPath] = destPath;
-                    minifyJSMap[srcPath] = destURI;
-                    debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
-                } catch (err) {
-                    debug.error('write file', path.toSystem(destPath));
-                    debug.error('write file', err.message);
-                    return process.exit(1);
-                }
-            }
-
-            jsList.push({
-                destPath: destPath,
-                dependencies: [srcPath]
-            });
-
-            source = htmlAttr.set(source, 'src', destURI);
-            return source;
-        }
-
-
-        if (isJSscript && options.minifyJS) {
             scriptCode = minifyJS(file, {
                 code: scriptCode,
                 uglifyJSOptions: options.uglifyJSOptions
