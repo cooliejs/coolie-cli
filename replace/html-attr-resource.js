@@ -17,6 +17,7 @@ var htmlAttr = require('../utils/html-attr.js');
 var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
+var parseHTML = require('../parse/html.js');
 
 var coolieIgnore = 'coolieignore';
 var linkRelList = [
