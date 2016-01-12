@@ -9,7 +9,6 @@
 
 
 var path = require('ydr-utils').path;
-var dato = require('ydr-utils').dato;
 var fs = require('fs');
 
 var parseHTML = require('../../parse/html.js');
@@ -37,7 +36,16 @@ describe('parse/html.js', function () {
                     }
                 });
             })
-            .get();
+            .match({
+                tag: 'meta',
+                attrs: {
+                    name: 'renderer'
+                }
+            }, function (node) {
+                node.attrs.content = 'xxxxxxxx';
+                return node;
+            })
+            .exec();
 
         console.log('\n\n------------------------------------------');
         console.log(ret);
