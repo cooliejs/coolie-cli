@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * css 路径构建
  * @author ydr.me
  * @create 2016-01-12 16:59
  */
@@ -42,11 +42,16 @@ var defaults = {
  */
 module.exports = function (href, options) {
     options = dato.extend({}, defaults, options);
-    var srcPath = pathURI.toAbsoluteFile(href, options.file, options.srcDirname);
+    var pathRet = pathURI.parseURI2Path(href);
+
+    if (!pathURI.isRelatived(pathRet.path)) {
+        return false;
+    }
+
+    var srcPath = pathURI.toAbsoluteFile(href, pathRet.path, options.srcDirname);
     var destPath = minifyPathmap[srcPath];
     var destURI = minifyCSSmap[srcPath];
     var resList = resourceMap[srcPath];
-    var cssList = [];
 
     if (!destURI) {
         var srcCode = reader(srcPath, 'utf8');
@@ -91,16 +96,11 @@ module.exports = function (href, options) {
         }
     }
 
-    cssList.push({
-        destPath: destPath,
-        dependencies: [{
-            srcPath: srcPath,
-            resList: resList
-        }]
-    });
-
     return {
-        url: destURI
+        url: destURI,
+        srcFile: srcPath,
+        destFile: destPath,
+        resList: resList
     };
 };
 
