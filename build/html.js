@@ -162,8 +162,8 @@ module.exports = function (options) {
                 code: ret.code
             });
 
-            if(typeis.String(postRet)){
-                ret.code = postRet;
+            if(typeis.Object(postRet) && typeis.String(postRet.code)){
+                ret.code = postRet.code;
             }
         }
 
