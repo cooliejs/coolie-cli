@@ -31,17 +31,14 @@ describe('replace/html-tag-script-attr.js', function () {
         var ret = replaceHTMLTagScriptAttr(file, {
             code: code,
             srcDirname: srcDirname,
-            srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname,
             destDirname: destDirname,
             destJSDirname: destJSDirname,
-            mainVersionMap: mainVersionMap,
-            destHost: 'http://abc.com/',
-            destCoolieConfigJSPath: destCoolieConfigJSPath
+            mainVersionMap: mainVersionMap
         }).code;
 
         console.log('\n\n-------------------------------------------');
         console.log(ret);
-        assert.equal(ret.indexOf('src="http://abc.com/static/js/') > -1, true);
+        assert.equal(ret.indexOf('static/js/coolie.min.js') === -1, true);
     });
 });
 
