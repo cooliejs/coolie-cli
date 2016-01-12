@@ -80,7 +80,7 @@ module.exports = function (file, options) {
 
         node.attrs.style = styleCode;
         return node;
-    }).get();
+    }).exec();
 
     return {
         code: code,

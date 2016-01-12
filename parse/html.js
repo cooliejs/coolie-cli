@@ -62,10 +62,10 @@ var ParseHTML = klass.create({
 
 
     /**
-     * 获取解析后的 html
+     * 执行处理，并返回 html
      * @returns {string}
      */
-    get: function () {
+    exec: function () {
         var the = this;
 
         return the.parser.process(the.code, {
