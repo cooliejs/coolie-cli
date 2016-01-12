@@ -10,6 +10,7 @@
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 var Middleware = require('ydr-utils').Middleware;
+var Emitter = require('ydr-utils').Emitter;
 
 var parseCoolieConfig = require('../parse/coolie.config.js');
 var buildAPP = require('../build/app.js');
@@ -25,12 +26,18 @@ var defaults = {
 var middleware = new Middleware({
     async: false
 });
+var emitter = new Emitter();
 
 middleware.on('error', function (err) {
     debug.error('middleware error', '');
     debug.error('middleware name', err.middlewareName);
     debug.error(err.name, err.message);
     console.log();
+    return process.exit(1);
+});
+
+emitter.on('exit', function (err) {
+    debug.error(err.name, err.message);
     return process.exit(1);
 });
 
@@ -57,7 +64,8 @@ module.exports = function (options) {
      */
     var configs = parseCoolieConfig({
         srcDirname: options.srcDirname,
-        middleware: middleware
+        middleware: middleware,
+        emitter: emitter
     });
     var srcDirname = configs.srcDirname;
     var destDirname = configs.destDirname;
@@ -123,6 +131,7 @@ module.exports = function (options) {
     debug.primary(++stepIndex + '/' + stepLength, 'build html');
     var buildHTMLResult = buildHTML({
         middleware: middleware,
+        emitter: emitter,
         glob: configs.html.src,
         removeHTMLYUIComments: configs.html.minify,
         removeHTMLLineComments: configs.html.minify,
