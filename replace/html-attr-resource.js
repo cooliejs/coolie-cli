@@ -43,16 +43,19 @@ var regList = [{
 }];
 var replaceList = [{
     tags: ['link'],
-    attrs: ['href']
+    attr: 'href',
+    conditions: {
+        attrs: {}
+    }
 }, {
     tags: ['embed', 'audio', 'video', 'source', 'img'],
-    attrs: ['src']
+    attr: 'src'
 }, {
     tags: ['object'],
-    attrs: ['data']
+    attr: 'data'
 }, {
     tags: ['source'],
-    attrs: ['srcset']
+    attr: 'srcset'
 }];
 var defaults = {
     code: '',
@@ -84,11 +87,76 @@ module.exports = function (file, options) {
     var resList = [];
     var resMap = {};
 
+    var parser = parseHTML(code);
+
     dato.each(replaceList, function (index, item) {
+        var attr = item.attr;
+        dato.each(item.tags, function (index, tag) {
+            parser.use(function (tree) {
+                tree.match({
+                    tag: tag
+                }, function (node) {
+                    if (!node.attrs[attr]) {
+                        return node;
+                    }
+
+                    if (node.attrs[coolieIgnore]) {
+                        node.attrs[coolieIgnore] = null;
+                        return node;
+                    }
+
+                    var isResourceTag = true;
+
+                    switch (node.tag) {
+                        case 'link':
+                            var linkRel = node.attrs.rel;
+                            isResourceTag = false;
+                            dato.each(linkRelList, function (index, regRel) {
+                                isResourceTag = regRel.test(linkRel);
+                                return !isResourceTag;
+                            });
+                            break;
+                    }
+
+                    if (!isResourceTag) {
+                        return node;
+                    }
+
+                    var value = node.attrs[attr];
+                    var pathRet = pathURI.parseURI2Path(value);
+
+                    // 不存在路径 || URL
+                    if (!value || pathURI.isURL(pathRet.path)) {
+                        return tag;
+                    }
+
+                    var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
+                    var resFile = copy(absFile, {
+                        version: true,
+                        copyPath: false,
+                        versionLength: options.versionLength,
+                        srcDirname: options.srcDirname,
+                        destDirname: options.destResourceDirname,
+                        logType: 1,
+                        embedFile: file,
+                        embedCode: tag
+                    });
+                    var resRelative = path.relative(options.destDirname, resFile);
+                    var url = pathURI.joinURI(options.destHost, resRelative);
+
+                    if (!resMap[absFile]) {
+                        resList.push(absFile);
+                    }
+
+                    node.attrs[attr] = url + pathRet.suffix;
+                    return node;
+                });
+            });
+        });
 
     });
 
-    // 标签替换，如 <img src="
+    //// 标签替换，如 <img src="
     //regList.forEach(function (item) {
     //    code = code.replace(item.reg, function (tag, tagName) {
     //        var find = true;
