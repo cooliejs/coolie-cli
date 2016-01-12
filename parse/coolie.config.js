@@ -286,6 +286,8 @@ module.exports = function (options) {
         } else {
             configs.js.chunk = [];
         }
+
+        configs.uglifyJSOptions = configs.js.minify;
     };
 
     // 检查 coolie-config.js 内的 base 路径
@@ -382,6 +384,11 @@ module.exports = function (options) {
         if (typeis.undefined(configs.html.minify) !== false) {
             configs.html.minify = true;
         }
+
+        configs.removeHTMLYUIComments = configs.html.minify;
+        configs.removeHTMLLineComments = configs.html.minify;
+        configs.joinHTMLSpaces = configs.html.minify;
+        configs.removeHTMLBreakLines = configs.html.minify;
     };
 
 
@@ -413,6 +420,8 @@ module.exports = function (options) {
             debug.error('parse coolie.config', '`css.minify` must be an object or a boolean value');
             process.exit(1);
         }
+
+        configs.cleanCSSOptions = configs.css.minify;
     };
 
 
@@ -472,6 +481,8 @@ module.exports = function (options) {
         }
 
         configs.dest.versionLength = configs.dest.versionLength || 32;
+        configs.destHost = configs.dest.host;
+        configs.versionLength = configs.dest.versionLength;
 
         if (!configs._noCoolieJS) {
             check._coolieConfigJS();

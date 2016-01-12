@@ -73,6 +73,7 @@ module.exports = function (options) {
 
     buildAPI(configs);
 
+    return console.log(configs);
 
 
     // 2. 复制文件
@@ -98,18 +99,18 @@ module.exports = function (options) {
         destDirname: destDirname,
         destCSSDirname: configs.destCSSDirname,
         destResourceDirname: configs.destResourceDirname,
-        destHost: configs.dest.host,
-        uglifyJSOptions: configs.js.minify,
-        cleanCSSOptions: configs.css.minify,
+        destHost: configs.destHost,
+        uglifyJSOptions: configs.uglifyJSOptions,
+        cleanCSSOptions: configs.cleanCSSOptions,
         versionLength: configs.dest.versionLength,
         minifyResource: configs.resource.minify,
         destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
         destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname,
-        removeHTMLYUIComments: configs.html.minify,
-        removeHTMLLineComments: configs.html.minify,
-        joinHTMLSpaces: configs.html.minify,
-        removeHTMLBreakLines: configs.html.minify
+        removeHTMLYUIComments: configs.removeHTMLYUIComments,
+        removeHTMLLineComments: configs.removeHTMLLineComments,
+        joinHTMLSpaces: configs.joinHTMLSpaces,
+        removeHTMLBreakLines: configs.removeHTMLBreakLines
     });
 
 
