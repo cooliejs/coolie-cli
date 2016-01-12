@@ -21,9 +21,20 @@ var code = fs.readFileSync(file, 'utf8');
 describe('parse/html.js', function () {
     it('1', function (done) {
         parseHTML()
-            .use(function(tree) {
+            .use(function (tree) {
                 tree.match({
-                    tag: 'img'
+                    tag: 'meta'
+                }, function (node) {
+                    if (node.attrs.charset) {
+                        return {
+                            tag: 'meta',
+                            attrs: {
+                                charset: 'gbk'
+                            }
+                        };
+                    } else {
+                        return node;
+                    }
                 });
             })
             .process(code)
@@ -32,6 +43,8 @@ describe('parse/html.js', function () {
                     //console.log(tree);
                 });
 
+                console.log('\n\n------------------------------------------');
+                console.log(ret.html);
                 done();
             });
     });
