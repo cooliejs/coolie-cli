@@ -40,6 +40,19 @@ var regList = [{
     reg: /<(source)\b[\s\S]*?>(?!["'])/gi,
     replaceAttrs: ['srcset']
 }];
+var replaceList = [{
+    tags: ['link'],
+    attrs: ['href']
+}, {
+    tags: ['embed', 'audio', 'video', 'source', 'img'],
+    attrs: ['src']
+}, {
+    tags: ['object'],
+    attrs: ['data']
+}, {
+    tags: ['source'],
+    attrs: ['srcset']
+}];
 var defaults = {
     code: '',
     versionLength: 32,
@@ -70,70 +83,74 @@ module.exports = function (file, options) {
     var resList = [];
     var resMap = {};
 
-    // 标签替换，如 <img src="
-    regList.forEach(function (item) {
-        code = code.replace(item.reg, function (tag, tagName) {
-            var find = true;
+    dato.each(replaceList, function (index, item) {
 
-            switch (tagName) {
-                case 'link':
-                    find = false;
-                    var linkRel = htmlAttr.get(tag, 'rel');
-
-                    dato.each(linkRelList, function (index, regRel) {
-                        find = regRel.test(linkRel);
-                        return !find;
-                    });
-                    break;
-            }
-
-            if (!find) {
-                return tag;
-            }
-
-            if (htmlAttr.get(tag, coolieIgnore)) {
-                return htmlAttr.remove(tag, coolieIgnore);
-            }
-
-            item.replaceAttrs.forEach(function (attr) {
-                var value = htmlAttr.get(tag, attr);
-
-                // 属性值为空
-                if (value === true) {
-                    return tag;
-                }
-
-                var pathRet = pathURI.parseURI2Path(value);
-
-                // 不存在路径 || URL
-                if (!value || pathURI.isURL(pathRet.path)) {
-                    return tag;
-                }
-
-                var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
-                var resFile = copy(absFile, {
-                    version: true,
-                    copyPath: false,
-                    versionLength: options.versionLength,
-                    srcDirname: options.srcDirname,
-                    destDirname: options.destResourceDirname,
-                    logType: 1,
-                    embedFile: file,
-                    embedCode: tag
-                });
-                var resRelative = path.relative(options.destDirname, resFile);
-                var url = pathURI.joinURI(options.destHost, resRelative);
-
-                if (!resMap[absFile]) {
-                    resList.push(absFile);
-                }
-
-                tag = htmlAttr.set(tag, attr, url + pathRet.suffix);
-            });
-
-            return tag;
-        });
     });
+
+    // 标签替换，如 <img src="
+    //regList.forEach(function (item) {
+    //    code = code.replace(item.reg, function (tag, tagName) {
+    //        var find = true;
+    //
+    //        switch (tagName) {
+    //            case 'link':
+    //                find = false;
+    //                var linkRel = htmlAttr.get(tag, 'rel');
+    //
+    //                dato.each(linkRelList, function (index, regRel) {
+    //                    find = regRel.test(linkRel);
+    //                    return !find;
+    //                });
+    //                break;
+    //        }
+    //
+    //        if (!find) {
+    //            return tag;
+    //        }
+    //
+    //        if (htmlAttr.get(tag, coolieIgnore)) {
+    //            return htmlAttr.remove(tag, coolieIgnore);
+    //        }
+    //
+    //        item.replaceAttrs.forEach(function (attr) {
+    //            var value = htmlAttr.get(tag, attr);
+    //
+    //            // 属性值为空
+    //            if (value === true) {
+    //                return tag;
+    //            }
+    //
+    //            var pathRet = pathURI.parseURI2Path(value);
+    //
+    //            // 不存在路径 || URL
+    //            if (!value || pathURI.isURL(pathRet.path)) {
+    //                return tag;
+    //            }
+    //
+    //            var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
+    //            var resFile = copy(absFile, {
+    //                version: true,
+    //                copyPath: false,
+    //                versionLength: options.versionLength,
+    //                srcDirname: options.srcDirname,
+    //                destDirname: options.destResourceDirname,
+    //                logType: 1,
+    //                embedFile: file,
+    //                embedCode: tag
+    //            });
+    //            var resRelative = path.relative(options.destDirname, resFile);
+    //            var url = pathURI.joinURI(options.destHost, resRelative);
+    //
+    //            if (!resMap[absFile]) {
+    //                resList.push(absFile);
+    //            }
+    //
+    //            tag = htmlAttr.set(tag, attr, url + pathRet.suffix);
+    //        });
+    //
+    //        return tag;
+    //    });
+    //});
 
     return {
         code: code,
