@@ -9,8 +9,8 @@
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 
-var pathURI = require('./path-uri.js');
-var copy = require('./copy.js');
+var pathURI = require('../utils/path-uri.js');
+var copy = require('../utils/copy.js');
 
 var defaults = {
     versionLength: 32,
