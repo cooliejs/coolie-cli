@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * coolie-cli API 出口
  * @author ydr.me
  * @create 2016-01-12 20:34
  */
@@ -37,7 +37,7 @@ module.exports = function (options) {
     var exports = {};
 
     /**
-     * 匹配 HTML 转换
+     * 匹配 HTML 并转换
      * @param html {String} 原始 HTML
      * @param conditions {Object} 匹配条件，参考 posthtml
      * @param transform {Function} 转换方法，参考 posthtml
@@ -82,6 +82,7 @@ module.exports = function (options) {
         });
     };
 
+
     /**
      * 构建 js 路径
      * @param url {String} url
@@ -112,8 +113,9 @@ module.exports = function (options) {
         });
     };
 
+
     /**
-     * 构建 js 路径
+     * 构建资源路径
      * @param url {String} url
      * @param file {String} 所在的文件路径
      * @param [_options] {Object}
