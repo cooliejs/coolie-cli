@@ -69,7 +69,7 @@ var compressorOptions = {
 module.exports = function (file, options) {
     var code = options.code;
 
-    //try {
+    try {
         return uglifyJS.minify(code, {
             fromString: true,
             // 是否警告提示
@@ -79,12 +79,12 @@ module.exports = function (file, options) {
             // 是否压缩
             compress: dato.extend({}, compressorOptions, options.uglifyJSOptions)
         }).code;
-    //} catch (err) {
-    //    debug.error('js code', code);
-    //    debug.error('jsminify', path.toSystem(file));
-    //    debug.error('jsminify', err.message);
-    //    process.exit(1);
-    //}
+    } catch (err) {
+        debug.error('js code', code);
+        debug.error('jsminify', path.toSystem(file));
+        debug.error('jsminify', err.message);
+        process.exit(1);
+    }
 };
 
 
