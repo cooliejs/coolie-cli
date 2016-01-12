@@ -68,55 +68,51 @@ module.exports = function (file, options) {
     var code = options.code;
     var cssList = [];
 
-    code = parseHTML(code)
-        .use(function (tree) {
-            tree.match({
-                tag: 'link',
-                attrs: {
-                    rel: 'stylesheet'
-                }
-            }, function (node) {
-                if (!node.attrs || !node.attrs.href) {
-                    return node;
-                }
+    code = parseHTML(code).match({
+        tag: 'link',
+        attrs: {
+            rel: 'stylesheet'
+        }
+    }, function (node) {
+        if (!node.attrs || !node.attrs.href) {
+            return node;
+        }
 
-                if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
-                    node.attrs[COOLIE_IGNORE] = null;
-                    return node;
-                }
+        if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
+            node.attrs[COOLIE_IGNORE] = null;
+            return node;
+        }
 
-                var href = node.attrs.href;
+        var href = node.attrs.href;
 
-                var ret = buildCSSPath(href, {
-                    file: file,
-                    srcDirname: options.srcDirname,
-                    destDirname: options.destDirname,
-                    destHost: options.destHost,
-                    destResourceDirname: options.destResourceDirname,
-                    destCSSDirname: options.destCSSDirname,
-                    minifyResource: options.minifyResource,
-                    minifyCSS: options.minifyCSS,
-                    versionLength: options.versionLength,
-                    signCSS: options.signCSS,
-                    cleanCSSOptions: options.cleanCSSOptions
-                });
+        var ret = buildCSSPath(href, {
+            file: file,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destResourceDirname: options.destResourceDirname,
+            destCSSDirname: options.destCSSDirname,
+            minifyResource: options.minifyResource,
+            minifyCSS: options.minifyCSS,
+            versionLength: options.versionLength,
+            signCSS: options.signCSS,
+            cleanCSSOptions: options.cleanCSSOptions
+        });
 
-                if (!ret) {
-                    return node;
-                }
+        if (!ret) {
+            return node;
+        }
 
-                cssList.push({
-                    destPath: ret.destFile,
-                    dependencies: [{
-                        srcPath: ret.srcFile,
-                        resList: ret.resList
-                    }]
-                });
-                node.attrs.href = ret.url;
-                return node;
-            });
-        })
-        .get();
+        cssList.push({
+            destPath: ret.destFile,
+            dependencies: [{
+                srcPath: ret.srcFile,
+                resList: ret.resList
+            }]
+        });
+        node.attrs.href = ret.url;
+        return node;
+    }).exec();
 
     return {
         code: code,

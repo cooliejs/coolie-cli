@@ -146,7 +146,7 @@ module.exports = function (file, options) {
     });
 
     return {
-        code: parser.get(),
+        code: parser.exec(),
         resList: resList
     };
 };
