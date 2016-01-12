@@ -82,7 +82,9 @@ module.exports = function (file, options) {
 
         // var a= {a: {b: 2}};
         //                  ^ 被模板引擎当做了界定符
-        node.content = node.content.replace(/}}(;?)$/, '}/**/};');
+        node.content = node.content.replace(/(}{2,});?$/, function (source, matched) {
+            return matched.split('').join('/**/') + ';';
+        });
 
         return node;
     }).exec();
