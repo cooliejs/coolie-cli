@@ -41,8 +41,7 @@ describe('replace/html-tag-script-attr.js', function () {
 
         console.log('\n\n-------------------------------------------');
         console.log(ret);
-        assert.equal(ret.indexOf('http://abc.com/' + destCoolieConfigJSURI) > -1, true);
-        assert.equal(ret.indexOf(mainVersionMap[srcMainPath]) > -1, true);
+        assert.equal(ret.indexOf('src="http://abc.com/static/js/') > -1, true);
     });
 });
 

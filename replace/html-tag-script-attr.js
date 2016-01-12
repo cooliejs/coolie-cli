@@ -108,67 +108,7 @@ module.exports = function (file, options) {
             return node;
         }
 
-        var hasCoolie = node.attrs.hasOwnProperty(COOLIE);
-        var src = node.attrs.src;
-
-        // 有 coolie 属性
-        if (hasCoolie) {
-            var dataMain = node.attrs[DATA_MAIN];
-            var dataConfig = node.attrs[DATA_CONFIG];
-
-            if (!dataMain) {
-                debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', '`' + DATA_MAIN + '` is empty');
-                return process.exit(1);
-            }
-
-            if (!dataConfig) {
-                debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', '`' + DATA_CONFIG + '` is empty');
-                return process.exit(1);
-            }
-
-            if (!options.srcCoolieConfigBaseDirname) {
-                debug.error('coolie script', path.toSystem(file));
-                debug.error('coolie script', '`coolie-config.js` is NOT defined, but used');
-                return process.exit(1);
-            }
-
-            var mainPath = path.join(options.srcCoolieConfigBaseDirname, dataMain);
-            var mainVersion = options.mainVersionMap[mainPath];
-
-            mainList.push(mainPath);
-
-            if (!typeis.file(mainPath)) {
-                debug.error('coolie main', '`' + path.toSystem(mainPath) + '` is NOT a file');
-                return process.exit(1);
-            }
-
-            if (!mainVersion) {
-                debug.error('coolie script', 'can not found `data-main` version');
-                debug.error('coolie `data-main`', dataMain);
-                debug.error('main file', path.toSystem(mainPath));
-                debug.error('html file', path.toSystem(file));
-                return process.exit(1);
-            }
-
-            var coolieConfigURI = pathURI.toRootURL(options.destCoolieConfigJSPath, options.destDirname);
-
-            // 绝对路径，相对他域
-            if (pathURI.isURL(options.destHost)) {
-                coolieConfigURI = pathURI.joinURI(options.destHost, coolieConfigURI);
-            }
-            // 相对本域
-            else {
-                coolieConfigURI = '~' + pathURI.joinURI(options.destHost, coolieConfigURI);
-            }
-
-            node.attrs[DATA_MAIN] = mainVersion + '.js';
-            node.attrs[DATA_CONFIG] = coolieConfigURI;
-            node.attrs[COOLIE] = null;
-        }
-
-        var ret = buildJSPath(src, {
+        var ret = buildJSPath(node.attrs.src, {
             file: file,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
@@ -179,6 +119,10 @@ module.exports = function (file, options) {
             versionLength: options.versionLength,
             signJS: options.signJS
         });
+
+        if (!ret) {
+            return node;
+        }
 
         jsList.push({
             destPath: ret.destFile,
