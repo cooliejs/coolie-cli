@@ -88,9 +88,7 @@ module.exports = function (file, options) {
     code = parseHTML(code).match({
         tag: 'script'
     }, function (node) {
-        if (!node.attrs) {
-            return node;
-        }
+        node.attrs = node.attrs || {};
 
         if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
             node.attrs[COOLIE_IGNORE] = null;
@@ -108,9 +106,10 @@ module.exports = function (file, options) {
             return node;
         }
 
-        console.log(node);
-
-
+        node.content = minifyJS(file, {
+            code: node.content,
+            uglifyJSOptions: options.uglifyJSOptions
+        });
         return node;
     }).exec();
 
