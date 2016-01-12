@@ -7,23 +7,46 @@
 
 'use strict';
 
-var path= require('ydr-utils').path;
-var encryption= require('ydr-utils').encryption;
+var fse = require('fs-extra');
+var path = require('ydr-utils').path;
+var encryption = require('ydr-utils').encryption;
+var debug = require('ydr-utils').debug;
+var dato = require('ydr-utils').dato;
 
 var pathURI = require('../utils/path-uri.js');
 var reader = require('../utils/reader.js');
 var sign = require('../utils/sign.js');
+var minifyCSS = require('../minify/css.js');
 
-var minifyPathmap= {};
-var minifyCSSmap= {};
-var resourceMap= {};
+var minifyPathmap = {};
+var minifyCSSmap = {};
+var resourceMap = {};
+var defaults = {
+    file: null,
+    srcDirname: null,
+    destDirname: null,
+    destHost: null,
+    destResourceDirname: null,
+    minifyResource: true,
+    versionLength: 32,
+    signCSS: true,
+    cleanCSSOptions: null
+};
 
+
+/**
+ * 构建 css 路径
+ * @param href
+ * @param options
+ * @returns {*}
+ */
 module.exports = function (href, options) {
-
-    var srcPath = pathURI.toAbsoluteFile(href, file, options.srcDirname);
+    options = dato.extend({}, defaults, options);
+    var srcPath = pathURI.toAbsoluteFile(href, options.file, options.srcDirname);
     var destPath = minifyPathmap[srcPath];
     var destURI = minifyCSSmap[srcPath];
     var resList = resourceMap[srcPath];
+    var cssList = [];
 
     if (!destURI) {
         var srcCode = reader(srcPath, 'utf8');
@@ -76,7 +99,9 @@ module.exports = function (href, options) {
         }]
     });
 
-    node.attrs.href = destURI;
+    return {
+        url: destURI
+    };
 };
 
 
