@@ -124,6 +124,7 @@ module.exports = function (file, options) {
                     }
 
                     var ret = pathBuild(node.attrs[attr], {
+                        file: file,
                         versionLength: options.versionLength,
                         srcDirname: options.srcDirname,
                         destResourceDirname: options.destResourceDirname,

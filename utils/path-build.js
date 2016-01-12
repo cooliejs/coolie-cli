@@ -37,11 +37,6 @@ module.exports = function (value, options) {
     }
 
     var absFile = pathURI.toAbsoluteFile(pathRet.path, options.file, options.srcDirname);
-    console.log('---------------------------------');
-    console.log(options);
-    console.log(absFile);
-    console.log('---------------------------------');
-
     var resFile = copy(absFile, {
         version: true,
         copyPath: false,
