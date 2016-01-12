@@ -72,7 +72,9 @@ module.exports = function (file, options) {
         .use(function (tree) {
             tree.match({
                 tag: 'link',
-                rel: 'stylesheet'
+                attrs: {
+                    rel: 'stylesheet'
+                }
             }, function (node) {
                 if (!node.attrs || !node.attrs.href) {
                     return node;
@@ -91,6 +93,7 @@ module.exports = function (file, options) {
                     destDirname: options.destDirname,
                     destHost: options.destHost,
                     destResourceDirname: options.destResourceDirname,
+                    destCSSDirname: options.destCSSDirname,
                     minifyResource: options.minifyResource,
                     minifyCSS: options.minifyCSS,
                     versionLength: options.versionLength,
@@ -110,7 +113,6 @@ module.exports = function (file, options) {
                     }]
                 });
                 node.attrs.href = ret.url;
-
                 return node;
             });
         })
