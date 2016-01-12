@@ -27,6 +27,7 @@ var defaults = {
     destDirname: null,
     destHost: null,
     destResourceDirname: null,
+    minifyCSS: true,
     minifyResource: true,
     versionLength: 32,
     signCSS: true,
