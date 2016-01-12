@@ -16,8 +16,10 @@ var sign = require('../utils/sign.js');
 
 // 替换 <img src="">
 var replaceHTMLAttrResource = require('../replace/html-attr-resource.js');
-// 替换 <script>
-var replaceHTMLTagScript = require('../replace/html-tag-script.js');
+// 替换 <script src>
+var replaceHTMLTagScriptAttr = require('../replace/html-tag-script-attr.js');
+var replaceHTMLTagScriptCoolie = require('../replace/html-tag-script-coolie.js');
+var replaceHTMLTagScriptContent = require('../replace/html-tag-script-content.js');
 // 替换 <script>
 var replaceHTMLTagLink = require('../replace/html-tag-link.js');
 // 替换 <style>
@@ -45,7 +47,9 @@ var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi
 var defaults = {
     code: '',
     replaceHTMLAttrResource: false,
-    replaceHTMLTagScript: false,
+    replaceHTMLTagScriptCoolie: false,
+    replaceHTMLTagScriptContent: false,
+    replaceHTMLTagScriptAttr: false,
     replaceHTMLTagLink: false,
     replaceHTMLTagStyleResource: false,
     replaceHTMLAttrStyleResource: false,
@@ -81,7 +85,9 @@ var defaults = {
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param [options.replaceHTMLAttrResource=false] {Boolean} 是否替换 html 内的属性资源引用
- * @param [options.replaceHTMLTagScript=false] {Boolean} 是否替换 html 内的 <script>
+ * @param [options.replaceHTMLTagScriptCoolie=false] {Boolean} 是否替换 html 内的 <script> 的 coolie
+ * @param [options.replaceHTMLTagScriptAttr=false] {Boolean} 是否替换 html 内的 <script> 的 src
+ * @param [options.replaceHTMLTagScriptContent=false] {Boolean} 是否替换 html 内的 <script> 的内容
  * @param [options.replaceHTMLTagLink=false] {Boolean} 是否替换 html 内的 <link>
  * @param [options.replaceHTMLTagStyleResource=false] {Boolean} 是否替换 html 内的 <style>
  * @param [options.replaceHTMLAttrStyleResource=false] {Boolean} 是否替换 html 内的 <div style="">
@@ -167,7 +173,6 @@ module.exports = function (file, options) {
         code = code.replace(key, val);
     });
 
-
     if (options.replaceHTMLAttrResource) {
         var replaceHTMLAttrResourceRet = replaceHTMLAttrResource(file, {
             code: code,
@@ -183,8 +188,8 @@ module.exports = function (file, options) {
         resList = resList.concat(replaceHTMLAttrResourceRet.resList);
     }
 
-    if (options.replaceHTMLTagScript) {
-        var replaceHTMLTagScriptRet = replaceHTMLTagScript(file, {
+    if (options.replaceHTMLTagScriptCoolie) {
+        var replaceHTMLTagScriptCoolieRet = replaceHTMLTagScriptCoolie(file, {
             code: code,
             srcDirname: options.srcDirname,
             coolieConfigBase: options.coolieConfigBase,
@@ -200,9 +205,51 @@ module.exports = function (file, options) {
             signJS: options.signJS
         });
 
-        code = replaceHTMLTagScriptRet.code;
-        mainList = replaceHTMLTagScriptRet.mainList;
-        jsList = jsList.concat(replaceHTMLTagScriptRet.jsList);
+        code = replaceHTMLTagScriptCoolieRet.code;
+        mainList = replaceHTMLTagScriptCoolieRet.mainList;
+        jsList = jsList.concat(replaceHTMLTagScriptCoolieRet.jsList);
+    }
+
+    if (options.replaceHTMLTagScriptAttr) {
+        var replaceHTMLTagScriptAttrRet = replaceHTMLTagScriptAttr(file, {
+            code: code,
+            srcDirname: options.srcDirname,
+            coolieConfigBase: options.coolieConfigBase,
+            srcCoolieConfigJSPath: options.srcCoolieConfigJSPath,
+            srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destJSDirname: options.destJSDirname,
+            destCoolieConfigJSPath: options.destCoolieConfigJSPath,
+            versionLength: options.versionLength,
+            mainVersionMap: options.mainVersionMap,
+            minifyJS: options.minifyJS,
+            signJS: options.signJS
+        });
+
+        code = replaceHTMLTagScriptAttrRet.code;
+        jsList = jsList.concat(replaceHTMLTagScriptAttrRet.jsList);
+    }
+
+    if (options.replaceHTMLTagScriptContent) {
+        var replaceHTMLTagScriptContentRet = replaceHTMLTagScriptContent(file, {
+            code: code,
+            srcDirname: options.srcDirname,
+            coolieConfigBase: options.coolieConfigBase,
+            srcCoolieConfigJSPath: options.srcCoolieConfigJSPath,
+            srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destJSDirname: options.destJSDirname,
+            destCoolieConfigJSPath: options.destCoolieConfigJSPath,
+            versionLength: options.versionLength,
+            mainVersionMap: options.mainVersionMap,
+            minifyJS: options.minifyJS,
+            signJS: options.signJS
+        });
+
+        code = replaceHTMLTagScriptContentRet.code;
+        jsList = jsList.concat(replaceHTMLTagScriptContentRet.jsList);
     }
 
     if (options.replaceHTMLTagLink) {

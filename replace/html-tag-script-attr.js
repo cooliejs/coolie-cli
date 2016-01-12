@@ -135,7 +135,6 @@ module.exports = function (file, options) {
 
     return {
         code: code,
-        mainList: mainList,
         jsList: jsList
     };
 };
