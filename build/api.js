@@ -131,7 +131,6 @@ module.exports = function (options) {
      */
     coolieAPI.buildResPath = function (url, file, _options) {
         _options = dato.extend({}, options, _options);
-        console.log(_options);
         return buildResPath(url, {
             file: file,
             versionLength: _options.versionLength,
