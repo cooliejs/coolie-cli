@@ -9,8 +9,8 @@
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 
-var pathURI = require('../utils/path-uri.js');
-var copy = require('../utils/copy.js');
+var pathURI = require('./path-uri.js');
+var copy = require('./copy.js');
 
 var defaults = {
     versionLength: 32,
@@ -36,7 +36,7 @@ module.exports = function (value, options) {
         return false;
     }
 
-    var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
+    var absFile = pathURI.toAbsoluteFile(pathRet.path, options.file, options.srcDirname);
     var resFile = copy(absFile, {
         version: true,
         copyPath: false,

@@ -17,6 +17,7 @@ var htmlAttr = require('../utils/html-attr.js');
 var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
+var pathBuild = require('../utils/path-build.js');
 var parseHTML = require('../parse/html.js');
 
 var coolieIgnore = 'coolieignore';
@@ -123,31 +124,43 @@ module.exports = function (file, options) {
                     }
 
                     var value = node.attrs[attr];
-                    var pathRet = pathURI.parseURI2Path(value);
 
-                    // 不存在路径 || URL
-                    if (!value || pathURI.isURL(pathRet.path)) {
-                        return node;
-                    }
-
-                    var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
-                    var resFile = copy(absFile, {
-                        version: true,
-                        copyPath: false,
+                    var ret = pathBuild(value, {
                         versionLength: options.versionLength,
                         srcDirname: options.srcDirname,
                         destDirname: options.destResourceDirname,
-                        logType: 1,
                         embedFile: file
                     });
-                    var resRelative = path.relative(options.destDirname, resFile);
-                    var url = pathURI.joinURI(options.destHost, resRelative);
 
-                    if (!resMap[absFile]) {
-                        resList.push(absFile);
+                    if(!ret){
+                        return node;
                     }
 
-                    node.attrs[attr] = url + pathRet.suffix;
+                    //var pathRet = pathURI.parseURI2Path(value);
+                    //
+                    //// 不存在路径 || URL
+                    //if (!value || pathURI.isURL(pathRet.path)) {
+                    //    return node;
+                    //}
+                    //
+                    //var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
+                    //var resFile = copy(absFile, {
+                    //    version: true,
+                    //    copyPath: false,
+                    //    versionLength: options.versionLength,
+                    //    srcDirname: options.srcDirname,
+                    //    destDirname: options.destResourceDirname,
+                    //    logType: 1,
+                    //    embedFile: file
+                    //});
+                    //var resRelative = path.relative(options.destDirname, resFile);
+                    //var url = pathURI.joinURI(options.destHost, resRelative);
+                    //
+                    //if (!resMap[absFile]) {
+                    //    resList.push(absFile);
+                    //}
+                    //
+                    //node.attrs[attr] = url + pathRet.suffix;
                     return node;
                 });
             });
