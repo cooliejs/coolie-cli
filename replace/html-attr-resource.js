@@ -122,15 +122,16 @@ module.exports = function (file, options) {
                         return node;
                     }
 
-                    console.log(node);
                     var value = node.attrs[attr];
                     var pathRet = pathURI.parseURI2Path(value);
 
                     // 不存在路径 || URL
                     if (!value || pathURI.isURL(pathRet.path)) {
-                        return tag;
+                        return node;
                     }
 
+                    console.log(node);
+                    console.log('========================================');
                     var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
                     var resFile = copy(absFile, {
                         version: true,
@@ -139,8 +140,7 @@ module.exports = function (file, options) {
                         srcDirname: options.srcDirname,
                         destDirname: options.destResourceDirname,
                         logType: 1,
-                        embedFile: file,
-                        embedCode: tag
+                        embedFile: file
                     });
                     var resRelative = path.relative(options.destDirname, resFile);
                     var url = pathURI.joinURI(options.destHost, resRelative);
