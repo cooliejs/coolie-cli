@@ -15,8 +15,6 @@ var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 
-var pathURI = require('../utils/path-uri.js');
-var htmlAttr = require('../utils/html-attr.js');
 var copy = require('../utils/copy.js');
 var guessDirname = require('../utils/guess-dirname.js');
 
@@ -105,65 +103,65 @@ module.exports = function (options) {
         return coolie;
     };
 
-    /**
-     * coolie 工具函数
-     * @type {{getAbsolutePath: Function, getHTMLTagAttr: Function, setHTMLTagAttr: Function, copyResourceFile: Function}}
-     */
-    coolie.utils = {
-        /**
-         * 获取绝对路径
-         * @param path {String} 相对路径
-         * @param parentFile {String} 父级文件
-         * @returns {string|null}
-         */
-        getAbsolutePath: function (path, parentFile) {
-            var p = pathURI.toAbsoluteFile(path, parentFile, configs.srcDirname);
-
-            return typeis.file(p) ? p : null;
-        },
-
-        /**
-         * 获取 html 标签属性
-         * @param html {String} 标签
-         * @param attrName {String} 标签名称
-         * @returns {String}
-         */
-        getHTMLTagAttr: function (html, attrName) {
-            return htmlAttr.get(html, attrName);
-        },
-
-        /**
-         * 设置 html 标签属性
-         * @param html {String} html 标签
-         * @param attrName {String} 标签属性名
-         * @param attrValue {String} 标签属性值
-         * @returns {String}
-         */
-        setHTMLTagAttr: function (html, attrName, attrValue) {
-            return htmlAttr.set(html, attrName, attrValue);
-        },
-
-        /**
-         * 复制资源文件
-         * @param srcResourcePath {String} 原始资源文件路径
-         * @returns {String} 资源的 URI
-         */
-        copyResourceFile: function (srcResourcePath) {
-            var destResourcePath = copy(srcResourcePath, {
-                srcDirname: srcDirname,
-                destDirname: configs.destResourceDirname,
-                copyPath: false,
-                version: true,
-                versionLength: configs.dest.versionLength,
-                minify: true,
-                logType: 1
-            });
-
-            var destResourceURI = pathURI.toRootURL(destResourcePath, configs.destDirname);
-
-            return pathURI.joinURI(configs.dest.host, destResourceURI);
-        }
-    };
+    ///**
+    // * coolie 工具函数
+    // * @type {{getAbsolutePath: Function, getHTMLTagAttr: Function, setHTMLTagAttr: Function, copyResourceFile: Function}}
+    // */
+    //coolie.utils = {
+    //    /**
+    //     * 获取绝对路径
+    //     * @param path {String} 相对路径
+    //     * @param parentFile {String} 父级文件
+    //     * @returns {string|null}
+    //     */
+    //    getAbsolutePath: function (path, parentFile) {
+    //        var p = pathURI.toAbsoluteFile(path, parentFile, configs.srcDirname);
+    //
+    //        return typeis.file(p) ? p : null;
+    //    },
+    //
+    //    /**
+    //     * 获取 html 标签属性
+    //     * @param html {String} 标签
+    //     * @param attrName {String} 标签名称
+    //     * @returns {String}
+    //     */
+    //    getHTMLTagAttr: function (html, attrName) {
+    //        return htmlAttr.get(html, attrName);
+    //    },
+    //
+    //    /**
+    //     * 设置 html 标签属性
+    //     * @param html {String} html 标签
+    //     * @param attrName {String} 标签属性名
+    //     * @param attrValue {String} 标签属性值
+    //     * @returns {String}
+    //     */
+    //    setHTMLTagAttr: function (html, attrName, attrValue) {
+    //        return htmlAttr.set(html, attrName, attrValue);
+    //    },
+    //
+    //    /**
+    //     * 复制资源文件
+    //     * @param srcResourcePath {String} 原始资源文件路径
+    //     * @returns {String} 资源的 URI
+    //     */
+    //    copyResourceFile: function (srcResourcePath) {
+    //        var destResourcePath = copy(srcResourcePath, {
+    //            srcDirname: srcDirname,
+    //            destDirname: configs.destResourceDirname,
+    //            copyPath: false,
+    //            version: true,
+    //            versionLength: configs.dest.versionLength,
+    //            minify: true,
+    //            logType: 1
+    //        });
+    //
+    //        var destResourceURI = pathURI.toRootURL(destResourcePath, configs.destDirname);
+    //
+    //        return pathURI.joinURI(configs.dest.host, destResourceURI);
+    //    }
+    //};
 
     /**
      * coolie debug
