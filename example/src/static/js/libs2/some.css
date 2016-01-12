@@ -1,5 +1,6 @@
 body{
     background: url("./some.jpg");
+    content: "";
 }
 
 .div{

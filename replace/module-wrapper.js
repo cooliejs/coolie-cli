@@ -127,20 +127,26 @@ var wrapDefine = function (file, ret, options) {
     }
 
     var text = ret.code;
+    var o = {};
+    var isJSON2JS = options.inType === 'json' && options.outType === 'js';
+    var isCSS2Style = options.inType === 'css' && options.outType === 'style';
 
-    if (!(options.inType === 'json' && options.outType === 'js')) {
-        var o = {
-            o: ret.code
-        };
-
+    if (!isJSON2JS) {
+        o.o = ret.code;
         text = JSON.stringify(o)
             .replace(REG_HUA_START, '')
             .replace(REG_HUA_END, '');
     }
 
-    ret.code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){' +
-        'r.exports=' + text + '' +
-        '});';
+    ret.code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){';
+
+    if (isCSS2Style) {
+        ret.code += 'coolie.importStyle(' + text + ')';
+    } else {
+        ret.code += 'r.exports=' + text + '';
+    }
+
+    ret.code += '});';
     ret.resList = ret.resList || [];
 
     return ret;
@@ -242,7 +248,6 @@ module.exports = function (file, options) {
                     code = minifyJSON(file, {
                         code: code
                     });
-                    code = string.toUnicode(code);
                     code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
@@ -293,14 +298,13 @@ module.exports = function (file, options) {
                         minifyResource: options.minifyResource,
                         replaceCSSResource: true
                     });
-                    code = string.toUnicode(code);
                     code = base64.string(code, extname);
                     minifyCSSRet.code = code;
                     return wrapDefine(file, minifyCSSRet, options);
 
                 // text
                 default :
-                    var minifyCSSRet2 = minifyCSS(file, {
+                    var minifyCSSRet3 = minifyCSS(file, {
                         code: code,
                         cleanCSSOptions: options.cleanCSSOptions,
                         versionLength: options.versionLength,
@@ -313,7 +317,7 @@ module.exports = function (file, options) {
                         minifyResource: options.minifyResource,
                         replaceCSSResource: true
                     });
-                    return wrapDefine(file, minifyCSSRet2, options);
+                    return wrapDefine(file, minifyCSSRet3, options);
             }
             break;
 
@@ -326,7 +330,6 @@ module.exports = function (file, options) {
                     return wrapDefine(file, createURLRet2, options);
 
                 case 'base64':
-                    code = string.toUnicode(code);
                     code = base64.string(code, extname);
                     return wrapDefine(file, code, options);
 
@@ -399,7 +402,6 @@ module.exports = function (file, options) {
                         cleanCSSOptions: options.cleanCSSOptions,
                         replaceCSSResource: true
                     });
-                    code = string.toUnicode(code);
                     code = base64.string(code, extname);
                     minifyHTMLRet.code = code;
                     minifyHTMLRet.resList = mergeRes(minifyHTMLRet);
@@ -438,6 +440,7 @@ module.exports = function (file, options) {
             break;
 
         case 'image':
+        case 'file':
             switch (options.outType) {
                 case 'base64':
                     code = base64.file(file);

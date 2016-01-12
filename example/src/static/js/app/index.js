@@ -12,6 +12,7 @@ define(function (require, exports, module) {
     //require('../../img/100x100.png', 'image|url');
     //require('../../img/100x100.png', 'image|text');
     //require('../../img/100x100.png', 'image|base64');
+    require('../../img/100x100.png', 'file');
 
 
     // text
@@ -22,13 +23,13 @@ define(function (require, exports, module) {
 
 
     // json
-    require('../libs2/some.html', 'html');
-    require('../libs2/some.json', 'json');
-    require('../libs2/some.json', 'json');
-    require('../libs2/some.json', 'json|url');
-    require('../libs2/some.json', 'json|text');
-    require('../libs2/some.json', 'json|base64');
-    var s = "require('../libs2/some.json', 'json|base64')";
+    //require('../libs2/some.html', 'html');
+    //require('../libs2/some.json', 'json');
+    //require('../libs2/some.json', 'json');
+    //require('../libs2/some.json', 'json|url');
+    //require('../libs2/some.json', 'json|text');
+    //require('../libs2/some.json', 'json|base64');
+    //var s = "require('../libs2/some.json', 'json|base64')";
 
 
     // css
@@ -36,6 +37,7 @@ define(function (require, exports, module) {
     //require('../libs2/some.css', 'css|url');
     //require('../libs2/some.css', 'css|text');
     //require('../libs2/some.css', 'css|base64');
+    require('../libs2/some.css', 'css|style');
 
 
     // html
