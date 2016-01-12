@@ -47,6 +47,12 @@ module.exports = function (coolie) {
     //coolie.use(require('./coolie-include-html.js'));
 
 
+    coolie.use(function (options) {
+        console.log(options);
+        return options.code;
+    });
+
+
     // <img data-original="/img.png"> 引用资源替换
     //coolie.use(function (options) {
     //    var REG_IMG = /<img[\s\S]*?>(?!["'])/gi;

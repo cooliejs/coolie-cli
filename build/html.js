@@ -10,6 +10,7 @@
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
+var typeis = require('ydr-utils').typeis;
 var fse = require('fs-extra');
 
 
@@ -97,11 +98,15 @@ module.exports = function (options) {
         }
 
         if (options.middleware) {
-            code = options.middleware.exec({
+            var preRet = options.middleware.exec({
                 file: htmlFile,
-                type: 'html',
+                progress: 'pre-html',
                 code: code
-            }).code;
+            });
+
+            if(typeis.Object(preRet) && typeis.String(preRet.code)){
+                code = preRet.code;
+            }
         }
 
         var ret = minifyHTML(htmlFile, {
@@ -149,6 +154,18 @@ module.exports = function (options) {
         htmlJSMap[htmlFile] = ret.jsList;
         htmlCSSMap[htmlFile] = ret.cssList;
         htmlRESMap[htmlFile] = ret.resList;
+
+        if (options.middleware) {
+            var postRet = options.middleware.exec({
+                file: htmlFile,
+                progress: 'post-html',
+                code: ret.code
+            });
+
+            if(typeis.String(postRet)){
+                ret.code = postRet;
+            }
+        }
 
         try {
             fse.outputFileSync(destFile, ret.code, 'utf8');
