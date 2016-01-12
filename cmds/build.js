@@ -29,6 +29,24 @@ var middleware = new Middleware({
 });
 var emitter = new Emitter();
 
+middleware.catchError(function (err, middleware) {
+    var pkg = middleware.package || {};
+    var UNKNDOW = 'unkndow';
+
+    pkg.author = pkg.author || {};
+    pkg.bugs = pkg.bugs || {};
+    pkg.repository = pkg.repository || {};
+    err.coolieMiddlware = {
+        name: pkg.name || UNKNDOW,
+        version: pkg.version || UNKNDOW,
+        author: pkg.author.name || pkg.author.nickname || pkg.author.email || pkg.author || UNKNDOW,
+        bug: pkg.bugs.url || pkg.bugs || UNKNDOW,
+        repository: pkg.repository.url || pkg.repository || UNKNDOW,
+        homepage: pkg.homepage || UNKNDOW
+    };
+    return err;
+});
+
 middleware.on('error', function (err) {
     debug.error('middleware error', '');
     debug.error('middleware name', err.middlewareName);
