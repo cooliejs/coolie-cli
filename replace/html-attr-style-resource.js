@@ -50,40 +50,36 @@ module.exports = function (file, options) {
     var code = options.code;
     var resList = [];
 
-    code = parseHTML(code).use(function (tree) {
-        tree.match({
-            tag: /.*/
-        }, function (node) {
-            if (!node.attrs || !node.attrs.style) {
-                return node;
-            }
-
-            if (node.attrs.hasOwnProperty(COOLIE_IGNOE)) {
-                node.attrs[COOLIE_IGNOE] = null;
-                return node;
-            }
-
-            var styleCode = node.attrs.style;
-            var replaceCSSResourceRet = replaceCSSResource(file, {
-                code: styleCode,
-                destCSSDirname: null,
-                versionLength: options.versionLength,
-                srcDirname: options.srcDirname,
-                destDirname: options.destDirname,
-                destHost: options.destHost,
-                destResourceDirname: options.destResourceDirname
-            });
-
-            styleCode = replaceCSSResourceRet.code;
-            resList = replaceCSSResourceRet.resList;
-
-            if (options.minifyCSS) {
-                styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
-            }
-
-            node.attrs.style = styleCode;
+    code = parseHTML(code).match(function (node) {
+        if (!node.attrs || !node.attrs.style) {
             return node;
+        }
+
+        if (node.attrs.hasOwnProperty(COOLIE_IGNOE)) {
+            node.attrs[COOLIE_IGNOE] = null;
+            return node;
+        }
+
+        var styleCode = node.attrs.style;
+        var replaceCSSResourceRet = replaceCSSResource(file, {
+            code: styleCode,
+            destCSSDirname: null,
+            versionLength: options.versionLength,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destResourceDirname: options.destResourceDirname
         });
+
+        styleCode = replaceCSSResourceRet.code;
+        resList = replaceCSSResourceRet.resList;
+
+        if (options.minifyCSS) {
+            styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
+        }
+
+        node.attrs.style = styleCode;
+        return node;
     }).get();
 
     return {

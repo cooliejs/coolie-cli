@@ -93,56 +93,54 @@ module.exports = function (file, options) {
         var attr = item.attr;
 
         dato.each(item.tags, function (index, tag) {
-            parser.use(function (tree) {
-                tree.match({
-                    tag: tag
-                }, function (node) {
-                    if (!node.attrs || !node.attrs[attr]) {
-                        return node;
-                    }
-
-                    if (node.attrs.hasOwnProperty(COOLIE_IGNOE)) {
-                        node.attrs[COOLIE_IGNOE] = null;
-                        return node;
-                    }
-
-                    var isResourceTag = true;
-
-                    switch (node.tag) {
-                        case 'link':
-                            var linkRel = node.attrs.rel;
-                            isResourceTag = false;
-                            dato.each(linkRelList, function (index, regRel) {
-                                isResourceTag = regRel.test(linkRel);
-                                return !isResourceTag;
-                            });
-                            break;
-                    }
-
-                    if (!isResourceTag) {
-                        return node;
-                    }
-
-                    var ret = buildResPath(node.attrs[attr], {
-                        file: file,
-                        versionLength: options.versionLength,
-                        srcDirname: options.srcDirname,
-                        destDirname: options.destDirname,
-                        destResourceDirname: options.destResourceDirname,
-                        destHost: options.destHost
-                    });
-
-                    if (!ret) {
-                        return node;
-                    }
-
-                    if (!resMap[ret.srcFile]) {
-                        resList.push(ret.srcFile);
-                    }
-
-                    node.attrs[attr] = ret.url;
+            parser.match({
+                tag: tag
+            }, function (node) {
+                if (!node.attrs || !node.attrs[attr]) {
                     return node;
+                }
+
+                if (node.attrs.hasOwnProperty(COOLIE_IGNOE)) {
+                    node.attrs[COOLIE_IGNOE] = null;
+                    return node;
+                }
+
+                var isResourceTag = true;
+
+                switch (node.tag) {
+                    case 'link':
+                        var linkRel = node.attrs.rel;
+                        isResourceTag = false;
+                        dato.each(linkRelList, function (index, regRel) {
+                            isResourceTag = regRel.test(linkRel);
+                            return !isResourceTag;
+                        });
+                        break;
+                }
+
+                if (!isResourceTag) {
+                    return node;
+                }
+
+                var ret = buildResPath(node.attrs[attr], {
+                    file: file,
+                    versionLength: options.versionLength,
+                    srcDirname: options.srcDirname,
+                    destDirname: options.destDirname,
+                    destResourceDirname: options.destResourceDirname,
+                    destHost: options.destHost
                 });
+
+                if (!ret) {
+                    return node;
+                }
+
+                if (!resMap[ret.srcFile]) {
+                    resList.push(ret.srcFile);
+                }
+
+                node.attrs[attr] = ret.url;
+                return node;
             });
         });
     });
