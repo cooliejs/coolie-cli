@@ -7,6 +7,8 @@
 
 'use strict';
 
+var configs = require('../../configs.js');
+
 
 module.exports = function (next, app) {
     // 前置
@@ -21,7 +23,9 @@ module.exports = function (next, app) {
     // 后置
     require('../controllers/post.js')(app);
 
-    next(null, app);
+    app.listen(configs.port, function (err) {
+        next(err, app);
+    }).on('error', next);
 };
 
 

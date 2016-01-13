@@ -12,6 +12,10 @@ var midSafe = require('../middlewares/safe.js');
 var midURL = require('../middlewares/url.js');
 
 module.exports = function (app) {
+    app.use(midParser.parseCookie);
+    app.use(midParser.parseSession);
+    app.use(midParser.parsePostBodyOfJSON);
+    app.use(midParser.parsePostBodyOfURLencoded);
     app.use(midSafe.mustHasHeaderHost);
     app.use(midSafe.addFrameOptionsHeader);
     app.use(midSafe.addUACompatibleHeader);
