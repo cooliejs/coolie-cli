@@ -7,10 +7,13 @@
 
 'use strict';
 
-module.exports = function (app) {
-    app.get('/', function (req, res, next) {
-        res.render('home.html');
-    });
-};
+var express = require('express');
+
+var router = express.Router();
+
+router.get('/', function (req, res, next) {
+    res.render('home.html');
+});
 
 
+module.exports = router;
