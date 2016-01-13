@@ -69,7 +69,6 @@ local.properties
 *.css.map
 ### Node template
 # Logs
-logs
 *.log
 npm-debug.log*
 
