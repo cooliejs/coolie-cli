@@ -19,7 +19,7 @@ module.exports = function () {
     };
 
     banner();
-    console.log('Build a front-end project, use `-d` parameter specifies the build root directory.');
+    console.log('Build a front-end project, use `-d` parameter specifies the root directory.');
     console.log('Use `cookie init -c` to initialize a build configuration file.');
     console.log('Online guide: https://coolie.ydr.me/guide/coolie.config.js/');
     console.log();
