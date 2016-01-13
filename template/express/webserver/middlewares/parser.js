@@ -7,6 +7,41 @@
 
 'use strict';
 
+var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+
+
+var configs = require('../../configs.js');
+
+
+// 解析 cookie
+exports.parseCookie = cookieParser(configs.cookie.secret);
+
+
+
+//
+
+
+// strict - only parse objects and arrays. (default: true)
+// limit - maximum request body size. (default: <100kb>)
+// reviver - passed to JSON.parse()
+// type - request content-type to parse (default: json)
+// verify - function to verify body content
+exports.parsePostBodyOfJSON = bodyParser.json({
+    strict: true,
+    limit: '100kb',
+    type: 'json'
+});
+
+
+// extended - parse extended syntax with the qs module. (default: true)
+// limit - maximum request body size. (default: <100kb>)
+// type - request content-type to parse (default: urlencoded)
+// verify - function to verify body content
+exports.parsePostBodyOfURLencoded = bodyParser.urlencoded({
+    extended: true
+});
+
 
 // 解析 ua
 exports.parseUA = function parseUA(req, res, next) {

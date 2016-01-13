@@ -1,4 +1,4 @@
-/*!
+/**
  * run express
  * @author ydr.me
  * @create 2015-04-29 14:09
@@ -6,8 +6,6 @@
 
 
 'use strict';
-var array = [];
-
 
 var path = require('path');
 var express = require('express');
@@ -17,7 +15,6 @@ var sessionParser = require('express-session');
 var Template = require('ydr-utils').Template;
 var cache = require('ydr-utils').cache;
 var random = require('ydr-utils').random;
-var encryption = require('ydr-utils').encryption;
 
 require('../utils/template-filters.js')(Template);
 
@@ -32,9 +29,6 @@ module.exports = function (next) {
         compress: false
     });
 
-    //////////////////////////////////////////////////////////////////////
-    ////////////////////////////[ setting ]///////////////////////////////
-    //////////////////////////////////////////////////////////////////////
     app.set('env', configs.env);
     app.set('port', configs.port);
     app.set('views', path.join(configs.webroot, './.views/'));

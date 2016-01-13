@@ -44,6 +44,12 @@ var TEMPLATE_MAP = {
         devDependencies: []
     }
 };
+// 忽略复制的文件
+var IGNORE_MAP = {
+    gitignore: '.gitignore',
+    npmignore: '.npmignore',
+    'package.json': true
+};
 
 
 /**
@@ -58,12 +64,18 @@ var createTemplate = function (root, destDirname) {
 
     dato.each(files, function (index, file) {
         var basename = path.basename(file);
+        var ignoreType = IGNORE_MAP[basename];
 
-        if (basename === 'package.json') {
+        if (ignoreType === true) {
             return;
         }
 
         var srcName = path.relative(root, file);
+
+        if (ignoreType) {
+            srcName = path.join(path.dirname(srcName), ignoreType);
+        }
+
         var destFile = path.join(destDirname, srcName);
 
         try {
