@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * 写 package.json
  * @author ydr.me
  * @create 2016-01-13 16:30
  */
@@ -18,8 +18,14 @@ var writePackageJSON = function (json, destDirname) {
     var file = path.join(destDirname, 'package.json');
 
     json.createBy = 'coolie@' + pkg.version + ' ' + Date.now();
-    fse.outputFileSync(file, JSON.stringify(json, null, 2), 'utf8');
 
+    try {
+        fse.outputFileSync(file, JSON.stringify(json, null, 2), 'utf8');
+        debug.success('create', path.toSystem(file));
+    } catch (err) {
+        debug.danger('create', path.toSystem(file));
+        debug.danger('error', err.message);
+    }
 };
 
 module.exports = writePackageJSON;
