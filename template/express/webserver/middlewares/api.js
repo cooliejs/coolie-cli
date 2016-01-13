@@ -7,6 +7,7 @@
 
 'use strict';
 
+var typeis = require('ydr-utils').typeis;
 var allocation = require('ydr-utils').allocation;
 var httpStatus = require('ydr-utils').httpStatus;
 
