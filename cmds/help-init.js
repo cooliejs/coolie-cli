@@ -22,6 +22,9 @@ module.exports = function () {
     console.log('Initial configuration file.');
     console.log('Use the following parameters to initialize the specified type of profile.');
     console.log();
+    console.log('Usage');
+    console.log('    coolie init [args]');
+    console.log();
     console.log('1. Command');
     debug.success('   init', 'initial configuration file', options);
     console.log();

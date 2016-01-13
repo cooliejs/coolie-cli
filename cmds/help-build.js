@@ -23,6 +23,9 @@ module.exports = function () {
     console.log('Use `cookie init -c` to initialize a build configuration file.');
     console.log('Online guide: https://coolie.ydr.me/guide/coolie.config.js/');
     console.log();
+    console.log('Usage');
+    console.log('    coolie build [args]');
+    console.log();
     console.log('1. Command');
     debug.success('   build', 'build a front-end project', options);
     console.log();

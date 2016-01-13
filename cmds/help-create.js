@@ -22,6 +22,9 @@ module.exports = function () {
     console.log('Create a front-end engineering template.');
     console.log('Use the following parameters to specify the type of template.');
     console.log();
+    console.log('Usage');
+    console.log('    coolie create [args]');
+    console.log();
     console.log('1. Command');
     debug.success('   create', 'create a sample, default is express', options);
     console.log();
