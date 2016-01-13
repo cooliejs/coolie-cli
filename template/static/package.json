@@ -3,7 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "description": "static-template description",
-  "scripts": {},
+  "scripts": {
+    "live-dev": "browser-sync start --config bs-config-dev.js",
+    "live-pro": "browser-sync start --config bs-config-pro.js",
+    "release": "coolie build -d webroot-dev && git add webroot-pro && git commit -am release && git push"
+  },
   "preferGlobal": false,
   "bin": {},
   "engines": {
