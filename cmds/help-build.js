@@ -19,6 +19,9 @@ module.exports = function () {
     };
 
     banner();
+    console.log('构建前端工程，使用 `-d` 参数指定构建根目录。');
+    console.log('在执行构建之前，你需要使用 `coolie init -c` 初始化一个构建配置文件。');
+    console.log('构建指导：https://coolie.ydr.me/guide/coolie.config.js/');
     console.log();
     console.log('1. Command');
     debug.success('   build', 'build a front-end project', options);
