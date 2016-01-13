@@ -69,6 +69,10 @@ command.if('init', function (args) {
 });
 
 command.if('create', function (args) {
+    if (args.help) {
+        return;
+    }
+
     cmdCreate({
         destDirname: command.dirname(args, 'dirname'),
         express: args.express,

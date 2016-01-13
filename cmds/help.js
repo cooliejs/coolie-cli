@@ -10,7 +10,6 @@
 var fs = require('fs');
 var debug = require('ydr-utils').debug;
 var path = require('ydr-utils').path;
-var string = require('ydr-utils').string;
 
 var banner = require('./banner.js');
 
