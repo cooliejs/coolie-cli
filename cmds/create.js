@@ -63,12 +63,12 @@ var createTemplate = function (root, destDirname) {
         dot: true
     });
 
-    dato.each(files, function (index, file) {
+    howdo.each(files, function (index, file, next) {
         var basename = path.basename(file);
         var ignoreType = IGNORE_MAP[basename];
 
         if (ignoreType === true) {
-            return;
+            return next();
         }
 
         var srcName = path.relative(root, file);
@@ -89,7 +89,8 @@ var createTemplate = function (root, destDirname) {
         }
 
         debug.success('create', path.toSystem(destFile));
-    });
+        setTimeout(next, 45);
+    }).follow();
 };
 
 
@@ -120,8 +121,8 @@ var deepCreate = function (type, options) {
             debug.success('devDependencies', JSON.stringify(devDependencies, null, 2));
             templatePackageJSON.dependencies = dependencies;
             templatePackageJSON.devDependencies = devDependencies;
-            createTemplate(meta.root, options.destDirname);
             writePackageJSON(templatePackageJSON, options.destDirname);
+            createTemplate(meta.root, options.destDirname);
         })
         .catch(function (err) {
             debug.error('create error', err.message);
