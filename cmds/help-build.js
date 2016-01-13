@@ -24,7 +24,7 @@ module.exports = function () {
     console.log('Online guide: https://coolie.ydr.me/guide/coolie.config.js/');
     console.log();
     console.log('Usage');
-    console.log('    coolie build [args]');
+    console.log('    coolie build [options]');
     console.log();
     console.log('1. Command');
     debug.success('   build', 'build a front-end project', options);

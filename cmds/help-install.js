@@ -24,7 +24,7 @@ module.exports = function () {
     console.log('coolie.js, alien, donkey');
     console.log();
     console.log('Usage');
-    console.log('    coolie install <module> [args]');
+    console.log('    coolie install <module> [options]');
     console.log();
     console.log('1. Command');
     debug.success('   install <module>', 'install a coolie module', options);
