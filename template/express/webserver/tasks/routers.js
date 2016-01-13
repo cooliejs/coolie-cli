@@ -8,7 +8,7 @@
 'use strict';
 
 var express = require('express');
-var configs = require('../configs.js');
+var configs = require('../../configs.js');
 var path = require('path');
 var multer = require('multer');
 
@@ -24,13 +24,13 @@ var staticOptions = {
 };
 
 module.exports = function (next, app) {
-    var controllers = require('./controllers/');
+    var controllerHome = require('../controllers/home.js');
+    var routerHome = require('../routers/home.js');
+
+    routerHome(app, controllerHome);
 
     // 程序路由优先，最后静态路由
     app.use('/', express.static(configs.webroot, staticOptions));
-
-    // 监控检查
-    app.get('/version.jsp', controllers.main.getVersion);
 
     // 路由终点
     app.use(controllers.middleware.clientError);
