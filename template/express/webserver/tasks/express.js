@@ -31,13 +31,12 @@ module.exports = function (next) {
     app.engine('html', Template.__express);
     app.set('view engine', 'html');
 
-
     // 路由区分大小写，默认 disabled
     app.set('case sensitive routing', true);
 
-
     // 严格路由，即 /a/b !== /a/b/
     app.set('strict routing', false);
+
     app.set('jsonp callback name', 'callback');
     app.set('json spaces', 'local' === configs.env ? 4 : 0);
     app.set('view cache', 'local' !== configs.env);
