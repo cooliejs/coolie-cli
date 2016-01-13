@@ -23,6 +23,7 @@ module.exports = function (next, app) {
     // 后置
     require('../controllers/post.js')(app);
 
+    // 启动 http
     app.listen(configs.port, function (err) {
         next(err, app);
     }).on('error', next);
