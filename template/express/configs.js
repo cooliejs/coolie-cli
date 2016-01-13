@@ -23,5 +23,10 @@ module.exports = {
         dev: ['warn', 'error'],
         test: ['error'],
         pro: ['error']
-    }[env]
+    }[env],
+    cookie: {
+        secret: 'coolie-template',
+        // 30d
+        expires: 30 * 24 * 60 * 60 * 1000
+    }
 };
