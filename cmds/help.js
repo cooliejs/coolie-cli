@@ -26,12 +26,13 @@ module.exports = function () {
 
     console.log(bannerText);
     banner();
+    console.log();
     console.log('1. Command');
     debug.success('   build', 'build a front-end project', options);
     debug.success('   book', 'open coolie book in default browser', options);
     debug.success('   install <module>', 'install a coolie module', options);
     debug.success('   init', 'initial configuration file', options);
-    //debug.success('   create', 'create a sample, default is node', options);
+    debug.success('   create', 'create a sample, default is node', options);
     debug.success('   help', 'show help information', options);
     debug.success('   version', 'show version information', options);
     console.log();
@@ -40,8 +41,8 @@ module.exports = function () {
     debug.success('   -d --dirname', 'specified a directory', options);
     debug.success('   -j --coolie.js', 'initial configuration file of `coolie.js`', options);
     debug.success('   -c --coolie-cli', 'initial configuration file of `coolie-cli`', options);
-    //debug.success('   -n --node', 'create a node sample', options);
-    //debug.success('   -s --static', 'create a static sample', options);
+    debug.success('   -n --node', 'create a node sample', options);
+    debug.success('   -s --static', 'create a static sample', options);
     console.log();
 };
 
