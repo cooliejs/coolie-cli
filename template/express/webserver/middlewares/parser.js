@@ -71,18 +71,3 @@ exports.parseUA = function parseUA(req, res, next) {
 };
 
 
-// 解析 404
-exports.clientError = function clientError(req, res, next) {
-    res.status(404);
-    res.send('404');
-};
-
-
-// 解析 500
-exports.serverError = function serverError(req, res, next) {
-    res.status(500);
-    res.send('500');
-};
-
-
-
