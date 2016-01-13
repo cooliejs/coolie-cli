@@ -13,6 +13,7 @@
 - 配置文件里添加`@version {{version}}、@create {{datetime}}`
 - 增加 demo 命令
 - 配置是否压缩 JS
-- 生成工程模板
+- 生成工程模板 √
+- 更详细的帮助信息，参考 git
 
 
