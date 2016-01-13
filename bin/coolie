@@ -56,13 +56,13 @@ command.if('book', function () {
 });
 
 command.if('install', function (args, names) {
-    if (!names.length) {
-        debug.success('coolie tips', 'try `coolie install coolie`');
-        return process.exit(1);
-    }
-
     if (args.help) {
         return cmdHelpInstall();
+    }
+
+    if (!names.length) {
+        debug.success('coolie tips', 'try `coolie install coolie.js`');
+        return process.exit(1);
     }
 
     cmdBanner();
