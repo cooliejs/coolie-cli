@@ -1,3 +1,3 @@
-# nodejs project template
+# static project template
 
 create by coolie-cli

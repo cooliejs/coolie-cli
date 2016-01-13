@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * 创建模板
  * @author ydr.me
  * @create 2016-01-13 15:25
  */
@@ -8,12 +8,12 @@
 'use strict';
 
 var debug = require('ydr-utils').debug;
+var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 var glob = require('glob');
 var fse = require('fs-extra');
 var howdo = require('howdo');
 
-var createExpress = require('./create-express');
 var banner = require('./banner.js');
 var getModulesVersion = require('../utils/get-modules-version.js');
 var writePackageJSON = require('../utils/write-package-json.js');
