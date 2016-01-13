@@ -41,7 +41,7 @@ module.exports = function () {
     debug.success('   -d --dirname', 'specified a directory', options);
     debug.success('   -j --coolie.js', 'initial configuration file of `coolie.js`', options);
     debug.success('   -c --coolie-cli', 'initial configuration file of `coolie-cli`', options);
-    debug.success('   -n --node', 'create a node sample', options);
+    debug.success('   -e --express', 'create a express sample', options);
     debug.success('   -s --static', 'create a static sample', options);
     console.log();
 };
