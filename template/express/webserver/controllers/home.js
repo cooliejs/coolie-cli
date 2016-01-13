@@ -15,5 +15,4 @@ router.get('/', function (req, res, next) {
     res.render('home.html');
 });
 
-
 module.exports = router;
