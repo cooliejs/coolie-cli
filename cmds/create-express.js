@@ -74,7 +74,8 @@ module.exports = function (options) {
         })
         .together()
         .try(function (dependencies, devDependencies) {
-
+            console.log(dependencies);
+            console.log(devDependencies);
         })
         .catch(function (err) {
             debug.error('create error', err.message);
