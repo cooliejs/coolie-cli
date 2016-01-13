@@ -8,14 +8,15 @@
 'use strict';
 
 var path = require('ydr-utils').path;
+var fse = require('fs-extra');
 
 var pkg = require('../package.json');
 
 
 
-var writePackageJSON = function (pkg, modules, destDirname, callback) {
+var writePackageJSON = function (json, destDirname, callback) {
     var file = path.join(destDirname, 'package.json');
 
-    pkg.createBy = 'coolie@' + pkg.version + ' ' + Date.now();
-    fse.outputFileSync(file, JSON.stringify(pkg, null, 2), 'utf8');
+    json.createBy = 'coolie@' + pkg.version + ' ' + Date.now();
+    fse.outputFileSync(file, JSON.stringify(json, null, 2), 'utf8');
 };
