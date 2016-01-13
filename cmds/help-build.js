@@ -1,5 +1,5 @@
 /**
- * create 帮助
+ * build 帮助
  * @author ydr.me
  * @create 2016-01-13 17:49
  */
@@ -21,13 +21,11 @@ module.exports = function () {
     banner();
     console.log();
     console.log('1. Command');
-    debug.success('   create', 'create a sample, default is express', options);
+    debug.success('   build', 'build a front-end project', options);
     console.log();
 
     console.log('2. Options');
     debug.success('   -d --dirname', 'specified a directory', options);
-    debug.success('   -e --express', 'create a express sample', options);
-    debug.success('   -s --static', 'create a static sample', options);
     debug.success('   -h --help', 'show help infomation with command', options);
     console.log();
 };
