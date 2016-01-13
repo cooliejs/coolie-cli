@@ -9,6 +9,7 @@
 
 var path = require('path');
 
+//noinspection JSUnresolvedVariable
 var env = process.env.ENVIRONMENT || 'local';
 var webroot = env === 'local' ? 'dev' : 'pro';
 var root = __dirname;
@@ -25,11 +26,11 @@ module.exports = {
         pro: ['error']
     }[env],
     cookie: {
-        secret: 'coolie-template',
+        secret: 'express-template',
         // 30d
         expires: 30 * 24 * 60 * 60 * 1000
     },
     mongodb: {
-        url: 'mongodb://localhost:27017/f2eclub'
+        url: 'mongodb://localhost:27017/express-template'
     }
 };
