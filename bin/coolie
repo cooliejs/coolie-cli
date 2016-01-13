@@ -7,6 +7,7 @@ var path = require('path');
 var command = require('ydr-utils').command;
 var debug = require('ydr-utils').debug;
 
+var cmdBanner = require('../cmds/banner.js');
 var cmdBuild = require('../cmds/build.js');
 var cmdVersion = require('../cmds/version.js');
 var cmdInit = require('../cmds/init.js');
@@ -64,6 +65,7 @@ command.if('install', function (args, names) {
         return cmdHelpInstall();
     }
 
+    cmdBanner();
     names.forEach(function (name) {
         cmdInstall({
             destDirname: command.dirname(args, 'dirname'),

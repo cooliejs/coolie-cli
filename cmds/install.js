@@ -8,11 +8,9 @@
 'use strict';
 
 var debug = require('ydr-utils').debug;
-var request = require('ydr-utils').request;
 
 var pkg = require('../package.json');
 var install = require('../utils/install.js');
-var banner = require('./banner.js');
 
 /**
  * 下载
@@ -21,7 +19,6 @@ var banner = require('./banner.js');
  * @param options.destDirname {String} 目标目录
  */
 module.exports = function (options) {
-    banner();
     var module = pkg.coolie.modules[options.name];
 
     if (!module) {
