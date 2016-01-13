@@ -16,6 +16,7 @@ var root = __dirname;
 module.exports = {
     port: 10000,
     env: env,
+    root: root,
     webroot: path.join(root, './webroot-' + webroot),
     console: {
         local: ['log', 'info', 'warn', 'error'],

@@ -11,9 +11,9 @@ var howdo = require('howdo');
 var cache = require('ydr-utils').cache;
 var system = require('ydr-utils').system;
 
-var splitLog = require('./split-log.js');
-var express = require('./express.js');
-var routers = require('./routers.js');
+var splitLog = require('./tasks/split-log.js');
+var express = require('./tasks/express.js');
+var routers = require('./tasks/routers.js');
 var configs = require('../configs.js');
 var pkg = require('../package.json');
 

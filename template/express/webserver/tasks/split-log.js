@@ -12,13 +12,15 @@ var fs = require('fs');
 var date = require('ydr-utils').date;
 var path = require('ydr-utils').path;
 
-var PM2_LOG = path.join(__dirname, '../logs', 'pm2.log');
+var configs = require('../../configs.js');
+
+var PM2_LOG = path.join(configs.root, './logs/pm2.log');
 
 module.exports = function (callback) {
     later.date.localTime();
     later.setInterval(function () {
         var dateLog = 'node-' + date.format('YYYY-MM-DD') + '.log';
-        dateLog = path.join(__dirname, '../logs', dateLog);
+        dateLog = path.join(configs.root, './logs', dateLog);
         var readStream = fs.createReadStream(PM2_LOG);
         var writeStream = fs.createWriteStream(dateLog);
         var complete = function () {

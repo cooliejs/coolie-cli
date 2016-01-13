@@ -19,7 +19,7 @@ var cache = require('ydr-utils').cache;
 var random = require('ydr-utils').random;
 var encryption = require('ydr-utils').encryption;
 
-require('./utils/template-filters.js')(Template);
+require('../utils/template-filters.js')(Template);
 
 module.exports = function (next) {
     var app = express();
