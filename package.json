@@ -21,6 +21,8 @@
     "AMDJS",
     "package",
     "module",
+    "coolie-cli",
+    "coolie.js",
     "coolie",
     "builder",
     "nodejs",
