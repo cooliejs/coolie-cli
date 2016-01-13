@@ -19,7 +19,6 @@ var configs = require('../../configs.js');
 exports.parseCookie = cookieParser(configs.cookie.secret);
 
 
-
 // 解析 session
 exports.parseSession = sessionParser({
     genid: function () {
