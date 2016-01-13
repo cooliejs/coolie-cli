@@ -6,9 +6,7 @@ var fs = require('fs');
 var path = require('path');
 var command = require('ydr-utils').command;
 var debug = require('ydr-utils').debug;
-var string = require('ydr-utils').string;
 
-var pkg = require('../package.json');
 var cmdBuild = require('../cmds/build.js');
 var cmdVersion = require('../cmds/version.js');
 var cmdInit = require('../cmds/init.js');
@@ -16,20 +14,23 @@ var cmdBook = require('../cmds/book.js');
 var cmdInstall = require('../cmds/install.js');
 var cmdCreate = require('../cmds/create.js');
 var cmdHelp = require('../cmds/help.js');
+var cmdHelpCreate = require('../cmds/help-create.js');
 
 command.alias({
     d: 'dirname',
     j: 'coolie.js',
     c: 'coolie-cli',
     e: 'express',
-    s: 'static'
+    s: 'static',
+    h: 'help'
 });
 
 command.type({
     'coolie.js': Boolean,
     'coolie-cli': Boolean,
     express: Boolean,
-    'static': Boolean
+    'static': Boolean,
+    help: Boolean
 });
 
 command.if('help', function () {
@@ -70,7 +71,7 @@ command.if('init', function (args) {
 
 command.if('create', function (args) {
     if (args.help) {
-        return;
+        return cmdHelpCreate();
     }
 
     cmdCreate({

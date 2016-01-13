@@ -42,6 +42,7 @@ module.exports = function () {
     debug.success('   -c --coolie-cli', 'initial configuration file of `coolie-cli`', options);
     debug.success('   -e --express', 'create a express sample', options);
     debug.success('   -s --static', 'create a static sample', options);
+    debug.success('   -h --help', 'show help infomation with command', options);
     console.log();
 };
 
