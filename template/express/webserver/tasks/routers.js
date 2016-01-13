@@ -12,7 +12,6 @@ var configs = require('../../configs.js');
 var path = require('path');
 var multer = require('multer');
 
-var uploadParser = multer({dest: path.join(configs.webroot, '.upload')});
 // 更为详尽配置的静态服务器
 var staticOptions = {
     dotfiles: 'ignore',
