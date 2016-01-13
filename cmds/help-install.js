@@ -19,6 +19,8 @@ module.exports = function () {
     };
 
     banner();
+    console.log('安装支持的前端模块。');
+    console.log('目前支持的模块有：coolie.js、alien、donkey。');
     console.log();
     console.log('1. Command');
     debug.success('   install <module>', 'install a coolie module', options);

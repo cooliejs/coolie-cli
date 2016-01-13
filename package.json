@@ -46,6 +46,10 @@
         "type": "file",
         "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/coolie.zip"
       },
+      "coolie.js": {
+        "type": "file",
+        "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/coolie.zip"
+      },
       "alien": {
         "type": "directory",
         "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/alien.zip"
