@@ -14,7 +14,6 @@ var midParser = require('../middlewares/parser.js');
 var midSafe = require('../middlewares/safe.js');
 var midURL = require('../middlewares/url.js');
 var midAPI = require('../middlewares/api.js');
-var midUser = require('../middlewares/user.js');
 var midError = require('../middlewares/error.js');
 
 

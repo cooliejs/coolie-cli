@@ -13,7 +13,7 @@ var system = require('ydr-utils').system;
 
 var log = require('./servers/log.js');
 var express = require('./servers/express.js');
-var routers = require('./servers/routers.js');
+var http = require('./servers/http.js');
 var configs = require('../configs.js');
 var pkg = require('../package.json');
 
@@ -23,10 +23,21 @@ cache.config({
 
 cache.set('app.configs', configs);
 
-module.exports = function () {
+module.exports = function (callback) {
     howdo
         .task(log)
         .task(express)
-        .task(routers)
-
-  
+        .task(http)
+        .follow(callback)
+        .try(function (app) {
+            console.log();
+            console.log('############################################');
+            console.log(pkg.name + '@' + pkg.version, 'http://' + system.localIP() + ':' + app.get('port'));
+            console.log('############################################\n');
+            console.log();
+        })
+        .catch(function (err) {
+            console.error(err);
+            return process.exit(-1);
+        });
+};
