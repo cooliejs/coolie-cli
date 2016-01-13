@@ -15,7 +15,7 @@ var writePackageJSON = require('../../utils/write-package-json');
 
 describe('utils/write-package-json', function () {
     it('e', function () {
-        var json= {};
+        var json = {};
 
         writePackageJSON(json, __dirname);
 
