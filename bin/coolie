@@ -14,6 +14,7 @@ var cmdVersion = require('../cmds/version.js');
 var cmdInit = require('../cmds/init.js');
 var cmdBook = require('../cmds/book.js');
 var cmdInstall = require('../cmds/install.js');
+var cmdCreate = require('../cmds/create.js');
 var cmdHelp = require('../cmds/help.js');
 
 command.alias({
@@ -28,7 +29,7 @@ command.type({
     'coolie.js': Boolean,
     'coolie-cli': Boolean,
     express: Boolean,
-    static: Boolean
+    'static': Boolean
 });
 
 command.if('help', function () {
@@ -64,6 +65,14 @@ command.if('init', function (args) {
         destDirname: command.dirname(args, 'dirname'),
         'coolie.js': args['coolie.js'],
         'coolie-cli': args['coolie-cli']
+    });
+});
+
+command.if('create', function (args) {
+    cmdCreate({
+        destDirname: command.dirname(args, 'dirname'),
+        express: args.express,
+        'static': args['static']
     });
 });
 
