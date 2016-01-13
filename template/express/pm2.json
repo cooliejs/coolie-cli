@@ -1,0 +1,13 @@
+{
+  "name": "express-template",
+  "cwd": "./",
+  "script": "./app.js",
+  "log_date_format": "",
+  "log_file": "./logs/pm2.log",
+  "error_file": "./logs/error.log",
+  "out_file": "./logs/pm2.log",
+  "pid_file": "./logs/pm2.pid",
+  "merge_logs": true,
+  "instances": 1,
+  "max_memory_restart": "1024M"
+}
