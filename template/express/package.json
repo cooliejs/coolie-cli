@@ -1,0 +1,38 @@
+{
+  "name": "express-sample",
+  "version": "0.0.1",
+  "private": true,
+  "description": "express-sample description",
+  "scripts": {
+    "start": "node ./clis/start.js"
+  },
+  "preferGlobal": false,
+  "bin": {},
+  "engines": {
+    "node": ">= 0.10.0",
+    "iojs": ">= 1.0.0"
+  },
+  "main": "index.js",
+  "keywords": [
+    "cloudcome",
+    "ydr.me"
+  ],
+  "author": {
+    "name": "cloudcome",
+    "email": "cloudcome@163.com",
+    "url": "http://ydr.me"
+  },
+  "contributors": [],
+  "homepage": "https://github.com/express-sample",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/express-sample"
+  },
+  "bugs": {
+    "url": "https://github.com/express-sample/issues"
+  },
+  "dependencies": {},
+  "peerDependencies": {},
+  "devDependencies": {},
+  "license": "MIT"
+}
