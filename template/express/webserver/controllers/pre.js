@@ -8,9 +8,16 @@
 'use strict';
 
 var midParser = require('../middlewares/parser.js');
+var midSafe = require('../middlewares/safe.js');
+var midURL = require('../middlewares/url.js');
 
 module.exports = function (app) {
+    app.use(midSafe.mustHasHeaderHost);
+    app.use(midSafe.addFrameOptionsHeader);
+    app.use(midSafe.addUACompatibleHeader);
     app.use(midParser.parseUA);
+    app.use(midURL.strictRouting);
+    app.use(midURL.fullUrl);
 };
 
 

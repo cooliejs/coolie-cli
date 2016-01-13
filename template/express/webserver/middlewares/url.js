@@ -26,6 +26,7 @@ exports.strictRouting = function (req, res, next) {
 };
 
 
+// 完整的 url
 exports.fullUrl = function (req, res, next) {
     req.$fullURL = req.protocol + '://' + req.headers.host + req.url;
     next();
