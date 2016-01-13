@@ -1,12 +1,13 @@
 /**
- * 日志分割
+ * 日志
  * @author ydr.me
- * @create 2015-12-14 10:54
+ * @create 2016-01-13 21:34
  */
 
 
 'use strict';
 
+var buildConsole = require('ydr-utils').console;
 var later = require('later');
 var fs = require('fs');
 var date = require('ydr-utils').date;
@@ -16,8 +17,11 @@ var configs = require('../../configs.js');
 
 var PM2_LOG = path.join(configs.root, './logs/pm2.log');
 
-module.exports = function (callback) {
+
+module.exports = function (next) {
     later.date.localTime();
+
+    // 每天 0 点重命名日志
     later.setInterval(function () {
         var dateLog = 'node-' + date.format('YYYY-MM-DD') + '.log';
         dateLog = path.join(configs.root, './logs', dateLog);
@@ -41,6 +45,14 @@ module.exports = function (callback) {
             m: [0]
         }]
     });
-    callback();
+
+    // 控制 console
+    buildConsole({
+        whiteList: configs.console
+    });
+    next();
 };
+
+
+
 
