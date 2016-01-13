@@ -7,16 +7,15 @@
 
 'use strict';
 
-var npm = require('ydr-utils').npm;
 var path = require('ydr-utils').path;
-var allocation = require('ydr-utils').allocation;
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 var howdo = require('howdo');
 var glob = require('glob');
 var fse = require('fs-extra');
 
-var pkg = require('../package.json');
+var getModulesVersion = require('../utils/get-modules-version.js');
+var writePackageJSON = require('../utils/write-package-json.js');
 
 var root = path.join(__dirname, '../template/express/');
 var templatePackageJSON = require(path.join(root, 'package.json'));
@@ -36,34 +35,6 @@ var devDependencies = [
     'mocha',
     'supervisor'
 ];
-
-
-/**
- * 获取模块列表版本
- * @param modules
- * @param callback
- */
-var getModulesVersion = function (modules, callback) {
-    howdo
-        .each(modules, function (index, dep, done) {
-            npm.getLatestVersion(dep, function (err, version) {
-                done(err, version);
-            });
-        })
-        .together()
-        .try(function () {
-            var args = allocation.args(arguments);
-            var deps = {};
-
-            dato.each(args, function (index, version) {
-                var name = modules[index];
-                deps[name] = version;
-            });
-
-            callback(null, deps);
-        })
-        .catch(callback);
-};
 
 
 /**
@@ -97,14 +68,6 @@ var createTemplate = function (root, destDirname) {
 
         debug.success('create', path.toSystem(destFile));
     });
-};
-
-
-var writePackageJSON = function (pkg, destDirname) {
-    var file = path.join(destDirname, 'package.json');
-
-    pkg.createBy = 'coolie@' + pkg.version + ' ' + Date.now();
-    fse.outputFileSync(file, JSON.stringify(pkg, null, 2), 'utf8');
 };
 
 
