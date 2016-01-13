@@ -1,3 +1,6 @@
+// 开发目录 Browser-sync 启动的端口
+var BROWSER_SYNC_PORT = 20000;
+
 
 /*
  |--------------------------------------------------------------------------
@@ -27,7 +30,7 @@ module.exports = {
         baseDir: "./webroot-dev"
     },
     "proxy": false,
-    "port": 10002,
+    "port": BROWSER_SYNC_PORT,
     "middleware": false,
     "serveStatic": [],
     "ghostMode": {
