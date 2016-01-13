@@ -12,7 +12,7 @@ var cache = require('ydr-utils').cache;
 var system = require('ydr-utils').system;
 
 var log = require('./servers/log.js');
-var mongoose = require('./servers/mongoose.js');
+//var mongoose = require('./servers/mongoose.js');
 var express = require('./servers/express.js');
 var http = require('./servers/http.js');
 var configs = require('../configs.js');
@@ -27,7 +27,7 @@ cache.set('app.configs', configs);
 module.exports = function (callback) {
     howdo
         .task(log)
-        .task(mongoose)
+        //.task(mongoose)
         .task(express)
         .task(http)
         .follow(callback)
