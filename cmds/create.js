@@ -31,6 +31,7 @@ var TEMPLATE_MAP = {
             'howdo',
             'later',
             'multer',
+            'mongoose',
             'ydr-utils'
         ],
         devDependencies: [
