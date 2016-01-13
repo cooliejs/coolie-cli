@@ -1,11 +1,9 @@
 {
-  "name": "express-sample",
+  "name": "static-template",
   "version": "0.0.1",
   "private": true,
-  "description": "express-sample description",
-  "scripts": {
-    "start": "node ./clis/start.js"
-  },
+  "description": "static-template description",
+  "scripts": {},
   "preferGlobal": false,
   "bin": {},
   "engines": {
@@ -23,13 +21,13 @@
     "url": "http://ydr.me"
   },
   "contributors": [],
-  "homepage": "https://github.com/express-sample",
+  "homepage": "https://github.com/static-template",
   "repository": {
     "type": "git",
-    "url": "https://github.com/express-sample"
+    "url": "https://github.com/static-template"
   },
   "bugs": {
-    "url": "https://github.com/express-sample/issues"
+    "url": "https://github.com/static-template/issues"
   },
   "dependencies": {},
   "peerDependencies": {},

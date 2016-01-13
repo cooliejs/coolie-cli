@@ -1,8 +1,8 @@
 {
-  "name": "express-sample",
+  "name": "express-template",
   "version": "0.0.1",
   "private": true,
-  "description": "express-sample description",
+  "description": "express-template description",
   "scripts": {
     "start": "node ./clis/start.js"
   },
@@ -23,13 +23,13 @@
     "url": "http://ydr.me"
   },
   "contributors": [],
-  "homepage": "https://github.com/express-sample",
+  "homepage": "https://github.com/express-template",
   "repository": {
     "type": "git",
-    "url": "https://github.com/express-sample"
+    "url": "https://github.com/express-template"
   },
   "bugs": {
-    "url": "https://github.com/express-sample/issues"
+    "url": "https://github.com/express-template/issues"
   },
   "dependencies": {},
   "peerDependencies": {},
