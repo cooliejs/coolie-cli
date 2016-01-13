@@ -13,10 +13,11 @@ var fse = require('fs-extra');
 var pkg = require('../package.json');
 
 
-
-var writePackageJSON = function (json, destDirname, callback) {
+var writePackageJSON = function (json, destDirname) {
     var file = path.join(destDirname, 'package.json');
 
     json.createBy = 'coolie@' + pkg.version + ' ' + Date.now();
     fse.outputFileSync(file, JSON.stringify(json, null, 2), 'utf8');
 };
+
+module.exports = writePackageJSON;

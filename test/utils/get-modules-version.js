@@ -11,7 +11,7 @@ var assert = require('assert');
 
 var getModulesVersion = require('../../utils/get-modules-version.js');
 
-describe('get-modules-version', function () {
+describe('utils/get-modules-version', function () {
     it('e', function (done) {
         var modules = [
             'npm',
