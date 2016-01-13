@@ -1,7 +1,7 @@
 /**
- * 前置路由
+ * 后置路由
  * @author ydr.me
- * @create 2016-01-13 15:12
+ * @create 2016-01-13 14:51
  */
 
 
@@ -10,7 +10,6 @@
 var midParser = require('../middlewares/parser.js');
 
 module.exports = function (app) {
-    app.use(midParser.parseUA);
+    app.use(midParser.clientError);
+    app.use(midParser.serverError);
 };
-
-
