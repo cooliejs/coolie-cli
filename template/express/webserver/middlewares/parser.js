@@ -9,7 +9,8 @@
 
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-
+var sessionParser = require('express-session');
+var random = require('ydr-utils').random;
 
 var configs = require('../../configs.js');
 
@@ -19,7 +20,15 @@ exports.parseCookie = cookieParser(configs.cookie.secret);
 
 
 
-//
+// 解析 session
+exports.parseSession = sessionParser({
+    genid: function () {
+        return random.string(10, 'Aa0-_.') + random.guid();
+    },
+    resave: true,
+    saveUninitialized: true,
+    secret: configs.cookie.secret
+});
 
 
 // strict - only parse objects and arrays. (default: true)
