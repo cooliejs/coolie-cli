@@ -7,8 +7,10 @@
 
 'use strict';
 
-exports.getHome = function (req, res, next) {
-    res.send('home');
+module.exports = function (app) {
+    app.get('/', function (req, res, next) {
+        res.send('home');
+    });
 };
 
 

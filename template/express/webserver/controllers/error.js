@@ -7,18 +7,16 @@
 
 'use strict';
 
+module.exports = function (app) {
+    // 404
+    app.use(function clientError(req, res, next) {
+        res.status(404);
+        res.send('404');
+    });
 
-// 404
-exports.clientError = function (req, res, next) {
-    res.status(404);
-    res.send('404');
+    // 500
+    app.use(function serverError(err, req, res, next) {
+        res.status(500);
+        res.send('500');
+    });
 };
-
-
-// 500
-exports.serverError = function (req, res, next) {
-    res.status(500);
-    res.send('500');
-};
-
-

@@ -1,4 +1,4 @@
-/*!
+/**
  * 路由
  * @author ydr.me
  * @create 2015-04-29 14:32
@@ -7,33 +7,16 @@
 
 'use strict';
 
-var express = require('express');
-var configs = require('../../configs.js');
-var path = require('path');
-var multer = require('multer');
-
-// 更为详尽配置的静态服务器
-var staticOptions = {
-    dotfiles: 'ignore',
-    etag: true,
-    extensions: ['html'],
-    index: false,
-    maxAge: '30d',
-    redirect: true
-};
 
 module.exports = function (next, app) {
-    var controllerHome = require('../controllers/home.js');
-    var routerHome = require('../routers/home.js');
-
-    routerHome(app, controllerHome);
+    // home
+    require('../controllers/home.js')(app);
 
     // 程序路由优先，最后静态路由
-    app.use('/', express.static(configs.webroot, staticOptions));
+    require('../controllers/static.js')(app);
 
     // 路由终点
-    app.use(controllers.middleware.clientError);
-    app.use(controllers.middleware.serverError);
+    require('../controllers/error.js')(app);
 
     next(null, app);
 };
