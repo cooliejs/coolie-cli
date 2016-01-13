@@ -36,7 +36,7 @@ module.exports = function (next, app) {
 
 
     // 接口
-    app.use('/api/user/', require('../controllers/api.js'));
+    app.use('/api/', require('../controllers/api.js'));
 
 
     // 静态文件
