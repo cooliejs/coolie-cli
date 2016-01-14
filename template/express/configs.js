@@ -9,8 +9,7 @@
 
 var path = require('path');
 
-//noinspection JSUnresolvedVariable
-var env = process.env.ENVIRONMENT || 'local';
+var env = getEnv();
 var webroot = env === 'local' ? 'dev' : 'pro';
 var root = __dirname;
 
@@ -34,3 +33,28 @@ module.exports = {
         url: 'mongodb://localhost:27017/express-template'
     }
 };
+
+
+/**
+ * 获取当前环境变量
+ * @returns {*|string}
+ */
+function getEnv() {
+    var LOCAL_ENV = 'local';
+    var DEVELOPMENT_ENV = 'dev';
+    var PRODUCTION_ENV = 'pro';
+    var TEST_ENV = 'test';
+    //noinspection JSUnresolvedVariable
+    var env = process.env.NODE_ENV || process.env.ENVIRONMENT || LOCAL_ENV;
+
+    if (env.indexOf(DEVELOPMENT_ENV) > -1) {
+        env = DEVELOPMENT_ENV;
+    } else if (env.indexOf(PRODUCTION_ENV) > -1) {
+        env = PRODUCTION_ENV;
+    } else if (env.indexOf(TEST_ENV) > -1) {
+        env = TEST_ENV;
+    }
+
+    return env;
+}
+
