@@ -1,8 +1,9 @@
+var configs = require('./configs.js');
 // 当前 express 的 url
-var EXPRESS_URL = 'http://localhost:10000';
+var EXPRESS_URL = 'http://localhost:' + configs.port;
 
 //  Browser-sync 启动的端口，不能与 express 端口一致
-var BROWSER_SYNC_PORT = 10001;
+var BROWSER_SYNC_PORT = configs.port + 100;
 
 
 /*
