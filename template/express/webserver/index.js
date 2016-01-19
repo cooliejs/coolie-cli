@@ -11,10 +11,10 @@ var howdo = require('howdo');
 var cache = require('ydr-utils').cache;
 var system = require('ydr-utils').system;
 
-var log = require('./servers/log.js');
+var log = require('./mounts/log.js');
 //var mongoose = require('./servers/mongoose.js');
-var express = require('./servers/express.js');
-var http = require('./servers/http.js');
+var express = require('./mounts/express.js');
+var routers = require('./mounts/routers.js');
 var configs = require('../configs.js');
 var pkg = require('../package.json');
 
@@ -29,7 +29,7 @@ module.exports = function (callback) {
         .task(log)
         //.task(mongoose)
         .task(express)
-        .task(http)
+        .task(routers)
         .follow(callback)
         .try(function (app) {
             console.log();
