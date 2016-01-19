@@ -3,7 +3,13 @@ var configs = require('./configs.js');
 var EXPRESS_URL = 'http://localhost:' + configs.port;
 
 //  Browser-sync 启动的端口，不能与 express 端口一致
-var BROWSER_SYNC_PORT = configs.port + 100;
+var BROWSER_SYNC_MAIN_PORT = configs.port + 100;
+
+// Browser-sync ui 端口，不能与 express 端口一致
+var BROWSER_SYNC_UI_PORT = configs.port + 101;
+
+// weinre 端口，不能与 express 端口一致
+var BROWSER_SYNC_WEINRE_PORT = 8080;
 
 
 /*
@@ -21,9 +27,9 @@ var BROWSER_SYNC_PORT = configs.port + 100;
  */
 module.exports = {
     "ui": {
-        "port": 3001,
+        "port": BROWSER_SYNC_UI_PORT,
         "weinre": {
-            "port": 8080
+            "port": BROWSER_SYNC_WEINRE_PORT
         }
     },
     "files": [
@@ -34,7 +40,7 @@ module.exports = {
     "watchOptions": {},
     "server": false,
     "proxy": EXPRESS_URL,
-    "port": BROWSER_SYNC_PORT,
+    "port": BROWSER_SYNC_MAIN_PORT,
     "middleware": false,
     "serveStatic": [],
     "ghostMode": {
