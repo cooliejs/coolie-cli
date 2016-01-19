@@ -19,10 +19,10 @@ module.exports = {
     root: root,
     webroot: path.join(root, './webroot-' + webroot),
     console: {
-        local: ['log', 'info', 'warn', 'error'],
-        dev: ['warn', 'error'],
-        test: ['error'],
-        pro: ['error']
+        local: ['info', 'warn', 'success', 'error'],
+        dev: ['info', 'warn', 'success', 'error'],
+        test: ['warn', 'error'],
+        pro: ['warn', 'error']
     }[env],
     cookie: {
         secret: 'express-template',

@@ -12,6 +12,7 @@ var later = require('later');
 var fs = require('fs');
 var date = require('ydr-utils').date;
 var path = require('ydr-utils').path;
+var log = require('ydr-utils').log;
 
 var configs = require('../../configs.js');
 
@@ -19,6 +20,9 @@ var PM2_LOG = path.join(configs.root, './logs/pm2.log');
 
 
 module.exports = function (next) {
+    log.config({
+        whiteList: configs.console
+    });
     later.date.localTime();
 
     // 每天 0 点重命名日志
