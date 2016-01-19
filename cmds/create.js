@@ -21,35 +21,16 @@ var writePackageJSON = require('../utils/write-package-json.js');
 var template_root = path.join(__dirname, '../template/');
 var TEMPLATE_MAP = {
     express: {
-        root: path.join(template_root, 'express'),
-        dependencies: [
-            'body-parser',
-            'cookie-parser',
-            'express',
-            'express-session',
-            'form-data',
-            'howdo',
-            'later',
-            'multer',
-            'mongoose',
-            'ydr-utils'
-        ],
-        devDependencies: [
-            'mocha',
-            'supervisor'
-        ]
+        root: path.join(template_root, 'express')
     },
     'static': {
-        root: path.join(template_root, 'static'),
-        dependencies: [],
-        devDependencies: []
+        root: path.join(template_root, 'static')
     }
 };
 // 忽略复制的文件
 var IGNORE_MAP = {
     gitignore: '.gitignore',
-    npmignore: '.npmignore',
-    'package.json': true
+    npmignore: '.npmignore'
 };
 
 
@@ -66,11 +47,6 @@ var createTemplate = function (root, destDirname) {
     howdo.each(files, function (index, file, next) {
         var basename = path.basename(file);
         var ignoreType = IGNORE_MAP[basename];
-
-        if (ignoreType === true) {
-            return next();
-        }
-
         var srcName = path.relative(root, file);
 
         if (ignoreType) {
@@ -106,28 +82,12 @@ var deepCreate = function (type, options) {
     var devDependencies = meta.devDependencies;
     var templatePackageJSON = require(path.join(meta.root, 'package.json'));
 
-    howdo
-    // dependencies
-        .task(function (done) {
-            getModulesVersion(dependencies, done);
-        })
-        // devDependencies
-        .task(function (done) {
-            getModulesVersion(devDependencies, done);
-        })
-        .together()
-        .try(function (dependencies, devDependencies) {
-            debug.success('dependencies', JSON.stringify(dependencies, null, 2));
-            debug.success('devDependencies', JSON.stringify(devDependencies, null, 2));
-            templatePackageJSON.dependencies = dependencies;
-            templatePackageJSON.devDependencies = devDependencies;
-            writePackageJSON(templatePackageJSON, options.destDirname);
-            createTemplate(meta.root, options.destDirname);
-        })
-        .catch(function (err) {
-            debug.error('create error', err.message);
-            process.exit(1);
-        });
+    debug.success('dependencies', JSON.stringify(dependencies, null, 2));
+    debug.success('devDependencies', JSON.stringify(devDependencies, null, 2));
+    templatePackageJSON.dependencies = dependencies;
+    templatePackageJSON.devDependencies = devDependencies;
+    writePackageJSON(templatePackageJSON, options.destDirname);
+    createTemplate(meta.root, options.destDirname);
 };
 
 
