@@ -9,7 +9,7 @@ var BROWSER_SYNC_MAIN_PORT = configs.port + 100;
 var BROWSER_SYNC_UI_PORT = configs.port + 101;
 
 // weinre 端口，不能与 express 端口一致
-var BROWSER_SYNC_WEINRE_PORT = 8080;
+var BROWSER_SYNC_WEINRE_PORT = configs.port + 102;
 
 
 /*
