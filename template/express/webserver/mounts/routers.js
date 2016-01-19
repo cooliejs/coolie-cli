@@ -8,6 +8,7 @@
 'use strict';
 
 var express = require('express');
+var log = require('ydr-utils').log;
 
 var configs = require('../../configs.js');
 var midParser = require('../middlewares/parser.js');
@@ -29,6 +30,7 @@ module.exports = function (next, app) {
     app.use(midParser.parseUA);
     app.use(midURL.strictRouting);
     app.use(midAPI.resAPI);
+    app.use(log.__expressStart());
 
 
     // 页面
@@ -51,6 +53,7 @@ module.exports = function (next, app) {
 
 
     // 后置
+    app.use(log.__expressEnd());
     app.use(midError.clientError);
     app.use(midError.serverError);
 
