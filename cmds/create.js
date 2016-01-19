@@ -15,8 +15,6 @@ var fse = require('fs-extra');
 var howdo = require('howdo');
 
 var banner = require('./banner.js');
-var getModulesVersion = require('../utils/get-modules-version.js');
-var writePackageJSON = require('../utils/write-package-json.js');
 
 var template_root = path.join(__dirname, '../template/');
 var TEMPLATE_MAP = {
@@ -78,15 +76,20 @@ var createTemplate = function (root, destDirname) {
  */
 var deepCreate = function (type, options) {
     var meta = TEMPLATE_MAP[type];
-    var dependencies = meta.dependencies;
-    var devDependencies = meta.devDependencies;
-    var templatePackageJSON = require(path.join(meta.root, 'package.json'));
+    var pkg = require(path.join(meta.root, 'package.json'));
+    var makeList = function (obj) {
+        var list = [];
 
-    debug.success('dependencies', JSON.stringify(dependencies, null, 2));
-    debug.success('devDependencies', JSON.stringify(devDependencies, null, 2));
-    templatePackageJSON.dependencies = dependencies;
-    templatePackageJSON.devDependencies = devDependencies;
-    writePackageJSON(templatePackageJSON, options.destDirname);
+        dato.each(obj, function (key, val) {
+            list.push(key + ': ' + val);
+        });
+
+        return list.join('\n');
+    };
+
+    debug.success('name', pkg.name + '@' + pkg.version);
+    debug.success('dependencies', makeList(pkg.dependencies));
+    debug.success('devDependencies', makeList(pkg.devDependencies));
     createTemplate(meta.root, options.destDirname);
 };
 
