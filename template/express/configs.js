@@ -18,7 +18,7 @@ module.exports = {
     env: env,
     root: root,
     webroot: path.join(root, './webroot-' + webroot),
-    console: {
+    logLevel: {
         local: ['info', 'warn', 'success', 'error'],
         dev: ['info', 'warn', 'success', 'error'],
         test: ['warn', 'error'],

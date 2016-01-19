@@ -7,7 +7,6 @@
 
 'use strict';
 
-var buildConsole = require('ydr-utils').console;
 var later = require('later');
 var fs = require('fs');
 var date = require('ydr-utils').date;
@@ -21,7 +20,7 @@ var PM2_LOG = path.join(configs.root, './logs/pm2.log');
 
 module.exports = function (next) {
     log.config({
-        whiteList: configs.console
+        whiteList: configs.logLevel
     });
     later.date.localTime();
 
@@ -50,10 +49,6 @@ module.exports = function (next) {
         }]
     });
 
-    // 控制 console
-    buildConsole({
-        whiteList: configs.console
-    });
     next();
 };
 
