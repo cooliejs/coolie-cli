@@ -188,7 +188,7 @@ var startLocal = function (callback) {
 
     args.push(__filename);
     args.push('-w');
-    args.push('./webserver/,./bookroot/');
+    args.push('./webserver/');
     args.push('-e');
     args.push('js,md');
     args.push('app.js');

@@ -1,0 +1,17 @@
+{{if abc}}
+<img src="/favicon.ico" alt="" abc>
+{{else}}
+<img src="/favicon.ico" alt="">
+{{/if}}
+
+
+<ul>
+    {{if abc < 3}}
+    <li>abc</li>
+    {{else}}
+    <li>def</li>
+    {{/if}}
+</ul>
+
+
+<img src="/favicon.ico" alt="" abc="{{abc ? '123' : ''}}">

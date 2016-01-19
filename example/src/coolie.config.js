@@ -20,7 +20,7 @@ module.exports = function (coolie) {
         },
         "html": {
             "src": [
-                "./html/replace.html"
+                "./html/123.html"
             ],
             "minify": true
         },
@@ -43,9 +43,24 @@ module.exports = function (coolie) {
     });
 
 
+    coolie.use(function (options) {
+        options.code = coolie.matchHTML(options.code, {
+            tag: 'img'
+        }, function (node) {
+            if (node.attrs.alt) {
+                return node;
+            }
+
+            node.attrs.alt = 'image';
+            return node;
+        });
+
+        return options;
+    });
+
+
     // {{include some.html}} 插值
     //coolie.use(require('./coolie-include-html.js'));
-
 
 
     //coolie.use(require('coolie-html-attr-resource')());
