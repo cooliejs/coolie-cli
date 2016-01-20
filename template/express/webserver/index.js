@@ -11,10 +11,10 @@ var howdo = require('howdo');
 var cache = require('ydr-utils').cache;
 var system = require('ydr-utils').system;
 
-var mountLog = require('./mounts/log.js');
-//var mountMongoose = require('./servers/mongoose.js');
-var mountExpress = require('./mounts/express.js');
-var mountRouters = require('./mounts/routers.js');
+var serviceLog = require('./services/log.js');
+var serviceMongoose = require('./services/mongoose.js');
+var serviceExpress = require('./services/express.js');
+var serviceRouters = require('./services/routers.js');
 var configs = require('../configs.js');
 var pkg = require('../package.json');
 
@@ -26,10 +26,10 @@ cache.set('app.configs', configs);
 
 module.exports = function (callback) {
     howdo
-        .task(mountLog)
-        //.task(mountMongoose)
-        .task(mountExpress)
-        .task(mountRouters)
+        .task(serviceLog)
+        .task(serviceMongoose)
+        .task(serviceExpress)
+        .task(serviceRouters)
         .follow(callback)
         .try(function (app) {
             console.log();
