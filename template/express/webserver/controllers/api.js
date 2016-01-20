@@ -9,12 +9,12 @@
 
 var express = require('express');
 
-var router = new express.Router();
+var app = express();
 
-router.get('/', function (req, res, next) {
+app.get('/', function (req, res, next) {
     res.api({
         now: Date.now()
     });
 });
 
-module.exports = router;
+module.exports = app;
