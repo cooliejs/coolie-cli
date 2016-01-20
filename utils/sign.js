@@ -10,7 +10,7 @@
 var pkg = require('../package.json');
 
 var sign = module.exports = function (type) {
-    var banner = pkg.name + '@' + pkg.version;
+    var banner = pkg.name + ' build';
 
     switch (type) {
         case 'html':
