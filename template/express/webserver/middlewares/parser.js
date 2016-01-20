@@ -11,6 +11,7 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var sessionParser = require('express-session');
 var random = require('ydr-utils').random;
+var encryption = require('ydr-utils').encryption;
 
 var configs = require('../../configs.js');
 
@@ -22,7 +23,7 @@ exports.parseCookie = cookieParser(configs.cookie.secret);
 // 解析 session
 exports.parseSession = sessionParser({
     genid: function () {
-        return random.string(10, 'Aa0-_.') + random.guid();
+        return random.string(6, 'Aa0-_.') + encryption.md5(random.guid());
     },
     resave: true,
     saveUninitialized: true,
