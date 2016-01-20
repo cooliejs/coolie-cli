@@ -24,10 +24,10 @@ module.exports = function (next, app) {
     app.use(midParser.parseSession);
     app.use(midParser.parsePostBodyOfJSON);
     app.use(midParser.parsePostBodyOfURLencoded);
+    app.use(midParser.parseUA);
     app.use(midSafe.mustHasHeaderHost);
     app.use(midSafe.addUACompatibleHeader);
     app.use(midSafe.addFrameOptionsHeader);
-    app.use(midParser.parseUA);
     app.use(midURL.strictRouting);
     app.use(midAPI.resAPI);
     app.use(log.__expressStart());

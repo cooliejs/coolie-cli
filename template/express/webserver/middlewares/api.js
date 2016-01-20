@@ -35,7 +35,9 @@ exports.resAPI =function (req, res, next) {
                 code = 200;
                 message = null;
             }
-        } else if (args.length === 2) {
+        }
+        // res.api(code, message);
+        else if (args.length === 2) {
             message = args[1];
             result = null;
         }

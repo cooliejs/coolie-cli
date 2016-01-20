@@ -52,7 +52,7 @@ exports.parsePostBodyOfURLencoded = bodyParser.urlencoded({
 
 
 // 解析 ua
-exports.parseUA = function parseUA(req, res, next) {
+exports.parseUA = function(req, res, next) {
     var ua = req.headers['user-agent'];
     var isMobile = /mobile|iphone|ipad|ipod|andorid/i.test(ua);
     var isWeixin = /MicroMessenger\b/i.test(ua);
