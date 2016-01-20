@@ -7,9 +7,9 @@
 
 'use strict';
 
-var express = require('express');
+var Router = require('express').Router;
 
-var app = express();
+var app = new Router();
 
 app.get('/', function (req, res, next) {
     res.render('home.html');

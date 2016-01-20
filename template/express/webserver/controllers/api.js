@@ -7,14 +7,14 @@
 
 'use strict';
 
-var express = require('express');
+var Router = require('express').Router;
 
-var app = express();
+var router = new Router();
 
-app.get('/', function (req, res, next) {
+router.get('/', function (req, res, next) {
     res.api({
         now: Date.now()
     });
 });
 
-module.exports = app;
+module.exports = router;
