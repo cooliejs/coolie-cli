@@ -42,14 +42,7 @@ module.exports = function (next, app) {
 
 
     // 静态文件
-    app.use('/', express.static(configs.webroot, {
-        dotfiles: 'ignore',
-        etag: true,
-        extensions: ['html'],
-        index: false,
-        maxAge: '30d',
-        redirect: true
-    }));
+    app.use('/', require('../controllers/static.js'));
 
 
     // 后置
