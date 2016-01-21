@@ -157,9 +157,32 @@ var now = function () {
 };
 
 
+/**
+ * 路径是否为文件夹
+ * @param _path
+ * @returns {*}
+ */
+var isDirectory = function (_path) {
+    var stat;
+
+    try {
+        stat = fs.statSync(_path);
+    } catch (err) {
+        return false;
+    }
+
+    return stat.isDirectory();
+};
+
+
 // 更新代码
 var gitPull = function (callback) {
     logNormal('\n\n───────────[ 1/3 ]───────────');
+
+    if (!isDirectory(path.join(ROOT, '.git'))) {
+        return callback();
+    }
+
     exec([
         'cd ' + ROOT,
         'git branch',
