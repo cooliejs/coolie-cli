@@ -9,6 +9,7 @@
 
 var howdo = require('howdo');
 var cache = require('ydr-utils').cache;
+var log = require('ydr-utils').log;
 var system = require('ydr-utils').system;
 
 var serviceLog = require('./services/log.js');
@@ -32,11 +33,18 @@ module.exports = function (callback) {
         .task(serviceRouters)
         .follow(callback)
         .try(function (app) {
-            console.log();
-            console.log('############################################');
-            console.log(pkg.name + '@' + pkg.version, 'http://' + system.localIP() + ':' + app.get('port'));
-            console.log('############################################\n');
-            console.log();
+            var table = [
+                ['app name', pkg.name],
+                ['app version', pkg.version],
+                ['app url', 'http://' + system.localIP() + ':' + app.get('port')],
+                ['app root', configs.root],
+                ['node version', process.versions.node],
+                ['express version', pkg.dependencies.express]
+            ];
+
+            log.success(log.table(table, {
+                tdBorder: true
+            }));
         })
         .catch(function (err) {
             console.error(err);
