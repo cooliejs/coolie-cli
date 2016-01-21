@@ -6,9 +6,7 @@ module.exports = function (coolie) {
     coolie.config({
         clean: true,
         "js": {
-            "main": [
-                "./static/js/app/index.js"
-            ],
+            "main": [],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
             "chunk": [
@@ -57,6 +55,9 @@ module.exports = function (coolie) {
 
         return options;
     });
+
+
+    coolie.use(require('/Users/cloudcome/development/github/coolie-html-tag-template/index.js')());
 
 
     // {{include some.html}} 插值
