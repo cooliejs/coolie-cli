@@ -180,6 +180,7 @@ var gitPull = function (callback) {
     logNormal('\n\n───────────[ 1/3 ]───────────');
 
     if (!isDirectory(path.join(ROOT, '.git'))) {
+        logWarning('fatal: Not a git repository (or any of the parent directories): .git');
         return callback();
     }
 
