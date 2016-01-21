@@ -16,7 +16,7 @@ exports.clientError = function clientError(req, res, next) {
 
 
 // 解析 500
-exports.serverError = function serverError(req, res, next) {
+exports.serverError = function serverError(err, req, res, next) {
     res.status(500);
     res.send('500');
 };
