@@ -19,6 +19,10 @@ var midError = require('../middlewares/error.js');
 
 
 module.exports = function (next, app) {
+    // 静态文件
+    app.use('/', require('../controllers/static.js'));
+
+
     // 前置
     app.use(midParser.parseCookie);
     app.use(midParser.parseSession);
@@ -39,10 +43,6 @@ module.exports = function (next, app) {
 
     // 接口
     app.use('/api/', require('../controllers/api.js'));
-
-
-    // 静态文件
-    app.use('/', require('../controllers/static.js'));
 
 
     // 后置
