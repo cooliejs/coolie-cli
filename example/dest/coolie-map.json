@@ -4,6 +4,8 @@
     "async": [],
     "js": [],
     "css": [],
-    "res": []
+    "res": [
+      "../src/favicon.ico"
+    ]
   }
 }

@@ -42,7 +42,8 @@ var REG_LINE_COMMENTS = /<!--.*?-->/g;
 var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
 var REG_COOLIE_COMMENTS = /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi;
 var REG_PRE_TAGNAME = /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi;
-var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi;
+var REG_CONDITIONS_COMMENTS_START = /<!--\[(if|else if|else).*?]>/gi;
+var REG_CONDITIONS_COMMENTS_END = /<!\[endif]-->/gi;
 var REG_PHP_FULL = /<\?php[\s\S]*?\?>/gi;
 var REG_PHP_SIMPLE = /<\?=[\s\S]*?\?>/gi;
 
@@ -147,7 +148,8 @@ module.exports = function (file, options) {
     code = code.replace(REG_COOLIE_COMMENTS, replace(coolieMap));
 
     // 保留条件注释
-    code = code.replace(REG_CONDITIONS_COMMENTS, replace(preMap));
+    code = code.replace(REG_CONDITIONS_COMMENTS_START, replace(commentsMap));
+    code = code.replace(REG_CONDITIONS_COMMENTS_END, replace(commentsMap));
 
     if (options.removeHTMLLineComments) {
         code = code.replace(REG_LINE_COMMENTS, '');
