@@ -25,7 +25,6 @@ var defaults = {
     removeHTMLLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
-    embedPHP: true,
     versionLength: 32,
     srcDirname: null,
     destDirname: null,
@@ -54,7 +53,6 @@ var defaults = {
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
- * @param [options.embedPHP=true] {Boolean} 是否内嵌 PHP
  * @param [options.versionLength=32] {Number} 版本号长度
  * @param [options.srcDirname] {String} 原始根目录
  * @param [options.destDirname] {String} 目标根目录
@@ -125,7 +123,6 @@ module.exports = function (options) {
             removeHTMLLineComments: options.removeHTMLLineComments,
             joinHTMLSpaces: options.joinHTMLSpaces,
             removeHTMLBreakLines: options.removeHTMLBreakLines,
-            embedPHP: options.embedPHP,
             versionLength: options.versionLength,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,

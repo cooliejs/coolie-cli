@@ -191,7 +191,6 @@ var defaults = {
     removeHTMLLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
-    embedPHP: true,
     uglifyJSOptions: null
 };
 
@@ -217,7 +216,6 @@ var defaults = {
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
- * @param [options.embedPHP=true] {Boolean} 是否内嵌 PHP
  * @return {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
@@ -357,7 +355,6 @@ module.exports = function (file, options) {
                             removeHTMLLineComments: options.removeHTMLLineComments,
                             joinHTMLSpaces: options.joinHTMLSpaces,
                             removeHTMLBreakLines: options.removeHTMLBreakLines,
-                            embedPHP: options.embedPHP,
                             srcDirname: options.srcDirname,
                             destDirname: options.destDirname,
                             destHost: options.destHost,
