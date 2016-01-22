@@ -181,7 +181,6 @@ module.exports = function (file, options) {
         code = code.replace(key, val);
     });
 
-    console.log(code);
     if (options.replaceHTMLAttrResource) {
         var replaceHTMLAttrResourceRet = replaceHTMLAttrResource(file, {
             code: code,

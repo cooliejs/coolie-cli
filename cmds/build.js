@@ -66,6 +66,7 @@ middleware.on('error', function (err) {
     debug.error('middleware repo', coolieMiddlware.repository);
     debug.error('middleware home', coolieMiddlware.homepage);
     debug.error('middleware error', err.message);
+    debug.error('error stack', err.stack);
     console.log();
     return process.exit(1);
 });

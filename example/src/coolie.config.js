@@ -39,4 +39,6 @@ module.exports = function (coolie) {
             "versionLength": 8
         }
     });
+
+    coolie.use(require('/Users/cloudcome/development/github/coolie-html-embed-php/index.js')());
 };
