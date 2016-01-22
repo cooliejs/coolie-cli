@@ -43,7 +43,8 @@ var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
 var REG_COOLIE_COMMENTS = /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi;
 var REG_PRE_TAGNAME = /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi;
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi;
-var REG_PHP = /<\?php.*?\?>/g;
+var REG_PHP_FULL = /<\?php[\s\S]*?\?>/gi;
+var REG_PHP_SIMPLE = /<\?=[\s\S]*?\?>/gi;
 
 var defaults = {
     code: '',
@@ -161,7 +162,8 @@ module.exports = function (file, options) {
     }
 
     if (options.embedPHP) {
-        code = code.replace(REG_PHP, replace(commentsMap));
+        code = code.replace(REG_PHP_FULL, replace(commentsMap));
+        code = code.replace(REG_PHP_SIMPLE, replace(commentsMap));
     }
 
     // 保留 pre tagName
