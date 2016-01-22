@@ -43,6 +43,7 @@ var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
 var REG_COOLIE_COMMENTS = /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi;
 var REG_PRE_TAGNAME = /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi;
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi;
+var REG_PHP = /<\?php.*?\?>/g;
 
 var defaults = {
     code: '',
@@ -58,6 +59,7 @@ var defaults = {
     removeHTMLLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
+    embedPHP: true,
     versionLength: 32,
     srcDirname: null,
     destDirname: null,
@@ -96,6 +98,7 @@ var defaults = {
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @param [options.embedPHP=true] {Boolean} 是否内嵌 PHP
  * @param [options.versionLength=32] {Number} 版本号长度
  * @param [options.srcDirname] {String} 原始根目录
  * @param [options.destDirname] {String} 目标根目录
@@ -157,6 +160,10 @@ module.exports = function (file, options) {
         code = code.replace(REG_YUI_COMMENTS, replace(commentsMap));
     }
 
+    if (options.embedPHP) {
+        code = code.replace(REG_PHP, replace(commentsMap));
+    }
+
     // 保留 pre tagName
     code = code.replace(REG_PRE_TAGNAME, replace(preMap));
 
@@ -173,6 +180,7 @@ module.exports = function (file, options) {
         code = code.replace(key, val);
     });
 
+    console.log(code);
     if (options.replaceHTMLAttrResource) {
         var replaceHTMLAttrResourceRet = replaceHTMLAttrResource(file, {
             code: code,

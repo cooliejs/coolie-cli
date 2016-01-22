@@ -18,7 +18,7 @@ module.exports = function (coolie) {
         },
         "html": {
             "src": [
-                "./html/123.html"
+                "./html/123.php"
             ],
             "minify": true
         },
