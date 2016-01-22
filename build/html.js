@@ -142,8 +142,8 @@ module.exports = function (options) {
             replaceCSSResource: options.replaceCSSResource,
             mainVersionMap: options.mainVersionMap,
             signHTML: true,
-            signJS: true,
-            signCSS: true
+            signJS: false,
+            signCSS: false
         });
 
         var relative = path.relative(options.srcDirname, htmlFile);
