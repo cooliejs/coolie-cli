@@ -130,7 +130,7 @@ var defaults = {
  * @param [options.signCSS] {Boolean} 是否签名 css 文件
  * @returns {Object}
  */
-module.exports = function minifyHTML(file, options) {
+var minifyHTML = function minifyHTML(file, options) {
     options = dato.extend({}, defaults, options);
     var coolieMap = {};
     var preMap = {};
@@ -143,35 +143,13 @@ module.exports = function minifyHTML(file, options) {
     var replace = function (pack) {
         return function (source) {
             var key = _generateKey();
+            var minifyConditionsCommentsRet = minifyConditionsComments(file, options, source);
 
-            var start = (source.match(REG_CONDITIONS_COMMENTS_START) || [''])[0];
-            var end = (source.match(REG_CONDITIONS_COMMENTS_END) || [''])[0];
-            var real = source;
-
-            if (start && end) {
-                real = source.replace(REG_CONDITIONS_COMMENTS_START, '')
-                    .replace(REG_CONDITIONS_COMMENTS_END, '');
-                var options2 = dato.extend({}, options);
-
-                console.log('start', start);
-                console.log('real', real);
-                console.log('end', end);
-                options2.code = real;
-                options2.signHTML = false;
-                //code: code,
-                //mainList: mainList,
-                //jsList: jsList,
-                //cssList: cssList,
-                //resList: resList
-                var realRet = minifyHTML(file, options2);
-                real = start + realRet.code + end;
-                mainList = mainList.concat(mainList);
-                jsList = jsList.concat(jsList);
-                cssList = cssList.concat(cssList);
-                resList = resList.concat(resList);
-            }
-
-            pack[key] = real;
+            mainList = mainList.concat(minifyConditionsCommentsRet.mainList);
+            jsList = jsList.concat(minifyConditionsCommentsRet.jsList);
+            cssList = cssList.concat(minifyConditionsCommentsRet.cssList);
+            resList = resList.concat(minifyConditionsCommentsRet.resList);
+            pack[key] = minifyConditionsCommentsRet.code;
 
             return key;
         };
@@ -373,9 +351,68 @@ module.exports = function minifyHTML(file, options) {
 };
 
 
+/**
+ * 压缩注释的 html
+ * @param file
+ * @param options
+ * @param source
+ * @returns {*}
+ */
+function minifyConditionsComments(file, options, source) {
+    var start = '';
+    dato.each(REG_CONDITIONS_COMMENTS_STARTS, function (index, reg) {
+        start = (source.match(reg) || [''])[0];
 
+        if (start) {
+            source = source.replace(reg, '');
+            return false;
+        }
 
+    });
 
+    var end = '';
+    dato.each(REG_CONDITIONS_COMMENTS_ENDS, function (index, reg) {
+        end = (source.match(reg) || [''])[0];
+
+        if (end) {
+            source = source.replace(reg, '');
+            return false;
+        }
+
+    });
+
+    var real = source;
+
+    if (!start || !end) {
+        return {
+            code: source,
+            mainList: [],
+            jsList: [],
+            cssList: [],
+            resList: []
+        };
+    }
+
+    if (start && end) {
+        real = source.replace(REG_CONDITIONS_COMMENTS_START, '')
+            .replace(REG_CONDITIONS_COMMENTS_END, '');
+        var options2 = dato.extend({}, options);
+
+        console.log('start', start);
+        console.log('real', real);
+        console.log('end', end);
+        options2.code = real;
+        options2.signHTML = false;
+        //code: code,
+        //mainList: mainList,
+        //jsList: jsList,
+        //cssList: cssList,
+        //resList: resList
+        var realRet = minifyHTML(file, options2);
+        realRet.code = start + realRet.code + end;
+        return realRet;
+    }
+}
 
 
 /**
@@ -388,4 +425,4 @@ function _generateKey() {
 }
 
 
-
+module.exports = minifyHTML;
