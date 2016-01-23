@@ -143,7 +143,15 @@ var minifyHTML = function minifyHTML(file, options) {
     var replace = function (pack) {
         return function (source) {
             var key = _generateKey();
-            var minifyConditionsCommentsRet = minifyConditionsComments(file, options, source);
+
+            var matched = matchConditionsComments(file, options, source);
+
+            if (!matched.start || !matched.end) {
+                pack[key] = source;
+                return key;
+            }
+
+            var minifyConditionsCommentsRet = minifyConditionsComments(file, options, matched);
 
             mainList = mainList.concat(minifyConditionsCommentsRet.mainList);
             jsList = jsList.concat(minifyConditionsCommentsRet.jsList);
@@ -351,14 +359,7 @@ var minifyHTML = function minifyHTML(file, options) {
 };
 
 
-/**
- * 压缩注释的 html
- * @param file
- * @param options
- * @param source
- * @returns {*}
- */
-function minifyConditionsComments(file, options, source) {
+var matchConditionsComments = function (file, options, source) {
     var start = '';
     dato.each(REG_CONDITIONS_COMMENTS_STARTS, function (index, reg) {
         start = (source.match(reg) || [''])[0];
@@ -378,40 +379,43 @@ function minifyConditionsComments(file, options, source) {
             source = source.replace(reg, '');
             return false;
         }
-
     });
 
-    var real = source;
+    return {
+        start: start,
+        end: end,
+        source: source
+    };
+};
 
-    if (!start || !end) {
-        return {
-            code: source,
-            mainList: [],
-            jsList: [],
-            cssList: [],
-            resList: []
-        };
-    }
 
-    if (start && end) {
-        real = source.replace(REG_CONDITIONS_COMMENTS_START, '')
-            .replace(REG_CONDITIONS_COMMENTS_END, '');
-        var options2 = dato.extend({}, options);
+/**
+ * 压缩注释的 html
+ * @param file
+ * @param options
+ * @param matched
+ * @returns {*}
+ */
+function minifyConditionsComments(file, options, matched) {
+    var source = matched.source;
+    var start = matched.start;
+    var end = matched.end;
+    var options2 = dato.extend({}, options);
 
-        console.log('start', start);
-        console.log('real', real);
-        console.log('end', end);
-        options2.code = real;
-        options2.signHTML = false;
-        //code: code,
-        //mainList: mainList,
-        //jsList: jsList,
-        //cssList: cssList,
-        //resList: resList
-        var realRet = minifyHTML(file, options2);
-        realRet.code = start + realRet.code + end;
-        return realRet;
-    }
+    console.log('start', start);
+    console.log('real', source);
+    console.log('end', end);
+
+    options2.code = source;
+    options2.signHTML = false;
+    //code: code,
+    //mainList: mainList,
+    //jsList: jsList,
+    //cssList: cssList,
+    //resList: resList
+    var realRet = minifyHTML(file, options2);
+    realRet.code = start + realRet.code + end;
+    return realRet;
 }
 
 
