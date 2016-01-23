@@ -148,19 +148,19 @@ module.exports = function (file, options) {
     // 保留条件注释
     //code = code.replace(REG_CONDITIONS_COMMENTS_START, replace(commentsMap));
     //code = code.replace(REG_CONDITIONS_COMMENTS_END, replace(commentsMap));
-    //code = code.replace(REG_CONDITIONS_COMMENTS, replace(commentsMap));
+    code = code.replace(REG_CONDITIONS_COMMENTS, replace(commentsMap));
 
-    //if (options.removeHTMLLineComments) {
-    //    code = code.replace(REG_LINE_COMMENTS, '');
-    //} else {
-    //    code = code.replace(REG_LINE_COMMENTS, replace(commentsMap));
-    //}
+    if (options.removeHTMLLineComments) {
+        code = code.replace(REG_LINE_COMMENTS, '');
+    } else {
+        code = code.replace(REG_LINE_COMMENTS, replace(commentsMap));
+    }
 
-    //if (options.removeHTMLYUIComments) {
-    //    code = code.replace(REG_YUI_COMMENTS, '');
-    //} else {
-    //    code = code.replace(REG_YUI_COMMENTS, replace(commentsMap));
-    //}
+    if (options.removeHTMLYUIComments) {
+        code = code.replace(REG_YUI_COMMENTS, '');
+    } else {
+        code = code.replace(REG_YUI_COMMENTS, replace(commentsMap));
+    }
 
     //if (options.embedPHP) {
     //    code = code.replace(REG_PHP_FULL, replace(commentsMap));
@@ -168,15 +168,15 @@ module.exports = function (file, options) {
     //}
 
     // 保留 pre tagName
-    //code = code.replace(REG_PRE_TAGNAME, replace(preMap));
+    code = code.replace(REG_PRE_TAGNAME, replace(preMap));
 
-    //if (options.joinHTMLSpaces) {
-    //    code = code.replace(REG_SPACES, ' ');
-    //}
-    //
-    //if (options.removeHTMLBreakLines) {
-    //    code = code.replace(REG_LINES, '');
-    //}
+    if (options.joinHTMLSpaces) {
+        code = code.replace(REG_SPACES, ' ');
+    }
+
+    if (options.removeHTMLBreakLines) {
+        code = code.replace(REG_LINES, '');
+    }
 
     // 恢复 条件注释 和 pre tagName
     dato.each(preMap, function (key, val) {
