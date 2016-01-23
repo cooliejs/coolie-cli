@@ -41,8 +41,16 @@ var REG_LINE_COMMENTS = /<!--.*?-->/g;
 var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
 var REG_COOLIE_COMMENTS = /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi;
 var REG_PRE_TAGNAME = /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi;
-var REG_CONDITIONS_COMMENTS_START = /<!--\[(if|else if|else).*(]|-->)>/gi;
+var REG_CONDITIONS_COMMENTS_START = /<!--\[(if|else if|else).*]><!-->/gi;
+var REG_CONDITIONS_COMMENTS_STARTS = [
+    /<!--\[(if|else if|else).*]><!-->/gi,
+    /<!--\[(if|else if|else).*]>/gi
+];
 var REG_CONDITIONS_COMMENTS_END = /<!\[endif]-->/gi;
+var REG_CONDITIONS_COMMENTS_ENDS = [
+    /<!--<!\[endif]-->/gi,
+    /<!\[endif]-->/gi
+];
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi;
 var REG_PHP_FULL = /<\?php[\s\S]*?\?>/gi;
 var REG_PHP_SIMPLE = /<\?=[\s\S]*?\?>/gi;
@@ -145,6 +153,9 @@ module.exports = function minifyHTML(file, options) {
                     .replace(REG_CONDITIONS_COMMENTS_END, '');
                 var options2 = dato.extend({}, options);
 
+                console.log('start', start);
+                console.log('real', real);
+                console.log('end', end);
                 options2.code = real;
                 options2.signHTML = false;
                 //code: code,
@@ -154,6 +165,10 @@ module.exports = function minifyHTML(file, options) {
                 //resList: resList
                 var realRet = minifyHTML(file, options2);
                 real = start + realRet.code + end;
+                mainList = mainList.concat(mainList);
+                jsList = jsList.concat(jsList);
+                cssList = cssList.concat(cssList);
+                resList = resList.concat(resList);
             }
 
             pack[key] = real;
@@ -229,7 +244,7 @@ module.exports = function minifyHTML(file, options) {
         });
 
         code = replaceHTMLTagScriptCoolieRet.code;
-        mainList = replaceHTMLTagScriptCoolieRet.mainList;
+        mainList = mainList.concat(replaceHTMLTagScriptCoolieRet.mainList);
         jsList = jsList.concat(replaceHTMLTagScriptCoolieRet.jsList);
     }
 
@@ -356,6 +371,11 @@ module.exports = function minifyHTML(file, options) {
         resList: resList
     };
 };
+
+
+
+
+
 
 
 /**
