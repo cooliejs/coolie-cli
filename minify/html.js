@@ -145,8 +145,8 @@ module.exports = function (file, options) {
     code = code.replace(REG_COOLIE_COMMENTS, replace(coolieMap));
 
     // 保留条件注释
-    code = code.replace(REG_CONDITIONS_COMMENTS_START, replace(commentsMap));
-    code = code.replace(REG_CONDITIONS_COMMENTS_END, replace(commentsMap));
+    //code = code.replace(REG_CONDITIONS_COMMENTS_START, replace(commentsMap));
+    //code = code.replace(REG_CONDITIONS_COMMENTS_END, replace(commentsMap));
 
     if (options.removeHTMLLineComments) {
         code = code.replace(REG_LINE_COMMENTS, '');
