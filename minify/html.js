@@ -122,7 +122,7 @@ var defaults = {
  * @param [options.signCSS] {Boolean} 是否签名 css 文件
  * @returns {Object}
  */
-module.exports = function (file, options) {
+module.exports = function minifyHTML(file, options) {
     options = dato.extend({}, defaults, options);
     var coolieMap = {};
     var preMap = {};
@@ -146,9 +146,7 @@ module.exports = function (file, options) {
     code = code.replace(REG_COOLIE_COMMENTS, replace(coolieMap));
 
     // 保留条件注释
-    //code = code.replace(REG_CONDITIONS_COMMENTS_START, replace(commentsMap));
-    //code = code.replace(REG_CONDITIONS_COMMENTS_END, replace(commentsMap));
-    code = code.replace(REG_CONDITIONS_COMMENTS, replace(commentsMap));
+    code = code.replace(REG_CONDITIONS_COMMENTS, replace(preMap));
 
     if (options.removeHTMLLineComments) {
         code = code.replace(REG_LINE_COMMENTS, '');
@@ -161,11 +159,6 @@ module.exports = function (file, options) {
     } else {
         code = code.replace(REG_YUI_COMMENTS, replace(commentsMap));
     }
-
-    //if (options.embedPHP) {
-    //    code = code.replace(REG_PHP_FULL, replace(commentsMap));
-    //    code = code.replace(REG_PHP_SIMPLE, replace(commentsMap));
-    //}
 
     // 保留 pre tagName
     code = code.replace(REG_PRE_TAGNAME, replace(preMap));
