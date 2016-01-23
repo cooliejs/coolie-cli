@@ -136,7 +136,27 @@ module.exports = function minifyHTML(file, options) {
         return function (source) {
             var key = _generateKey();
 
-            pack[key] = source;
+            var start = (source.match(REG_CONDITIONS_COMMENTS_START) || [''])[0];
+            var end = (source.match(REG_CONDITIONS_COMMENTS_END) || [''])[0];
+            var real = source;
+
+            if (start && end) {
+                real = source.replace(REG_CONDITIONS_COMMENTS_START, '')
+                    .replace(REG_CONDITIONS_COMMENTS_END, '');
+                var options2 = dato.extend({}, options);
+
+                options2.code = real;
+                options2.signHTML = false;
+                //code: code,
+                //mainList: mainList,
+                //jsList: jsList,
+                //cssList: cssList,
+                //resList: resList
+                var realRet = minifyHTML(file, options2);
+                real = start + realRet.code + end;
+            }
+
+            pack[key] = real;
 
             return key;
         };

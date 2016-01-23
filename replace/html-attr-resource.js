@@ -89,8 +89,6 @@ module.exports = function (file, options) {
     var resMap = {};
     var parser = parseHTML(code);
 
-    console.log(code);
-
     dato.each(replaceList, function (index, item) {
         var attr = item.attr;
 
