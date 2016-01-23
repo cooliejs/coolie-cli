@@ -51,7 +51,6 @@ module.exports = function (file, options) {
     var resList = [];
 
     code = parseHTML(code).match(function (node) {
-        console.log(node);
         if (!node.attrs || !node.attrs.style) {
             return node;
         }
