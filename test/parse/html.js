@@ -19,12 +19,23 @@ var code = fs.readFileSync(file, 'utf8');
 
 describe('parse/html.js', function () {
     it('1', function () {
-        var ret = parseHTML(code, {
-            tag: 'body'
-        }, function (node) {
-            node.attrs.abc = 123;
-            return node;
-        });
+        //var ret = parseHTML(code, {
+        //    tag: '*'
+        //}, function (node) {
+        //    node.attrs.abc = 123;
+        //    node.attrs.coolieignore = false;
+        //    return node;
+        //});
+
+        var ret = parseHTML(code)
+            .match({
+                tag: 'body'
+            }, function (node) {
+                node.attrs.abc = 123;
+                node.attrs.coolieignore = false;
+                return node;
+            })
+            .exec();
 
         console.log(ret);
     });

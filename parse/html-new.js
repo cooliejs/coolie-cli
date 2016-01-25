@@ -42,7 +42,7 @@ var buildTagReg = function (tagName, options) {
 
     // @link http://haacked.com/archive/2004/10/25/usingregularexpressionstomatchhtml.aspx/
     // /<\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)>/
-    var tagNameRegStr = tagName === '*' ? '[a-z][a-z\\d]*' : string.escapeRegExp(tagName);
+    var tagNameRegStr = tagName === '*' ? '[a-z][a-z\\d-]*' : string.escapeRegExp(tagName);
     var regString = '<' + tagNameRegStr +
         '((\\s+[\\w-]+(\\s*=\\s*(?:".*?"|\'.*?\'|[^\'">\\s]+))?)+\\s*|\\s*)>';
 
@@ -163,7 +163,12 @@ var matchHTML = function (html, conditions) {
 };
 
 
-var renderHTML = function (node, closed) {
+/**
+ * 渲染 html
+ * @param node
+ * @returns {string}
+ */
+var renderHTML = function (node) {
     var html = '<' + node.tag;
     var attrList = [];
 
@@ -175,7 +180,7 @@ var renderHTML = function (node, closed) {
         } else if (val === false) {
             return;
         } else {
-            attr += '="' + val + '"';
+            attr += '="' + String(val) + '"';
         }
 
         if (attr) {
@@ -189,8 +194,8 @@ var renderHTML = function (node, closed) {
 
     html += '>';
 
-    if (closed) {
-        html += '</' + node.tag + '>';
+    if (node.closed) {
+        html += node.content + '</' + node.tag + '>';
     }
 
     return html;
@@ -204,13 +209,51 @@ var transformHTML = function (matched, transform) {
     });
 
     // render
-    dato.each(matched.list, function (index, item) {
-        matched.html = matched.html.replace(matched.reg, '');
-    });
+    //dato.each(matched.list, function (index, item) {
+    //    matched.html = matched.html.replace(matched.reg, renderHTML(item));
+    //});
+
+    console.log(matched);
+
+    return matched.html;
 };
 
 
-module.exports = function (html, conditions, transform) {
-    return transformHTML(matchHTML(html, conditions), transform);
+var HTMLParser = klass.create({
+    constructor: function (html, options) {
+        var the = this;
+
+        the._html = html;
+        the._options = dato.extend({}, options);
+        the._matchList = [];
+    },
+
+
+    match: function (conditions, transform) {
+        var the = this;
+
+        if (typeis.Function(transform)) {
+            the._matchList.push([conditions, transform]);
+        }
+
+        return the;
+    },
+
+
+    exec: function () {
+        var the = this;
+
+        dato.each(the._matchList, function (index, match) {
+            the._html = transformHTML(matchHTML(the._html, match[0]), match[1]);
+        });
+
+        return the._html;
+    }
+});
+
+
+module.exports = function (html, options) {
+    return new HTMLParser(html, options);
 };
+
 
