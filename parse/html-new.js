@@ -20,6 +20,7 @@ dato.each(UNCLOSED_TAGS_LIST, function (index, tag) {
 });
 
 var REG_TAG_NAME = /^<[a-z][a-z\\d]*/i;
+var REG_TAG_ATTR = /\s*([\w-]+)(?:\s*=\s*(".*?"|'.*?'|[^'">\s]+))?/g;
 
 
 /**
@@ -53,13 +54,15 @@ var buildTagReg = function (tagName, closed) {
 
 
 var splitAttrs = function (html, conditions) {
-    var reg = /\s*([\w-]+)(?:\s*=\s*(".*?"|'.*?'|[^'">\s]+))?/;
     var buildTagRegRet = buildTagReg(conditions.tag, false);
     var tag = html.match(buildTagRegRet.reg)[0];
     var attrs = tag.replace(REG_TAG_NAME, '');
-    var ret = attrs.match(reg);
+    var ret = {};
+    var matched;
 
-    console.log(ret);
+    while ((matched = REG_TAG_ATTR.exec(attrs))){
+        console.log(matched);
+    }
 
     return ret;
 };
