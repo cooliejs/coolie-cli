@@ -145,7 +145,7 @@ var minifyHTML = function minifyHTML(file, options) {
             var key = _generateKey();
             var matchConditionsCommentsRet = matchConditionsComments(file, options, source);
 
-            if(!matchConditionsCommentsRet.start || !matchConditionsCommentsRet.end){
+            if (!matchConditionsCommentsRet.start || !matchConditionsCommentsRet.end) {
                 pack[key] = source;
                 return key;
             }
@@ -153,10 +153,10 @@ var minifyHTML = function minifyHTML(file, options) {
             var minifyConditionsCommentsRet = minifyConditionsComments(file, options, matchConditionsCommentsRet);
 
             pack[key] = minifyConditionsCommentsRet.code;
-            mainList= mainList.concat(minifyConditionsCommentsRet.mainList);
-            jsList= jsList.concat(minifyConditionsCommentsRet.jsList);
-            cssList= cssList.concat(minifyConditionsCommentsRet.cssList);
-            resList= resList.concat(minifyConditionsCommentsRet.resList);
+            mainList = mainList.concat(minifyConditionsCommentsRet.mainList);
+            jsList = jsList.concat(minifyConditionsCommentsRet.jsList);
+            cssList = cssList.concat(minifyConditionsCommentsRet.cssList);
+            resList = resList.concat(minifyConditionsCommentsRet.resList);
 
             return key;
         };
