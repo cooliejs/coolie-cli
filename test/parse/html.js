@@ -43,15 +43,15 @@ describe('parse/html.js', function () {
                 node.attrs.class = 'favicon';
                 return node;
             })
-            //.match({
-            //    tag: ['body', 'p'],
-            //    attrs: {
-            //        class: /abc/
-            //    }
-            //}, function (node) {
-            //    node.attrs.time = Date.now();
-            //    return node;
-            //})
+            .match({
+                tag: ['body', 'p'],
+                attrs: {
+                    class: /abc/
+                }
+            }, function (node) {
+                node.attrs.time = Date.now();
+                return node;
+            })
             .exec();
 
         console.log('----------------------------------------------');

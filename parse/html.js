@@ -13,10 +13,10 @@ var string = require('ydr-utils').string;
 var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 
-var UNCLOSED_TAGS_LIST = 'AREA BASE BASEFONT BR COL COMMAND EMBED FRAME HR IMG INPUT ISINDEX KEYGEN LINK META ' +
+var UNCLOSED_TAGS_LIST = ('AREA BASE BASEFONT BR COL COMMAND EMBED FRAME HR IMG INPUT ISINDEX KEYGEN LINK META ' +
     'PARAM SOURCE TRACK WEB ' +
         // svg elements
-    'PATH CIRCLE ELLIPSE LINE RECT USE STOP POLYLINE POLYGON'.split(' ');
+    'PATH CIRCLE ELLIPSE LINE RECT USE STOP POLYLINE POLYGON').split(' ');
 var UNCLOSED_TAGS_MAP = {};
 
 dato.each(UNCLOSED_TAGS_LIST, function (index, tag) {
@@ -107,6 +107,10 @@ var parseTag = function (html, conditions) {
             closed: true,
             global: false
         });
+        //debug.success('UNCLOSED_TAGS_MAP', UNCLOSED_TAGS_MAP);
+        //debug.success('conditions', conditions);
+        //debug.success('html', html);
+        //debug.success('reg', buildTagRegRet.reg);
         content = html.match(buildTagRegRet.reg)[5];
     }
 
