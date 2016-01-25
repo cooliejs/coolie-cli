@@ -164,8 +164,6 @@ var matchHTML = function (html, conditions) {
                         find = false;
                 }
 
-                find = item.attrs[key] === val;
-
                 if (!find) {
                     return false;
                 }
