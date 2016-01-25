@@ -72,7 +72,7 @@ var buildTagReg = function (tagName, options) {
 
 
 var parseTag = function (html, conditions) {
-    var buildTagRegRet = buildTagReg(conditions.tag, false);
+    var buildTagRegRet = buildTagReg(conditions.tag, {closed: false});
     var tag = html.match(buildTagRegRet.reg)[0];
     var tagName = tag.match(REG_TAG_NAME)[0].slice(1);
     var attrString = tag.replace(REG_TAG_NAME, '');
@@ -88,7 +88,7 @@ var parseTag = function (html, conditions) {
 
     // 闭合标签
     if (!UNCLOSED_TAGS_MAP[tagName.toUpperCase()]) {
-        buildTagRegRet = buildTagReg(conditions.tag, true);
+        buildTagRegRet = buildTagReg(conditions.tag, {closed: true});
         console.log(html.match(buildTagRegRet.reg));
     }
 
@@ -107,8 +107,8 @@ module.exports = function parseHTML(html, conditions) {
     var reg = buildTagRegRet.reg;
     var matches = html.match(reg);
 
-    if (!matches && buildTagRegRet.closed) {
-        buildTagRegRet = buildTagReg(conditions.tag, false);
+    if (!matches && buildTagRegRet.options.closed) {
+        buildTagRegRet = buildTagReg(conditions.tag, {closed: false});
         reg = buildTagRegRet.reg;
         matches = html.match(reg);
     }
