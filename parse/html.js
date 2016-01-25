@@ -198,7 +198,7 @@ var renderHTML = function (node) {
 
         if (val === true) {
             attr += '';
-        } else if (val === false) {
+        } else if (val === false || typeis.empty(val)) {
             return;
         } else {
             attr += '="' + String(val) + '"';
@@ -262,7 +262,7 @@ var HTMLParser = klass.create({
     match: function (conditions, transform) {
         var the = this;
 
-        if (! conditions || !conditions.tag) {
+        if (!conditions || !conditions.tag) {
             return the;
         }
 
