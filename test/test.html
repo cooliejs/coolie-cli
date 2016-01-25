@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<!--
+ - 文件描述
+ - @author ydr.me
+ - @create 2015-09-06 11:26
+ -->
+<html lang="zh-Hans">
+<head>
+    <script>
+        (function () {
+            var version = 10;
+            var b = document.createElement('b');
+            while (version > 5) {
+                b.innerHTML = '<!--[if IE ' + version + ']><i></i><![endif]-->';
+                if (b.getElementsByTagName('i').length) {
+                    break;
+                }
+                version--;
+            }
+            version = version > 5 ? version : 0;
+            document.documentElement.className += version ? 'ie ie' + version : 'noie';
+        }());
+    </script>
+</head>
+<body>
+
+</body>
+</html>
