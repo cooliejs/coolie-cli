@@ -144,20 +144,7 @@ var minifyHTML = function minifyHTML(file, options) {
         return function (source) {
             var key = _generateKey();
 
-            var matched = matchConditionsComments(file, options, source);
-
-            if (!matched.start || !matched.end) {
-                pack[key] = source;
-                return key;
-            }
-
-            var minifyConditionsCommentsRet = minifyConditionsComments(file, options, matched);
-
-            mainList = mainList.concat(minifyConditionsCommentsRet.mainList);
-            jsList = jsList.concat(minifyConditionsCommentsRet.jsList);
-            cssList = cssList.concat(minifyConditionsCommentsRet.cssList);
-            resList = resList.concat(minifyConditionsCommentsRet.resList);
-            pack[key] = minifyConditionsCommentsRet.code;
+            pack[key] = source;
 
             return key;
         };
@@ -359,6 +346,13 @@ var minifyHTML = function minifyHTML(file, options) {
 };
 
 
+/**
+ * 匹配条件注释
+ * @param file
+ * @param options
+ * @param source
+ * @returns {{start: string, end: string, source: *}}
+ */
 var matchConditionsComments = function (file, options, source) {
     var start = '';
     dato.each(REG_CONDITIONS_COMMENTS_STARTS, function (index, reg) {
