@@ -34,15 +34,15 @@ describe('parse/html.js', function () {
                 node.attrs.class = 'abc';
                 return node;
             })
-            //.match({
-            //    tag: 'link',
-            //    attrs: {
-            //        type: 'image/x-icon'
-            //    }
-            //}, function (node) {
-            //    node.attrs.class = 'favicon';
-            //    return node;
-            //})
+            .match({
+                tag: 'link',
+                attrs: {
+                    type: 'image/x-icon'
+                }
+            }, function (node) {
+                node.attrs.class = 'favicon';
+                return node;
+            })
             //.match({
             //    tag: ['body', 'p'],
             //    attrs: {

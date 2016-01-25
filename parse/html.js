@@ -113,6 +113,7 @@ var parseTag = function (html, conditions) {
     return {
         tag: tagName,
         attrs: attrs,
+        source: html,
         content: content,
         closed: buildTagRegRet.options.closed
     };
