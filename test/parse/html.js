@@ -29,10 +29,14 @@ describe('parse/html.js', function () {
 
         var ret = parseHTML(code)
             .match({
-                tag: '*'
+                tag: 'body'
             }, function (node) {
                 node.attrs.abc = 123;
                 node.attrs.coolieignore = false;
+                return node;
+            })
+            .match('html', function (node) {
+                node.attrs.lang += '-xxx';
                 return node;
             })
             .exec();

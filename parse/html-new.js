@@ -41,18 +41,17 @@ var buildTagReg = function (tagName, options) {
         ignoreCase: true
     }, options);
 
-    //if (tagName === '*') {
-    //    debug.error('parse html error', 'dose\'t support `*` of tag property');
-    //    return process.exit();
-    //}
+    if (tagName === '*') {
+        debug.error('parse html error', 'dose\'t support `*` of tag property');
+        return process.exit();
+    }
 
     // @link http://haacked.com/archive/2004/10/25/usingregularexpressionstomatchhtml.aspx/
     // /<\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)>/
-    var tagNameRegStr = tagName === '*' ? '[a-z][a-z\\d-]*' : string.escapeRegExp(tagName);
-    var regString = '<(' + tagNameRegStr + ')' +
+    var regString = '<(' + string.escapeRegExp(tagName) + ')' +
         '((\\s+[\\w-]+(\\s*=\\s*(?:".*?"|\'.*?\'|[^\'">\\s]+))?)+\\s*|\\s*)>';
 
-    if (!typeis.Boolean(options.closed)) {
+    if (!typeis.Boolean(options.closed) && tagName !== '*') {
         options.closed = !UNCLOSED_TAGS_MAP[tagName.toUpperCase()];
     }
 
@@ -99,7 +98,7 @@ var parseTag = function (html, conditions) {
     }
 
     // 闭合标签
-    if (!UNCLOSED_TAGS_MAP[tagName.toUpperCase()]) {
+    if (!buildTagRegRet.options.closed) {
         buildTagRegRet = buildTagReg(conditions.tag, {
             closed: true,
             global: false
@@ -226,8 +225,6 @@ var transformHTML = function (matched, transform) {
         matched.list[index] = transform(item);
     });
 
-    console.log(matched.list);
-
     // render
     dato.each(matched.list, function (index, item) {
         matched.html = matched.html.replace(matched.reg, renderHTML(item));
@@ -246,9 +243,20 @@ var HTMLParser = klass.create({
         the._matchList = [];
     },
 
-
+    /**
+     * 匹配 html
+     * @param conditions
+     * @param transform
+     * @returns {HTMLParser}
+     */
     match: function (conditions, transform) {
         var the = this;
+
+        if (typeis.String(conditions)) {
+            conditions = {
+                tag: conditions
+            };
+        }
 
         if (typeis.Function(transform)) {
             the._matchList.push([conditions, transform]);
@@ -258,6 +266,10 @@ var HTMLParser = klass.create({
     },
 
 
+    /**
+     * 执行匹配替换
+     * @returns {*}
+     */
     exec: function () {
         var the = this;
 
