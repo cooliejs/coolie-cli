@@ -48,14 +48,16 @@ var buildTagReg = function (tagName, options) {
     // @link http://haacked.com/archive/2004/10/25/usingregularexpressionstomatchhtml.aspx/
     // /<\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)>/
     var regString = '<(' + string.escapeRegExp(tagName) + ')' +
-        '((\\s+[\\w-]+(\\s*=\\s*(?:".*?"|\'.*?\'|[^\'">\\s]+))?)+\\s*|\\s*)>';
+        '((\\s+[\\w-]+(\\s*=\\s*(?:".*?"|\'.*?\'|[^\'">\\s]+))?)+\\s*|\\s*)';
 
     if (!typeis.Boolean(options.closed) && tagName !== '*') {
         options.closed = !UNCLOSED_TAGS_MAP[tagName.toUpperCase()];
     }
 
     if (options.closed) {
-        regString += '([\\s\\S]*?)</\\1>';
+        regString += '>([\\s\\S]*?)</\\1>';
+    } else {
+        regString += '\\/\\s*>';
     }
 
     var regexpParams = '';
@@ -89,8 +91,10 @@ var parseTag = function (html, conditions) {
     var attrs = {};
     var content = null;
     var matched;
+    var source = '';
 
     while ((matched = REG_TAG_ATTR.exec(attrString))) {
+        source = '<' + tagName + matched.input;
         var val = matched[2];
         val = val === undefined ? true : val.slice(1, -1);
         attrs[matched[1]] = val;
@@ -108,6 +112,7 @@ var parseTag = function (html, conditions) {
     return {
         tag: tagName,
         attrs: attrs,
+        source: source,
         content: content,
         closed: buildTagRegRet.options.closed
     };
@@ -237,7 +242,7 @@ var transformHTML = function (matched, transform) {
 
     // render
     dato.each(matched.list, function (index, item) {
-        matched.html = matched.html.replace(matched.reg, renderHTML(item));
+        matched.html = matched.html.replace(item.source, renderHTML(item));
     });
 
     return matched.html;
