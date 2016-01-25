@@ -70,7 +70,8 @@ var parseTag = function (html, conditions) {
     return {
         tag: tagName,
         tagName: tagName,
-        attrs: attrs
+        attrs: attrs,
+        content: ''
     };
 };
 
