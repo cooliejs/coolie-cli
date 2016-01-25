@@ -32,7 +32,7 @@ var REG_TAG_ATTR = /\s*([\w-]+)(?:\s*=\s*(".*?"|'.*?'|[^'">\s]+))?/g;
 var buildTagReg = function (tagName, closed) {
     // @link http://haacked.com/archive/2004/10/25/usingregularexpressionstomatchhtml.aspx/
     // /<\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)>/
-    var tagNameRegStr = tagName === '*' ? '[a-z][a-z\\d]*': string.escapeRegExp(tagName);
+    var tagNameRegStr = tagName === '*' ? '[a-z][a-z\\d]*' : string.escapeRegExp(tagName);
     var regString = '<' + tagNameRegStr +
         '((\\s+[\\w-]+(\\s*=\\s*(?:".*?"|\'.*?\'|[^\'">\\s]+))?)+\\s*|\\s*)>';
 
@@ -53,18 +53,25 @@ var buildTagReg = function (tagName, closed) {
 };
 
 
-var splitAttrs = function (html, conditions) {
+var parseTag = function (html, conditions) {
     var buildTagRegRet = buildTagReg(conditions.tag, false);
     var tag = html.match(buildTagRegRet.reg)[0];
-    var attrs = tag.replace(REG_TAG_NAME, '');
-    var ret = {};
+    var tagName = tag.match(REG_TAG_NAME)[0].slice(1);
+    var attrString = tag.replace(REG_TAG_NAME, '');
+    var attrs = {};
     var matched;
 
-    while ((matched = REG_TAG_ATTR.exec(attrs))){
-        console.log(matched);
+    while ((matched = REG_TAG_ATTR.exec(attrString))) {
+        var val = matched[2];
+        val = val === undefined ? true : val.slice(1, -1);
+        attrs[matched[1]] = val;
     }
 
-    return ret;
+    return {
+        tag: tagName,
+        tagName: tagName,
+        attrs: attrs
+    };
 };
 
 
@@ -85,7 +92,7 @@ module.exports = function parseHTML(html, conditions) {
     }
 
     return matches.map(function (matched) {
-        return splitAttrs(matched, conditions);
+        return parseTag(matched, conditions);
     });
 };
 
