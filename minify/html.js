@@ -412,10 +412,6 @@ function minifyConditionsComments(file, options, matched) {
     var end = matched.end;
     var options2 = dato.extend({}, options);
 
-    console.log('start', start);
-    console.log('real', source);
-    console.log('end', end);
-
     options2.code = source;
     options2.signHTML = false;
     //code: code,
