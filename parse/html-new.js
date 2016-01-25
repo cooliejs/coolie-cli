@@ -265,7 +265,7 @@ var HTMLParser = klass.create({
     match: function (conditions, transform) {
         var the = this;
 
-        if (!conditions.tag) {
+        if (! conditions || !conditions.tag) {
             return the;
         }
 
@@ -277,12 +277,6 @@ var HTMLParser = klass.create({
                 the.match(childConditions, transform);
             });
             return the;
-        }
-
-        if (typeis.String(conditions)) {
-            conditions = {
-                tag: conditions
-            };
         }
 
         if (typeis.Function(transform)) {
