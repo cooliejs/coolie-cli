@@ -7,7 +7,7 @@ module.exports = function (coolie) {
         clean: true,
         "js": {
             "main": [
-                "./static/js/app/**/*.js"
+
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
@@ -20,7 +20,7 @@ module.exports = function (coolie) {
         },
         "html": {
             "src": [
-                "./html/**/*.html"
+                "./html/123.html"
             ],
             "minify": true
         },
@@ -42,5 +42,7 @@ module.exports = function (coolie) {
         }
     });
 
+    coolie.use(require('/Users/cloudcome/development/github/coolie-html-tag-template/index.js')());
     coolie.use(require('/Users/cloudcome/development/github/coolie-html-embed-php/index.js')());
+    coolie.use(require('/Users/cloudcome/development/github/coolie-html-attr-resource/index.js')());
 };
