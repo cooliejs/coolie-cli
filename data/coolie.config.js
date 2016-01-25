@@ -22,7 +22,7 @@ module.exports = function (coolie) {
         // 目标配置
         dest: {
             // 目标目录，相对于当前文件
-            dirname: '../dest/',
+            dirname: '../webroot-pro/',
             // 目标根域
             host: '',
             // 版本号长度
