@@ -10,6 +10,7 @@
 var fs = require('fs-extra');
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
+var debug = require('ydr-utils').debug;
 
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
@@ -88,56 +89,55 @@ module.exports = function (file, options) {
     dato.each(replaceList, function (index, item) {
         var attr = item.attr;
 
-        dato.each(item.tags, function (index, tag) {
-            parser.match({
-                tag: tag
-            }, function (node) {
-                if (!node.attrs || !node.attrs[attr]) {
-                    return node;
-                }
-
-                if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
-                    node.attrs[COOLIE_IGNORE] = null;
-                    return node;
-                }
-
-                var isResourceTag = true;
-
-                switch (node.tag) {
-                    case 'link':
-                        var linkRel = node.attrs.rel;
-                        isResourceTag = false;
-                        dato.each(linkRelList, function (index, regRel) {
-                            isResourceTag = regRel.test(linkRel);
-                            return !isResourceTag;
-                        });
-                        break;
-                }
-
-                if (!isResourceTag) {
-                    return node;
-                }
-
-                var ret = buildResPath(node.attrs[attr], {
-                    file: file,
-                    versionLength: options.versionLength,
-                    srcDirname: options.srcDirname,
-                    destDirname: options.destDirname,
-                    destResourceDirname: options.destResourceDirname,
-                    destHost: options.destHost
-                });
-
-                if (!ret) {
-                    return node;
-                }
-
-                if (!resMap[ret.srcFile]) {
-                    resList.push(ret.srcFile);
-                }
-
-                node.attrs[attr] = ret.url;
+        debug.warn('item', item);
+        parser.match({
+            tag: item.tags
+        }, function (node) {
+            if (!node.attrs[attr]) {
                 return node;
+            }
+
+            if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
+                node.attrs[COOLIE_IGNORE] = null;
+                return node;
+            }
+
+            var isResourceTag = true;
+
+            switch (node.tag) {
+                case 'link':
+                    var linkRel = node.attrs.rel;
+                    isResourceTag = false;
+                    dato.each(linkRelList, function (index, regRel) {
+                        isResourceTag = regRel.test(linkRel);
+                        return !isResourceTag;
+                    });
+                    break;
+            }
+
+            if (!isResourceTag) {
+                return node;
+            }
+
+            var ret = buildResPath(node.attrs[attr], {
+                file: file,
+                versionLength: options.versionLength,
+                srcDirname: options.srcDirname,
+                destDirname: options.destDirname,
+                destResourceDirname: options.destResourceDirname,
+                destHost: options.destHost
             });
+
+            if (!ret) {
+                return node;
+            }
+
+            if (!resMap[ret.srcFile]) {
+                resList.push(ret.srcFile);
+            }
+
+            node.attrs[attr] = ret.url;
+            return node;
         });
     });
 
