@@ -18,13 +18,19 @@ var bufferMap = {};
 /**
  * 读取文件内容
  * @param file {String} 文件
- * @param [encoding] {String} 编码，默认为二进制
+ * @param encoding {String} 编码
+ * @param embedFile {String} 所在文件
  * @returns {*}
  */
-module.exports = function (file, encoding) {
+module.exports = function (file, encoding, embedFile) {
     if (!typeis.file(file)) {
         debug.error('read file', path.toSystem(file));
         debug.error('read file', 'no such file');
+
+        if (embedFile) {
+            debug.error('embed file', path.toSystem(embedFile));
+        }
+
         process.exit(1);
     }
 
@@ -40,6 +46,11 @@ module.exports = function (file, encoding) {
         } catch (err) {
             debug.error('read file', path.toSystem(file));
             debug.error('read file', err.message);
+
+            if (embedFile) {
+                debug.error('embed file', path.toSystem(embedFile));
+            }
+
             process.exit(1);
         }
     }
