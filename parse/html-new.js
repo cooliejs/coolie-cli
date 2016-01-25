@@ -97,9 +97,9 @@ var parseTag = function (html, conditions) {
 
     return {
         tag: tagName,
-        tagName: tagName,
         attrs: attrs,
-        content: content
+        content: content,
+        closed: buildTagRegRet.options.closed
     };
 };
 
@@ -108,9 +108,9 @@ var parseTag = function (html, conditions) {
  * 解析 html
  * @param html
  * @param conditions {Object} 查询条件
- * @returns {Array}
+ * @returns {*}
  */
-module.exports = function (html, conditions) {
+var matchHTML = function (html, conditions) {
     conditions.tag = conditions.tag || conditions.tagName;
     var buildTagRegRet = buildTagReg(conditions.tag, conditions.closed);
     var reg = buildTagRegRet.reg;
@@ -123,13 +123,18 @@ module.exports = function (html, conditions) {
     }
 
     if (!matches) {
-        return [];
+        return {
+            html: html,
+            list: [],
+            reg: reg
+        };
     }
 
     var find = matches.map(function (matched) {
         return parseTag(matched, conditions);
     });
-    var matched = [];
+
+    matches = [];
 
     if (conditions.attrs) {
         dato.each(find, function (index, item) {
@@ -143,11 +148,69 @@ module.exports = function (html, conditions) {
             });
 
             if (find) {
-                matched.push(item);
+                matches.push(item);
             }
         });
+    } else {
+        matches = find;
     }
 
-    return matched;
+    return {
+        html: html,
+        list: matches,
+        reg: reg
+    };
+};
+
+
+var renderHTML = function (node, closed) {
+    var html = '<' + node.tag;
+    var attrList = [];
+
+    dato.each(node.attrs || {}, function (key, val) {
+        var attr = key;
+
+        if (val === true) {
+            attr += '';
+        } else if (val === false) {
+            return;
+        } else {
+            attr += '="' + val + '"';
+        }
+
+        if (attr) {
+            attrList.push(attr);
+        }
+    });
+
+    if (attrList.length) {
+        html += ' ' + attrList.join(' ');
+    }
+
+    html += '>';
+
+    if (closed) {
+        html += '</' + node.tag + '>';
+    }
+
+    return html;
+};
+
+
+var transformHTML = function (matched, transform) {
+    // transform
+    dato.each(matched.list, function (index, item) {
+        matched.list[index] = transform(item);
+    });
+
+    // render
+    dato.each(matched.list, function (index, item) {
+        matched.html = matched.html.replace(matched.reg, '');
+    });
+};
+
+
+module.exports = function (html, conditions, transform) {
+    return transformHTML(matchHTML(html, conditions), transform);
 };
 
