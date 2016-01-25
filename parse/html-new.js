@@ -12,6 +12,7 @@ var dato = require('ydr-utils').dato;
 var allocation = require('ydr-utils').allocation;
 var string = require('ydr-utils').string;
 var typeis = require('ydr-utils').typeis;
+var debug = require('ydr-utils').debug;
 
 var UNCLOSED_TAGS_LIST = 'IMG LINK META BR AREA COL COMMAND EMBED HR INPUT KEYGEN PARAM SOURCE TRACK WBR'.split(' ');
 var UNCLOSED_TAGS_MAP = {};
@@ -40,10 +41,15 @@ var buildTagReg = function (tagName, options) {
         ignoreCase: true
     }, options);
 
+    //if (tagName === '*') {
+    //    debug.error('parse html error', 'dose\'t support `*` of tag property');
+    //    return process.exit();
+    //}
+
     // @link http://haacked.com/archive/2004/10/25/usingregularexpressionstomatchhtml.aspx/
     // /<\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)>/
     var tagNameRegStr = tagName === '*' ? '[a-z][a-z\\d-]*' : string.escapeRegExp(tagName);
-    var regString = '<' + tagNameRegStr +
+    var regString = '<(' + tagNameRegStr + ')' +
         '((\\s+[\\w-]+(\\s*=\\s*(?:".*?"|\'.*?\'|[^\'">\\s]+))?)+\\s*|\\s*)>';
 
     if (!typeis.Boolean(options.closed)) {
@@ -51,7 +57,7 @@ var buildTagReg = function (tagName, options) {
     }
 
     if (options.closed) {
-        regString += '([\\s\\S]*?)</' + tagNameRegStr + '>';
+        regString += '([\\s\\S]*?)</\\1>';
     }
 
     var regexpParams = '';
@@ -71,6 +77,12 @@ var buildTagReg = function (tagName, options) {
 };
 
 
+/**
+ * 解析标签
+ * @param html
+ * @param conditions
+ * @returns {{tag: String, attrs: {}, content: String, closed: Boolean}}
+ */
 var parseTag = function (html, conditions) {
     var buildTagRegRet = buildTagReg(conditions.tag, {closed: false});
     var tag = html.match(buildTagRegRet.reg)[0];
@@ -92,7 +104,7 @@ var parseTag = function (html, conditions) {
             closed: true,
             global: false
         });
-        content = html.match(buildTagRegRet.reg)[4];
+        content = html.match(buildTagRegRet.reg)[5];
     }
 
     return {
@@ -202,18 +214,24 @@ var renderHTML = function (node) {
 };
 
 
+/**
+ * 转换 HTML
+ * @param matched
+ * @param transform
+ * @returns {XML|void|string|*}
+ */
 var transformHTML = function (matched, transform) {
     // transform
     dato.each(matched.list, function (index, item) {
         matched.list[index] = transform(item);
     });
 
-    // render
-    //dato.each(matched.list, function (index, item) {
-    //    matched.html = matched.html.replace(matched.reg, renderHTML(item));
-    //});
+    console.log(matched.list);
 
-    console.log(matched);
+    // render
+    dato.each(matched.list, function (index, item) {
+        matched.html = matched.html.replace(matched.reg, renderHTML(item));
+    });
 
     return matched.html;
 };
@@ -252,6 +270,12 @@ var HTMLParser = klass.create({
 });
 
 
+/**
+ * 解析 html 并进行相应转换，请勿在 html 里保留注释
+ * @param html
+ * @param options
+ * @returns {Domain|Suite}
+ */
 module.exports = function (html, options) {
     return new HTMLParser(html, options);
 };

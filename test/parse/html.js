@@ -29,7 +29,7 @@ describe('parse/html.js', function () {
 
         var ret = parseHTML(code)
             .match({
-                tag: 'body'
+                tag: '*'
             }, function (node) {
                 node.attrs.abc = 123;
                 node.attrs.coolieignore = false;
@@ -37,6 +37,7 @@ describe('parse/html.js', function () {
             })
             .exec();
 
+        console.log('----------------------------------------------');
         console.log(ret);
     });
 });
