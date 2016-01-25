@@ -24,22 +24,32 @@ describe('parse/html.js', function () {
             //    tag: 'body'
             //}, function (node) {
             //    node.attrs.abc = 123;
+            //    node.attrs.class = 'abc';
             //    node.attrs.coolieignore = false;
             //    return node;
             //})
-            //.match('html', function (node) {
-            //    node.attrs.lang += '-xxx';
-            //    return node;
-            //})
-            .match({
-                tag: 'link',
-                attrs: {
-                    type: 'image/x-icon'
-                }
-            }, function (node) {
-                node.attrs.class = 'favicon';
+            .match('p', function (node) {
+                node.attrs.class = 'abc';
                 return node;
             })
+            //.match({
+            //    tag: 'link',
+            //    attrs: {
+            //        type: 'image/x-icon'
+            //    }
+            //}, function (node) {
+            //    node.attrs.class = 'favicon';
+            //    return node;
+            //})
+            //.match({
+            //    tag: ['body', 'p'],
+            //    //attrs: {
+            //    //    class: /abc/
+            //    //}
+            //}, function (node) {
+            //    node.attrs.time = Date.now();
+            //    return node;
+            //})
             .exec();
 
         console.log('----------------------------------------------');

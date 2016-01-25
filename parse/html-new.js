@@ -265,6 +265,20 @@ var HTMLParser = klass.create({
     match: function (conditions, transform) {
         var the = this;
 
+        if (!conditions.tag) {
+            return the;
+        }
+
+        if (typeis.Array(conditions.tag)) {
+            dato.each(conditions.tag, function (index, tag) {
+                var childConditions = dato.extend({}, conditions, {
+                    tag: tag
+                });
+                the.match(childConditions, transform);
+            });
+            return the;
+        }
+
         if (typeis.String(conditions)) {
             conditions = {
                 tag: conditions
