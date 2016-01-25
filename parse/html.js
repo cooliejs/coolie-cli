@@ -277,6 +277,7 @@ var HTMLParser = klass.create({
         }
 
         if (typeis.Function(transform)) {
+            console.log(conditions);
             the._matchList.push([conditions, transform]);
         }
 

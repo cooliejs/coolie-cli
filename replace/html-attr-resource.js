@@ -41,10 +41,7 @@ var regList = [{
 }];
 var replaceList = [{
     tags: ['link'],
-    attr: 'href',
-    conditions: {
-        attrs: {}
-    }
+    attr: 'href'
 }, {
     tags: ['embed', 'audio', 'video', 'source', 'img'],
     attr: 'src'
@@ -89,7 +86,6 @@ module.exports = function (file, options) {
     dato.each(replaceList, function (index, item) {
         var attr = item.attr;
 
-        debug.warn('item', item);
         parser.match({
             tag: item.tags
         }, function (node) {
