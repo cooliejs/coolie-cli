@@ -20,7 +20,7 @@ var code = fs.readFileSync(file, 'utf8');
 describe('parse/html.js', function () {
     it('1', function () {
         var ret = parseHTML(code, {
-            tag: 'meta'
+            tag: 'body'
         });
 
         console.log(ret);

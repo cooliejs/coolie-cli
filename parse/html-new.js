@@ -19,6 +19,8 @@ dato.each(UNCLOSED_TAGS_LIST, function (index, tag) {
     UNCLOSED_TAGS_MAP[tag] = true;
 });
 
+var REG_TAG_NAME = /^<[a-z][a-z\\d]*/i;
+
 
 /**
  * 生成正则表达式
@@ -29,7 +31,7 @@ dato.each(UNCLOSED_TAGS_LIST, function (index, tag) {
 var buildTagReg = function (tagName, closed) {
     // @link http://haacked.com/archive/2004/10/25/usingregularexpressionstomatchhtml.aspx/
     // /<\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)>/
-    var tagNameRegStr = tagName === '*' ? '[a-z][a-z\d]*?' : string.escapeRegExp(tagName);
+    var tagNameRegStr = tagName === '*' ? '[a-z][a-z\\d]*': string.escapeRegExp(tagName);
     var regString = '<' + tagNameRegStr +
         '((\\s+[\\w-]+(\\s*=\\s*(?:".*?"|\'.*?\'|[^\'">\\s]+))?)+\\s*|\\s*)>';
 
@@ -51,11 +53,15 @@ var buildTagReg = function (tagName, closed) {
 
 
 var splitAttrs = function (html, conditions) {
-    var reg = /\s+[\w-]+(\s*=\\s*(?:".*?"|'.*?'|[^'">\\s]+))?/;
+    var reg = /\s*([\w-]+)(?:\s*=\s*(".*?"|'.*?'|[^'">\s]+))?/;
     var buildTagRegRet = buildTagReg(conditions.tag, false);
-    var tag = html.match(buildTagRegRet)[0];
+    var tag = html.match(buildTagRegRet.reg)[0];
+    var attrs = tag.replace(REG_TAG_NAME, '');
+    var ret = attrs.match(reg);
 
-    return tag.split(reg);
+    console.log(ret);
+
+    return ret;
 };
 
 
