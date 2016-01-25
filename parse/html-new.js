@@ -88,8 +88,11 @@ var parseTag = function (html, conditions) {
 
     // 闭合标签
     if (!UNCLOSED_TAGS_MAP[tagName.toUpperCase()]) {
-        buildTagRegRet = buildTagReg(conditions.tag, {closed: true});
-        console.log(html.match(buildTagRegRet.reg));
+        buildTagRegRet = buildTagReg(conditions.tag, {
+            closed: true,
+            global: false
+        });
+        content = html.match(buildTagRegRet.reg)[4];
     }
 
     return {
