@@ -33,6 +33,7 @@ module.exports = function (coolie) {
         js: {
             // 入口模块，相对于当前文件
             main: [
+                // 支持 glob 语法
                 './static/js/app/**/*.js'
             ],
             // coolie-config.js 路径，相对于当前文件
@@ -47,6 +48,7 @@ module.exports = function (coolie) {
         html: {
             // html 文件，相对于当前文件
             src: [
+                // 支持 glob 语法
                 './views/**/*.html'
             ],
             // 是否压缩
@@ -73,6 +75,7 @@ module.exports = function (coolie) {
 
         // 原样复制文件，相对于当前文件
         copy: [
+            // 支持 glob 语法
             './favicon.ico',
             './robots.txt'
         ]
