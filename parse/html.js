@@ -17,14 +17,16 @@ var UNCLOSED_TAGS_LIST = ('AREA BASE BASEFONT BR COL COMMAND EMBED FRAME HR IMG 
 'PARAM SOURCE TRACK WEB ' +
     // svg elements
 'PATH CIRCLE ELLIPSE LINE RECT USE STOP POLYLINE POLYGON').split(' ');
-var UNCLOSED_TAGS_MAP = {};
+var UNCLOSED_TAGS_MAP = {
+    '*': false
+};
 
 dato.each(UNCLOSED_TAGS_LIST, function (index, tag) {
     UNCLOSED_TAGS_MAP[tag] = true;
 });
 
 var REG_TAG_NAME = /^<[a-z][a-z\\d]*/i;
-var REG_TAG_ATTR = /\s*([\w-]+)(?:\s*=\s*(".*?"|'.*?'|[^'">\s]+))?/g;
+var REG_TAG_ATTR = /\s*([\w-]+)(?:\s*=\s*("[\s\S]*?"|'[\s\S]*?'|[^'">\s]+))?/g;
 
 
 /**
@@ -313,7 +315,7 @@ var HTMLParser = klass.create({
 
 
 /**
- * 解析 html 并进行相应转换，请勿在 html 里保留注释
+ * 解析 html 并进行相应转换，请勿在 html 里保留注释，请保证没有断行影响正则匹配
  * @param html
  * @param options
  * @returns {Domain|Suite}

@@ -50,7 +50,9 @@ module.exports = function (file, options) {
     code = parseHTML(code).match({
         tag: '*'
     }, function (node) {
-        if (!node.attrs || !node.attrs.style) {
+        debug.success('node', node);
+
+        if (!node.attrs.style) {
             return node;
         }
 
