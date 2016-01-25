@@ -143,8 +143,20 @@ var minifyHTML = function minifyHTML(file, options) {
     var replace = function (pack) {
         return function (source) {
             var key = _generateKey();
+            var matchConditionsCommentsRet = matchConditionsComments(file, options, source);
 
-            pack[key] = source;
+            if(!matchConditionsCommentsRet.start || !matchConditionsCommentsRet.end){
+                pack[key] = source;
+                return key;
+            }
+
+            var minifyConditionsCommentsRet = minifyConditionsComments(file, options, matchConditionsCommentsRet);
+
+            pack[key] = minifyConditionsCommentsRet.code;
+            mainList= mainList.concat(minifyConditionsCommentsRet.mainList);
+            jsList= jsList.concat(minifyConditionsCommentsRet.jsList);
+            cssList= cssList.concat(minifyConditionsCommentsRet.cssList);
+            resList= resList.concat(minifyConditionsCommentsRet.resList);
 
             return key;
         };
