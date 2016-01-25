@@ -13,7 +13,10 @@ var string = require('ydr-utils').string;
 var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 
-var UNCLOSED_TAGS_LIST = 'IMG LINK META BR AREA COL COMMAND EMBED HR INPUT KEYGEN PARAM SOURCE TRACK WBR'.split(' ');
+var UNCLOSED_TAGS_LIST = 'AREA BASE BASEFONT BR COL COMMAND EMBED FRAME HR IMG INPUT ISINDEX KEYGEN LINK META ' +
+    'PARAM SOURCE TRACK WEB ' +
+        // svg elements
+    'PATH CIRCLE ELLIPSE LINE RECT USE STOP POLYLINE POLYGON'.split(' ');
 var UNCLOSED_TAGS_MAP = {};
 
 dato.each(UNCLOSED_TAGS_LIST, function (index, tag) {
@@ -57,7 +60,7 @@ var buildTagReg = function (tagName, options) {
     if (options.closed) {
         regString += '>([\\s\\S]*?)</\\1>';
     } else {
-        regString += '\\/\\s*>';
+        regString += '(\\/\\s*)?>';
     }
 
     var regexpParams = '';
@@ -91,10 +94,8 @@ var parseTag = function (html, conditions) {
     var attrs = {};
     var content = null;
     var matched;
-    var source = '';
 
     while ((matched = REG_TAG_ATTR.exec(attrString))) {
-        source = '<' + tagName + matched.input;
         var val = matched[2];
         val = val === undefined ? true : val.slice(1, -1);
         attrs[matched[1]] = val;
@@ -112,7 +113,6 @@ var parseTag = function (html, conditions) {
     return {
         tag: tagName,
         attrs: attrs,
-        source: source,
         content: content,
         closed: buildTagRegRet.options.closed
     };
