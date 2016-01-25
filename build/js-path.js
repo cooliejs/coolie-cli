@@ -52,7 +52,7 @@ module.exports = function (src, options) {
     var destPath = minifyPathMap[srcPath];
 
     if (!destURI) {
-        var srcCode = reader(srcPath, 'utf8');
+        var srcCode = reader(srcPath, 'utf8', options.file);
         var destCode = srcCode;
 
         if (options.minifyJS) {

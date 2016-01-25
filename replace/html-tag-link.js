@@ -7,30 +7,15 @@
 
 'use strict';
 
-var fse = require('fs-extra');
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
-var debug = require('ydr-utils').debug;
-var typeis = require('ydr-utils').typeis;
-var encryption = require('ydr-utils').encryption;
 
-var pathURI = require('../utils/path-uri.js');
 var copy = require('../utils/copy.js');
-var sign = require('../utils/sign.js');
-var reader = require('../utils/reader.js');
-var minifyCSS = require('../minify/css.js');
 var parseHTML = require('../parse/html.js');
 var buildCSSPath = require('../build/css-path.js');
 
 
 var COOLIE_IGNORE = 'coolieignore';
-var CSS_RELS = {
-    'stylesheet': true
-};
-var REG_LINK = /<link\b[\s\S]*?>/ig;
-var minifyPathmap = {};
-var minifyCSSmap = {};
-var resourceMap = {};
 var defaults = {
     code: '',
     srcDirname: null,

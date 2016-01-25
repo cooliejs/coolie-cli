@@ -11,7 +11,6 @@ var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 
 var copy = require('../utils/copy.js');
-var reader = require('../utils/reader.js');
 var parseHTML = require('../parse/html.js');
 var buildJSPath = require('../build/js-path.js');
 

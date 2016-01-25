@@ -40,6 +40,17 @@ var defaults = {
  * 构建 css 路径
  * @param href
  * @param options
+ * @param options.file
+ * @param options.srcDirname
+ * @param options.destDirname
+ * @param options.destHost
+ * @param options.destResourceDirname
+ * @param options.destCSSDirname
+ * @param options.minifyCSS
+ * @param options.minifyResource
+ * @param options.versionLength
+ * @param options.signCSS
+ * @param options.cleanCSSOptions
  * @returns {*}
  */
 module.exports = function (href, options) {
@@ -56,7 +67,7 @@ module.exports = function (href, options) {
     var resList = resourceMap[srcPath];
 
     if (!destURI) {
-        var srcCode = reader(srcPath, 'utf8');
+        var srcCode = reader(srcPath, 'utf8', options.file);
         var destCode = srcCode;
 
         if (options.minifyCSS) {

@@ -7,20 +7,14 @@
 
 'use strict';
 
-var fse = require('fs-extra');
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
 var typeis = require('ydr-utils').typeis;
-var encryption = require('ydr-utils').encryption;
 
 var pathURI = require('../utils/path-uri.js');
 var copy = require('../utils/copy.js');
-var sign = require('../utils/sign.js');
-var reader = require('../utils/reader.js');
-var minifyJS = require('../minify/js.js');
 var parseHTML = require('../parse/html.js');
-var buildJSPath = require('../build/js-path.js');
 
 var JS_TYPES = {
     'javascript': true,

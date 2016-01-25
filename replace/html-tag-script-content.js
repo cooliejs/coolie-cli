@@ -10,7 +10,6 @@
 var dato = require('ydr-utils').dato;
 
 var copy = require('../utils/copy.js');
-var reader = require('../utils/reader.js');
 var sign = require('../utils/sign.js');
 var minifyJS = require('../minify/js.js');
 var parseHTML = require('../parse/html.js');

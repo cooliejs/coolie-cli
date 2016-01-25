@@ -16,7 +16,6 @@ var encryption = require('ydr-utils').encryption;
 var parseCMDRequire = require('../parse/cmd-require.js');
 var reader = require('../utils/reader.js');
 var globalId = require('../utils/global-id.js');
-var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
 var replaceAMDRequire = require('../replace/amd-require.js');
 var replaceAMDDefine = require('../replace/amd-define.js');
