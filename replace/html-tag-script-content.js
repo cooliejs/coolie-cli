@@ -53,8 +53,6 @@ module.exports = function (file, options) {
     code = parseHTML(code).match({
         tag: 'script'
     }, function (node) {
-        node.attrs = node.attrs || {};
-
         if (node.attrs.hasOwnProperty('src')) {
             return node;
         }

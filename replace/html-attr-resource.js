@@ -9,12 +9,8 @@
 
 var fs = require('fs-extra');
 var path = require('ydr-utils').path;
-var string = require('ydr-utils').string;
 var dato = require('ydr-utils').dato;
-var debug = require('ydr-utils').debug;
 
-var htmlAttr = require('../utils/html-attr.js');
-var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
 var buildResPath = require('../build/res-path.js');

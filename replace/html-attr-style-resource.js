@@ -9,14 +9,11 @@
 
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
-var path = require('ydr-utils').path;
 
-var htmlAttr = require('../utils/html-attr.js');
 var parseHTML = require('../parse/html.js');
 var replaceCSSResource = require('./css-resource.js');
 
 var COOLIE_IGNORE = 'coolieignore';
-var REG_TAG = /<([a-z][a-z\d]*?)\b[\s\S]*?>/gi;
 var REG_LINES = /[\n\r]/g;
 var REG_SPACES = /\s+/g;
 var defaults = {

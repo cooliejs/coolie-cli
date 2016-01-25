@@ -14,7 +14,6 @@ var debug = require('ydr-utils').debug;
 var typeis = require('ydr-utils').typeis;
 var encryption = require('ydr-utils').encryption;
 
-var htmlAttr = require('../utils/html-attr.js');
 var pathURI = require('../utils/path-uri.js');
 var copy = require('../utils/copy.js');
 var sign = require('../utils/sign.js');
