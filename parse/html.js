@@ -245,6 +245,10 @@ var transformHTML = function (matched, transform) {
 
     // render
     dato.each(matched.list, function (index, item) {
+        if (!item) {
+            return;
+        }
+
         matched.html = matched.html.replace(item.source, renderHTML(item));
     });
 
