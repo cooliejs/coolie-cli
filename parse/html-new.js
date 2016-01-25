@@ -31,7 +31,7 @@ var REG_TAG_ATTR = /\s*([\w-]+)(?:\s*=\s*(".*?"|'.*?'|[^'">\s]+))?/g;
  * @param options.closed
  * @param options.global
  * @param options.ignoreCase
- * @returns {{reg: RegExp, closed: Boolean}}
+ * @returns {{reg: RegExp, options: Object}}
  */
 var buildTagReg = function (tagName, options) {
     options = dato.extend({
@@ -46,17 +46,27 @@ var buildTagReg = function (tagName, options) {
     var regString = '<' + tagNameRegStr +
         '((\\s+[\\w-]+(\\s*=\\s*(?:".*?"|\'.*?\'|[^\'">\\s]+))?)+\\s*|\\s*)>';
 
-    if (ty) {
-        closed = !UNCLOSED_TAGS_MAP[tagName.toUpperCase()];
+    if (!typeis.Boolean(options.closed)) {
+        options.closed = !UNCLOSED_TAGS_MAP[tagName.toUpperCase()];
     }
 
-    if (closed) {
+    if (options.closed) {
         regString += '([\\s\\S]*?)</' + tagNameRegStr + '>';
     }
 
+    var regexpParams = '';
+
+    if (options.global) {
+        regexpParams += 'g';
+    }
+
+    if (options.ignoreCase) {
+        regexpParams += 'i';
+    }
+
     return {
-        reg: new RegExp(regString, 'ig'),
-        closed: closed
+        reg: new RegExp(regString, regexpParams),
+        options: options
     };
 };
 
