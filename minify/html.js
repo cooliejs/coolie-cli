@@ -130,7 +130,7 @@ var defaults = {
  * @param [options.signCSS] {Boolean} 是否签名 css 文件
  * @returns {Object}
  */
-var minifyHTML = function minifyHTML(file, options) {
+var minifyHTML = function (file, options) {
     options = dato.extend({}, defaults, options);
     var coolieMap = {};
     var preMap = {};
@@ -168,12 +168,14 @@ var minifyHTML = function minifyHTML(file, options) {
     // 保留条件注释
     code = code.replace(REG_CONDITIONS_COMMENTS, replace(commentsMap));
 
+    // 移除行内注释
     if (options.removeHTMLLineComments) {
         code = code.replace(REG_LINE_COMMENTS, '');
     } else {
         code = code.replace(REG_LINE_COMMENTS, replace(commentsMap));
     }
 
+    // 移除 YUI 注释
     if (options.removeHTMLYUIComments) {
         code = code.replace(REG_YUI_COMMENTS, '');
     } else {
@@ -183,15 +185,17 @@ var minifyHTML = function minifyHTML(file, options) {
     // 保留 pre tagName
     code = code.replace(REG_PRE_TAGNAME, replace(preMap));
 
+    // 合并长空白
     if (options.joinHTMLSpaces) {
         code = code.replace(REG_SPACES, ' ');
     }
 
+    // 移除多换行
     if (options.removeHTMLBreakLines) {
         code = code.replace(REG_LINES, '');
     }
 
-    // 恢复 条件注释 和 pre tagName
+    // 恢复 pre tagName
     dato.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
