@@ -104,7 +104,13 @@ var parseTag = function (html, conditions) {
 };
 
 
-module.exports = function parseHTML(html, conditions) {
+/**
+ * 解析 html
+ * @param html
+ * @param conditions {Object} 查询条件
+ * @returns {Array}
+ */
+module.exports = function (html, conditions) {
     conditions.tag = conditions.tag || conditions.tagName;
     var buildTagRegRet = buildTagReg(conditions.tag, conditions.closed);
     var reg = buildTagRegRet.reg;
@@ -120,8 +126,28 @@ module.exports = function parseHTML(html, conditions) {
         return [];
     }
 
-    return matches.map(function (matched) {
+    var find = matches.map(function (matched) {
         return parseTag(matched, conditions);
     });
+    var matched = [];
+
+    if (conditions.attrs) {
+        dato.each(find, function (index, item) {
+            var find = true;
+            dato.each(conditions.attrs, function (key, val) {
+                find = item.attrs[key] === val;
+
+                if (!find) {
+                    return false;
+                }
+            });
+
+            if (find) {
+                matched.push(item);
+            }
+        });
+    }
+
+    return matched;
 };
 
