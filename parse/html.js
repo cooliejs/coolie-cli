@@ -75,8 +75,6 @@ var buildTagReg = function (tagName, options) {
         regexpParams += 'i';
     }
 
-    debug.success('reg', new RegExp(regString, regexpParams));
-
     return {
         reg: new RegExp(regString, regexpParams),
         options: options
@@ -111,10 +109,6 @@ var parseTag = function (html, conditions) {
             closed: true,
             global: false
         });
-        //debug.success('UNCLOSED_TAGS_MAP', UNCLOSED_TAGS_MAP);
-        //debug.success('conditions', conditions);
-        //debug.success('html', html);
-        //debug.success('reg', buildTagRegRet.reg);
         content = html.match(buildTagRegRet.reg)[5];
     }
 
