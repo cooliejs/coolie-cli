@@ -50,6 +50,15 @@ var buildTagReg = function (tagName, closed) {
 };
 
 
+var splitAttrs = function (html, conditions) {
+    var reg = /\s+[\w-]+(\s*=\\s*(?:".*?"|'.*?'|[^'">\\s]+))?/;
+    var buildTagRegRet = buildTagReg(conditions.tag, false);
+    var tag = html.match(buildTagRegRet)[0];
+
+    return tag.split(reg);
+};
+
+
 module.exports = function parseHTML(html, conditions) {
     conditions.tag = conditions.tag || conditions.tagName;
     var buildTagRegRet = buildTagReg(conditions.tag, conditions.closed);
@@ -66,6 +75,8 @@ module.exports = function parseHTML(html, conditions) {
         return [];
     }
 
-    return matches;
+    return matches.map(function (matched) {
+        return splitAttrs(matched, conditions);
+    });
 };
 
