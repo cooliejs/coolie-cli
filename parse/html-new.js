@@ -11,6 +11,7 @@ var klass = require('ydr-utils').class;
 var dato = require('ydr-utils').dato;
 var allocation = require('ydr-utils').allocation;
 var string = require('ydr-utils').string;
+var typeis = require('ydr-utils').typeis;
 
 var UNCLOSED_TAGS_LIST = 'IMG LINK META BR AREA COL COMMAND EMBED HR INPUT KEYGEN PARAM SOURCE TRACK WBR'.split(' ');
 var UNCLOSED_TAGS_MAP = {};
@@ -26,24 +27,31 @@ var REG_TAG_ATTR = /\s*([\w-]+)(?:\s*=\s*(".*?"|'.*?'|[^'">\s]+))?/g;
 /**
  * 生成正则表达式
  * @param tagName
- * @param closed
+ * @param options
+ * @param options.closed
+ * @param options.global
+ * @param options.ignoreCase
  * @returns {{reg: RegExp, closed: Boolean}}
  */
-var buildTagReg = function (tagName, closed) {
+var buildTagReg = function (tagName, options) {
+    options = dato.extend({
+        closed: undefined,
+        global: true,
+        ignoreCase: true
+    }, options);
+
     // @link http://haacked.com/archive/2004/10/25/usingregularexpressionstomatchhtml.aspx/
     // /<\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)>/
     var tagNameRegStr = tagName === '*' ? '[a-z][a-z\\d]*' : string.escapeRegExp(tagName);
     var regString = '<' + tagNameRegStr +
         '((\\s+[\\w-]+(\\s*=\\s*(?:".*?"|\'.*?\'|[^\'">\\s]+))?)+\\s*|\\s*)>';
 
-    var args = allocation.args(arguments);
-
-    if (args.length === 1) {
+    if (ty) {
         closed = !UNCLOSED_TAGS_MAP[tagName.toUpperCase()];
     }
 
     if (closed) {
-        regString += '[\\s\\S]*?</' + tagNameRegStr + '>';
+        regString += '([\\s\\S]*?)</' + tagNameRegStr + '>';
     }
 
     return {
@@ -59,6 +67,7 @@ var parseTag = function (html, conditions) {
     var tagName = tag.match(REG_TAG_NAME)[0].slice(1);
     var attrString = tag.replace(REG_TAG_NAME, '');
     var attrs = {};
+    var content = null;
     var matched;
 
     while ((matched = REG_TAG_ATTR.exec(attrString))) {
@@ -67,11 +76,17 @@ var parseTag = function (html, conditions) {
         attrs[matched[1]] = val;
     }
 
+    // 闭合标签
+    if (!UNCLOSED_TAGS_MAP[tagName.toUpperCase()]) {
+        buildTagRegRet = buildTagReg(conditions.tag, true);
+        console.log(html.match(buildTagRegRet.reg));
+    }
+
     return {
         tag: tagName,
         tagName: tagName,
         attrs: attrs,
-        content: ''
+        content: content
     };
 };
 
