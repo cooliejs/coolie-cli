@@ -6,7 +6,9 @@ module.exports = function (coolie) {
     coolie.config({
         clean: true,
         "js": {
-            "main": [],
+            "main": [
+                "./static/js/app/**/*.js"
+            ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
             "chunk": [
@@ -18,7 +20,7 @@ module.exports = function (coolie) {
         },
         "html": {
             "src": [
-                "./html/123.html"
+                "./html/**/*.html"
             ],
             "minify": true
         },
