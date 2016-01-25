@@ -9,7 +9,6 @@
 
 var klass = require('ydr-utils').class;
 var dato = require('ydr-utils').dato;
-var allocation = require('ydr-utils').allocation;
 var string = require('ydr-utils').string;
 var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
