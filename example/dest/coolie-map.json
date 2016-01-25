@@ -1,0 +1,377 @@
+{
+  "/html/123.html": {
+    "main": [],
+    "async": [],
+    "js": [],
+    "css": [],
+    "res": [
+      "../src/favicon.ico"
+    ]
+  },
+  "/html/async.html": {
+    "main": [
+      {
+        "src": "../src/static/js/app/async.js",
+        "dest": "/static/js/app/cbfe839e.js",
+        "deps": [
+          "../src/static/js/libs1/all.js",
+          "../src/static/js/libs2/some.css",
+          "../src/static/js/libs2/some.html",
+          "../src/static/js/libs2/some.jpg",
+          "../src/static/js/libs2/some.json",
+          "../src/static/js/libs2/some.txt",
+          "../src/static/img/girl.jpg",
+          "../src/static/css/1.css",
+          "../src/static/img/100x100.png"
+        ]
+      }
+    ],
+    "async": [
+      {
+        "src": "../src/static/js/pages/page1.js",
+        "dest": "/static/js/async/1.ed7e8b81.js",
+        "deps": [
+          "../src/static/js/libs2/some.txt"
+        ]
+      },
+      {
+        "src": "../src/static/js/pages/page2.js",
+        "dest": "/static/js/async/2.e9c1e785.js",
+        "deps": []
+      },
+      {
+        "src": "../src/static/js/pages/404.js",
+        "dest": "/static/js/async/3.d312c07a.js",
+        "deps": [
+          "../src/static/js/libs1/path1/path2/index.js"
+        ]
+      }
+    ],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
+    "css": [
+      {
+        "dest": "/static/css/f2955b02.css",
+        "deps": [
+          {
+            "src": "../src/static/css/path1/path2/3.css",
+            "res": [
+              "../src/static/img/100x100.png"
+            ]
+          },
+          {
+            "src": "../src/static/css/bootstrap.css",
+            "res": [
+              "../src/static/fonts/glyphicons-halflings-regular.eot",
+              "../src/static/fonts/glyphicons-halflings-regular.woff2",
+              "../src/static/fonts/glyphicons-halflings-regular.woff",
+              "../src/static/fonts/glyphicons-halflings-regular.ttf",
+              "../src/static/fonts/glyphicons-halflings-regular.svg"
+            ]
+          }
+        ]
+      }
+    ],
+    "res": [
+      "../src/favicon.ico"
+    ]
+  },
+  "/html/attr.html": {
+    "main": [],
+    "async": [],
+    "js": [],
+    "css": [],
+    "res": [
+      "../src/static/img/girl.jpg"
+    ]
+  },
+  "/html/css.html": {
+    "main": [],
+    "async": [],
+    "js": [],
+    "css": [
+      {
+        "dest": "/static/css/915d7e0b.css",
+        "deps": [
+          {
+            "src": "../src/static/css/1.css",
+            "res": [
+              "../src/static/img/100x100.png"
+            ]
+          }
+        ]
+      }
+    ],
+    "res": []
+  },
+  "/html/index.html": {
+    "main": [
+      {
+        "src": "../src/static/js/app/index.js",
+        "dest": "/static/js/app/1f67e90b.js",
+        "deps": [
+          "../src/static/img/100x100.png",
+          "../src/static/js/libs2/some.css",
+          "../src/static/js/libs2/some.jpg",
+          "../src/static/img/girl.jpg"
+        ]
+      }
+    ],
+    "async": [],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
+    "css": [
+      {
+        "dest": "/static/css/fd1dd123.css",
+        "deps": [
+          {
+            "src": "../src/static/css/3.css",
+            "res": []
+          }
+        ]
+      }
+    ],
+    "res": [
+      "../src/favicon.ico",
+      "../src/apple-touch-icon-72.png",
+      "../src/apple-touch-icon-144.png",
+      "../src/static/img/100x100.png",
+      "../src/static/img/loading.gif"
+    ]
+  },
+  "/html/index1.html": {
+    "main": [],
+    "async": [],
+    "js": [],
+    "css": [],
+    "res": []
+  },
+  "/html/index2.html": {
+    "main": [
+      {
+        "src": "../src/static/js/app/index.js",
+        "dest": "/static/js/app/1f67e90b.js",
+        "deps": [
+          "../src/static/js/libs2/some.css",
+          "../src/static/js/libs2/some.jpg",
+          "../src/static/img/girl.jpg"
+        ]
+      }
+    ],
+    "async": [],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
+    "css": [],
+    "res": [
+      "../src/favicon.ico",
+      "../src/static/img/100x100.png",
+      "../src/static/img/loading.gif"
+    ]
+  },
+  "/html/index3.html": {
+    "main": [],
+    "async": [],
+    "js": [
+      {
+        "dest": "/static/js/58a9223e.js",
+        "deps": [
+          "../src/static/js/index3-1.js",
+          "../src/static/js/index3-2.js",
+          "../src/static/js/index3-3.js",
+          "../src/static/js/index3-4.js",
+          "../src/static/js/index3-5.js",
+          "../src/static/js/index3-6.js",
+          "../src/static/js/index3-7.js"
+        ]
+      },
+      {
+        "dest": "/static/js/adc74bbb.js",
+        "deps": [
+          "../src/static/js/index3-1.js",
+          "../src/static/js/index3-2.js"
+        ]
+      }
+    ],
+    "css": [
+      {
+        "dest": "/static/css/9cb04e03.css",
+        "deps": [
+          {
+            "src": "../src/static/css/1.css",
+            "res": [
+              "../src/static/img/100x100.png"
+            ]
+          },
+          {
+            "src": "../src/static/css/2.css",
+            "res": []
+          },
+          {
+            "src": "../src/static/css/3.css",
+            "res": []
+          }
+        ]
+      },
+      {
+        "dest": "/static/css/dde007fe.css",
+        "deps": [
+          {
+            "src": "../src/static/css/1.css",
+            "res": [
+              "../src/static/img/100x100.png"
+            ]
+          },
+          {
+            "src": "../src/static/css/3.css",
+            "res": []
+          }
+        ]
+      }
+    ],
+    "res": [
+      "../src/static/img/logo_03.png"
+    ]
+  },
+  "/html/index4.html": {
+    "main": [],
+    "async": [],
+    "js": [],
+    "css": [],
+    "res": []
+  },
+  "/html/js.html": {
+    "main": [],
+    "async": [],
+    "js": [
+      {
+        "dest": "/static/js/9b9a7c15.js",
+        "deps": [
+          "../src/static/js/script.js"
+        ]
+      }
+    ],
+    "css": [],
+    "res": []
+  },
+  "/html/replace.html": {
+    "main": [
+      {
+        "src": "../src/static/js/app/index.js",
+        "dest": "/static/js/app/1f67e90b.js",
+        "deps": [
+          "../src/static/js/libs2/some.jpg",
+          "../src/static/img/girl.jpg"
+        ]
+      }
+    ],
+    "async": [],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
+    "css": [],
+    "res": [
+      "../src/favicon.ico",
+      "../src/static/img/girl.jpg"
+    ]
+  },
+  "/html/res.html": {
+    "main": [
+      {
+        "src": "../src/static/js/app/res.js",
+        "dest": "/static/js/app/4a973f33.js",
+        "deps": [
+          "../src/static/js/libs1/html.html",
+          "../src/static/img/girl.jpg",
+          "../src/static/css/1.css",
+          "../src/static/img/100x100.png"
+        ]
+      }
+    ],
+    "async": [],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
+    "css": [],
+    "res": []
+  },
+  "/html/style.html": {
+    "main": [],
+    "async": [],
+    "js": [],
+    "css": [],
+    "res": [
+      "../src/static/img/girl.jpg"
+    ]
+  },
+  "/html/user/index.html": {
+    "main": [
+      {
+        "src": "../src/static/js/app/user/index.js",
+        "dest": "/static/js/app/058c828d.js",
+        "deps": [
+          "../src/static/js/libs1/path1/path2/index.js",
+          "../src/static/js/libs1/all.js"
+        ]
+      }
+    ],
+    "async": [],
+    "js": [
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
+    "css": [
+      {
+        "dest": "/static/css/3ac7893e.css",
+        "deps": [
+          {
+            "src": "../src/static/css/1.css",
+            "res": [
+              "../src/static/img/100x100.png"
+            ]
+          },
+          {
+            "src": "../src/static/css/2.css",
+            "res": []
+          }
+        ]
+      }
+    ],
+    "res": [
+      "../src/favicon.ico",
+      "../src/static/img/100x100.png",
+      "../src/static/img/loading.gif"
+    ]
+  }
+}
