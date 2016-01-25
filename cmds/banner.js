@@ -24,5 +24,6 @@ module.exports = function () {
     table = log.magenta(table);
     table = log.bold(table);
 
+    console.log();
     console.log(table);
 };
