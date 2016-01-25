@@ -154,7 +154,7 @@ var minifyHTML = function minifyHTML(file, options) {
     code = code.replace(REG_COOLIE_COMMENTS, replace(coolieMap));
 
     // 保留条件注释
-    code = code.replace(REG_CONDITIONS_COMMENTS, replace(preMap));
+    code = code.replace(REG_CONDITIONS_COMMENTS, replace(commentsMap));
 
     if (options.removeHTMLLineComments) {
         code = code.replace(REG_LINE_COMMENTS, '');
