@@ -98,7 +98,7 @@ var parseTag = function (html, conditions) {
     }
 
     // 闭合标签
-    if (!buildTagRegRet.options.closed) {
+    if (!UNCLOSED_TAGS_MAP[conditions.tag.toUpperCase()]) {
         buildTagRegRet = buildTagReg(conditions.tag, {
             closed: true,
             global: false
@@ -151,6 +151,19 @@ var matchHTML = function (html, conditions) {
         dato.each(find, function (index, item) {
             var find = true;
             dato.each(conditions.attrs, function (key, val) {
+                switch (typeis(val)) {
+                    case 'string':
+                        find = item.attrs[key] === val;
+                        break;
+
+                    case 'regexp':
+                        find = val.test(item.attrs[key]);
+                        break;
+
+                    default:
+                        find = false;
+                }
+
                 find = item.attrs[key] === val;
 
                 if (!find) {
