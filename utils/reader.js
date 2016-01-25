@@ -25,7 +25,7 @@ module.exports = function (file, encoding) {
     if (!typeis.file(file)) {
         debug.error('read file', path.toSystem(file));
         debug.error('read file', 'no such file');
-        throw new Error('no such file `' + path.toSystem(file) + '`');
+        process.exit(1);
     }
 
     encoding = encoding || 'binary';
@@ -40,7 +40,7 @@ module.exports = function (file, encoding) {
         } catch (err) {
             debug.error('read file', path.toSystem(file));
             debug.error('read file', err.message);
-            throw err;
+            process.exit(1);
         }
     }
 
