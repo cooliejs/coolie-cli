@@ -14,9 +14,9 @@ var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 
 var UNCLOSED_TAGS_LIST = ('AREA BASE BASEFONT BR COL COMMAND EMBED FRAME HR IMG INPUT ISINDEX KEYGEN LINK META ' +
-    'PARAM SOURCE TRACK WEB ' +
-        // svg elements
-    'PATH CIRCLE ELLIPSE LINE RECT USE STOP POLYLINE POLYGON').split(' ');
+'PARAM SOURCE TRACK WEB ' +
+    // svg elements
+'PATH CIRCLE ELLIPSE LINE RECT USE STOP POLYLINE POLYGON').split(' ');
 var UNCLOSED_TAGS_MAP = {};
 
 dato.each(UNCLOSED_TAGS_LIST, function (index, tag) {
@@ -44,16 +44,16 @@ var buildTagReg = function (tagName, options) {
     }, options);
 
     if (tagName === '*') {
-        debug.error('parse html error', 'dose\'t support `*` of tag property');
-        return process.exit();
+        options.closed = false;
     }
 
     // @link http://haacked.com/archive/2004/10/25/usingregularexpressionstomatchhtml.aspx/
     // /<\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)>/
-    var regString = '<(' + string.escapeRegExp(tagName) + ')' +
-        '((\\s+[\\w-]+(\\s*=\\s*(?:".*?"|\'.*?\'|[^\'">\\s]+))?)+\\s*|\\s*)';
+    var tagNameRegStr = tagName === '*' ? '[a-z][a-z\d-]*' : string.escapeRegExp(tagName);
+    var regString = '<(' + tagNameRegStr + ')' +
+        '((\\s+[\\w-]+(\\s*=\\s*(?:"[\\s\\S]*?"|\'[\\s\\S]*?\'|[^\'">\\s]+))?)+\\s*|\\s*)';
 
-    if (!typeis.Boolean(options.closed) && tagName !== '*') {
+    if (!typeis.Boolean(options.closed)) {
         options.closed = !UNCLOSED_TAGS_MAP[tagName.toUpperCase()];
     }
 
@@ -72,6 +72,8 @@ var buildTagReg = function (tagName, options) {
     if (options.ignoreCase) {
         regexpParams += 'i';
     }
+
+    debug.success('reg', new RegExp(regString, regexpParams));
 
     return {
         reg: new RegExp(regString, regexpParams),

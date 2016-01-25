@@ -47,7 +47,9 @@ module.exports = function (file, options) {
     var code = options.code;
     var resList = [];
 
-    code = parseHTML(code).match(function (node) {
+    code = parseHTML(code).match({
+        tag: '*'
+    }, function (node) {
         if (!node.attrs || !node.attrs.style) {
             return node;
         }
