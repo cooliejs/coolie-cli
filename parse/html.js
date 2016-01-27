@@ -214,7 +214,7 @@ var renderHTML = function (node) {
     var html = '<' + node.tag;
     var attrList = [];
 
-    dato.each(node.attrs || {}, function (key, val) {
+    dato.each(node.attrs, function (key, val) {
         var attr = key;
 
         if (val === true) {
