@@ -13,7 +13,7 @@ __The front-end development builder.__
 __前端开发构建工具。__配合[coolie.js](https://github.com/cooliejs/coolie.js)（模块加载器）完成前端工程化构建。
 
 
-- coolie 官方指南 <http://coolie.ydr.me/>
+- coolie 官方指南 <https://coolie.ydr.me/>
 - 社区 <http://FrontEndDev.org/>
 
 
