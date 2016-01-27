@@ -13,6 +13,8 @@ var string = require('ydr-utils').string;
 var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 
+var stringify = require('../utils/stringify.js');
+
 var UNCLOSED_TAGS_LIST = ('AREA BASE BASEFONT BR COL COMMAND EMBED FRAME HR IMG INPUT ISINDEX KEYGEN LINK META ' +
 'PARAM SOURCE TRACK WEB ' +
     // svg elements
@@ -27,7 +29,7 @@ dato.each(UNCLOSED_TAGS_LIST, function (index, tag) {
 
 var REG_TAG_NAME = /^<[a-z][a-z\\d]*/i;
 var REG_TAG_ATTR = /\s*([\w-]+)(?:\s*=\s*("[\s\S]*?"|'[\s\S]*?'|[^'">\s]+))?/g;
-
+var REG_DOUBLE_QUOTE_S = /\\"/g;
 
 /**
  * 生成正则表达式
@@ -209,12 +211,15 @@ var renderHTML = function (node) {
         } else if (val === false || typeis.empty(val)) {
             return;
         } else {
-            var o = {};
-            o.p = String(val);
+            val = stringify(val);
+            var isDouble = REG_DOUBLE_QUOTE_S.test(val);
 
+            if (isDouble) {
+                val = val.replace(REG_DOUBLE_QUOTE_S, '"');
+                val = "'" + val.slice(1, -1) + "'";
+            }
 
-
-            attr += '="' + String(val) + '"';
+            attr += '=' + val + '';
         }
 
         if (attr) {
