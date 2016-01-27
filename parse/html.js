@@ -209,6 +209,11 @@ var renderHTML = function (node) {
         } else if (val === false || typeis.empty(val)) {
             return;
         } else {
+            var o = {};
+            o.p = String(val);
+
+
+
             attr += '="' + String(val) + '"';
         }
 
