@@ -17,7 +17,9 @@ var debug = require('ydr-utils').debug;
 
 var copy = require('../utils/copy.js');
 var guessDirname = require('../utils/guess-dirname.js');
+var pkg = require('../package.json');
 
+var DEBUG = Boolean(pkg.dist || pkg.publish_time);
 var coolieConfigJSFile;
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /}$/;
@@ -164,6 +166,7 @@ module.exports = function (options) {
      * coolie debug
      */
     coolie.debug = debug;
+    coolie.DEBUG = DEBUG;
 
     // 检查文件
     check.file = function () {
