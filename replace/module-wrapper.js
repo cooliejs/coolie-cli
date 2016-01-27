@@ -24,9 +24,8 @@ var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
 var reader = require('../utils/reader.js');
 var globalId = require('../utils/global-id.js');
+var stringify = require('../utils/stringify.js');
 
-var REG_HUA_START = /^.*?:/;
-var REG_HUA_END = /}$/;
 
 /**
  * 生成模块 url
@@ -127,15 +126,11 @@ var wrapDefine = function (file, ret, options) {
     }
 
     var text = ret.code;
-    var o = {};
     var isJSON2JS = options.inType === 'json' && options.outType === 'js';
     var isCSS2Style = options.inType === 'css' && options.outType === 'style';
 
     if (!isJSON2JS) {
-        o.o = ret.code;
-        text = JSON.stringify(o)
-            .replace(REG_HUA_START, '')
-            .replace(REG_HUA_END, '');
+        text = stringify(ret.code);
     }
 
     ret.code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){';
