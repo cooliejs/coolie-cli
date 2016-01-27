@@ -96,13 +96,23 @@ var parseTag = function (html, conditions) {
     var tagName = tag.match(REG_TAG_NAME)[0].slice(1);
     var attrString = tag.replace(REG_TAG_NAME, '');
     var attrs = {};
+    var quotes = {};
     var content = null;
     var matched;
 
     while ((matched = REG_TAG_ATTR.exec(attrString))) {
         var val = matched[2];
-        val = val === undefined ? true : val.slice(1, -1);
+        var quote = null;
+
+        if (typeis.empty(val)) {
+            val = true;
+        } else {
+            quote = val.slice(0, 1);
+            val = val.slice(1, -1);
+        }
+
         attrs[matched[1]] = val;
+        quotes[matched[1]] = quote;
     }
 
     // 闭合标签
@@ -117,6 +127,7 @@ var parseTag = function (html, conditions) {
     return {
         tag: tagName,
         attrs: attrs,
+        quotes: quotes,
         source: html,
         content: content,
         closed: buildTagRegRet.options.closed
@@ -212,9 +223,17 @@ var renderHTML = function (node) {
             return;
         } else {
             val = stringify(val);
-            var isDouble = REG_DOUBLE_QUOTE_S.test(val);
 
-            if (isDouble) {
+            var quote = node.quotes[key];
+            var isDoubleInVal;
+
+            if (quote) {
+                isDoubleInVal = quote === "'";
+            } else {
+                isDoubleInVal = REG_DOUBLE_QUOTE_S.test(val);
+            }
+
+            if (isDoubleInVal) {
                 val = val.replace(REG_DOUBLE_QUOTE_S, '"');
                 val = "'" + val.slice(1, -1) + "'";
             }
