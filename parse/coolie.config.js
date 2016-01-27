@@ -19,7 +19,7 @@ var copy = require('../utils/copy.js');
 var guessDirname = require('../utils/guess-dirname.js');
 var pkg = require('../package.json');
 
-var DEBUG = Boolean(pkg.dist || pkg.publish_time);
+var DEBUG = !Boolean(pkg.dist || pkg.publish_time);
 var coolieConfigJSFile;
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /}$/;
