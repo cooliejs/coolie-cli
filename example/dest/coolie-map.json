@@ -1,0 +1,11 @@
+{
+  "/html/123.html": {
+    "main": [],
+    "async": [],
+    "js": [],
+    "css": [],
+    "res": [
+      "../src/favicon.ico"
+    ]
+  }
+}
