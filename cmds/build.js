@@ -92,7 +92,7 @@ module.exports = function (options) {
 
     // 1. 分析配置文件
     console.log();
-    debug.primary(++stepIndex + '/' + stepLength, 'parse coolie config');
+    debug.primary(++stepIndex + '/' + stepLength, 'parse coolie-cli profile');
     /**
      * 配置
      * @type {{js: Object, dest: Object, resource: Object, html: Object}}
@@ -123,7 +123,7 @@ module.exports = function (options) {
 
     // 3. 构建入口文件
     console.log();
-    debug.primary(++stepIndex + '/' + stepLength, 'build main module');
+    debug.primary(++stepIndex + '/' + stepLength, 'build main modules');
     var buildAPPResult = buildAPP({
         glob: configs.js.main,
         chunk: configs.js.chunk,
@@ -148,7 +148,7 @@ module.exports = function (options) {
 
     // 3. 重写 coolie-config.js
     console.log();
-    debug.primary(++stepIndex + '/' + stepLength, 'override coolie-config.js');
+    debug.primary(++stepIndex + '/' + stepLength, 'generate coolie.js profile');
     var destCoolieConfigJSPath = replaceCoolieConfig(configs.srcCoolieConfigJSPath, {
         versionLength: configs.versionLength,
         destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
@@ -165,7 +165,7 @@ module.exports = function (options) {
 
     // 4. 构建 html
     console.log();
-    debug.primary(++stepIndex + '/' + stepLength, 'build html');
+    debug.primary(++stepIndex + '/' + stepLength, 'build htmls');
     var buildHTMLResult = buildHTML({
         middleware: middleware,
         emitter: emitter,
@@ -197,7 +197,7 @@ module.exports = function (options) {
 
     // 5. 生成资源地图
     console.log();
-    debug.primary(++stepIndex + '/' + stepLength, 'generate a resource relationship map');
+    debug.primary(++stepIndex + '/' + stepLength, 'generate coolie map');
     buildMap({
         srcDirname: srcDirname,
         destDirname: destDirname,
