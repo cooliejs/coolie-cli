@@ -19,7 +19,7 @@ var replaceHTMLAttrResource = require('../replace/html-attr-resource.js');
 var replaceHTMLTagScriptAttr = require('../replace/html-tag-script-attr.js');
 var replaceHTMLTagScriptCoolie = require('../replace/html-tag-script-coolie.js');
 var replaceHTMLTagScriptContent = require('../replace/html-tag-script-content.js');
-// 替换 <script>
+// 替换 <link>
 var replaceHTMLTagLink = require('../replace/html-tag-link.js');
 // 替换 <style>
 var replaceHTMLTagStyleResource = require('../replace/html-tag-style-resource.js');
