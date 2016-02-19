@@ -59,7 +59,6 @@ var createURL = function (file, options) {
             copyPath: false,
             logType: 1
         });
-        debug.warn('destFile', destFile);
     } else {
         var extname = path.extname(file);
         var version = encryption.etag(file).slice(0, options.versionLength);

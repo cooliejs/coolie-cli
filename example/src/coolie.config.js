@@ -45,7 +45,8 @@ module.exports = function (coolie) {
     });
 
     if (process.env.NODE_ENV === 'local') {
-        console.log('local mode');
+        console.log('------------------------------------');
+        console.log('[coolie.config.js]', 'local mode');
         coolie.use(require('/Users/cloudcome/development/github/coolie-html-tag-template/index.js')());
         coolie.use(require('/Users/cloudcome/development/github/coolie-html-embed-php/index.js')());
         coolie.use(require('/Users/cloudcome/development/github/coolie-html-attr-resource/index.js')());
