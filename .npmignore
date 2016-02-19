@@ -10,4 +10,4 @@ CVS
 npm-debug.log
 test
 node_modules
-example
+/example

@@ -104,6 +104,8 @@ module.exports = function (file, options) {
 
     try {
         fse.copySync(file, toFile);
+        debug.success('from', file);
+        debug.success('to', toFile);
         copyFilesMap[file] = toFile;
         copiedLength++;
 
