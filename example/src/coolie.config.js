@@ -35,7 +35,7 @@ module.exports = function (coolie) {
             "minify": true
         },
         "copy": [
-            "static/fonts/tinymce.woff"
+            //"static/fonts/tinymce.woff"
         ],
         "dest": {
             "dirname": "../dest/",

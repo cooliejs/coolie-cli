@@ -59,6 +59,7 @@ var createURL = function (file, options) {
             copyPath: false,
             logType: 1
         });
+        debug.warn('destFile', destFile);
     } else {
         var extname = path.extname(file);
         var version = encryption.etag(file).slice(0, options.versionLength);
@@ -219,7 +220,7 @@ module.exports = function (file, options) {
     var extname = path.extname(file);
     var code = options.code ?
         options.code :
-        (options.inType === 'image' ? null : reader(file, 'utf8'));
+        (['image', 'file'].indexOf(options.inType) > -1 ? null : reader(file, 'utf8'));
     var options2 = dato.extend(options, {
         code: code
     });
