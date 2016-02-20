@@ -13,15 +13,16 @@ var request = require('ydr-utils').request;
 
 var configs = require('../../configs.js');
 
-var PM2_LOG = path.join(configs.root, './logs/pm2.log');
-
-
 module.exports = function (next) {
     log.config({
         whiteList: configs.logLevel
     });
 
     request.defaults.debug = configs.logLevel.indexOf('info') > -1;
+
+    log.manage({
+        dirname: path.join(configs.root, 'logs')
+    });
 
     next();
 };
