@@ -22,23 +22,37 @@ var TEMPLATE_MAP = {
     express: {
         root: path.join(template_root, 'express'),
         convert: {
-            'webserver/index.js': {
-                mongoose: 'webserver/index${mongoose}.js',
-                mongoose_redis: 'webserver/index${mongoose}.js',
-                none: 'webserver/index${none}.js'
-            },
             'package.json': {
                 mongoose: 'package${mongoose}.json',
                 redis: 'package${redis}.json',
                 mongoose_redis: 'package${mongoose_redis}.json',
                 none: 'package${none}.json'
             },
-            'webserver/index${mongoose}.js': false,
-            'webserver/index${none}.js': false,
+            'configs.js': {
+                mongoose_redis: 'configs${redis}.js',
+                redis: 'configs${redis}.js',
+                none: 'configs${none}.js'
+            },
+            'webserver/index.js': {
+                mongoose: 'webserver/index${mongoose}.js',
+                mongoose_redis: 'webserver/index${mongoose}.js',
+                none: 'webserver/index${none}.js'
+            },
+            'webserver/middlewares/parser.js': {
+                redis: 'webserver/middlewares/parser${redis}.js',
+                mongoose_redis: 'webserver/middlewares/parser${redis}.js',
+                none: 'webserver/middlewares/parser${none}.js'
+            },
             'package${mongoose_redis}.json': false,
             'package${mongoose}.json': false,
             'package${none}.json': false,
-            'package${redis}.json': false
+            'package${redis}.json': false,
+            'configs${redis}.js': false,
+            'configs${none}.js': false,
+            'webserver/index${mongoose}.js': false,
+            'webserver/index${none}.js': false,
+            'webserver/middlewares/parser${none}.js': false,
+            'webserver/middlewares/parser${redis}.js': false
         }
     },
     'static': {
