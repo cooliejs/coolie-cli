@@ -24,10 +24,21 @@ var TEMPLATE_MAP = {
         convert: {
             'webserver/index.js': {
                 mongoose: 'webserver/index${mongoose}.js',
+                mongoose_redis: 'webserver/index${mongoose}.js',
                 none: 'webserver/index${none}.js'
             },
+            'package.json': {
+                mongoose: 'package${mongoose}.json',
+                redis: 'package${redis}.json',
+                mongoose_redis: 'package${mongoose_redis}.json',
+                none: 'package${none}.json'
+            },
             'webserver/index${mongoose}.js': false,
-            'webserver/index${none}.js': false
+            'webserver/index${none}.js': false,
+            'package${mongoose_redis}.json': false,
+            'package${mongoose}.json': false,
+            'package${none}.json': false,
+            'package${redis}.json': false
         }
     },
     'static': {
@@ -135,9 +146,18 @@ var createTemplate = function (meta, options) {
  * @param type {String} 模板类型
  * @param options {Object} 配置
  * @param options.destDirname {String} 目标目录
+ * @param options.mongoose {Boolean} 是否添加 mongoose
+ * @param options.redis {Boolean} 是否添加 redis
+ * @param options.mongoose_redis {Boolean} 是否添加 mongoose 和 redis
  */
 var deepCreate = function (type, options) {
     var meta = TEMPLATE_MAP[type];
+
+    if (options.mongoose && options.redis) {
+        options.mongoose_redis = true;
+        options.mongoose = options.redis = false;
+    }
+
     createTemplate(meta, options);
 };
 
