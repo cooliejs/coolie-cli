@@ -35,8 +35,9 @@
   },
   "dependencies": {
     "body-parser": "^1.14.2",
+    "connect-redis": "^3.0.2",
     "cookie-parser": "^1.4.1",
-    "express": "^4.13.3",
+    "express": "^4.13.4",
     "express-session": "^1.13.0",
     "howdo": "^3.3.0",
     "later": "^1.2.0",

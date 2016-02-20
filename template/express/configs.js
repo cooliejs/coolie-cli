@@ -19,11 +19,14 @@ module.exports = {
     root: root,
     webroot: path.join(root, './webroot-' + webroot),
     logLevel: {
-        local: ['info', 'warn', 'success', 'error'],
-        dev: ['info', 'warn', 'success', 'error'],
-        test: ['warn', 'error'],
+        local: ['info', 'success', 'warn', 'error'],
+        dev: ['info', 'success', 'warn',  'error'],
+        test: ['info', 'success', 'warn', 'error'],
         pro: ['warn', 'error']
     }[env],
+    redis: {
+
+    },
     cookie: {
         secret: 'express-template',
         // 30d
