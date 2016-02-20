@@ -44,18 +44,18 @@ var TEMPLATE_MAP = {
                 mongoose_redis: 'webserver/middlewares/parser${redis}.js',
                 none: 'webserver/middlewares/parser${none}.js'
             },
-            'package${mongoose_redis}.json': false,
-            'package${mongoose}.json': false,
-            'package${none}.json': false,
-            'package${redis}.json': false,
-            'configs${mongoose_redis}.js': false,
-            'configs${mongoose}.js': false,
-            'configs${redis}.js': false,
-            'configs${none}.js': false,
-            'webserver/index${mongoose}.js': false,
-            'webserver/index${none}.js': false,
-            'webserver/middlewares/parser${none}.js': false,
-            'webserver/middlewares/parser${redis}.js': false
+            //'package${mongoose_redis}.json': false,
+            //'package${mongoose}.json': false,
+            //'package${none}.json': false,
+            //'package${redis}.json': false,
+            //'configs${mongoose_redis}.js': false,
+            //'configs${mongoose}.js': false,
+            //'configs${redis}.js': false,
+            //'configs${none}.js': false,
+            //'webserver/index${mongoose}.js': false,
+            //'webserver/index${none}.js': false,
+            //'webserver/middlewares/parser${none}.js': false,
+            //'webserver/middlewares/parser${redis}.js': false
         }
     },
     'static': {
@@ -101,7 +101,9 @@ var createTemplate = function (meta, options) {
         var relFile = '';
         var findConvert = false;
 
-        if (transiType === false) {
+        var isDynamic = REG_REPLACE.test(basename);
+
+        if (isDynamic) {
             relName = basename.replace(REG_REPLACE, '.');
             relFile = path.join(dir, relName);
         }
