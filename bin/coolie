@@ -34,7 +34,9 @@ command.type({
     'coolie-cli': Boolean,
     express: Boolean,
     'static': Boolean,
-    help: Boolean
+    help: Boolean,
+    mongoose: Boolean,
+    redis: Boolean
 });
 
 command.if('help', function () {

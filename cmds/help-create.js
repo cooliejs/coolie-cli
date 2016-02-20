@@ -30,9 +30,11 @@ module.exports = function () {
     console.log();
 
     console.log('2. Options');
-    debug.success('   -d --dirname', 'specified a directory', options);
     debug.success('   -e --express', 'create a express sample', options);
     debug.success('   -s --static', 'create a static sample', options);
+    debug.success('   --mongoose', 'express with mongoose', options);
+    debug.success('   --redis', 'express with redis', options);
+    debug.success('   -d --dirname', 'specified a directory', options);
     debug.success('   -h --help', 'show help infomation with command', options);
     console.log();
 };
