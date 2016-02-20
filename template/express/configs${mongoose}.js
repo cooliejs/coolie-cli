@@ -25,36 +25,13 @@ module.exports = {
         test: ['info', 'success', 'warn', 'error'],
         pro: ['warn', 'error']
     }[env],
-    redis: {
-        local: {
-            url: 'redis://127.0.0.1:6379',
-            db: 0,
-            pass: 'REDIS_PASSWORD',
-            prefix: pkg.name + ':'
-        },
-        dev: {
-            url: 'redis://127.0.0.1:6379',
-            db: 0,
-            pass: 'REDIS_PASSWORD',
-            prefix: pkg.name + ':'
-        },
-        test: {
-            url: 'redis://127.0.0.1:6379',
-            db: 0,
-            pass: 'REDIS_PASSWORD',
-            prefix: pkg.name + ':'
-        },
-        pro: {
-            url: 'redis://127.0.0.1:6379',
-            db: 0,
-            pass: 'REDIS_PASSWORD',
-            prefix: pkg.name + ':'
-        }
-    },
     cookie: {
         secret: 'express-template',
         // 30d
         expires: 30 * 24 * 60 * 60 * 1000
+    },
+    mongodb: {
+        url: 'mongodb://localhost:27017/express-template'
     }
 };
 

@@ -25,6 +25,9 @@ module.exports = {
         test: ['info', 'success', 'warn', 'error'],
         pro: ['warn', 'error']
     }[env],
+    mongodb: {
+        url: 'mongodb://localhost:27017/express-template'
+    },
     redis: {
         local: {
             url: 'redis://127.0.0.1:6379',

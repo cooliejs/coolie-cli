@@ -28,9 +28,6 @@ module.exports = {
         secret: 'express-template',
         // 30d
         expires: 30 * 24 * 60 * 60 * 1000
-    },
-    mongodb: {
-        url: 'mongodb://localhost:27017/express-template'
     }
 };
 
