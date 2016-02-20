@@ -48,6 +48,8 @@ var TEMPLATE_MAP = {
             'package${mongoose}.json': false,
             'package${none}.json': false,
             'package${redis}.json': false,
+            'configs${mongoose_redis}.js': false,
+            'configs${mongoose}.js': false,
             'configs${redis}.js': false,
             'configs${none}.js': false,
             'webserver/index${mongoose}.js': false,

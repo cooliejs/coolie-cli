@@ -8,7 +8,6 @@
 'use strict';
 
 var path = require('path');
-var pkg = require('./package.json');
 
 var env = getEnv();
 var webroot = env === 'local' ? 'dev' : 'pro';
