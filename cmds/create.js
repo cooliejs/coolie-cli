@@ -166,10 +166,18 @@ var createTemplate = function (meta, options) {
  */
 var deepCreate = function (type, options) {
     var meta = TEMPLATE_MAP[type];
+    var isExpress = type === 'express';
 
-    if (options.mongoose && options.redis) {
+    if (isExpress && options.mongoose && options.redis) {
         options.mongoose_redis = true;
         options.mongoose = options.redis = false;
+        debug.success('create', type + ' template with mongoose and redis');
+    } else if (isExpress && options.mongoose) {
+        debug.success('create', type + ' template with mongoose');
+    } else if (isExpress && options.redis) {
+        debug.success('create', type + ' template with redis');
+    } else {
+        debug.success('create', type + ' template');
     }
 
     createTemplate(meta, options);
