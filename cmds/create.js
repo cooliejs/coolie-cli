@@ -19,7 +19,15 @@ var banner = require('./banner.js');
 var template_root = path.join(__dirname, '../template/');
 var TEMPLATE_MAP = {
     express: {
-        root: path.join(template_root, 'express')
+        root: path.join(template_root, 'express'),
+        convert: {
+            'webserver/index.js': {
+                mongoose: 'webserver/index-mongoose.js',
+                none: 'webserver/index-none.js'
+            },
+            'webserver/index-mongoose.js': false,
+            'webserver/index-none.js': false
+        }
     },
     'static': {
         root: path.join(template_root, 'static')
@@ -36,10 +44,17 @@ var IGNORE_MAP = {
  * 创建模板
  * @param root
  * @param destDirname
+ * @param convert
  */
-var createTemplate = function (root, destDirname) {
+var createTemplate = function (root, destDirname, convert) {
     var files = glob.sync(path.join(root, '*'), {
         dot: true
+    });
+
+    var convert2 = {};
+
+    dato.each(convert, function (rela, transi) {
+        convert2[path.join(root, rela)] = transi;
     });
 
     howdo.each(files, function (index, file, next) {
@@ -90,7 +105,7 @@ var deepCreate = function (type, options) {
     debug.success('name', pkg.name + '@' + pkg.version);
     debug.success('dependencies', makeList(pkg.dependencies));
     debug.success('devDependencies', makeList(pkg.devDependencies));
-    createTemplate(meta.root, options.destDirname);
+    createTemplate(meta.root, options.destDirname, meta.convert);
 };
 
 
