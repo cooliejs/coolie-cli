@@ -10,6 +10,7 @@
 var debug = require('ydr-utils').debug;
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
+var typeis = require('ydr-utils').typeis;
 var glob = require('glob');
 var fse = require('fs-extra');
 var howdo = require('howdo');
@@ -51,7 +52,8 @@ var createTemplate = function (meta, options) {
     var convert = meta.convert;
     var destDirname = options.destDirname;
     var files = glob.sync(path.join(root, '**/*'), {
-        dot: true
+        dot: true,
+        nodir: true
     });
 
     var convert2 = {};
@@ -78,7 +80,7 @@ var createTemplate = function (meta, options) {
 
         if (relFile) {
             if (converted[relFile]) {
-                return;
+                return next();
             }
 
             converted[relFile] = true;
