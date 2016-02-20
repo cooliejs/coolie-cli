@@ -8,6 +8,7 @@
 'use strict';
 
 var path = require('path');
+var pkg = require('./package.json');
 
 var env = getEnv();
 var webroot = env === 'local' ? 'dev' : 'pro';
@@ -20,12 +21,35 @@ module.exports = {
     webroot: path.join(root, './webroot-' + webroot),
     logLevel: {
         local: ['info', 'success', 'warn', 'error'],
-        dev: ['info', 'success', 'warn',  'error'],
+        dev: ['info', 'success', 'warn', 'error'],
         test: ['info', 'success', 'warn', 'error'],
         pro: ['warn', 'error']
     }[env],
     redis: {
-
+        local: {
+            url: 'redis://127.0.0.1:6379',
+            db: 0,
+            pass: 'REDIS_PASSWORD',
+            prefix: pkg.name + ':'
+        },
+        dev: {
+            url: 'redis://127.0.0.1:6379',
+            db: 0,
+            pass: 'REDIS_PASSWORD',
+            prefix: pkg.name + ':'
+        },
+        test: {
+            url: 'redis://127.0.0.1:6379',
+            db: 0,
+            pass: 'REDIS_PASSWORD',
+            prefix: pkg.name + ':'
+        },
+        pro: {
+            url: 'redis://127.0.0.1:6379',
+            db: 0,
+            pass: 'REDIS_PASSWORD',
+            prefix: pkg.name + ':'
+        }
     },
     cookie: {
         secret: 'express-template',
