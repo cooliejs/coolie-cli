@@ -40,7 +40,6 @@
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "howdo": "^3.3.0",
-    "later": "^1.2.0",
     "multer": "^1.1.0",
     "mongoose": "^4.3.6",
     "ydr-utils": "^41.2.9"
