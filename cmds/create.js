@@ -195,7 +195,7 @@ module.exports = function (options) {
     banner();
 
     if (!options.express && !options['static']) {
-        debug.warn('coolie tips', 'missing template type');
+        debug.warn('coolie tips', 'missing template type, can be --express(-e), --static(-s)');
         return;
     }
 
