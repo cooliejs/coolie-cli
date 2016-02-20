@@ -22,11 +22,11 @@ var TEMPLATE_MAP = {
         root: path.join(template_root, 'express'),
         convert: {
             'webserver/index.js': {
-                mongoose: 'webserver/index-mongoose.js',
-                none: 'webserver/index-none.js'
+                mongoose: 'webserver/index${mongoose}.js',
+                none: 'webserver/index${none}.js'
             },
-            'webserver/index-mongoose.js': false,
-            'webserver/index-none.js': false
+            'webserver/index${mongoose}.js': false,
+            'webserver/index${none}.js': false
         }
     },
     'static': {
@@ -38,29 +38,74 @@ var IGNORE_MAP = {
     gitignore: '.gitignore',
     npmignore: '.npmignore'
 };
+var REG_REPLACE = /\$\{.*?}\./;
 
 
 /**
  * 创建模板
- * @param root
- * @param destDirname
- * @param convert
+ * @param meta
+ * @param options
  */
-var createTemplate = function (root, destDirname, convert) {
-    var files = glob.sync(path.join(root, '*'), {
+var createTemplate = function (meta, options) {
+    var root = meta.root;
+    var convert = meta.convert;
+    var destDirname = options.destDirname;
+    var files = glob.sync(path.join(root, '**/*'), {
         dot: true
     });
 
     var convert2 = {};
+    var converted = {};
 
     dato.each(convert, function (rela, transi) {
         convert2[path.join(root, rela)] = transi;
     });
 
     howdo.each(files, function (index, file, next) {
+        var dir = path.dirname(file);
         var basename = path.basename(file);
         var ignoreType = IGNORE_MAP[basename];
         var srcName = path.relative(root, file);
+        var transiType = convert2[file];
+        var relName = '';
+        var relFile = '';
+        var findConvert = false;
+
+        if (transiType === false) {
+            relName = basename.replace(REG_REPLACE, '.');
+            relFile = path.join(dir, relName);
+        }
+
+        if (relFile) {
+            if (converted[relFile]) {
+                return;
+            }
+
+            converted[relFile] = true;
+            transiType = convert2[relFile];
+
+            if (transiType) {
+                srcName = path.relative(root, relFile);
+                dato.each(transiType, function (key, originFile) {
+                    if (options[key]) {
+                        file = originFile;
+                        findConvert = true;
+                        return false;
+                    }
+                });
+
+                if (!findConvert) {
+                    file = transiType.none;
+                }
+
+                file = path.join(root, file);
+                //debug.warn('transiType', transiType);
+                //debug.warn('relFile', relFile);
+                //debug.warn('srcName', srcName);
+                //debug.warn('options', options);
+                //debug.warn('file', file);
+            }
+        }
 
         if (ignoreType) {
             srcName = path.join(path.dirname(srcName), ignoreType);
@@ -69,6 +114,8 @@ var createTemplate = function (root, destDirname, convert) {
         var destFile = path.join(destDirname, srcName);
 
         try {
+            debug.error('file', file);
+            debug.error('destFile', destFile);
             fse.copySync(file, destFile, {
                 // 是否覆盖
                 clobber: false
@@ -77,7 +124,7 @@ var createTemplate = function (root, destDirname, convert) {
             // ignore
         }
 
-        debug.success('create', path.toSystem(destFile));
+        //debug.success('create', path.toSystem(srcName));
         setTimeout(next, 45);
     }).follow();
 };
@@ -105,7 +152,7 @@ var deepCreate = function (type, options) {
     debug.success('name', pkg.name + '@' + pkg.version);
     debug.success('dependencies', makeList(pkg.dependencies));
     debug.success('devDependencies', makeList(pkg.devDependencies));
-    createTemplate(meta.root, options.destDirname, meta.convert);
+    createTemplate(meta, options);
 };
 
 
