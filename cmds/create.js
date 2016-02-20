@@ -29,7 +29,8 @@ var TEMPLATE_MAP = {
                 none: 'package${none}.json'
             },
             'configs.js': {
-                mongoose_redis: 'configs${redis}.js',
+                mongoose_redis: 'configs${mongoose_redis}.js',
+                mongoose: 'configs${mongoose}.js',
                 redis: 'configs${redis}.js',
                 none: 'configs${none}.js'
             },
