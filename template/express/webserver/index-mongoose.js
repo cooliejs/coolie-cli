@@ -13,6 +13,7 @@ var log = require('ydr-utils').log;
 var system = require('ydr-utils').system;
 
 var serviceLog = require('./services/log.js');
+var serviceMongoose = require('./services/mongoose.js');
 var serviceExpress = require('./services/express.js');
 var serviceRouters = require('./services/routers.js');
 var configs = require('../configs.js');
@@ -27,6 +28,7 @@ cache.set('app.configs', configs);
 module.exports = function (callback) {
     howdo
         .task(serviceLog)
+        .task(serviceMongoose)
         .task(serviceExpress)
         .task(serviceRouters)
         .follow(callback)
