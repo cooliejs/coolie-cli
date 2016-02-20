@@ -146,7 +146,7 @@ module.exports = function (options) {
     });
 
 
-    // 3. 重写 coolie-config.js
+    // 4. 重写 coolie-config.js
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'generate coolie.js profile');
     var destCoolieConfigJSPath = replaceCoolieConfig(configs.srcCoolieConfigJSPath, {
@@ -163,7 +163,7 @@ module.exports = function (options) {
     });
 
 
-    // 4. 构建 html
+    // 5. 构建 html
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'build htmls');
     var buildHTMLResult = buildHTML({
@@ -195,7 +195,7 @@ module.exports = function (options) {
     });
 
 
-    // 5. 生成资源地图
+    // 6. 生成资源地图
     console.log();
     debug.primary(++stepIndex + '/' + stepLength, 'generate coolie map');
     buildMap({
