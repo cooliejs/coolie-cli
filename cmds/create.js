@@ -116,8 +116,6 @@ var createTemplate = function (meta, options) {
         var destFile = path.join(destDirname, srcName);
 
         try {
-            debug.error('file', file);
-            debug.error('destFile', destFile);
             fse.copySync(file, destFile, {
                 // 是否覆盖
                 clobber: false
@@ -126,7 +124,7 @@ var createTemplate = function (meta, options) {
             // ignore
         }
 
-        //debug.success('create', path.toSystem(srcName));
+        debug.success('create', path.toSystem(srcName));
         setTimeout(next, 45);
     }).follow();
 };
@@ -140,20 +138,6 @@ var createTemplate = function (meta, options) {
  */
 var deepCreate = function (type, options) {
     var meta = TEMPLATE_MAP[type];
-    var pkg = require(path.join(meta.root, 'package.json'));
-    var makeList = function (obj) {
-        var list = [];
-
-        dato.each(obj, function (key, val) {
-            list.push(key + ': ' + val);
-        });
-
-        return list.join('\n');
-    };
-
-    debug.success('name', pkg.name + '@' + pkg.version);
-    debug.success('dependencies', makeList(pkg.dependencies));
-    debug.success('devDependencies', makeList(pkg.devDependencies));
     createTemplate(meta, options);
 };
 

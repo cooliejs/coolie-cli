@@ -1,0 +1,51 @@
+{
+  "name": "express-template",
+  "version": "0.0.1",
+  "private": true,
+  "description": "express-template description",
+  "scripts": {
+    "start": "node ./clis/start.js",
+    "release": "rm -rf ./webroot-pro && coolie build -d webroot-dev && git add webroot-pro && git commit -am release && git push",
+    "live": "browser-sync start --config bs-config.js"
+  },
+  "preferGlobal": false,
+  "bin": {},
+  "engines": {
+    "node": ">= 0.10.0",
+    "iojs": ">= 1.0.0"
+  },
+  "main": "index.js",
+  "keywords": [
+    "cloudcome",
+    "ydr.me"
+  ],
+  "author": {
+    "name": "cloudcome",
+    "email": "cloudcome@163.com",
+    "url": "http://ydr.me"
+  },
+  "contributors": [],
+  "homepage": "https://github.com/express-template",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/express-template"
+  },
+  "bugs": {
+    "url": "https://github.com/express-template/issues"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "howdo": "^3.3.0",
+    "multer": "^1.1.0",
+    "ydr-utils": "^41.3.4"
+  },
+  "peerDependencies": {},
+  "devDependencies": {
+    "mocha": "^2.3.4",
+    "supervisor": "^0.9.1"
+  },
+  "license": "MIT"
+}

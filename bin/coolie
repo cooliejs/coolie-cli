@@ -96,7 +96,9 @@ command.if('create', function (args) {
     cmdCreate({
         destDirname: command.dirname(args, 'dirname'),
         express: args.express,
-        'static': args['static']
+        'static': args['static'],
+        mongoose: args.mongoose,
+        redis: args.redis
     });
 });
 
