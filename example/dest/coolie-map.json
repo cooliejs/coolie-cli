@@ -1,0 +1,16 @@
+{
+  "/html/123.html": {
+    "main": [],
+    "async": [],
+    "js": [
+      {
+        "dest": "/static/js/2e16819a.js",
+        "deps": [
+          "../src/static/js/123.js"
+        ]
+      }
+    ],
+    "css": [],
+    "res": []
+  }
+}
