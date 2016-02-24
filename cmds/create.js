@@ -132,6 +132,7 @@ var createTemplate = function (meta, options) {
         }
 
         var destFile = path.join(destDirname, srcName);
+        var destName = path.basename(destDirname);
 
         try {
             fse.copySync(file, destFile, {
@@ -142,7 +143,7 @@ var createTemplate = function (meta, options) {
             // ignore
         }
 
-        debug.success('create', path.toSystem(srcName));
+        debug.success('create', path.toSystem(path.join(destName, srcName)));
         setTimeout(next, 45);
     }).follow();
 };
