@@ -19,21 +19,21 @@ module.exports = function () {
     };
 
     banner();
-    console.log('Create a front-end engineering template.');
+    console.log('Create a Front-end engineering template.');
     console.log('Use the following parameters to specify the type of template.');
     console.log();
     console.log('Usage');
     console.log('    coolie create <--templateType> [options]');
     console.log();
     console.log('1. Command');
-    debug.success('   create', 'create a sample, default is express', options);
+    debug.success('   create', 'create a project template', options);
     console.log();
 
     console.log('2. Options');
-    debug.success('   -e --express', 'create a express template', options);
-    debug.success('   -s --static', 'create a static template', options);
-    debug.success('   -m --mongoose', 'express template with mongoose', options);
-    debug.success('   -r --redis', 'express template with redis', options);
+    debug.success('   -e --express', 'create a express project template', options);
+    debug.success('   -s --static', 'create a static project template', options);
+    debug.success('   -m --mongoose', 'express project template with mongoose', options);
+    debug.success('   -r --redis', 'express project template with redis', options);
     debug.success('   -d --dirname', 'specified a directory', options);
     debug.success('   -h --help', 'show help infomation with command', options);
     console.log();

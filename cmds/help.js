@@ -31,7 +31,7 @@ module.exports = function () {
     debug.success('   book', 'open coolie book in default browser', options);
     debug.success('   install <module>', 'install a coolie module', options);
     debug.success('   init', 'initial configuration file', options);
-    debug.success('   create', 'create a sample, default is express', options);
+    debug.success('   create', 'create a project template', options);
     debug.success('   help', 'show help information', options);
     debug.success('   version', 'show version information', options);
     console.log();
