@@ -10,9 +10,9 @@
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var sessionParser = require('express-session');
-var multer = require('multer');
 var random = require('ydr-utils').random;
 var encryption = require('ydr-utils').encryption;
+var multer = require('multer');
 var os = require('os');
 
 var configs = require('../../configs.js');
