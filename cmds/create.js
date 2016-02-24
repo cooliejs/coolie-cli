@@ -9,13 +9,16 @@
 
 var debug = require('ydr-utils').debug;
 var dato = require('ydr-utils').dato;
+var date = require('ydr-utils').date;
 var path = require('ydr-utils').path;
 var typeis = require('ydr-utils').typeis;
+var Template = require('ydr-utils').Template;
 var glob = require('glob');
 var fse = require('fs-extra');
 var howdo = require('howdo');
 
 var banner = require('./banner.js');
+var pkg = require('../package.json');
 
 var template_root = path.join(__dirname, '../template/');
 var TEMPLATE_MAP = {
@@ -62,8 +65,9 @@ var REG_REPLACE = /\$\{.*?}\./;
  * 创建模板
  * @param meta
  * @param options
+ * @param callback
  */
-var createTemplate = function (meta, options) {
+var createTemplate = function (meta, options, callback) {
     var root = meta.root;
     var convert = meta.convert;
     var destDirname = options.destDirname;
@@ -145,7 +149,37 @@ var createTemplate = function (meta, options) {
 
         debug.success('create', path.toSystem(path.join(destName, srcName)));
         setTimeout(next, 45);
-    }).follow();
+    }).follow(callback);
+};
+
+
+/**
+ * 创建 readme.md
+ * @param options
+ */
+var createReadmeMD = function (options) {
+    var destDirname = options.destDirname;
+    var destName = path.basename(destDirname);
+    var srcName = 'readme.md';
+    var destFile = path.join(destDirname, srcName);
+    var readmeMDTemplatePath = path.join(__dirname, '../data/template-readme.md');
+    var readmeMDTemplateData = fse.readFileSync(readmeMDTemplatePath, 'utf8');
+    var tpl = new Template(readmeMDTemplateData, {
+        compress: false
+    });
+    var data = tpl.render({
+        name: destName,
+        pkg: pkg,
+        now: date.format('YYYY-MM-DD HH:mm:ss.SSS')
+    });
+
+    try {
+        fse.outputFileSync(destFile, data, 'utf8');
+    } catch (err) {
+        // ignore
+    }
+
+    debug.success('create', path.toSystem(path.join(destName, srcName)));
 };
 
 
@@ -174,7 +208,9 @@ var deepCreate = function (type, options) {
         debug.success('create', type + ' template');
     }
 
-    createTemplate(meta, options);
+    createTemplate(meta, options, function () {
+        createReadmeMD(options);
+    });
 };
 
 
