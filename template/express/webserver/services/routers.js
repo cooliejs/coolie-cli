@@ -26,8 +26,8 @@ module.exports = function (next, app) {
     // 前置
     app.use(midParser.parseCookie);
     app.use(midParser.parseSession);
-    app.use(midParser.parsePostBodyOfJSON);
-    app.use(midParser.parsePostBodyOfURLencoded);
+    app.use(midParser.parseApplicationJSON);
+    app.use(midParser.parseApplicationXwwwFormUrlencoded);
     app.use(midParser.parseUA);
     app.use(midSafe.mustHasHeaderHost);
     app.use(midSafe.addUACompatibleHeader);
