@@ -40,8 +40,8 @@ module.exports = function () {
     debug.success('   -d --dirname', 'specified a directory', options);
     debug.success('   -j --coolie.js', 'initial configuration file of `coolie.js`', options);
     debug.success('   -c --coolie-cli', 'initial configuration file of `coolie-cli`', options);
-    debug.success('   -e --express', 'create a express sample', options);
-    debug.success('   -s --static', 'create a static sample', options);
+    debug.success('   -e --express', 'choose express template', options);
+    debug.success('   -s --static', 'choose static template', options);
     debug.success('   -h --help', 'show help infomation with command', options);
     console.log();
 };
