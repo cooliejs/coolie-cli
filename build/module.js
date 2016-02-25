@@ -98,7 +98,8 @@ module.exports = function (file, options) {
     // 分析 require()
     var syncRequires = parseCMDRequire(file, {
         code: code,
-        async: false
+        async: false,
+        srcDirname: options.srcDirname
     });
     var syncName2IdMap = {};
     var syncDepFileMap = {};
