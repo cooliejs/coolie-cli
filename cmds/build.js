@@ -129,6 +129,7 @@ module.exports = function (options) {
         chunk: configs.js.chunk,
         srcDirname: srcDirname,
         destDirname: destDirname,
+        destJSDirname: configs.destJSDirname,
         destCSSDirname: configs.destCSSDirname,
         destResourceDirname: configs.destResourceDirname,
         destHost: configs.destHost,
