@@ -64,7 +64,6 @@ module.exports = function (file, options) {
     var resList = [];
     var resMap = {};
     var build = function (file, options) {
-        console.log('build', file);
         var ret = buildModule(file, {
             inType: options.inType,
             outType: options.outType,
