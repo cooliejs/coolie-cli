@@ -73,7 +73,6 @@ var defaults = {
  */
 module.exports = function (options) {
     options = dato.extend(true, {}, defaults, options);
-    console.log(options);
 
     var mainVersionMap = {};
     var chunkVersionMap = {};
@@ -126,6 +125,7 @@ module.exports = function (options) {
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
+            destJSDirname: options.destJSDirname,
             destCSSDirname: options.destCSSDirname,
             destResourceDirname: options.destResourceDirname,
             destHost: options.destHost,

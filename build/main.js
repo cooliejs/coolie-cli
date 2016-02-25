@@ -54,7 +54,6 @@ var defaults = {
  * @returns {{dependencies: {id: String, file: String, buffer: Buffer, md5: String}, resList: Array}}
  */
 module.exports = function (file, options) {
-    options = dato.extend({}, defaults, options);
     var mainFile = file;
     // 依赖长度
     var dependencyLength = 1;
@@ -65,6 +64,7 @@ module.exports = function (file, options) {
     var resList = [];
     var resMap = {};
     var build = function (file, options) {
+        console.log('build', file);
         var ret = buildModule(file, {
             inType: options.inType,
             outType: options.outType,
