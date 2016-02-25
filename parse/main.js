@@ -53,7 +53,8 @@ module.exports = function (options) {
 
         var requireAsyncList = parseCMDRequire(mainFile, {
             code: code,
-            async: true
+            async: true,
+            srcDirname: options.srcDirname
         });
 
         mainMap[mainFile] = {

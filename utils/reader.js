@@ -19,7 +19,7 @@ var bufferMap = {};
  * 读取文件内容
  * @param file {String} 文件
  * @param encoding {String} 编码
- * @param embedFile {String} 所在文件
+ * @param [embedFile] {String} 所在文件
  * @returns {*}
  */
 module.exports = function (file, encoding, embedFile) {

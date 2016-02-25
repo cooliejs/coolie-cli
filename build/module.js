@@ -85,7 +85,8 @@ module.exports = function (file, options) {
     // 分析 require.async()
     var asyncRequires = parseCMDRequire(file, {
         code: code,
-        async: true
+        async: true,
+        srcDirname: options.srcDirname
     });
     var asyncName2IdMap = {};
 
