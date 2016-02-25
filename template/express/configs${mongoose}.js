@@ -55,6 +55,6 @@ function getEnv() {
         env = TEST_ENV;
     }
 
-    return env;
+    return (process.env.NODE_ENV = env);
 }
 
