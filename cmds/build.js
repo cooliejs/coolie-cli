@@ -10,12 +10,14 @@
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 var Middleware = require('ydr-utils').Middleware;
+var Emitter = require('ydr-utils').Emitter;
 
 var parseCoolieConfig = require('../parse/coolie.config.js');
 var buildAPP = require('../build/app.js');
 var buildCopy = require('../build/copy.js');
 var buildHTML = require('../build/html.js');
 var buildMap = require('../build/map.js');
+var buildAPI = require('../build/api.js');
 var replaceCoolieConfig = require('../replace/coolie-config.js');
 var banner = require('./banner.js');
 
@@ -25,12 +27,52 @@ var defaults = {
 var middleware = new Middleware({
     async: false
 });
+var emitter = new Emitter();
+
+
+// 重写 err
+middleware.catchError(function (err, middleware) {
+    var pkg = middleware.package || {};
+    var UNKNDOW = 'unkndow';
+
+    pkg.author = pkg.author || {};
+    pkg.bugs = pkg.bugs || {};
+    pkg.repository = pkg.repository || {};
+
+    var author = ''.concat(
+        pkg.author.name || '',
+        pkg.author.nickname || '',
+        pkg.author.email ? '<' + pkg.author.email + '>' : ''
+    );
+
+    err.coolieMiddlware = {
+        name: pkg.name || UNKNDOW,
+        version: pkg.version || UNKNDOW,
+        author: author || pkg.author || UNKNDOW,
+        bug: pkg.bugs.url || pkg.bugs || UNKNDOW,
+        repository: pkg.repository.url || pkg.repository || UNKNDOW,
+        homepage: pkg.homepage || UNKNDOW
+    };
+    return err;
+});
 
 middleware.on('error', function (err) {
-    debug.error('middleware error', '');
-    debug.error('middleware name', err.middlewareName);
-    debug.error(err.name, err.message);
+    var coolieMiddlware = err.coolieMiddlware;
+
+    debug.error('middleware name', coolieMiddlware.name);
+    debug.error('middleware version', coolieMiddlware.version);
+    debug.error('middleware author', coolieMiddlware.author);
+    debug.error('middleware bug', coolieMiddlware.bug);
+    debug.error('middleware repo', coolieMiddlware.repository);
+    debug.error('middleware home', coolieMiddlware.homepage);
+    debug.error('middleware error', err.message);
+    debug.error('error stack', err.stack);
     console.log();
+    return process.exit(1);
+});
+
+emitter.on('exit', function (err) {
+    debug.error(err.name, err.message);
     return process.exit(1);
 });
 
@@ -50,17 +92,20 @@ module.exports = function (options) {
 
     // 1. 分析配置文件
     console.log();
-    debug.primary(++stepIndex + '/' + stepLength, 'parse coolie config');
+    debug.primary(++stepIndex + '/' + stepLength, 'parse coolie-cli profile');
     /**
      * 配置
      * @type {{js: Object, dest: Object, resource: Object, html: Object}}
      */
     var configs = parseCoolieConfig({
         srcDirname: options.srcDirname,
-        middleware: middleware
+        middleware: middleware,
+        emitter: emitter
     });
     var srcDirname = configs.srcDirname;
     var destDirname = configs.destDirname;
+
+    buildAPI(configs, middleware);
 
 
     // 2. 复制文件
@@ -78,34 +123,35 @@ module.exports = function (options) {
 
     // 3. 构建入口文件
     console.log();
-    debug.primary(++stepIndex + '/' + stepLength, 'build main module');
+    debug.primary(++stepIndex + '/' + stepLength, 'build main modules');
     var buildAPPResult = buildAPP({
         glob: configs.js.main,
         chunk: configs.js.chunk,
         srcDirname: srcDirname,
         destDirname: destDirname,
+        destJSDirname: configs.destJSDirname,
         destCSSDirname: configs.destCSSDirname,
         destResourceDirname: configs.destResourceDirname,
-        destHost: configs.dest.host,
-        uglifyJSOptions: configs.js.minify,
-        cleanCSSOptions: configs.css.minify,
-        versionLength: configs.dest.versionLength,
-        minifyResource: configs.resource.minify,
+        destHost: configs.destHost,
+        uglifyJSOptions: configs.uglifyJSOptions,
+        cleanCSSOptions: configs.cleanCSSOptions,
+        versionLength: configs.versionLength,
+        minifyResource: configs.minifyResource,
         destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
         destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname,
-        removeHTMLYUIComments: configs.html.minify,
-        removeHTMLLineComments: configs.html.minify,
-        joinHTMLSpaces: configs.html.minify,
-        removeHTMLBreakLines: configs.html.minify
+        removeHTMLYUIComments: configs.removeHTMLYUIComments,
+        removeHTMLLineComments: configs.removeHTMLLineComments,
+        joinHTMLSpaces: configs.joinHTMLSpaces,
+        removeHTMLBreakLines: configs.removeHTMLBreakLines
     });
 
 
-    // 3. 重写 coolie-config.js
+    // 4. 重写 coolie-config.js
     console.log();
-    debug.primary(++stepIndex + '/' + stepLength, 'override coolie-config.js');
+    debug.primary(++stepIndex + '/' + stepLength, 'generate coolie.js profile');
     var destCoolieConfigJSPath = replaceCoolieConfig(configs.srcCoolieConfigJSPath, {
-        versionLength: configs.dest.versionLength,
+        versionLength: configs.versionLength,
         destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
         destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname,
@@ -113,28 +159,29 @@ module.exports = function (options) {
         destDirname: destDirname,
         destJSDirname: configs.destJSDirname,
         versionMap: dato.extend({}, buildAPPResult.chunkVersionMap, buildAPPResult.asyncVersionMap),
-        destHost: configs.dest.host,
+        destHost: configs.destHost,
         sign: true
     });
 
 
-    // 4. 构建 html
+    // 5. 构建 html
     console.log();
-    debug.primary(++stepIndex + '/' + stepLength, 'build html');
+    debug.primary(++stepIndex + '/' + stepLength, 'build htmls');
     var buildHTMLResult = buildHTML({
         middleware: middleware,
+        emitter: emitter,
         glob: configs.html.src,
-        removeHTMLYUIComments: configs.html.minify,
-        removeHTMLLineComments: configs.html.minify,
-        joinHTMLSpaces: configs.html.minify,
-        removeHTMLBreakLines: configs.html.minify,
-        versionLength: configs.dest.versionLength,
+        removeHTMLYUIComments: configs.removeHTMLYUIComments,
+        removeHTMLLineComments: configs.removeHTMLLineComments,
+        joinHTMLSpaces: configs.joinHTMLSpaces,
+        removeHTMLBreakLines: configs.removeHTMLBreakLines,
+        versionLength: configs.versionLength,
         srcDirname: srcDirname,
         destDirname: destDirname,
         destJSDirname: configs.destJSDirname,
         destCSSDirname: configs.destCSSDirname,
         destResourceDirname: configs.destResourceDirname,
-        destHost: configs.dest.host,
+        destHost: configs.destHost,
         coolieConfigBase: configs.coolieConfigBase,
         srcCoolieConfigJSPath: configs.srcCoolieConfigJSPath,
         srcCoolieConfigBaseDirname: configs.srcCoolieConfigBaseDirname,
@@ -143,15 +190,15 @@ module.exports = function (options) {
         minifyCSS: true,
         minifyResource: true,
         uglifyJSOptions: null,
-        cleanCSSOptions: configs.css.minfiy,
+        cleanCSSOptions: configs.cleanCSSOptions,
         replaceCSSResource: true,
         mainVersionMap: buildAPPResult.mainVersionMap
     });
 
 
-    // 5. 生成资源地图
+    // 6. 生成资源地图
     console.log();
-    debug.primary(++stepIndex + '/' + stepLength, 'generate a resource relationship map');
+    debug.primary(++stepIndex + '/' + stepLength, 'generate coolie map');
     buildMap({
         srcDirname: srcDirname,
         destDirname: destDirname,

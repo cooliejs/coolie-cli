@@ -31,9 +31,9 @@ var compressorOptions = {
     // 压缩if表达式
     conditionals: true,
     // 压缩条件表达式
-    comparisons: true,
+    comparisons: false,
     // 压缩常数表达式
-    evaluate: true,
+    evaluate: false,
     // 压缩布尔值
     booleans: true,
     // 压缩循环

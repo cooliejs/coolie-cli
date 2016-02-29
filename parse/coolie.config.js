@@ -15,11 +15,11 @@ var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 
-var pathURI = require('../utils/path-uri.js');
-var htmlAttr = require('../utils/html-attr.js');
 var copy = require('../utils/copy.js');
 var guessDirname = require('../utils/guess-dirname.js');
+var pkg = require('../package.json');
 
+var DEBUG = !Boolean(pkg.dist || pkg.publish_time);
 var coolieConfigJSFile;
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /}$/;
@@ -53,6 +53,7 @@ var coolieFn = function () {
 /**
  * 解析 config
  * @param options {Object} 配置
+ * @param [options.coolieAPI] {Object} coolie API
  * @param options.srcDirname {Object} coolie.config.js 路径
  * @param options.middleware {Object} 中间件
  * @returns {Object}
@@ -65,9 +66,7 @@ module.exports = function (options) {
     var check = {};
     var coolie = {};
 
-    if (options.middleware) {
-        options.middleware.bindContext(coolie);
-    }
+    configs.coolieAPI = coolie;
 
     /**
      * 配置 coolie 构建参数
@@ -75,7 +74,7 @@ module.exports = function (options) {
      * @returns {{}}
      */
     coolie.config = function (_configs) {
-        configs = _configs;
+        dato.extend(configs, _configs);
         return coolie;
     };
 
@@ -92,8 +91,8 @@ module.exports = function (options) {
                 debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie-*"');
             }
 
-            if (!middleware.middlewareName) {
-                debug.warn('invalid middleware', 'some middleware has lost its name');
+            if (!middleware.package) {
+                debug.warn('invalid middleware', 'some middleware has lost its `package` property');
                 debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie-*"');
             }
 
@@ -103,70 +102,71 @@ module.exports = function (options) {
         return coolie;
     };
 
-    /**
-     * coolie 工具函数
-     * @type {{getAbsolutePath: Function, getHTMLTagAttr: Function, setHTMLTagAttr: Function, copyResourceFile: Function}}
-     */
-    coolie.utils = {
-        /**
-         * 获取绝对路径
-         * @param path {String} 相对路径
-         * @param parentFile {String} 父级文件
-         * @returns {string|null}
-         */
-        getAbsolutePath: function (path, parentFile) {
-            var p = pathURI.toAbsoluteFile(path, parentFile, configs.srcDirname);
-
-            return typeis.file(p) ? p : null;
-        },
-
-        /**
-         * 获取 html 标签属性
-         * @param html {String} 标签
-         * @param attrName {String} 标签名称
-         * @returns {String}
-         */
-        getHTMLTagAttr: function (html, attrName) {
-            return htmlAttr.get(html, attrName);
-        },
-
-        /**
-         * 设置 html 标签属性
-         * @param html {String} html 标签
-         * @param attrName {String} 标签属性名
-         * @param attrValue {String} 标签属性值
-         * @returns {String}
-         */
-        setHTMLTagAttr: function (html, attrName, attrValue) {
-            return htmlAttr.set(html, attrName, attrValue);
-        },
-
-        /**
-         * 复制资源文件
-         * @param srcResourcePath {String} 原始资源文件路径
-         * @returns {String} 资源的 URI
-         */
-        copyResourceFile: function (srcResourcePath) {
-            var destResourcePath = copy(srcResourcePath, {
-                srcDirname: srcDirname,
-                destDirname: configs.destResourceDirname,
-                copyPath: false,
-                version: true,
-                versionLength: configs.dest.versionLength,
-                minify: true,
-                logType: 1
-            });
-
-            var destResourceURI = pathURI.toRootURL(destResourcePath, configs.destDirname);
-
-            return pathURI.joinURI(configs.dest.host, destResourceURI);
-        }
-    };
+    ///**
+    // * coolie 工具函数
+    // * @type {{getAbsolutePath: Function, getHTMLTagAttr: Function, setHTMLTagAttr: Function, copyResourceFile: Function}}
+    // */
+    //coolie.utils = {
+    //    /**
+    //     * 获取绝对路径
+    //     * @param path {String} 相对路径
+    //     * @param parentFile {String} 父级文件
+    //     * @returns {string|null}
+    //     */
+    //    getAbsolutePath: function (path, parentFile) {
+    //        var p = pathURI.toAbsoluteFile(path, parentFile, configs.srcDirname);
+    //
+    //        return typeis.file(p) ? p : null;
+    //    },
+    //
+    //    /**
+    //     * 获取 html 标签属性
+    //     * @param html {String} 标签
+    //     * @param attrName {String} 标签名称
+    //     * @returns {String}
+    //     */
+    //    getHTMLTagAttr: function (html, attrName) {
+    //        return htmlAttr.get(html, attrName);
+    //    },
+    //
+    //    /**
+    //     * 设置 html 标签属性
+    //     * @param html {String} html 标签
+    //     * @param attrName {String} 标签属性名
+    //     * @param attrValue {String} 标签属性值
+    //     * @returns {String}
+    //     */
+    //    setHTMLTagAttr: function (html, attrName, attrValue) {
+    //        return htmlAttr.set(html, attrName, attrValue);
+    //    },
+    //
+    //    /**
+    //     * 复制资源文件
+    //     * @param srcResourcePath {String} 原始资源文件路径
+    //     * @returns {String} 资源的 URI
+    //     */
+    //    copyResourceFile: function (srcResourcePath) {
+    //        var destResourcePath = copy(srcResourcePath, {
+    //            srcDirname: srcDirname,
+    //            destDirname: configs.destResourceDirname,
+    //            copyPath: false,
+    //            version: true,
+    //            versionLength: configs.dest.versionLength,
+    //            minify: true,
+    //            logType: 1
+    //        });
+    //
+    //        var destResourceURI = pathURI.toRootURL(destResourcePath, configs.destDirname);
+    //
+    //        return pathURI.joinURI(configs.dest.host, destResourceURI);
+    //    }
+    //};
 
     /**
      * coolie debug
      */
     coolie.debug = debug;
+    coolie.DEBUG = DEBUG;
 
     // 检查文件
     check.file = function () {
@@ -289,6 +289,8 @@ module.exports = function (options) {
         } else {
             configs.js.chunk = [];
         }
+
+        configs.uglifyJSOptions = configs.js.minify;
     };
 
     // 检查 coolie-config.js 内的 base 路径
@@ -385,6 +387,11 @@ module.exports = function (options) {
         if (typeis.undefined(configs.html.minify) !== false) {
             configs.html.minify = true;
         }
+
+        configs.removeHTMLYUIComments = configs.html.minify;
+        configs.removeHTMLLineComments = configs.html.minify;
+        configs.joinHTMLSpaces = configs.html.minify;
+        configs.removeHTMLBreakLines = configs.html.minify;
     };
 
 
@@ -416,6 +423,8 @@ module.exports = function (options) {
             debug.error('parse coolie.config', '`css.minify` must be an object or a boolean value');
             process.exit(1);
         }
+
+        configs.cleanCSSOptions = configs.css.minify;
     };
 
 
@@ -439,6 +448,8 @@ module.exports = function (options) {
         if (typeis.undefined(configs.resource.minify) !== false) {
             configs.resource.minify = true;
         }
+
+        configs.minifyResource = configs.resource.minify;
     };
 
 
@@ -475,6 +486,8 @@ module.exports = function (options) {
         }
 
         configs.dest.versionLength = configs.dest.versionLength || 32;
+        configs.destHost = configs.dest.host;
+        configs.versionLength = configs.dest.versionLength;
 
         if (!configs._noCoolieJS) {
             check._coolieConfigJS();

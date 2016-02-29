@@ -6,25 +6,39 @@ var fs = require('fs');
 var path = require('path');
 var command = require('ydr-utils').command;
 var debug = require('ydr-utils').debug;
-var string = require('ydr-utils').string;
 
-var pkg = require('../package.json');
+var cmdBanner = require('../cmds/banner.js');
 var cmdBuild = require('../cmds/build.js');
 var cmdVersion = require('../cmds/version.js');
 var cmdInit = require('../cmds/init.js');
 var cmdBook = require('../cmds/book.js');
 var cmdInstall = require('../cmds/install.js');
+var cmdCreate = require('../cmds/create.js');
 var cmdHelp = require('../cmds/help.js');
+var cmdHelpBuild = require('../cmds/help-build.js');
+var cmdHelpCreate = require('../cmds/help-create.js');
+var cmdHelpInit = require('../cmds/help-init.js');
+var cmdHelpInstall = require('../cmds/help-install.js');
 
 command.alias({
     d: 'dirname',
     j: 'coolie.js',
-    c: 'coolie-cli'
+    c: 'coolie-cli',
+    e: 'express',
+    s: 'static',
+    h: 'help',
+    m: 'mongoose',
+    r: 'redis'
 });
 
 command.type({
     'coolie.js': Boolean,
-    'coolie-cli': Boolean
+    'coolie-cli': Boolean,
+    express: Boolean,
+    'static': Boolean,
+    help: Boolean,
+    mongoose: Boolean,
+    redis: Boolean
 });
 
 command.if('help', function () {
@@ -32,6 +46,10 @@ command.if('help', function () {
 });
 
 command.if('build', function (args) {
+    if (args.help) {
+        return cmdHelpBuild();
+    }
+
     cmdBuild({
         srcDirname: command.dirname(args, 'dirname')
     });
@@ -42,11 +60,16 @@ command.if('book', function () {
 });
 
 command.if('install', function (args, names) {
+    if (args.help) {
+        return cmdHelpInstall();
+    }
+
     if (!names.length) {
-        debug.success('coolie tips', 'try `coolie install coolie`');
+        debug.success('coolie tips', 'try `coolie install coolie.js`');
         return process.exit(1);
     }
 
+    cmdBanner();
     names.forEach(function (name) {
         cmdInstall({
             destDirname: command.dirname(args, 'dirname'),
@@ -56,10 +79,28 @@ command.if('install', function (args, names) {
 });
 
 command.if('init', function (args) {
+    if (args.help) {
+        return cmdHelpInit();
+    }
+
     cmdInit({
         destDirname: command.dirname(args, 'dirname'),
         'coolie.js': args['coolie.js'],
         'coolie-cli': args['coolie-cli']
+    });
+});
+
+command.if('create', function (args) {
+    if (args.help) {
+        return cmdHelpCreate();
+    }
+
+    cmdCreate({
+        destDirname: command.dirname(args, 'dirname'),
+        express: args.express,
+        'static': args['static'],
+        mongoose: args.mongoose,
+        redis: args.redis
     });
 });
 

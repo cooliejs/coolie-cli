@@ -102,7 +102,7 @@ module.exports = function (file, options) {
 
             coolieCode.replace(REG_LINK, function (source, quote, href) {
                 var cssFile = pathURI.toAbsoluteFile(href, file, options.srcDirname);
-                var cssCode = reader(cssFile, ENCODING);
+                var cssCode = reader(cssFile, ENCODING, file);
 
                 if (options.minifyCSS) {
                     var minifyCSSRet = minifyCSS(cssFile, {
@@ -168,7 +168,7 @@ module.exports = function (file, options) {
 
             coolieCode.replace(REG_SCRIPT, function (source, quote, src) {
                 var jsFile = pathURI.toAbsoluteFile(src, file, options.srcDirname);
-                var jsCode = reader(jsFile, ENCODING);
+                var jsCode = reader(jsFile, ENCODING, file);
 
                 if (options.minifyJS) {
                     jsCode = minifyJS(jsFile, {

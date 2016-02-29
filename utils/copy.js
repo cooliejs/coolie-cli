@@ -50,8 +50,8 @@ var defaults = {
  * @param options.srcDirname {String} 原始根目录
  * @param options.destDirname {String} 目标根目录
  * @param options.copyPath {Boolean} 是否复制路径
- * @param options.embedFile {String} 被嵌入的文件
- * @param options.embedCode {String} 被嵌入的文件代码
+ * @param [options.embedFile] {String} 被嵌入的文件
+ * @param [options.embedCode] {String} 被嵌入的文件代码
  * @param options.version {Boolean} 是否版本控制
  * @param options.versionLength {Number} 版本长度
  * @param options.minify {Boolean} 是否压缩

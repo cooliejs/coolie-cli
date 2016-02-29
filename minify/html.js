@@ -8,7 +8,6 @@
 'use strict';
 
 
-var debug = require('ydr-utils').debug;
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
 
@@ -16,9 +15,11 @@ var sign = require('../utils/sign.js');
 
 // 替换 <img src="">
 var replaceHTMLAttrResource = require('../replace/html-attr-resource.js');
-// 替换 <script>
-var replaceHTMLTagScript = require('../replace/html-tag-script.js');
-// 替换 <script>
+// 替换 <script src>
+var replaceHTMLTagScriptAttr = require('../replace/html-tag-script-attr.js');
+var replaceHTMLTagScriptCoolie = require('../replace/html-tag-script-coolie.js');
+var replaceHTMLTagScriptContent = require('../replace/html-tag-script-content.js');
+// 替换 <link>
 var replaceHTMLTagLink = require('../replace/html-tag-link.js');
 // 替换 <style>
 var replaceHTMLTagStyleResource = require('../replace/html-tag-style-resource.js');
@@ -40,12 +41,26 @@ var REG_LINE_COMMENTS = /<!--.*?-->/g;
 var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
 var REG_COOLIE_COMMENTS = /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi;
 var REG_PRE_TAGNAME = /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi;
+var REG_CONDITIONS_COMMENTS_START = /<!--\[(if|else if|else).*]><!-->/gi;
+var REG_CONDITIONS_COMMENTS_STARTS = [
+    /<!--\[(if|else if|else).*]><!-->/gi,
+    /<!--\[(if|else if|else).*]>/gi
+];
+var REG_CONDITIONS_COMMENTS_END = /<!\[endif]-->/gi;
+var REG_CONDITIONS_COMMENTS_ENDS = [
+    /<!--<!\[endif]-->/gi,
+    /<!\[endif]-->/gi
+];
 var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi;
+var REG_PHP_FULL = /<\?php[\s\S]*?\?>/gi;
+var REG_PHP_SIMPLE = /<\?=[\s\S]*?\?>/gi;
 
 var defaults = {
     code: '',
     replaceHTMLAttrResource: false,
-    replaceHTMLTagScript: false,
+    replaceHTMLTagScriptCoolie: false,
+    replaceHTMLTagScriptAttr: false,
+    replaceHTMLTagScriptContent: false,
     replaceHTMLTagLink: false,
     replaceHTMLTagStyleResource: false,
     replaceHTMLAttrStyleResource: false,
@@ -81,7 +96,9 @@ var defaults = {
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param [options.replaceHTMLAttrResource=false] {Boolean} 是否替换 html 内的属性资源引用
- * @param [options.replaceHTMLTagScript=false] {Boolean} 是否替换 html 内的 <script>
+ * @param [options.replaceHTMLTagScriptCoolie=false] {Boolean} 是否替换 html 内的 <script> 的 coolie
+ * @param [options.replaceHTMLTagScriptAttr=false] {Boolean} 是否替换 html 内的 <script> 的 src
+ * @param [options.replaceHTMLTagScriptContent=false] {Boolean} 是否替换 html 内的 <script> 的内容
  * @param [options.replaceHTMLTagLink=false] {Boolean} 是否替换 html 内的 <link>
  * @param [options.replaceHTMLTagStyleResource=false] {Boolean} 是否替换 html 内的 <style>
  * @param [options.replaceHTMLAttrStyleResource=false] {Boolean} 是否替换 html 内的 <div style="">
@@ -113,7 +130,7 @@ var defaults = {
  * @param [options.signCSS] {Boolean} 是否签名 css 文件
  * @returns {Object}
  */
-module.exports = function (file, options) {
+var minifyHTML = function (file, options) {
     options = dato.extend({}, defaults, options);
     var coolieMap = {};
     var preMap = {};
@@ -126,8 +143,20 @@ module.exports = function (file, options) {
     var replace = function (pack) {
         return function (source) {
             var key = _generateKey();
+            var matchConditionsCommentsRet = matchConditionsComments(file, options, source);
 
-            pack[key] = source;
+            if (!matchConditionsCommentsRet.start || !matchConditionsCommentsRet.end) {
+                pack[key] = source;
+                return key;
+            }
+
+            var minifyConditionsCommentsRet = minifyConditionsComments(file, options, matchConditionsCommentsRet);
+
+            pack[key] = minifyConditionsCommentsRet.code;
+            mainList = mainList.concat(minifyConditionsCommentsRet.mainList);
+            jsList = jsList.concat(minifyConditionsCommentsRet.jsList);
+            cssList = cssList.concat(minifyConditionsCommentsRet.cssList);
+            resList = resList.concat(minifyConditionsCommentsRet.resList);
 
             return key;
         };
@@ -137,14 +166,16 @@ module.exports = function (file, options) {
     code = code.replace(REG_COOLIE_COMMENTS, replace(coolieMap));
 
     // 保留条件注释
-    code = code.replace(REG_CONDITIONS_COMMENTS, replace(preMap));
+    code = code.replace(REG_CONDITIONS_COMMENTS, replace(commentsMap));
 
+    // 移除行内注释
     if (options.removeHTMLLineComments) {
         code = code.replace(REG_LINE_COMMENTS, '');
     } else {
         code = code.replace(REG_LINE_COMMENTS, replace(commentsMap));
     }
 
+    // 移除 YUI 注释
     if (options.removeHTMLYUIComments) {
         code = code.replace(REG_YUI_COMMENTS, '');
     } else {
@@ -154,19 +185,20 @@ module.exports = function (file, options) {
     // 保留 pre tagName
     code = code.replace(REG_PRE_TAGNAME, replace(preMap));
 
+    // 合并长空白
     if (options.joinHTMLSpaces) {
         code = code.replace(REG_SPACES, ' ');
     }
 
+    // 移除多换行
     if (options.removeHTMLBreakLines) {
         code = code.replace(REG_LINES, '');
     }
 
-    // 恢复 条件注释 和 pre tagName
+    // 恢复 pre tagName
     dato.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
-
 
     if (options.replaceHTMLAttrResource) {
         var replaceHTMLAttrResourceRet = replaceHTMLAttrResource(file, {
@@ -183,8 +215,8 @@ module.exports = function (file, options) {
         resList = resList.concat(replaceHTMLAttrResourceRet.resList);
     }
 
-    if (options.replaceHTMLTagScript) {
-        var replaceHTMLTagScriptRet = replaceHTMLTagScript(file, {
+    if (options.replaceHTMLTagScriptCoolie) {
+        var replaceHTMLTagScriptCoolieRet = replaceHTMLTagScriptCoolie(file, {
             code: code,
             srcDirname: options.srcDirname,
             coolieConfigBase: options.coolieConfigBase,
@@ -200,9 +232,38 @@ module.exports = function (file, options) {
             signJS: options.signJS
         });
 
-        code = replaceHTMLTagScriptRet.code;
-        mainList = replaceHTMLTagScriptRet.mainList;
-        jsList = jsList.concat(replaceHTMLTagScriptRet.jsList);
+        code = replaceHTMLTagScriptCoolieRet.code;
+        mainList = mainList.concat(replaceHTMLTagScriptCoolieRet.mainList);
+        jsList = jsList.concat(replaceHTMLTagScriptCoolieRet.jsList);
+    }
+
+    if (options.replaceHTMLTagScriptAttr) {
+        var replaceHTMLTagScriptAttrRet = replaceHTMLTagScriptAttr(file, {
+            code: code,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destJSDirname: options.destJSDirname,
+            versionLength: options.versionLength,
+            mainVersionMap: options.mainVersionMap,
+            minifyJS: options.minifyJS,
+            signJS: options.signJS
+        });
+
+        code = replaceHTMLTagScriptAttrRet.code;
+        jsList = jsList.concat(replaceHTMLTagScriptAttrRet.jsList);
+    }
+
+    if (options.replaceHTMLTagScriptContent) {
+        var replaceHTMLTagScriptContentRet = replaceHTMLTagScriptContent(file, {
+            code: code,
+            srcDirname: options.srcDirname,
+            minifyJS: options.minifyJS,
+            signJS: options.signJS
+        });
+
+        code = replaceHTMLTagScriptContentRet.code;
+        jsList = jsList.concat(replaceHTMLTagScriptContentRet.jsList);
     }
 
     if (options.replaceHTMLTagLink) {
@@ -302,6 +363,69 @@ module.exports = function (file, options) {
 
 
 /**
+ * 匹配条件注释
+ * @param file
+ * @param options
+ * @param source
+ * @returns {{start: string, end: string, source: *}}
+ */
+var matchConditionsComments = function (file, options, source) {
+    var start = '';
+    dato.each(REG_CONDITIONS_COMMENTS_STARTS, function (index, reg) {
+        start = (source.match(reg) || [''])[0];
+
+        if (start) {
+            source = source.replace(reg, '');
+            return false;
+        }
+
+    });
+
+    var end = '';
+    dato.each(REG_CONDITIONS_COMMENTS_ENDS, function (index, reg) {
+        end = (source.match(reg) || [''])[0];
+
+        if (end) {
+            source = source.replace(reg, '');
+            return false;
+        }
+    });
+
+    return {
+        start: start,
+        end: end,
+        source: source
+    };
+};
+
+
+/**
+ * 压缩注释的 html
+ * @param file
+ * @param options
+ * @param matched
+ * @returns {*}
+ */
+function minifyConditionsComments(file, options, matched) {
+    var source = matched.source;
+    var start = matched.start;
+    var end = matched.end;
+    var options2 = dato.extend({}, options);
+
+    options2.code = source;
+    options2.signHTML = false;
+    //code: code,
+    //mainList: mainList,
+    //jsList: jsList,
+    //cssList: cssList,
+    //resList: resList
+    var realRet = minifyHTML(file, options2);
+    realRet.code = start + realRet.code + end;
+    return realRet;
+}
+
+
+/**
  * 生成随机唯一 KEY
  * @returns {string}
  * @private
@@ -311,4 +435,4 @@ function _generateKey() {
 }
 
 
-
+module.exports = minifyHTML;

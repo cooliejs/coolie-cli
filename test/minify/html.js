@@ -31,7 +31,9 @@ describe('minify/html.js', function () {
         var ret = minifyHTML(file, {
             code: code,
             replaceHTMLAttrResource: true,
-            replaceHTMLTagScript: true,
+            replaceHTMLTagScriptCoolie: true,
+            replaceHTMLTagScriptAttr: true,
+            replaceHTMLTagScriptContent: true,
             replaceHTMLTagStyleResource: true,
             replaceHTMLAttrStyleResource: true,
             replaceHTMLCoolieGroup: true,

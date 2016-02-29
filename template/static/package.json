@@ -1,0 +1,40 @@
+{
+  "name": "static-template",
+  "version": "0.0.1",
+  "private": true,
+  "description": "static-template description",
+  "scripts": {
+    "live-dev": "browser-sync start --config bs-config-dev.js",
+    "live-pro": "browser-sync start --config bs-config-pro.js",
+    "release": "coolie build -d webroot-dev && git add webroot-pro && git commit -am release && git push"
+  },
+  "preferGlobal": false,
+  "bin": {},
+  "engines": {
+    "node": ">= 0.10.0",
+    "iojs": ">= 1.0.0"
+  },
+  "main": "index.js",
+  "keywords": [
+    "cloudcome",
+    "ydr.me"
+  ],
+  "author": {
+    "name": "cloudcome",
+    "email": "cloudcome@163.com",
+    "url": "http://ydr.me"
+  },
+  "contributors": [],
+  "homepage": "https://github.com/static-template",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/static-template"
+  },
+  "bugs": {
+    "url": "https://github.com/static-template/issues"
+  },
+  "dependencies": {},
+  "peerDependencies": {},
+  "devDependencies": {},
+  "license": "MIT"
+}

@@ -32,6 +32,8 @@ describe('replace/html-attr-resource.js', function () {
         var REG_LINK = /<link[\s\S]*?href="\/static\/res\//;
         var REG_IMG = /<img[\s\S]*?src="\/static\/res\//;
 
+        console.log('---------------------------------------');
+        console.log(ret);
         assert.equal(REG_LINK.test(ret), true);
         assert.equal(REG_IMG.test(ret), true);
     });

@@ -33,8 +33,10 @@ describe('replace/html-coolie-group.js', function () {
             replaceCSSResource: true,
             minifyCSS: true,
             minifyJS: true
-        });
+        }).code;
 
+        console.log('\n\n-------------------------------');
+        console.log(ret);
         assert.equal(/<!--coolie-->/g.test(ret), false);
     });
 });

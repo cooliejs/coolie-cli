@@ -46,81 +46,69 @@ module.exports = function (options, callback) {
     }
 
     debug.success('install ' + name, url);
-    request.down({
-        url: url,
-        query: {
-            _: Date.now()
+    request.get({
+        url: url
+    }).on('error', function (err) {
+        debug.error('install ' + name, err.message);
+        process.exit(1);
+    }).pipe(tempStream).on('error', function (err) {
+        debug.error('install ' + name, err.message);
+        process.exit(1);
+    }).on('close', function () {
+        debug.ignore('unzip ' + name, tempFile);
+
+        var zip = new AdmZip(tempFile);
+        var unzipError = null;
+
+        try {
+            zip.extractAllTo(unzipDirname, true);
+        } catch (err) {
+            unzipError = err;
+            debug.error('unzip ' + name, unzipDirname);
+            debug.error('unzip ' + name, err.message);
         }
-    }, function (err, stream, res) {
-        if (err) {
-            debug.error('download ' + name, err.message);
+
+        if (unzipError) {
             return process.exit(1);
         }
 
-        if (res.statusCode !== 200) {
-            debug.error('download ' + name, 'response status code is ' + res.statusCode);
-            return process.exit(1);
-        }
+        if (options.type === 'file') {
+            // 目标目录 + 临时目录 + 所有文件
+            var globFile = path.join(options.destDirname, tempName, './**/*');
+            var files = glob.sync(globFile);
 
-        stream.pipe(tempStream).on('error', function (err) {
-            debug.success('install ' + name, err.message);
-            process.exit(1);
-        }).on('close', function () {
-            debug.ignore('unzip ' + name, tempFile);
-
-            var zip = new AdmZip(tempFile);
-            var unzipError = null;
-
-            try {
-                zip.extractAllTo(unzipDirname, true);
-            } catch (err) {
-                unzipError = err;
-                debug.error('unzip ' + name, unzipDirname);
-                debug.error('unzip ' + name, err.message);
-            }
-
-            if (unzipError) {
-                return process.exit(1);
-            }
-
-            if (options.type === 'file') {
-                // 目标目录 + 临时目录 + 所有文件
-                var globFile = path.join(options.destDirname, tempName, './**/*');
-                var files = glob.sync(globFile);
-
-                dato.each(files, function (index, file) {
-                    var basename = path.basename(file);
-                    var destPath = path.join(options.destDirname, basename);
-
-                    try {
-                        fse.copySync(file, destPath);
-                        debug.success(name + ' file', path.toSystem(destPath));
-                    } catch (err) {
-                        debug.error(name + ' file', path.toSystem(destPath));
-                        debug.error('copy error', err.message);
-                        return process.exit(1);
-                    }
-                });
+            dato.each(files, function (index, file) {
+                var basename = path.basename(file);
+                var destPath = path.join(options.destDirname, basename);
 
                 try {
-                    fse.removeSync(unzipDirname);
+                    fse.copySync(file, destPath);
+                    debug.success(name + ' file', path.toSystem(destPath));
                 } catch (err) {
-                    debug.error('remove tempfile', unzipDirname);
-                    debug.error('remove tempfile', err.message);
+                    debug.error(name + ' file', path.toSystem(destPath));
+                    debug.error('copy error', err.message);
+                    return process.exit(1);
                 }
-            } else {
-                debug.success(name + ' directory', path.toSystem(unzipDirname));
-            }
+            });
 
             try {
-                fse.removeSync(tempFile);
+                fse.removeSync(unzipDirname);
             } catch (err) {
-                debug.error('remove tempfile', tempFile);
+                debug.error('remove tempfile', unzipDirname);
                 debug.error('remove tempfile', err.message);
             }
+        } else {
+            debug.success(name + ' directory', path.toSystem(unzipDirname));
+        }
 
-            callback(null, unzipDirname);
-        });
+        try {
+            fse.removeSync(tempFile);
+        } catch (err) {
+            debug.error('remove tempfile', tempFile);
+            debug.error('remove tempfile', err.message);
+        }
+
+        callback(null, unzipDirname);
     });
 };
 

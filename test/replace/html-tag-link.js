@@ -30,11 +30,10 @@ describe('replace/html-tag-link.js', function () {
             destResourceDirname: destResourceDirname
         });
 
-        console.log('===========================\n');
-        console.log(JSON.stringify(ret, null, 4));
+        console.log('\n\n-----------------------------------------');
+        console.log(ret.code);
         assert.equal(/\n/.test(ret.code), false);
         assert.equal(ret.cssList.length > 0, true);
-        console.log('\n===========================');
     });
 });
 

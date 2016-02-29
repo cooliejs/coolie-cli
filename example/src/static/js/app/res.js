@@ -13,4 +13,5 @@ define(function (require, exports, module) {
     'use strict';
 
     require('../libs1/html.html', 'html');
+    require('../../fonts/tinymce.woff', 'file');
 });

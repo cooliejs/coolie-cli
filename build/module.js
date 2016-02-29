@@ -16,7 +16,6 @@ var encryption = require('ydr-utils').encryption;
 var parseCMDRequire = require('../parse/cmd-require.js');
 var reader = require('../utils/reader.js');
 var globalId = require('../utils/global-id.js');
-var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
 var replaceAMDRequire = require('../replace/amd-require.js');
 var replaceAMDDefine = require('../replace/amd-define.js');
@@ -83,18 +82,11 @@ module.exports = function (file, options) {
         process.exit(1);
     }
 
-    //[{ id: '/Users/cloudcome/development/github/nodejs-coolie/example/src/static/js/libs1/path1/path2/index.js|js',
-    //file: '/Users/cloudcome/development/github/nodejs-coolie/example/src/static/js/libs1/path1/path2/index.js',
-    //gid: '1',
-    //raw: '../libs1/path1/path2/',
-    //name: '../libs1/path1/path2/index.js',
-    //inType: 'js',
-    //outType: 'js' }]
-
     // 分析 require.async()
     var asyncRequires = parseCMDRequire(file, {
         code: code,
-        async: true
+        async: true,
+        srcDirname: options.srcDirname
     });
     var asyncName2IdMap = {};
 
@@ -106,7 +98,8 @@ module.exports = function (file, options) {
     // 分析 require()
     var syncRequires = parseCMDRequire(file, {
         code: code,
-        async: false
+        async: false,
+        srcDirname: options.srcDirname
     });
     var syncName2IdMap = {};
     var syncDepFileMap = {};

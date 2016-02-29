@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "1.2.0",
+  "version": "1.6.19",
   "description": "The front-end development builder.",
   "preferGlobal": true,
   "bin": {
@@ -21,6 +21,8 @@
     "AMDJS",
     "package",
     "module",
+    "coolie-cli",
+    "coolie.js",
     "coolie",
     "builder",
     "nodejs",
@@ -44,6 +46,10 @@
         "type": "file",
         "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/coolie.zip"
       },
+      "coolie.js": {
+        "type": "file",
+        "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/coolie.zip"
+      },
       "alien": {
         "type": "directory",
         "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/alien.zip"
@@ -56,10 +62,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/cloudcome/nodejs-coolie"
+    "url": "https://github.com/cooliejs/coolie-cli"
   },
   "bugs": {
-    "url": "https://github.com/cloudcome/nodejs-coolie/issues"
+    "url": "https://github.com/cooliejs/coolie-cli/issues"
   },
   "licenses": "MIT",
   "dependencies": {
@@ -70,7 +76,7 @@
     "howdo": "^2.0.2",
     "open": "0.0.5",
     "uglify-js": "^2.5.0",
-    "ydr-utils": "^35.2.5"
+    "ydr-utils": "^41.2.9"
   },
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha -c --recursive --ui bdd test -t 0"

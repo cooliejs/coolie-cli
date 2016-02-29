@@ -7,29 +7,15 @@
 
 'use strict';
 
-var fse = require('fs-extra');
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
-var debug = require('ydr-utils').debug;
-var typeis = require('ydr-utils').typeis;
-var encryption = require('ydr-utils').encryption;
 
-var htmlAttr = require('../utils/html-attr.js');
-var pathURI = require('../utils/path-uri.js');
 var copy = require('../utils/copy.js');
-var sign = require('../utils/sign.js');
-var reader = require('../utils/reader.js');
-var minifyCSS = require('../minify/css.js');
+var parseHTML = require('../parse/html.js');
+var buildCSSPath = require('../build/css-path.js');
 
 
 var COOLIE_IGNORE = 'coolieignore';
-var CSS_RELS = {
-    'stylesheet': true
-};
-var REG_LINK = /<link\b[\s\S]*?>/ig;
-var minifyPathmap = {};
-var minifyCSSmap = {};
-var resourceMap = {};
 var defaults = {
     code: '',
     srcDirname: null,
@@ -64,99 +50,53 @@ var defaults = {
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
     var code = options.code;
-    var resList = [];
     var cssList = [];
 
-    code = code.replace(REG_LINK, function (source) {
-        var ignore = htmlAttr.get(source, COOLIE_IGNORE);
-
-        if (ignore) {
-            source = htmlAttr.remove(source, COOLIE_IGNORE);
-            return source;
+    code = parseHTML(code).match({
+        tag: 'link',
+        attrs: {
+            rel: 'stylesheet'
+        }
+    }, function (node) {
+        if (!node.attrs || !node.attrs.href) {
+            return node;
         }
 
-        var rel = htmlAttr.get(source, 'rel');
-        var href = htmlAttr.get(source, 'href');
-
-        if (rel === true || !rel) {
-            rel = 'stylesheet';
+        if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
+            node.attrs[COOLIE_IGNORE] = null;
+            return node;
         }
 
-        if (href === true) {
-            href = '';
+        var href = node.attrs.href;
+
+        var ret = buildCSSPath(href, {
+            file: file,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destHost: options.destHost,
+            destResourceDirname: options.destResourceDirname,
+            destCSSDirname: options.destCSSDirname,
+            minifyResource: options.minifyResource,
+            minifyCSS: options.minifyCSS,
+            versionLength: options.versionLength,
+            signCSS: options.signCSS,
+            cleanCSSOptions: options.cleanCSSOptions
+        });
+
+        if (!ret) {
+            return node;
         }
 
-        var isCSSlink = CSS_RELS[rel];
-
-        if (isCSSlink && href) {
-            var isRelatived = pathURI.isRelatived(href);
-
-            if (!isRelatived) {
-                return source;
-            }
-
-            var srcPath = pathURI.toAbsoluteFile(href, file, options.srcDirname);
-            var destPath = minifyPathmap[srcPath];
-            var destURI = minifyCSSmap[srcPath];
-            resList = resourceMap[srcPath];
-
-            if (!destURI) {
-                var srcCode = reader(srcPath, 'utf8');
-                var destCode = srcCode;
-
-                if (options.minifyCSS) {
-                    var minifyCSSRet = minifyCSS(srcPath, {
-                        code: srcCode,
-                        cleanCSSOptions: options.cleanCSSOptions,
-                        versionLength: options.versionLength,
-                        srcDirname: options.srcDirname,
-                        destDirname: options.destDirname,
-                        destHost: options.destHost,
-                        destResourceDirname: options.destResourceDirname,
-                        minifyResource: options.minifyResource,
-                        replaceCSSResource: true
-                    });
-                    destCode = minifyCSSRet.code;
-                    resList = minifyCSSRet.resList;
-                }
-
-                var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
-
-                destPath = path.join(options.destCSSDirname, destVersion + '.css');
-                destURI = pathURI.toRootURL(destPath, options.destDirname);
-                destURI = pathURI.joinURI(options.destHost, destURI);
-
-                if (options.signCSS) {
-                    destCode = sign('css') + '\n' + destCode;
-                }
-
-                try {
-                    fse.outputFileSync(destPath, destCode, 'utf8');
-                    minifyPathmap[srcPath] = destPath;
-                    minifyCSSmap[srcPath] = destURI;
-                    resourceMap[srcPath] = resList;
-                    debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
-                } catch (err) {
-                    debug.error('write file', path.toSystem(destPath));
-                    debug.error('write file', err.message);
-                    return process.exit(1);
-                }
-            }
-
-            cssList.push({
-                destPath: destPath,
-                dependencies: [{
-                    srcPath: srcPath,
-                    resList: resList
-                }]
-            });
-
-            source = htmlAttr.set(source, 'href', destURI);
-            return source;
-        }
-
-        return source;
-    });
+        cssList.push({
+            destPath: ret.destFile,
+            dependencies: [{
+                srcPath: ret.srcFile,
+                resList: ret.resList
+            }]
+        });
+        node.attrs.href = ret.url;
+        return node;
+    }).exec();
 
     return {
         code: code,

@@ -9,13 +9,11 @@
 
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
-var path = require('ydr-utils').path;
 
-var htmlAttr = require('../utils/html-attr.js');
+var parseHTML = require('../parse/html.js');
 var replaceCSSResource = require('./css-resource.js');
 
-var COOLIE_IGNOE = 'coolieignore';
-var REG_TAG = /<([a-z][a-z\d]*?)\b[\s\S]*?>/gi;
+var COOLIE_IGNORE = 'coolieignore';
 var REG_LINES = /[\n\r]/g;
 var REG_SPACES = /\s+/g;
 var defaults = {
@@ -49,16 +47,19 @@ module.exports = function (file, options) {
     var code = options.code;
     var resList = [];
 
-    // style=""
-    code = code.replace(REG_TAG, function (source, tagName) {
-        var ignore = htmlAttr.get(source, COOLIE_IGNOE);
-        var styleCode = htmlAttr.get(source, 'style');
-
-        if (ignore || (!styleCode || styleCode === true)) {
-            source = htmlAttr.remove(source, COOLIE_IGNOE);
-            return source;
+    code = parseHTML(code).match({
+        tag: '*'
+    }, function (node) {
+        if (!node.attrs.style) {
+            return node;
         }
 
+        if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
+            node.attrs[COOLIE_IGNORE] = null;
+            return node;
+        }
+
+        var styleCode = node.attrs.style;
         var replaceCSSResourceRet = replaceCSSResource(file, {
             code: styleCode,
             destCSSDirname: null,
@@ -76,10 +77,9 @@ module.exports = function (file, options) {
             styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
         }
 
-        source = htmlAttr.set(source, 'style', styleCode);
-
-        return source;
-    });
+        node.attrs.style = styleCode;
+        return node;
+    }).exec();
 
     return {
         code: code,

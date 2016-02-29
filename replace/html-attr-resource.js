@@ -9,16 +9,15 @@
 
 var fs = require('fs-extra');
 var path = require('ydr-utils').path;
-var string = require('ydr-utils').string;
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 
-var htmlAttr = require('../utils/html-attr.js');
-var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
+var buildResPath = require('../build/res-path.js');
+var parseHTML = require('../parse/html.js');
 
-var coolieIgnore = 'coolieignore';
+var COOLIE_IGNORE = 'coolieignore';
 var linkRelList = [
     /apple-touch-icon/,
     /apple-touch-icon-precomposed/,
@@ -39,6 +38,19 @@ var regList = [{
 }, {
     reg: /<(source)\b[\s\S]*?>(?!["'])/gi,
     replaceAttrs: ['srcset']
+}];
+var replaceList = [{
+    tags: ['link'],
+    attr: 'href'
+}, {
+    tags: ['embed', 'audio', 'video', 'source', 'img'],
+    attr: 'src'
+}, {
+    tags: ['object'],
+    attr: 'data'
+}, {
+    tags: ['source'],
+    attr: 'srcset'
 }];
 var defaults = {
     code: '',
@@ -69,74 +81,64 @@ module.exports = function (file, options) {
     var code = options.code;
     var resList = [];
     var resMap = {};
+    var parser = parseHTML(code);
 
-    // 标签替换，如 <img src="
-    regList.forEach(function (item) {
-        code = code.replace(item.reg, function (tag, tagName) {
-            var find = true;
+    dato.each(replaceList, function (index, item) {
+        var attr = item.attr;
 
-            switch (tagName) {
+        parser.match({
+            tag: item.tags
+        }, function (node) {
+            if (!node.attrs[attr]) {
+                return node;
+            }
+
+            if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
+                node.attrs[COOLIE_IGNORE] = null;
+                return node;
+            }
+
+            var isResourceTag = true;
+
+            switch (node.tag) {
                 case 'link':
-                    find = false;
-                    var linkRel = htmlAttr.get(tag, 'rel');
-
+                    var linkRel = node.attrs.rel;
+                    isResourceTag = false;
                     dato.each(linkRelList, function (index, regRel) {
-                        find = regRel.test(linkRel);
-                        return !find;
+                        isResourceTag = regRel.test(linkRel);
+                        return !isResourceTag;
                     });
                     break;
             }
 
-            if (!find) {
-                return tag;
+            if (!isResourceTag) {
+                return node;
             }
 
-            if (htmlAttr.get(tag, coolieIgnore)) {
-                return htmlAttr.remove(tag, coolieIgnore);
-            }
-
-            item.replaceAttrs.forEach(function (attr) {
-                var value = htmlAttr.get(tag, attr);
-
-                // 属性值为空
-                if (value === true) {
-                    return tag;
-                }
-
-                var pathRet = pathURI.parseURI2Path(value);
-
-                // 不存在路径 || URL
-                if (!value || pathURI.isURL(pathRet.path)) {
-                    return tag;
-                }
-
-                var absFile = pathURI.toAbsoluteFile(pathRet.path, file, options.srcDirname);
-                var resFile = copy(absFile, {
-                    version: true,
-                    copyPath: false,
-                    versionLength: options.versionLength,
-                    srcDirname: options.srcDirname,
-                    destDirname: options.destResourceDirname,
-                    logType: 1,
-                    embedFile: file,
-                    embedCode: tag
-                });
-                var resRelative = path.relative(options.destDirname, resFile);
-                var url = pathURI.joinURI(options.destHost, resRelative);
-
-                if (!resMap[absFile]) {
-                    resList.push(absFile);
-                }
-
-                tag = htmlAttr.set(tag, attr, url + pathRet.suffix);
+            var ret = buildResPath(node.attrs[attr], {
+                file: file,
+                versionLength: options.versionLength,
+                srcDirname: options.srcDirname,
+                destDirname: options.destDirname,
+                destResourceDirname: options.destResourceDirname,
+                destHost: options.destHost
             });
 
-            return tag;
+            if (!ret) {
+                return node;
+            }
+
+            if (!resMap[ret.srcFile]) {
+                resList.push(ret.srcFile);
+            }
+
+            node.attrs[attr] = ret.url;
+            return node;
         });
     });
 
     return {
-        code: code,
+        code: parser.exec(),
         resList: resList
     };
 };

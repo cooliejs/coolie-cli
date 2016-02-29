@@ -3,17 +3,17 @@
 [![Build Status][travis-img]][travis-url] 
 [![coolie][shields-img]][shields-url]
 
-[travis-img]: https://travis-ci.org/cloudcome/nodejs-coolie.svg?branch=master
-[travis-url]: https://travis-ci.org/cloudcome/nodejs-coolie
+[travis-img]: https://travis-ci.org/cooliejs/coolie-cli.svg?branch=master
+[travis-url]: https://travis-ci.org/cooliejs/coolie-cli
 [shields-img]: https://img.shields.io/npm/v/coolie.svg
 [shields-url]: https://www.npmjs.com/package/coolie
 
 __The front-end development builder.__
 
-__前端开发构建工具。__配合[coolie.js](https://github.com/cloudcome/coolie)（模块加载器）完成前端工程化构建。
+__前端开发构建工具。__配合[coolie.js](https://github.com/cooliejs/coolie.js)（模块加载器）完成前端工程化构建。
 
 
-- coolie 官方指南 <http://coolie.ydr.me/>
+- coolie 官方指南 <https://coolie.ydr.me/>
 - 社区 <http://FrontEndDev.org/>
 
 
@@ -35,24 +35,26 @@ npm install -g coolie
 # 使用方法
 ```
 
-                               oooo   o8o
-                               `888   `"'
-  .ooooo.   .ooooo.   .ooooo.   888  oooo   .ooooo.
- d88' `"Y8 d88' `88b d88' `88b  888  `888  d88' `88b
- 888       888   888 888   888  888   888  888ooo888
- 888   .o8 888   888 888   888  888   888  888    .o
- `Y8bod8P' `Y8bod8P' `Y8bod8P' o888o o888o `Y8bod8P'
+                                  oooo    o8o
+                                  `888    `"'
+  .ooooo.    .ooooo.    .ooooo.    888   oooo    .ooooo.
+ d88' `"Y8  d88' `88b  d88' `88b   888   `888   d88' `88b
+ 888        888   888  888   888   888    888   888ooo888
+ 888   .o8  888   888  888   888   888    888   888    .o
+ `Y8bod8P'  `Y8bod8P'  `Y8bod8P'  o888o  o888o  `Y8bod8P'
 
-╔═══════════════════════════════════════════════════╗
-║   coolie@1.0.0                                    ║
-║   The front-end development builder.              ║
-╚═══════════════════════════════════════════════════╝
+┌────────────────────────────────────┐
+│ coolie-cli                         │
+│ coolie@1.6.14                      │
+│ The front-end development builder. │
+└────────────────────────────────────┘
 
 1. Command
    build                  >> build a front-end project
    book                   >> open coolie book in default browser
    install <module>       >> install a coolie module
    init                   >> initial configuration file
+   create                 >> create a project template
    help                   >> show help information
    version                >> show version information
 
@@ -60,5 +62,7 @@ npm install -g coolie
    -d --dirname           >> specified a directory
    -j --coolie.js         >> initial configuration file of `coolie.js`
    -c --coolie-cli        >> initial configuration file of `coolie-cli`
-   
+   -e --express           >> create a express sample
+   -s --static            >> create a static sample
+   -h --help              >> show help infomation with command
 ```
