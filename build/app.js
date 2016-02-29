@@ -81,11 +81,14 @@ module.exports = function (options) {
     var appMap = {};
 
     // 1、分析 main
+    debug.ignore('build app', 'parse main and async modules');
     var mainMap = parseMain({
         glob: options.glob,
         srcDirname: options.srcDirname,
         globOptions: options.globOptions
     });
+    debug.success('mainMap', mainMap);
+    return process.exit();
     var mainLength = Object.keys(mainMap).length;
 
     if (!mainLength) {
