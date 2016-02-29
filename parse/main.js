@@ -47,7 +47,7 @@ module.exports = function (options) {
         try {
             code = reader(mainFile, 'utf8');
         } catch (err) {
-            debug.error('parse main', path.toSystem(mainFile));
+            debug.error('read main', path.toSystem(mainFile));
             process.exit();
         }
 
