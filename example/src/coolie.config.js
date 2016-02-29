@@ -7,7 +7,8 @@ module.exports = function (coolie) {
         clean: true,
         "js": {
             "main": [
-                "/static/js/app/res.js"
+                //"/static/js/app/res.js",
+                "/static/js/app/webuploader.js",
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
@@ -20,7 +21,8 @@ module.exports = function (coolie) {
         },
         "html": {
             "src": [
-                "./html/123.html"
+                "./html/123.html",
+                "./html/webuploader.html"
             ],
             "minify": true
         },
