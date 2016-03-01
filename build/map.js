@@ -91,7 +91,7 @@ module.exports = function (options) {
 
         coolieMap[htmlURI] = {
             main: [],
-            async: [],
+            //async: [],
             js: [],
             css: []
         };
