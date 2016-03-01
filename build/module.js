@@ -74,7 +74,7 @@ module.exports = function (file, options) {
     // 读取模块内容
     var code;
     try {
-        code = reader(file, 'utf8');
+        code = reader(file, 'utf8', options.parent);
     } catch (err) {
         debug.error('build module', path.toSystem(options.file));
         debug.error('main module', path.toSystem(options.main));
