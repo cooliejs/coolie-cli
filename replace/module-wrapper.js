@@ -180,6 +180,7 @@ var defaults = {
     destResourceDirname: null,
     destHost: '/',
     versionLength: 32,
+    parent: null,
     minifyResource: true,
     cleanCSSOptions: null,
     removeHTMLYUIComments: true,
@@ -204,6 +205,7 @@ var defaults = {
  * @param options.destResourceDirname {String} 目标资源目录
  * @param options.destHost {String} 目标域
  * @param options.versionLength {Number} 版本号长度
+ * @param options.parent {String} 父级文件
  * @param [options.minifyResource] {Boolean} 是否压缩静态资源
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
@@ -219,7 +221,7 @@ module.exports = function (file, options) {
     var extname = path.extname(file);
     var code = options.code ?
         options.code :
-        (['image', 'file'].indexOf(options.inType) > -1 ? null : reader(file, 'utf8'));
+        (['image', 'file'].indexOf(options.inType) > -1 ? null : reader(file, 'utf8', options.parent));
     var options2 = dato.extend(options, {
         code: code
     });

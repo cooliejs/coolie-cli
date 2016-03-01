@@ -170,6 +170,7 @@ module.exports = function (file, options) {
                 destResourceDirname: options.destResourceDirname,
                 destHost: options.destHost,
                 versionLength: options.versionLength,
+                parent: options.parent,
                 minifyResource: options.minifyResource,
                 cleanCSSOptions: options.cleanCSSOptions,
                 uglifyJSOptions: options.uglifyJSOptions,
