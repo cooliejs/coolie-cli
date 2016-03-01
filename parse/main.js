@@ -11,10 +11,13 @@ var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
+var random = require('ydr-utils').random;
 
 var reader = require('../utils/reader.js');
+var pathURI = require('../utils/path-uri.js');
 var parseCMDRequire = require('./cmd-require.js');
 
+var ENCODING = 'utf8';
 var defaults = {
     glob: [],
     globOptions: {
@@ -35,7 +38,6 @@ module.exports = function (options) {
     options = dato.extend({}, defaults, options);
 
     var mainMap = {};
-
     // 入口文件
     var mainFiles = path.glob(options.glob, {
         globOptions: options.globOptions,
@@ -77,15 +79,22 @@ module.exports = function (options) {
 
             if (mainFilesMap[file]) {
                 mainMap[file] = {
-                    async: false,
-                    parent: null
+                    async: false
                 };
             }
 
             dato.each(requireAsyncList, function (index, asyncMeta) {
-                mainMap[asyncMeta.file] = {
+                // 将 async 模块虚拟出来
+                var virtualName = '[cooolie-virtual]'+random.string(20) + random.guid();
+                var virtualFile = pathURI.replaceVersion(asyncMeta.file, virtualName);
+                var virtualCode = 'define(function(require){require('+asyncMeta.raw+')});';
+                var virtualBuffer = new Buffer(virtualCode, ENCODING);
+
+                reader.setCache(virtualFile, ENCODING, virtualBuffer);
+                mainMap[virtualFile] = {
                     async: true,
-                    parent: file
+                    parent: file,
+                    origin: asyncMeta.file
                 };
             });
 
