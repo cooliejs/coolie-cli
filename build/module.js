@@ -60,6 +60,7 @@ var defaults = {
  * @param options.minifyResource {Boolean} 压缩静态资源
  * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.cleanCSSOptions {Object} clean-css 配置
+ * @param options.virtualMap {Object} 虚拟
  * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
@@ -70,6 +71,7 @@ module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
 
     var resList = [];
+    var virtualMap = options.virtualMap;
 
     // 读取模块内容
     var code;
@@ -91,7 +93,9 @@ module.exports = function (file, options) {
     var asyncName2IdMap = {};
 
     dato.each(asyncRequires, function (index, item) {
-        asyncName2IdMap[item.raw] = item.gid;
+        var replacedFile = virtualMap[item.file] || item.file;
+
+        asyncName2IdMap[item.raw] = globalId.get(replacedFile, item.outType);
     });
 
 
@@ -101,9 +105,6 @@ module.exports = function (file, options) {
         async: false,
         srcDirname: options.srcDirname
     });
-    debug.error('file', file);
-    debug.error('asyncRequires', asyncRequires);
-    debug.error('syncRequires', syncRequires);
     var syncName2IdMap = {};
     var syncDepFileMap = {};
     var depGidList = [];

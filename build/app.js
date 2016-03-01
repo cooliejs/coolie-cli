@@ -98,7 +98,8 @@ module.exports = function (options) {
             chunkVersionMap: chunkVersionMap,
             asyncVersionMap: asyncVersionMap,
             appMap: appMap,
-            mainMap: mainMap
+            mainMap: mainMap,
+            virtualMap: virtualMap
         };
     }
 
@@ -140,7 +141,8 @@ module.exports = function (options) {
             removeHTMLYUIComments: options.removeHTMLYUIComments,
             removeHTMLLineComments: options.removeHTMLLineComments,
             joinHTMLSpaces: options.joinHTMLSpaces,
-            removeHTMLBreakLines: options.removeHTMLBreakLines
+            removeHTMLBreakLines: options.removeHTMLBreakLines,
+            virtualMap: virtualMap
         });
         var dependencies = buildMainRet.dependencies;
         var resList = buildMainRet.resList;

@@ -91,6 +91,8 @@ module.exports = function (options) {
                 var virtualCode = 'define(function(require){return require("' + asyncMeta.raw + '")})';
                 var virtualBuffer = new Buffer(virtualCode, ENCODING);
 
+                //debug.info('code', code);
+                //debug.info('asyncMeta', asyncMeta);
                 reader.setCache(virtualFile, ENCODING, virtualBuffer);
                 virtualMap[asyncMeta.file] = virtualFile;
                 mainMap[virtualFile] = {
