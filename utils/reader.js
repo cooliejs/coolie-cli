@@ -58,3 +58,14 @@ module.exports = function (file, encoding, embedFile) {
     return encoding === 'binary' ? bf : bf.toString(encoding);
 };
 
+
+/**
+ * 主动设置缓存
+ * @param file
+ * @param encoding
+ * @param buffer
+ */
+module.exports.setCache = function (file, encoding, buffer) {
+    bufferMap[encoding] = bufferMap[encoding] || {};
+    bufferMap[encoding][file] = buffer;
+};

@@ -1,7 +1,7 @@
 define(function (require, exports, module) {
     'use strict';
 
-    require.async('../libs2/all-1-2.js');
+    require.async('../libs1/all-1-2.js');
 
     //require('../libs1/all.js');
     ////require('../libs2/some.css', 'css');
