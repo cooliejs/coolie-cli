@@ -87,7 +87,6 @@ module.exports = function (options) {
         srcDirname: options.srcDirname,
         globOptions: options.globOptions
     });
-    debug.success('mainMap', mainMap);
     var mainLength = Object.keys(mainMap).length;
 
     if (!mainLength) {
@@ -107,6 +106,7 @@ module.exports = function (options) {
         return process.exit(1);
     }
 
+    debug.ignore('build app', 'will build ' + mainLength + ' modules');
     // 2、分析 chunk
     // chunk => index
     var chunkFileMap = parseChunk({
