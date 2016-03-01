@@ -14,4 +14,5 @@ define(function (require, exports, module) {
 
     require('./all-1-1.js');
     require('./all-1-2.js');
+    module.exports = '/libs1/all-1.js';
 });

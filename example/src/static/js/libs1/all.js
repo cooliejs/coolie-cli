@@ -5,11 +5,12 @@
  */
 
 
-define(function (require) {
+define(function (require, exports, module) {
     /**
      * @module libs/all
      */
     'use strict';
 
     require.async('./all-1.js');
+    module.exports = '/libs1/all.js';
 });

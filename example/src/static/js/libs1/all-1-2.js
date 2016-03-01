@@ -12,5 +12,5 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    module.exports = {};
+    module.exports = '/libs1/all-1-2.js';
 });
