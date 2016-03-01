@@ -10,6 +10,7 @@ module.exports = function (coolie) {
                 //"/static/js/app/res.js",
                 //"/static/js/app/webuploader.js",
                 "/static/js/app/async.js",
+                "/static/js/app/async-2.js",
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
@@ -23,6 +24,7 @@ module.exports = function (coolie) {
         "html": {
             "src": [
                 "./html/async.html",
+                "./html/async-2.html",
                 //"./html/123.html",
             ],
             "minify": true

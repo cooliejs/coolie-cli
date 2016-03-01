@@ -88,7 +88,8 @@ module.exports = function (options) {
                 // 将 async 模块虚拟出来
                 var virtualName = '[coolie-virtual-file]' + random.guid();
                 var virtualFile = pathURI.replaceVersion(asyncMeta.file, virtualName);
-                var virtualCode = 'define(function(require){return require("' + asyncMeta.raw + '")})';
+                var rawName = path.basename(asyncMeta.raw);
+                var virtualCode = 'define(function(require){return require("./' + rawName + '")})';
                 var virtualBuffer = new Buffer(virtualCode, ENCODING);
 
                 //debug.info('code', code);
