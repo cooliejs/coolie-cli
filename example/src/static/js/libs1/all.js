@@ -11,4 +11,5 @@ define(function (require) {
      */
     'use strict';
 
+    require.async('./all-1.js');
 });

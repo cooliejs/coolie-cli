@@ -42,34 +42,54 @@ module.exports = function (options) {
         srcDirname: options.srcDirname
     });
 
-    dato.each(mainFiles, function (index, mainFile) {
-        var code;
-        try {
-            code = reader(mainFile, 'utf8');
-        } catch (err) {
-            debug.error('read main', path.toSystem(mainFile));
-            process.exit();
-        }
+    /**
+     * 分析模块
+     * @param mainFiles
+     */
+    function parseModules(mainFiles) {
+        dato.each(mainFiles, function (index, mainFile) {
+            var code;
+            try {
+                code = reader(mainFile, 'utf8');
+            } catch (err) {
+                debug.error('read module', path.toSystem(mainFile));
+                process.exit();
+            }
 
-        var requireAsyncList = parseCMDRequire(mainFile, {
-            code: code,
-            async: true,
-            srcDirname: options.srcDirname
-        });
-
-        mainMap[mainFile] = {
-            async: false,
-            requireAsyncList: requireAsyncList
-        };
-
-        dato.each(requireAsyncList, function (index, ayncMeta) {
-            mainMap[ayncMeta.file] = {
+            // require.async()
+            var requireAsyncList = parseCMDRequire(mainFile, {
+                code: code,
                 async: true,
+                srcDirname: options.srcDirname
+            });
+
+            // require()
+            var requireSyncList = parseCMDRequire(mainFile, {
+                code: code,
+                async: false,
+                srcDirname: options.srcDirname
+            });
+
+            mainMap[mainFile] = {
+                async: false,
                 requireAsyncList: []
             };
-        });
-    });
 
+            dato.each(requireAsyncList, function (index, asyncMeta) {
+                debug.success('ayncMeta', asyncMeta);
+                mainMap[asyncMeta.file] = {
+                    async: true,
+                    requireAsyncList: []
+                };
+            });
+
+            dato.each(requireSyncList, function (index, syncMeta) {
+                parseModules([syncMeta.file]);
+            });
+        });
+    }
+
+    parseModules(mainFiles);
     return mainMap;
 };
 
