@@ -41,45 +41,51 @@ module.exports = function (options) {
         globOptions: options.globOptions,
         srcDirname: options.srcDirname
     });
+    var mainFilesMap = {};
+
+    dato.each(mainFiles, function (mainFile) {
+        mainFilesMap[mainFile] = true;
+    });
 
     /**
      * 分析模块
-     * @param mainFiles
+     * @param files
      */
-    function parseModules(mainFiles) {
-        dato.each(mainFiles, function (index, mainFile) {
+    function parseModules(files) {
+        dato.each(files, function (index, file) {
             var code;
             try {
-                code = reader(mainFile, 'utf8');
+                code = reader(file, 'utf8');
             } catch (err) {
-                debug.error('read module', path.toSystem(mainFile));
+                debug.error('read module', path.toSystem(file));
                 process.exit();
             }
 
             // require.async()
-            var requireAsyncList = parseCMDRequire(mainFile, {
+            var requireAsyncList = parseCMDRequire(file, {
                 code: code,
                 async: true,
                 srcDirname: options.srcDirname
             });
 
             // require()
-            var requireSyncList = parseCMDRequire(mainFile, {
+            var requireSyncList = parseCMDRequire(file, {
                 code: code,
                 async: false,
                 srcDirname: options.srcDirname
             });
 
-            mainMap[mainFile] = {
-                async: false,
-                requireAsyncList: []
-            };
+            if (mainFilesMap[file]) {
+                mainMap[file] = {
+                    async: false,
+                    parent: null
+                };
+            }
 
             dato.each(requireAsyncList, function (index, asyncMeta) {
-                debug.success('ayncMeta', asyncMeta);
                 mainMap[asyncMeta.file] = {
                     async: true,
-                    requireAsyncList: []
+                    parent: file
                 };
             });
 
