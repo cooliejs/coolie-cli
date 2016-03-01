@@ -23,22 +23,22 @@ var bufferMap = {};
  * @returns {*}
  */
 module.exports = function (file, encoding, embedFile) {
-    if (!typeis.file(file)) {
-        debug.error('read file', path.toSystem(file));
-        debug.error('read file', 'no such file');
-
-        if (embedFile) {
-            debug.error('embed file', path.toSystem(embedFile));
-        }
-
-        process.exit(1);
-    }
-
     encoding = encoding || 'binary';
     bufferMap[encoding] = bufferMap[encoding] || {};
     var bf = bufferMap[encoding][file];
 
     if (!bf) {
+        if (!typeis.file(file)) {
+            debug.error('read file', path.toSystem(file));
+            debug.error('read file', 'no such file');
+
+            if (embedFile) {
+                debug.error('embed file', path.toSystem(embedFile));
+            }
+
+            process.exit(1);
+        }
+
         try {
             var ret = fs.readFileSync(file, encoding);
 
