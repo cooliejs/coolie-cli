@@ -11,6 +11,6 @@ define(function (require, exports, module) {
      */
     'use strict';
 
-    require.async('./all-1.js');
+    //require.async('./all-1.js');
     module.exports = '/libs1/all.js';
 });

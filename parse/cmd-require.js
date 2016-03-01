@@ -190,7 +190,8 @@ module.exports = function (file, options) {
                 raw: $2,
                 name: name,
                 inType: inType,
-                outType: outType
+                outType: outType,
+                async: options.async
             };
 
             requires.push(dep);

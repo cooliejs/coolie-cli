@@ -90,8 +90,6 @@ module.exports = function (file, options) {
     });
     var asyncName2IdMap = {};
 
-    debug.error('file', file);
-    debug.error('asyncRequires', asyncRequires);
     dato.each(asyncRequires, function (index, item) {
         asyncName2IdMap[item.raw] = item.gid;
     });
@@ -103,6 +101,9 @@ module.exports = function (file, options) {
         async: false,
         srcDirname: options.srcDirname
     });
+    debug.error('file', file);
+    debug.error('asyncRequires', asyncRequires);
+    debug.error('syncRequires', syncRequires);
     var syncName2IdMap = {};
     var syncDepFileMap = {};
     var depGidList = [];
