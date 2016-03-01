@@ -85,9 +85,9 @@ module.exports = function (options) {
 
             dato.each(requireAsyncList, function (index, asyncMeta) {
                 // 将 async 模块虚拟出来
-                var virtualName = '[cooolie-virtual]'+random.string(20) + random.guid();
+                var virtualName = '[cooolie-virtual]' + random.string(20) + random.guid();
                 var virtualFile = pathURI.replaceVersion(asyncMeta.file, virtualName);
-                var virtualCode = 'define(function(require){require('+asyncMeta.raw+')});';
+                var virtualCode = 'define(function(require){require(' + asyncMeta.raw + ')});';
                 var virtualBuffer = new Buffer(virtualCode, ENCODING);
 
                 reader.setCache(virtualFile, ENCODING, virtualBuffer);
