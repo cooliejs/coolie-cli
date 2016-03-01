@@ -93,6 +93,7 @@ module.exports = function (file, options) {
     var asyncName2IdMap = {};
 
     dato.each(asyncRequires, function (index, item) {
+        // 虚拟文件
         var replacedFile = virtualMap[item.file] || item.file;
 
         asyncName2IdMap[item.raw] = globalId.get(replacedFile, item.outType);
