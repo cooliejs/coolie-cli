@@ -43,7 +43,7 @@ module.exports = function (options) {
     });
     var mainFilesMap = {};
 
-    dato.each(mainFiles, function (mainFile) {
+    dato.each(mainFiles, function (index, mainFile) {
         mainFilesMap[mainFile] = true;
     });
 
