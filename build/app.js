@@ -109,6 +109,7 @@ module.exports = function (options) {
     debug.ignore('build app', 'will build ' + mainLength + ' modules');
     // 2、分析 chunk
     // chunk => index
+    debug.ignore('build app', 'parse chunk modules');
     var chunkFileMap = parseChunk({
         chunk: options.chunk,
         srcDirname: options.srcDirname,
@@ -153,7 +154,8 @@ module.exports = function (options) {
         dato.each(dependencies, function (index, dependency) {
             var chunkIndex = chunkFileMap[dependency.file];
 
-            if (chunkIndex) {
+            // 符合分块策略 && 不是入口模块
+            if (chunkIndex && !mainMap[dependency.file]) {
                 chunkDependingCountMap[dependency.id] = chunkDependingCountMap[dependency.id] || {
                         chunkIndex: chunkIndex,
                         id: dependency.id,
@@ -183,6 +185,10 @@ module.exports = function (options) {
         mainIndex++;
     });
 
+    //debug.warn('mainMap', mainMap);
+    //debug.warn('chunkDependingCountMap', chunkDependingCountMap);
+    //debug.warn('singleModuleMap', singleModuleMap);
+    //return process.exit();
     // 4、chunk 分组
     var chunkGroupMap = {};
     // [{chunkIndex, Number, id: String, file: String, buffer: Buffer, md5: String, count: Number, mainIndex: Number}]
