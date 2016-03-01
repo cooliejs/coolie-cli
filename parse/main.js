@@ -38,6 +38,7 @@ module.exports = function (options) {
     options = dato.extend({}, defaults, options);
 
     var mainMap = {};
+    var virtualMap = {};
     // 入口文件
     var mainFiles = path.glob(options.glob, {
         globOptions: options.globOptions,
@@ -91,6 +92,7 @@ module.exports = function (options) {
                 var virtualBuffer = new Buffer(virtualCode, ENCODING);
 
                 reader.setCache(virtualFile, ENCODING, virtualBuffer);
+                virtualMap[asyncMeta.file] = virtualFile;
                 mainMap[virtualFile] = {
                     async: true,
                     parent: file,
@@ -105,7 +107,11 @@ module.exports = function (options) {
     }
 
     parseModules(mainFiles);
-    return mainMap;
+
+    return {
+        mainMap: mainMap,
+        virtualMap: virtualMap
+    };
 };
 
 

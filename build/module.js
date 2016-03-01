@@ -90,6 +90,8 @@ module.exports = function (file, options) {
     });
     var asyncName2IdMap = {};
 
+    debug.error('file', file);
+    debug.error('asyncRequires', asyncRequires);
     dato.each(asyncRequires, function (index, item) {
         asyncName2IdMap[item.raw] = item.gid;
     });

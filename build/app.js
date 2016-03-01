@@ -82,12 +82,13 @@ module.exports = function (options) {
 
     // 1、分析 main
     debug.ignore('build app', 'parse main and async modules');
-    var mainMap = parseMain({
+    var parseMainRet = parseMain({
         glob: options.glob,
         srcDirname: options.srcDirname,
         globOptions: options.globOptions
     });
-    debug.warn('mainMap', mainMap);
+    var mainMap = parseMainRet.mainMap;
+    var virtualMap = parseMainRet.virtualMap;
     var mainLength = Object.keys(mainMap).length;
 
     if (!mainLength) {
