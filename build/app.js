@@ -81,7 +81,7 @@ module.exports = function (options) {
     var appMap = {};
 
     // 1、分析 main
-    debug.ignore('build app', 'parse main and async modules');
+    //debug.ignore('build app', 'parse main and async modules');
     var parseMainRet = parseMain({
         glob: options.glob,
         srcDirname: options.srcDirname,
@@ -109,10 +109,10 @@ module.exports = function (options) {
         return process.exit(1);
     }
 
-    debug.ignore('build app', 'will build ' + mainLength + ' modules');
+    debug.success('build app', 'will build ' + mainLength + ' main modules');
     // 2、分析 chunk
     // chunk => index
-    debug.ignore('build app', 'parse chunk modules');
+    //debug.ignore('build app', 'parse chunk modules');
     var chunkFileMap = parseChunk({
         chunk: options.chunk,
         srcDirname: options.srcDirname,

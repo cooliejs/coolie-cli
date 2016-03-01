@@ -87,7 +87,7 @@ module.exports = function (options) {
             dato.each(requireAsyncList, function (index, asyncMeta) {
                 // 将 async 模块虚拟出来
                 var originalFile = asyncMeta.file;
-                var virtualName = '[coolie-virtual-file]' + random.guid();
+                var virtualName = '[coolie-virtual-file]-' + random.guid();
                 var virtualFile = pathURI.replaceVersion(originalFile, virtualName);
                 var rawName = path.basename(asyncMeta.raw);
                 var virtualCode = 'define(function(require){return require("./' + rawName + '")})';
