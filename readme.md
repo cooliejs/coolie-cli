@@ -45,7 +45,7 @@ npm install -g coolie
 
 ┌────────────────────────────────────┐
 │ coolie-cli                         │
-│ coolie@1.6.14                      │
+│ coolie@1.7.0                       │
 │ The front-end development builder. │
 └────────────────────────────────────┘
 
