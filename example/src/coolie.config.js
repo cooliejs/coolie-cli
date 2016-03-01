@@ -22,7 +22,8 @@ module.exports = function (coolie) {
         },
         "html": {
             "src": [
-                "./html/123.html",
+                "./html/async.html",
+                //"./html/123.html",
             ],
             "minify": true
         },
