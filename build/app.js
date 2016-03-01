@@ -88,7 +88,6 @@ module.exports = function (options) {
         globOptions: options.globOptions
     });
     debug.warn('mainMap', mainMap);
-    return process.exit();
     var mainLength = Object.keys(mainMap).length;
 
     if (!mainLength) {
