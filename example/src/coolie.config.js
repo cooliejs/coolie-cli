@@ -9,23 +9,23 @@ module.exports = function (coolie) {
             "main": [
                 //"/static/js/app/res.js",
                 //"/static/js/app/webuploader.js",
-                "/static/js/app/async.js",
-                "/static/js/app/async-2.js",
+                //"/static/js/app/async.js",
+                //"/static/js/app/async-2.js",
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
             "chunk": [
-                [
-                    "./static/js/libs1/**" // => 0
-                ],
-                "./static/js/libs2/**"    // => 1
+                //[
+                //    "./static/js/libs1/**" // => 0
+                //],
+                //"./static/js/libs2/**"    // => 1
             ]
         },
         "html": {
             "src": [
-                "./html/async.html",
-                "./html/async-2.html",
-                //"./html/123.html",
+                //"./html/async.html",
+                //"./html/async-2.html",
+                "./html/123.html",
             ],
             "minify": true
         },
