@@ -86,8 +86,9 @@ module.exports = function (options) {
 
             dato.each(requireAsyncList, function (index, asyncMeta) {
                 // 将 async 模块虚拟出来
+                var originalFile = asyncMeta.file;
                 var virtualName = '[coolie-virtual-file]' + random.guid();
-                var virtualFile = pathURI.replaceVersion(asyncMeta.file, virtualName);
+                var virtualFile = pathURI.replaceVersion(originalFile, virtualName);
                 var rawName = path.basename(asyncMeta.raw);
                 var virtualCode = 'define(function(require){return require("./' + rawName + '")})';
                 var virtualBuffer = new Buffer(virtualCode, ENCODING);
@@ -95,7 +96,8 @@ module.exports = function (options) {
                 //debug.info('code', code);
                 //debug.info('asyncMeta', asyncMeta);
                 reader.setCache(virtualFile, ENCODING, virtualBuffer);
-                virtualMap[asyncMeta.file] = virtualFile;
+                virtualMap[originalFile] = virtualFile;
+                virtualMap[virtualFile] = originalFile;
                 mainMap[virtualFile] = {
                     async: true,
                     parent: file,
