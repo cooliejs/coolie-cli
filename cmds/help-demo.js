@@ -1,5 +1,5 @@
 /**
- * build 帮助
+ * demo 帮助
  * @author ydr.me
  * @create 2016-01-13 17:49
  */
@@ -8,6 +8,7 @@
 'use strict';
 
 var debug = require('ydr-utils').debug;
+var log = require('ydr-utils').log;
 
 var banner = require('./banner.js');
 
@@ -22,10 +23,10 @@ module.exports = function () {
     console.log('Download a coolie demo, use `-d` parameter specifies the root directory.');
     console.log();
     console.log('1. Usage');
-    console.log('   coolie demo <demoId> [options]');
+    console.log(log.yellow('   coolie demo <demoId> [options]'));
     console.log();
     console.log('2. Example');
-    console.log('   coolie demo 1');
+    console.log(log.yellow('   coolie demo 1'));
     console.log();
     console.log('3. Command');
     debug.success('   demo', 'download a coolie demo', options);

@@ -8,6 +8,7 @@
 'use strict';
 
 var debug = require('ydr-utils').debug;
+var log = require('ydr-utils').log;
 
 var banner = require('./banner.js');
 
@@ -24,10 +25,12 @@ module.exports = function () {
     console.log('coolie.js, alien, donkey');
     console.log();
     console.log('1. Usage');
-    console.log('   coolie install <module> [options]');
+    console.log(log.yellow('   coolie install <module> [options]'));
     console.log();
     console.log('2. Example');
-    console.log('   coolie install coolie.js');
+    console.log(log.yellow('   coolie install coolie.js'));
+    console.log(log.yellow('   coolie install alien'));
+    console.log(log.yellow('   coolie install donkey'));
     console.log();
     console.log('3. Command');
     debug.success('   install <module>', 'install a coolie module', options);

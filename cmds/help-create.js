@@ -8,6 +8,7 @@
 'use strict';
 
 var debug = require('ydr-utils').debug;
+var log = require('ydr-utils').log;
 
 var banner = require('./banner.js');
 
@@ -23,10 +24,11 @@ module.exports = function () {
     console.log('Use the following parameters to specify the type of template.');
     console.log();
     console.log('1. Usage');
-    console.log('   coolie create <--templateType> [options]');
+    console.log(log.yellow('   coolie create <--templateType> [options]'));
     console.log();
     console.log('2. Example');
-    console.log('   coolie create -e');
+    console.log(log.yellow('   coolie create --express'));
+    console.log(log.yellow('   coolie create --static'));
     console.log();
     console.log('3. Command');
     debug.success('   create', 'create a project template', options);

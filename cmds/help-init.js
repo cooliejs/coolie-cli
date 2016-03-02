@@ -8,6 +8,7 @@
 'use strict';
 
 var debug = require('ydr-utils').debug;
+var log = require('ydr-utils').log;
 
 var banner = require('./banner.js');
 
@@ -23,10 +24,11 @@ module.exports = function () {
     console.log('Use the following parameters to initialize the specified type of profile.');
     console.log();
     console.log('1. Usage');
-    console.log('   coolie init <--initType> [options]');
+    console.log(log.yellow('   coolie init <--initType> [options]'));
     console.log();
     console.log('2. Example');
-    console.log('   coolie init -j');
+    console.log(log.yellow('   coolie init --coolie-cli'));
+    console.log(log.yellow('   coolie init --coolie.js'));
     console.log();
     console.log('3. Command');
     debug.success('   init', 'initial configuration file', options);
