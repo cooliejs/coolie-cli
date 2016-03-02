@@ -32,6 +32,7 @@ module.exports = function () {
     debug.success('   install <module>', 'install a coolie module', options);
     debug.success('   init', 'initial configuration file', options);
     debug.success('   create', 'create a project template', options);
+    debug.success('   demo <demoId>', 'download a coolie demo', options);
     debug.success('   help', 'show help information', options);
     debug.success('   version', 'show version information', options);
     console.log();
