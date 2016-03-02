@@ -45,6 +45,7 @@ module.exports = function (options, callback) {
 
     //log.success(options);
     var url = path.joinURI(options.git, options.registry, options.repository, 'archive', options.branch + '.zip');
+    debug.ignore('git clone', url);
     //log.success('git clone', url);
     var filename = options.repository + '-' + options.branch + '.zip';
     var filepath = path.join(options.dirname, filename);
@@ -53,7 +54,6 @@ module.exports = function (options, callback) {
         callback(err);
 
         if (!err) {
-            debug.success('git clone', url);
             debug.success('git clone', path.toSystem(filepath));
         }
     });
