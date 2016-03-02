@@ -26,6 +26,9 @@ module.exports = function () {
     console.log('Usage');
     console.log('    coolie build [options]');
     console.log();
+    console.log('Example');
+    console.log('    coolie build');
+    console.log();
     console.log('1. Command');
     debug.success('   build', 'build a front-end project', options);
     console.log();

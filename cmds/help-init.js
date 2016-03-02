@@ -25,6 +25,9 @@ module.exports = function () {
     console.log('Usage');
     console.log('    coolie init <--initType> [options]');
     console.log();
+    console.log('Usage');
+    console.log('    coolie init -j');
+    console.log();
     console.log('1. Command');
     debug.success('   init', 'initial configuration file', options);
     console.log();

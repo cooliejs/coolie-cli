@@ -25,6 +25,9 @@ module.exports = function () {
     console.log('Usage');
     console.log('    coolie create <--templateType> [options]');
     console.log();
+    console.log('Example');
+    console.log('    coolie create -e');
+    console.log();
     console.log('1. Command');
     debug.success('   create', 'create a project template', options);
     console.log();
