@@ -22,17 +22,17 @@ module.exports = function () {
     console.log('Initial configuration file.');
     console.log('Use the following parameters to initialize the specified type of profile.');
     console.log();
-    console.log('Usage');
-    console.log('    coolie init <--initType> [options]');
+    console.log('1. Usage');
+    console.log('   coolie init <--initType> [options]');
     console.log();
-    console.log('Usage');
-    console.log('    coolie init -j');
+    console.log('2. Example');
+    console.log('   coolie init -j');
     console.log();
-    console.log('1. Command');
+    console.log('3. Command');
     debug.success('   init', 'initial configuration file', options);
     console.log();
 
-    console.log('2. Options');
+    console.log('4. Options');
     debug.success('   -d --dirname', 'specified a directory', options);
     debug.success('   -j --coolie.js', 'initial configuration file of `coolie.js`', options);
     debug.success('   -c --coolie-cli', 'initial configuration file of `coolie-cli`', options);

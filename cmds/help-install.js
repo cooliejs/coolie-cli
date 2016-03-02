@@ -23,17 +23,17 @@ module.exports = function () {
     console.log('Currently supported modules are: ');
     console.log('coolie.js, alien, donkey');
     console.log();
-    console.log('Usage');
-    console.log('    coolie install <module> [options]');
+    console.log('1. Usage');
+    console.log('   coolie install <module> [options]');
     console.log();
-    console.log('Example');
-    console.log('    coolie install coolie.js');
+    console.log('2. Example');
+    console.log('   coolie install coolie.js');
     console.log();
-    console.log('1. Command');
+    console.log('3. Command');
     debug.success('   install <module>', 'install a coolie module', options);
     console.log();
 
-    console.log('2. Options');
+    console.log('4. Options');
     debug.success('   -d --dirname', 'specified a directory', options);
     debug.success('   -h --help', 'show help infomation with command', options);
     console.log();

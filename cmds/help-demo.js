@@ -21,17 +21,17 @@ module.exports = function () {
     banner();
     console.log('Download a coolie demo, use `-d` parameter specifies the root directory.');
     console.log();
-    console.log('Usage');
-    console.log('    coolie demo <demoId> [options]');
+    console.log('1. Usage');
+    console.log('   coolie demo <demoId> [options]');
     console.log();
-    console.log('Example');
-    console.log('    coolie demo 1');
+    console.log('2. Example');
+    console.log('   coolie demo 1');
     console.log();
-    console.log('1. Command');
+    console.log('3. Command');
     debug.success('   demo', 'download a coolie demo', options);
     console.log();
 
-    console.log('2. Options');
+    console.log('4. Options');
     debug.success('   -d --dirname', 'specified a directory', options);
     debug.success('   -h --help', 'show help infomation with command', options);
     console.log();

@@ -8,6 +8,7 @@
 'use strict';
 
 var debug = require('ydr-utils').debug;
+var log = require('ydr-utils').log;
 
 var banner = require('./banner.js');
 
@@ -23,17 +24,17 @@ module.exports = function () {
     console.log('Use `cookie init -c` to initialize a build configuration file.');
     console.log('Online guide: https://coolie.ydr.me/guide/coolie.config.js/');
     console.log();
-    console.log('Usage');
-    console.log('    coolie build [options]');
+    console.log('1. Usage');
+    console.log(log.yellow('   coolie build [options]'));
     console.log();
-    console.log('Example');
-    console.log('    coolie build');
+    console.log('2. Example');
+    console.log(log.yellow('   coolie build'));
     console.log();
-    console.log('1. Command');
+    console.log('3. Command');
     debug.success('   build', 'build a front-end project', options);
     console.log();
 
-    console.log('2. Options');
+    console.log('4. Options');
     debug.success('   -d --dirname', 'specified a directory', options);
     debug.success('   -h --help', 'show help infomation with command', options);
     console.log();

@@ -22,17 +22,17 @@ module.exports = function () {
     console.log('Create a Front-end engineering template.');
     console.log('Use the following parameters to specify the type of template.');
     console.log();
-    console.log('Usage');
-    console.log('    coolie create <--templateType> [options]');
+    console.log('1. Usage');
+    console.log('   coolie create <--templateType> [options]');
     console.log();
-    console.log('Example');
-    console.log('    coolie create -e');
+    console.log('2. Example');
+    console.log('   coolie create -e');
     console.log();
-    console.log('1. Command');
+    console.log('3. Command');
     debug.success('   create', 'create a project template', options);
     console.log();
 
-    console.log('2. Options');
+    console.log('4. Options');
     debug.success('   -e --express', 'create a express project template', options);
     debug.success('   -s --static', 'create a static project template', options);
     debug.success('   -m --mongoose', 'express project template with mongoose', options);
