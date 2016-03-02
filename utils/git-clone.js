@@ -56,7 +56,7 @@ module.exports = function (options, callback) {
     request({
         url: url,
         encoding: 'binary',
-        debug: true
+        debug: false
     }).on('error', function (err) {
         debug.error('git clone', err.message);
         complete(err);
