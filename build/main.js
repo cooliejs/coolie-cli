@@ -51,10 +51,12 @@ var defaults = {
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @param options.virtualMap {Object} 虚拟
  * @returns {{dependencies: {id: String, file: String, buffer: Buffer, md5: String}, resList: Array}}
  */
 module.exports = function (file, options) {
     var mainFile = file;
+    var virtualMap = options.virtualMap;
     // 依赖长度
     var dependencyLength = 1;
     // 构建长度
@@ -78,7 +80,8 @@ module.exports = function (file, options) {
             destHost: options.destHost,
             versionLength: options.versionLength,
             minifyResource: options.minifyResource,
-            cleanCSSOptions: options.cleanCSSOptions
+            cleanCSSOptions: options.cleanCSSOptions,
+            virtualMap: options.virtualMap
         });
 
         dato.each(ret.resList, function (index, res) {
@@ -116,7 +119,8 @@ module.exports = function (file, options) {
         buildLength++;
 
         if (buildLength === dependencyLength) {
-            var srcMainURI = pathURI.toRootURL(mainFile, options.srcDirname);
+            var replacedFile = virtualMap[mainFile] || mainFile;
+            var srcMainURI = pathURI.toRootURL(replacedFile, options.srcDirname);
 
             debug.success('√', srcMainURI);
         }

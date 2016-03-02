@@ -81,11 +81,14 @@ module.exports = function (options) {
     var appMap = {};
 
     // 1、分析 main
-    var mainMap = parseMain({
+    //debug.ignore('build app', 'parse main and async modules');
+    var parseMainRet = parseMain({
         glob: options.glob,
         srcDirname: options.srcDirname,
         globOptions: options.globOptions
     });
+    var mainMap = parseMainRet.mainMap;
+    var virtualMap = parseMainRet.virtualMap;
     var mainLength = Object.keys(mainMap).length;
 
     if (!mainLength) {
@@ -95,7 +98,8 @@ module.exports = function (options) {
             chunkVersionMap: chunkVersionMap,
             asyncVersionMap: asyncVersionMap,
             appMap: appMap,
-            mainMap: mainMap
+            mainMap: mainMap,
+            virtualMap: virtualMap
         };
     }
 
@@ -105,8 +109,10 @@ module.exports = function (options) {
         return process.exit(1);
     }
 
+    debug.success('build app', 'will build ' + mainLength + ' main modules');
     // 2、分析 chunk
     // chunk => index
+    //debug.ignore('build app', 'parse chunk modules');
     var chunkFileMap = parseChunk({
         chunk: options.chunk,
         srcDirname: options.srcDirname,
@@ -135,7 +141,8 @@ module.exports = function (options) {
             removeHTMLYUIComments: options.removeHTMLYUIComments,
             removeHTMLLineComments: options.removeHTMLLineComments,
             joinHTMLSpaces: options.joinHTMLSpaces,
-            removeHTMLBreakLines: options.removeHTMLBreakLines
+            removeHTMLBreakLines: options.removeHTMLBreakLines,
+            virtualMap: virtualMap
         });
         var dependencies = buildMainRet.dependencies;
         var resList = buildMainRet.resList;
@@ -151,7 +158,8 @@ module.exports = function (options) {
         dato.each(dependencies, function (index, dependency) {
             var chunkIndex = chunkFileMap[dependency.file];
 
-            if (chunkIndex) {
+            // 符合分块策略 && 不是入口模块
+            if (chunkIndex && !mainMap[dependency.file]) {
                 chunkDependingCountMap[dependency.id] = chunkDependingCountMap[dependency.id] || {
                         chunkIndex: chunkIndex,
                         id: dependency.id,
@@ -181,6 +189,10 @@ module.exports = function (options) {
         mainIndex++;
     });
 
+    //debug.warn('mainMap', mainMap);
+    //debug.warn('chunkDependingCountMap', chunkDependingCountMap);
+    //debug.warn('singleModuleMap', singleModuleMap);
+    //return process.exit();
     // 4、chunk 分组
     var chunkGroupMap = {};
     // [{chunkIndex, Number, id: String, file: String, buffer: Buffer, md5: String, count: Number, mainIndex: Number}]

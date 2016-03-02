@@ -91,7 +91,7 @@ module.exports = function (options) {
 
         coolieMap[htmlURI] = {
             main: [],
-            async: [],
+            //async: [],
             js: [],
             css: []
         };
@@ -111,24 +111,24 @@ module.exports = function (options) {
         });
     });
 
-    // 集合 async
-    dato.each(htmlMainURIMap, function (mainJS, mainURI) {
-        var asyncList = options.buildAPPResult.mainMap[mainJS].requireAsyncList;
-
-        dato.each(asyncList, function (index, asyncMain) {
-            var noVersionAsyncMainPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.js');
-            var asyncMainVersion = options.buildAPPResult.asyncVersionMap[noVersionAsyncMainPath];
-            var dependencies = options.buildAPPResult.appMap[asyncMain.file] || [];
-            var destAsyncMainJSPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.' + asyncMainVersion + '.js');
-
-            dependencies.shift();
-            coolieMap[mainURI].async.push({
-                src: parseURI(asyncMain.file),
-                dest: parseURI(destAsyncMainJSPath),
-                deps: parseURI(dependencies)
-            });
-        });
-    });
+    //// 集合 async
+    //dato.each(htmlMainURIMap, function (mainJS, mainURI) {
+    //    var asyncList = options.buildAPPResult.mainMap[mainJS].requireAsyncList;
+    //
+    //    dato.each(asyncList, function (index, asyncMain) {
+    //        var noVersionAsyncMainPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.js');
+    //        var asyncMainVersion = options.buildAPPResult.asyncVersionMap[noVersionAsyncMainPath];
+    //        var dependencies = options.buildAPPResult.appMap[asyncMain.file] || [];
+    //        var destAsyncMainJSPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.' + asyncMainVersion + '.js');
+    //
+    //        dependencies.shift();
+    //        coolieMap[mainURI].async.push({
+    //            src: parseURI(asyncMain.file),
+    //            dest: parseURI(destAsyncMainJSPath),
+    //            deps: parseURI(dependencies)
+    //        });
+    //    });
+    //});
 
     // 集合 js
     dato.each(options.buildHTMLResult.htmlJSMap, function (htmlFile, jsList) {

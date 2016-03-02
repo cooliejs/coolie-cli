@@ -90,7 +90,8 @@ describe('build/module.js', function () {
             srcDirname: srcDirname,
             destDirname: destDirname,
             destResourceDirname: destResourceDirname,
-            destHost: '/'
+            destHost: '/',
+            virtualMap: {}
         });
 
         var REG_CODE = /^define\("[a-z\d]*?",.*?\);$/;

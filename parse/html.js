@@ -28,7 +28,7 @@ dato.each(UNCLOSED_TAGS_LIST, function (index, tag) {
 });
 
 var REG_TAG_NAME = /^<[a-z][\w-]*/i;
-var REG_TAG_ATTR = /\s*([\w:.-]+)(?:\s*=\s*("[\s\S]*?"|'[\s\S]*?'|[^'">\s]+))?/g;
+var REG_TAG_ATTR = /\s*([\w:.@$-]+)(?:\s*=\s*("[\s\S]*?"|'[\s\S]*?'|[^'">\s]+))?/g;
 var REG_DOUBLE_QUOTE_S = /\\"/g;
 
 /**

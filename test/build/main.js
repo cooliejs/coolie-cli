@@ -31,9 +31,11 @@ describe('build/module.js', function () {
             destDirname: destDirname,
             destResourceDirname: destResourceDirname,
             destHost: '/',
-            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname
+            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname,
+            virtualMap: {}
         });
 
+        console.log(ret.dependencies);
         assert.equal(ret.dependencies.length > 0, true);
     });
 
@@ -49,7 +51,8 @@ describe('build/module.js', function () {
             destDirname: destDirname,
             destResourceDirname: destResourceDirname,
             destHost: '/',
-            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname
+            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname,
+            virtualMap: {}
         });
 
         assert.equal(ret.dependencies.length > 0, true);

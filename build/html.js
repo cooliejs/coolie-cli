@@ -91,7 +91,7 @@ module.exports = function (options) {
         var code;
 
         try {
-            code = reader(htmlFile, 'utf8');
+            code = reader(htmlFile, 'utf8', htmlFile);
         } catch (err) {
             debug.error('build html', path.toSystem(htmlFile));
             process.exit(1);

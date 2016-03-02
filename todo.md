@@ -5,7 +5,7 @@
 - html include 功能 【插件】coolie-html-include
 - 中间件支持：任意模块的过滤传输，模板预编译 
 - viewsReplacement 模板层变量隐式替换
-- 支持任意模块的内的 require.async
+- 支持任意模块的内的 require.async √
 - 支持构建单个 cmd 文件【x】
 - 入口模块构建加上耗时
 - 本机基本信息收集上报统计

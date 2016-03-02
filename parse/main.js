@@ -11,10 +11,13 @@ var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
+var random = require('ydr-utils').random;
 
 var reader = require('../utils/reader.js');
+var pathURI = require('../utils/path-uri.js');
 var parseCMDRequire = require('./cmd-require.js');
 
+var ENCODING = 'utf8';
 var defaults = {
     glob: [],
     globOptions: {
@@ -35,42 +38,85 @@ module.exports = function (options) {
     options = dato.extend({}, defaults, options);
 
     var mainMap = {};
-
+    var virtualMap = {};
     // 入口文件
     var mainFiles = path.glob(options.glob, {
         globOptions: options.globOptions,
         srcDirname: options.srcDirname
     });
+    var mainFilesMap = {};
 
     dato.each(mainFiles, function (index, mainFile) {
-        var code;
-        try {
-            code = reader(mainFile, 'utf8');
-        } catch (err) {
-            debug.error('parse main', path.toSystem(mainFile));
-            process.exit();
-        }
-
-        var requireAsyncList = parseCMDRequire(mainFile, {
-            code: code,
-            async: true,
-            srcDirname: options.srcDirname
-        });
-
-        mainMap[mainFile] = {
-            async: false,
-            requireAsyncList: requireAsyncList
-        };
-
-        dato.each(requireAsyncList, function (index, ayncMeta) {
-            mainMap[ayncMeta.file] = {
-                async: true,
-                requireAsyncList: []
-            };
-        });
+        mainFilesMap[mainFile] = true;
     });
 
-    return mainMap;
+    /**
+     * 分析模块
+     * @param files
+     */
+    function parseModules(files) {
+        dato.each(files, function (index, file) {
+            var code;
+            try {
+                code = reader(file, 'utf8');
+            } catch (err) {
+                debug.error('read module', path.toSystem(file));
+                process.exit();
+            }
+
+            // require.async()
+            var requireAsyncList = parseCMDRequire(file, {
+                code: code,
+                async: true,
+                srcDirname: options.srcDirname
+            });
+
+            // require()
+            var requireSyncList = parseCMDRequire(file, {
+                code: code,
+                async: false,
+                srcDirname: options.srcDirname
+            });
+
+            if (mainFilesMap[file]) {
+                mainMap[file] = {
+                    async: false
+                };
+            }
+
+            dato.each(requireAsyncList, function (index, asyncMeta) {
+                // 将 async 模块虚拟出来
+                var originalFile = asyncMeta.file;
+                var virtualName = '[coolie-virtual-file]-' + random.guid();
+                var virtualFile = pathURI.replaceVersion(originalFile, virtualName);
+                var rawName = path.basename(asyncMeta.raw);
+                var virtualCode = 'define(function(require){return require("./' + rawName + '")})';
+                var virtualBuffer = new Buffer(virtualCode, ENCODING);
+
+                //debug.info('code', code);
+                //debug.info('asyncMeta', asyncMeta);
+                reader.setCache(virtualFile, ENCODING, virtualBuffer);
+                virtualMap[originalFile] = virtualFile;
+                virtualMap[virtualFile] = originalFile;
+                mainMap[virtualFile] = {
+                    async: true,
+                    parent: file,
+                    origin: asyncMeta.file
+                };
+            });
+
+            dato.each(requireSyncList.concat(requireAsyncList), function (index, syncMeta) {
+                parseModules([syncMeta.file]);
+            });
+        });
+    }
+
+    parseModules(mainFiles);
+
+    return {
+        mainMap: mainMap,
+        virtualMap: virtualMap
+    };
 };
 
 
