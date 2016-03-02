@@ -19,15 +19,16 @@ module.exports = function () {
     };
 
     banner();
-    console.log('Build a front-end project, use `-d` parameter specifies the root directory.');
-    console.log('Use `cookie init -c` to initialize a build configuration file.');
-    console.log('Online guide: https://coolie.ydr.me/guide/coolie.config.js/');
+    console.log('Download a coolie demo, use `-d` parameter specifies the root directory.');
     console.log();
     console.log('Usage');
-    console.log('    coolie build [options]');
+    console.log('    coolie demo <demoId> [options]');
+    console.log();
+    console.log('Example');
+    console.log('    coolie demo 1');
     console.log();
     console.log('1. Command');
-    debug.success('   build', 'build a front-end project', options);
+    debug.success('   demo', 'download a coolie demo', options);
     console.log();
 
     console.log('2. Options');

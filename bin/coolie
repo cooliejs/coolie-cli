@@ -19,6 +19,7 @@ var cmdHelp = require('../cmds/help.js');
 var cmdHelpBuild = require('../cmds/help-build.js');
 var cmdHelpCreate = require('../cmds/help-create.js');
 var cmdHelpInit = require('../cmds/help-init.js');
+var cmdHelpDemo = require('../cmds/help-demo.js');
 var cmdHelpInstall = require('../cmds/help-install.js');
 
 command.alias({
@@ -108,7 +109,7 @@ command.if('create', function (args) {
 // coolie demo <demoIndex>
 command.if('demo', function (args, names) {
     if (args.help) {
-        return cmdHelpCreate();
+        return cmdHelpDemo();
     }
 
     if (!names.length) {
