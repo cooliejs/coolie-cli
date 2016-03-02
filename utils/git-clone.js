@@ -44,14 +44,19 @@ module.exports = function (options, callback) {
     }
 
     //log.success(options);
-    // https://github.com/expressjs/express/archive/master.zip
-    // https://github.com/expressjs/express/archive/3.x.zip
     var url = path.joinURI(options.git, options.registry, options.repository, 'archive', options.branch + '.zip');
     //log.success('git clone', url);
     var filename = options.repository + '-' + options.branch + '.zip';
     var filepath = path.join(options.dirname, filename);
     var ws = fse.createWriteStream(filepath);
-    var complete = controller.once(callback);
+    var complete = controller.once(function (err) {
+        callback(err);
+
+        if (!err) {
+            debug.success('git clone', url);
+            debug.success('git clone', path.toSystem(filepath));
+        }
+    });
 
     request({
         url: url,
