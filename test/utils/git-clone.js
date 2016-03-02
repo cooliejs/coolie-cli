@@ -11,10 +11,20 @@ var assert = require('assert');
 
 var gitClone = require('../../utils/git-clone.js');
 
+var lazy  = function (done) {
+    return function () {
+        setTimeout(done, 500);
+    };
+};
 
 describe('utils/git-clone.js', function () {
-    it('e', function () {
-        gitClone();
+    it('e', function (done) {
+        gitClone({
+            dirname: __dirname,
+            registry: 'cooliejs',
+            repository: 'coolie-demo1',
+            branch: 'master'
+        }, lazy(done));
     });
 });
 
