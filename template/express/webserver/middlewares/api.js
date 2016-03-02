@@ -33,13 +33,13 @@ exports.resAPI =function (req, res, next) {
             else {
                 result = args[0];
                 code = 200;
-                message = null;
+                message = undefined;
             }
         }
         // res.api(code, message);
         else if (args.length === 2) {
             message = args[1];
-            result = null;
+            result = undefined;
         }
 
         res.json({
