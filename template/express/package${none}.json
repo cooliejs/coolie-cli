@@ -40,7 +40,7 @@
     "express-session": "^1.13.0",
     "howdo": "^3.3.0",
     "multer": "^1.1.0",
-    "ydr-utils": "^41.3.4"
+    "ydr-utils": "^42.2.4"
   },
   "peerDependencies": {},
   "devDependencies": {

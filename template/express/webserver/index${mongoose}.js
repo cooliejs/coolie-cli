@@ -11,6 +11,8 @@ var howdo = require('howdo');
 var cache = require('ydr-utils').cache;
 var log = require('ydr-utils').log;
 var system = require('ydr-utils').system;
+var request = require('ydr-utils').request;
+var console = require('ydr-utils').console;
 
 var serviceLog = require('./services/log.js');
 var serviceMongoose = require('./services/mongoose.js');
@@ -22,8 +24,9 @@ var pkg = require('../package.json');
 cache.config({
     debug: 'local' === configs.env
 });
-
 cache.set('app.configs', configs);
+
+request.defaults.debug = true;
 
 module.exports = function (callback) {
     howdo
@@ -42,9 +45,10 @@ module.exports = function (callback) {
                 ['express version', pkg.dependencies.express]
             ];
 
-            log.success(log.table(table, {
-                tdBorder: true
-            }));
+            console.table(table, {
+                tdBorder: true,
+                colors: ['green', 'bold']
+            });
         })
         .catch(function (err) {
             console.error(err);
