@@ -33,8 +33,8 @@ module.exports = function (next, app) {
     app.use(midSafe.addUACompatibleHeader);
     app.use(midSafe.addFrameOptionsHeader);
     app.use(midURL.strictRouting);
-    app.use(midAPI.resAPI);
-    app.use(log.__expressStart());
+    app.use(midAPI.resAPI(app));
+    app.use(log.__expressStart(app));
 
 
     // 页面
@@ -46,7 +46,7 @@ module.exports = function (next, app) {
 
 
     // 后置
-    app.use(log.__expressEnd());
+    app.use(log.__expressEnd(app));
     app.use(midError.clientError);
     app.use(midError.serverError);
 
