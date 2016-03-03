@@ -34,7 +34,7 @@ module.exports = function (next, app) {
     app.use(midSafe.addFrameOptionsHeader);
     app.use(midURL.strictRouting);
     app.use(midAPI.resAPI(app));
-    app.use(log.__expressStart(app));
+    app.use(log.__expressStart());
 
 
     // 页面
@@ -46,7 +46,7 @@ module.exports = function (next, app) {
 
 
     // 后置
-    app.use(log.__expressEnd(app));
+    app.use(log.__expressEnd());
     app.use(midError.clientError);
     app.use(midError.serverError);
 
