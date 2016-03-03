@@ -21,12 +21,19 @@ var serviceRouters = require('./services/routers.js');
 var configs = require('../configs.js');
 var pkg = require('../package.json');
 
+// 缓存设置
 cache.config({
     debug: 'local' === configs.env
 });
 cache.set('app.configs', configs);
 
+// 请求设置
 request.defaults.debug = true;
+
+// 控制台设置
+console.config({
+    color: 'local' === configs.env
+});
 
 module.exports = function (callback) {
     howdo
