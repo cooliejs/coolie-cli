@@ -19,6 +19,10 @@ var midError = require('../middlewares/error.js');
 
 
 module.exports = function (next, app) {
+    // res.api
+    app.use(midAPI.resAPI(app));
+
+
     // 静态文件
     app.use('/', require('../controllers/static.js'));
 
@@ -33,7 +37,6 @@ module.exports = function (next, app) {
     app.use(midSafe.addUACompatibleHeader);
     app.use(midSafe.addFrameOptionsHeader);
     app.use(midURL.strictRouting);
-    app.use(midAPI.resAPI(app));
     app.use(log.__expressStart());
 
 
