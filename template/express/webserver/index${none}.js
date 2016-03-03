@@ -14,6 +14,9 @@ var system = require('ydr-utils').system;
 var request = require('ydr-utils').request;
 var console = require('ydr-utils').console;
 
+var serviceCache = require('./services/cache.js');
+var serviceConsole = require('./services/console.js');
+var serviceRequest = require('./services/request.js');
 var serviceLog = require('./services/log.js');
 var serviceExpress = require('./services/express.js');
 var serviceRouters = require('./services/routers.js');
@@ -29,6 +32,9 @@ request.defaults.debug = true;
 
 module.exports = function (callback) {
     howdo
+        .task(serviceCache)
+        .task(serviceConsole)
+        .task(serviceRequest)
         .task(serviceLog)
         .task(serviceExpress)
         .task(serviceRouters)

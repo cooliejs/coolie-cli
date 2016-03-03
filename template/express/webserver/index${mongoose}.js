@@ -14,6 +14,9 @@ var system = require('ydr-utils').system;
 var request = require('ydr-utils').request;
 var console = require('ydr-utils').console;
 
+var serviceCache = require('./services/cache.js');
+var serviceConsole = require('./services/console.js');
+var serviceRequest = require('./services/request.js');
 var serviceLog = require('./services/log.js');
 var serviceMongoose = require('./services/mongoose.js');
 var serviceExpress = require('./services/express.js');
@@ -21,22 +24,12 @@ var serviceRouters = require('./services/routers.js');
 var configs = require('../configs.js');
 var pkg = require('../package.json');
 
-// 缓存设置
-cache.config({
-    debug: 'local' === configs.env
-});
-cache.set('app.configs', configs);
-
-// 请求设置
-request.defaults.debug = true;
-
-// 控制台设置
-console.config({
-    color: 'local' === configs.env
-});
 
 module.exports = function (callback) {
     howdo
+        .task(serviceCache)
+        .task(serviceConsole)
+        .task(serviceRequest)
         .task(serviceLog)
         .task(serviceMongoose)
         .task(serviceExpress)
