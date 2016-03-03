@@ -9,10 +9,10 @@
 
 var Router = require('express').Router;
 
-var app = new Router();
+var router = new Router();
 
-app.get('/', function (req, res, next) {
+router.get('/', function (req, res, next) {
     res.render('home.html');
 });
 
-module.exports = app;
+module.exports = router;
