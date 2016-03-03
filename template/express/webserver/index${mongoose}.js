@@ -24,7 +24,6 @@ var serviceRouters = require('./services/routers.js');
 var configs = require('../configs.js');
 var pkg = require('../package.json');
 
-
 module.exports = function (callback) {
     howdo
         .task(serviceCache)

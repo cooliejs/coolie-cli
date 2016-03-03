@@ -23,13 +23,6 @@ var serviceRouters = require('./services/routers.js');
 var configs = require('../configs.js');
 var pkg = require('../package.json');
 
-cache.config({
-    debug: 'local' === configs.env
-});
-cache.set('app.configs', configs);
-
-request.defaults.debug = true;
-
 module.exports = function (callback) {
     howdo
         .task(serviceCache)
