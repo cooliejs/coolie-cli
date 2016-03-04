@@ -15,7 +15,7 @@ var banner = require('./banner.js');
 
 module.exports = function () {
     banner();
-    openHelper(pkg.coolie.book + '?from=coolie.cli@' + pkg.version, function (err) {
+    openHelper(pkg.coolie.book + '?from=coolie-cli@' + pkg.version, function (err) {
         if (err) {
             debug.error('coolie book', pkg.coolie.book);
             debug.error('coolie book', err.message);
