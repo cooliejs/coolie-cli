@@ -12,6 +12,7 @@ var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
 var random = require('ydr-utils').random;
+var controller = require('ydr-utils').controller;
 
 var reader = require('../utils/reader.js');
 var pathURI = require('../utils/path-uri.js');
@@ -45,9 +46,15 @@ module.exports = function (options) {
         srcDirname: options.srcDirname
     });
     var mainFilesMap = {};
+    var parsedMap = {};
+    var parseLength = 0;
 
     dato.each(mainFiles, function (index, mainFile) {
         mainFilesMap[mainFile] = true;
+    });
+
+    var showProgress = controller.throttle(function (file) {
+        debug.wait('parse module', pathURI.toRootURL(file, options.srcDirname));
     });
 
     /**
@@ -56,6 +63,12 @@ module.exports = function (options) {
      */
     function parseModules(files) {
         dato.each(files, function (index, file) {
+            if (parsedMap[file]) {
+                return;
+            }
+
+            parseLength++;
+            showProgress(file);
             var code;
             try {
                 code = reader(file, 'utf8');
@@ -64,6 +77,7 @@ module.exports = function (options) {
                 process.exit();
             }
 
+            parsedMap[file] = true;
             // require.async()
             var requireAsyncList = parseCMDRequire(file, {
                 code: code,
@@ -112,6 +126,9 @@ module.exports = function (options) {
     }
 
     parseModules(mainFiles);
+    debug.waitEnd('parse module', parseLength + ' modules parsed', {
+        colors: 'green'
+    });
 
     return {
         mainMap: mainMap,
