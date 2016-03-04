@@ -15,12 +15,15 @@ var log = require('ydr-utils').log;
 var pkg = require('../package.json');
 
 module.exports = function () {
+    console.log();
     console.table([
         ['coolie-cli'],
         ['coolie@' + pkg.version],
-        [pkg.description]
+        [pkg.description],
+        [pkg.homepage]
     ], {
-        colors: ['yellow', 'bold']
+        colors: ['red'],
+        padding: 10
     });
 
     console.log();

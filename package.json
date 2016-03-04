@@ -37,10 +37,10 @@
     "email": "cloudcome@163.com",
     "url": "http://ydr.me"
   },
-  "homepage": "http://coolie.ydr.me/",
+  "homepage": "https://coolie.ydr.me/",
   "coolie": {
     "package.json": "https://raw.githubusercontent.com/cloudcome/coolie/master/package.json",
-    "book": "http://coolie.ydr.me/",
+    "book": "https://coolie.ydr.me/",
     "modules": {
       "coolie": {
         "type": "file",
@@ -76,7 +76,7 @@
     "howdo": "^2.0.2",
     "open": "0.0.5",
     "uglify-js": "^2.5.0",
-    "ydr-utils": "^42.2.11"
+    "ydr-utils": "^42.2.12"
   },
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha -c --recursive --ui bdd test -t 0"

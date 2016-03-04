@@ -19,11 +19,11 @@ var bannerText = fs.readFileSync(bannerPath, 'utf8');
 
 module.exports = function () {
     var options = {
-        eventAlign: 'left',
-        eventLength: 25
+        nameAlign: 'left',
+        nameLength: 20
     };
 
-    console.log(bannerText);
+    console.log(console.styles.pretty(bannerText, 'red'));
     banner();
     console.log();
     console.log('1. Command');
@@ -43,6 +43,8 @@ module.exports = function () {
     debug.success('   -c --coolie-cli', 'initial configuration file of `coolie-cli`', options);
     debug.success('   -e --express', 'choose express template', options);
     debug.success('   -s --static', 'choose static template', options);
+    debug.success('   -r --redis', 'express template with redis', options);
+    debug.success('   -m --mongoose', 'express template with mongoose', options);
     debug.success('   -h --help', 'show help infomation with command', options);
     console.log();
 };
