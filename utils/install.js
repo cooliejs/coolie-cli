@@ -55,10 +55,10 @@ module.exports = function (options, callback) {
         process.exit(1);
     }).pipe(tempStream).on('error', function (err) {
         debug.error('install ' + name, err.message);
-        console.loadingEnd()
+        console.loadingEnd();
         process.exit(1);
     }).on('close', function () {
-        console.loadingEnd()
+        console.loadingEnd();
         debug.ignore('unzip ' + name, tempFile);
 
         var zip = new AdmZip(tempFile);
