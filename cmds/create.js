@@ -39,13 +39,9 @@ var TEMPLATE_MAP = {
             },
             'webserver/index.js': {
                 mongoose: 'webserver/index${mongoose}.js',
-                mongoose_redis: 'webserver/index${mongoose}.js',
+                mongoose_redis: 'webserver/index${mongoose_redis}.js',
+                redis: 'webserver/index${redis}.js',
                 none: 'webserver/index${none}.js'
-            },
-            'webserver/middlewares/parser.js': {
-                redis: 'webserver/middlewares/parser${redis}.js',
-                mongoose_redis: 'webserver/middlewares/parser${redis}.js',
-                none: 'webserver/middlewares/parser${none}.js'
             }
         }
     },
