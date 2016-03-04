@@ -68,7 +68,6 @@ module.exports = function (file, options) {
         }
 
         var href = node.attrs.href;
-
         var ret = buildCSSPath(href, {
             file: file,
             srcDirname: options.srcDirname,

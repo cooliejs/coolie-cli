@@ -61,7 +61,7 @@ module.exports = function (href, options) {
         return false;
     }
 
-    var srcPath = pathURI.toAbsoluteFile(href, pathRet.path, options.srcDirname);
+    var srcPath = pathURI.toAbsoluteFile(href, options.file, options.srcDirname);
     var destPath = minifyPathmap[srcPath];
     var destURI = minifyCSSmap[srcPath];
     var resList = resourceMap[srcPath];
