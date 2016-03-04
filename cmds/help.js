@@ -19,8 +19,7 @@ var bannerText = fs.readFileSync(bannerPath, 'utf8');
 
 module.exports = function () {
     var options = {
-        nameAlign: 'left',
-        nameLength: 20
+        nameAlign: 'left'
     };
 
     console.log(console.styles.pretty(bannerText, 'red'));
