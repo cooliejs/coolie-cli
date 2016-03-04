@@ -15,8 +15,7 @@ var banner = require('./banner.js');
 
 module.exports = function () {
     var options = {
-        eventAlign: 'left',
-        eventLength: 25
+        nameAlign: 'left'
     };
 
     banner();
@@ -24,11 +23,11 @@ module.exports = function () {
     console.log('Use the following parameters to initialize the specified type of profile.');
     console.log();
     console.log('1. Usage');
-    console.log('   coolie init <--initType> [options]');
+    console.warn('   coolie init <--initType> [options]');
     console.log();
     console.log('2. Example');
-    console.log('   coolie init --coolie-cli');
-    console.log('   coolie init --coolie.js');
+    console.warn('   coolie init --coolie-cli');
+    console.warn('   coolie init --coolie.js');
     console.log();
     console.log('3. Command');
     debug.success('   init', 'initial configuration file', options);
