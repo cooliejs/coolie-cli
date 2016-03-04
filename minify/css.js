@@ -33,7 +33,8 @@ var defaults = {
     // url 检查
     rebase: false,
     // 资源地图
-    sourceMap: false
+    sourceMap: false,
+    mute: false
 };
 var cssminify = null;
 
@@ -49,6 +50,7 @@ var cssminify = null;
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
+ * @param options.mute {Boolean} 是否静音
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.replaceCSSResource] {Boolean} 是否替换 css 内引用文件
@@ -74,7 +76,8 @@ module.exports = function (file, options) {
                 destHost: options.destHost,
                 destResourceDirname: options.destResourceDirname,
                 destCSSDirname: options.destCSSDirname,
-                minifyResource: options.minifyResource
+                minifyResource: options.minifyResource,
+                mute: options.mute
             });
             code = replaceCSSResourceRet.code;
             resList = replaceCSSResourceRet.resList;

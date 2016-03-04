@@ -38,7 +38,8 @@ var defaults = {
     destHost: '/',
     destResourceDirname: null,
     destCSSDirname: null,
-    minifyResource: true
+    minifyResource: true,
+    mute: false
 };
 
 
@@ -52,6 +53,7 @@ var defaults = {
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
+ * @param options.mute {Boolean} 是否静音
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @returns {Object}
@@ -86,7 +88,7 @@ module.exports = function (file, options) {
                 copyPath: false,
                 version: true,
                 versionLength: options.versionLength,
-                logType: 1,
+                logType: options.mute ? 0 : 1,
                 embedFile: file,
                 embedCode: all
             });

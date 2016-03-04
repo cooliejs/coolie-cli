@@ -29,7 +29,8 @@ var defaults = {
     code: '',
     minifyJS: true,
     uglifyJSOptions: null,
-    signJS: false
+    signJS: false,
+    mute: false
 };
 
 
@@ -41,6 +42,7 @@ var defaults = {
  * @param [options.minifyJS] {Boolean} 是否压缩 JS
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
  * @param [options.signJS] {Boolean} 是否签名 JS 文件
+ * @param [options.mute] {Boolean} 是否静音
  * @returns {Object}
  */
 module.exports = function (file, options) {
@@ -74,7 +76,8 @@ module.exports = function (file, options) {
 
         node.content = minifyJS(file, {
             code: node.content,
-            uglifyJSOptions: options.uglifyJSOptions
+            uglifyJSOptions: options.uglifyJSOptions,
+            mute: options.mute
         });
 
         if (options.signJS) {

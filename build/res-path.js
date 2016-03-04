@@ -18,7 +18,8 @@ var defaults = {
     srcDirname: null,
     destDirname: null,
     destResourceDirname: null,
-    destHost: '/'
+    destHost: '/',
+    mute: false
 };
 
 
@@ -45,7 +46,7 @@ module.exports = function (value, options) {
         versionLength: options.versionLength,
         srcDirname: options.srcDirname,
         destDirname: options.destResourceDirname,
-        logType: 1,
+        logType: options.mute ? 0 : 1,
         embedFile: options.file
     });
     var resRelative = path.relative(options.destDirname, resFile);

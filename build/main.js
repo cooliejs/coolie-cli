@@ -10,6 +10,7 @@
 var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 var path = require('ydr-utils').path;
+var controller = require('ydr-utils').controller;
 
 var pathURI = require('../utils/path-uri.js');
 var buildModule = require('./module.js');
@@ -65,7 +66,13 @@ module.exports = function (file, options) {
     var dependencies = [];
     var resList = [];
     var resMap = {};
+    var showProgress = controller.throttle(function (file) {
+        debug.wait('parse module', pathURI.toRootURL(file, options.srcDirname), {
+            colors: 'yellow'
+        });
+    });
     var build = function (file, options) {
+        showProgress(file);
         var ret = buildModule(file, {
             inType: options.inType,
             outType: options.outType,
@@ -81,7 +88,8 @@ module.exports = function (file, options) {
             versionLength: options.versionLength,
             minifyResource: options.minifyResource,
             cleanCSSOptions: options.cleanCSSOptions,
-            virtualMap: options.virtualMap
+            virtualMap: options.virtualMap,
+            mute: true
         });
 
         dato.each(ret.resList, function (index, res) {
@@ -122,7 +130,9 @@ module.exports = function (file, options) {
             var replacedFile = virtualMap[mainFile] || mainFile;
             var srcMainURI = pathURI.toRootURL(replacedFile, options.srcDirname);
 
-            debug.success('√', srcMainURI);
+            debug.waitEnd('√', srcMainURI, {
+                colors: 'green'
+            });
         }
     };
     var options2 = dato.extend({}, options, {

@@ -54,7 +54,9 @@ module.exports = function (options) {
     });
 
     var showProgress = controller.throttle(function (file) {
-        debug.wait('parse module', pathURI.toRootURL(file, options.srcDirname));
+        debug.wait('parse module', pathURI.toRootURL(file, options.srcDirname), {
+            colors: 'yellow'
+        });
     });
 
     /**

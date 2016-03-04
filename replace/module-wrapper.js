@@ -187,7 +187,8 @@ var defaults = {
     removeHTMLLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
-    uglifyJSOptions: null
+    uglifyJSOptions: null,
+    mute: true
 };
 
 
@@ -206,6 +207,7 @@ var defaults = {
  * @param options.destHost {String} 目标域
  * @param options.versionLength {Number} 版本号长度
  * @param options.parent {String} 父级文件
+ * @param options.mute {Boolean} 是否静音
  * @param [options.minifyResource] {Boolean} 是否压缩静态资源
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
@@ -272,7 +274,8 @@ module.exports = function (file, options) {
                             // 模块里的 css 相对于根目录
                             destCSSDirname: null,
                             minifyResource: options.minifyResource,
-                            replaceCSSResource: true
+                            replaceCSSResource: true,
+                            mute: options.mute
                         });
                     };
                     var createURLRet = createURL(file, options2);
@@ -293,7 +296,8 @@ module.exports = function (file, options) {
                         // 模块里的 css 相对于根目录
                         destCSSDirname: null,
                         minifyResource: options.minifyResource,
-                        replaceCSSResource: true
+                        replaceCSSResource: true,
+                        mute: options.mute
                     });
                     code = base64.string(code, extname);
                     minifyCSSRet.code = code;
@@ -312,7 +316,8 @@ module.exports = function (file, options) {
                         // 模块里的 css 相对于根目录
                         destCSSDirname: null,
                         minifyResource: options.minifyResource,
-                        replaceCSSResource: true
+                        replaceCSSResource: true,
+                        mute: options.mute
                     });
                     return wrapDefine(file, minifyCSSRet3, options);
             }
@@ -363,7 +368,8 @@ module.exports = function (file, options) {
                             versionLength: options.versionLength,
                             uglifyJSOptions: options.uglifyJSOptions,
                             cleanCSSOptions: options.cleanCSSOptions,
-                            replaceCSSResource: true
+                            replaceCSSResource: true,
+                            mute: options.mute
                         });
                     };
                     var createURLRet3 = createURL(file, options2);
@@ -397,7 +403,8 @@ module.exports = function (file, options) {
                         versionLength: options.versionLength,
                         uglifyJSOptions: options.uglifyJSOptions,
                         cleanCSSOptions: options.cleanCSSOptions,
-                        replaceCSSResource: true
+                        replaceCSSResource: true,
+                        mute: options.mute
                     });
                     code = base64.string(code, extname);
                     minifyHTMLRet.code = code;
@@ -429,7 +436,8 @@ module.exports = function (file, options) {
                         versionLength: options.versionLength,
                         uglifyJSOptions: options.uglifyJSOptions,
                         cleanCSSOptions: options.cleanCSSOptions,
-                        replaceCSSResource: true
+                        replaceCSSResource: true,
+                        mute: options.mute
                     });
                     minifyHTMLRet2.resList = mergeRes(minifyHTMLRet2);
                     return wrapDefine(file, minifyHTMLRet2, options);

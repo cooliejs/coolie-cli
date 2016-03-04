@@ -29,7 +29,8 @@ var defaults = {
     minifyJS: true,
     uglifyJSOptions: null,
     versionLength: 32,
-    signJS: true
+    signJS: true,
+    mute: false
 };
 
 
@@ -76,7 +77,10 @@ module.exports = function (src, options) {
             fse.outputFileSync(destPath, destCode, 'utf8');
             minifyPathMap[srcPath] = destPath;
             minifyJSMap[srcPath] = destURI;
-            debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
+
+            if (!options.mute) {
+                debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
+            }
         } catch (err) {
             debug.error('write file', path.toSystem(destPath));
             debug.error('write file', err.message);

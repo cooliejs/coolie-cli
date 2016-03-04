@@ -38,7 +38,8 @@ var defaults = {
     removeHTMLYUIComments: true,
     removeHTMLLineComments: true,
     joinHTMLSpaces: true,
-    removeHTMLBreakLines: true
+    removeHTMLBreakLines: true,
+    mute: true
 };
 
 /**
@@ -61,6 +62,7 @@ var defaults = {
  * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.cleanCSSOptions {Object} clean-css 配置
  * @param options.virtualMap {Object} 虚拟
+ * @param options.mute {Boolean} 是否静音
  * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
@@ -182,7 +184,8 @@ module.exports = function (file, options) {
                 removeHTMLYUIComments: options.removeHTMLYUIComments,
                 removeHTMLLineComments: options.removeHTMLLineComments,
                 joinHTMLSpaces: options.joinHTMLSpaces,
-                removeHTMLBreakLines: options.removeHTMLBreakLines
+                removeHTMLBreakLines: options.removeHTMLBreakLines,
+                mute: options.mute
             });
             code = replaceModuleWrapperRet.code;
             resList = replaceModuleWrapperRet.resList;
