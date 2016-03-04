@@ -96,11 +96,11 @@ module.exports = function (file, options) {
         coolieConfig.async = path.toURI(path.relative(options.destCoolieConfigBaseDirname, options.destCoolieConfigAsyncDirname)) + '/';
         coolieConfig.chunk = path.toURI(path.relative(options.destCoolieConfigBaseDirname, options.destCoolieConfigChunkDirname)) + '/';
 
-        debug.success('√', 'base: "' + coolieConfig.base + '"');
-        debug.success('√', 'async: "' + coolieConfig.async + '"');
-        debug.success('√', 'chunk: "' + coolieConfig.chunk + '"');
-        debug.success('√', 'version: "' + JSON.stringify(versionMap2, null, 2) + '"');
-        debug.success('√', 'callbacks: ' + callbacks.length);
+        debug.success('coolie-config.js', 'base: "' + coolieConfig.base + '"');
+        debug.success('coolie-config.js', 'async: "' + coolieConfig.async + '"');
+        debug.success('coolie-config.js', 'chunk: "' + coolieConfig.chunk + '"');
+        //debug.success('√', 'version: "' + JSON.stringify(versionMap2, null, 2) + '"');
+        debug.success('coolie-config.js', 'callbacks: ' + callbacks.length);
 
         var code2 = 'coolie.config({' +
             'base:"' + coolieConfig.base + '",' +

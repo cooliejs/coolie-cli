@@ -109,11 +109,11 @@ module.exports = function (file, options) {
 
         switch (options.logType) {
             case 1:
-                debug.success('√', pathURI.toRootURL(file, options.srcDirname));
+                debug.success('copied from', pathURI.toRootURL(file, options.srcDirname));
                 break;
 
             case 2:
-                debug.success('√', pathURI.toRootURL(toFile, options.srcDirname));
+                debug.success('copied to', pathURI.toRootURL(toFile, options.srcDirname));
                 break;
         }
     } catch (err) {

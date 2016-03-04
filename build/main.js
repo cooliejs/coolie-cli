@@ -30,7 +30,9 @@ var defaults = {
     removeHTMLYUIComments: true,
     removeHTMLLineComments: true,
     joinHTMLSpaces: true,
-    removeHTMLBreakLines: true
+    removeHTMLBreakLines: true,
+    mainIndex: 0,
+    mainLength: 0
 };
 
 /**
@@ -53,6 +55,8 @@ var defaults = {
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
  * @param options.virtualMap {Object} 虚拟
+ * @param options.mainIndex {Number} 当前序号
+ * @param options.mainLength {Number} 长度
  * @returns {{dependencies: {id: String, file: String, buffer: Buffer, md5: String}, resList: Array}}
  */
 module.exports = function (file, options) {
@@ -130,7 +134,7 @@ module.exports = function (file, options) {
             var replacedFile = virtualMap[mainFile] || mainFile;
             var srcMainURI = pathURI.toRootURL(replacedFile, options.srcDirname);
 
-            debug.waitEnd('√', srcMainURI, {
+            debug.waitEnd((options.mainIndex + 1) + '/' + options.mainLength, srcMainURI, {
                 colors: 'green'
             });
         }

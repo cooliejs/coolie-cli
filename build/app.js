@@ -140,7 +140,9 @@ module.exports = function (options) {
             removeHTMLLineComments: options.removeHTMLLineComments,
             joinHTMLSpaces: options.joinHTMLSpaces,
             removeHTMLBreakLines: options.removeHTMLBreakLines,
-            virtualMap: virtualMap
+            virtualMap: virtualMap,
+            mainIndex: mainIndex,
+            mainLength: mainLength
         });
         var dependencies = buildMainRet.dependencies;
         var resList = buildMainRet.resList;

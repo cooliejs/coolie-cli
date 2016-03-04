@@ -57,7 +57,7 @@ var createURL = function (file, options) {
             version: true,
             versionLength: options.versionLength,
             copyPath: false,
-            logType: 1
+            logType: 0
         });
     } else {
         var extname = path.extname(file);
