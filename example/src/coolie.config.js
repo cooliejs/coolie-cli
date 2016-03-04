@@ -9,7 +9,7 @@ module.exports = function (coolie) {
             "main": [
                 //"/static/js/app/res.js",
                 //"/static/js/app/webuploader.js",
-                //"/static/js/app/async.js",
+                "/static/js/app/async.js",
                 //"/static/js/app/async-2.js",
             ],
             "coolie-config.js": "./static/js/coolie-config.js",

@@ -1,9 +1,9 @@
 define(function (require, exports, module) {
     'use strict';
 
-    require.async('../libs1/all.js');
+    //require.async('../libs1/all.js');
 
-    //require('../libs1/all.js');
+    require.async('../libs1/path1/path2/');
     ////require('../libs2/some.css', 'css');
     ////require('../libs2/some.html', 'html|url');
     ////require('../libs2/some.jpg', 'image|url');

@@ -89,7 +89,7 @@ module.exports = function (options) {
                 var originalFile = asyncMeta.file;
                 var virtualName = '[coolie-virtual-file]-' + random.guid();
                 var virtualFile = pathURI.replaceVersion(originalFile, virtualName);
-                var rawName = path.basename(asyncMeta.raw);
+                var rawName = path.basename(asyncMeta.name);
                 var virtualCode = 'define(function(require){return require("./' + rawName + '")})';
                 var virtualBuffer = new Buffer(virtualCode, ENCODING);
 
