@@ -26,11 +26,14 @@ module.exports = function (next, app) {
 
     sessionStore.on('disconnect', function () {
         var err = new Error('disconnect redis store');
+
+        err.redisUrl = configs.redis;
         console.error(err);
         complete(err);
     });
 
     sessionStore.on('error', function (err) {
+        err.redisUrl = configs.redis;
         console.error(err);
         complete(err);
     });

@@ -19,12 +19,6 @@ module.exports = {
     env: env,
     root: root,
     webroot: path.join(root, './webroot-' + webroot),
-    logLevel: {
-        local: ['info', 'success', 'warn', 'error'],
-        dev: ['info', 'success', 'warn', 'error'],
-        test: ['info', 'success', 'warn', 'error'],
-        pro: ['warn', 'error']
-    }[env],
     redis: {
         local: {
             url: 'redis://127.0.0.1:6379',

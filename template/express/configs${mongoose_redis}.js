@@ -19,15 +19,12 @@ module.exports = {
     env: env,
     root: root,
     webroot: path.join(root, './webroot-' + webroot),
-    logLevel: {
-        local: ['info', 'success', 'warn', 'error'],
-        dev: ['info', 'success', 'warn', 'error'],
-        test: ['info', 'success', 'warn', 'error'],
-        pro: ['warn', 'error']
-    }[env],
     mongodb: {
-        url: 'mongodb://localhost:27017/express-template'
-    },
+        local: 'mongodb://localhost:27017/express-template',
+        dev: 'mongodb://localhost:27017/express-template',
+        test: 'mongodb://localhost:27017/express-template',
+        pro: 'mongodb://localhost:27017/express-template'
+    }[env],
     redis: {
         local: {
             url: 'redis://127.0.0.1:6379',

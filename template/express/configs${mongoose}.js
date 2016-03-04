@@ -18,20 +18,17 @@ module.exports = {
     env: env,
     root: root,
     webroot: path.join(root, './webroot-' + webroot),
-    logLevel: {
-        local: ['info', 'success', 'warn', 'error'],
-        dev: ['info', 'success', 'warn', 'error'],
-        test: ['info', 'success', 'warn', 'error'],
-        pro: ['warn', 'error']
-    }[env],
     cookie: {
         secret: 'express-template',
         // 30d
         expires: 30 * 24 * 60 * 60 * 1000
     },
     mongodb: {
-        url: 'mongodb://localhost:27017/express-template'
-    }
+        local: 'mongodb://localhost:27017/express-template',
+        dev: 'mongodb://localhost:27017/express-template',
+        test: 'mongodb://localhost:27017/express-template',
+        pro: 'mongodb://localhost:27017/express-template'
+    }[env]
 };
 
 

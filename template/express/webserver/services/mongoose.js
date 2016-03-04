@@ -6,17 +6,28 @@
 
 'use strict';
 
+
+var mongoose = require('mongoose');
+var controller = require('ydr-utils').controller;
+
 var configs = require('../../configs.js');
 
-// mongoose
-var mongoose = require('mongoose');
-
 module.exports = function (next) {
-    mongoose.connect(configs.mongodb.url);
-    mongoose.connection
-        .on('connected', next)
-        .on('error', next)
-        .on('disconnected', next);
+    var complete = controller.once(function (err) {
+        next(err);
+    });
+
+    mongoose.connect(configs.mongodb);
+    mongoose.connection.on('connected', complete);
+    mongoose.connection.on('error', function (err) {
+        err.mongodbUrl = configs.mongodb;
+        complete(err);
+    });
+    mongoose.connection.on('disconnected', function () {
+        var err = new Error('disconnected mongodb');
+        err.mongodbUrl = configs.mongodb;
+        complete(err);
+    });
 };
 
 
