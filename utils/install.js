@@ -45,7 +45,8 @@ module.exports = function (options, callback) {
         };
     }
 
-    debug.success('install ' + name, url);
+    debug.ignore('install ' + name, url);
+    console.loading();
     request.get({
         url: url,
         debug: false
@@ -54,8 +55,10 @@ module.exports = function (options, callback) {
         process.exit(1);
     }).pipe(tempStream).on('error', function (err) {
         debug.error('install ' + name, err.message);
+        console.loadingEnd()
         process.exit(1);
     }).on('close', function () {
+        console.loadingEnd()
         debug.ignore('unzip ' + name, tempFile);
 
         var zip = new AdmZip(tempFile);

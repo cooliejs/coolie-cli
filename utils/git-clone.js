@@ -49,25 +49,26 @@ module.exports = function (options, callback) {
     //log.success(options);
     var url = path.joinURI(options.git, options.registry, options.repository, 'archive', options.branch + '.zip');
     debug.ignore('git clone', url);
-    //log.success('git clone', url);
+    console.loading();
     var tempFile = path.join(os.tmpdir(), random.guid());
     var filename = options.repository + '-' + options.branch;
     var unzipPath = path.join(options.dirname, filename);
     var ws = fse.createWriteStream(tempFile);
     var complete = controller.once(function (err) {
         callback(err);
+        console.loadingEnd();
 
         if (err) {
             return remoteTempfile();
         }
 
-        debug.ignore('git clone', path.toSystem(tempFile));
+        debug.ignore('unzip', path.toSystem(tempFile));
 
         var zip = new AdmZip(tempFile);
 
         try {
             zip.extractAllTo(options.dirname, true);
-            debug.success('unzip', path.toSystem(unzipPath));
+            debug.success(options.repository, path.toSystem(unzipPath));
         } catch (err) {
             debug.error('unzip ' + name, unzipPath);
             debug.error('unzip ' + name, err.message);
