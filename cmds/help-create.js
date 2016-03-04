@@ -24,11 +24,11 @@ module.exports = function () {
     console.log('Use the following parameters to specify the type of template.');
     console.log();
     console.log('1. Usage');
-    console.log(log.yellow('   coolie create <--templateType> [options]'));
+    console.warn('   coolie create <--templateType> [options]');
     console.log();
     console.log('2. Example');
-    console.log(log.yellow('   coolie create --express'));
-    console.log(log.yellow('   coolie create --static'));
+    console.warn('   coolie create --express');
+    console.warn('   coolie create --static');
     console.log();
     console.log('3. Command');
     debug.success('   create', 'create a project template', options);

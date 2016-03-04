@@ -23,10 +23,10 @@ module.exports = function () {
     console.log('Download a coolie demo, use `-d` parameter specifies the root directory.');
     console.log();
     console.log('1. Usage');
-    console.log(log.yellow('   coolie demo <demoId> [options]'));
+    console.warn('   coolie demo <demoId> [options]');
     console.log();
     console.log('2. Example');
-    console.log(log.yellow('   coolie demo 1'));
+    console.warn('   coolie demo 1');
     console.log();
     console.log('3. Command');
     debug.success('   demo', 'download a coolie demo', options);
