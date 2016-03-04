@@ -28,6 +28,7 @@ exports.parseCookie = cookieParser(configs.cookie.secret);
 
 
 // 解析 session
+var sessionStore = new RedisStore(configs.redis);
 exports.parseSession = sessionParser({
     genid: function () {
         return random.string() + encryption.md5(random.guid());
@@ -35,7 +36,19 @@ exports.parseSession = sessionParser({
     resave: true,
     saveUninitialized: true,
     secret: configs.cookie.secret,
-    store: new RedisStore(configs.redis)
+    store: sessionStore
+});
+
+sessionStore.on('connect', function () {
+    console.info('connect redis store success');
+});
+
+sessionStore.on('disconnect', function () {
+    console.info('disconnect redis store success');
+});
+
+sessionStore.on('error', function (err) {
+    console.error(err);
 });
 
 
