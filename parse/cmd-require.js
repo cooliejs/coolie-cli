@@ -143,6 +143,10 @@ var cleanURL = function (url, isSingleURL) {
 };
 
 
+var asyncCache = {};
+var syncCache = {};
+
+
 /**
  * 解析依赖，返回数组
  * @param file {String} 文件地址
@@ -155,6 +159,12 @@ var cleanURL = function (url, isSingleURL) {
 module.exports = function (file, options) {
     var requires = [];
     var code = options.code;
+
+    if (options.async && asyncCache[file]) {
+        return asyncCache[file];
+    } else if (!options.async && syncCache[file]) {
+        return syncCache[file];
+    }
 
     code.replace(REG_SLASH, '').replace(options.async ? REG_REQUIRE_ASYNC : REG_REQUIRE_SYNC, function ($0, $1, $2) {
         if ($2) {
@@ -197,6 +207,12 @@ module.exports = function (file, options) {
             requires.push(dep);
         }
     });
+
+    if (options.async) {
+        asyncCache[file] = requires;
+    } else {
+        syncCache[file] = requires;
+    }
 
     return requires;
 };

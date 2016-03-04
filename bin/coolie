@@ -6,6 +6,7 @@ var fs = require('fs');
 var path = require('path');
 var command = require('ydr-utils').command;
 var debug = require('ydr-utils').debug;
+var console = require('ydr-utils').console;
 
 var cmdBanner = require('../cmds/banner.js');
 var cmdBuild = require('../cmds/build.js');
