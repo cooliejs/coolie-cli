@@ -15,7 +15,10 @@ var log = require('ydr-utils').log;
 var debug = require('ydr-utils').debug;
 var controller = require('ydr-utils').controller;
 var typeis = require('ydr-utils').typeis;
+var random = require('ydr-utils').random;
 var fse = require('fs-extra');
+var AdmZip = require('adm-zip');
+var os = require('os');
 
 var defaults = {
     git: 'https://github.com',
@@ -47,16 +50,38 @@ module.exports = function (options, callback) {
     var url = path.joinURI(options.git, options.registry, options.repository, 'archive', options.branch + '.zip');
     debug.ignore('git clone', url);
     //log.success('git clone', url);
-    var filename = options.repository + '-' + options.branch + '.zip';
-    var filepath = path.join(options.dirname, filename);
-    var ws = fse.createWriteStream(filepath);
+    var tempFile = path.join(os.tmpdir(), random.guid());
+    var filename = options.repository + '-' + options.branch;
+    var unzipPath = path.join(options.dirname, filename);
+    var ws = fse.createWriteStream(tempFile);
     var complete = controller.once(function (err) {
         callback(err);
 
-        if (!err) {
-            debug.success('git clone', path.toSystem(filepath));
+        if (err) {
+            return remoteTempfile();
         }
+
+        debug.ignore('git clone', path.toSystem(tempFile));
+
+        var zip = new AdmZip(tempFile);
+
+        try {
+            zip.extractAllTo(options.dirname, true);
+            debug.success('unzip', path.toSystem(unzipPath));
+        } catch (err) {
+            debug.error('unzip ' + name, unzipPath);
+            debug.error('unzip ' + name, err.message);
+        }
+
+        remoteTempfile();
     });
+    var remoteTempfile = function () {
+        try {
+            fse.removeSync(tempFile);
+        } catch (err) {
+            // ignore
+        }
+    };
 
     request({
         url: url,
@@ -66,7 +91,7 @@ module.exports = function (options, callback) {
         debug.error('git clone', err.message);
         complete(err);
     }).on('close', complete).pipe(ws).on('error', function (err) {
-        debug.error('write file', path.toSystem(filepath));
+        debug.error('write file', path.toSystem(tempFile));
         debug.error('write error', err.message);
         complete(err);
     }).on('close', complete);

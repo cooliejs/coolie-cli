@@ -47,7 +47,8 @@ module.exports = function (options, callback) {
 
     debug.success('install ' + name, url);
     request.get({
-        url: url
+        url: url,
+        debug: false
     }).on('error', function (err) {
         debug.error('install ' + name, err.message);
         process.exit(1);
@@ -94,8 +95,7 @@ module.exports = function (options, callback) {
             try {
                 fse.removeSync(unzipDirname);
             } catch (err) {
-                debug.error('remove tempfile', unzipDirname);
-                debug.error('remove tempfile', err.message);
+                // ignore
             }
         } else {
             debug.success(name + ' directory', path.toSystem(unzipDirname));
@@ -104,8 +104,7 @@ module.exports = function (options, callback) {
         try {
             fse.removeSync(tempFile);
         } catch (err) {
-            debug.error('remove tempfile', tempFile);
-            debug.error('remove tempfile', err.message);
+            // ignore
         }
 
         callback(null, unzipDirname);
