@@ -18,7 +18,7 @@ var midAPI = require('../middlewares/api.js');
 var midError = require('../middlewares/error.js');
 
 
-module.exports = function (next, app) {
+module.exports = function (next, app, sessionStore) {
     // res.api
     app.use(midAPI.resAPI(app));
 
@@ -29,7 +29,7 @@ module.exports = function (next, app) {
 
     // 前置
     app.use(midParser.parseCookie);
-    app.use(midParser.parseSession);
+    app.use(midParser.parseSession(sessionStore));
     app.use(midParser.parseApplicationJSON);
     app.use(midParser.parseApplicationXwwwFormUrlencoded);
     app.use(midParser.parseUA);

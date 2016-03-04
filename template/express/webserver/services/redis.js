@@ -13,10 +13,10 @@ var controller = require('ydr-utils').controller;
 
 var configs = require('../../configs.js');
 
-module.exports = function (next) {
+module.exports = function (next, app) {
     var sessionStore = new RedisStore(configs.redis);
     var complete = controller.once(function (err) {
-        next(err, sessionStore);
+        next(err, app, sessionStore);
     });
 
     sessionStore.on('connect', function () {

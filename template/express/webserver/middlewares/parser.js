@@ -10,7 +10,6 @@
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var sessionParser = require('express-session');
-var RedisStore = require('connect-redis')(sessionParser);
 var random = require('ydr-utils').random;
 var encryption = require('ydr-utils').encryption;
 var multer = require('multer');
@@ -28,28 +27,17 @@ exports.parseCookie = cookieParser(configs.cookie.secret);
 
 
 // 解析 session
-var sessionStore = new RedisStore(configs.redis);
-exports.parseSession = sessionParser({
-    genid: function () {
-        return random.string() + encryption.md5(random.guid());
-    },
-    resave: true,
-    saveUninitialized: true,
-    secret: configs.cookie.secret,
-    store: sessionStore
-});
-
-sessionStore.on('connect', function () {
-    console.info('connect redis store success');
-});
-
-sessionStore.on('disconnect', function () {
-    console.info('disconnect redis store success');
-});
-
-sessionStore.on('error', function (err) {
-    console.error(err);
-});
+exports.parseSession = function (store) {
+    return sessionParser({
+        genid: function () {
+            return random.string() + encryption.md5(random.guid());
+        },
+        resave: true,
+        saveUninitialized: true,
+        secret: configs.cookie.secret,
+        store: store
+    });
+};
 
 
 // 解析 application/json
@@ -71,7 +59,7 @@ exports.parseMultipartFormData = upload.array();
 
 
 // 解析 ua
-exports.parseUA = function(req, res, next) {
+exports.parseUA = function (req, res, next) {
     var ua = req.headers['user-agent'];
     var isMobile = /mobile|iphone|ipad|ipod|andorid/i.test(ua);
     var isWeixin = /MicroMessenger\b/i.test(ua);
