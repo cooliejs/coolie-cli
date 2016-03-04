@@ -18,17 +18,18 @@ module.exports = {
     env: env,
     root: root,
     webroot: path.join(root, './webroot-' + webroot),
-    cookie: {
-        secret: 'express-template',
-        // 30d
-        expires: 30 * 24 * 60 * 60 * 1000
-    },
     mongodb: {
         local: 'mongodb://localhost:27017/express-template',
         dev: 'mongodb://localhost:27017/express-template',
         test: 'mongodb://localhost:27017/express-template',
         pro: 'mongodb://localhost:27017/express-template'
-    }[env]
+    }[env],
+    cookie: {
+        secret: 'express-template',
+        // 30d
+        expires: 30 * 24 * 60 * 60 * 1000
+    },
+    api: 'http://api.com'
 };
 
 

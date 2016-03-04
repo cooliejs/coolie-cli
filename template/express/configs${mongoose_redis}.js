@@ -55,7 +55,8 @@ module.exports = {
         secret: 'express-template',
         // 30d
         expires: 30 * 24 * 60 * 60 * 1000
-    }
+    },
+    api: 'http://api.com'
 };
 
 
