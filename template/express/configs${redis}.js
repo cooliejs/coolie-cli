@@ -44,7 +44,7 @@ module.exports = {
             pass: 'REDIS_PASSWORD',
             prefix: pkg.name + ':'
         }
-    },
+    }[env],
     cookie: {
         secret: 'express-template',
         // 30d

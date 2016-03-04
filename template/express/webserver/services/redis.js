@@ -16,6 +16,10 @@ var configs = require('../../configs.js');
 module.exports = function (next, app) {
     var sessionStore = new RedisStore(configs.redis);
     var complete = controller.once(function (err) {
+        if (err) {
+            err.redisURL = configs.redis;
+        }
+
         next(err, app, sessionStore);
     });
 
@@ -26,15 +30,10 @@ module.exports = function (next, app) {
 
     sessionStore.on('disconnect', function () {
         var err = new Error('disconnect redis store');
-
-        err.redisUrl = configs.redis;
-        console.error(err);
         complete(err);
     });
 
     sessionStore.on('error', function (err) {
-        err.redisUrl = configs.redis;
-        console.error(err);
         complete(err);
     });
 };
