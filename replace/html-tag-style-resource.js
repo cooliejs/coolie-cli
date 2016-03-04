@@ -24,7 +24,8 @@ var defaults = {
     destResourceDirname: null,
     replaceCSSResource: true,
     minifyCSS: true,
-    minifyResource: true
+    minifyResource: true,
+    mute: false
 };
 
 /**
@@ -41,6 +42,7 @@ var defaults = {
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 内的资源
+ * @param [options.mute=false] {Boolean} 是否静音
  * @returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
@@ -72,7 +74,8 @@ module.exports = function (file, options) {
                     srcDirname: options.srcDirname,
                     destDirname: options.destDirname,
                     destHost: options.destHost,
-                    destResourceDirname: options.destResourceDirname
+                    destResourceDirname: options.destResourceDirname,
+                    mute: options.mute
                 });
 
                 styleCode = minifyCSSRet.code;

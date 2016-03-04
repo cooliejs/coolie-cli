@@ -48,7 +48,8 @@ var defaults = {
     cleanCSSOptions: true,
     replaceCSSResource: true,
     signJS: false,
-    signCSS: false
+    signCSS: false,
+    mute: false
 };
 
 
@@ -72,6 +73,7 @@ var defaults = {
  * @param [options.replaceCSSResource] {Boolean} 是否替换 CSS 内引用资源
  * @param [options.signJS] {Boolean} 是否签名 js 文件
  * @param [options.signCSS] {Boolean} 是否签名 css 文件
+ * @param [options.mute] {Boolean} 是否静音
  * @returns {{code: String, cssList: Array, jsList: Array}}
  */
 module.exports = function (file, options) {
@@ -106,17 +108,18 @@ module.exports = function (file, options) {
 
                 if (options.minifyCSS) {
                     var minifyCSSRet = minifyCSS(cssFile, {
-                            code: cssCode,
-                            cleanCSSOptions: options.cleanCSSOptions,
-                            versionLength: options.versionLength,
-                            srcDirname: options.srcDirname,
-                            destDirname: options.destDirname,
-                            destHost: options.destHost,
-                            destResourceDirname: options.destResourceDirname,
-                            destCSSDirname: options.destCSSDirname,
-                            minifyResource: options.minifyResource,
-                            replaceCSSResource: options.replaceCSSResource
-                        });
+                        code: cssCode,
+                        cleanCSSOptions: options.cleanCSSOptions,
+                        versionLength: options.versionLength,
+                        srcDirname: options.srcDirname,
+                        destDirname: options.destDirname,
+                        destHost: options.destHost,
+                        destResourceDirname: options.destResourceDirname,
+                        destCSSDirname: options.destCSSDirname,
+                        minifyResource: options.minifyResource,
+                        replaceCSSResource: options.replaceCSSResource,
+                        mute: options.mute
+                    });
                     cssCode = minifyCSSRet.code + '\n';
                     cssFileResMap[cssFile] = minifyCSSRet.resList;
                 }
@@ -147,7 +150,10 @@ module.exports = function (file, options) {
 
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
-                debug.success('√', concatURI);
+
+                if (!options.mute) {
+                    debug.success('√', concatURI);
+                }
             } catch (err) {
                 debug.error('write css', path.toSystem(concatFile));
                 debug.error('write css', err.message);
@@ -173,7 +179,8 @@ module.exports = function (file, options) {
                 if (options.minifyJS) {
                     jsCode = minifyJS(jsFile, {
                             code: jsCode,
-                            uglifyJSOptions: options.uglifyJSOptions
+                            uglifyJSOptions: options.uglifyJSOptions,
+                            mute: options.mute
                         }) + '\n';
                 }
 
@@ -198,7 +205,10 @@ module.exports = function (file, options) {
 
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
-                debug.success('√', concatURI);
+
+                if (!options.mute) {
+                    debug.success('√', concatURI);
+                }
             } catch (err) {
                 debug.error('write js', path.toSystem(concatFile));
                 debug.error('write js', err.message);

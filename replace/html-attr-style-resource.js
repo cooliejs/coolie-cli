@@ -24,7 +24,8 @@ var defaults = {
     destHost: '/',
     destResourceDirname: null,
     minifyResource: true,
-    minifyCSS: true
+    minifyCSS: true,
+    mute: false
 };
 
 
@@ -40,6 +41,7 @@ var defaults = {
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
+ * @param [options.mute] {Boolean} 是否静音
  * returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
@@ -67,7 +69,8 @@ module.exports = function (file, options) {
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
             destHost: options.destHost,
-            destResourceDirname: options.destResourceDirname
+            destResourceDirname: options.destResourceDirname,
+            mute: false
         });
 
         styleCode = replaceCSSResourceRet.code;

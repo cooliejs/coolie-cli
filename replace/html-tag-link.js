@@ -26,7 +26,8 @@ var defaults = {
     versionLength: 32,
     minifyCSS: true,
     cleanCSSOptions: null,
-    signCSS: false
+    signCSS: false,
+    mute: false
 };
 
 
@@ -45,6 +46,7 @@ var defaults = {
  * @param [options.minifyResource] {Boolean} 是否压缩静态资源
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.signCSS] {Boolean} 是否签名 CSS 文件
+ * @param [options.mute] {Boolean} 是否静音
  * @returns {{code: String, cssList: Array}}
  */
 module.exports = function (file, options) {
@@ -79,7 +81,8 @@ module.exports = function (file, options) {
             minifyCSS: options.minifyCSS,
             versionLength: options.versionLength,
             signCSS: options.signCSS,
-            cleanCSSOptions: options.cleanCSSOptions
+            cleanCSSOptions: options.cleanCSSOptions,
+            mute: options.mute
         });
 
         if (!ret) {

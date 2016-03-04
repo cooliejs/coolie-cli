@@ -32,7 +32,8 @@ var defaults = {
     minifyResource: true,
     versionLength: 32,
     signCSS: true,
-    cleanCSSOptions: null
+    cleanCSSOptions: null,
+    mute: false
 };
 
 
@@ -51,6 +52,7 @@ var defaults = {
  * @param options.versionLength
  * @param options.signCSS
  * @param options.cleanCSSOptions
+ * @param options.mute
  * @returns {*}
  */
 module.exports = function (href, options) {
@@ -80,7 +82,8 @@ module.exports = function (href, options) {
                 destHost: options.destHost,
                 destResourceDirname: options.destResourceDirname,
                 minifyResource: options.minifyResource,
-                replaceCSSResource: true
+                replaceCSSResource: true,
+                mute: options.mute
             });
             destCode = minifyCSSRet.code;
             resList = minifyCSSRet.resList;
@@ -101,7 +104,10 @@ module.exports = function (href, options) {
             minifyPathmap[srcPath] = destPath;
             minifyCSSmap[srcPath] = destURI;
             resourceMap[srcPath] = resList;
-            debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
+
+            if (!options.mute) {
+                debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
+            }
         } catch (err) {
             debug.error('write file', path.toSystem(destPath));
             debug.error('write file', err.message);
