@@ -24,9 +24,16 @@ var REPO_URL = 'https://api.github.com/repos';
 module.exports = function (repo, callback) {
     var url = path.joinURI(REPO_URL, owner, repo);
 
-    request.get(url, function (err, body) {
-        if(err){
-            return callback(null, {});
+    console.loading();
+    request({
+        method: 'get',
+        url: url,
+        debug: false
+    }, function (err, body) {
+        console.loadingEnd();
+        
+        if (err) {
+            return callback(err);
         }
 
         var json = {};
@@ -35,6 +42,10 @@ module.exports = function (repo, callback) {
             json = JSON.parse(body);
         } catch (err) {
             // ignore
+        }
+
+        if (!json.name && json.message) {
+            return callback(new Error(json.message || 'Not Found'));
         }
 
         callback(null, json);

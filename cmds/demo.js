@@ -7,8 +7,13 @@
 
 'use strict';
 
+var howdo = require('howdo');
+var debug = require('ydr-utils').debug;
+var openHelper = require('open');
+
 var banner = require('./banner.js');
 var gitClone = require('../utils/git-clone.js');
+var gitRepo = require('../utils/git-repo.js');
 
 
 /**
@@ -20,10 +25,36 @@ var gitClone = require('../utils/git-clone.js');
 module.exports = function (options) {
     banner();
 
-    gitClone({
-        dirname: options.destDirname,
-        repository: 'coolie-demo' + options.demo
-    });
+    var repo = 'coolie-demo' + options.demo;
+
+    howdo
+        .task(function (next) {
+            gitRepo(repo, next);
+        })
+        .task(function (next, info) {
+            gitClone({
+                dirname: options.destDirname,
+                repository: repo
+            }, function (err) {
+                next(err, info);
+            });
+        })
+        .task(function (next, info) {
+            var homepage = info.homepage || info.html_url;
+            openHelper(homepage, function (err) {
+                if (err) {
+                    return next();
+                }
+
+                debug.success('coolie demo', homepage);
+                next();
+            });
+        })
+        .follow()
+        .try()
+        .catch(function (err) {
+            debug.error('coolie demo', err.message);
+        });
 };
 
 
