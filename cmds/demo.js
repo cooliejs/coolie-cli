@@ -46,14 +46,14 @@ module.exports = function (options) {
                     return next();
                 }
 
-                debug.success('coolie demo', homepage);
+                debug.success(repo, homepage);
                 next();
             });
         })
         .follow()
         .try()
         .catch(function (err) {
-            debug.error('coolie demo', err.message);
+            debug.error(repo, err.message);
         });
 };
 
