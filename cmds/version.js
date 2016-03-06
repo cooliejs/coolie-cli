@@ -18,7 +18,7 @@ var banner = require('./banner.js');
 module.exports = function () {
     banner();
     debug.success('local coolie-cli', pkg.version);
-    debug.ignore('check version', 'wait a moment...');
+    console.loading();
     howdo
         // 获取 coolie.cli 版本
         .task(function (done) {
@@ -27,7 +27,8 @@ module.exports = function () {
                     return done(err);
                 }
 
-                debug.success('online coolie-cli', version);
+
+                done(err, version);
             });
         })
         // 获取 coolie.js 版本
@@ -50,10 +51,17 @@ module.exports = function () {
                     return done(new Error('parse error'));
                 }
 
-                debug.success('online coolie.js', json.version);
+
+                done(err, json.version);
             });
         })
-        .together()
+        .together(function () {
+            console.loadingEnd();
+        })
+        .try(function (coolieCliVersion, coolieJSVersion) {
+            debug.success('online coolie-cli', coolieCliVersion);
+            debug.success('online coolie.js', coolieJSVersion);
+        })
         .catch(function (err) {
             debug.error('error', err.message);
             return process.exit(1);
