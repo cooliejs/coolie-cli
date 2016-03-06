@@ -3,11 +3,11 @@ define(function (require, exports, module) {
 
     //require.async('../libs1/all.js');
 
-    require.async('../libs1/path1/path2/');
+    //require.async('../libs1/path1/path2/');
     ////require('../libs2/some.css', 'css');
     ////require('../libs2/some.html', 'html|url');
     ////require('../libs2/some.jpg', 'image|url');
-    ////require('../libs2/some.json', 'json');
+    require('../../json/_brokers.json', 'json');
     ////require('../libs2/some.txt', 'text');
     //
     //var listenHash = function () {

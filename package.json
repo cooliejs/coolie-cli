@@ -39,6 +39,7 @@
   },
   "homepage": "https://coolie.ydr.me/",
   "coolie": {
+    "owner": "cooliejs",
     "package.json": "https://raw.githubusercontent.com/cloudcome/coolie/master/package.json",
     "book": "https://coolie.ydr.me/",
     "modules": {
