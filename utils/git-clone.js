@@ -55,23 +55,24 @@ module.exports = function (options, callback) {
     var unzipPath = path.join(options.dirname, filename);
     var ws = fse.createWriteStream(tempFile);
     var complete = controller.once(function (err) {
-        callback(err);
         console.loadingEnd();
 
         if (err) {
+            callback(err);
             return remoteTempfile();
         }
 
         debug.ignore('unzip', path.toSystem(tempFile));
 
-        var zip = new AdmZip(tempFile);
 
         try {
+            var zip = new AdmZip(tempFile);
             zip.extractAllTo(options.dirname, true);
             debug.success(options.repository, path.toSystem(unzipPath));
         } catch (err) {
-            debug.error('unzip ' + name, unzipPath);
-            debug.error('unzip ' + name, err.message);
+            debug.error('unzip ' + options.repository, unzipPath);
+            debug.error('unzip ' + options.repository, err.message);
+            callback(err);
         }
 
         remoteTempfile();

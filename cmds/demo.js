@@ -32,6 +32,10 @@ module.exports = function (options) {
             gitRepo(repo, next);
         })
         .task(function (next, info) {
+            if (info.created_at === info.updated_at) {
+                return next(new Error('Not Found'));
+            }
+
             gitClone({
                 dirname: options.destDirname,
                 repository: repo
