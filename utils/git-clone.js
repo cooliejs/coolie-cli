@@ -64,11 +64,11 @@ module.exports = function (options, callback) {
 
         debug.ignore('unzip', path.toSystem(tempFile));
 
-
         try {
             var zip = new AdmZip(tempFile);
             zip.extractAllTo(options.dirname, true);
             debug.success(options.repository, path.toSystem(unzipPath));
+            callback();
         } catch (err) {
             debug.error('unzip ' + options.repository, unzipPath);
             debug.error('unzip ' + options.repository, err.message);
