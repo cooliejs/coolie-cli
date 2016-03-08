@@ -18,7 +18,7 @@ module.exports = express.static(configs.webroot, {
     etag: configs.env !== 'local',
     extensions: ['html'],
     index: false,
-    maxAge: configs.env === 'local' ? 0 : '30d',
+    maxAge: '30d',
     redirect: true,
     lastModified: false,
     setHeaders: function (res) {
