@@ -18,6 +18,7 @@ var buildResPath = require('../build/res-path.js');
 var parseHTML = require('../parse/html.js');
 
 var COOLIE_IGNORE = 'coolieignore';
+var COOLIE_BASE64 = 'cooliebase64';
 var linkRelList = [
     /apple-touch-icon/,
     /apple-touch-icon-precomposed/,
@@ -26,19 +27,6 @@ var linkRelList = [
     /og:image/,
     /msapplication-TileImage/
 ];
-var regList = [{
-    reg: /<(link)\b[\s\S]*?>(?!["'])/gi,
-    replaceAttrs: ['href']
-}, {
-    reg: /<(embed|audio|video|source|img)\b[\s\S]*?>(?!["'])/gi,
-    replaceAttrs: ['src']
-}, {
-    reg: /<(object)\b[\s\S]*>(?!["'])/gi,
-    replaceAttrs: ['data']
-}, {
-    reg: /<(source)\b[\s\S]*?>(?!["'])/gi,
-    replaceAttrs: ['srcset']
-}];
 var replaceList = [{
     tags: ['link'],
     attr: 'href'
@@ -124,7 +112,8 @@ module.exports = function (file, options) {
                 destDirname: options.destDirname,
                 destResourceDirname: options.destResourceDirname,
                 destHost: options.destHost,
-                mute: options.mute
+                mute: options.mute,
+                base64: Boolean(node.attrs[COOLIE_BASE64])
             });
 
             if (!ret) {
@@ -135,6 +124,7 @@ module.exports = function (file, options) {
                 resList.push(ret.srcFile);
             }
 
+            node.attrs[COOLIE_BASE64] = null;
             node.attrs[attr] = ret.url;
             return node;
         });

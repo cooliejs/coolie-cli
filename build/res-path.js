@@ -11,6 +11,7 @@ var path = require('ydr-utils').path;
 
 var pathURI = require('../utils/path-uri.js');
 var copy = require('../utils/copy.js');
+var base64 = require('../utils/base64.js');
 
 var defaults = {
     file: null,
@@ -19,7 +20,8 @@ var defaults = {
     destDirname: null,
     destResourceDirname: null,
     destHost: '/',
-    mute: false
+    mute: false,
+    base64: false
 };
 
 
@@ -49,8 +51,15 @@ module.exports = function (value, options) {
         logType: options.mute ? 0 : 1,
         embedFile: options.file
     });
-    var resRelative = path.relative(options.destDirname, resFile);
-    var url = pathURI.joinURI(options.destHost, resRelative);
+
+    var url = '';
+
+    if (options.base64) {
+        url = base64.file(resFile);
+    } else {
+        var resRelative = path.relative(options.destDirname, resFile);
+        url = pathURI.joinURI(options.destHost, resRelative);
+    }
 
     return {
         srcFile: absFile,
