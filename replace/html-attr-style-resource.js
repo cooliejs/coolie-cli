@@ -14,6 +14,7 @@ var parseHTML = require('../parse/html.js');
 var replaceCSSResource = require('./css-resource.js');
 
 var COOLIE_IGNORE = 'coolieignore';
+var COOLIE_BASE64 = 'cooliebase64';
 var REG_LINES = /[\n\r]/g;
 var REG_SPACES = /\s+/g;
 var defaults = {

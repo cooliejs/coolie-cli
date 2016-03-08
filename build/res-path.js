@@ -42,21 +42,21 @@ module.exports = function (value, options) {
     }
 
     var absFile = pathURI.toAbsoluteFile(pathRet.path, options.file, options.srcDirname);
-    var resFile = copy(absFile, {
-        version: true,
-        copyPath: false,
-        versionLength: options.versionLength,
-        srcDirname: options.srcDirname,
-        destDirname: options.destResourceDirname,
-        logType: options.mute ? 0 : 1,
-        embedFile: options.file
-    });
-
     var url = '';
+    var resFile = absFile;
 
     if (options.base64) {
-        url = base64.file(resFile);
+        url = base64.file(absFile);
     } else {
+        resFile = copy(absFile, {
+            version: true,
+            copyPath: false,
+            versionLength: options.versionLength,
+            srcDirname: options.srcDirname,
+            destDirname: options.destResourceDirname,
+            logType: options.mute ? 0 : 1,
+            embedFile: options.file
+        });
         var resRelative = path.relative(options.destDirname, resFile);
         url = pathURI.joinURI(options.destHost, resRelative);
     }
