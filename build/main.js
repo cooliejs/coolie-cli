@@ -134,7 +134,7 @@ module.exports = function (file, options) {
             var replacedFile = virtualMap[mainFile] || mainFile;
             var srcMainURI = pathURI.toRootURL(replacedFile, options.srcDirname);
 
-            debug.waitEnd((options.mainIndex + 1) + '/' + options.mainLength, srcMainURI, {
+            debug.waitEnd('main ' + (options.mainIndex + 1) + '/' + options.mainLength, srcMainURI, {
                 colors: 'green'
             });
         }
