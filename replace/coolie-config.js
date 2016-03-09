@@ -99,7 +99,6 @@ module.exports = function (file, options) {
         debug.success('coolie-config.js', 'base: "' + coolieConfig.base + '"');
         debug.success('coolie-config.js', 'async: "' + coolieConfig.async + '"');
         debug.success('coolie-config.js', 'chunk: "' + coolieConfig.chunk + '"');
-        //debug.success('√', 'version: "' + JSON.stringify(versionMap2, null, 2) + '"');
         debug.success('coolie-config.js', 'callbacks: ' + callbacks.length);
 
         var code2 = 'coolie.config({' +
@@ -132,7 +131,7 @@ module.exports = function (file, options) {
 
         try {
             fse.outputFileSync(destCoolieConfigJSPath, code3, 'utf8');
-            debug.success('√', destCoolieConfigJSURI);
+            debug.success('output', destCoolieConfigJSURI);
         } catch (err) {
             debug.error('coolie-config.js', destCoolieConfigJSPath);
             debug.error('write file', err.message);

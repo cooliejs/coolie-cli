@@ -127,6 +127,10 @@ module.exports = function (file, options) {
                 files.push(cssFile);
                 md5List.push(encryption.md5(cssCode));
                 bfList.push(new Buffer(cssCode, ENCODING));
+
+                if (!options.mute) {
+                    debug.success('build css', pathURI.toRootURL(cssFile, options.srcDirname));
+                }
             });
 
             findCache = hasCache(files);
@@ -150,10 +154,6 @@ module.exports = function (file, options) {
 
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
-
-                if (!options.mute) {
-                    debug.success('√', concatURI);
-                }
             } catch (err) {
                 debug.error('write css', path.toSystem(concatFile));
                 debug.error('write css', err.message);
@@ -187,6 +187,10 @@ module.exports = function (file, options) {
                 files.push(jsFile);
                 md5List.push(encryption.md5(jsCode));
                 bfList.push(new Buffer(jsCode, ENCODING));
+
+                if (!options.mute) {
+                    debug.success('build js', pathURI.toRootURL(jsFile, options.srcDirname));
+                }
             });
 
             findCache = hasCache(files);
@@ -205,10 +209,6 @@ module.exports = function (file, options) {
 
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
-
-                if (!options.mute) {
-                    debug.success('√', concatURI);
-                }
             } catch (err) {
                 debug.error('write js', path.toSystem(concatFile));
                 debug.error('write js', err.message);
