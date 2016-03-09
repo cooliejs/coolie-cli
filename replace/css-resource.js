@@ -15,6 +15,7 @@ var dato = require('ydr-utils').dato;
 var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
+var buildResPath = require('../build/res-path.js');
 
 // background: url("...");
 var REG_URL = /url\s*?\((.*?)\)/ig;
@@ -24,11 +25,13 @@ var REG_QUOTE = /^["']|['"]$/g;
 var regs = [{
     before: 'url(',
     reg: REG_URL,
-    after: ')'
+    after: ')',
+    quote: false
 }, {
-    before: '(src="',
+    before: '(src=',
     reg: REG_SRC,
-    after: '")'
+    after: ')',
+    quote: true
 }];
 var defaults = {
     code: '',
@@ -39,7 +42,8 @@ var defaults = {
     destResourceDirname: null,
     destCSSDirname: null,
     minifyResource: true,
-    mute: false
+    mute: false,
+    base64: false
 };
 
 
@@ -54,6 +58,7 @@ var defaults = {
  * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param options.mute {Boolean} 是否静音
+ * @param options.base64 {Boolean} 是否 base64
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @returns {Object}
@@ -66,42 +71,45 @@ module.exports = function (file, options) {
 
     regs.forEach(function (item) {
         code = code.replace(item.reg, function (all, resource) {
+            var quote = resource[0];
+
+            quote = quote === "'" || quote === '"' ? quote : '';
+            quote = item.quote ? quote : '';
             resource = resource.replace(REG_QUOTE, '');
 
             var pathRet = pathURI.parseURI2Path(resource);
+            var ret = buildResPath(resource, {
+                file: file,
+                versionLength: options.versionLength,
+                srcDirname: options.srcDirname,
+                destDirname: options.destDirname,
+                destResourceDirname: options.destResourceDirname,
+                destHost: options.destHost,
+                mute: options.mute,
+                base64: options.base64
+            });
 
-            if (!pathURI.isRelatived(pathRet.original)) {
+            if (!ret) {
                 return all;
             }
 
-            var absDir = pathURI.isRelativeFile(pathRet.path) ? path.dirname(file) : options.srcDirname;
-            var absFile = path.join(absDir, pathRet.path);
+            var srcFile = ret.srcFile;
+            var destFile = ret.destFile;
 
-            if (!depsMap[absFile]) {
-                depsMap[absFile] = true;
-                deps.push(absFile);
+            if (!depsMap[srcFile]) {
+                depsMap[srcFile] = true;
+                deps.push(srcFile);
             }
 
-            var destFile = copy(absFile, {
-                srcDirname: options.srcDirname,
-                destDirname: options.destResourceDirname,
-                copyPath: false,
-                version: true,
-                versionLength: options.versionLength,
-                logType: options.mute ? 0 : 1,
-                embedFile: file,
-                embedCode: all
-            });
+            if (options.base64) {
+                return item.before + quote + ret.url + quote + item.after;
+            }
 
-            var url = '';
+            var url = ret.url;
 
             // 有目标文件，css 里的资源相对于 css 文件本身
             if (options.destCSSDirname) {
                 url = path.relative(options.destCSSDirname, destFile);
-            }
-            // 否则，css 里的资源相对于根目录
-            else {
-                url = pathURI.joinURI(options.destHost, path.relative(options.destDirname, destFile));
             }
 
             url = path.toURI(url) + pathRet.suffix;

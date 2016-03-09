@@ -18,5 +18,6 @@
 - 构建多线程模式，便于显示进度
 - 构建之后使用更小尺寸的模块加载器
 - 缓存依赖信息 √
-- 直接解压缩 demo zip 包
+- 直接解压缩 demo zip 包 √
+- cooliebase64:html-attr √ html-attr-style √
 

@@ -26,7 +26,8 @@ var defaults = {
     destResourceDirname: null,
     minifyResource: true,
     minifyCSS: true,
-    mute: false
+    mute: false,
+    base64: false
 };
 
 
@@ -71,7 +72,8 @@ module.exports = function (file, options) {
             destDirname: options.destDirname,
             destHost: options.destHost,
             destResourceDirname: options.destResourceDirname,
-            mute: false
+            mute: false,
+            base64: Boolean(node.attrs[COOLIE_BASE64])
         });
 
         styleCode = replaceCSSResourceRet.code;
@@ -81,6 +83,7 @@ module.exports = function (file, options) {
             styleCode = styleCode.replace(REG_LINES, '').replace(REG_SPACES, ' ');
         }
 
+        node.attrs[COOLIE_BASE64] = null;
         node.attrs.style = styleCode;
         return node;
     }).exec();

@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<!-- important meta -->
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="Cache-Control" content="no-siteapp" />
+	<meta name="format-detection" content="telephone=no" />
+	
+	<!-- desc and title -->
+	<meta name="description" content="牛宝宝理财">
+	<meta name="keywords" content="牛宝宝理财">
+	<title>牛股王</title>
+</head>
+<body>
+	<script id="template" type="text/template">
+    <div class="rem-container">
+		<div class="ng-split"></div>
+
+		<!-- 基本资料 -->
+		<div class="ng-title-step border-top border-bottom ng-border">
+			<div class="title">基本资料</div>
+		</div>
+		<div class="ng-row-input ng-border">
+			<div class="left ng-border">姓</div>
+			<div class="right">
+				<input class="ng-cursor" type="text" maxlength="10" placeholder="例如：李" id="userfname" {@if requestInfo}value="${requestInfo.lastName}"{@/if}/>
+			</div>
+		</div>
+		<div class="ng-row-input ng-border">
+			<div class="left ng-border">名</div>
+			<div class="right">
+				<input class="ng-cursor" type="text" maxlength="10" placeholder="例如：白" id="usersname" {@if requestInfo}value="${requestInfo.firstName}"{@/if}/>
+			</div>
+		</div>
+		<div class="ng-row-input ng-border">
+			<div class="left ng-border">身份证号</div>
+			<div class="right">
+				<input class="ng-cursor" type="text" maxlength="18" placeholder="目前只支持大陆身份证开户" id="usercard" {@if requestInfo && requestInfo.realIdCheck == 2}disabled="disabled"{@/if} {@if requestInfo}value="${requestInfo.realId}"{@/if}/>
+			</div>
+		</div>
+		<div class="ng-row-input ng-border">
+			<div class="left ng-border">电子邮箱</div>
+			<div class="right">
+				<input class="ng-cursor" type="text" id="usermail" placeholder="用于接收交易结单" {@if requestInfo}value="${requestInfo.email}"{@/if}/>
+			</div>
+		</div>
+		<div class="kh-tip">*实名认证后身份证不可修改</div>
+
+		<!-- 成员 -->
+		<div class="ng-row-input border-top ng-border">
+			<div class="left ng-border">家庭成员数</div>
+			<div class="right">
+				<div class="select">
+					<div class="select-txt">请选择</div>
+					<i class="icon iconfont">&#xe60c;</i>	
+				</div>
+				<select class="ng-cursor" id="userfnum">
+					<option value="0">请选择</option>
+					{@each familySizeType as item}
+					<option value="${item.Key}" {@if requestInfo && requestInfo.familySize == item.Key}selected{@/if}>${item.Value}</option>
+					{@/each}
+				</select>
+			</div>
+		</div>
+		<div class="ng-row-input ng-border">
+			<div class="left ng-border">婚姻状况</div>
+			<div class="right">
+				<div class="select">
+					<div class="select-txt">请选择</div>
+					<i class="icon iconfont">&#xe60c;</i>	
+				</div>
+				<select class="ng-cursor" id="usermarry">
+					<option value="0">请选择</option>
+					{@each maritalStatusType as item}
+					<option value="${item.Key}" {@if requestInfo && requestInfo.maritalStatus == item.Key}selected{@/if}>${item.Value}</option>
+					{@/each}
+				</select>
+			</div>
+		</div>
+		<div class="ng-split"></div>
+		
+		<!-- 财务 -->
+		<div class="ng-title-step border-top border-bottom ng-border">
+			<div class="title">职业及财务状况</div>
+		</div>
+		<div class="ng-row-input ng-border">
+			<div class="left ng-border">选择职业</div>
+			<div class="right">
+				<div class="select">
+					<div class="select-txt">请选择</div>
+					<i class="icon iconfont">&#xe60c;</i>	
+				</div>
+				<select class="ng-cursor" id="userjob">
+					<option value="0">请选择</option>
+					{@each professionType as item}
+					<option value="${item.Key}" {@if requestInfo && requestInfo.profession == item.Key}selected{@/if}>${item.Value}</option>
+					{@/each}
+				</select>
+			</div>
+		</div>
+		<div class="ng-row-input ng-border">
+			<div class="left ng-border">选择行业</div>
+			<div class="right">
+				<div class="select">
+					<div class="select-txt">请选择</div>
+					<i class="icon iconfont">&#xe60c;</i>	
+				</div>
+				<select class="ng-cursor" id="userindustry">
+					<option value="0">请选择</option>
+					{@each industryType as item}
+					<option value="${item.Key}" {@if requestInfo && requestInfo.industry == item.Key}selected{@/if}>${item.Value}</option>
+					{@/each}
+				</select>
+			</div>
+		</div>
+		<div class="ng-split"></div>
+		
+		<!-- 年收入 -->
+		<div class="ng-row-input border-top ng-border">
+			<div class="left ng-border">税后年收入</div>
+			<div class="right">
+				<div class="select">
+					<div class="select-txt">请选择</div>
+					<i class="icon iconfont">&#xe60c;</i>	
+				</div>
+				<select class="ng-cursor" id="userincome">
+					<option value="0">请选择</option>
+					{@each annualIncomeType as item}
+					<option value="${item.Key}" {@if requestInfo && requestInfo.annualIncome == item.Key}selected{@/if}>${item.Value}</option>
+					{@/each}
+				</select>
+			</div>
+		</div>
+		<div class="ng-row-input ng-border">
+			<div class="left ng-border">总资产净值</div>
+			<div class="right">
+				<div class="select">
+					<div class="select-txt">请选择</div>
+					<i class="icon iconfont">&#xe60c;</i>	
+				</div>
+				<select class="ng-cursor" id="usermoney">
+					<option value="0">请选择</option>
+					{@each totalAssetsType as item}
+					<option value="${item.Key}" {@if requestInfo && requestInfo.totalAssets == item.Key}selected{@/if}>${item.Value}</option>
+					{@/each}
+				</select>
+			</div>
+		</div>
+		<div class="ng-split"></div>
+
+		<!-- 投资目标 -->
+		<div class="ng-row-input border-top ng-border">
+			<div class="left ng-border">投资目标</div>
+			<div class="right">
+				<div class="select">
+					<div class="select-txt">请选择</div>
+					<i class="icon iconfont">&#xe60c;</i>	
+				</div>
+				<select class="ng-cursor" id="usergoal">
+					<option value="0">请选择</option>
+					{@each investmentExpectationType as item}
+					<option value="${item.Key}" {@if requestInfo && requestInfo.investmentExpectation == item.Key}selected{@/if}>${item.Value}</option>
+					{@/each}
+				</select>
+			</div>
+		</div>
+		<div class="ng-row-input ng-border">
+			<div class="left ng-border">投资经验</div>
+			<div class="right">
+				<div class="select">
+					<div class="select-txt">请选择</div>
+					<i class="icon iconfont">&#xe60c;</i>	
+				</div>
+				<select class="ng-cursor" id="userexp">
+					<option value="0">请选择</option>
+					{@each investmentExperienceType as item}
+					<option value="${item.Key}" {@if requestInfo && requestInfo.investmentExperience == item.Key}selected{@/if}>${item.Value}</option>
+					{@/each}
+				</select>
+			</div>
+		</div>
+		
+		<!-- btn -->
+		<div class="ng-btn">
+    		<button id="infonextbtn">下一步</button>
+    	</div>
+    	<div class="ng-split"></div>
+    </div>
+	</script>
+</body>
+</html>
