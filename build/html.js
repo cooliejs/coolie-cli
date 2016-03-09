@@ -86,6 +86,7 @@ module.exports = function (options) {
     var htmlJSMap = {};
     var htmlCSSMap = {};
     var htmlRESMap = {};
+    var htmlLength = htmlList.length;
 
     dato.each(htmlList, function (index, htmlFile) {
         var code;
@@ -104,7 +105,7 @@ module.exports = function (options) {
                 code: code
             });
 
-            if(typeis.Object(preRet) && typeis.String(preRet.code)){
+            if (typeis.Object(preRet) && typeis.String(preRet.code)) {
                 code = preRet.code;
             }
         }
@@ -162,14 +163,14 @@ module.exports = function (options) {
                 code: ret.code
             });
 
-            if(typeis.Object(postRet) && typeis.String(postRet.code)){
+            if (typeis.Object(postRet) && typeis.String(postRet.code)) {
                 ret.code = postRet.code;
             }
         }
 
         try {
             fse.outputFileSync(destFile, ret.code, 'utf8');
-            debug.success('√', htmlURI);
+            debug.success('html ' + (index + 1) + '/' + htmlLength, htmlURI);
         } catch (err) {
             debug.error('write html', path.toSystem(htmlFile));
             debug.error('write file', err.message);
