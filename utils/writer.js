@@ -40,7 +40,7 @@ var defaults = {
  * @param options.versionList {Array} 版本列表
  * @param options.versionLength {Number} 版本配置
  * @param options.log {Boolean} 是否显示日志
- * @returns {{file: String, version: String}}
+ * @returns {{path: String, version: String}}
  */
 module.exports = function (options) {
     options = dato.extend({}, defaults, options);

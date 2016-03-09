@@ -106,7 +106,7 @@ module.exports = function (href, options) {
             resourceMap[srcPath] = resList;
 
             if (!options.mute) {
-                debug.success('√', pathURI.toRootURL(srcPath, options.srcDirname));
+                debug.success('build', pathURI.toRootURL(srcPath, options.srcDirname));
             }
         } catch (err) {
             debug.error('write file', path.toSystem(destPath));
