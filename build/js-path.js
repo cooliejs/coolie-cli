@@ -79,7 +79,7 @@ module.exports = function (src, options) {
             minifyJSMap[srcPath] = destURI;
 
             if (!options.mute) {
-                debug.success('build', pathURI.toRootURL(srcPath, options.srcDirname));
+                debug.success('build js', pathURI.toRootURL(srcPath, options.srcDirname));
             }
         } catch (err) {
             debug.error('write file', path.toSystem(destPath));

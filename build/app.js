@@ -91,7 +91,7 @@ module.exports = function (options) {
     var mainLength = Object.keys(mainMap).length;
 
     if (!mainLength) {
-        debug.ignore('build app', 'no main modules');
+        debug.ignore('build main', 'no main modules');
         return {
             mainVersionMap: mainVersionMap,
             chunkVersionMap: chunkVersionMap,
@@ -104,7 +104,7 @@ module.exports = function (options) {
 
     if (mainLength && !options.destCoolieConfigBaseDirname) {
         debug.error('mainLength', mainLength);
-        debug.error('build app', '`coolie-config.js` is not defined');
+        debug.error('build main', '`coolie-config.js` is not defined');
         return process.exit(1);
     }
 

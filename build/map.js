@@ -171,7 +171,7 @@ module.exports = function (options) {
 
     try {
         fse.writeJSONSync(coolieMapPath, coolieMap);
-        debug.success('√', pathURI.toRootURL(coolieMapPath, options.srcDirname));
+        debug.success('coolie map', pathURI.toRootURL(coolieMapPath, options.srcDirname));
         return coolieMapPath;
     } catch (err) {
         debug.error('write coolie map', path.toSystem(coolieMapPath));

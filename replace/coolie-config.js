@@ -131,10 +131,10 @@ module.exports = function (file, options) {
 
         try {
             fse.outputFileSync(destCoolieConfigJSPath, code3, 'utf8');
-            debug.success('output', destCoolieConfigJSURI);
+            debug.success('coolie-config.js', destCoolieConfigJSURI);
         } catch (err) {
             debug.error('coolie-config.js', destCoolieConfigJSPath);
-            debug.error('write file', err.message);
+            debug.error('output file', err.message);
         }
 
         return destCoolieConfigJSPath;
