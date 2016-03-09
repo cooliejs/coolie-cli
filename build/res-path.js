@@ -64,6 +64,6 @@ module.exports = function (value, options) {
     return {
         srcFile: absFile,
         destFile: resFile,
-        url: url + pathRet.suffix
+        url: url + (options.base64 ? '' : pathRet.suffix)
     };
 };

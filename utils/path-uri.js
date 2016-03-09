@@ -16,6 +16,7 @@ var REG_BLANK = /^(data|about):/i;
 var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_RELATIVE = /^\.{1,2}\//;
 var REG_END = /\.[a-z\d]+\.([^.]+)$/i;
+var REG_COOLIE_BASE64 = /#cooliebase64/i;
 
 
 /**
@@ -163,8 +164,11 @@ exports.parseURI2Path = function (uri) {
     var ret = {};
     var uri2 = uri.replace(REG_SUFFIX, '');
 
+
     // 后置
     ret.suffix = (uri.match(REG_SUFFIX) || ['', ''])[1];
+    ret.coolieBase64 = REG_COOLIE_BASE64.test(ret.suffix);
+    ret.suffix = ret.suffix.replace(REG_COOLIE_BASE64, '');
     // 后缀
     ret.extname = path.extname(uri2);
     // 无后缀文件名

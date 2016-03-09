@@ -19,5 +19,5 @@
 - 构建之后使用更小尺寸的模块加载器
 - 缓存依赖信息 √
 - 直接解压缩 demo zip 包 √
-- cooliebase64:html-attr √ html-attr-style √
+- cooliebase64:html-attr √ html-attr-style √ html-tag-style
 

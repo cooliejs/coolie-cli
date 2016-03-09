@@ -42,8 +42,7 @@ var defaults = {
     destResourceDirname: null,
     destCSSDirname: null,
     minifyResource: true,
-    mute: false,
-    base64: false
+    mute: false
 };
 
 
@@ -58,7 +57,6 @@ var defaults = {
  * @param options.destHost {String} 目标文件 URL 域
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param options.mute {Boolean} 是否静音
- * @param options.base64 {Boolean} 是否 base64
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @returns {Object}
@@ -86,7 +84,7 @@ module.exports = function (file, options) {
                 destResourceDirname: options.destResourceDirname,
                 destHost: options.destHost,
                 mute: options.mute,
-                base64: options.base64
+                base64: pathRet.coolieBase64
             });
 
             if (!ret) {
@@ -101,7 +99,7 @@ module.exports = function (file, options) {
                 deps.push(srcFile);
             }
 
-            if (options.base64) {
+            if (pathRet.coolieBase64) {
                 return item.before + quote + ret.url + quote + item.after;
             }
 
