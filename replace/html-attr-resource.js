@@ -16,6 +16,7 @@ var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
 var buildResPath = require('../build/res-path.js');
 var parseHTML = require('../parse/html.js');
+var pathURI = require('../utils/path-uri.js');
 
 var COOLIE_IGNORE = 'coolieignore';
 var COOLIE_BASE64 = 'cooliebase64';
@@ -105,7 +106,9 @@ module.exports = function (file, options) {
                 return node;
             }
 
-            var ret = buildResPath(node.attrs[attr], {
+            var resource = node.attrs[attr];
+            var pathRet = pathURI.parseURI2Path(resource);
+            var ret = buildResPath(resource, {
                 file: file,
                 versionLength: options.versionLength,
                 srcDirname: options.srcDirname,
@@ -113,7 +116,7 @@ module.exports = function (file, options) {
                 destResourceDirname: options.destResourceDirname,
                 destHost: options.destHost,
                 mute: options.mute,
-                base64: Boolean(node.attrs[COOLIE_BASE64])
+                base64: pathRet.coolieBase64
             });
 
             if (!ret) {
@@ -124,7 +127,6 @@ module.exports = function (file, options) {
                 resList.push(ret.srcFile);
             }
 
-            node.attrs[COOLIE_BASE64] = null;
             node.attrs[attr] = ret.url;
             return node;
         });

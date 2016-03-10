@@ -16,7 +16,7 @@ var REG_BLANK = /^(data|about):/i;
 var REG_SUFFIX = /(\?.*|#.*)$/;
 var REG_RELATIVE = /^\.{1,2}\//;
 var REG_END = /\.[a-z\d]+\.([^.]+)$/i;
-var REG_COOLIE_BASE64 = /#cooliebase64/i;
+var REG_COOLIE_BASE64 = /#cooliebase64$/i;
 
 
 /**
