@@ -26,9 +26,9 @@ exports.strictRouting = function (req, res, next) {
 };
 
 
-// 完整的 url
-exports.fullUrl = function (req, res, next) {
-    req.$fullURL = req.protocol + '://' + req.headers.host + req.url;
+// 解析 url
+exports.parseURL = function (req, res, next) {
+    res.locals.$url = urlHelper.parse(req.originalUrl, true);
     next();
 };
 

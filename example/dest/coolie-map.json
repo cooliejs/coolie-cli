@@ -18,17 +18,5 @@
     "res": [
       "../src/static/img/line.png"
     ]
-  },
-  "/html/012.html": {
-    "main": [],
-    "js": [],
-    "css": [],
-    "res": []
-  },
-  "/html/456.html": {
-    "main": [],
-    "js": [],
-    "css": [],
-    "res": []
   }
 }

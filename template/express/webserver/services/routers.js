@@ -37,6 +37,7 @@ module.exports = function (next, app, sessionStore) {
     app.use(midSafe.addUACompatibleHeader);
     app.use(midSafe.addFrameOptionsHeader);
     app.use(midURL.strictRouting);
+    app.use(midURL.parseURL);
     app.use(log.__expressStart());
 
 
