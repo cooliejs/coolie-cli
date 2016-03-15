@@ -79,9 +79,16 @@ exports.parseUA = function (req, res, next) {
 };
 
 
-// 解析 url
+// 解析 URL
 exports.parseURL = function (req, res, next) {
     res.locals.$url = ur.parse(req.originalUrl, true);
+    next();
+};
+
+
+// 解析配置
+exports.parseConfigs = function (req, res, next) {
+    res.locals.$configs = configs;
     next();
 };
 

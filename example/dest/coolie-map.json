@@ -1,22 +1,8 @@
 {
-  "/html/123.html": {
+  "/html/888.html": {
     "main": [],
     "js": [],
-    "css": [
-      {
-        "dest": "/static/css/30784899.css",
-        "deps": [
-          {
-            "src": "../src/static/css/123.css",
-            "res": [
-              "../src/static/img/line.png"
-            ]
-          }
-        ]
-      }
-    ],
-    "res": [
-      "../src/static/img/line.png"
-    ]
+    "css": [],
+    "res": []
   }
 }

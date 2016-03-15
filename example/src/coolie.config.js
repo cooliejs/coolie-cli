@@ -23,7 +23,8 @@ module.exports = function (coolie) {
             "src": [
                 //"./html/async.html",
                 //"./html/async-2.html",
-                "./html/123.html",
+                //"./html/123.html",
+                "./html/888.html",
                 //"./html/012.html",
                 //"./html/456.html",
             ],
