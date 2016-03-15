@@ -14,6 +14,7 @@ var random = require('ydr-utils').random;
 var encryption = require('ydr-utils').encryption;
 var multer = require('multer');
 var os = require('os');
+var ur = require('url');
 
 var configs = require('../../configs.js');
 
@@ -77,4 +78,10 @@ exports.parseUA = function (req, res, next) {
     next();
 };
 
+
+// 解析 url
+exports.parseURL = function (req, res, next) {
+    res.locals.$url = ur.parse(req.originalUrl, true);
+    next();
+};
 

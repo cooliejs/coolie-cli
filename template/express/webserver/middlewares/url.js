@@ -25,11 +25,3 @@ exports.strictRouting = function (req, res, next) {
     next();
 };
 
-
-// 解析 url
-exports.parseURL = function (req, res, next) {
-    res.locals.$url = urlHelper.parse(req.originalUrl, true);
-    next();
-};
-
-

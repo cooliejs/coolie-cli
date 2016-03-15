@@ -33,11 +33,11 @@ module.exports = function (next, app, sessionStore) {
     app.use(midParser.parseApplicationJSON);
     app.use(midParser.parseApplicationXwwwFormUrlencoded);
     app.use(midParser.parseUA);
+    app.use(midParser.parseURL);
     app.use(midSafe.mustHasHeaderHost);
     app.use(midSafe.addUACompatibleHeader);
     app.use(midSafe.addFrameOptionsHeader);
     app.use(midURL.strictRouting);
-    app.use(midURL.parseURL);
     app.use(log.__expressStart());
 
 
