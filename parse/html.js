@@ -100,10 +100,6 @@ var parseTag = function (html, conditions) {
     var content = null;
     var matched;
 
-    console.error('buildTagRegRet.reg', buildTagRegRet.reg)
-    console.error('tag', tag)
-    console.error('attrString', attrString)
-
     while ((matched = REG_TAG_ATTR.exec(attrString))) {
         var val = matched[2];
         var quote = null;
@@ -217,8 +213,6 @@ var matchHTML = function (html, conditions) {
 var renderHTML = function (node) {
     var html = '<' + node.tag;
     var attrList = [];
-
-    console.log(node);
 
     dato.each(node.attrs, function (key, val) {
         var attr = key;
