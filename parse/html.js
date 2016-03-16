@@ -27,8 +27,8 @@ dato.each(UNCLOSED_TAGS_LIST, function (index, tag) {
     UNCLOSED_TAGS_MAP[tag] = true;
 });
 
-var REG_TAG_NAME = /^<[a-z][\w-]*/i;
-var REG_TAG_ATTR = /\s*([\w:.@$-]+)(?:\s*=\s*("[\s\S]*?"|'[\s\S]*?'|[^'">\s]+))?/g;
+var REG_TAG_NAME = /^<[a-z][\w-]*\b/i;
+var REG_TAG_ATTR = /\s*([\w:.@$-]+)(?:\s*=\s*("[\s\S]*?"|'[\s\S]*?'|[^'">\s]*))?/g;
 var REG_DOUBLE_QUOTE_S = /\\"/g;
 
 /**
@@ -53,9 +53,9 @@ var buildTagReg = function (tagName, options) {
 
     // @link http://haacked.com/archive/2004/10/25/usingregularexpressionstomatchhtml.aspx/
     // /<\w+((\s+\w+(\s*=\s*(?:".*?"|'.*?'|[^'">\s]+))?)+\s*|\s*)>/
-    var tagNameRegStr = tagName === '*' ? '[a-z][a-z\d-]*' : string.escapeRegExp(tagName);
+    var tagNameRegStr = tagName === '*' ? '[a-z][a-z\\d-]*' : string.escapeRegExp(tagName);
     var regString = '<(' + tagNameRegStr + ')' +
-        '((\\s+[\\w-]+(\\s*=\\s*(?:"[\\s\\S]*?"|\'[\\s\\S]*?\'|[^\'">\\s]+))?)+\\s*|\\s*)';
+        '((\\s+[\\w:.@$-]+(\\s*=\\s*(?:"[\\s\\S]*?"|\'[\\s\\S]*?\'|[^\'">\\s]+))?)+\\s*|\\s*)';
 
     if (!typeis.Boolean(options.closed)) {
         options.closed = !UNCLOSED_TAGS_MAP[tagName.toUpperCase()];
@@ -99,6 +99,10 @@ var parseTag = function (html, conditions) {
     var quotes = {};
     var content = null;
     var matched;
+
+    console.error('buildTagRegRet.reg', buildTagRegRet.reg)
+    console.error('tag', tag)
+    console.error('attrString', attrString)
 
     while ((matched = REG_TAG_ATTR.exec(attrString))) {
         var val = matched[2];
