@@ -239,7 +239,6 @@ module.exports = function (file, options) {
                     };
                     var createURLRet1 = createURL(file, options2);
                     uri = createURLRet1.code;
-                    uri = pathURI.joinURI(options.destHost, uri);
                     createURLRet1.code = uri;
                     return wrapDefine(file, createURLRet1, options);
 
@@ -280,7 +279,6 @@ module.exports = function (file, options) {
                     };
                     var createURLRet = createURL(file, options2);
                     uri = createURLRet.code;
-                    uri = pathURI.joinURI(options.destHost, uri);
                     createURLRet.code = uri;
                     return wrapDefine(file, createURLRet, options);
 
@@ -327,8 +325,6 @@ module.exports = function (file, options) {
             switch (options.outType) {
                 case 'url':
                     var createURLRet2 = createURL(file, options2);
-                    uri = pathURI.joinURI(options.destHost, createURLRet2.code);
-                    createURLRet2.code = uri;
                     return wrapDefine(file, createURLRet2, options);
 
                 case 'base64':
@@ -374,7 +370,6 @@ module.exports = function (file, options) {
                     };
                     var createURLRet3 = createURL(file, options2);
                     uri = createURLRet3.code;
-                    uri = pathURI.joinURI(options.destHost, uri);
                     createURLRet3.code = uri;
                     createURLRet3.resList = mergeRes(createURLRet3);
                     return wrapDefine(file, createURLRet3, options);

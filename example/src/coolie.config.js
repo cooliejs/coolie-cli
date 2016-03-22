@@ -5,6 +5,7 @@ module.exports = function (coolie) {
         clean: true,
         "js": {
             "main": [
+                "/static/js/app/example-index.js",
                 //"/static/js/app/res.js",
                 //"/static/js/app/webuploader.js",
                 //"/static/js/app/async.js",
@@ -45,7 +46,7 @@ module.exports = function (coolie) {
         ],
         "dest": {
             "dirname": "../dest/",
-            "host": "/",
+            "host": "qbac/dist/",
             "versionLength": 8
         }
     });
