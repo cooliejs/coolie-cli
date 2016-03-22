@@ -14,4 +14,6 @@ define(function (require, exports, module) {
 
     require('./example-index.css', 'css|url');
     require('./example-index.html', 'html|url');
+    require('./example-index.json', 'json|url');
+    require('./example-index.png', 'file|url');
 });
