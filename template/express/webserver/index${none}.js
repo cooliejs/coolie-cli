@@ -13,6 +13,7 @@ var log = require('ydr-utils').log;
 var system = require('ydr-utils').system;
 var request = require('ydr-utils').request;
 var console = require('ydr-utils').console;
+var date = require('ydr-utils').date;
 
 var serviceCache = require('./services/cache.js');
 var serviceConsole = require('./services/console.js');
@@ -34,11 +35,13 @@ module.exports = function (callback) {
         .follow(callback)
         .try(function (app) {
             var table = [
+                ['start time', date.format('YYYY-MM-DD HH:mm:ss.SSS')],
                 ['app name', pkg.name],
                 ['app version', pkg.version],
                 ['app url', 'http://' + system.localIP() + ':' + app.get('port')],
                 ['app root', configs.root],
                 ['node version', process.versions.node],
+                ['node env', process.env.NODE_ENV],
                 ['express version', pkg.dependencies.express]
             ];
 
