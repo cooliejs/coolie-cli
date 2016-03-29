@@ -5,7 +5,7 @@ module.exports = function (coolie) {
         clean: true,
         "js": {
             "main": [
-                "/static/js/app/example-index.js",
+                //"/static/js/app/example-index.js",
                 //"/static/js/app/res.js",
                 //"/static/js/app/webuploader.js",
                 //"/static/js/app/async.js",
@@ -25,8 +25,8 @@ module.exports = function (coolie) {
                 //"./html/async.html",
                 //"./html/async-2.html",
                 //"./html/123.html",
-                "./html/888.html",
-                //"./html/012.html",
+                //"./html/888.html",
+                "./html/012.html",
                 //"./html/456.html",
             ],
             "minify": true

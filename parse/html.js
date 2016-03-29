@@ -222,8 +222,6 @@ var renderHTML = function (node) {
         } else if (val === false || typeis.empty(val)) {
             return;
         } else {
-            val = stringify(val);
-
             var quote = node.quotes[key];
             var isDoubleInVal;
 
@@ -234,8 +232,9 @@ var renderHTML = function (node) {
             }
 
             if (isDoubleInVal) {
-                val = val.replace(REG_DOUBLE_QUOTE_S, '"');
-                val = "'" + val.slice(1, -1) + "'";
+                val = "'" + val + "'";
+            } else {
+                val = '"' + val + '"';
             }
 
             attr += '=' + val + '';
