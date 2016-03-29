@@ -13,8 +13,6 @@ var string = require('ydr-utils').string;
 var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 
-var stringify = require('../utils/stringify.js');
-
 var UNCLOSED_TAGS_LIST = ('AREA BASE BASEFONT BR COL COMMAND EMBED FRAME HR IMG INPUT ISINDEX KEYGEN LINK META ' +
 'PARAM SOURCE TRACK WEB ' +
     // svg elements
