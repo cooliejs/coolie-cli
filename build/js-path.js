@@ -67,7 +67,7 @@ module.exports = function (src, options) {
 
         destPath = path.join(options.destJSDirname, destVersion + '.js');
         destURI = pathURI.toRootURL(destPath, options.destDirname);
-        destURI = pathURI.joinURI(options.destHost, destURI);
+        destURI = pathURI.joinHost('js',options.destHost, destURI);
 
         if (options.signJS) {
             destCode = sign('js') + '\n' + destCode;

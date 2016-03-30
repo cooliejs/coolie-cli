@@ -47,9 +47,16 @@ module.exports = function (coolie) {
         ],
         "dest": {
             "dirname": "../dest/",
-            "host": function (path) {
-                console.log('cal', path, 'host');
-                return "qbac/dist/";
+            "host": function (type, path) {
+                if (/\.(png|jpg|jpeg|gif|webp|bmp)$/i.test(path)) {
+                    return 'http://img.cdn.com';
+                }
+
+                return {
+                    res: 'http://res.cdn.com',
+                    css: 'http://css.cdn.com',
+                    js: 'http://js.cdn.com'
+                }[type];
             },
             "versionLength": 8
         }

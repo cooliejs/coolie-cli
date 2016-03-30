@@ -190,10 +190,11 @@ exports.removeVersion = function (file) {
 
 /**
  * 合并域和路径
+ * @param type {String} 类型
  * @param host {String|Function} 域
  * @param _path {String} 路径
  */
-exports.joinURI = function (host, _path) {
+exports.joinHost = function (type, host, _path) {
     if (typeis.String(host)) {
         return path.joinURI(host, _path);
     }
@@ -201,5 +202,5 @@ exports.joinURI = function (host, _path) {
     // 转换为绝对路径
     _path = path.joinURI('/', _path);
 
-    return path.joinURI(host(_path), path);
+    return path.joinURI(host(type, _path), _path);
 };

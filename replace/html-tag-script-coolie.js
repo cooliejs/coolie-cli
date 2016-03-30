@@ -146,13 +146,11 @@ module.exports = function (file, options) {
 
         var coolieConfigURI = pathURI.toRootURL(options.destCoolieConfigJSPath, options.destDirname);
 
-        // 绝对路径，相对他域
-        if (pathURI.isURL(options.destHost)) {
-            coolieConfigURI = pathURI.joinURI(options.destHost, coolieConfigURI);
-        }
-        // 相对本域
-        else {
-            coolieConfigURI = '~' + pathURI.joinURI(options.destHost, coolieConfigURI);
+        coolieConfigURI = pathURI.joinHost('js', options.destHost, coolieConfigURI);
+
+        // 本域
+        if (!pathURI.isURL(coolieConfigURI)) {
+            coolieConfigURI = '~' + coolieConfigURI;
         }
 
         node.attrs[DATA_MAIN] = mainVersion + '.js';
