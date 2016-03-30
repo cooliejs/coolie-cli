@@ -103,6 +103,8 @@ module.exports = function (file, options) {
         }
 
         var src = node.attrs.src;
+        // src 是否静态路径
+        var isStaticSrc = pathURI.isURL(src);
 
         // 有 coolie 属性
         var dataMain = node.attrs[DATA_MAIN];
@@ -148,8 +150,8 @@ module.exports = function (file, options) {
 
         coolieConfigURI = pathURI.joinHost('js', options.destHost, coolieConfigURI);
 
-        // 本域
-        if (!pathURI.isURL(coolieConfigURI)) {
+        // 本域并且 src 为静态
+        if (!pathURI.isURL(coolieConfigURI) && isStaticSrc) {
             coolieConfigURI = '~' + coolieConfigURI;
         }
 
