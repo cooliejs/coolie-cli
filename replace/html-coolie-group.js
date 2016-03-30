@@ -160,7 +160,7 @@ module.exports = function (file, options) {
                 return process.exit(1);
             }
 
-            concatRet = '<link rel="stylesheet" href="' + path.joinURI(options.destHost, concatURI) + '">';
+            concatRet = '<link rel="stylesheet" href="' + pathURI.joinURI(options.destHost, concatURI) + '">';
             cacheFilesList.push(files);
             cacheResultList.push(concatRet);
 
@@ -215,7 +215,7 @@ module.exports = function (file, options) {
                 return process.exit(1);
             }
 
-            concatRet = '<script src="' + path.joinURI(options.destHost, concatURI) + '"></script>';
+            concatRet = '<script src="' + pathURI.joinURI(options.destHost, concatURI) + '"></script>';
             cacheFilesList.push(files);
             cacheResultList.push(concatRet);
 

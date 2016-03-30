@@ -9,6 +9,7 @@
 
 
 var path = require('ydr-utils').path;
+var typeis = require('ydr-utils').typeis;
 
 var REG_ABSOLUTE = /^((?:(?:http|ftp)s?:|)\/\/)/i;
 var REG_RELATIVE_ROOT = /^\//;
@@ -187,4 +188,18 @@ exports.removeVersion = function (file) {
 };
 
 
+/**
+ * 合并域和路径
+ * @param host {String|Function} 域
+ * @param _path {String} 路径
+ */
+exports.joinURI = function (host, _path) {
+    if (typeis.String(host)) {
+        return path.joinURI(host, _path);
+    }
 
+    // 转换为绝对路径
+    _path = path.joinURI('/', _path);
+
+    return path.joinURI(host(_path), path);
+};

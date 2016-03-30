@@ -158,7 +158,7 @@ module.exports = function (options) {
     //
     //        var destResourceURI = pathURI.toRootURL(destResourcePath, configs.destDirname);
     //
-    //        return path.joinURI(configs.dest.host, destResourceURI);
+    //        return pathURI.joinURI(configs.dest.host, destResourceURI);
     //    }
     //};
 
@@ -474,15 +474,11 @@ module.exports = function (options) {
         configs.destJSDirname = path.join(configs.destDirname, configs.js.dest);
         configs.destCSSDirname = path.join(configs.destDirname, configs.css.dest);
         configs.destResourceDirname = path.join(configs.destDirname, configs.resource.dest);
-        configs.dest.host = configs.dest.host || '';
+        configs.dest.host = configs.dest.host || '/';
 
-        if (!typeis.string(configs.dest.host)) {
+        if (!typeis.String(configs.dest.host) && !typeis.Function(configs.dest.host)) {
             debug.error('parse coolie.config', '`dest.host` property must be an URL string');
             process.exit(1);
-        }
-
-        if (typeis.String(configs.dest.host) && configs.dest.host.slice(-1) !== '/') {
-            configs.dest.host += '/';
         }
 
         configs.dest.versionLength = configs.dest.versionLength || 32;

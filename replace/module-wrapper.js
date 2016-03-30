@@ -90,7 +90,7 @@ var createURL = function (file, options) {
     var uri = pathURI.toRootURL(destFile, options.destDirname);
 
     return {
-        code: path.joinURI(options.destHost, uri),
+        code: pathURI.joinURI(options.destHost, uri),
         resList: resList,
         mainList: filterRet.mainList,
         jsList: filterRet.jsList,
