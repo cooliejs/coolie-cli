@@ -58,7 +58,7 @@ module.exports = function (value, options) {
             embedFile: options.file
         });
         var resRelative = path.relative(options.destDirname, resFile);
-        url = pathURI.joinURI(options.destHost, resRelative);
+        url = path.joinURI(options.destHost, resRelative);
     }
 
     return {

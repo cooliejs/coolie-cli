@@ -148,11 +148,11 @@ module.exports = function (file, options) {
 
         // 绝对路径，相对他域
         if (pathURI.isURL(options.destHost)) {
-            coolieConfigURI = pathURI.joinURI(options.destHost, coolieConfigURI);
+            coolieConfigURI = path.joinURI(options.destHost, coolieConfigURI);
         }
         // 相对本域
         else {
-            coolieConfigURI = '~' + pathURI.joinURI(options.destHost, coolieConfigURI);
+            coolieConfigURI = '~' + path.joinURI(options.destHost, coolieConfigURI);
         }
 
         node.attrs[DATA_MAIN] = mainVersion + '.js';

@@ -93,7 +93,7 @@ module.exports = function (href, options) {
 
         destPath = path.join(options.destCSSDirname, destVersion + '.css');
         destURI = pathURI.toRootURL(destPath, options.destDirname);
-        destURI = pathURI.joinURI(options.destHost, destURI);
+        destURI = path.joinURI(options.destHost, destURI);
 
         if (options.signCSS) {
             destCode = sign('css') + '\n' + destCode;

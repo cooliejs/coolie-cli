@@ -121,14 +121,6 @@ describe('utils/path-uri.js', function () {
         assert.equal(ret7, true);
     });
 
-    it('.joinURL', function () {
-        var ret1 = pathURI.joinURI('/a', '/b');
-        var ret2 = pathURI.joinURI('/a/b/c', '../d');
-
-        assert.equal(ret1, '/a/b');
-        assert.equal(ret2, '/a/b/d');
-    });
-
     it('.parseURI2Path', function () {
         var ret = pathURI.parseURI2Path('/a/b/c/d/?x=1&y=2&z=3#!/m=n=q');
 

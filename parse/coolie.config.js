@@ -158,7 +158,7 @@ module.exports = function (options) {
     //
     //        var destResourceURI = pathURI.toRootURL(destResourcePath, configs.destDirname);
     //
-    //        return pathURI.joinURI(configs.dest.host, destResourceURI);
+    //        return path.joinURI(configs.dest.host, destResourceURI);
     //    }
     //};
 
@@ -481,7 +481,7 @@ module.exports = function (options) {
             process.exit(1);
         }
 
-        if (configs.dest.host.slice(-1) !== '/') {
+        if (typeis.String(configs.dest.host) && configs.dest.host.slice(-1) !== '/') {
             configs.dest.host += '/';
         }
 

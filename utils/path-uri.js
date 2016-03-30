@@ -135,25 +135,6 @@ exports.isURL = function (p) {
 
 
 /**
- * URI 合并
- * @param p1
- * @param p2
- */
-exports.joinURI = function (p1, p2) {
-    p1 = path.toURI(p1);
-    p2 = path.toURI(p2);
-
-    var protocol = (p1.match(REG_ABSOLUTE) || ['', ''])[1];
-
-    p1 = p1.replace(REG_ABSOLUTE, '');
-
-    var p3 = path.join(p1, p2);
-
-    return protocol + p3;
-};
-
-
-/**
  * 解析 URI 为路径信息
  * @param uri {String} URI
  * @returns {Object}
@@ -192,7 +173,7 @@ exports.replaceVersion = function (uri, version) {
     var dir = path.dirname(uri);
     var extname = path.extname(uri);
 
-    return exports.joinURI(dir, version + extname);
+    return path.joinURI(dir, version + extname);
 };
 
 
