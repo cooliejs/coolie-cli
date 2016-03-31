@@ -23,5 +23,5 @@
 - cooliebase64: <div style> √ 
 - cooliebase64: <style> √ 
 - cooliebase64: css file √
-- 支持 host 函数
+- 支持 host 函数 √
 
