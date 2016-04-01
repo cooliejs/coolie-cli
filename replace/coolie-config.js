@@ -107,7 +107,7 @@ module.exports = function (file, options) {
             'chunk:"' + coolieConfig.chunk + '",' +
             'debug:false,' +
             'cache:true,' +
-            'builder:"' + pkg.version + '",' +
+            'built:"' + pkg.name + '@' + pkg.version + '",' +
             'version:' + version + '})' +
             '.use()';
 
