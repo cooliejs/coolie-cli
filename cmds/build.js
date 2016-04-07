@@ -11,6 +11,7 @@ var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 var Middleware = require('ydr-utils').Middleware;
 var Emitter = require('ydr-utils').Emitter;
+var date = require('ydr-utils').date;
 
 var parseCoolieConfig = require('../parse/coolie.config.js');
 var buildAPP = require('../build/app.js');
@@ -212,7 +213,7 @@ module.exports = function (options) {
 
     var pastTime = Date.now() - beginTime;
     console.log();
-    debug.primary('build success', 'past ' + pastTime + 'ms');
+    debug.primary('build success', 'past ' + pastTime + 'ms, at ' + date.format('YYYY-MM-DD HH:mm.ss:SSS'));
     console.log();
 };
 
