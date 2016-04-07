@@ -16,6 +16,7 @@ var controller = require('ydr-utils').controller;
 
 var reader = require('../utils/reader.js');
 var pathURI = require('../utils/path-uri.js');
+var progress = require('../utils/progress.js');
 var parseCMDRequire = require('./cmd-require.js');
 
 var ENCODING = 'utf8';
@@ -53,12 +54,6 @@ module.exports = function (options) {
         mainFilesMap[mainFile] = true;
     });
 
-    var showProgress = controller.throttle(function (file) {
-        debug.wait('parse module', pathURI.toRootURL(file, options.srcDirname), {
-            colors: 'yellow'
-        });
-    });
-
     /**
      * 分析模块
      * @param files
@@ -70,7 +65,7 @@ module.exports = function (options) {
             }
 
             parseLength++;
-            showProgress(file);
+            progress.run('parse module', pathURI.toRootURL(file, options.srcDirname));
             var code;
             try {
                 code = reader(file, 'utf8');
@@ -128,13 +123,12 @@ module.exports = function (options) {
     }
 
     parseModules(mainFiles);
-    debug.waitEnd('parse module', parseLength + ' modules parsed', {
-        colors: 'green'
-    });
+    progress.stop('parse module', parseLength + ' modules parsed');
 
     return {
         mainMap: mainMap,
-        virtualMap: virtualMap
+        virtualMap: virtualMap,
+        parseLength: parseLength
     };
 };
 

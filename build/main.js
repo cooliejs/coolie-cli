@@ -13,6 +13,7 @@ var path = require('ydr-utils').path;
 var controller = require('ydr-utils').controller;
 
 var pathURI = require('../utils/path-uri.js');
+var progress = require('../utils/progress.js');
 var buildModule = require('./module.js');
 
 var defaults = {
@@ -70,13 +71,9 @@ module.exports = function (file, options) {
     var dependencies = [];
     var resList = [];
     var resMap = {};
-    var showProgress = controller.throttle(function (file) {
-        debug.wait('parse module', pathURI.toRootURL(file, options.srcDirname), {
-            colors: 'yellow'
-        });
-    });
     var build = function (file, options) {
-        showProgress(file);
+        var srcURI = pathURI.toRootURL(file, options.srcDirname);
+        progress.run((options.mainIndex + 1) + '/' + options.mainLength, srcURI);
         var ret = buildModule(file, {
             inType: options.inType,
             outType: options.outType,
@@ -134,9 +131,7 @@ module.exports = function (file, options) {
             var replacedFile = virtualMap[mainFile] || mainFile;
             var srcMainURI = pathURI.toRootURL(replacedFile, options.srcDirname);
 
-            debug.waitEnd('main ' + (options.mainIndex + 1) + '/' + options.mainLength, srcMainURI, {
-                colors: 'green'
-            });
+            progress.stop((options.mainIndex + 1) + '/' + options.mainLength, srcMainURI);
         }
     };
     var options2 = dato.extend({}, options, {
