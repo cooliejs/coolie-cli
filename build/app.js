@@ -42,7 +42,8 @@ var defaults = {
     removeHTMLYUIComments: true,
     removeHTMLLineComments: true,
     joinHTMLSpaces: true,
-    removeHTMLBreakLines: true
+    removeHTMLBreakLines: true,
+    mute: true
 };
 
 /**
@@ -69,6 +70,7 @@ var defaults = {
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @param [options.mute=true] {Boolean} 是否静音
  * @returns {Object}
  */
 module.exports = function (options) {
@@ -142,7 +144,8 @@ module.exports = function (options) {
             removeHTMLBreakLines: options.removeHTMLBreakLines,
             virtualMap: virtualMap,
             mainIndex: mainIndex,
-            mainLength: mainLength
+            mainLength: mainLength,
+            mute: options.mute
         });
         var dependencies = buildMainRet.dependencies;
         var resList = buildMainRet.resList;

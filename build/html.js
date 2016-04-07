@@ -41,7 +41,8 @@ var defaults = {
     uglifyJSOptions: null,
     cleanCSSOptions: null,
     replaceCSSResource: true,
-    mainVersionMap: null
+    mainVersionMap: null,
+    mute: true
 };
 
 /**
@@ -71,6 +72,7 @@ var defaults = {
  * @param [options.cleanCSSOptions=null] {Boolean} 压缩 CSS 配置
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 引用资源
  * @param [options.mainVersionMap] {Object} 入口模块版本信息
+ * @param [options.mute] {Boolean} 是否静音，隐藏多余日志的打印
  * @returns {Object}
  */
 module.exports = function (options) {
@@ -144,7 +146,8 @@ module.exports = function (options) {
             mainVersionMap: options.mainVersionMap,
             signHTML: true,
             signJS: false,
-            signCSS: false
+            signCSS: false,
+            mute: options.mute
         });
 
         var relative = path.relative(options.srcDirname, htmlFile);
@@ -168,9 +171,13 @@ module.exports = function (options) {
             }
         }
 
+        if (options.mute) {
+            debug.waitEnd();
+        }
+
         try {
             fse.outputFileSync(destFile, ret.code, 'utf8');
-            debug.success('html ' + (index + 1) + '/' + htmlLength, htmlURI);
+            debug.success((index + 1) + '/' + htmlLength, htmlURI);
         } catch (err) {
             debug.error('write html', path.toSystem(htmlFile));
             debug.error('write file', err.message);

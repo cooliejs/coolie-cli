@@ -144,7 +144,8 @@ module.exports = function (options) {
         removeHTMLYUIComments: configs.removeHTMLYUIComments,
         removeHTMLLineComments: configs.removeHTMLLineComments,
         joinHTMLSpaces: configs.joinHTMLSpaces,
-        removeHTMLBreakLines: configs.removeHTMLBreakLines
+        removeHTMLBreakLines: configs.removeHTMLBreakLines,
+        mute: true
     });
 
 
@@ -193,7 +194,8 @@ module.exports = function (options) {
         uglifyJSOptions: null,
         cleanCSSOptions: configs.cleanCSSOptions,
         replaceCSSResource: true,
-        mainVersionMap: buildAPPResult.mainVersionMap
+        mainVersionMap: buildAPPResult.mainVersionMap,
+        mute: true
     });
 
 

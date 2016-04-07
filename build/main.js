@@ -33,7 +33,8 @@ var defaults = {
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
     mainIndex: 0,
-    mainLength: 0
+    mainLength: 0,
+    mute: true
 };
 
 /**
@@ -55,6 +56,7 @@ var defaults = {
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @param [options.mute=true] {Boolean} 是否静音
  * @param options.virtualMap {Object} 虚拟
  * @param options.mainIndex {Number} 当前序号
  * @param options.mainLength {Number} 长度
@@ -90,7 +92,7 @@ module.exports = function (file, options) {
             minifyResource: options.minifyResource,
             cleanCSSOptions: options.cleanCSSOptions,
             virtualMap: options.virtualMap,
-            mute: true
+            mute: options.mute
         });
 
         dato.each(ret.resList, function (index, res) {
