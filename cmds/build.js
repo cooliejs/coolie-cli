@@ -215,7 +215,7 @@ module.exports = function (options) {
 
     var pastTime = Date.now() - beginTime;
     console.log();
-    debug.primary('build success', 'past ' + pastTime + 'ms, at ' + date.format('YYYY-MM-DD HH:mm.ss:SSS'));
+    debug.primary('build success', 'past ' + pastTime + 'ms, at ' + date.format('YYYY-MM-DD HH:mm:ss.SSS'));
     console.log();
 };
 
