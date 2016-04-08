@@ -20,6 +20,7 @@ describe('utils/progress.js', function () {
         }
 
         progress.stop('测试', '结束');
+        done();
     });
 });
 
