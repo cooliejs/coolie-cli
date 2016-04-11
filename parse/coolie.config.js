@@ -361,9 +361,14 @@ module.exports = function (options) {
             process.exit(1);
         }
 
-        if (typeis.undefined(configs.css.minify) === true) {
+        if (configs.css.minify === true) {
+            configs.css.minify = null;
+        } else if (configs.css.minify === false) {
             configs.css.minify = {
-                compatibility: 'ie7'
+                advanced: false,
+                keepBreaks: true,
+                keepSpecialComments: '*',
+                mediaMerging: false
             };
         }
 

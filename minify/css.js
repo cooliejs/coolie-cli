@@ -15,7 +15,7 @@ var debug = require('ydr-utils').debug;
 
 var replaceCSSResource = require('../replace/css-resource.js');
 
-var defaults = {
+var cleanCSSOptions = {
     // 高级优化
     advanced: false,
     // 属性合并
@@ -26,15 +26,28 @@ var defaults = {
     debug: false,
     // 断行
     keepBreaks: false,
-    // 注释
+    // * 保留所有
+    // 1 保留第一行
+    // 0 移除所有
     keepSpecialComments: 0,
     // 媒体查询合并
     mediaMerging: true,
     // url 检查
     rebase: false,
     // 资源地图
-    sourceMap: false,
-    mute: false
+    sourceMap: false
+};
+var defaults = {
+    cleanCSSOptions: null,
+    versionLength: 32,
+    srcDirname: null,
+    destDirname: null,
+    destHost: null,
+    destResourceDirname: null,
+    mute: false,
+    destCSSDirname: null,
+    minifyResource: true,
+    replaceCSSResource: true
 };
 var cssminify = null;
 
@@ -57,11 +70,13 @@ var cssminify = null;
  * @returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
+    options = dato.extend({}, defaults, options);
     var code = options.code;
     var resList = [];
 
     if (!cssminify) {
-        cssminify = new CleanCSS(dato.extend({}, defaults, options.cleanCSSOptions));
+        console.log('options.cleanCSSOptions', options.cleanCSSOptions);
+        cssminify = new CleanCSS(dato.extend({}, cleanCSSOptions, options.cleanCSSOptions));
     }
 
     try {
