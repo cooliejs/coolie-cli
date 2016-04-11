@@ -57,14 +57,6 @@ var REG_PHP_SIMPLE = /<\?=[\s\S]*?\?>/gi;
 
 var defaults = {
     code: '',
-    replaceHTMLAttrResource: false,
-    replaceHTMLTagScriptCoolie: false,
-    replaceHTMLTagScriptAttr: false,
-    replaceHTMLTagScriptContent: false,
-    replaceHTMLTagLink: false,
-    replaceHTMLTagStyleResource: false,
-    replaceHTMLAttrStyleResource: false,
-    replaceHTMLCoolieGroup: false,
     removeHTMLYUIComments: true,
     removeHTMLLineComments: true,
     joinHTMLSpaces: true,
@@ -96,14 +88,6 @@ var defaults = {
  * @param file {String} 文件地址
  * @param options {Object} 配置
  * @param options.code {String} 代码
- * @param [options.replaceHTMLAttrResource=false] {Boolean} 是否替换 html 内的属性资源引用
- * @param [options.replaceHTMLTagScriptCoolie=false] {Boolean} 是否替换 html 内的 <script> 的 coolie
- * @param [options.replaceHTMLTagScriptAttr=false] {Boolean} 是否替换 html 内的 <script> 的 src
- * @param [options.replaceHTMLTagScriptContent=false] {Boolean} 是否替换 html 内的 <script> 的内容
- * @param [options.replaceHTMLTagLink=false] {Boolean} 是否替换 html 内的 <link>
- * @param [options.replaceHTMLTagStyleResource=false] {Boolean} 是否替换 html 内的 <style>
- * @param [options.replaceHTMLAttrStyleResource=false] {Boolean} 是否替换 html 内的 <div style="">
- * @param [options.replaceHTMLCoolieGroup=false] {Boolean} 是否替换 html 内的 <\!--coolie-->
  * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
  * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
@@ -202,159 +186,161 @@ var minifyHTML = function (file, options) {
         code = code.replace(key, val);
     });
 
-    if (options.replaceHTMLAttrResource) {
-        var replaceHTMLAttrResourceRet = replaceHTMLAttrResource(file, {
-            code: code,
-            versionLength: options.versionLength,
-            srcDirname: options.srcDirname,
-            destDirname: options.destDirname,
-            destHost: options.destHost,
-            destResourceDirname: options.destResourceDirname,
-            minifyResource: options.minifyResource,
-            mute: options.mute
-        });
 
-        code = replaceHTMLAttrResourceRet.code;
-        resList = resList.concat(replaceHTMLAttrResourceRet.resList);
-    }
+    // replace <img src="...">
+    var replaceHTMLAttrResourceRet = replaceHTMLAttrResource(file, {
+        code: code,
+        versionLength: options.versionLength,
+        srcDirname: options.srcDirname,
+        destDirname: options.destDirname,
+        destHost: options.destHost,
+        destResourceDirname: options.destResourceDirname,
+        minifyResource: options.minifyResource,
+        mute: options.mute
+    });
 
-    if (options.replaceHTMLTagScriptCoolie) {
-        var replaceHTMLTagScriptCoolieRet = replaceHTMLTagScriptCoolie(file, {
-            code: code,
-            srcDirname: options.srcDirname,
-            coolieConfigBase: options.coolieConfigBase,
-            srcCoolieConfigJSPath: options.srcCoolieConfigJSPath,
-            srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
-            destDirname: options.destDirname,
-            destHost: options.destHost,
-            destJSDirname: options.destJSDirname,
-            destCoolieConfigJSPath: options.destCoolieConfigJSPath,
-            versionLength: options.versionLength,
-            mainVersionMap: options.mainVersionMap,
-            minifyJS: options.minifyJS,
-            uglifyJSOptions: options.uglifyJSOptions,
-            signJS: options.signJS,
-            mute: options.mute
-        });
+    code = replaceHTMLAttrResourceRet.code;
+    resList = resList.concat(replaceHTMLAttrResourceRet.resList);
 
-        code = replaceHTMLTagScriptCoolieRet.code;
-        mainList = mainList.concat(replaceHTMLTagScriptCoolieRet.mainList);
-        jsList = jsList.concat(replaceHTMLTagScriptCoolieRet.jsList);
-    }
 
-    if (options.replaceHTMLTagScriptAttr) {
-        var replaceHTMLTagScriptAttrRet = replaceHTMLTagScriptAttr(file, {
-            code: code,
-            srcDirname: options.srcDirname,
-            destDirname: options.destDirname,
-            destHost: options.destHost,
-            destJSDirname: options.destJSDirname,
-            versionLength: options.versionLength,
-            mainVersionMap: options.mainVersionMap,
-            minifyJS: options.minifyJS,
-            uglifyJSOptions: options.uglifyJSOptions,
-            signJS: options.signJS,
-            mute: options.mute
-        });
+    // replace <script coolie>
+    var replaceHTMLTagScriptCoolieRet = replaceHTMLTagScriptCoolie(file, {
+        code: code,
+        srcDirname: options.srcDirname,
+        coolieConfigBase: options.coolieConfigBase,
+        srcCoolieConfigJSPath: options.srcCoolieConfigJSPath,
+        srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
+        destDirname: options.destDirname,
+        destHost: options.destHost,
+        destJSDirname: options.destJSDirname,
+        destCoolieConfigJSPath: options.destCoolieConfigJSPath,
+        versionLength: options.versionLength,
+        mainVersionMap: options.mainVersionMap,
+        minifyJS: options.minifyJS,
+        uglifyJSOptions: options.uglifyJSOptions,
+        signJS: options.signJS,
+        mute: options.mute
+    });
 
-        code = replaceHTMLTagScriptAttrRet.code;
-        jsList = jsList.concat(replaceHTMLTagScriptAttrRet.jsList);
-    }
+    code = replaceHTMLTagScriptCoolieRet.code;
+    mainList = mainList.concat(replaceHTMLTagScriptCoolieRet.mainList);
+    jsList = jsList.concat(replaceHTMLTagScriptCoolieRet.jsList);
 
-    if (options.replaceHTMLTagScriptContent) {
-        var replaceHTMLTagScriptContentRet = replaceHTMLTagScriptContent(file, {
-            code: code,
-            srcDirname: options.srcDirname,
-            minifyJS: options.minifyJS,
-            uglifyJSOptions: options.uglifyJSOptions,
-            signJS: options.signJS,
-            mute: options.mute
-        });
 
-        code = replaceHTMLTagScriptContentRet.code;
-        jsList = jsList.concat(replaceHTMLTagScriptContentRet.jsList);
-    }
+    // replace <script>
+    var replaceHTMLTagScriptAttrRet = replaceHTMLTagScriptAttr(file, {
+        code: code,
+        srcDirname: options.srcDirname,
+        destDirname: options.destDirname,
+        destHost: options.destHost,
+        destJSDirname: options.destJSDirname,
+        versionLength: options.versionLength,
+        mainVersionMap: options.mainVersionMap,
+        minifyJS: options.minifyJS,
+        uglifyJSOptions: options.uglifyJSOptions,
+        signJS: options.signJS,
+        mute: options.mute
+    });
 
-    if (options.replaceHTMLTagLink) {
-        var replaceHTMLTagLinkRet = replaceHTMLTagLink(file, {
-            code: code,
-            srcDirname: options.srcDirname,
-            destDirname: options.destDirname,
-            destHost: options.destHost,
-            destCSSDirname: options.destCSSDirname,
-            destResourceDirname: options.destResourceDirname,
-            versionLength: options.versionLength,
-            minifyCSS: options.minifyCSS,
-            cleanCSSOptions: options.cleanCSSOptions,
-            signCSS: options.signCSS,
-            mute: options.mute
-        });
+    code = replaceHTMLTagScriptAttrRet.code;
+    jsList = jsList.concat(replaceHTMLTagScriptAttrRet.jsList);
 
-        code = replaceHTMLTagLinkRet.code;
-        cssList = cssList.concat(replaceHTMLTagLinkRet.cssList);
-    }
+
+    // replace <script>***</script>
+    var replaceHTMLTagScriptContentRet = replaceHTMLTagScriptContent(file, {
+        code: code,
+        srcDirname: options.srcDirname,
+        minifyJS: options.minifyJS,
+        uglifyJSOptions: options.uglifyJSOptions,
+        signJS: options.signJS,
+        mute: options.mute
+    });
+
+    code = replaceHTMLTagScriptContentRet.code;
+    jsList = jsList.concat(replaceHTMLTagScriptContentRet.jsList);
+
+
+    // replace <link href="">
+    var replaceHTMLTagLinkRet = replaceHTMLTagLink(file, {
+        code: code,
+        srcDirname: options.srcDirname,
+        destDirname: options.destDirname,
+        destHost: options.destHost,
+        destCSSDirname: options.destCSSDirname,
+        destResourceDirname: options.destResourceDirname,
+        versionLength: options.versionLength,
+        minifyCSS: options.minifyCSS,
+        cleanCSSOptions: options.cleanCSSOptions,
+        signCSS: options.signCSS,
+        mute: options.mute
+    });
+
+    code = replaceHTMLTagLinkRet.code;
+    cssList = cssList.concat(replaceHTMLTagLinkRet.cssList);
+
 
     // 恢复 coolie group
     dato.each(coolieMap, function (key, val) {
         code = code.replace(key, val);
     });
 
-    if (options.replaceHTMLCoolieGroup) {
-        var replaceHTMLCoolieGroupRet = replaceHTMLCoolieGroup(file, {
-            code: code,
-            destJSDirname: options.destJSDirname,
-            cleanCSSOptions: options.cleanCSSOptions,
-            versionLength: options.versionLength,
-            srcDirname: options.srcDirname,
-            destDirname: options.destDirname,
-            destHost: options.destHost,
-            destResourceDirname: options.destResourceDirname,
-            destCSSDirname: options.destCSSDirname,
-            minifyJS: options.minifyJS,
-            uglifyJSOptions: options.uglifyJSOptions,
-            minifyCSS: options.minifyCSS,
-            replaceCSSResource: options.replaceCSSResource,
-            signJS: options.signJS,
-            signCSS: options.signCSS,
-            mute: options.mute
-        });
 
-        code = replaceHTMLCoolieGroupRet.code;
-        jsList = jsList.concat(replaceHTMLCoolieGroupRet.jsList);
-        cssList = cssList.concat(replaceHTMLCoolieGroupRet.cssList);
-    }
+    // replace <!--coolie--> ... <!--/coolie-->
+    var replaceHTMLCoolieGroupRet = replaceHTMLCoolieGroup(file, {
+        code: code,
+        destJSDirname: options.destJSDirname,
+        cleanCSSOptions: options.cleanCSSOptions,
+        versionLength: options.versionLength,
+        srcDirname: options.srcDirname,
+        destDirname: options.destDirname,
+        destHost: options.destHost,
+        destResourceDirname: options.destResourceDirname,
+        destCSSDirname: options.destCSSDirname,
+        minifyJS: options.minifyJS,
+        uglifyJSOptions: options.uglifyJSOptions,
+        minifyCSS: options.minifyCSS,
+        replaceCSSResource: options.replaceCSSResource,
+        signJS: options.signJS,
+        signCSS: options.signCSS,
+        mute: options.mute
+    });
 
-    if (options.replaceHTMLTagStyleResource) {
-        var replaceHTMLTagStyleResourceRet = replaceHTMLTagStyleResource(file, {
-            code: code,
-            versionLength: options.versionLength,
-            srcDirname: options.srcDirname,
-            destDirname: options.destDirname,
-            destHost: options.destHost,
-            destResourceDirname: options.destResourceDirname,
-            minifyCSS: options.minifyCSS,
-            minifyResource: options.minifyResource,
-            mute: options.mute
-        });
+    code = replaceHTMLCoolieGroupRet.code;
+    jsList = jsList.concat(replaceHTMLCoolieGroupRet.jsList);
+    cssList = cssList.concat(replaceHTMLCoolieGroupRet.cssList);
 
-        code = replaceHTMLTagStyleResourceRet.code;
-        resList = resList.concat(replaceHTMLTagStyleResourceRet.resList);
-    }
 
-    if (options.replaceHTMLAttrStyleResource) {
-        var replaceHTMLAttrStyleResourceRet = replaceHTMLAttrStyleResource(file, {
-            code: code,
-            versionLength: options.versionLength,
-            srcDirname: options.srcDirname,
-            destDirname: options.destDirname,
-            destHost: options.destHost,
-            destResourceDirname: options.destResourceDirname,
-            minifyResource: options.minifyResource,
-            mute: options.mute
-        });
-        code = replaceHTMLAttrStyleResourceRet.code;
-        resList = resList.concat(replaceHTMLAttrStyleResourceRet.resList);
-    }
+    // replace <style>
+    var replaceHTMLTagStyleResourceRet = replaceHTMLTagStyleResource(file, {
+        code: code,
+        versionLength: options.versionLength,
+        srcDirname: options.srcDirname,
+        destDirname: options.destDirname,
+        destHost: options.destHost,
+        destResourceDirname: options.destResourceDirname,
+        minifyCSS: options.minifyCSS,
+        minifyResource: options.minifyResource,
+        mute: options.mute
+    });
+
+    code = replaceHTMLTagStyleResourceRet.code;
+    resList = resList.concat(replaceHTMLTagStyleResourceRet.resList);
+
+
+    // replace <div style="">
+    var replaceHTMLAttrStyleResourceRet = replaceHTMLAttrStyleResource(file, {
+        code: code,
+        versionLength: options.versionLength,
+        srcDirname: options.srcDirname,
+        destDirname: options.destDirname,
+        destHost: options.destHost,
+        destResourceDirname: options.destResourceDirname,
+        minifyResource: options.minifyResource,
+        mute: options.mute
+    });
+    code = replaceHTMLAttrStyleResourceRet.code;
+    resList = resList.concat(replaceHTMLAttrStyleResourceRet.resList);
+
 
     // 恢复注释
     dato.each(commentsMap, function (key, val) {
