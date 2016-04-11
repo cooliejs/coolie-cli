@@ -232,6 +232,7 @@ var minifyHTML = function (file, options) {
             versionLength: options.versionLength,
             mainVersionMap: options.mainVersionMap,
             minifyJS: options.minifyJS,
+            uglifyJSOptions: options.uglifyJSOptions,
             signJS: options.signJS,
             mute: options.mute
         });
@@ -251,6 +252,7 @@ var minifyHTML = function (file, options) {
             versionLength: options.versionLength,
             mainVersionMap: options.mainVersionMap,
             minifyJS: options.minifyJS,
+            uglifyJSOptions: options.uglifyJSOptions,
             signJS: options.signJS,
             mute: options.mute
         });
@@ -264,6 +266,7 @@ var minifyHTML = function (file, options) {
             code: code,
             srcDirname: options.srcDirname,
             minifyJS: options.minifyJS,
+            uglifyJSOptions: options.uglifyJSOptions,
             signJS: options.signJS,
             mute: options.mute
         });
