@@ -56,7 +56,7 @@ module.exports = function (coolie) {
                 // 支持 glob 语法
                 './.views/**/*.html'
             ],
-            // 是否压缩
+            // html 压缩配置
             minify: true
         },
 
@@ -65,9 +65,7 @@ module.exports = function (coolie) {
             // css 文件保存目录，相对于 dest.dirname
             dest: './static/css/',
             // css 压缩配置
-            minify: {
-                compatibility: 'ie7'
-            }
+            minify: true
         },
 
         // 资源

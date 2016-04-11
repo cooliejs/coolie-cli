@@ -75,7 +75,6 @@ module.exports = function (file, options) {
     var resList = [];
 
     if (!cssminify) {
-        console.log('options.cleanCSSOptions', options.cleanCSSOptions);
         cssminify = new CleanCSS(dato.extend({}, cleanCSSOptions, options.cleanCSSOptions));
     }
 

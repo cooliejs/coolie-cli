@@ -51,6 +51,21 @@ var coolieFn = function () {
 
 
 /**
+ * 默认布尔值
+ * @param varible
+ * @param dft
+ * @returns {*}
+ */
+var keepDefault = function (varible, dft) {
+    if (undefined === dft) {
+        return dft;
+    }
+
+    return typeis.Boolean(dft) ? Boolean(varible) : varible;
+};
+
+
+/**
  * 解析 config
  * @param options {Object} 配置
  * @param [options.coolieAPI] {Object} coolie API
@@ -336,10 +351,10 @@ module.exports = function (options) {
             configs.joinHTMLSpaces = configs.html.minify;
             configs.removeHTMLBreakLines = configs.html.minify;
         } else {
-            configs.removeHTMLYUIComments = configs.html.removeHTMLYUIComments !== false;
-            configs.removeHTMLLineComments = configs.html.removeHTMLLineComments !== false;
-            configs.joinHTMLSpaces = configs.html.joinHTMLSpaces !== false;
-            configs.removeHTMLBreakLines = configs.html.removeHTMLBreakLines !== false;
+            configs.removeHTMLYUIComments = keepDefault(configs.html.removeHTMLYUIComments, true);
+            configs.removeHTMLLineComments = keepDefault(configs.html.removeHTMLLineComments, true);
+            configs.joinHTMLSpaces = keepDefault(configs.html.joinHTMLSpaces, true);
+            configs.removeHTMLBreakLines = keepDefault(configs.html.removeHTMLBreakLines, true);
         }
     };
 
@@ -370,6 +385,10 @@ module.exports = function (options) {
                 keepSpecialComments: '*',
                 mediaMerging: false
             };
+        } else {
+            configs.css.minify.keepBreaks = keepDefault(configs.css.minify, false);
+            configs.css.minify.keepSpecialComments = keepDefault(configs.css.keepSpecialComments, 0);
+            configs.css.minify.mediaMerging = keepDefault(configs.css.mediaMerging, true);
         }
 
         // css.minify

@@ -319,6 +319,7 @@ var minifyHTML = function (file, options) {
         destHost: options.destHost,
         destResourceDirname: options.destResourceDirname,
         minifyCSS: options.minifyCSS,
+        cleanCSSOptions: options.cleanCSSOptions,
         minifyResource: options.minifyResource,
         mute: options.mute
     });

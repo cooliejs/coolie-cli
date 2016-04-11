@@ -45,9 +45,7 @@ module.exports = function (coolie) {
         },
         "css": {
             "dest": "./static/css/",
-            "minify": {
-                "compatibility": "ie7"
-            }
+            "minify": false
         },
         "resource": {
             "dest": "./static/res/",
