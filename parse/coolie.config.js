@@ -329,10 +329,22 @@ module.exports = function (options) {
             configs.html.minify = true;
         }
 
-        configs.removeHTMLYUIComments = configs.html.minify;
-        configs.removeHTMLLineComments = configs.html.minify;
-        configs.joinHTMLSpaces = configs.html.minify;
-        configs.removeHTMLBreakLines = configs.html.minify;
+        if (typeis.Boolean(configs.html.minify)) {
+            configs.replaceHTMLAttrResource = configs.html.minify;
+            configs.replaceHTMLTagScriptCoolie = configs.html.minify;
+            configs.replaceHTMLTagScriptAttr = configs.html.minify;
+            configs.replaceHTMLTagScriptContent = configs.html.minify;
+            configs.replaceHTMLTagLink = configs.html.minify;
+            configs.replaceHTMLTagStyleResource = configs.html.minify;
+            configs.replaceHTMLAttrStyleResource = configs.html.minify;
+            configs.replaceHTMLCoolieGroup = configs.html.minify;
+            configs.removeHTMLYUIComments = configs.html.minify;
+            configs.removeHTMLLineComments = configs.html.minify;
+            configs.joinHTMLSpaces = configs.html.minify;
+            configs.removeHTMLBreakLines = configs.html.minify;
+        } else {
+
+        }
     };
 
 

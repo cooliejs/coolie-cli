@@ -23,7 +23,7 @@ module.exports = function (coolie) {
             "minify": {
                 global_defs: {
                     DEBUG: false,
-                    CLASSICAL: true
+                    CLASSICAL: false
                 }
             }
         },

@@ -24,7 +24,7 @@ module.exports = function (coolie) {
             // 目标目录，相对于当前文件
             dirname: '../webroot-pro/',
             // 目标根域
-            host: '',
+            host: '/',
             // 版本号长度
             versionLength: 32
         },
@@ -41,7 +41,12 @@ module.exports = function (coolie) {
             // js 文件保存目录，相对于 dest.dirname
             dest: './static/js/',
             // 分块配置
-            chunk: []
+            chunk: [],
+            minify: {
+                global_defs: {
+                    DEBUG: false
+                }
+            }
         },
 
         // html 构建
