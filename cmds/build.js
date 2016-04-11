@@ -191,7 +191,7 @@ module.exports = function (options) {
         minifyJS: true,
         minifyCSS: true,
         minifyResource: true,
-        uglifyJSOptions: null,
+        uglifyJSOptions: configs.uglifyJSOptions,
         cleanCSSOptions: configs.cleanCSSOptions,
         replaceCSSResource: true,
         mainVersionMap: buildAPPResult.mainVersionMap,

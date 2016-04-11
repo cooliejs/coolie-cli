@@ -12,4 +12,25 @@ define(function (require, exports, module) {
 
     'use strict';
 
+    if (DEBUG) {
+        console.log('DEBUG is true')
+    }
+
+    if (!DEBUG) {
+        console.log('DEBUG is false');
+    }
+
+    if (CLASSICAL) {
+        console.log('CLASSICAL is true');
+    }
+
+    if (!CLASSICAL) {
+        console.log('CLASSICAL is false');
+    }
+
+    var abc = true;
+
+    if (abc === true) {
+        console.log('abc is true');
+    }
 });

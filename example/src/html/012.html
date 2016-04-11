@@ -11,9 +11,74 @@
 
 </pre>
 
+<script>
+    var APP = APP || {}
+
+    APP.abd = '1dq';
+    APP.abd2 = '{{abc ? 1 : 0}}';
+    APP.abd3 = '{{abc}}';
+
+    if (DEBUG) {
+        console.log('DEBUG is true')
+    } else {
+        console.log('DEBUG is false');
+    }
+
+    if (CLASSICAL) {
+        console.log('CLASSICAL is true');
+    } else {
+        console.log('CLASSICAL is false');
+    }
+
+    var abc = true;
+
+    if (abc === true) {
+        console.log('abc is true');
+    }
+
+    var def = 123;
+
+    var ddm = 456 > def;
+
+    (function () {
+        var abc = 1;
+        var def = 2;
+
+        return 3;
+    })();
+
+    function x312() {
+        if (!DEBUG) {
+            console.log('x312 DEBUG is false');
+            return;
+        }
+
+        console.log('x312 DEBUG is true');
+    }
+</script>
+
+<script>
+    if ('{{=some}}' === '0') {
+        console.log('some is "0"');
+    } else {
+        console.log('some not is "0"');
+    }
+
+    console.log('some ' + ('{{=some}}' === '0' ? '' : ' not ') + ' is "0"');
+
+    var TEMP = '{{=some}}';
+    console.log('some ' + (TEMP === '0' ? '' : ' not ') + ' is "0"');
+
+    if(!1 === false){
+        console.log('Boolean(0) is false');
+    }else{
+        console.log('Boolean(0) is true');
+    }
+</script>
+
 <script coolie src="/static/js/coolie.min.js"
-data-config="coolie-config.js"
-data-main="012.js"></script>
+        data-config="coolie-config.js"
+        data-main="012.js"></script>
 
 
 

@@ -19,7 +19,13 @@ module.exports = function (coolie) {
                 //    "./static/js/libs1/**" // => 0
                 //],
                 //"./static/js/libs2/**"    // => 1
-            ]
+            ],
+            "minify": {
+                global_defs: {
+                    DEBUG: false,
+                    CLASSICAL: true
+                }
+            }
         },
         "html": {
             "src": [
