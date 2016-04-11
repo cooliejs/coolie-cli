@@ -75,8 +75,6 @@ var compressorOptions = {
 module.exports = function (file, options) {
     var code = options.code;
 
-    console.log(options.uglifyJSOptions.global_defs);
-
     try {
         return uglifyJS.minify(code, {
             fromString: true,
