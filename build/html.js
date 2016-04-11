@@ -114,14 +114,6 @@ module.exports = function (options) {
 
         var ret = minifyHTML(htmlFile, {
             code: code,
-            replaceHTMLAttrResource: true,
-            replaceHTMLTagScriptCoolie: true,
-            replaceHTMLTagScriptAttr: true,
-            replaceHTMLTagScriptContent: true,
-            replaceHTMLTagLink: true,
-            replaceHTMLTagStyleResource: true,
-            replaceHTMLAttrStyleResource: true,
-            replaceHTMLCoolieGroup: true,
             removeHTMLYUIComments: options.removeHTMLYUIComments,
             removeHTMLLineComments: options.removeHTMLLineComments,
             joinHTMLSpaces: options.joinHTMLSpaces,
