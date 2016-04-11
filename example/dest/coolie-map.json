@@ -1,0 +1,41 @@
+{
+  "/html/012.html": {
+    "main": [
+      {
+        "src": "../src/static/js/app/012.js",
+        "dest": "/static/js/app/2fffcf38.js",
+        "deps": []
+      }
+    ],
+    "js": [
+      {
+        "dest": "/static/js/d41d8cd9.js",
+        "deps": [
+          "../src/static/js/1.js"
+        ]
+      },
+      {
+        "dest": "/static/js/8c17fee6.js",
+        "deps": [
+          "../src/static/js/coolie.min.js"
+        ]
+      }
+    ],
+    "css": [
+      {
+        "dest": "/static/css/5b8eb1bc.css",
+        "deps": [
+          {
+            "src": "../src/static/css/1.css",
+            "res": [
+              "../src/static/img/100x100.png"
+            ]
+          }
+        ]
+      }
+    ],
+    "res": [
+      "../src/static/img/100x100.png"
+    ]
+  }
+}
