@@ -36,7 +36,7 @@ var defaults = {
     uglifyJSOptions: null,
     cleanCSSOptions: null,
     removeHTMLYUIComments: true,
-    removeHTMLLineComments: true,
+    removeHTMLOneLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
     mute: true
@@ -64,7 +64,7 @@ var defaults = {
  * @param options.virtualMap {Object} 虚拟
  * @param options.mute {Boolean} 是否静音
  * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
- * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
+ * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
  * @returns {{dependencies: Array, code: String, md5: String}}
@@ -182,7 +182,7 @@ module.exports = function (file, options) {
                 cleanCSSOptions: options.cleanCSSOptions,
                 uglifyJSOptions: options.uglifyJSOptions,
                 removeHTMLYUIComments: options.removeHTMLYUIComments,
-                removeHTMLLineComments: options.removeHTMLLineComments,
+                removeHTMLOneLineComments: options.removeHTMLOneLineComments,
                 joinHTMLSpaces: options.joinHTMLSpaces,
                 removeHTMLBreakLines: options.removeHTMLBreakLines,
                 mute: options.mute

@@ -346,13 +346,13 @@ module.exports = function (options) {
 
         // 布尔值
         if (typeis.Boolean(configs.html.minify)) {
-            configs.removeHTMLYUIComments = configs.html.minify;
-            configs.removeHTMLLineComments = configs.html.minify;
+            configs.removeHTMLMultipleLinesComments = configs.html.minify;
+            configs.removeHTMLOneLineComments = configs.html.minify;
             configs.joinHTMLSpaces = configs.html.minify;
             configs.removeHTMLBreakLines = configs.html.minify;
         } else {
-            configs.removeHTMLYUIComments = keepDefault(configs.html.removeHTMLYUIComments, true);
-            configs.removeHTMLLineComments = keepDefault(configs.html.removeHTMLLineComments, true);
+            configs.removeHTMLMultipleLinesComments = keepDefault(configs.html.removeHTMLMultipleLinesComments, true);
+            configs.removeHTMLOneLineComments = keepDefault(configs.html.removeHTMLOneLineComments, true);
             configs.joinHTMLSpaces = keepDefault(configs.html.joinHTMLSpaces, true);
             configs.removeHTMLBreakLines = keepDefault(configs.html.removeHTMLBreakLines, true);
         }
@@ -380,7 +380,6 @@ module.exports = function (options) {
             configs.css.minify = null;
         } else if (configs.css.minify === false) {
             configs.css.minify = {
-                advanced: false,
                 keepBreaks: true,
                 keepSpecialComments: '*',
                 mediaMerging: false

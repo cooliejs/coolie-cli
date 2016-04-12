@@ -184,7 +184,7 @@ var defaults = {
     minifyResource: true,
     cleanCSSOptions: null,
     removeHTMLYUIComments: true,
-    removeHTMLLineComments: true,
+    removeHTMLOneLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
     uglifyJSOptions: null,
@@ -212,7 +212,7 @@ var defaults = {
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
  * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
- * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
+ * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
  * @return {{code: String, resList: Array}}
@@ -350,7 +350,7 @@ module.exports = function (file, options) {
                             replaceHTMLAttrStyleResource: true,
                             replaceHTMLCoolieGroup: true,
                             removeHTMLYUIComments: options.removeHTMLYUIComments,
-                            removeHTMLLineComments: options.removeHTMLLineComments,
+                            removeHTMLOneLineComments: options.removeHTMLOneLineComments,
                             joinHTMLSpaces: options.joinHTMLSpaces,
                             removeHTMLBreakLines: options.removeHTMLBreakLines,
                             srcDirname: options.srcDirname,
@@ -384,7 +384,7 @@ module.exports = function (file, options) {
                         replaceHTMLAttrStyleResource: true,
                         replaceHTMLCoolieGroup: true,
                         removeHTMLYUIComments: options.removeHTMLYUIComments,
-                        removeHTMLLineComments: options.removeHTMLLineComments,
+                        removeHTMLOneLineComments: options.removeHTMLOneLineComments,
                         joinHTMLSpaces: options.joinHTMLSpaces,
                         removeHTMLBreakLines: options.removeHTMLBreakLines,
                         srcDirname: options.srcDirname,
@@ -417,7 +417,7 @@ module.exports = function (file, options) {
                         replaceHTMLAttrStyleResource: true,
                         replaceHTMLCoolieGroup: true,
                         removeHTMLYUIComments: options.removeHTMLYUIComments,
-                        removeHTMLLineComments: options.removeHTMLLineComments,
+                        removeHTMLOneLineComments: options.removeHTMLOneLineComments,
                         joinHTMLSpaces: options.joinHTMLSpaces,
                         removeHTMLBreakLines: options.removeHTMLBreakLines,
                         srcDirname: options.srcDirname,

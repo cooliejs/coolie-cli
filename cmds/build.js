@@ -141,7 +141,7 @@ module.exports = function (options) {
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
         destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname,
         removeHTMLYUIComments: configs.removeHTMLYUIComments,
-        removeHTMLLineComments: configs.removeHTMLLineComments,
+        removeHTMLOneLineComments: configs.removeHTMLOneLineComments,
         joinHTMLSpaces: configs.joinHTMLSpaces,
         removeHTMLBreakLines: configs.removeHTMLBreakLines,
         mute: true
@@ -173,7 +173,7 @@ module.exports = function (options) {
         emitter: emitter,
         glob: configs.html.src,
         removeHTMLYUIComments: configs.removeHTMLYUIComments,
-        removeHTMLLineComments: configs.removeHTMLLineComments,
+        removeHTMLOneLineComments: configs.removeHTMLOneLineComments,
         joinHTMLSpaces: configs.joinHTMLSpaces,
         removeHTMLBreakLines: configs.removeHTMLBreakLines,
         versionLength: configs.versionLength,

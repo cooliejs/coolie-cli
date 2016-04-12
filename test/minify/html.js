@@ -38,7 +38,7 @@ describe('minify/html.js', function () {
             replaceHTMLAttrStyleResource: true,
             replaceHTMLCoolieGroup: true,
             removeHTMLYUIComments: true,
-            removeHTMLLineComments: true,
+            removeHTMLOneLineComments: true,
             joinHTMLSpaces: true,
             removeHTMLBreakLines: true,
             versionLength: 32,

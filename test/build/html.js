@@ -34,7 +34,7 @@ describe('build/html.js', function () {
                 './html/user/index.html'
             ],
             removeHTMLYUIComments: true,
-            removeHTMLLineComments: true,
+            removeHTMLOneLineComments: true,
             joinHTMLSpaces: true,
             removeHTMLBreakLines: true,
             versionLength: 32,

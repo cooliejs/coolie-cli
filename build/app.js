@@ -40,7 +40,7 @@ var defaults = {
     destCoolieConfigChunkDirname: null,
     destCoolieConfigAsyncDirname: null,
     removeHTMLYUIComments: true,
-    removeHTMLLineComments: true,
+    removeHTMLOneLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
     mute: true
@@ -67,7 +67,7 @@ var defaults = {
  * @param options.destCoolieConfigChunkDirname {String} coolie-config:chunk 目录
  * @param options.destCoolieConfigAsyncDirname {String} coolie-config:async 目录
  * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
- * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
+ * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
  * @param [options.mute=true] {Boolean} 是否静音
@@ -139,7 +139,7 @@ module.exports = function (options) {
             minifyResource: options.minifyResource,
             cleanCSSOptions: options.cleanCSSOptions,
             removeHTMLYUIComments: options.removeHTMLYUIComments,
-            removeHTMLLineComments: options.removeHTMLLineComments,
+            removeHTMLOneLineComments: options.removeHTMLOneLineComments,
             joinHTMLSpaces: options.joinHTMLSpaces,
             removeHTMLBreakLines: options.removeHTMLBreakLines,
             virtualMap: virtualMap,

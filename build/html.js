@@ -22,7 +22,7 @@ var defaults = {
     middleware: null,
     glob: [],
     removeHTMLYUIComments: true,
-    removeHTMLLineComments: true,
+    removeHTMLOneLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
     versionLength: 32,
@@ -51,7 +51,7 @@ var defaults = {
  * @param options.middleware {Object} 中间件
  * @param options.glob {String|Array} html glob
  * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
- * @param [options.removeHTMLLineComments=true] {Boolean} 是否去除行注释
+ * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
  * @param [options.versionLength=32] {Number} 版本号长度
@@ -115,7 +115,7 @@ module.exports = function (options) {
         var ret = minifyHTML(htmlFile, {
             code: code,
             removeHTMLYUIComments: options.removeHTMLYUIComments,
-            removeHTMLLineComments: options.removeHTMLLineComments,
+            removeHTMLOneLineComments: options.removeHTMLOneLineComments,
             joinHTMLSpaces: options.joinHTMLSpaces,
             removeHTMLBreakLines: options.removeHTMLBreakLines,
             versionLength: options.versionLength,
