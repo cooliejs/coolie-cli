@@ -42,6 +42,7 @@ module.exports = function (coolie) {
             dest: './static/js/',
             // 分块配置
             chunk: [],
+            // js 压缩配置
             minify: {
                 global_defs: {
                     DEBUG: false
