@@ -77,7 +77,9 @@ var compressorOptions = {
     warnings: false,
 
     // 全局常量
-    global_defs: {}
+    global_defs: {
+        DEBUG: false
+    }
 };
 
 
