@@ -339,11 +339,6 @@ module.exports = function (options) {
             configs.html.src = [];
         }
 
-        // html.minify
-        if (typeis.undefined(configs.html.minify) !== false) {
-            configs.html.minify = true;
-        }
-
         // 布尔值
         if (typeis.Boolean(configs.html.minify)) {
             configs.removeHTMLMultipleLinesComments = configs.html.minify;
