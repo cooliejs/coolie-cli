@@ -28,7 +28,7 @@ var defaults = {
     minifyResource: true,
     uglifyJSOptions: null,
     cleanCSSOptions: null,
-    removeHTMLYUIComments: true,
+    removeHTMLMultipleLinesComments: true,
     removeHTMLOneLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
@@ -52,7 +52,7 @@ var defaults = {
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.cleanCSSOptions {Object} clean-css 配置
- * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
+ * @param [options.removeHTMLMultipleLinesComments=true] {Boolean} 是否去除 YUI 注释
  * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行

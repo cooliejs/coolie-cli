@@ -37,7 +37,7 @@ module.exports = function (coolie) {
                 //"./html/456.html",
             ],
             "minify": {
-                removeHTMLYUIComments: true,
+                removeHTMLMultipleLinesComments: true,
                 removeHTMLOneLineComments: true,
                 joinHTMLSpaces: false,
                 removeHTMLBreakLines: false

@@ -39,7 +39,7 @@ var defaults = {
     destCoolieConfigBaseDirname: null,
     destCoolieConfigChunkDirname: null,
     destCoolieConfigAsyncDirname: null,
-    removeHTMLYUIComments: true,
+    removeHTMLMultipleLinesComments: true,
     removeHTMLOneLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
@@ -66,7 +66,7 @@ var defaults = {
  * @param options.destCoolieConfigBaseDirname {String} coolie-config:base 目录
  * @param options.destCoolieConfigChunkDirname {String} coolie-config:chunk 目录
  * @param options.destCoolieConfigAsyncDirname {String} coolie-config:async 目录
- * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
+ * @param [options.removeHTMLMultipleLinesComments=true] {Boolean} 是否去除 YUI 注释
  * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
@@ -138,7 +138,7 @@ module.exports = function (options) {
             versionLength: options.versionLength,
             minifyResource: options.minifyResource,
             cleanCSSOptions: options.cleanCSSOptions,
-            removeHTMLYUIComments: options.removeHTMLYUIComments,
+            removeHTMLMultipleLinesComments: options.removeHTMLMultipleLinesComments,
             removeHTMLOneLineComments: options.removeHTMLOneLineComments,
             joinHTMLSpaces: options.joinHTMLSpaces,
             removeHTMLBreakLines: options.removeHTMLBreakLines,

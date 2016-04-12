@@ -57,7 +57,7 @@ var REG_PHP_SIMPLE = /<\?=[\s\S]*?\?>/gi;
 
 var defaults = {
     code: '',
-    removeHTMLYUIComments: true,
+    removeHTMLMultipleLinesComments: true,
     removeHTMLOneLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
@@ -88,7 +88,7 @@ var defaults = {
  * @param file {String} 文件地址
  * @param options {Object} 配置
  * @param options.code {String} 代码
- * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
+ * @param [options.removeHTMLMultipleLinesComments=true] {Boolean} 是否去除 YUI 注释
  * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
@@ -162,7 +162,7 @@ var minifyHTML = function (file, options) {
     }
 
     // 移除 YUI 注释
-    if (options.removeHTMLYUIComments) {
+    if (options.removeHTMLMultipleLinesComments) {
         code = code.replace(REG_YUI_COMMENTS, '');
     } else {
         code = code.replace(REG_YUI_COMMENTS, replace(commentsMap));

@@ -21,7 +21,7 @@ var reader = require('../utils/reader.js');
 var defaults = {
     middleware: null,
     glob: [],
-    removeHTMLYUIComments: true,
+    removeHTMLMultipleLinesComments: true,
     removeHTMLOneLineComments: true,
     joinHTMLSpaces: true,
     removeHTMLBreakLines: true,
@@ -50,7 +50,7 @@ var defaults = {
  * @param options {Object} 配置
  * @param options.middleware {Object} 中间件
  * @param options.glob {String|Array} html glob
- * @param [options.removeHTMLYUIComments=true] {Boolean} 是否去除 YUI 注释
+ * @param [options.removeHTMLMultipleLinesComments=true] {Boolean} 是否去除 YUI 注释
  * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
@@ -114,7 +114,7 @@ module.exports = function (options) {
 
         var ret = minifyHTML(htmlFile, {
             code: code,
-            removeHTMLYUIComments: options.removeHTMLYUIComments,
+            removeHTMLMultipleLinesComments: options.removeHTMLMultipleLinesComments,
             removeHTMLOneLineComments: options.removeHTMLOneLineComments,
             joinHTMLSpaces: options.joinHTMLSpaces,
             removeHTMLBreakLines: options.removeHTMLBreakLines,

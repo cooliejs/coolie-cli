@@ -33,7 +33,7 @@ describe('build/html.js', function () {
                 './html/async.html',
                 './html/user/index.html'
             ],
-            removeHTMLYUIComments: true,
+            removeHTMLMultipleLinesComments: true,
             removeHTMLOneLineComments: true,
             joinHTMLSpaces: true,
             removeHTMLBreakLines: true,
