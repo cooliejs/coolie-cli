@@ -12,7 +12,7 @@ var fs = require('fs');
 var assert = require('assert');
 
 var minifyHTML = require('../../minify/html.js');
-var file = path.join(__dirname, '../../example/src/html/index.html');
+var file = path.join(__dirname, '../../example/src/html/minify-test.html');
 
 var srcDirname = path.join(__dirname, '../../example/src/');
 var srcCoolieConfigBaseDirname = path.join(srcDirname, 'static/js/app/');

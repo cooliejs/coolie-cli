@@ -33,12 +33,7 @@ var reContinuousBlank = /\s{2,}|\t/g;
 // 单行注释
 var reOneLineComments = /<!--.*?-->/g;
 // 多行注释
-//<!--
-// - app1.html
-// - @author ydr.me
-// - @create 2014-09-25 19:20
-// -->
-var reMultipleLinesComments = /<!--.*\n(.*\n)+.*-->/g;
+var reMultipleLinesComments = /<!--.*\n(.*\n)+?.*-->/g;
 var reCoolieComments = /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi;
 var rePreTagname = /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi;
 var reConditionsCommentsStarts = [
@@ -158,6 +153,7 @@ var minifyHTML = function (file, options) {
 
     // 移除多行注释
     if (options.removeHTMLMultipleLinesComments) {
+        console.log(code.match(reMultipleLinesComments));
         code = code.replace(reMultipleLinesComments, '');
     } else {
         code = code.replace(reMultipleLinesComments, replace(commentsMap));
