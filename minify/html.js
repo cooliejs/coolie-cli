@@ -153,7 +153,6 @@ var minifyHTML = function (file, options) {
 
     // 移除多行注释
     if (options.removeHTMLMultipleLinesComments) {
-        console.log(code.match(reMultipleLinesComments));
         code = code.replace(reMultipleLinesComments, '');
     } else {
         code = code.replace(reMultipleLinesComments, replace(commentsMap));
