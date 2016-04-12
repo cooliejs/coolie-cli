@@ -30,17 +30,6 @@ describe('minify/html.js', function () {
         var code = fs.readFileSync(file, 'utf8');
         var ret = minifyHTML(file, {
             code: code,
-            replaceHTMLAttrResource: true,
-            replaceHTMLTagScriptCoolie: true,
-            replaceHTMLTagScriptAttr: true,
-            replaceHTMLTagScriptContent: true,
-            replaceHTMLTagStyleResource: true,
-            replaceHTMLAttrStyleResource: true,
-            replaceHTMLCoolieGroup: true,
-            removeHTMLMultipleLinesComments: true,
-            removeHTMLOneLineComments: true,
-            joinHTMLSpaces: true,
-            removeHTMLBreakLines: true,
             versionLength: 32,
             srcDirname: srcDirname,
             destDirname: destDirname,

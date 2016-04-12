@@ -21,10 +21,7 @@ var reader = require('../utils/reader.js');
 var defaults = {
     middleware: null,
     glob: [],
-    removeHTMLMultipleLinesComments: true,
-    removeHTMLOneLineComments: true,
-    joinHTMLSpaces: true,
-    removeHTMLBreakLines: true,
+    htmlMinifyOptions: null,
     versionLength: 32,
     srcDirname: null,
     destDirname: null,
@@ -50,10 +47,7 @@ var defaults = {
  * @param options {Object} 配置
  * @param options.middleware {Object} 中间件
  * @param options.glob {String|Array} html glob
- * @param [options.removeHTMLMultipleLinesComments=true] {Boolean} 是否去除 YUI 注释
- * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
- * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
- * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @param options.htmlMinifyOptions {Object} 压缩 html 配置
  * @param [options.versionLength=32] {Number} 版本号长度
  * @param [options.srcDirname] {String} 原始根目录
  * @param [options.destDirname] {String} 目标根目录
@@ -114,10 +108,7 @@ module.exports = function (options) {
 
         var ret = minifyHTML(htmlFile, {
             code: code,
-            removeHTMLMultipleLinesComments: options.removeHTMLMultipleLinesComments,
-            removeHTMLOneLineComments: options.removeHTMLOneLineComments,
-            joinHTMLSpaces: options.joinHTMLSpaces,
-            removeHTMLBreakLines: options.removeHTMLBreakLines,
+            htmlMinifyOptions: options.htmlMinifyOptions,
             versionLength: options.versionLength,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,

@@ -28,10 +28,7 @@ var defaults = {
     minifyResource: true,
     uglifyJSOptions: null,
     cleanCSSOptions: null,
-    removeHTMLMultipleLinesComments: true,
-    removeHTMLOneLineComments: true,
-    joinHTMLSpaces: true,
-    removeHTMLBreakLines: true,
+    htmlMinifyOptions: null,
     mainIndex: 0,
     mainLength: 0,
     mute: true
@@ -52,10 +49,7 @@ var defaults = {
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.cleanCSSOptions {Object} clean-css 配置
- * @param [options.removeHTMLMultipleLinesComments=true] {Boolean} 是否去除 YUI 注释
- * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
- * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
- * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @param options.htmlMinifyOptions {Object} 压缩 html 配置
  * @param [options.mute=true] {Boolean} 是否静音
  * @param options.virtualMap {Object} 虚拟
  * @param options.mainIndex {Number} 当前序号

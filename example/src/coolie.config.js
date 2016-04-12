@@ -40,7 +40,7 @@ module.exports = function (coolie) {
             "minify": {
                 removeHTMLMultipleLinesComments: true,
                 removeHTMLOneLineComments: true,
-                joinHTMLSpaces: true,
+                joinHTMLContinuousBlanks: true,
                 removeHTMLBreakLines: true
             }
         },

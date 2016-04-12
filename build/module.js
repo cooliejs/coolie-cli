@@ -35,10 +35,7 @@ var defaults = {
     minifyResource: true,
     uglifyJSOptions: null,
     cleanCSSOptions: null,
-    removeHTMLMultipleLinesComments: true,
-    removeHTMLOneLineComments: true,
-    joinHTMLSpaces: true,
-    removeHTMLBreakLines: true,
+    htmlMinifyOptions: null,
     mute: true
 };
 
@@ -61,12 +58,9 @@ var defaults = {
  * @param options.minifyResource {Boolean} 压缩静态资源
  * @param options.uglifyJSOptions {Object} uglify-js 配置
  * @param options.cleanCSSOptions {Object} clean-css 配置
+ * @param options.htmlMinifyOptions {Object} 压缩 html 配置
  * @param options.virtualMap {Object} 虚拟
  * @param options.mute {Boolean} 是否静音
- * @param [options.removeHTMLMultipleLinesComments=true] {Boolean} 是否去除 YUI 注释
- * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
- * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
- * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
  * @returns {{dependencies: Array, code: String, md5: String}}
  */
 module.exports = function (file, options) {
@@ -181,10 +175,7 @@ module.exports = function (file, options) {
                 minifyResource: options.minifyResource,
                 cleanCSSOptions: options.cleanCSSOptions,
                 uglifyJSOptions: options.uglifyJSOptions,
-                removeHTMLMultipleLinesComments: options.removeHTMLMultipleLinesComments,
-                removeHTMLOneLineComments: options.removeHTMLOneLineComments,
-                joinHTMLSpaces: options.joinHTMLSpaces,
-                removeHTMLBreakLines: options.removeHTMLBreakLines,
+                htmlMinifyOptions: options.htmlMinifyOptions,
                 mute: options.mute
             });
             code = replaceModuleWrapperRet.code;

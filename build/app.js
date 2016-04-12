@@ -39,10 +39,7 @@ var defaults = {
     destCoolieConfigBaseDirname: null,
     destCoolieConfigChunkDirname: null,
     destCoolieConfigAsyncDirname: null,
-    removeHTMLMultipleLinesComments: true,
-    removeHTMLOneLineComments: true,
-    joinHTMLSpaces: true,
-    removeHTMLBreakLines: true,
+    htmlMinifyOptions: null,
     mute: true
 };
 
@@ -66,10 +63,7 @@ var defaults = {
  * @param options.destCoolieConfigBaseDirname {String} coolie-config:base 目录
  * @param options.destCoolieConfigChunkDirname {String} coolie-config:chunk 目录
  * @param options.destCoolieConfigAsyncDirname {String} coolie-config:async 目录
- * @param [options.removeHTMLMultipleLinesComments=true] {Boolean} 是否去除 YUI 注释
- * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
- * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
- * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @param options.htmlMinifyOptions {Object} 压缩 html 配置
  * @param [options.mute=true] {Boolean} 是否静音
  * @returns {Object}
  */
@@ -138,10 +132,7 @@ module.exports = function (options) {
             versionLength: options.versionLength,
             minifyResource: options.minifyResource,
             cleanCSSOptions: options.cleanCSSOptions,
-            removeHTMLMultipleLinesComments: options.removeHTMLMultipleLinesComments,
-            removeHTMLOneLineComments: options.removeHTMLOneLineComments,
-            joinHTMLSpaces: options.joinHTMLSpaces,
-            removeHTMLBreakLines: options.removeHTMLBreakLines,
+            htmlMinifyOptions: options.htmlMinifyOptions,
             virtualMap: virtualMap,
             mainIndex: mainIndex,
             mainLength: mainLength,

@@ -29,7 +29,7 @@ var replaceHTMLAttrStyleResource = require('../replace/html-attr-style-resource.
 var replaceHTMLCoolieGroup = require('../replace/html-coolie-group.js');
 
 var reLineBreak = /[\n\r]/g;
-var reContinuousBlank = /\s{2,}|\t/g;
+var reContinuousBlanks = /\s{2,}|\t/g;
 // 单行注释
 var reOneLineComments = /<!--.*?-->/g;
 // 多行注释
@@ -47,10 +47,6 @@ var reConditionsCommentsEnds = [
 var reConditionsComments = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi;
 var defaults = {
     code: '',
-    removeHTMLMultipleLinesComments: true,
-    removeHTMLOneLineComments: true,
-    joinHTMLSpaces: true,
-    removeHTMLBreakLines: true,
     versionLength: 32,
     srcDirname: null,
     destDirname: null,
@@ -65,6 +61,7 @@ var defaults = {
     minifyResource: true,
     uglifyJSOptions: null,
     cleanCSSOptions: null,
+    htmlMinifyOptions: null,
     replaceCSSResource: true,
     mainVersionMap: null,
     signHTML: false,
@@ -72,16 +69,19 @@ var defaults = {
     signCSS: false,
     mute: false
 };
+var htmlMinifyDefaults = {
+    removeHTMLOneLineComments: true,
+    removeHTMLMultipleLinesComments: true,
+    joinHTMLContinuousBlanks: true,
+    removeHTMLBreakLines: true
+};
 
 /**
  * html minify
  * @param file {String} 文件地址
  * @param options {Object} 配置
  * @param options.code {String} 代码
- * @param [options.removeHTMLMultipleLinesComments=true] {Boolean} 是否去除多行注释
- * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除单行注释
- * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
- * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
+ * @param options.htmlMinifyOptions {Object} 压缩 html 配置
  * @param [options.versionLength=32] {Number} 版本号长度
  * @param [options.srcDirname] {String} 原始根目录
  * @param [options.destDirname] {String} 目标根目录
@@ -108,6 +108,7 @@ var defaults = {
  */
 var minifyHTML = function (file, options) {
     options = dato.extend({}, defaults, options);
+    var htmlMinifyOptions = dato.extend({}, htmlMinifyDefaults, options.htmlMinifyOptions);
     var coolieMap = {};
     var preMap = {};
     var commentsMap = {};
@@ -145,14 +146,14 @@ var minifyHTML = function (file, options) {
     code = code.replace(reConditionsComments, replace(commentsMap));
 
     // 移除单行注释
-    if (options.removeHTMLOneLineComments) {
+    if (htmlMinifyOptions.removeHTMLOneLineComments) {
         code = code.replace(reOneLineComments, '');
     } else {
         code = code.replace(reOneLineComments, replace(commentsMap));
     }
 
     // 移除多行注释
-    if (options.removeHTMLMultipleLinesComments) {
+    if (htmlMinifyOptions.removeHTMLMultipleLinesComments) {
         code = code.replace(reMultipleLinesComments, '');
     } else {
         code = code.replace(reMultipleLinesComments, replace(commentsMap));
@@ -162,12 +163,12 @@ var minifyHTML = function (file, options) {
     code = code.replace(rePreTagname, replace(preMap));
 
     // 合并长空白
-    if (options.joinHTMLSpaces) {
-        code = code.replace(reContinuousBlank, ' ');
+    if (htmlMinifyOptions.joinHTMLContinuousBlanks) {
+        code = code.replace(reContinuousBlanks, ' ');
     }
 
     // 移除多换行
-    if (options.removeHTMLBreakLines) {
+    if (htmlMinifyOptions.removeHTMLBreakLines) {
         code = code.replace(reLineBreak, '');
     }
 

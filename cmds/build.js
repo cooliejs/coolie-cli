@@ -140,10 +140,7 @@ module.exports = function (options) {
         destCoolieConfigBaseDirname: configs.destCoolieConfigBaseDirname,
         destCoolieConfigChunkDirname: configs.destCoolieConfigChunkDirname,
         destCoolieConfigAsyncDirname: configs.destCoolieConfigAsyncDirname,
-        removeHTMLMultipleLinesComments: configs.removeHTMLMultipleLinesComments,
-        removeHTMLOneLineComments: configs.removeHTMLOneLineComments,
-        joinHTMLSpaces: configs.joinHTMLSpaces,
-        removeHTMLBreakLines: configs.removeHTMLBreakLines,
+        htmlMinifyOptions: configs.htmlMinifyOptions,
         mute: true
     });
 
@@ -172,10 +169,7 @@ module.exports = function (options) {
         middleware: middleware,
         emitter: emitter,
         glob: configs.html.src,
-        removeHTMLMultipleLinesComments: configs.removeHTMLMultipleLinesComments,
-        removeHTMLOneLineComments: configs.removeHTMLOneLineComments,
-        joinHTMLSpaces: configs.joinHTMLSpaces,
-        removeHTMLBreakLines: configs.removeHTMLBreakLines,
+        htmlMinifyOptions: configs.htmlMinifyOptions,
         versionLength: configs.versionLength,
         srcDirname: srcDirname,
         destDirname: destDirname,

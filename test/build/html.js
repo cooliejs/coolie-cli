@@ -33,10 +33,6 @@ describe('build/html.js', function () {
                 './html/async.html',
                 './html/user/index.html'
             ],
-            removeHTMLMultipleLinesComments: true,
-            removeHTMLOneLineComments: true,
-            joinHTMLSpaces: true,
-            removeHTMLBreakLines: true,
             versionLength: 32,
             srcDirname: srcDirname,
             destDirname: destDirname,

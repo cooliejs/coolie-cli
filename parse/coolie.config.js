@@ -246,7 +246,14 @@ module.exports = function (options) {
             configs.js.chunk = [];
         }
 
-        configs.uglifyJSOptions = configs.js.minify;
+        // @todo 目前仅支持 true
+        if (typeis.Boolean(configs.js.minify)) {
+            configs.js.minify = {};
+        }
+
+        configs.uglifyJSOptions = {
+            global_defs: configs.js.minify.global_defs
+        };
     };
 
     // 检查 coolie-config.js 内的 base 路径
@@ -341,15 +348,19 @@ module.exports = function (options) {
 
         // 布尔值
         if (typeis.Boolean(configs.html.minify)) {
-            configs.removeHTMLMultipleLinesComments = configs.html.minify;
-            configs.removeHTMLOneLineComments = configs.html.minify;
-            configs.joinHTMLSpaces = configs.html.minify;
-            configs.removeHTMLBreakLines = configs.html.minify;
+            configs.htmlMinifyOptions = {
+                removeHTMLMultipleLinesComments: configs.html.minify,
+                removeHTMLOneLineComments: configs.html.minify,
+                joinHTMLContinuousBlanks: configs.html.minify,
+                removeHTMLBreakLines: configs.html.minify
+            };
         } else {
-            configs.removeHTMLMultipleLinesComments = keepDefault(configs.html.removeHTMLMultipleLinesComments, true);
-            configs.removeHTMLOneLineComments = keepDefault(configs.html.removeHTMLOneLineComments, true);
-            configs.joinHTMLSpaces = keepDefault(configs.html.joinHTMLSpaces, true);
-            configs.removeHTMLBreakLines = keepDefault(configs.html.removeHTMLBreakLines, true);
+            configs.htmlMinifyOptions = {
+                removeHTMLMultipleLinesComments: keepDefault(configs.html.removeHTMLMultipleLinesComments, true),
+                removeHTMLOneLineComments: keepDefault(configs.html.removeHTMLOneLineComments, true),
+                joinHTMLContinuousBlanks: keepDefault(configs.html.joinHTMLContinuousBlanks, true),
+                removeHTMLBreakLines: keepDefault(configs.html.removeHTMLBreakLines, true)
+            };
         }
     };
 
