@@ -24,7 +24,15 @@ var code = fs.readFileSync(file, 'utf8');
 describe('minify/css.js', function () {
     it('one line', function () {
         var ret = minifyCSS(file, {
-            code: code
+            code: code,
+            versionLength: 32,
+            srcDirname: srcDirname,
+            destDirname: destDirname,
+            destHost: '/',
+            destResourceDirname: destResourceDirname,
+            destCSSDirname: null,
+            minifyResource: true,
+            replaceCSSResource: true
         }).code;
 
         assert.equal((ret.match(/\n/g) || []).length, 0);

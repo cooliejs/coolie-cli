@@ -80,7 +80,6 @@ module.exports = function (file, options) {
 
     try {
         code = cssminify.minify(code).styles;
-
         if (options.replaceCSSResource) {
             var replaceCSSResourceRet = replaceCSSResource(file, {
                 code: code,
