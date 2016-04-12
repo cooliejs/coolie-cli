@@ -62,7 +62,7 @@ var compressorOptions = {
     hoist_funs: true,
 
     // 变量声明提前
-    hoist_vars: false,
+    hoist_vars: true,
 
     // 压缩 if return if continue
     if_return: true,
@@ -76,7 +76,7 @@ var compressorOptions = {
     // 显示警告语句
     warnings: false,
 
-    // 全局常量，会在构建之后，删除
+    // 全局常量
     global_defs: {}
 };
 
