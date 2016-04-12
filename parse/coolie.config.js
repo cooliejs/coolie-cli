@@ -246,6 +246,8 @@ module.exports = function (options) {
             configs.js.chunk = [];
         }
 
+        configs.js.minify = configs.js.minify || true;
+
         // @todo 目前仅支持 true
         if (typeis.Boolean(configs.js.minify)) {
             configs.js.minify = {};
@@ -345,6 +347,8 @@ module.exports = function (options) {
         } else {
             configs.html.src = [];
         }
+
+        configs.html.minify = configs.html.minify || true;
 
         // 布尔值
         if (typeis.Boolean(configs.html.minify)) {
