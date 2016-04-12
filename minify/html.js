@@ -28,33 +28,28 @@ var replaceHTMLAttrStyleResource = require('../replace/html-attr-style-resource.
 // 替换 <!--coolie-->...<!--/coolie-->
 var replaceHTMLCoolieGroup = require('../replace/html-coolie-group.js');
 
-var REG_LINES = /[\n\r]/g;
-var REG_SPACES = /\s{2,}|\t/g;
+var reLineBreak = /[\n\r]/g;
+var reContinuousBlank = /\s{2,}|\t/g;
 // 单行注释
-var REG_LINE_COMMENTS = /<!--.*?-->/g;
-// yui注释
+var reOneLineComments = /<!--.*?-->/g;
+// 多行注释
 //<!--
 // - app1.html
 // - @author ydr.me
 // - @create 2014-09-25 19:20
 // -->
-var REG_YUI_COMMENTS = /<!--\s*\n(\s*?-.*\n)+\s*-->/g;
-var REG_COOLIE_COMMENTS = /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi;
-var REG_PRE_TAGNAME = /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi;
-var REG_CONDITIONS_COMMENTS_START = /<!--\[(if|else if|else).*]><!-->/gi;
-var REG_CONDITIONS_COMMENTS_STARTS = [
+var reMultipleLinesComments = /<!--.*\n(.*\n)+.*-->/g;
+var reCoolieComments = /<!--\s*?coolie\s*?-->[\s\S]*?<!--\s*?\/coolie\s*?-->/gi;
+var rePreTagname = /<(textarea|pre|code|style|script)\b[\s\S]*?>[\s\S]*?<\/\1>/gi;
+var reConditionsCommentsStarts = [
     /<!--\[(if|else if|else).*]><!-->/gi,
     /<!--\[(if|else if|else).*]>/gi
 ];
-var REG_CONDITIONS_COMMENTS_END = /<!\[endif]-->/gi;
-var REG_CONDITIONS_COMMENTS_ENDS = [
+var reConditionsCommentsEnds = [
     /<!--<!\[endif]-->/gi,
     /<!\[endif]-->/gi
 ];
-var REG_CONDITIONS_COMMENTS = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi;
-var REG_PHP_FULL = /<\?php[\s\S]*?\?>/gi;
-var REG_PHP_SIMPLE = /<\?=[\s\S]*?\?>/gi;
-
+var reConditionsComments = /<!--\[(if|else if).*?]>([\s\S]*?)<!\[endif]-->/gi;
 var defaults = {
     code: '',
     removeHTMLMultipleLinesComments: true,
@@ -88,8 +83,8 @@ var defaults = {
  * @param file {String} 文件地址
  * @param options {Object} 配置
  * @param options.code {String} 代码
- * @param [options.removeHTMLMultipleLinesComments=true] {Boolean} 是否去除 YUI 注释
- * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除行注释
+ * @param [options.removeHTMLMultipleLinesComments=true] {Boolean} 是否去除多行注释
+ * @param [options.removeHTMLOneLineComments=true] {Boolean} 是否去除单行注释
  * @param [options.joinHTMLSpaces=true] {Boolean} 是否合并空白
  * @param [options.removeHTMLBreakLines=true] {Boolean} 是否删除断行
  * @param [options.versionLength=32] {Number} 版本号长度
@@ -149,36 +144,36 @@ var minifyHTML = function (file, options) {
     };
 
     // 保留 <!--coolie-->
-    code = code.replace(REG_COOLIE_COMMENTS, replace(coolieMap));
+    code = code.replace(reCoolieComments, replace(coolieMap));
 
     // 保留条件注释
-    code = code.replace(REG_CONDITIONS_COMMENTS, replace(commentsMap));
+    code = code.replace(reConditionsComments, replace(commentsMap));
 
-    // 移除行内注释
+    // 移除单行注释
     if (options.removeHTMLOneLineComments) {
-        code = code.replace(REG_LINE_COMMENTS, '');
+        code = code.replace(reOneLineComments, '');
     } else {
-        code = code.replace(REG_LINE_COMMENTS, replace(commentsMap));
+        code = code.replace(reOneLineComments, replace(commentsMap));
     }
 
-    // 移除 YUI 注释
+    // 移除多行注释
     if (options.removeHTMLMultipleLinesComments) {
-        code = code.replace(REG_YUI_COMMENTS, '');
+        code = code.replace(reMultipleLinesComments, '');
     } else {
-        code = code.replace(REG_YUI_COMMENTS, replace(commentsMap));
+        code = code.replace(reMultipleLinesComments, replace(commentsMap));
     }
 
     // 保留 pre tagName
-    code = code.replace(REG_PRE_TAGNAME, replace(preMap));
+    code = code.replace(rePreTagname, replace(preMap));
 
     // 合并长空白
     if (options.joinHTMLSpaces) {
-        code = code.replace(REG_SPACES, ' ');
+        code = code.replace(reContinuousBlank, ' ');
     }
 
     // 移除多换行
     if (options.removeHTMLBreakLines) {
-        code = code.replace(REG_LINES, '');
+        code = code.replace(reLineBreak, '');
     }
 
     // 恢复 pre tagName
@@ -371,7 +366,7 @@ var minifyHTML = function (file, options) {
  */
 var matchConditionsComments = function (file, options, source) {
     var start = '';
-    dato.each(REG_CONDITIONS_COMMENTS_STARTS, function (index, reg) {
+    dato.each(reConditionsCommentsStarts, function (index, reg) {
         start = (source.match(reg) || [''])[0];
 
         if (start) {
@@ -382,7 +377,7 @@ var matchConditionsComments = function (file, options, source) {
     });
 
     var end = '';
-    dato.each(REG_CONDITIONS_COMMENTS_ENDS, function (index, reg) {
+    dato.each(reConditionsCommentsEnds, function (index, reg) {
         end = (source.match(reg) || [''])[0];
 
         if (end) {

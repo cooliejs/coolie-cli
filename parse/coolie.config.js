@@ -57,7 +57,7 @@ var coolieFn = function () {
  * @returns {*}
  */
 var keepDefault = function (varible, dft) {
-    if (undefined === dft) {
+    if (undefined === varible) {
         return dft;
     }
 

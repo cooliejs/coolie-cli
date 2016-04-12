@@ -34,13 +34,14 @@ module.exports = function (coolie) {
                 //"./html/123.html",
                 //"./html/888.html",
                 "./html/012.html",
+                "./html/comments.html",
                 //"./html/456.html",
             ],
             "minify": {
                 removeHTMLMultipleLinesComments: true,
                 removeHTMLOneLineComments: true,
-                joinHTMLSpaces: false,
-                removeHTMLBreakLines: false
+                joinHTMLSpaces: true,
+                removeHTMLBreakLines: true
             }
         },
         "css": {
