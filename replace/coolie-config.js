@@ -26,12 +26,12 @@ var config = {};
 var callbacks = [];
 var coolieFn = function () {
     var coolie = {
-        config: function (cnf) {
-            cnf = cnf || {};
+        config: function (_configs) {
+            _configs = _configs || {};
 
-            config.base = cnf.base || '';
-            config.version = cnf.version || '';
-            config.host = cnf.host || '';
+            for (var i in _configs) {
+                config[i] = _configs[i];
+            }
 
             return coolie;
         },
@@ -101,15 +101,38 @@ module.exports = function (file, options) {
         debug.success('coolie-config.js', 'chunk: "' + coolieConfig.chunk + '"');
         debug.success('coolie-config.js', 'callbacks: ' + callbacks.length);
 
-        var code2 = 'coolie.config({' +
-            'base:"' + coolieConfig.base + '",' +
-            'async:"' + coolieConfig.async + '",' +
-            'chunk:"' + coolieConfig.chunk + '",' +
-            'debug:false,' +
-            'cache:true,' +
-            'built:"' + pkg.name + '@' + pkg.version + '",' +
-            'version:' + version + '})' +
-            '.use()';
+        var code2 = 'coolie.config({';
+
+        //+
+        //    'base:"' + coolieConfig.base + '",' +
+        //    'async:"' + coolieConfig.async + '",' +
+        //    'chunk:"' + coolieConfig.chunk + '",' +
+        //    'debug:false,' +
+        //    'cache:true,' +
+        //    'built:"' + pkg.name + '@' + pkg.version + '",' +
+        //    'version:' + version + '})';
+
+        var configList = [];
+
+        dato.each(coolieConfig, function (key, val) {
+            var one = '';
+
+            if (typeof val === 'object') {
+                one = key + ':' + JSON.stringify(val);
+            } else if (typeof val === 'function') {
+                one = key + ':' + val.toString() + '';
+            } else {
+                one = key + ':"' + val + '"';
+            }
+
+            if (one) {
+                configList.push(one);
+            }
+
+        });
+
+        code2 += configList.join(',');
+        code2 += '}).use()';
 
         dato.each(callbacks, function (index, callback) {
             code2 += '.callback(' + callback.toString() + ')';
