@@ -5,7 +5,7 @@ module.exports = function (coolie) {
         clean: true,
         "js": {
             "main": [
-                "/static/js/app/012.js",
+                //"/static/js/app/012.js",
                 //"/static/js/app/example-index.js",
                 //"/static/js/app/res.js",
                 //"/static/js/app/webuploader.js",
@@ -34,8 +34,8 @@ module.exports = function (coolie) {
                 //"./html/123.html",
                 //"./html/888.html",
                 "./html/012.html",
-                "./html/comments.html",
-                "./html/wordpress.html",
+                //"./html/comments.html",
+                //"./html/wordpress.html",
                 //"./html/456.html",
             ],
             "minify": {
@@ -82,27 +82,27 @@ module.exports = function (coolie) {
     //    coolie.use(require('/Users/cloudcome/development/github/coolie-html-attr-resource/index.js')());
     //}
 
-    coolie.use(function (options) {
-        if(options.progress !== 'pre-html'){
-            return options;
-        }
-
-        options.code = options.code.replace(/<\?php wordpress_wp_content_theme_path \?>/g, '');
-        return options;
-    });
-
-    coolie.use(function (options) {
-        if(options.progress !== 'post-html'){
-            return options;
-        }
-
-        options.code = coolie.matchHTML(options.code, {
-            tag: 'img'
-        }, function (node) {
-            node.attrs.src = '<?php wordpress_wp_content_theme_path ?>' + node.attrs.src;
-            return node;
-        });
-
-        return options;
-    });
+    //coolie.use(function (options) {
+    //    if(options.progress !== 'pre-html'){
+    //        return options;
+    //    }
+    //
+    //    options.code = options.code.replace(/<\?php wordpress_wp_content_theme_path \?>/g, '');
+    //    return options;
+    //});
+    //
+    //coolie.use(function (options) {
+    //    if(options.progress !== 'post-html'){
+    //        return options;
+    //    }
+    //
+    //    options.code = coolie.matchHTML(options.code, {
+    //        tag: 'img'
+    //    }, function (node) {
+    //        node.attrs.src = '<?php wordpress_wp_content_theme_path ?>' + node.attrs.src;
+    //        return node;
+    //    });
+    //
+    //    return options;
+    //});
 };

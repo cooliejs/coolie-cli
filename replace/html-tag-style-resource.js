@@ -8,6 +8,7 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
+var debug = require('ydr-utils').debug;
 
 var htmlAttr = require('../utils/html-attr.js');
 var minifyCSS = require('../minify/css.js');
@@ -56,8 +57,8 @@ module.exports = function (file, options) {
         var ignore = htmlAttr.get(styleTag, COOLIE_IGNOE);
 
         if (ignore) {
-            source = htmlAttr.remove(styleTag, COOLIE_IGNOE);
-            return source;
+            styleTag = htmlAttr.remove(styleTag, COOLIE_IGNOE);
+            return styleTag + styleCode + '</style>';
         }
 
         var type = htmlAttr.get(styleTag, 'type');
