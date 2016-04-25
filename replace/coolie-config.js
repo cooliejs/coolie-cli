@@ -114,6 +114,11 @@ module.exports = function (file, options) {
 
         var configList = [];
 
+        configList.push('cache:true');
+        configList.push('debug:false');
+        configList.push('version:' + version);
+        configList.push('built:' + '"' + pkg.name + '@' + pkg.version + '"');
+
         dato.each(coolieConfig, function (key, val) {
             var one = '';
 

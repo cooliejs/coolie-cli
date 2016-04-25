@@ -5,12 +5,12 @@ module.exports = function (coolie) {
         clean: true,
         "js": {
             "main": [
-                //"/static/js/app/012.js",
-                //"/static/js/app/example-index.js",
-                //"/static/js/app/res.js",
-                //"/static/js/app/webuploader.js",
-                //"/static/js/app/async.js",
-                //"/static/js/app/async-2.js",
+                "/static/js/app/012.js",
+                "/static/js/app/example-index.js",
+                "/static/js/app/res.js",
+                "/static/js/app/webuploader.js",
+                "/static/js/app/async.js",
+                "/static/js/app/async-2.js",
             ],
             "coolie-config.js": "./static/js/coolie-config.js",
             "dest": "./static/js/",
