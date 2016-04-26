@@ -246,9 +246,8 @@ module.exports = function (options) {
             configs.js.chunk = [];
         }
 
-        configs.js.minify = configs.js.minify || true;
-
         // @todo 目前仅支持 true
+        configs.js.minify = true;
         if (typeis.Boolean(configs.js.minify)) {
             configs.js.minify = {};
         }
@@ -385,7 +384,11 @@ module.exports = function (options) {
         }
 
         if (configs.css.minify === true) {
-            configs.css.minify = null;
+            configs.css.minify = {
+                keepBreaks: false,
+                keepSpecialComments: '0',
+                mediaMerging: true
+            };
         } else if (configs.css.minify === false) {
             configs.css.minify = {
                 keepBreaks: true,
@@ -393,9 +396,10 @@ module.exports = function (options) {
                 mediaMerging: false
             };
         } else {
-            configs.css.minify.keepBreaks = keepDefault(configs.css.minify, false);
-            configs.css.minify.keepSpecialComments = keepDefault(configs.css.keepSpecialComments, 0);
-            configs.css.minify.mediaMerging = keepDefault(configs.css.mediaMerging, true);
+            configs.css.minify = configs.css.minify || {};
+            configs.css.minify.keepBreaks = keepDefault(configs.css.minify.keepBreaks, false);
+            configs.css.minify.keepSpecialComments = configs.css.minify.keepSpecialComments || '0';
+            configs.css.minify.mediaMerging = keepDefault(configs.css.minify.mediaMerging, true);
         }
 
         // css.minify

@@ -2,7 +2,17 @@
   "/html/012.html": {
     "main": [],
     "js": [],
-    "css": [],
+    "css": [
+      {
+        "dest": "/static/css/1e413281.css",
+        "deps": [
+          {
+            "src": "../src/static/css/012.css",
+            "res": []
+          }
+        ]
+      }
+    ],
     "res": []
   }
 }

@@ -38,15 +38,15 @@ module.exports = function (coolie) {
                 //"./html/wordpress.html",
                 //"./html/456.html",
             ],
-            "minify": false
+            "minify": true
         },
         "css": {
             "dest": "./static/css/",
-            "minify": false
+            "minify": true
         },
         "resource": {
             "dest": "./static/res/",
-            "minify": true
+            "minify": false
         },
         "copy": [
             //"static/fonts/tinymce.woff"
