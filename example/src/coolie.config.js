@@ -38,12 +38,7 @@ module.exports = function (coolie) {
                 //"./html/wordpress.html",
                 //"./html/456.html",
             ],
-            "minify": {
-                removeHTMLMultipleLinesComments: true,
-                removeHTMLOneLineComments: true,
-                joinHTMLContinuousBlanks: true,
-                removeHTMLBreakLines: true
-            }
+            "minify": false
         },
         "css": {
             "dest": "./static/css/",

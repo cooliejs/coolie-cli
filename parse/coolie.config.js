@@ -348,8 +348,6 @@ module.exports = function (options) {
             configs.html.src = [];
         }
 
-        configs.html.minify = configs.html.minify || true;
-
         // 布尔值
         if (typeis.Boolean(configs.html.minify)) {
             configs.htmlMinifyOptions = {
