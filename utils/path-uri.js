@@ -204,3 +204,25 @@ exports.joinHost = function (type, host, _path) {
 
     return path.joinURI(host(type, _path), _path);
 };
+
+
+/**
+ * 从当前路径开始查找，直到根路径，查找匹配 name 的路径
+ * @param start {String} 开始路径
+ * @param matchName {String} 匹配路径名
+ * @param end {String} 结束路径
+ * @returns {String}
+ */
+exports.closest = function (start, matchName, end) {
+    while (!/^\.{1,2}\//.test(path.relative(end, start))) {
+        var basename = path.basename(start);
+
+        if (basename === matchName) {
+            return start;
+        }
+
+        start = path.join(start, '..');
+    }
+
+    return null;
+};

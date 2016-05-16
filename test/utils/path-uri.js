@@ -142,4 +142,14 @@ describe('utils/path-uri.js', function () {
 
         assert.equal(ret, 'a.js');
     });
+    
+    it('.closest', function () {
+        var start = path.join(__dirname, './a/found/b/found/file.txt');
+        var foundYes = path.join(__dirname, './a/found/b/found');
+        var matchName = 'found';
+        var end = path.join(__dirname, './');
+        var found = pathURI.closest(start, matchName, end);
+
+        assert.equal(found, foundYes);
+    });
 });
