@@ -17,7 +17,7 @@ var controller = require('ydr-utils').controller;
 var reader = require('../utils/reader.js');
 var pathURI = require('../utils/path-uri.js');
 var progress = require('../utils/progress.js');
-var parseRequireList = require('./require-list.js');
+var parseRequireList = require('./require.js');
 
 var ENCODING = 'utf8';
 var defaults = {

@@ -13,7 +13,7 @@ var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 var encryption = require('ydr-utils').encryption;
 
-var parseRequireList = require('../parse/require-list.js');
+var parseRequireList = require('../parse/require.js');
 var reader = require('../utils/reader.js');
 var globalId = require('../utils/global-id.js');
 var minifyJS = require('../minify/js.js');

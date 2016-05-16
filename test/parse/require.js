@@ -9,10 +9,10 @@
 
 var assert = require('assert');
 
-var parseRequireList = require('../../parse/require-list.js');
+var parseRequireList = require('../../parse/require.js');
 var file = __filename;
 
-describe('parse/require-list.js', function () {
+describe('parse/require.js', function () {
     it('sync', function () {
         var code = 'define(function(){require("a");require("./a.js");require("./a.css", "css|url");});';
         var requires = parseRequireList(file, {
