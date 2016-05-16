@@ -39,7 +39,7 @@ module.exports = function (file, options) {
     var url = pathURI.joinHost(options.inType, options.destHost, uri);
 
     return '\n' +
-        '//# sourceURL=' + url + '\n' +
+        '/*' + url + '*/\n' +
         'define("' + id + '", [' + depsStr + '], function (' + args + ') {\n\n' +
         factory +
         '\n\n});\n';
