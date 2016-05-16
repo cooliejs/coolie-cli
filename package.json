@@ -79,7 +79,7 @@
     "ydr-utils": "^42.2.22"
   },
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha -c --recursive --ui bdd test -t 0 test/**/test.*.js"
+    "test": "node node_modules/mocha/bin/mocha -c --recursive -t 0 --ui bdd test/**/test.*.js"
   },
   "maintainers": [
     {

@@ -8,9 +8,13 @@
 'use strict';
 
 var assert = require('assert');
+var path = require('ydr-utils').path;
 
 var parseRequireList = require('../../parse/require.js');
 var file = __filename;
+
+var srcDirname = path.join(__dirname, 'src');
+var nodeModulesDirname = path.join(__dirname, 'node_modules');
 
 describe('parse/require.js', function () {
     it('sync', function () {
@@ -18,8 +22,8 @@ describe('parse/require.js', function () {
         var requires = parseRequireList(file, {
             code: code,
             async: false,
-            srcDirname: __dirname,
-            srcCoolieConfigNodeModulesDirname: __dirname
+            srcDirname: srcDirname,
+            srcCoolieConfigNodeModulesDirname: nodeModulesDirname
         });
 
         console.log(JSON.stringify(requires, null, 4));
@@ -44,7 +48,8 @@ describe('parse/require.js', function () {
         var requires = parseRequireList(file, {
             code: code,
             async: true,
-            srcDirname: __dirname
+            srcDirname: srcDirname,
+            srcCoolieConfigNodeModulesDirname: nodeModulesDirname
         });
 
         console.log(JSON.stringify(requires, null, 4));

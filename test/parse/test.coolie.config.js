@@ -13,7 +13,7 @@ var typeis = require('ydr-utils').typeis;
 
 var parseCoolieConfig = require('../../parse/coolie.config.js');
 
-var srcDirname = path.join(__dirname, '../../example/src/');
+var srcDirname = path.join(__dirname, 'src/');
 
 describe('parse/coolie.config.js', function () {
     it('e', function () {

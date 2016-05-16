@@ -12,7 +12,7 @@ var path = require('ydr-utils').path;
 
 var parseChunk = require('../../parse/chunk.js');
 
-var srcDirname = path.join(__dirname, '../../example/src/');
+var srcDirname = path.join(__dirname, 'src/');
 
 describe('parse/chunk.js', function () {
     it('e', function () {
@@ -20,14 +20,14 @@ describe('parse/chunk.js', function () {
             srcDirname: srcDirname,
             chunk: [
                 [
-                    './static/js/libs1/**'
+                    'a/**'
                 ],
-                './static/js/libs2/**'
+                'b/**'
             ]
         });
 
-        var file0 = path.join(srcDirname, 'static/js/libs1/all.js');
-        var file1 = path.join(srcDirname, 'static/js/libs2/some.css');
+        var file0 = path.join(srcDirname, 'a/1.js');
+        var file1 = path.join(srcDirname, 'b/2.js');
 
         console.log(ret);
 
