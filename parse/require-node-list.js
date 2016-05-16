@@ -12,17 +12,15 @@ var Uglify = require("uglify-js");
 
 
 module.exports = function (code, async) {
-    var ast = Uglify.parse(code, {
-        strict: true
-    });
+    var ast = Uglify.parse(code);
     var requireNodes = [];
 
     ast.walk(new Uglify.TreeWalker(function (node) {
         if (node instanceof Uglify.AST_Node && node.start.value === 'require' && node.args) {
             if (node.args.length === 1 || node.args.length === 2) {
-                if (async && (node.expression.prototype === 'async' || node.expression.end.value === 'async')) {
+                if (async && (node.expression.property === 'async' || node.expression.end.value === 'async')) {
                     requireNodes.push(node);
-                } else if (!async && !node.expression.prototype) {
+                } else if (!async && !node.expression.property) {
                     requireNodes.push(node);
                 }
             }

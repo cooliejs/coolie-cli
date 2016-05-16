@@ -7,9 +7,10 @@
 
 'use strict';
 
-var U2 = require("uglify-js");
+var Uglify = require("uglify-js");
 
 var requirePipeline = require('../utils/require-pipeline.js');
+var parseRequireNodeList = require('../parse/require-node-list.js');
 
 
 /**
@@ -17,29 +18,14 @@ var requirePipeline = require('../utils/require-pipeline.js');
  * @param file {String} 文件路径
  * @param options {Object} 配置
  * @param options.code {String} 代码，压缩后的代码
- * @param options.name2IdMap {Object} 依赖对应表 {outName: id}
+ * @param options.outName2IdMap {Object} 依赖对应表 {outName: id}
  * @param options.async {Boolean} 是否异步模块
  */
 module.exports = function (file, options) {
     var code = options.code;
-    var outName2IdMap = options.name2IdMap;
-    var ast = U2.parse(code, {
-        strict: true
-    });
-    var requireNodeList = [];
+    var outName2IdMap = options.outName2IdMap;
+    var requireNodeList = parseRequireNodeList(code, options.async);
     var offset = 0;
-
-    ast.walk(new U2.TreeWalker(function (node) {
-        if (node instanceof U2.AST_Node && node.start.value === 'require' && node.args) {
-            if (node.args.length === 1 || node.args.length === 2) {
-                if (options.async && (node.expression.prototype === 'async' || node.expression.end.value === 'async')) {
-                    requireNodeList.push(node);
-                } else if (!options.async && !node.expression.prototype) {
-                    requireNodeList.push(node);
-                }
-            }
-        }
-    }));
 
     requireNodeList.forEach(function (node) {
         var arg0 = node.args[0];
@@ -49,23 +35,19 @@ module.exports = function (file, options) {
         var endPos = arg0.start.endpos + offset;
         var name = arg0.value;
         var nameLength = name.length;
-        var pipeLine;
-
-        if (!async && arg1) {
-            pipeLine = arg1.value.split('|');
-            nameLength = arg1.start.endpos - arg0.start.pos - 2;
-            endPos = arg1.start.endpos + offset;
-        }
-
-        pipeLine = requirePipeline(file, pipeLine);
+        var pipeLine =requirePipeline(async ? '' : (arg1 && arg1.value || ''));
         var outType = pipeLine[1];
         var outName =  name + '|' + outType;
         var replaceValue = outName2IdMap[outName];
-
-        var replacement = new U2.AST_String({
+        var replacement = new Uglify.AST_String({
             value: replaceValue,
             quote: arg0.quote
         }).print_to_string({beautify: true});
+
+        if (!async && arg1) {
+            nameLength = arg1.start.endpos - arg0.start.pos - 2;
+            endPos = arg1.start.endpos + offset;
+        }
 
         code = code.slice(0, startPos) + replacement + code.slice(endPos);
         offset += replaceValue.length - nameLength;

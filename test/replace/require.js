@@ -20,14 +20,14 @@ describe('replace/require.js', function () {
         var ret = replaceRequire(file, {
             code: code,
             async: false,
-            name2IdMap: {
+            outName2IdMap: {
                 '../libs/x.js|js': 'm',
                 '../libs/all.js|js': 'n'
             }
         });
         var expect = 'define(function(require){require("m");require.async("../libs/x.js");require("n");console.log("app/index.js")});';
 
-        //console.log(ret);
+        console.log(ret);
         assert.equal(ret, expect);
     });
 
@@ -36,13 +36,13 @@ describe('replace/require.js', function () {
         var ret =  replaceRequire(file, {
             code: code,
             async: true,
-            name2IdMap: {
+            outName2IdMap: {
                 '../libs/all.js|js': 'n'
             }
         });
         var expect = 'define(function(require){require("../libs/x.js");require.async("n");console.log("app/index.js")});';
 
-        //console.log(ret);
+        console.log(ret);
         assert.equal(ret, expect);
     });
 });
