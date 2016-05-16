@@ -1,7 +1,7 @@
 {
   "name": "coolie",
   "version": "2.0.0-alpha",
-  "description": "The front-end development builder.",
+  "description": "前端工程化构建工具",
   "preferGlobal": true,
   "bin": {
     "coolie": "./bin/coolie"

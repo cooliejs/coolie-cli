@@ -21,6 +21,8 @@ module.exports = function () {
     banner();
     console.log('在线指南：<https://coolie.ydr.me/guide/coolie.config.js/>。');
     console.log();
+    console.log(console.styles.pretty('[warning] 2.x 及以上版本只支持 CommonJS 规范的模块构建', ['red', 'bold']));
+    console.log();
     console.log('1. Usage');
     console.log(console.styles.pretty('   coolie build [options]', 'yellow'));
     console.log();

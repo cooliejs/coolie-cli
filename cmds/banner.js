@@ -8,22 +8,17 @@
 
 'use strict';
 
-var fs = require('fs');
-var string = require('ydr-utils').string;
-var log = require('ydr-utils').log;
-
 var pkg = require('../package.json');
 
 module.exports = function () {
     console.log();
     console.table([
-        ['coolie-cli'],
         ['coolie@' + pkg.version],
         [pkg.description],
-        [pkg.homepage]
+        ['官网：'+pkg.homepage]
     ], {
         colors: ['green'],
-        padding: 10
+        padding: 1
     });
 
     console.log();
