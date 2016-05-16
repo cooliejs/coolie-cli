@@ -14,7 +14,7 @@ var debug = require('ydr-utils').debug;
 var globalId = require('../utils/global-id.js');
 var pathURI = require('../utils/path-uri.js');
 var requirePipeline = require('../utils/require-pipeline.js');
-
+var parseRequireNodeList = require('./require-node-list.js');
 
 var PACKAGE_JSON = 'package.json';
 var NODE_MODULES = 'node_modules';
@@ -33,15 +33,13 @@ var reRelative = /^\.{1,2}\//;
  */
 module.exports = function (file, options) {
     var code = options.code;
-    var ast = U2.parse(code, {
-        strict: true
-    });
     var requireList = [];
+    var nodeList = parseRequireNodeList(code, options.async);
     var parser = function (node) {
         var async = node.expression.property === 'async';
         var arg0 = node.args[0];
         var arg1 = node.args[1];
-        var pipeLine = requirePipeline(arg1 && !async ? arg1.value : 'js|js');
+        var pipeLine = requirePipeline(file, async ? '' : (arg1 && arg1.value || ''));
         var inType = pipeLine[0];
         var outType = pipeLine[1];
         var name = arg0.value;
@@ -95,18 +93,8 @@ module.exports = function (file, options) {
         });
     };
 
-    ast.walk(new U2.TreeWalker(function (node) {
-        if (node instanceof U2.AST_Node && node.start.value === 'require' && node.args) {
-            if (node.args.length === 1 || node.args.length === 2) {
-                if (options.async && node.expression.property === 'async') {
-                    parser(node);
-                } else if (!options.async && !node.expression.prototype) {
-                    parser(node);
-                }
-            }
-        }
-    }));
-
+    nodeList.forEach(parser);
+    
     return requireList;
 };
 

@@ -21,8 +21,8 @@ describe('replace/require.js', function () {
             code: code,
             async: false,
             name2IdMap: {
-                '../libs/x.js': 'm',
-                '../libs/all.js", "js|js': 'n'
+                '../libs/x.js|js': 'm',
+                '../libs/all.js|js': 'n'
             }
         });
         var expect = 'define(function(require){require("m");require.async("../libs/x.js");require("n");console.log("app/index.js")});';
@@ -37,7 +37,7 @@ describe('replace/require.js', function () {
             code: code,
             async: true,
             name2IdMap: {
-                '../libs/all.js': 'n'
+                '../libs/all.js|js': 'n'
             }
         });
         var expect = 'define(function(require){require("../libs/x.js");require.async("n");console.log("app/index.js")});';
