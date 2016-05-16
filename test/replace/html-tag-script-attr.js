@@ -12,11 +12,11 @@ var fs = require('fs');
 var assert = require('assert');
 
 var replaceHTMLTagScriptAttr = require('../../replace/html-tag-script-attr.js');
-var file = path.join(__dirname, '../../example/src/html/user/index.html');
+var file = path.join(__dirname, 'src/html-tag-script-attr.html');
 
 var code = fs.readFileSync(file, 'utf8');
-var srcDirname = path.join(__dirname, '../../example/src/');
-var destDirname = path.join(__dirname, '../../example/dest/');
+var srcDirname = path.join(__dirname, 'src/');
+var destDirname = path.join(__dirname, 'dest/');
 var destCoolieConfigJSURI = 'static/js/eb21eac7c7c8278c7bf0c208efbfd663.js';
 var destCoolieConfigJSPath = path.join(destDirname, destCoolieConfigJSURI);
 var destJSDirname = path.join(destDirname, 'static/js/');

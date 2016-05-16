@@ -12,11 +12,11 @@ var fs = require('fs');
 var assert = require('assert');
 
 var replaceHTMLAttrStyleResource = require('../../replace/html-attr-style-resource.js');
-var file = path.join(__dirname, '../../example/src/html/replace.html');
+var file = path.join(__dirname, './src/html-attr-style-resource.html');
 
 var code = fs.readFileSync(file, 'utf8');
-var srcDirname = path.join(__dirname, '../../example/src/');
-var destDirname = path.join(__dirname, '../../example/dest/');
+var srcDirname = path.join(__dirname, 'src/');
+var destDirname = path.join(__dirname, 'dest/');
 var destResourceDirname = path.join(destDirname, 'static/res');
 
 describe('replace/html-attr-style-resource.js', function () {

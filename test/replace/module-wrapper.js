@@ -15,18 +15,18 @@ var dato = require('ydr-utils').dato;
 var replaceModuleWrapper = require('../../replace/module-wrapper.js');
 var globalId = require('../../utils/global-id.js');
 
-var srcDirname = path.join(__dirname, '../../example/src/');
-var destDirname = path.join(__dirname, '../../example/dest/');
+var srcDirname = path.join(__dirname, 'src/');
+var destDirname = path.join(__dirname, 'dest/');
 var destResourceDirname = path.join(destDirname, 'static/res/');
 var destCSSDirname = path.join(destDirname, 'static/css/');
 var destJSDirname = path.join(destDirname, 'static/js/');
 
-var jsonPath = path.join(srcDirname, 'static/js/libs2/some.json');
-var cssPath = path.join(srcDirname, 'static/js/libs2/some.css');
-var textPath = path.join(srcDirname, 'static/js/libs2/some.txt');
-var htmlPath = path.join(srcDirname, 'static/js/libs2/some.html');
-var imagePath = path.join(srcDirname, 'static/js/libs2/some.jpg');
-var jsPath = path.join(srcDirname, 'static/js/libs2/some.js');
+var jsonPath = path.join(srcDirname, 'module-wrapper.json');
+var cssPath = path.join(srcDirname, 'module-wrapper.css');
+var textPath = path.join(srcDirname, 'module-wrapper.txt');
+var htmlPath = path.join(srcDirname, 'module-wrapper.html');
+var imagePath = path.join(srcDirname, 'module-wrapper.jpg');
+var jsPath = path.join(srcDirname, 'module-wrapper.js');
 
 var options = {
     srcDirname: srcDirname,
