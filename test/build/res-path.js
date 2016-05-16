@@ -17,9 +17,9 @@ var destResourceDirname = path.join(destDirname, 'static/res');
 
 describe('build/res-path.js', function () {
     it('e', function () {
-        var url = '/static/img/loading.gif';
+        var url = './res-path.png';
         var ret = buildResPath(url, {
-            file: path.join(__dirname, 'res-path.html'),
+            file: path.join(srcDirname, 'res-path.html'),
             srcDirname: srcDirname,
             destDirname: destDirname,
             destHost: '/',

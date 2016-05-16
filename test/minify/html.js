@@ -12,12 +12,12 @@ var fs = require('fs');
 var assert = require('assert');
 
 var minifyHTML = require('../../minify/html.js');
-var file = path.join(__dirname, '../../example/src/html/minify-test.html');
 
-var srcDirname = path.join(__dirname, '../../example/src/');
+var srcDirname = path.join(__dirname, 'src/');
+var file = path.join(srcDirname, 'html.html');
 var srcCoolieConfigBaseDirname = path.join(srcDirname, 'static/js/app/');
-var srcMainPath = path.join(srcCoolieConfigBaseDirname, 'index.js');
-var destDirname = path.join(__dirname, '../../example/dest/');
+var srcMainPath = path.join(srcCoolieConfigBaseDirname, 'html-main.js');
+var destDirname = path.join(__dirname, 'dest/');
 var destCoolieConfigJSPath = path.join(destDirname, 'static/js/dwdqwdqwdqwdqwdqwdqw312.js');
 var destResourceDirname = path.join(destDirname, 'static/res/');
 var destJSDirname = path.join(destDirname, 'static/js/');
