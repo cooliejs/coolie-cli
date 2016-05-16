@@ -18,14 +18,24 @@ describe('replace/wrap-define.js', function () {
         var id = 0;
         var deps = [];
 
-        console.log(wrapDefine(id, deps, factory));
+        console.log(wrapDefine(__filename, {
+            id: id,
+            deps: deps,
+            factory: factory,
+            srcDirname: __dirname
+        }));
     });
     it('deps:not empty', function () {
         var factory = '"aaa";';
         var id = 0;
-        var deps = [1,2,3];
+        var deps = [1, 2, 3];
 
-        console.log(wrapDefine(id, deps, factory));
+        console.log(wrapDefine(__filename, {
+            id: id,
+            deps: deps,
+            factory: factory,
+            srcDirname: __dirname
+        }));
     });
 });
 

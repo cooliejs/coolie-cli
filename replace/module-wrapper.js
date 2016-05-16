@@ -137,10 +137,16 @@ var wrapModuleDefine = function (file, ret, options) {
     var id = globalId.get(file, options.outType);
     var deps = [];
     var factory = isCSS2Style ?
-    'return coolie.importStyle(' + text + ')' :
-    'return ' + text + '';
+    'return coolie.importStyle(' + text + ');' :
+    'return ' + text + ';';
 
-    ret.code = wrapDefine(id, deps, factory);
+    ret.code = wrapDefine(file, {
+        srcDirname: options.srcDirname,
+        id: id,
+        deps: deps,
+        factory: factory,
+        rem: false
+    });
     ret.resList = ret.resList || [];
 
     return ret;

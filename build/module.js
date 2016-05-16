@@ -16,6 +16,7 @@ var encryption = require('ydr-utils').encryption;
 var parseRequireList = require('../parse/require.js');
 var reader = require('../utils/reader.js');
 var globalId = require('../utils/global-id.js');
+var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
 var replaceRequire = require('../replace/require.js');
 var wrapDefine = require('../replace/wrap-define.js');
@@ -70,16 +71,17 @@ module.exports = function (file, options) {
 
     var resList = [];
     var virtualMap = options.virtualMap;
+    var isJS = options.inType === 'js';
 
     // 读取模块内容
     var code = reader(file, 'utf8', options.parent);
 
     // 分析 require.async()
-    var asyncRequires = parseRequireList(file, {
+    var asyncRequires = isJS ? parseRequireList(file, {
         code: code,
         async: true,
         srcDirname: options.srcDirname
-    });
+    }) : [];
     var asyncOutName2IdMap = {};
 
     dato.each(asyncRequires, function (index, item) {
@@ -89,13 +91,12 @@ module.exports = function (file, options) {
         asyncOutName2IdMap[item.outName] = globalId.get(replacedFile, item.outType);
     });
 
-
     // 分析 require()
-    var syncRequires = parseRequireList(file, {
+    var syncRequires = isJS ? parseRequireList(file, {
         code: code,
         async: false,
         srcDirname: options.srcDirname
-    });
+    }) : [];
     var syncOutName2IdMap = {};
     var syncDepFileMap = {};
     var depGidList = [];
@@ -141,7 +142,13 @@ module.exports = function (file, options) {
             var gid = options.main === file ? '0' : globalId.get(file, options.outType);
 
             // 3. 包裹 define()
-            code = wrapDefine(gid, depGidList, code);
+            code = wrapDefine(file, {
+                srcDirname: options.srcDirname,
+                id: gid,
+                deps: depGidList,
+                factory: code,
+                rem: true
+            });
 
             // 4. 压缩代码
             code = minifyJS(file, {

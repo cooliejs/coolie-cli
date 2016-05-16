@@ -7,16 +7,32 @@
 
 'use strict';
 
-module.exports = function (id, deps, factory) {
+var pathURI = require('../utils/path-uri.js');
+
+
+/**
+ * define 包装
+ * @param file
+ * @param options
+ * @returns {string}
+ */
+module.exports = function (file, options) {
+    var id = options.id;
+    var deps = options.deps;
+    var factory = options.factory;
+    var rem = options.rem !== false;
     var depsStr = deps.join('", "');
+    var args = rem ? 'require, exports, module' : '';
 
     if (depsStr) {
         depsStr = '"' + depsStr + '"';
     }
 
-    return 'define("' + id + '", [' + depsStr + '], function (require, exports, module) {\n\n' +
+    return '\n' +
+        'define("' + id + '", [' + depsStr + '], function (' + args + ') {\n\n' +
         factory +
-        '\n\n});';
+        '\n\n//# sourceURL=' + pathURI.toRootURL(file, options.srcDirname) + '\n' +
+        '});\n';
 };
 
 

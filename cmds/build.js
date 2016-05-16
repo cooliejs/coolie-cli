@@ -148,6 +148,7 @@ module.exports = function (options) {
     });
 
 
+
     // 4. 重写 coolie-config.js
     console.log();
     debug.primary('step ' + (++stepIndex) + '/' + stepLength, 'generate coolie.js profile');
