@@ -91,9 +91,15 @@ var compressorOptions = {
 module.exports = function (file, options) {
     var code = options.code;
 
+    options.uglifyJSOptions = options.uglifyJSOptions || {};
+
     if (options.uglifyJSOptions.minify === false) {
         return code;
     }
+
+    options.uglifyJSOptions.global_defs = options.uglifyJSOptions.global_defs || {};
+    delete(options.uglifyJSOptions.minify);
+
 
     try {
         return uglifyJS.minify(code, {

@@ -152,12 +152,6 @@ module.exports = function (file, options) {
                 factory: code,
                 rem: true
             });
-
-            // 4. 压缩代码
-            code = minifyJS(file, {
-                code: code,
-                uglifyJSOptions: options.uglifyJSOptions
-            });
             break;
 
         default:
@@ -182,6 +176,12 @@ module.exports = function (file, options) {
             resList = replaceModuleWrapperRet.resList;
             break;
     }
+
+    // 4. 压缩代码
+    code = minifyJS(file, {
+        code: code,
+        uglifyJSOptions: options.uglifyJSOptions
+    });
 
     return {
         dependencies: dependencies,
