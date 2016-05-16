@@ -12,15 +12,15 @@ var path = require('ydr-utils').path;
 
 var buildMain = require('../../build/main.js');
 
-var srcDirname = path.join(__dirname, '../../example/src/');
-var destDirname = path.join(__dirname, '../../example/dest/');
+var srcDirname = path.join(__dirname, 'src/');
+var destDirname = path.join(__dirname, 'dest/');
 var destResourceDirname = path.join(destDirname, 'static/res/');
 var destCoolieConfigBaseDirname = path.join(destDirname, 'static/js/app/');
 
 
 describe('build/module.js', function () {
     it('sync', function () {
-        var mainFile = path.join(srcDirname, 'static/js/app/index.js');
+        var mainFile = path.join(srcDirname, 'main-sync.js');
         var ret = buildMain(mainFile, {
             inType: 'js',
             outType: 'js',
@@ -40,7 +40,7 @@ describe('build/module.js', function () {
     });
 
     it('async', function () {
-        var mainFile = path.join(srcDirname, 'static/js/app/async.js');
+        var mainFile = path.join(srcDirname, 'main-async.js');
         var ret = buildMain(mainFile, {
             inType: 'js',
             outType: 'js',

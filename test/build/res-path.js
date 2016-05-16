@@ -11,16 +11,15 @@ var path = require('ydr-utils').path;
 var assert = require('assert');
 
 var buildResPath = require('../../build/res-path.js');
-var exampleDirname = path.join(__dirname, '../../example/');
-var srcDirname = path.join(exampleDirname, 'src');
-var destDirname = path.join(exampleDirname, 'dest');
+var srcDirname = path.join(__dirname, 'src');
+var destDirname = path.join(__dirname, 'dest');
 var destResourceDirname = path.join(destDirname, 'static/res');
 
 describe('build/res-path.js', function () {
     it('e', function () {
         var url = '/static/img/loading.gif';
         var ret = buildResPath(url, {
-            file: path.join(exampleDirname, 'html/index.html'),
+            file: path.join(__dirname, 'res-path.html'),
             srcDirname: srcDirname,
             destDirname: destDirname,
             destHost: '/',

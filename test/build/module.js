@@ -13,8 +13,8 @@ var path = require('ydr-utils').path;
 
 var buildModule = require('../../build/module.js');
 
-var srcDirname = path.join(__dirname, '../../example/src/');
-var destDirname = path.join(__dirname, '../../example/dest/');
+var srcDirname = path.join(__dirname, 'src/');
+var destDirname = path.join(__dirname, 'dest/');
 var destCSSDirname = path.join(destDirname, 'static/css/');
 var destResourceDirname = path.join(destDirname, 'static/res/');
 
@@ -80,7 +80,7 @@ describe('build/module.js', function () {
     //});
 
     it('async:js|js', function () {
-        var file = path.join(srcDirname, 'static/js/app/async.js');
+        var file = path.join(srcDirname, 'main-async.js');
 
         var ret = buildModule(file, {
             inType: 'js',
