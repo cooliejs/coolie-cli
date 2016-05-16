@@ -17,6 +17,7 @@ var debug = require('ydr-utils').debug;
 
 var copy = require('../utils/copy.js');
 var guessDirname = require('../utils/guess-dirname.js');
+var pathURI = require('../utils/path-uri.js');
 var pkg = require('../package.json');
 
 var DEBUG = !Boolean(pkg.dist || pkg.publish_time);
@@ -30,9 +31,8 @@ var coolieFn = function () {
         config: function (cnf) {
             cnf = cnf || {};
 
-            config.base = cnf.base || '';
-            config.version = cnf.version || '';
-            config.host = cnf.host || '';
+            config.baseDir = cnf.baseDir || '';
+            config.nodeModulesDir = cnf.nodeModulesDir || '';
 
             return coolie;
         },
@@ -76,7 +76,6 @@ var keepDefault = function (varible, dft) {
 module.exports = function (options) {
     var srcDirname = options.srcDirname;
     var srcCoolieConfigJSPath = path.join(srcDirname, './coolie.config.js');
-    var srcCoolieJSONPath = path.join(srcDirname, './coolie.json');
     var configs = {};
     var check = {};
     var coolie = {};
@@ -126,39 +125,7 @@ module.exports = function (options) {
 
     // 检查文件
     check.file = function () {
-        if (typeis.file(srcCoolieConfigJSPath)) {
-            require(srcCoolieConfigJSPath)(coolie);
-        } else if (typeis.file(srcCoolieJSONPath)) {
-            debug.warn('!!!!!!!!!!', 'please use `coolie.config.js` to replace `coolie.json`');
-
-            if (!typeis.file(srcCoolieJSONPath)) {
-                debug.error('coolie.json', path.toSystem(srcCoolieJSONPath) + ' is NOT a file');
-                srcCoolieConfigJSPath = null;
-                srcCoolieJSONPath = null;
-                return process.exit(1);
-            }
-
-            try {
-                var configCode = fse.readFileSync(srcCoolieJSONPath, 'utf8');
-
-                try {
-                    configs = JSON.parse(configCode);
-                } catch (err) {
-                    debug.error('read coolie.json', path.toSystem(srcCoolieJSONPath));
-                    debug.error('parse coolie.json', '`coolie.json` parse error');
-                    debug.error('parse coolie.json', err.message);
-                    return process.exit(1);
-                }
-            } catch (err) {
-                debug.error('read coolie.json', path.toSystem(srcCoolieJSONPath));
-                debug.error('read coolie.json', err.message);
-                return process.exit(1);
-            }
-        } else {
-            debug.warn('!!!!!!!!!!', 'use `coolie init` command to generate `coolie.config.js`');
-            debug.error('coolie.config.js', path.toSystem(srcCoolieConfigJSPath) + ' is NOT a file');
-            return process.exit(1);
-        }
+        require(srcCoolieConfigJSPath)(coolie);
     };
 
 
@@ -257,6 +224,7 @@ module.exports = function (options) {
         };
     };
 
+
     // 检查 coolie-config.js 内的 base 路径
     // base 路径必须在 coolie-config.js 以内，否则在构建之后的 main 会指向错误
     check._coolieConfigJS = function () {
@@ -280,12 +248,17 @@ module.exports = function (options) {
 
         try {
             fn(coolieConfig, callbacks);
-            basePath = coolieConfig.base;
-            //basePath = path.join(path.dirname(config.js['coolie.js']), coolieConfig.base);
+            basePath = coolieConfig.baseDir;
         } catch (err) {
-            debug.error('parse coolie.config', path.toSystem(srcCoolieJSONPath));
+            debug.error('parse coolie.config', path.toSystem(coolieConfigJSFile));
             debug.error('parse coolie.config', err.message);
-            process.exit(1);
+            return process.exit(1);
+        }
+
+        if (!basePath) {
+            debug.error('parse coolie.config', path.toSystem(coolieConfigJSFile));
+            debug.error('parse coolie.config', 'config.baseDir 未指定');
+            return process.exit(1);
         }
 
         var coolieConfigJSDir = path.dirname(coolieConfigJSFile);
@@ -293,21 +266,29 @@ module.exports = function (options) {
         try {
             basePath = path.join(coolieConfigJSDir, basePath);
         } catch (err) {
-            debug.error('parse coolie.config', path.toSystem(srcCoolieJSONPath));
+            debug.error('parse coolie.config', path.toSystem(coolieConfigJSDir));
             debug.error('parse coolie.config', err.message);
-            process.exit(1);
+            return process.exit(1);
         }
 
         var toBase = path.relative(srcDirname, basePath);
 
-        if (toBase.indexOf('../') > -1) {
+        if (/^\.\.\//.test(toBase)) {
             debug.error('coolie base', 'coolie base path must be under ' + srcDirname +
                 '\nbut now is ' + basePath, 'error');
             process.exit(1);
         }
 
-        configs.coolieConfigBase = coolieConfig.base;
+        configs.coolieConfigBaseDirDir = coolieConfig.baseDir;
+        configs.coolieConfigNodeModulesDir = coolieConfig.nodeModulesDir;
         configs.srcCoolieConfigBaseDirname = basePath;
+
+        if (pathURI.isRelativeFile(coolieConfig.nodeModulesDir)) {
+            configs.srcCoolieConfigNodeModulesDirname = path.join(basePath, coolieConfig.nodeModulesDir);
+        } else {
+            configs.srcCoolieConfigNodeModulesDirname = path.join(srcDirname, coolieConfig.nodeModulesDir);
+        }
+
         //var relativeBase = path.relative(srcDirname, configs.srcCoolieConfigBaseDirname);
         configs.destCoolieConfigBaseDirname = path.join(configs.destDirname, configs.js.dest, coolieConfig.base);
     };
@@ -519,6 +500,7 @@ module.exports = function (options) {
         configs.destCoolieConfigChunkDirname = path.join(configs.destDirname, relative);
     };
 
+
     // 猜想 async 目录
     check.async = function () {
         var srcAsyncDirname = guessDirname(configs.destJSDirname, 'async');
@@ -540,7 +522,7 @@ module.exports = function (options) {
 
     dato.extend(configs, {
         srcDirname: srcDirname,
-        configPath: srcCoolieConfigJSPath ? srcCoolieConfigJSPath : srcCoolieJSONPath
+        configPath: srcCoolieConfigJSPath
     });
 
     debug.success('coolie config', path.toSystem(configs.configPath));

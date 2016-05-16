@@ -6,8 +6,8 @@
  *
  * @link http://coolie.ydr.me/guide/coolie-config.js/
  * @author ydr.me
- * @version {{version}}
- * @create {{datetime}}
+ * @version 2.0.0-alpha
+ * @create 2016-05-16 15:33:19
  * ======================================================
  */
 

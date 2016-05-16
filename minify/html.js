@@ -89,7 +89,7 @@ var htmlMinifyDefaults = {
  * @param [options.destCSSDirname] {String} 目标 CSS 目录
  * @param [options.destResourceDirname] {String} 目标资源目录
  * @param [options.destHost] {String} 目标域
- * @param [options.coolieConfigBase] {String} coolie-config:base 值
+ * @param [options.coolieConfigBaseDir] {String} coolie-config:base 值
  * @param [options.srcCoolieConfigJSPath] {String} 原始 coolie-config.js 路径
  * @param [options.srcCoolieConfigBaseDirname] {String} 原始 coolie-config:base 目录
  * @param [options.destCoolieConfigJSPath] {String} 目标 coolie-config.js 路径
@@ -198,7 +198,7 @@ var minifyHTML = function (file, options) {
     var replaceHTMLTagScriptCoolieRet = replaceHTMLTagScriptCoolie(file, {
         code: code,
         srcDirname: options.srcDirname,
-        coolieConfigBase: options.coolieConfigBase,
+        coolieConfigBaseDir: options.coolieConfigBaseDir,
         srcCoolieConfigJSPath: options.srcCoolieConfigJSPath,
         srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
         destDirname: options.destDirname,
