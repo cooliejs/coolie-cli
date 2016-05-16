@@ -19,7 +19,6 @@ module.exports = function () {
     };
 
     banner();
-    console.log('使用内置样板创建一个前端工程。');
     console.log();
     console.log('1. Usage');
     console.warn('   coolie create <--templateType> [options]');

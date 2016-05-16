@@ -39,8 +39,8 @@ module.exports = function () {
     console.log('2. 参数');
     debug.success('   -h --help', '打印命名的帮助信息', options);
     debug.success('   -d --dirname', '指定目标目录，默认为当前工作目录', options);
-    debug.success('   -j --coolie.js', '初始化模块加载器配置文件', options);
-    debug.success('   -c --coolie-cli', '初始化前端工程化构建配置文件', options);
+    debug.success('   -j --coolie.js', '初始化模块加载器配置文件，生成文件名为`coolie-config.js', options);
+    debug.success('   -c --coolie-cli', '初始化前端工程化构建配置文件，生成文件名为`coolie.config.js', options);
     debug.success('   -e --express', '选择 express 全栈工程样板', options);
     debug.success('   -s --static', '选择静态工程样板', options);
     debug.success('   -r --redis', '是否在 express 样板中使用 redis', options);

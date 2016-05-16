@@ -19,8 +19,6 @@ module.exports = function () {
     };
 
     banner();
-    console.log('Initial configuration file.');
-    console.log('Use the following parameters to initialize the specified type of profile.');
     console.log();
     console.log('1. Usage');
     console.warn('   coolie init <--initType> [options]');
@@ -30,14 +28,14 @@ module.exports = function () {
     console.warn('   coolie init --coolie.js');
     console.log();
     console.log('3. Command');
-    debug.success('   init', 'initial configuration file', options);
+    debug.success('   init', '初始化配置文件', options);
     console.log();
 
     console.log('4. Options');
-    debug.success('   -d --dirname', 'specified a directory', options);
-    debug.success('   -j --coolie.js', 'initial configuration file of `coolie.js`', options);
-    debug.success('   -c --coolie-cli', 'initial configuration file of `coolie-cli`', options);
-    debug.success('   -h --help', 'show help infomation with command', options);
+    debug.success('   -d --dirname', '指定目标目录，默认为当前工作目录', options);
+    debug.success('   -j --coolie.js', '初始化模块加载器配置文件，生成文件名为`coolie-config.js`', options);
+    debug.success('   -c --coolie-cli', '初始化前端工程化构建配置文件，生成文件名为`coolie.config.js`', options);
+    debug.success('   -h --help', '打印命名的帮助信息', options);
     console.log();
 };
 

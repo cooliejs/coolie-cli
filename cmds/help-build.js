@@ -19,7 +19,6 @@ module.exports = function () {
     };
 
     banner();
-    console.log('前端工程化构建。');
     console.log('在线指南：<https://coolie.ydr.me/guide/coolie.config.js/>。');
     console.log();
     console.log('1. Usage');
