@@ -3,6 +3,23 @@
 module.exports = function (coolie) {
     coolie.config({
         clean: true,
+        "dest": {
+            "dirname": "../dest/",
+            host: '',
+            "host2": function (type, path) {
+                return '/';
+                //if (/\.(png|jpg|jpeg|gif|webp|bmp)$/i.test(path)) {
+                //    return 'http://img.cdn.com';
+                //}
+                //
+                //return {
+                //    res: 'http://res.cdn.com',
+                //    css: 'http://css.cdn.com',
+                //    js: 'http://js.cdn.com'
+                //}[type];
+            },
+            "versionLength": 8
+        },
         "js": {
             "main": [
                 "/static/js/app/012.js",
@@ -50,23 +67,7 @@ module.exports = function (coolie) {
         },
         "copy": [
             //"static/fonts/tinymce.woff"
-        ],
-        "dest": {
-            "dirname": "../dest/",
-            "host": function (type, path) {
-                return '/';
-                //if (/\.(png|jpg|jpeg|gif|webp|bmp)$/i.test(path)) {
-                //    return 'http://img.cdn.com';
-                //}
-                //
-                //return {
-                //    res: 'http://res.cdn.com',
-                //    css: 'http://css.cdn.com',
-                //    js: 'http://js.cdn.com'
-                //}[type];
-            },
-            "versionLength": 8
-        }
+        ]
     });
 
     //if (process.env.NODE_ENV === 'local') {
