@@ -1,0 +1,24 @@
+{
+  "/.views/index.html": {
+    "main": [
+      {
+        "src": "../webroot-dev/static/js/app/index.js",
+        "dest": "/static/js/app/814e6806fe881f2415f53c004a62c8f4.js",
+        "deps": [
+          "../webroot-dev/static/js/utils/hehe.js",
+          "../webroot-dev/static/js/data/json.json"
+        ]
+      }
+    ],
+    "js": [
+      {
+        "dest": "/static/js/42c4629319b558a879da5b1e45fcdfc0.js",
+        "deps": [
+          "../webroot-dev/static/js/coolie.js"
+        ]
+      }
+    ],
+    "css": [],
+    "res": []
+  }
+}
