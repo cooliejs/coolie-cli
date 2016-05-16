@@ -12,7 +12,7 @@ var assert = require('assert');
 var parseRequireList = require('../../parse/require-list.js');
 var file = __filename;
 
-describe('parse/cmd-require.js', function () {
+describe('parse/require-list.js', function () {
     it('sync', function () {
         var code = 'define(function(){require("a");require("./a.js");require("./a.css", "css|url");});';
         var requires = parseRequireList(file, {
@@ -34,25 +34,30 @@ describe('parse/cmd-require.js', function () {
         assert.equal(requires[2].outType, 'url');
     });
 
-    // it('async', function () {
-    //     var code = 'define(function(){require.async("a.js");require.async("./a.js");require.async("b.js", function(){alert("done")})});';
-    //     var requires = parseRequireList(file, {
-    //         code: code,
-    //         async: true
-    //     });
-    //
-    //     //console.log(JSON.stringify(requires, null, 4));
-    //     assert.equal(requires.length, 3);
-    //     assert.equal(requires[0].name, 'a.js');
-    //     assert.equal(requires[1].name, './a.js');
-    //     assert.equal(requires[2].name, 'b.js');
-    //     assert.equal(requires[0].inType, 'js');
-    //     assert.equal(requires[0].outType, 'js');
-    //     assert.equal(requires[1].inType, 'js');
-    //     assert.equal(requires[1].outType, 'js');
-    //     assert.equal(requires[2].inType, 'js');
-    //     assert.equal(requires[2].outType, 'js');
-    // });
+    it('async', function () {
+        var code = 'define(function(){' +
+            'require.async("a");' +
+            'require.async("./a.js");' +
+            'require.async("./b.js", function(){alert("done");});' +
+            '});';
+        var requires = parseRequireList(file, {
+            code: code,
+            async: true,
+            srcDirname: __dirname
+        });
+
+        console.log(JSON.stringify(requires, null, 4));
+        assert.equal(requires.length, 3);
+        assert.equal(requires[0].name, 'a');
+        assert.equal(requires[1].name, './a.js');
+        assert.equal(requires[2].name, './b.js');
+        assert.equal(requires[0].inType, 'js');
+        assert.equal(requires[0].outType, 'js');
+        assert.equal(requires[1].inType, 'js');
+        assert.equal(requires[1].outType, 'js');
+        assert.equal(requires[2].inType, 'js');
+        assert.equal(requires[2].outType, 'js');
+    });
 });
 
 

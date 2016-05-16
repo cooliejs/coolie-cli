@@ -17,7 +17,7 @@ var controller = require('ydr-utils').controller;
 var reader = require('../utils/reader.js');
 var pathURI = require('../utils/path-uri.js');
 var progress = require('../utils/progress.js');
-var parseCMDRequire = require('./cmd-require.js');
+var parseRequireList = require('./require-list.js');
 
 var ENCODING = 'utf8';
 var defaults = {
@@ -76,14 +76,14 @@ module.exports = function (options) {
 
             parsedMap[file] = true;
             // require.async()
-            var requireAsyncList = parseCMDRequire(file, {
+            var requireAsyncList = parseRequireList(file, {
                 code: code,
                 async: true,
                 srcDirname: options.srcDirname
             });
 
             // require()
-            var requireSyncList = parseCMDRequire(file, {
+            var requireSyncList = parseRequireList(file, {
                 code: code,
                 async: false,
                 srcDirname: options.srcDirname

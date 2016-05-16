@@ -96,7 +96,6 @@ module.exports = function (file, options) {
 
         inType = moduleInTypeMap[inType];
 
-
         if (!inType) {
             debug.error('错误', '不支持的入口类型：' + inType + '\n' + path.toSystem(file));
             return process.exit(1);

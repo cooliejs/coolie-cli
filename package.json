@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "1.10.5",
+  "version": "2.0.0-alpha",
   "description": "The front-end development builder.",
   "preferGlobal": true,
   "bin": {
@@ -35,7 +35,7 @@
   "author": {
     "name": "cloudcome",
     "email": "cloudcome@163.com",
-    "url": "http://ydr.me"
+    "url": "https://ydr.me"
   },
   "homepage": "https://coolie.ydr.me/",
   "coolie": {

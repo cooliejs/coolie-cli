@@ -13,7 +13,7 @@ var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 var encryption = require('ydr-utils').encryption;
 
-var parseCMDRequire = require('../parse/cmd-require.js');
+var parseRequireList = require('../parse/require-list.js');
 var reader = require('../utils/reader.js');
 var globalId = require('../utils/global-id.js');
 var minifyJS = require('../minify/js.js');
@@ -81,7 +81,7 @@ module.exports = function (file, options) {
     }
 
     // 分析 require.async()
-    var asyncRequires = parseCMDRequire(file, {
+    var asyncRequires = parseRequireList(file, {
         code: code,
         async: true,
         srcDirname: options.srcDirname
@@ -97,7 +97,7 @@ module.exports = function (file, options) {
 
 
     // 分析 require()
-    var syncRequires = parseCMDRequire(file, {
+    var syncRequires = parseRequireList(file, {
         code: code,
         async: false,
         srcDirname: options.srcDirname
