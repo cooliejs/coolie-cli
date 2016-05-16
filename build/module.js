@@ -17,7 +17,7 @@ var parseRequireList = require('../parse/require.js');
 var reader = require('../utils/reader.js');
 var globalId = require('../utils/global-id.js');
 var minifyJS = require('../minify/js.js');
-var replaceAMDRequire = require('../replace/amd-require.js');
+var replaceRequire = require('../replace/require.js');
 var wrapDefine = require('../replace/wrap-define.js');
 var replaceModuleWrapper = require('../replace/module-wrapper.js');
 
@@ -72,15 +72,7 @@ module.exports = function (file, options) {
     var virtualMap = options.virtualMap;
 
     // 读取模块内容
-    var code;
-    try {
-        code = reader(file, 'utf8', options.parent);
-    } catch (err) {
-        debug.error('build module', path.toSystem(options.file));
-        debug.error('main module', path.toSystem(options.main));
-        debug.error('parent module', path.toSystem(options.parent));
-        process.exit(1);
-    }
+    var code = reader(file, 'utf8', options.parent);
 
     // 分析 require.async()
     var asyncRequires = parseRequireList(file, {
@@ -127,36 +119,35 @@ module.exports = function (file, options) {
         }
     });
 
-
     // 分析模块类型
     switch (options.inType) {
         case 'js':
-            // 1. 压缩代码
-            // code = minifyJS(file, {
-            //     code: code,
-            //     uglifyJSOptions: options.uglifyJSOptions
-            // });
-
-            // 2. 替换 require.async()
-            code = replaceAMDRequire(file, {
+            // 1. 替换 require.async()
+            code = replaceRequire(file, {
                 code: code,
                 async: true,
-                name2IdMap: asyncOutName2IdMap
+                outName2IdMap: asyncOutName2IdMap
             });
 
-            // 3. 替换 require()
-            code = replaceAMDRequire(file, {
+            // 2. 替换 require()
+            code = replaceRequire(file, {
                 code: code,
                 async: false,
-                name2IdMap: syncOutName2IdMap
+                outName2IdMap: syncOutName2IdMap
             });
 
             // 同一个文件，不同的模块出口类型，返回的模块是不一样的
             // 例：image|js !== image|url
             var gid = options.main === file ? '0' : globalId.get(file, options.outType);
 
-            // 4. 替换 define()
+            // 3. 包裹 define()
             code = wrapDefine(gid, depGidList, code);
+
+            // 4. 压缩代码
+            code = minifyJS(file, {
+                code: code,
+                uglifyJSOptions: options.uglifyJSOptions
+            });
             break;
 
         default:

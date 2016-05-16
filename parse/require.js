@@ -82,6 +82,12 @@ module.exports = function (file, options) {
             id = path.join(fromDirname, main);
         }
 
+        var extname = path.extname(id);
+
+        if (outType === 'js' && extname !== '.js') {
+            id += '.js';
+        }
+
         requireList.push({
             file: id,
             id: id + '|' + outType,
@@ -95,7 +101,7 @@ module.exports = function (file, options) {
     };
 
     nodeList.forEach(parser);
-    
+
     return requireList;
 };
 

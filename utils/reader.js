@@ -29,8 +29,9 @@ module.exports = function (file, encoding, embedFile) {
 
     if (!bf) {
         if (!typeis.file(file)) {
+            console.log();
             debug.error('read file', path.toSystem(file));
-            debug.error('read file', 'no such file');
+            debug.error('read file', '该文件不存在');
 
             if (embedFile) {
                 debug.error('embed file', path.toSystem(embedFile));

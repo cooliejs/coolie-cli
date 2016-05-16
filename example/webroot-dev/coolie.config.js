@@ -43,11 +43,7 @@ module.exports = function (coolie) {
             // 分块配置
             chunk: [],
             // js 压缩配置
-            minify: {
-                global_defs: {
-                    DEBUG: false
-                }
-            }
+            minify: false
         },
 
         // html 构建
