@@ -33,6 +33,8 @@ var coolieFn = function () {
 
             config.baseDir = cnf.baseDir || '';
             config.nodeModulesDir = cnf.nodeModulesDir || '';
+            config.debug = cnf.debug !== false;
+            config.global = cnf.global || {};
 
             return coolie;
         },
@@ -213,14 +215,13 @@ module.exports = function (options) {
             configs.js.chunk = [];
         }
 
-        // @todo 目前仅支持 true
-        configs.js.minify = true;
-        if (typeis.Boolean(configs.js.minify)) {
-            configs.js.minify = {};
+        if (configs.js.minify !== false) {
+            configs.js.minify = typeis.Object(configs.js.minify) ? configs.js.minify : {};
         }
 
         configs.uglifyJSOptions = {
-            global_defs: configs.js.minify.global_defs
+            minify: Boolean(configs.js.minify),
+            global_defs: configs.js.minify ? configs.js.minify.global_defs : {}
         };
     };
 
@@ -254,6 +255,16 @@ module.exports = function (options) {
             debug.error('parse coolie.config', err.message);
             return process.exit(1);
         }
+
+        if (coolieConfig.global) {
+            dato.each(coolieConfig.global, function (key, val) {
+                if (typeis.Boolean(val)) {
+                    configs.uglifyJSOptions.global_defs[key] = val;
+                }
+            });
+        }
+
+        configs.uglifyJSOptions.global_defs.DEBUG = false;
 
         if (!basePath) {
             debug.error('parse coolie.config', path.toSystem(coolieConfigJSFile));

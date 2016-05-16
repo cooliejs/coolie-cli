@@ -25,5 +25,7 @@ coolie.config({
     debug: true,
 
     // 全局变量，用于模块构建的预定义变量判断压缩
-    global: {}
+    global: {
+        hehe: true
+    }
 }).use();
