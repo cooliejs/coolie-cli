@@ -13,12 +13,11 @@ var fs = require('fs');
 
 var minifyCSS = require('../../minify/css.js');
 
-var srcDirname = path.join(__dirname, '../../example/src/');
-var destDirname = path.join(__dirname, '../../example/dest/');
+var srcDirname = path.join(__dirname, './src/');
+var destDirname = path.join(__dirname, './dest/');
 var destResourceDirname = path.join(destDirname, 'static/res/');
 var destCSSDirname = path.join(destDirname, 'static/css/');
-var file = path.join(srcDirname, 'static/css/1.css');
-
+var file = path.join(srcDirname, '1.css');
 var code = fs.readFileSync(file, 'utf8');
 
 describe('minify/css.js', function () {
@@ -29,7 +28,7 @@ describe('minify/css.js', function () {
             srcDirname: srcDirname,
             destDirname: destDirname,
             destHost: '/',
-            destResourceDirname: destResourceDirname,
+            destResourceDirname: destDirname,
             destCSSDirname: null,
             minifyResource: true,
             replaceCSSResource: true

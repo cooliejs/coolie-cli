@@ -13,11 +13,11 @@ var typeis = require('ydr-utils').typeis;
 var assert = require('assert');
 
 var replaceCSSResource = require('../../replace/css-resource.js');
-var file = path.join(__dirname, '../../example/src/static/css/1.css');
+var file = path.join(__dirname, 'src/1.css');
 
 var code = fs.readFileSync(file, 'utf8');
-var srcDirname = path.join(__dirname, '../../example/src/');
-var destDirname = path.join(__dirname, '../../example/dest/');
+var srcDirname = path.join(__dirname, 'src/');
+var destDirname = path.join(__dirname, 'dest/');
 var destResourceDirname = path.join(destDirname, '/static/res');
 var destCSSDirname = path.join(destDirname, '/static/css');
 
