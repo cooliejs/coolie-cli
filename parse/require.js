@@ -29,6 +29,7 @@ var reRelative = /^\.{1,2}\//;
  * @param options.code {String} 代码
  * @param options.async {Boolean} 是否为异步 require
  * @param options.srcDirname {String} 构建目录
+ * @param options.srcCoolieConfigNodeModulesDirname {String} node_modules 根目录
  * @returns {Array}
  */
 module.exports = function (file, options) {
@@ -67,13 +68,18 @@ module.exports = function (file, options) {
                 pkg.devDependencies = pkg.devDependencies || {};
                 pkg.peerDependencies = pkg.peerDependencies || {};
 
+                // 从子的 node_modules 开始找
                 if (pkg.dependencies[name] || pkg.devDependencies[name]) {
                     fromDirname = path.join(closestNodeModulesDirname, NODE_MODULES);
-                } else {
-                    fromDirname = path.join(options.srcDirname, NODE_MODULES);
                 }
-            } else {
-                fromDirname = path.join(options.srcDirname, NODE_MODULES);
+                // 根目录的 node_modules 开始
+                else {
+                    fromDirname = options.srcCoolieConfigNodeModulesDirname;
+                }
+            }
+            // 根目录的 node_modules 开始
+            else {
+                fromDirname = options.srcCoolieConfigNodeModulesDirname;
             }
 
             // 依赖模块的描述文件

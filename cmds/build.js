@@ -108,7 +108,6 @@ module.exports = function (options) {
 
     buildAPI(configs, middleware);
 
-
     // 2. 复制文件
     console.log();
     debug.primary('step ' + (++stepIndex) + '/' + stepLength, 'copy files');

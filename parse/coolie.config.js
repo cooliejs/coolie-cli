@@ -296,6 +296,7 @@ module.exports = function (options) {
 
         if (pathURI.isRelativeFile(coolieConfig.nodeModulesDir)) {
             configs.srcCoolieConfigNodeModulesDirname = path.join(basePath, coolieConfig.nodeModulesDir);
+            console.log(coolieConfig.nodeModulesDir);
         } else {
             configs.srcCoolieConfigNodeModulesDirname = path.join(srcDirname, coolieConfig.nodeModulesDir);
         }

@@ -80,7 +80,8 @@ module.exports = function (file, options) {
     var asyncRequires = isJS ? parseRequireList(file, {
         code: code,
         async: true,
-        srcDirname: options.srcDirname
+        srcDirname: options.srcDirname,
+        srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
     }) : [];
     var asyncOutName2IdMap = {};
 

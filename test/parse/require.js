@@ -18,7 +18,8 @@ describe('parse/require.js', function () {
         var requires = parseRequireList(file, {
             code: code,
             async: false,
-            srcDirname: __dirname
+            srcDirname: __dirname,
+            srcCoolieConfigNodeModulesDirname: __dirname
         });
 
         console.log(JSON.stringify(requires, null, 4));
