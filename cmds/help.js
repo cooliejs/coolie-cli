@@ -38,11 +38,11 @@ module.exports = function () {
 
     console.log('2. 参数');
     debug.success('   -h --help', '打印命名的帮助信息', options);
-    debug.success('   -d --dirname', '指定目标目录', options);
+    debug.success('   -d --dirname', '指定目标目录，默认为当前工作目录', options);
     debug.success('   -j --coolie.js', '初始化模块加载器配置文件', options);
     debug.success('   -c --coolie-cli', '初始化前端工程化构建配置文件', options);
-    debug.success('   -e --express', '选择 express 网站样板', options);
-    debug.success('   -s --static', '选择静态网站样板', options);
+    debug.success('   -e --express', '选择 express 全栈工程样板', options);
+    debug.success('   -s --static', '选择静态工程样板', options);
     debug.success('   -r --redis', '是否在 express 样板中使用 redis', options);
     debug.success('   -m --mongoose', '是否在 express 样板中使用 mongoose', options);
     console.log();

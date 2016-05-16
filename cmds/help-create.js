@@ -19,8 +19,7 @@ module.exports = function () {
     };
 
     banner();
-    console.log('Create a Front-end engineering template.');
-    console.log('Use the following parameters to specify the type of template.');
+    console.log('使用内置样板创建一个前端工程。');
     console.log();
     console.log('1. Usage');
     console.warn('   coolie create <--templateType> [options]');
@@ -30,16 +29,16 @@ module.exports = function () {
     console.warn('   coolie create --static');
     console.log();
     console.log('3. Command');
-    debug.success('   create', 'create a project template', options);
+    debug.success('   create', '创建一个前端样板工程', options);
     console.log();
 
     console.log('4. Options');
-    debug.success('   -e --express', 'create a express project template', options);
-    debug.success('   -s --static', 'create a static project template', options);
-    debug.success('   -m --mongoose', 'express project template with mongoose', options);
-    debug.success('   -r --redis', 'express project template with redis', options);
-    debug.success('   -d --dirname', 'specified a directory', options);
-    debug.success('   -h --help', 'show help infomation with command', options);
+    debug.success('   -d --dirname', '指定目标目录，默认为当前工作目录', options);
+    debug.success('   -e --express', '选择 express 全栈工程样板', options);
+    debug.success('   -s --static', '选择静态工程样板', options);
+    debug.success('   -r --redis', '是否在 express 样板中使用 redis', options);
+    debug.success('   -m --mongoose', '是否在 express 样板中使用 mongoose', options);
+    debug.success('   -h --help', '打印命名的帮助信息', options);
     console.log();
 };
 

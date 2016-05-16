@@ -19,7 +19,6 @@ module.exports = function () {
     };
 
     banner();
-    console.log('Download a coolie demo, use `-d` parameter specifies the root directory.');
     console.log();
     console.log('1. Usage');
     console.warn('   coolie demo <demoId> [options]');
@@ -28,12 +27,12 @@ module.exports = function () {
     console.warn('   coolie demo 1');
     console.log();
     console.log('3. Command');
-    debug.success('   demo', 'download a coolie demo', options);
+    debug.success('   demo', '下载 coolie 官方示例', options);
     console.log();
 
     console.log('4. Options');
-    debug.success('   -d --dirname', 'specified a directory', options);
-    debug.success('   -h --help', 'show help infomation with command', options);
+    debug.success('   -d --dirname', '指定目标目录，默认为当前工作目录', options);
+    debug.success('   -h --help', '打印命名的帮助信息', options);
     console.log();
 };
 
