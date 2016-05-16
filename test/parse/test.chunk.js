@@ -29,6 +29,8 @@ describe('parse/chunk.js', function () {
         var file0 = path.join(srcDirname, 'static/js/libs1/all.js');
         var file1 = path.join(srcDirname, 'static/js/libs2/some.css');
 
+        console.log(ret);
+
         assert.equal(ret[file0], '0');
         assert.equal(ret[file1], '1');
     });

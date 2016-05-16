@@ -1,1 +1,3 @@
-coolie.config().use();
+coolie.config({
+    baseDir: './'
+}).use();

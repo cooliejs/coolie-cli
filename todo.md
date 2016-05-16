@@ -24,4 +24,4 @@
 - cooliebase64: <style> √ 
 - cooliebase64: css file √
 - 支持 host 函数 √
-
+- 使用 -c 指定配置文件
