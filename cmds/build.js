@@ -108,6 +108,7 @@ module.exports = function (options) {
 
     buildAPI(configs, middleware);
 
+
     // 2. 复制文件
     console.log();
     debug.primary('step ' + (++stepIndex) + '/' + stepLength, 'copy files');
@@ -160,6 +161,7 @@ module.exports = function (options) {
         destJSDirname: configs.destJSDirname,
         versionMap: dato.extend({}, buildAPPResult.chunkVersionMap, buildAPPResult.asyncVersionMap),
         destHost: configs.destHost,
+        uglifyJSOptions: configs.uglifyJSOptions,
         sign: true
     });
 

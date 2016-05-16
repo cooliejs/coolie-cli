@@ -84,7 +84,7 @@ module.exports = function (file, options) {
 
         var extname = path.extname(id);
 
-        if (outType === 'js' && extname !== '.js') {
+        if (inType === 'js' && extname !== '.js') {
             id += '.js';
         }
 

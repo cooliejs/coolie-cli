@@ -8,6 +8,10 @@
 'use strict';
 
 var hehe = require('../utils/hehe');
+var hehe2 = require('../utils/hehe', 'js');
+var hehe3 = require('../utils/hehe', 'js|js');
+
+require('../data/json.json', 'json');
 
 module.exports = 'index';
 

@@ -61,6 +61,7 @@ var coolieFn = function () {
  * @param options.versionMap {Object} 版本配置 {file: version}
  * @param options.versionLength {Number} 版本长度
  * @param options.destJSDirname {String} JS 保存目录
+ * @param options.uglifyJSOptions {Object} JS 压缩配置
  * @param options.sign {Boolean} 是否签名
  * @returns {String}
  */
@@ -147,7 +148,8 @@ module.exports = function (file, options) {
 
         var destCoolieConfigJSPath = encryption.md5(code2).slice(0, options.versionLength) + '.js';
         var code3 = minifyJS(file, {
-            code: code2
+            code: code2,
+            uglifyJSOptions: options.uglifyJSOptions
         });
 
         if (options.sign) {

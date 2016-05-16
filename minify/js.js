@@ -77,9 +77,7 @@ var compressorOptions = {
     warnings: false,
 
     // 全局常量
-    global_defs: {
-        DEBUG: false
-    }
+    global_defs: {}
 };
 
 
@@ -93,6 +91,10 @@ var compressorOptions = {
 module.exports = function (file, options) {
     var code = options.code;
 
+    if (options.uglifyJSOptions.minify === false) {
+        return code;
+    }
+
     try {
         return uglifyJS.minify(code, {
             fromString: true,
@@ -101,7 +103,7 @@ module.exports = function (file, options) {
             // 变量管理
             mangle: true,
             // 是否压缩
-            compress: dato.extend({}, compressorOptions, options.uglifyJSOptions)
+            compress: dato.extend(true, {}, compressorOptions, options.uglifyJSOptions)
         }).code;
     } catch (err) {
         debug.error('js code', code);

@@ -82,11 +82,19 @@ module.exports = function (options) {
                 srcDirname: options.srcDirname
             });
 
+            requireAsyncList = requireAsyncList.filter(function (meta) {
+                return meta.inType === 'js';
+            });
+
             // require()
             var requireSyncList = parseRequireList(file, {
                 code: code,
                 async: false,
                 srcDirname: options.srcDirname
+            });
+
+            requireSyncList = requireSyncList.filter(function (meta) {
+                return meta.inType === 'js';
             });
 
             if (mainFilesMap[file]) {
@@ -116,8 +124,8 @@ module.exports = function (options) {
                 };
             });
 
-            dato.each(requireSyncList.concat(requireAsyncList), function (index, syncMeta) {
-                parseModules([syncMeta.file]);
+            dato.each(requireSyncList.concat(requireAsyncList), function (index, meta) {
+                parseModules([meta.file]);
             });
         });
     }
