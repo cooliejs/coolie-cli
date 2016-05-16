@@ -47,6 +47,7 @@ var coolieFn = function () {
         }
     };
 };
+var reLastPath = /^\.{2}\//;
 
 
 /**
@@ -78,31 +79,36 @@ module.exports = function (file, options) {
         .replace(REG_FUNCTION_END, '');
     /*jshint evil: true*/
     var fn = new Function('config, callbacks', coolieString + code);
-    var base;
     var version = JSON.stringify(versionMap);
 
     try {
         fn(coolieConfig, callbacks);
 
-        var versionMap2 = {};
+        var asyncMap = {};
+        var chunkMap = {};
 
         dato.each(versionMap, function (_file, _version) {
-            var relative = path.relative(options.destCoolieConfigBaseDirname, _file);
+            var basename = path.basename(_file, '.js');
+            var relativeAsync = path.relative(options.destCoolieConfigAsyncDirname, _file);
 
-            relative = path.toURI(relative);
-            versionMap2[relative] = _version;
+            if(reLastPath.test(relativeAsync)){
+                chunkMap[basename] = _version;
+            } else {
+                asyncMap[basename] = _version;
+            }
         });
 
-        version = JSON.stringify(versionMap2);
-        coolieConfig.async = path.toURI(path.relative(options.destCoolieConfigBaseDirname, options.destCoolieConfigAsyncDirname)) + '/';
-        coolieConfig.chunk = path.toURI(path.relative(options.destCoolieConfigBaseDirname, options.destCoolieConfigChunkDirname)) + '/';
+        asyncMap = JSON.stringify(asyncMap);
+        chunkMap = JSON.stringify(chunkMap);
+        coolieConfig.asyncDir = path.toURI(path.relative(options.destCoolieConfigBaseDirname, options.destCoolieConfigAsyncDirname)) + '/';
+        coolieConfig.chunkDir = path.toURI(path.relative(options.destCoolieConfigBaseDirname, options.destCoolieConfigChunkDirname)) + '/';
 
-        debug.success('coolie-config.js', 'base: "' + coolieConfig.base + '"');
-        debug.success('coolie-config.js', 'async: "' + coolieConfig.async + '"');
-        debug.success('coolie-config.js', 'chunk: "' + coolieConfig.chunk + '"');
+        debug.success('coolie-config.js', 'baseDir: "' + coolieConfig.baseDir + '"');
+        debug.success('coolie-config.js', 'asyncDir: "' + coolieConfig.asyncDir + '"');
+        debug.success('coolie-config.js', 'chunkDir: "' + coolieConfig.chunkDir + '"');
         debug.success('coolie-config.js', 'callbacks: ' + callbacks.length);
 
-        var code2 = 'coolie.config({';
+        var code2 = 'coolie.config({\n';
 
         //+
         //    'base:"' + coolieConfig.base + '",' +
@@ -114,14 +120,23 @@ module.exports = function (file, options) {
         //    'version:' + version + '})';
 
         var configList = [];
+        var ignoreMap = {
+            debug: 1,
+            mode: 1
+        };
 
-        configList.push('cache:true');
-        configList.push('debug:false');
-        configList.push('version:' + version);
-        configList.push('built:' + '"' + pkg.name + '@' + pkg.version + '"');
+        configList.push('debug: false');
+        configList.push('mode: "AMD"');
+        configList.push('asyncMap: ' + asyncMap);
+        configList.push('chunkMap: ' + chunkMap);
+        configList.push('built: ' + '"' + pkg.name + '@' + pkg.version + '"');
 
         dato.each(coolieConfig, function (key, val) {
             var one = '';
+
+            if (ignoreMap[key]) {
+                return;
+            }
 
             if (typeof val === 'object') {
                 one = key + ':' + JSON.stringify(val);
@@ -134,11 +149,14 @@ module.exports = function (file, options) {
             if (one) {
                 configList.push(one);
             }
-
         });
 
-        code2 += configList.join(',');
-        code2 += '}).use()';
+        configList = configList.map(function (item) {
+            return '    ' + item;
+        });
+
+        code2 += configList.join(',\n');
+        code2 += '\n}).use()';
 
         dato.each(callbacks, function (index, callback) {
             code2 += '.callback(' + callback.toString() + ')';
@@ -146,11 +164,11 @@ module.exports = function (file, options) {
 
         code2 += ';';
 
-        var destCoolieConfigJSPath = encryption.md5(code2).slice(0, options.versionLength) + '.js';
         var code3 = minifyJS(file, {
             code: code2,
             uglifyJSOptions: options.uglifyJSOptions
         });
+        var destCoolieConfigJSPath = encryption.md5(code3).slice(0, options.versionLength) + '.js';
 
         if (options.sign) {
             code3 = sign('js') + '\n' + code3;

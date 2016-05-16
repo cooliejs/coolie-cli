@@ -13,6 +13,8 @@ var hehe3 = require('../utils/hehe', 'js|js');
 
 require('../data/json.json', 'json');
 
+require.async('../async/page1.js');
+
 module.exports = 'index';
 
 

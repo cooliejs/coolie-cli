@@ -41,7 +41,9 @@ module.exports = function (coolie) {
             // js 文件保存目录，相对于 dest.dirname
             dest: './static/js/',
             // 分块配置
-            chunk: [],
+            chunk: [
+                "./static/js/utils/**"
+            ],
             // js 压缩配置
             minify: false
         },
