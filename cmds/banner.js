@@ -22,7 +22,7 @@ module.exports = function () {
         [pkg.description],
         [pkg.homepage]
     ], {
-        colors: ['red'],
+        colors: ['green'],
         padding: 10
     });
 

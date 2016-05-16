@@ -11,6 +11,7 @@ var debug = require('ydr-utils').debug;
 
 var pkg = require('../package.json');
 var install = require('../utils/install.js');
+var helpInstall = require('./help-install.js');
 
 /**
  * 下载
@@ -19,18 +20,19 @@ var install = require('../utils/install.js');
  * @param options.destDirname {String} 目标目录
  */
 module.exports = function (options) {
-    var module = pkg.coolie.modules[options.name];
-
-    if (!module) {
-        debug.error('coolie install', 'can not found ' + options.name);
-        return process.exit(1);
-    }
-
-    install({
-        name: options.name,
-        url: module.url,
-        destDirname: options.destDirname,
-        type: module.type
-    });
+    helpInstall();
+    // var module = pkg.coolie.modules[options.name];
+    //
+    // if (!module) {
+    //     debug.error('coolie install', 'can not found ' + options.name);
+    //     return process.exit(1);
+    // }
+    //
+    // install({
+    //     name: options.name,
+    //     url: module.url,
+    //     destDirname: options.destDirname,
+    //     type: module.type
+    // });
 };
 

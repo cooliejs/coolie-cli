@@ -1,8 +1,0 @@
-body{
-    background: url("./some.jpg");
-    content: "";
-}
-
-.div{
-    background: url("/static/img/girl.jpg");
-}

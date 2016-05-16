@@ -22,29 +22,29 @@ module.exports = function () {
         nameAlign: 'left'
     };
 
-    console.log(console.styles.pretty(bannerText, 'red'));
+    console.log(console.styles.pretty(bannerText, 'green'));
     banner();
     console.log();
-    console.log('1. Command');
-    debug.success('   build', 'build a front-end project', options);
-    debug.success('   book', 'open coolie book in default browser', options);
-    debug.success('   install <module>', 'install a coolie module', options);
-    debug.success('   init', 'initial configuration file', options);
-    debug.success('   create', 'create a project template', options);
-    debug.success('   demo <demoId>', 'download a coolie demo', options);
-    debug.success('   help', 'show help information', options);
-    debug.success('   version', 'show version information', options);
+    console.log('1. 命令');
+    debug.success('   build', '前端工程化构建', options);
+    debug.success('   book', '打开 coolie 官方指南', options);
+    // debug.success('   install <module>', 'install a coolie module', options);
+    debug.success('   init', '初始化配置文件', options);
+    debug.success('   create', '创建一个 coolie 样板工程', options);
+    debug.success('   demo <demoId>', '下载 coolie 官方示例', options);
+    debug.success('   help', '打印帮助信息', options);
+    debug.success('   version', '打印版本信息', options);
     console.log();
 
-    console.log('2. Options');
-    debug.success('   -d --dirname', 'specified a directory', options);
-    debug.success('   -j --coolie.js', 'initial configuration file of `coolie.js`', options);
-    debug.success('   -c --coolie-cli', 'initial configuration file of `coolie-cli`', options);
-    debug.success('   -e --express', 'choose express template', options);
-    debug.success('   -s --static', 'choose static template', options);
-    debug.success('   -r --redis', 'express template with redis', options);
-    debug.success('   -m --mongoose', 'express template with mongoose', options);
-    debug.success('   -h --help', 'show help infomation with command', options);
+    console.log('2. 参数');
+    debug.success('   -h --help', '打印命名的帮助信息', options);
+    debug.success('   -d --dirname', '指定目标目录', options);
+    debug.success('   -j --coolie.js', '初始化模块加载器配置文件', options);
+    debug.success('   -c --coolie-cli', '初始化前端工程化构建配置文件', options);
+    debug.success('   -e --express', '选择 express 网站样板', options);
+    debug.success('   -s --static', '选择静态网站样板', options);
+    debug.success('   -r --redis', '是否在 express 样板中使用 redis', options);
+    debug.success('   -m --mongoose', '是否在 express 样板中使用 mongoose', options);
     console.log();
 };
 
