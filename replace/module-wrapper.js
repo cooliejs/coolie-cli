@@ -142,6 +142,8 @@ var wrapModuleDefine = function (file, ret, options) {
 
     ret.code = wrapDefine(file, {
         srcDirname: options.srcDirname,
+        destHost: options.destHost,
+        inType: options.inType,
         id: id,
         deps: deps,
         factory: factory,

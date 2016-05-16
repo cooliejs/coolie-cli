@@ -14,6 +14,13 @@ var pathURI = require('../utils/path-uri.js');
  * define 包装
  * @param file
  * @param options
+ * @param options.id
+ * @param options.deps
+ * @param options.factory
+ * @param options.srcDirname
+ * @param options.destHost
+ * @param options.inType
+ * @param [options.rem]
  * @returns {string}
  */
 module.exports = function (file, options) {
@@ -27,12 +34,15 @@ module.exports = function (file, options) {
     if (depsStr) {
         depsStr = '"' + depsStr + '"';
     }
+    
+    var uri = pathURI.toRootURL(file, options.srcDirname);
+    var url = pathURI.joinHost(options.inType, options.destHost, uri);
 
     return '\n' +
+        '//# sourceURL=' + url + '\n' +
         'define("' + id + '", [' + depsStr + '], function (' + args + ') {\n\n' +
         factory +
-        '\n\n//# sourceURL=' + pathURI.toRootURL(file, options.srcDirname) + '\n' +
-        '});\n';
+        '\n\n});\n';
 };
 
 

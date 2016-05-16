@@ -22,7 +22,9 @@ describe('replace/wrap-define.js', function () {
             id: id,
             deps: deps,
             factory: factory,
-            srcDirname: __dirname
+            srcDirname: __dirname,
+            destHost: '/',
+            inType: 'js'
         }));
     });
     it('deps:not empty', function () {
@@ -34,7 +36,9 @@ describe('replace/wrap-define.js', function () {
             id: id,
             deps: deps,
             factory: factory,
-            srcDirname: __dirname
+            srcDirname: __dirname,
+            destHost: '/',
+            inType: 'js'
         }));
     });
 });

@@ -144,6 +144,8 @@ module.exports = function (file, options) {
             // 3. 包裹 define()
             code = wrapDefine(file, {
                 srcDirname: options.srcDirname,
+                destHost: options.destHost,
+                inType: options.inType,
                 id: gid,
                 deps: depGidList,
                 factory: code,
