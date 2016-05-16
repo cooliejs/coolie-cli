@@ -14,16 +14,16 @@ var encryption = require('ydr-utils').encryption;
 var typeis = require('ydr-utils').typeis;
 
 var replaceCoolieConfig = require('../../replace/coolie-config.js');
-var file = path.join(__dirname, '../../example/src/static/js/coolie-config.js');
 
-var srcDirname = path.join(__dirname, '../../example/src/');
-var destDirname = path.join(__dirname, '../../example/dest/');
+var srcDirname = path.join(__dirname, 'src/');
+var file = path.join(srcDirname, 'coolie-config.js');
+var destDirname = path.join(__dirname, 'dest/');
 var destCoolieConfigBaseDirname = path.join(destDirname, 'static/js/app/');
 var destCoolieConfigAsyncDirname = path.join(destDirname, 'static/js/async/');
 var destCoolieConfigChunkDirname = path.join(destDirname, 'static/js/chunk/');
 var destJSDirname = path.join(destDirname, 'static/js/');
-var testFile1 = path.join(destDirname, 'static/js/index3-1.js');
-var testFile2 = path.join(destDirname, 'static/js/app/user/index.js');
+var testFile1 = path.join(destDirname, 'file1.js');
+var testFile2 = path.join(destDirname, 'file2.js');
 
 describe('replace/coolie-config.js', function () {
     it('e', function () {
