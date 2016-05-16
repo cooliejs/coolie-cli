@@ -19,9 +19,8 @@ module.exports = function () {
     };
 
     banner();
-    console.log('Build a front-end project, use `-d` parameter specifies the root directory.');
-    console.log('Use `cookie init -c` to initialize a build configuration file.');
-    console.log('Online guide: https://coolie.ydr.me/guide/coolie.config.js/');
+    console.log('前端工程化构建。');
+    console.log('在线指南：<https://coolie.ydr.me/guide/coolie.config.js/>。');
     console.log();
     console.log('1. Usage');
     console.log(console.styles.pretty('   coolie build [options]', 'yellow'));
@@ -30,12 +29,12 @@ module.exports = function () {
     console.log(console.styles.pretty('   coolie build', 'yellow'));
     console.log();
     console.log('3. Command');
-    debug.success('   build', 'build a front-end project', options);
+    debug.success('   build', '前端工程化构建', options);
     console.log();
 
     console.log('4. Options');
-    debug.success('   -d --dirname', 'specified a directory', options);
-    debug.success('   -h --help', 'show help infomation with command', options);
+    debug.success('   -d --dirname', '指定前段工程根目录', options);
+    debug.success('   -h --help', '打印帮助信息', options);
     console.log();
 };
 
