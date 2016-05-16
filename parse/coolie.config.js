@@ -221,7 +221,7 @@ module.exports = function (options) {
 
         configs.uglifyJSOptions = {
             minify: Boolean(configs.js.minify),
-            global_defs: configs.js.minify ? configs.js.minify.global_defs : {}
+            global_defs: configs.js.minify ? configs.js.minify.global_defs || {} : {}
         };
     };
 
