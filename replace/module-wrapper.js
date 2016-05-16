@@ -25,6 +25,7 @@ var copy = require('../utils/copy.js');
 var reader = require('../utils/reader.js');
 var globalId = require('../utils/global-id.js');
 var stringify = require('../utils/stringify.js');
+var wrapDefine = require('./wrap-define.js');
 
 
 /**
@@ -118,7 +119,7 @@ var createURL = function (file, options) {
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @returns {Object}
  */
-var wrapDefine = function (file, ret, options) {
+var wrapModuleDefine = function (file, ret, options) {
     if (typeis.String(ret)) {
         ret = {
             code: ret
@@ -133,15 +134,13 @@ var wrapDefine = function (file, ret, options) {
         text = stringify(ret.code);
     }
 
-    ret.code = 'define("' + globalId.get(file, options.outType) + '",[],function(y,d,r){';
+    var id = globalId.get(file, options.outType);
+    var deps = [];
+    var factory = isCSS2Style ?
+    'return coolie.importStyle(' + text + ')' :
+    'return ' + text + '';
 
-    if (isCSS2Style) {
-        ret.code += 'r.exports=coolie.importStyle(' + text + ')';
-    } else {
-        ret.code += 'r.exports=' + text + '';
-    }
-
-    ret.code += '});';
+    ret.code = wrapDefine(id, deps, factory);
     ret.resList = ret.resList || [];
 
     return ret;
@@ -234,21 +233,21 @@ module.exports = function (file, options) {
                     var createURLRet1 = createURL(file, options2);
                     uri = createURLRet1.code;
                     createURLRet1.code = uri;
-                    return wrapDefine(file, createURLRet1, options);
+                    return wrapModuleDefine(file, createURLRet1, options);
 
                 case 'base64':
                     code = minifyJSON(file, {
                         code: code
                     });
                     code = base64.string(code, extname);
-                    return wrapDefine(file, code, options);
+                    return wrapModuleDefine(file, code, options);
 
                 // text
                 default :
                     code = minifyJSON(file, {
                         code: code
                     });
-                    return wrapDefine(file, code, options);
+                    return wrapModuleDefine(file, code, options);
             }
             break;
 
@@ -274,7 +273,7 @@ module.exports = function (file, options) {
                     var createURLRet = createURL(file, options2);
                     uri = createURLRet.code;
                     createURLRet.code = uri;
-                    return wrapDefine(file, createURLRet, options);
+                    return wrapModuleDefine(file, createURLRet, options);
 
                 case 'base64':
                     var minifyCSSRet = minifyCSS(file, {
@@ -293,7 +292,7 @@ module.exports = function (file, options) {
                     });
                     code = base64.string(code, extname);
                     minifyCSSRet.code = code;
-                    return wrapDefine(file, minifyCSSRet, options);
+                    return wrapModuleDefine(file, minifyCSSRet, options);
 
                 // text
                 default :
@@ -311,7 +310,7 @@ module.exports = function (file, options) {
                         replaceCSSResource: true,
                         mute: options.mute
                     });
-                    return wrapDefine(file, minifyCSSRet3, options);
+                    return wrapModuleDefine(file, minifyCSSRet3, options);
             }
             break;
 
@@ -319,15 +318,15 @@ module.exports = function (file, options) {
             switch (options.outType) {
                 case 'url':
                     var createURLRet2 = createURL(file, options2);
-                    return wrapDefine(file, createURLRet2, options);
+                    return wrapModuleDefine(file, createURLRet2, options);
 
                 case 'base64':
                     code = base64.string(code, extname);
-                    return wrapDefine(file, code, options);
+                    return wrapModuleDefine(file, code, options);
 
                 // text
                 default :
-                    return wrapDefine(file, code, options);
+                    return wrapModuleDefine(file, code, options);
             }
             break;
 
@@ -363,7 +362,7 @@ module.exports = function (file, options) {
                     uri = createURLRet3.code;
                     createURLRet3.code = uri;
                     createURLRet3.resList = mergeRes(createURLRet3);
-                    return wrapDefine(file, createURLRet3, options);
+                    return wrapModuleDefine(file, createURLRet3, options);
 
                 case 'base64':
                     var minifyHTMLRet = minifyHTML(file, {
@@ -392,7 +391,7 @@ module.exports = function (file, options) {
                     code = base64.string(code, extname);
                     minifyHTMLRet.code = code;
                     minifyHTMLRet.resList = mergeRes(minifyHTMLRet);
-                    return wrapDefine(file, minifyHTMLRet, options);
+                    return wrapModuleDefine(file, minifyHTMLRet, options);
 
                 // text
                 default :
@@ -420,7 +419,7 @@ module.exports = function (file, options) {
                         mute: options.mute
                     });
                     minifyHTMLRet2.resList = mergeRes(minifyHTMLRet2);
-                    return wrapDefine(file, minifyHTMLRet2, options);
+                    return wrapModuleDefine(file, minifyHTMLRet2, options);
             }
             break;
 
@@ -429,12 +428,12 @@ module.exports = function (file, options) {
             switch (options.outType) {
                 case 'base64':
                     code = base64.file(file);
-                    return wrapDefine(file, code, options);
+                    return wrapModuleDefine(file, code, options);
 
                 // url
                 default :
                     uri = createURL(file, options2);
-                    return wrapDefine(file, uri, options);
+                    return wrapModuleDefine(file, uri, options);
             }
             break;
 

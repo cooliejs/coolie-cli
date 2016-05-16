@@ -111,8 +111,8 @@ module.exports = function (file, options) {
                 id: item.id,
                 file: item.file,
                 gid: item.gid,
-                raw: item.raw,
                 name: item.name,
+                outName: item.outName,
                 inType: item.inType,
                 outType: item.outType
             });
