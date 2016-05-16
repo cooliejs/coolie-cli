@@ -35,6 +35,7 @@ var defaults = {
  * @param options.glob {String|Array} 配置
  * @param options.globOptions {Object} glob 配置
  * @param options.srcDirname {String} 原始目录
+ * @param options.srcCoolieConfigNodeModulesDirname {String} node_modules 根目录
  */
 module.exports = function (options) {
     options = dato.extend({}, defaults, options);
@@ -79,7 +80,8 @@ module.exports = function (options) {
             var requireAsyncList = parseRequireList(file, {
                 code: code,
                 async: true,
-                srcDirname: options.srcDirname
+                srcDirname: options.srcDirname,
+                srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
             });
 
             requireAsyncList = requireAsyncList.filter(function (meta) {
@@ -90,7 +92,8 @@ module.exports = function (options) {
             var requireSyncList = parseRequireList(file, {
                 code: code,
                 async: false,
-                srcDirname: options.srcDirname
+                srcDirname: options.srcDirname,
+                srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
             });
 
             requireSyncList = requireSyncList.filter(function (meta) {

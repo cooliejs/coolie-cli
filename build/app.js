@@ -82,7 +82,8 @@ module.exports = function (options) {
     var parseMainRet = parseMain({
         glob: options.glob,
         srcDirname: options.srcDirname,
-        globOptions: options.globOptions
+        globOptions: options.globOptions,
+        srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
     });
     var mainMap = parseMainRet.mainMap;
     var virtualMap = parseMainRet.virtualMap;
