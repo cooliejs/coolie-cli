@@ -68,7 +68,6 @@
   "bugs": {
     "url": "https://github.com/cooliejs/coolie-cli/issues"
   },
-  "licenses": "MIT",
   "dependencies": {
     "adm-zip": "^0.4.7",
     "clean-css": "^3.4.6",
