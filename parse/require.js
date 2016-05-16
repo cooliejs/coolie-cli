@@ -86,6 +86,7 @@ module.exports = function (file, options) {
             file: id,
             id: id + '|' + outType,
             name: name,
+            outName: name + '|' + outType,
             inType: inType,
             outType: outType,
             gid: globalId.get(id, outType),

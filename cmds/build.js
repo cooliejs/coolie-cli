@@ -106,8 +106,6 @@ module.exports = function (options) {
     var srcDirname = configs.srcDirname;
     var destDirname = configs.destDirname;
 
-    return console.log(configs);
-
     buildAPI(configs, middleware);
 
     // 2. 复制文件
@@ -130,6 +128,8 @@ module.exports = function (options) {
         glob: configs.js.main,
         chunk: configs.js.chunk,
         srcDirname: srcDirname,
+        srcCoolieConfigBaseDirname: configs.srcCoolieConfigBaseDirname,
+        srcCoolieConfigNodeModulesDirname: configs.srcCoolieConfigNodeModulesDirname,
         destDirname: destDirname,
         destJSDirname: configs.destJSDirname,
         destCSSDirname: configs.destCSSDirname,

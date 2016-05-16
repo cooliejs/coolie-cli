@@ -7,6 +7,8 @@
 
 'use strict';
 
+var hehe = require('../utils/hehe');
+
 module.exports = 'index';
 
 

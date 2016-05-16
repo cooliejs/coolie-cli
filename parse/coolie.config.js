@@ -279,7 +279,7 @@ module.exports = function (options) {
             process.exit(1);
         }
 
-        configs.coolieConfigBaseDirDir = coolieConfig.baseDir;
+        configs.coolieConfigBaseDir = coolieConfig.baseDir;
         configs.coolieConfigNodeModulesDir = coolieConfig.nodeModulesDir;
         configs.srcCoolieConfigBaseDirname = basePath;
 
@@ -290,7 +290,7 @@ module.exports = function (options) {
         }
 
         //var relativeBase = path.relative(srcDirname, configs.srcCoolieConfigBaseDirname);
-        configs.destCoolieConfigBaseDirname = path.join(configs.destDirname, configs.js.dest, coolieConfig.base);
+        configs.destCoolieConfigBaseDirname = path.join(configs.destDirname, configs.js.dest, coolieConfig.baseDir);
     };
 
 

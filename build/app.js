@@ -50,6 +50,8 @@ var defaults = {
  * @param options.chunk {String|Array} chunk 配置
  * @param options.minDependingCount2Chunk {Number} 最小引用次数分离 chunk
  * @param options.srcDirname {String} 原始目录
+ * @param options.srcCoolieConfigBaseDirname {String} base 根目录
+ * @param options.srcCoolieConfigNodeModulesDirname {String} node_modules 根目录
  * @param options.destDirname {String} 目标目录
  * @param options.destJSDirname {String} 目标 JS 目录
  * @param options.destCSSDirname {String} 目标 CSS 目录
@@ -118,12 +120,15 @@ module.exports = function (options) {
     // 入口文件计数
     var mainIndex = 0;
 
+
     debug.success('build main', 'will build ' + mainLength + ' main modules');
     // 3、chunk 计数统计
     dato.each(mainMap, function (mainFile, mainMeta) {
         var buildMainRet = buildMain(mainFile, {
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
+            srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
+            srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname,
             destDirname: options.destDirname,
             destJSDirname: options.destJSDirname,
             destCSSDirname: options.destCSSDirname,
