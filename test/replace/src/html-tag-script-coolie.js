@@ -1,0 +1,1 @@
+module.exports = 'html-tag-script-coolie.js';

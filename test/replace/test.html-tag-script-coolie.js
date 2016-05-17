@@ -12,16 +12,16 @@ var fs = require('fs');
 var assert = require('assert');
 
 var replaceHTMLTagScriptCoolie = require('../../replace/html-tag-script-coolie.js');
-var file = path.join(__dirname, 'src/html-tag-script-coolie.html');
 
-var code = fs.readFileSync(file, 'utf8');
 var srcDirname = path.join(__dirname, 'src/');
+var file = path.join(srcDirname, 'html-tag-script-coolie.html');
+var code = fs.readFileSync(file, 'utf8');
 var destDirname = path.join(__dirname, 'dest/');
 var destCoolieConfigJSURI = 'static/js/eb21eac7c7c8278c7bf0c208efbfd663.js';
 var destCoolieConfigJSPath = path.join(destDirname, destCoolieConfigJSURI);
 var destJSDirname = path.join(destDirname, 'static/js/');
-var srcCoolieConfigBaseDirname = path.join(srcDirname, 'static/js/app/');
-var srcMainPath = path.join(srcDirname, 'static/js/app/user/index.js');
+var srcCoolieConfigBaseDirname = path.join(srcDirname, './');
+var srcMainPath = path.join(srcDirname, 'html-tag-script-coolie.js');
 var mainVersionMap = {};
 
 mainVersionMap[srcMainPath] = '00023123123123123312312';
