@@ -16,7 +16,7 @@ var reader = require('../../utils/reader.js');
 
 describe('utils/reader.js', function () {
     it('utf8', function () {
-        var textFile = path.join(__dirname, '../../example/src/html/replace.html');
+        var textFile = path.join(__dirname, 'src/reader.html');
         var ret1 = reader(textFile, 'utf8');
         var ret2 = reader(textFile, 'utf8');
 
@@ -24,7 +24,7 @@ describe('utils/reader.js', function () {
     });
 
     it('binary', function () {
-        var binaryFile = path.join(__dirname, '../../example/src/favicon.ico');
+        var binaryFile = path.join(__dirname, 'src/reader.png');
         var ret = reader(binaryFile);
 
         assert.equal(Buffer.isBuffer(ret), true);
