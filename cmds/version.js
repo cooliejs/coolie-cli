@@ -20,39 +20,24 @@ module.exports = function () {
     debug.success('local coolie-cli', pkg.version);
     console.loading();
     howdo
-        // 获取 coolie.cli 版本
+        // 获取 coolie-cli 版本
         .task(function (done) {
             npm.getLatestVersion(pkg.name, function (err, version) {
                 if (err) {
                     return done(err);
                 }
 
-
                 done(err, version);
             });
         })
         // 获取 coolie.js 版本
         .task(function (done) {
-            request.get({
-                url: pkg.coolie['package.json'],
-                query: {
-                    _: Date.now()
-                }
-            }, function (err, data) {
+            npm.getLatestVersion('coolie.js', function (err, version) {
                 if (err) {
                     return done(err);
                 }
 
-                var json = {};
-
-                try {
-                    json = JSON.parse(data);
-                } catch (err) {
-                    return done(new Error('parse error'));
-                }
-
-
-                done(err, json.version);
+                done(err, version);
             });
         })
         .together(function () {
