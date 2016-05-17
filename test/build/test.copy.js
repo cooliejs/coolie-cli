@@ -12,8 +12,8 @@ var path = require('ydr-utils').path;
 
 var copy = require('../../build/copy.js');
 
-var srcDirname = path.join(__dirname, '.');
-var destDirname = path.join(__dirname, '../../example/dest/__test__');
+var srcDirname = path.join(__dirname, 'src');
+var destDirname = path.join(__dirname, 'dest');
 
 describe('build/copy.js', function () {
     it('e', function () {

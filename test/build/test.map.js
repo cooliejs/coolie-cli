@@ -13,8 +13,8 @@ var typeis = require('ydr-utils').typeis;
 
 var buildMap = require('../../build/map.js');
 
-var srcDirname = path.join(__dirname, '../../example/src');
-var destDirname = path.join(__dirname, '../../example/dest');
+var srcDirname = path.join(__dirname, 'src');
+var destDirname = path.join(__dirname, 'dest');
 var destCoolieConfigBaseDirname = path.join(destDirname, 'app');
 var destCoolieConfigChunkDirname = path.join(destDirname, 'chunk');
 var destCoolieConfigAsyncDirname = path.join(destDirname, 'async');
