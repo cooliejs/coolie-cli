@@ -71,7 +71,7 @@ describe('module-wrapper', function () {
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
-            assert.equal(replaceModuleWrapperRet.code.indexOf('r.exports={') > -1, true);
+            assert.equal(replaceModuleWrapperRet.code.indexOf('return {') > -1, true);
         });
     });
 
@@ -100,7 +100,7 @@ describe('module-wrapper', function () {
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
-            assert.equal(replaceModuleWrapperRet.code.indexOf('r.exports="') > -1, true);
+            assert.equal(replaceModuleWrapperRet.code.indexOf('return "') > -1, true);
         });
     });
     //
@@ -129,7 +129,7 @@ describe('module-wrapper', function () {
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
-            assert.equal(replaceModuleWrapperRet.code.indexOf('r.exports="') > -1, true);
+            assert.equal(replaceModuleWrapperRet.code.indexOf('return "') > -1, true);
         });
     });
 
@@ -158,7 +158,7 @@ describe('module-wrapper', function () {
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
-            assert.equal(replaceModuleWrapperRet.code.indexOf('r.exports="') > -1, true);
+            assert.equal(replaceModuleWrapperRet.code.indexOf('return "') > -1, true);
         });
     });
 
@@ -186,7 +186,7 @@ describe('module-wrapper', function () {
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
-            assert.equal(replaceModuleWrapperRet.code.indexOf('r.exports="') > -1, true);
+            assert.equal(replaceModuleWrapperRet.code.indexOf('return "') > -1, true);
         });
     });
 });
