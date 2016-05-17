@@ -12,9 +12,10 @@ var fs = require('fs');
 var assert = require('assert');
 
 var replaceHTMLCoolieGroup = require('../../replace/html-coolie-group.js');
-var file = path.join(__dirname, '../../example/src/html/index3.html');
-var srcDirname = path.join(__dirname, '../../example/src/');
-var destDirname = path.join(__dirname, '../../example/dest/');
+
+var srcDirname = path.join(__dirname, 'src/');
+var file = path.join(srcDirname, 'html-coolie-group.html');
+var destDirname = path.join(__dirname, 'dest/');
 var destResourceDirname = path.join(destDirname, 'res');
 var destCSSDirname = path.join(destDirname, 'static/css/');
 var destJSDirname = path.join(destDirname, 'static/js/');
