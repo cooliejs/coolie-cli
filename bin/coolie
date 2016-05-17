@@ -66,19 +66,20 @@ command.if('install', function (args, names) {
     if (args.help) {
         return cmdHelpInstall();
     }
-
-    if (!names.length) {
-        debug.warn('coolie tips', 'try `coolie install coolie.js`');
-        return process.exit(1);
-    }
+    //
+    // if (!names.length) {
+    //     debug.warn('coolie tips', 'try `coolie install coolie.js`');
+    //     return process.exit(1);
+    // }
 
     cmdBanner();
-    names.forEach(function (name) {
-        cmdInstall({
-            destDirname: command.dirname(args, 'dirname'),
-            name: name
-        });
-    });
+    // names.forEach(function (name) {
+    //     cmdInstall({
+    //         destDirname: command.dirname(args, 'dirname'),
+    //         name: name
+    //     });
+    // });
+    cmdInstall();
 });
 
 command.if('init', function (args) {

@@ -15,7 +15,7 @@ var helpInstall = require('./help-install.js');
 
 /**
  * 下载
- * @param options {Object} 配置
+ * @param [options] {Object} 配置
  * @param options.name {String} 名称
  * @param options.destDirname {String} 目标目录
  */

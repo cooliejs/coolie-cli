@@ -7,7 +7,6 @@
 
 'use strict';
 
-var request = require('ydr-utils').request;
 var npm = require('ydr-utils').npm;
 var debug = require('ydr-utils').debug;
 var howdo = require('howdo');
