@@ -1,1 +1,1 @@
-require('../utils/hehe');
+alert(require('../utils/hehe') + require('a'));

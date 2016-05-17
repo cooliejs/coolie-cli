@@ -96,7 +96,8 @@ module.exports = function (file, options) {
     var syncRequires = isJS ? parseRequireList(file, {
         code: code,
         async: false,
-        srcDirname: options.srcDirname
+        srcDirname: options.srcDirname,
+        srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
     }) : [];
     var syncOutName2IdMap = {};
     var syncDepFileMap = {};

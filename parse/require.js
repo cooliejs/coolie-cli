@@ -85,7 +85,8 @@ module.exports = function (file, options) {
             // 依赖模块的描述文件
             var reqPkg = require(path.join(fromDirname, name, PACKAGE_JSON));
             var main = reqPkg.main || 'index.js';
-            id = path.join(fromDirname, main);
+
+            id = path.join(fromDirname, name, main);
         }
 
         var extname = path.extname(id);
