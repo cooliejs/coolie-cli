@@ -12,7 +12,7 @@ var assert = require('assert');
 
 var base64 = require('../../utils/base64.js');
 
-var base64File = path.join(__dirname, './base64.js');
+var base64File = path.join(__dirname, './src/base64.js');
 
 describe('utils/base64.js', function () {
     it('base64.string', function () {
