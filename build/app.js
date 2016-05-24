@@ -128,7 +128,7 @@ module.exports = function (options) {
         var buildMainRet = buildMain(mainFile, {
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
-            srcCoolieConfigBaseDirname: options.srcCoolieConfigMainModulesDirname,
+            srcCoolieConfigMainModulesDirname: options.srcCoolieConfigMainModulesDirname,
             srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname,
             destDirname: options.destDirname,
             destJSDirname: options.destJSDirname,

@@ -15,8 +15,8 @@ var minifyHTML = require('../../minify/html.js');
 
 var srcDirname = path.join(__dirname, 'src/');
 var file = path.join(srcDirname, 'html.html');
-var srcCoolieConfigBaseDirname = path.join(srcDirname, './');
-var srcMainPath = path.join(srcCoolieConfigBaseDirname, 'html-main.js');
+var srcCoolieConfigMainModulesDirname = path.join(srcDirname, './');
+var srcMainPath = path.join(srcCoolieConfigMainModulesDirname, 'html-main.js');
 var destDirname = path.join(__dirname, 'dest/');
 var destCoolieConfigJSPath = path.join(destDirname, 'static/js/dwdqwdqwdqwdqwdqwdqw312.js');
 var destResourceDirname = path.join(destDirname, 'static/res/');
@@ -37,7 +37,7 @@ describe('minify/html.js', function () {
             destCSSDirname: destCSSDirname,
             destResourceDirname: destResourceDirname,
             destHost: '/',
-            srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname,
+            srcCoolieConfigMainModulesDirname: srcCoolieConfigMainModulesDirname,
             destCoolieConfigJSPath: destCoolieConfigJSPath,
             minifyJS: true,
             minifyCSS: true,

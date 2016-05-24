@@ -20,7 +20,7 @@ var destDirname = path.join(__dirname, 'dest/');
 var destCoolieConfigJSURI = 'static/js/eb21eac7c7c8278c7bf0c208efbfd663.js';
 var destCoolieConfigJSPath = path.join(destDirname, destCoolieConfigJSURI);
 var destJSDirname = path.join(destDirname, 'static/js/');
-var srcCoolieConfigBaseDirname = path.join(srcDirname, 'static/js/app/');
+var srcCoolieConfigMainModulesDirname = path.join(srcDirname, 'static/js/app/');
 var srcMainPath = path.join(srcDirname, 'static/js/app/user/index.js');
 var mainVersionMap = {};
 
@@ -31,7 +31,7 @@ describe('replace/html-tag-script-attr.js', function () {
         var ret = replaceHTMLTagScriptContent(file, {
             code: code,
             srcDirname: srcDirname,
-            srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname,
+            srcCoolieConfigMainModulesDirname: srcCoolieConfigMainModulesDirname,
             destDirname: destDirname,
             destJSDirname: destJSDirname,
             mainVersionMap: mainVersionMap,

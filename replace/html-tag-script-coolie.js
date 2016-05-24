@@ -38,7 +38,7 @@ var REG_SPACE = /\s+/g;
 var defaults = {
     code: '',
     srcDirname: null,
-    srcCoolieConfigBaseDirname: null,
+    srcCoolieConfigMainModulesDirname: null,
     destJSDirname: null,
     destDirname: null,
     destHost: '/',
@@ -121,6 +121,9 @@ module.exports = function (file, options) {
             debug.error('coolie script', '`' + DATA_CONFIG + '` is empty');
             return process.exit(1);
         }
+
+        console.log(options);
+        return process.exit(1);
 
         if (!options.srcCoolieConfigMainModulesDirname) {
             debug.error('coolie script', path.toSystem(file));

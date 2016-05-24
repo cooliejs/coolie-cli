@@ -13,7 +13,7 @@ var path = require('ydr-utils').path;
 var buildHTML = require('../../build/html.js');
 
 var srcDirname = path.join(__dirname, 'src/');
-var srcCoolieConfigBaseDirname = path.join(srcDirname, './');
+var srcCoolieConfigMainModulesDirname = path.join(srcDirname, './');
 var destDirname = path.join(__dirname, 'dest/');
 var destCoolieConfigJSPath = path.join(destDirname, 'static/js/dwdqwdqwdqwdqwdqwdqw312.js');
 var destResourceDirname = path.join(destDirname, 'static/res/');
@@ -21,7 +21,7 @@ var destJSDirname = path.join(destDirname, 'static/js/');
 var destCSSDirname = path.join(destDirname, 'static/css/');
 var mainVersionMap = {};
 
-mainVersionMap[path.join(srcCoolieConfigBaseDirname, 'html.js')] = Math.random().toString(32).slice(2);
+mainVersionMap[path.join(srcCoolieConfigMainModulesDirname, 'html.js')] = Math.random().toString(32).slice(2);
 describe('build/html.js', function () {
     it('e', function () {
         var ret = buildHTML({
@@ -35,7 +35,7 @@ describe('build/html.js', function () {
             destCSSDirname: destCSSDirname,
             destResourceDirname: destResourceDirname,
             destHost: '/',
-            srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname,
+            srcCoolieConfigMainModulesDirname: srcCoolieConfigMainModulesDirname,
             destCoolieConfigJSPath: destCoolieConfigJSPath,
             minifyJS: true,
             minifyCSS: true,

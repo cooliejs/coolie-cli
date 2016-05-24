@@ -20,7 +20,7 @@ var destDirname = path.join(__dirname, 'dest/');
 var destCoolieConfigJSURI = 'static/js/eb21eac7c7c8278c7bf0c208efbfd663.js';
 var destCoolieConfigJSPath = path.join(destDirname, destCoolieConfigJSURI);
 var destJSDirname = path.join(destDirname, 'static/js/');
-var srcCoolieConfigBaseDirname = path.join(srcDirname, './');
+var srcCoolieConfigMainModulesDirname = path.join(srcDirname, './');
 var srcMainPath = path.join(srcDirname, 'html-tag-script-coolie.js');
 var mainVersionMap = {};
 
@@ -31,7 +31,7 @@ describe('replace/html-tag-script-coolie.js', function () {
         var ret = replaceHTMLTagScriptCoolie(file, {
             code: code,
             srcDirname: srcDirname,
-            srcCoolieConfigBaseDirname: srcCoolieConfigBaseDirname,
+            srcCoolieConfigMainModulesDirname: srcCoolieConfigMainModulesDirname,
             destDirname: destDirname,
             destJSDirname: destJSDirname,
             mainVersionMap: mainVersionMap,
