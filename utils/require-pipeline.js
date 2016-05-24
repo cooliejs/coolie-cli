@@ -8,6 +8,7 @@
 'use strict';
 
 var path = require('path');
+var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 
 
@@ -63,13 +64,43 @@ var moduleOutTypeMap = {
 
 
 /**
+ * 默认的入口模块类型匹配规则
+ * @type {*[]}
+ */
+var moduleInTypeMatches = [
+    ['js', /^js$/],
+    ['html', /^html$/],
+    ['css', /^css$/],
+    ['json', /^json$/],
+    ['text', /^txt$/]
+];
+
+/**
  * 解析依赖的管道类型
  * @param file
  * @param pipeline
  * @returns {Array}
  */
 module.exports = function (file, pipeline) {
-    pipeline = (pipeline || 'js|js').split('|');
+    var dftInType = 'js';
+    var extension = path.extname(file).slice(1);
+
+    if (extension) {
+        dato.each(moduleInTypeMatches, function (index, rule) {
+            var inType = rule[0];
+            var regexp = rule[1];
+
+            if (regexp.test(extension)) {
+                dftInType = inType;
+                return false;
+            }
+        });
+
+        dftInType = 'file';
+    }
+
+    pipeline = (pipeline ? pipeline.toLowerCase() : dftInType).split('|');
+    
     var inType = pipeline[0];
     var outType = pipeline[1];
 
