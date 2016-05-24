@@ -241,7 +241,6 @@ module.exports = function (options) {
             process.exit(1);
         }
 
-        console.log(coolieConfig);
         configs.coolieConfigMainModulesDir = coolieConfig.mainModulesDir;
         configs.coolieConfigNodeModulesDir = coolieConfig.nodeModulesDir;
         configs.srcCoolieConfigMainModulesDirname = mainModulesDir;

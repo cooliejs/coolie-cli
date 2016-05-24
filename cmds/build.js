@@ -106,10 +106,6 @@ module.exports = function (options) {
     var srcDirname = configs.srcDirname;
     var destDirname = configs.destDirname;
 
-
-    return;
-    return console.log(configs);
-
     buildAPI(configs, middleware);
 
     // 2. 复制文件
