@@ -24,9 +24,9 @@ describe('build/map.js', function () {
         var destPath = buildMap({
             srcDirname: srcDirname,
             destDirname: destDirname,
-            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname,
-            destCoolieConfigChunkDirname: destCoolieConfigChunkDirname,
-            destCoolieConfigAsyncDirname: destCoolieConfigAsyncDirname,
+            destMainModulesDirname: destCoolieConfigBaseDirname,
+            destChunkModulesDirname: destCoolieConfigChunkDirname,
+            destAsyncModulesDirname: destCoolieConfigAsyncDirname,
             buildAPPResult: {
                 mainVersionMap: {},
                 asyncVersionMap: {},

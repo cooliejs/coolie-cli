@@ -204,17 +204,18 @@ module.exports = function (options) {
     // 检查 coolie-config.js 内的 base 路径
     // base 路径必须在 coolie-config.js 以内，否则在构建之后的 main 会指向错误
     check._coolieConfigJS = function () {
-        var coolieConfig = coolieConfigRuntime(coolieConfigJSFile);
-        var mainModulesDir = coolieConfig.mainModulesDir;
+        var coolieConfigs = coolieConfigRuntime(coolieConfigJSFile);
+        var mainModulesDir = coolieConfigs.mainModulesDir;
 
-        if (coolieConfig.global) {
-            dato.each(coolieConfig.global, function (key, val) {
+        if (coolieConfigs.global) {
+            dato.each(coolieConfigs.global, function (key, val) {
                 if (typeis.Boolean(val)) {
                     configs.uglifyJSOptions.global_defs[key] = val;
                 }
             });
         }
 
+        configs.coolieConfigs = coolieConfigs;
         configs.uglifyJSOptions.global_defs.DEBUG = false;
 
         if (!mainModulesDir) {
@@ -241,18 +242,18 @@ module.exports = function (options) {
             process.exit(1);
         }
 
-        configs.coolieConfigMainModulesDir = coolieConfig.mainModulesDir;
-        configs.coolieConfigNodeModulesDir = coolieConfig.nodeModulesDir;
+        configs.coolieConfigMainModulesDir = coolieConfigs.mainModulesDir;
+        configs.coolieConfigNodeModulesDir = coolieConfigs.nodeModulesDir;
         configs.srcCoolieConfigMainModulesDirname = mainModulesDir;
 
-        if (pathURI.isRelativeFile(coolieConfig.nodeModulesDir)) {
-            configs.srcCoolieConfigNodeModulesDirname = path.join(mainModulesDir, coolieConfig.nodeModulesDir);
-            console.log(coolieConfig.nodeModulesDir);
+        if (pathURI.isRelativeFile(coolieConfigs.nodeModulesDir)) {
+            configs.srcCoolieConfigNodeModulesDirname = path.join(mainModulesDir, coolieConfigs.nodeModulesDir);
+            console.log(coolieConfigs.nodeModulesDir);
         } else {
-            configs.srcCoolieConfigNodeModulesDirname = path.join(srcDirname, coolieConfig.nodeModulesDir);
+            configs.srcCoolieConfigNodeModulesDirname = path.join(srcDirname, coolieConfigs.nodeModulesDir);
         }
 
-        configs.destMainModulesDirname = path.join(configs.destDirname, configs.js.dest, coolieConfig.baseDir);
+        configs.destMainModulesDirname = path.join(configs.destDirname, configs.js.dest, coolieConfigs.baseDir);
     };
 
 

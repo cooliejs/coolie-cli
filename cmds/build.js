@@ -139,9 +139,9 @@ module.exports = function (options) {
         cleanCSSOptions: configs.cleanCSSOptions,
         versionLength: configs.versionLength,
         minifyResource: configs.minifyResource,
-        destCoolieConfigBaseDirname: configs.destMainModulesDirname,
-        destCoolieConfigChunkDirname: configs.destChunkModulesDirname,
-        destCoolieConfigAsyncDirname: configs.destAsyncModulesDirname,
+        destMainModulesDirname: configs.destMainModulesDirname,
+        destChunkModulesDirname: configs.destChunkModulesDirname,
+        destAsyncModulesDirname: configs.destAsyncModulesDirname,
         htmlMinifyOptions: configs.htmlMinifyOptions,
         mute: true
     });
@@ -152,10 +152,11 @@ module.exports = function (options) {
     console.log();
     debug.primary('step ' + (++stepIndex) + '/' + stepLength, 'generate coolie.js profile');
     var destCoolieConfigJSPath = replaceCoolieConfig(configs.srcCoolieConfigJSPath, {
+        coolieConfigs: configs.coolieConfigs,
         versionLength: configs.versionLength,
-        destCoolieConfigBaseDirname: configs.destMainModulesDirname,
-        destCoolieConfigChunkDirname: configs.destChunkModulesDirname,
-        destCoolieConfigAsyncDirname: configs.destAsyncModulesDirname,
+        destMainModulesDirname: configs.destMainModulesDirname,
+        destChunkModulesDirname: configs.destChunkModulesDirname,
+        destAsyncModulesDirname: configs.destAsyncModulesDirname,
         srcDirname: srcDirname,
         destDirname: destDirname,
         destJSDirname: configs.destJSDirname,
@@ -203,9 +204,9 @@ module.exports = function (options) {
         srcDirname: srcDirname,
         destDirname: destDirname,
         configs: configs,
-        destCoolieConfigBaseDirname: configs.destMainModulesDirname,
-        destCoolieConfigChunkDirname: configs.destChunkModulesDirname,
-        destCoolieConfigAsyncDirname: configs.destAsyncModulesDirname,
+        destMainModulesDirname: configs.destMainModulesDirname,
+        destChunkModulesDirname: configs.destChunkModulesDirname,
+        destAsyncModulesDirname: configs.destAsyncModulesDirname,
         buildAPPResult: buildAPPResult,
         buildHTMLResult: buildHTMLResult
     });

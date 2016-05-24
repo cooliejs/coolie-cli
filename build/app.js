@@ -36,9 +36,9 @@ var defaults = {
     uglifyJSOptions: null,
     versionLength: 32,
     minifyResource: true,
-    destCoolieConfigBaseDirname: null,
-    destCoolieConfigChunkDirname: null,
-    destCoolieConfigAsyncDirname: null,
+    destMainModulesDirname: null,
+    destChunkModulesDirname: null,
+    destAsyncModulesDirname: null,
     htmlMinifyOptions: null,
     mute: true
 };

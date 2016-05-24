@@ -29,12 +29,8 @@ coolie.config({
         hehe: true,
         CLASSICAL: false
     }
-}).resolveModule(function () {
-    
-}).parseModule(function () {
-    
 }).callback(function () {
-    
+    console.log(1);
 }).callback(function () {
-    
+    console.log(2);
 }).use();

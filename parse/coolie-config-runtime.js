@@ -28,8 +28,6 @@ module.exports = function (file) {
     
     var coolieConfig = {};
     var callbacks = [];
-    var moduleResolver = null;
-    var moduleParser = null;
     var coolieFn = function () {
         var coolie = {
             config: function (cnf) {
@@ -51,22 +49,6 @@ module.exports = function (file) {
                 }
 
                 return coolie;
-            },
-            resolveModule: function (fn) {
-                if(moduleResolver){
-                    return;
-                }
-
-                moduleResolver = fn;
-                return coolie;
-            },
-            parseModule: function (fn) {
-                if(moduleParser){
-                    return;
-                }
-
-                moduleParser = fn;
-                return coolie;
             }
         };
     };
@@ -75,10 +57,10 @@ module.exports = function (file) {
         .replace(reFunctionEnd, '');
 
     /* jshint evil: true */
-    var runtime = new Function('coolieConfig', 'callbacks', 'moduleResolver', 'moduleParser', coolieFnBody + code);
+    var runtime = new Function('coolieConfig', 'callbacks', coolieFnBody + code);
 
     try {
-        runtime(coolieConfig, callbacks, moduleResolver, moduleParser);
+        runtime(coolieConfig, callbacks);
     } catch (err) {
         debug.error('parse coolie.config', path.toSystem(file));
         debug.error('parse coolie.config', err.message);
@@ -86,12 +68,9 @@ module.exports = function (file) {
     }
 
     return {
-        base: coolieConfig.base,
-        baseDir: coolieConfig.baseDir,
         mainModulesDir: coolieConfig.mainModulesDir,
         nodeModulesDir: coolieConfig.nodeModulesDir,
         global: coolieConfig.global,
-        moduleResolver: moduleResolver,
-        moduleParser: moduleParser
+        callbacks: callbacks
     };
 };

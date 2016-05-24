@@ -31,7 +31,7 @@ describe('build/module.js', function () {
             destDirname: destDirname,
             destResourceDirname: destResourceDirname,
             destHost: '/',
-            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname,
+            destMainModulesDirname: destCoolieConfigBaseDirname,
             virtualMap: {}
         });
 
@@ -51,7 +51,7 @@ describe('build/module.js', function () {
             destDirname: destDirname,
             destResourceDirname: destResourceDirname,
             destHost: '/',
-            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname,
+            destMainModulesDirname: destCoolieConfigBaseDirname,
             virtualMap: {}
         });
 

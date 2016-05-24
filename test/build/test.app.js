@@ -41,9 +41,9 @@ describe('build/app.js', function () {
             destJSDirname: destJSDirname,
             destCSSDirname: destCSSDirname,
             destResourceDirname: destResourceDirname,
-            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname,
-            destCoolieConfigChunkDirname: destCoolieConfigChunkDirname,
-            destCoolieConfigAsyncDirname: destCoolieConfigAsyncDirname
+            destMainModulesDirname: destCoolieConfigBaseDirname,
+            destChunkModulesDirname: destCoolieConfigChunkDirname,
+            destAsyncModulesDirname: destCoolieConfigAsyncDirname
         });
 
         console.log(JSON.stringify(ret, null, 4));

@@ -34,9 +34,9 @@ describe('replace/coolie-config.js', function () {
 
         var ret = replaceCoolieConfig(file, {
             versionLength: 32,
-            destCoolieConfigBaseDirname: destCoolieConfigBaseDirname,
-            destCoolieConfigAsyncDirname: destCoolieConfigAsyncDirname,
-            destCoolieConfigChunkDirname: destCoolieConfigChunkDirname,
+            destMainModulesDirname: destCoolieConfigBaseDirname,
+            destAsyncModulesDirname: destCoolieConfigAsyncDirname,
+            destChunkModulesDirname: destCoolieConfigChunkDirname,
             srcDirname: srcDirname,
             destDirname: destDirname,
             destJSDirname: destJSDirname,

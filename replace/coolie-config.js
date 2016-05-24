@@ -45,50 +45,45 @@ module.exports = function (file, options) {
         return null;
     }
 
-    var coolieConfig = {};
-    var asyncMap = {};
-    var chunkMap = {};
+    var coolieConfigs = options.coolieConfigs;
+    var destCoolieConfig = {};
+    var asyncModulesMap = {};
+    var chunkModulesMap = {};
 
     dato.each(options.versionMap, function (_file, _version) {
         var basename = path.basename(_file, '.js');
         var relativeAsync = path.relative(options.destAsyncModulesDirname, _file);
 
         if (reLastPath.test(relativeAsync)) {
-            chunkMap[basename] = _version;
+            chunkModulesMap[basename] = _version;
         } else {
-            asyncMap[basename] = _version;
+            asyncModulesMap[basename] = _version;
         }
     });
 
-    asyncMap = JSON.stringify(asyncMap);
-    chunkMap = JSON.stringify(chunkMap);
-    coolieConfig.asyncDir = path.toURI(path.relative(options.destMainModulesDirname, options.destAsyncModulesDirname)) + '/';
-    coolieConfig.chunkDir = path.toURI(path.relative(options.destMainModulesDirname, options.destChunkModulesDirname)) + '/';
+    asyncModulesMap = JSON.stringify(asyncModulesMap);
+    chunkModulesMap = JSON.stringify(chunkModulesMap);
+    destCoolieConfig.mainModulesDir = coolieConfigs.mainModulesDir;
+    destCoolieConfig.asyncModulesDir = path.toURI(path.relative(options.destMainModulesDirname, options.destAsyncModulesDirname)) + '/';
+    destCoolieConfig.chunkModulesDir = path.toURI(path.relative(options.destMainModulesDirname, options.destChunkModulesDirname)) + '/';
 
-    debug.success('coolie-config.js', 'baseDir: "' + coolieConfig.baseDir + '"');
-    debug.success('coolie-config.js', 'asyncDir: "' + coolieConfig.asyncDir + '"');
-    debug.success('coolie-config.js', 'chunkDir: "' + coolieConfig.chunkDir + '"');
-    debug.success('coolie-config.js', 'callbacks: ' + callbacks.length);
+    debug.success('coolie-config.js', 'mainModulesDir: "' + destCoolieConfig.mainModulesDir + '"');
+    debug.success('coolie-config.js', 'asyncModulesDir: "' + destCoolieConfig.asyncModulesDir + '"');
+    debug.success('coolie-config.js', 'chunkModulesDir: "' + destCoolieConfig.chunkModulesDir + '"');
+    debug.success('coolie-config.js', 'callbacks: ' + coolieConfigs.callbacks.length);
 
-    var code2 = 'coolie.config({\n';
+    var destCoolieConfigCode = 'coolie.config({\n';
     var configList = [];
-    var ignoreMap = {
-        debug: 1,
-        mode: 1
-    };
+
 
     configList.push('debug: false');
     configList.push('mode: "AMD"');
-    configList.push('asyncMap: ' + asyncMap);
-    configList.push('chunkMap: ' + chunkMap);
+    configList.push('asyncModulesMap: ' + asyncModulesMap);
+    configList.push('chunkModulesMap: ' + chunkModulesMap);
     configList.push('built: ' + '"' + pkg.name + '@' + pkg.version + '"');
 
-    dato.each(coolieConfig, function (key, val) {
+    dato.each(destCoolieConfig, function (key, val) {
         var one = '';
-
-        if (ignoreMap[key]) {
-            return;
-        }
 
         if (typeof val === 'object') {
             one = key + ':' + JSON.stringify(val);
@@ -107,30 +102,30 @@ module.exports = function (file, options) {
         return '    ' + item;
     });
 
-    code2 += configList.join(',\n');
-    code2 += '\n}).use()';
+    destCoolieConfigCode += configList.join(',\n');
+    destCoolieConfigCode += '\n}).use()';
 
-    dato.each(callbacks, function (index, callback) {
-        code2 += '.callback(' + callback.toString() + ')';
+    dato.each(coolieConfigs.callbacks, function (index, callback) {
+        destCoolieConfigCode += '.callback(' + callback.toString() + ')';
     });
 
-    code2 += ';';
+    destCoolieConfigCode += ';';
 
-    var code3 = minifyJS(file, {
-        code: code2,
+    var minifyedDestCoolieConfigCode = minifyJS(file, {
+        code: destCoolieConfigCode,
         uglifyJSOptions: options.uglifyJSOptions
     });
-    var destCoolieConfigJSPath = encryption.md5(code3).slice(0, options.versionLength) + '.js';
+    var destCoolieConfigJSPath = encryption.md5(minifyedDestCoolieConfigCode).slice(0, options.versionLength) + '.js';
 
     if (options.sign) {
-        code3 = sign('js') + '\n' + code3;
+        minifyedDestCoolieConfigCode = sign('js') + '\n' + minifyedDestCoolieConfigCode;
     }
 
     destCoolieConfigJSPath = path.join(options.destJSDirname, destCoolieConfigJSPath);
     var destCoolieConfigJSURI = pathURI.toRootURL(destCoolieConfigJSPath, options.srcDirname);
 
     try {
-        fse.outputFileSync(destCoolieConfigJSPath, code3, 'utf8');
+        fse.outputFileSync(destCoolieConfigJSPath, minifyedDestCoolieConfigCode, 'utf8');
         debug.success('coolie-config.js', destCoolieConfigJSURI);
     } catch (err) {
         debug.error('coolie-config.js', destCoolieConfigJSPath);
@@ -138,7 +133,6 @@ module.exports = function (file, options) {
     }
 
     return destCoolieConfigJSPath;
-
 };
 
 
