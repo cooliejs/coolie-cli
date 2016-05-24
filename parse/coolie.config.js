@@ -19,37 +19,12 @@ var copy = require('../utils/copy.js');
 var guessDirname = require('../utils/guess-dirname.js');
 var pathURI = require('../utils/path-uri.js');
 var pkg = require('../package.json');
+var coolieConfigRuntime = require('./coolie-config-runtime');
 
 var DEBUG = !Boolean(pkg.dist || pkg.publish_time);
 var coolieConfigJSFile;
 var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
 var REG_FUNCTION_END = /}$/;
-var coolieConfig = {};
-var callbacks = [];
-var coolieFn = function () {
-    var coolie = {
-        config: function (cnf) {
-            cnf = cnf || {};
-
-            config.baseDir = cnf.baseDir || '';
-            config.nodeModulesDir = cnf.nodeModulesDir || '';
-            config.debug = cnf.debug !== false;
-            config.global = cnf.global || {};
-
-            return coolie;
-        },
-        use: function () {
-            return coolie;
-        },
-        callback: function (fn) {
-            if (typeof(fn) === 'function') {
-                callbacks.push(fn);
-            }
-
-            return coolie;
-        }
-    };
-};
 
 
 /**
@@ -229,32 +204,8 @@ module.exports = function (options) {
     // 检查 coolie-config.js 内的 base 路径
     // base 路径必须在 coolie-config.js 以内，否则在构建之后的 main 会指向错误
     check._coolieConfigJS = function () {
-        var code;
-
-        try {
-            code = fse.readFileSync(coolieConfigJSFile, 'utf8');
-        } catch (err) {
-            debug.error('parse coolie.config', path.toSystem(coolieConfigJSFile));
-            debug.error('read file', path.toSystem(coolieConfigJSFile));
-            debug.error('read file', err.message);
-            process.exit(1);
-        }
-
-        var coolieString = coolieFn.toString()
-            .replace(REG_FUNCTION_START, '')
-            .replace(REG_FUNCTION_END, '');
-        /* jshint evil: true */
-        var fn = new Function('config, callbacks', coolieString + code);
-        var basePath;
-
-        try {
-            fn(coolieConfig, callbacks);
-            basePath = coolieConfig.baseDir;
-        } catch (err) {
-            debug.error('parse coolie.config', path.toSystem(coolieConfigJSFile));
-            debug.error('parse coolie.config', err.message);
-            return process.exit(1);
-        }
+        var coolieConfig = coolieConfigRuntime(coolieConfigJSFile);
+        var basePath = coolieConfig.mainModulesDir;
 
         if (coolieConfig.global) {
             dato.each(coolieConfig.global, function (key, val) {

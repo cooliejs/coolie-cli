@@ -24,6 +24,8 @@ var REG_FUNCTION_END = /}$/;
 var coolieConfig = {};
 var config = {};
 var callbacks = [];
+var moduleResolver = null;
+var moduleParser = null;
 var coolieFn = function () {
     var coolie = {
         config: function (_configs) {
@@ -44,7 +46,24 @@ var coolieFn = function () {
             }
 
             return coolie;
+        },
+        resolveModule: function (fn) {
+            if(moduleResolver){
+                return;
+            }
+
+            moduleResolver = fn;
+            return coolie;
+        },
+        parseModule: function (fn) {
+            if(moduleParser){
+                return;
+            }
+
+            moduleParser = fn;
+            return coolie;
         }
+        
     };
 };
 var reLastPath = /^\.{2}\//;
