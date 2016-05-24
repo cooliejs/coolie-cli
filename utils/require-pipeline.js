@@ -78,14 +78,15 @@ var moduleInTypeMatches = [
 /**
  * 解析依赖的管道类型
  * @param file
+ * @param name
  * @param pipeline
  * @returns {Array}
  */
-module.exports = function (file, pipeline) {
+module.exports = function (file, name, pipeline) {
     var dftInType = 'js';
-    var extension = path.extname(file).slice(1);
+    var extension = path.extname(name).slice(1);
 
-    if (extension) {
+    if (extension && !pipeline) {
         dato.each(moduleInTypeMatches, function (index, rule) {
             var inType = rule[0];
             var regexp = rule[1];
@@ -96,11 +97,11 @@ module.exports = function (file, pipeline) {
             }
         });
 
-        dftInType = 'file';
+        dftInType = dftInType || 'file';
     }
 
     pipeline = (pipeline ? pipeline.toLowerCase() : dftInType).split('|');
-    
+
     var inType = pipeline[0];
     var outType = pipeline[1];
 
@@ -113,6 +114,8 @@ module.exports = function (file, pipeline) {
 
     var dfnOutType = moduleOutTypeMap[inType];
     outType = dfnOutType[outType] ? outType : dfnOutType.d;
+
+    console.log(file, name, inType, outType);
 
     return [inType, outType];
 };

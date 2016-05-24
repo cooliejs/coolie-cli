@@ -8,6 +8,7 @@
 'use strict';
 
 var Uglify = require("uglify-js");
+var debug = require('ydr-utils').debug;
 
 var requirePipeline = require('../utils/require-pipeline.js');
 var parseRequireNodeList = require('../parse/require-node-list.js');
@@ -35,10 +36,17 @@ module.exports = function (file, options) {
         var endPos = arg0.start.endpos + offset;
         var name = arg0.value;
         var nameLength = name.length;
-        var pipeLine =requirePipeline(async ? '' : (arg1 && arg1.value || ''));
+        var pipeLine = requirePipeline(file, name, async ? '' : (arg1 && arg1.value || ''));
         var outType = pipeLine[1];
-        var outName =  name + '|' + outType;
+        var outName = name + '|' + outType;
         var replaceValue = outName2IdMap[outName];
+
+        if (!replaceValue) {
+            debug.error('replace error', '未找到 ' + name + ' 构建之后的 ID');
+            debug.error('replace file', file);
+            return process.exit(1);
+        }
+
         var replacement = new Uglify.AST_String({
             value: replaceValue,
             quote: arg0.quote

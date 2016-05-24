@@ -50,6 +50,7 @@ var defaults = {
  * @param options.chunk {String|Array} chunk 配置
  * @param options.minDependingCount2Chunk {Number} 最小引用次数分离 chunk
  * @param options.srcDirname {String} 原始目录
+ * @param options.coolieConfigs {String} coolie-configs.js 配置
  * @param options.srcCoolieConfigMainModulesDirname {String} base 根目录
  * @param options.srcCoolieConfigNodeModulesDirname {String} node_modules 根目录
  * @param options.destDirname {String} 目标目录
@@ -83,6 +84,7 @@ module.exports = function (options) {
         glob: options.glob,
         srcDirname: options.srcDirname,
         globOptions: options.globOptions,
+        coolieConfigs: options.coolieConfigs,
         srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
     });
     var mainMap = parseMainRet.mainMap;
@@ -128,6 +130,7 @@ module.exports = function (options) {
         var buildMainRet = buildMain(mainFile, {
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
+            coolieConfigs: options.coolieConfigs,
             srcCoolieConfigMainModulesDirname: options.srcCoolieConfigMainModulesDirname,
             srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname,
             destDirname: options.destDirname,

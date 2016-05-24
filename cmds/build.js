@@ -128,6 +128,7 @@ module.exports = function (options) {
         glob: configs.js.main,
         chunk: configs.js.chunk,
         srcDirname: srcDirname,
+        coolieConfigs: configs.coolieConfigs,
         srcCoolieConfigMainModulesDirname: configs.srcCoolieConfigMainModulesDirname,
         srcCoolieConfigNodeModulesDirname: configs.srcCoolieConfigNodeModulesDirname,
         destDirname: destDirname,

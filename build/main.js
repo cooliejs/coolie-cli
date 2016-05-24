@@ -39,6 +39,7 @@ var defaults = {
  * @param file {String} 入口路径
  * @param options {Object} 配置
  * @param options.srcDirname {String} 原始目录
+ * @param options.coolieConfigs {String} coolie-configs.js 配置
  * @param options.srcCoolieConfigMainModulesDirname {String} base 根目录
  * @param options.srcCoolieConfigNodeModulesDirname {String} node_modules 根目录
  * @param options.destDirname {String} 目标目录
@@ -79,6 +80,7 @@ module.exports = function (file, options) {
             parent: options.parent,
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
+            coolieConfigs: options.coolieConfigs,
             srcCoolieConfigMainModulesDirname: options.srcCoolieConfigMainModulesDirname,
             srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname,
             destDirname: options.destDirname,

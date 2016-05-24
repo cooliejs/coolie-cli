@@ -35,6 +35,7 @@ module.exports = function (file) {
 
                 coolieConfig.mainModulesDir = cnf.mainModulesDir || '';
                 coolieConfig.nodeModulesDir = cnf.nodeModulesDir || '';
+                coolieConfig.nodeModuleMainPath = cnf.nodeModuleMainPath || '';
                 coolieConfig.debug = cnf.debug !== false;
                 coolieConfig.global = cnf.global || {};
 
@@ -70,6 +71,7 @@ module.exports = function (file) {
     return {
         mainModulesDir: coolieConfig.mainModulesDir,
         nodeModulesDir: coolieConfig.nodeModulesDir,
+        nodeModuleMainPath: coolieConfig.nodeModuleMainPath,
         global: coolieConfig.global,
         callbacks: callbacks
     };

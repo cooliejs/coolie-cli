@@ -30,20 +30,24 @@ var reRelative = /^\.{1,2}\//;
  * @param options.async {Boolean} 是否为异步 require
  * @param options.srcDirname {String} 构建目录
  * @param options.srcCoolieConfigNodeModulesDirname {String} node_modules 根目录
+ * @param options.coolieConfigs {Object} coolie-configs 配置
  * @returns {Array}
  */
 module.exports = function (file, options) {
     var code = options.code;
     var requireList = [];
     var nodeList = parseRequireNodeList(code, options.async);
+    var coolieConfigs = options.coolieConfigs;
+    var nodeModuleMainPath = coolieConfigs.nodeModuleMainPath;
+
     var parser = function (node) {
         var async = node.expression.property === 'async';
         var arg0 = node.args[0];
         var arg1 = node.args[1];
-        var pipeLine = requirePipeline(file, async ? '' : (arg1 && arg1.value || ''));
+        var name = arg0.value;
+        var pipeLine = requirePipeline(file, name, async ? '' : (arg1 && arg1.value || ''));
         var inType = pipeLine[0];
         var outType = pipeLine[1];
-        var name = arg0.value;
         var id;
 
         // 相对于根目录
@@ -56,37 +60,42 @@ module.exports = function (file, options) {
         }
         // 相对于 node_modules 目录
         else {
-            // 找到最近的 node_modules
-            var closestNodeModulesDirname = pathURI.closest(file, NODE_MODULES, options.srcDirname);
-            var fromDirname;
+            // // 找到最近的 node_modules
+            // var closestNodeModulesDirname = pathURI.closest(file, NODE_MODULES, options.srcDirname);
+            // var fromDirname;
+            //
+            // if (closestNodeModulesDirname) {
+            //     // // 当前模块的描述文件
+            //     // var pkg = require(path.join(closestNodeModulesDirname, PACKAGE_JSON));
+            //     //
+            //     // pkg.dependencies = pkg.dependencies || {};
+            //     // pkg.devDependencies = pkg.devDependencies || {};
+            //     // pkg.peerDependencies = pkg.peerDependencies || {};
+            //     //
+            //     // // 从子的 node_modules 开始找
+            //     // if (pkg.dependencies[name] || pkg.devDependencies[name]) {
+            //     //     fromDirname = path.join(closestNodeModulesDirname, NODE_MODULES);
+            //     // }
+            //     // // 根目录的 node_modules 开始
+            //     // else {
+            //     //     fromDirname = options.srcCoolieConfigNodeModulesDirname;
+            //     // }
+            // }
+            // // 根目录的 node_modules 开始
+            // else {
+            //     fromDirname = options.srcCoolieConfigNodeModulesDirname;
+            // }
 
-            if (closestNodeModulesDirname) {
-                // 当前模块的描述文件
-                var pkg = require(path.join(closestNodeModulesDirname, PACKAGE_JSON));
 
-                pkg.dependencies = pkg.dependencies || {};
-                pkg.devDependencies = pkg.devDependencies || {};
-                pkg.peerDependencies = pkg.peerDependencies || {};
+            var fromDirname = path.join(options.srcCoolieConfigNodeModulesDirname, name);
 
-                // 从子的 node_modules 开始找
-                if (pkg.dependencies[name] || pkg.devDependencies[name]) {
-                    fromDirname = path.join(closestNodeModulesDirname, NODE_MODULES);
-                }
-                // 根目录的 node_modules 开始
-                else {
-                    fromDirname = options.srcCoolieConfigNodeModulesDirname;
-                }
+            if (nodeModuleMainPath) {
+                id = path.join(fromDirname, nodeModuleMainPath);
+            } else {
+                // 依赖模块的描述文件
+                var reqPkg = require(path.join(fromDirname, PACKAGE_JSON));
+                id = path.join(fromDirname, reqPkg.main || 'index.js');
             }
-            // 根目录的 node_modules 开始
-            else {
-                fromDirname = options.srcCoolieConfigNodeModulesDirname;
-            }
-
-            // 依赖模块的描述文件
-            var reqPkg = require(path.join(fromDirname, name, PACKAGE_JSON));
-            var main = reqPkg.main || 'index.js';
-
-            id = path.join(fromDirname, name, main);
         }
 
         var extname = path.extname(id);
@@ -108,6 +117,8 @@ module.exports = function (file, options) {
     };
 
     nodeList.forEach(parser);
+
+    // console.log(requireList);
 
     return requireList;
 };

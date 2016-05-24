@@ -35,6 +35,7 @@ var defaults = {
  * @param options.glob {String|Array} 配置
  * @param options.globOptions {Object} glob 配置
  * @param options.srcDirname {String} 原始目录
+ * @param options.coolieConfigs {String} coolie-configs.js 配置
  * @param options.srcCoolieConfigNodeModulesDirname {String} node_modules 根目录
  */
 module.exports = function (options) {
@@ -81,6 +82,7 @@ module.exports = function (options) {
                 code: code,
                 async: true,
                 srcDirname: options.srcDirname,
+                coolieConfigs: options.coolieConfigs,
                 srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
             });
 
@@ -93,6 +95,7 @@ module.exports = function (options) {
                 code: code,
                 async: false,
                 srcDirname: options.srcDirname,
+                coolieConfigs: options.coolieConfigs,
                 srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
             });
 
