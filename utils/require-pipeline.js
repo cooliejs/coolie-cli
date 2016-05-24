@@ -115,8 +115,6 @@ module.exports = function (file, name, pipeline) {
     var dfnOutType = moduleOutTypeMap[inType];
     outType = dfnOutType[outType] ? outType : dfnOutType.d;
 
-    console.log(file, name, inType, outType);
-
     return [inType, outType];
 };
 

@@ -158,6 +158,7 @@ module.exports = function (options) {
         destMainModulesDirname: configs.destMainModulesDirname,
         destChunkModulesDirname: configs.destChunkModulesDirname,
         destAsyncModulesDirname: configs.destAsyncModulesDirname,
+        destCoolieConfigMainModulesDir: configs.destCoolieConfigMainModulesDir,
         srcDirname: srcDirname,
         destDirname: destDirname,
         destJSDirname: configs.destJSDirname,

@@ -16,15 +16,13 @@ var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 
 var copy = require('../utils/copy.js');
-var guessDirname = require('../utils/guess-dirname.js');
+var guessDirnameName = require('../utils/guess-dirname.js');
 var pathURI = require('../utils/path-uri.js');
 var pkg = require('../package.json');
 var coolieConfigRuntime = require('./coolie-config-runtime');
 
 var DEBUG = !Boolean(pkg.dist || pkg.publish_time);
 var coolieConfigJSFile;
-var REG_FUNCTION_START = /^function\s*?\(\s*\)\s*\{/;
-var REG_FUNCTION_END = /}$/;
 
 
 /**
@@ -66,6 +64,12 @@ module.exports = function (options) {
      */
     coolie.config = function (_configs) {
         dato.extend(configs, _configs);
+
+        dato.extend(configs, {
+            srcDirname: srcDirname,
+            configPath: srcCoolieConfigJSPath
+        });
+
         return coolie;
     };
 
@@ -103,6 +107,50 @@ module.exports = function (options) {
     // 检查文件
     check.file = function () {
         require(srcCoolieConfigJSPath)(coolie);
+    };
+
+
+    // 检查 dest 路径
+    // dest: {
+    //     dirname: '',
+    //     host: ''
+    //     versionLength: 32
+    // }
+    check.dest = function () {
+        if (!typeis.object(configs.dest)) {
+            debug.error('parse coolie.config', '`dest` property must be an object');
+            process.exit(1);
+        }
+
+        if (!typeis.string(configs.dest.dirname)) {
+            debug.error('parse coolie.config', '`dest.dirname` property must be a direction name');
+            process.exit(1);
+        }
+
+        configs.destDirname = path.join(srcDirname, configs.dest.dirname);
+        configs.destJSDirname = path.join(configs.destDirname, configs.js.dest);
+        configs.destCSSDirname = path.join(configs.destDirname, configs.css.dest);
+        configs.destResourceDirname = path.join(configs.destDirname, configs.resource.dest);
+        configs.dest.host = configs.dest.host || '/';
+
+        if (!typeis.String(configs.dest.host) && !typeis.Function(configs.dest.host)) {
+            debug.error('parse coolie.config', '`dest.host` property must be an URL string');
+            process.exit(1);
+        }
+
+        configs.dest.versionLength = configs.dest.versionLength || 32;
+        configs.destHost = configs.dest.host;
+        configs.versionLength = configs.dest.versionLength;
+
+        if (configs.clean) {
+            try {
+                fse.emptyDirSync(configs.destDirname);
+            } catch (err) {
+                debug.error('clean dest dirname', path.toSystem(configs.destDirname));
+                debug.error('clean dest dirname', err.message);
+                return process.exit(1);
+            }
+        }
     };
 
 
@@ -198,6 +246,10 @@ module.exports = function (options) {
             minify: Boolean(configs.js.minify),
             global_defs: configs.js.minify ? configs.js.minify.global_defs || {} : {}
         };
+
+        if (!configs._noCoolieJS) {
+            check._coolieConfigJS();
+        }
     };
 
 
@@ -256,7 +308,9 @@ module.exports = function (options) {
             configs.srcCoolieConfigNodeModulesDirname = path.join(srcDirname, coolieConfigs.nodeModulesDir);
         }
 
-        configs.destMainModulesDirname = path.join(configs.destDirname, configs.js.dest, coolieConfigs.baseDir);
+        var guessMainName = guessDirnameName(configs.destJSDirname, 'main');
+        configs.destMainModulesDirname = path.join(configs.destDirname, configs.js.dest, guessMainName);
+        configs.destCoolieConfigMainModulesDir = '/' + path.relative(configs.destDirname, configs.destMainModulesDirname) + '/';
     };
 
 
@@ -384,44 +438,6 @@ module.exports = function (options) {
     };
 
 
-    // 检查 dest 路径
-    // dest: {
-    //     dirname: '',
-    //     host: ''
-    //     versionLength: 32
-    // }
-    check.dest = function () {
-        if (!typeis.object(configs.dest)) {
-            debug.error('parse coolie.config', '`dest` property must be an object');
-            process.exit(1);
-        }
-
-        if (!typeis.string(configs.dest.dirname)) {
-            debug.error('parse coolie.config', '`dest.dirname` property must be a direction name');
-            process.exit(1);
-        }
-
-        configs.destDirname = path.join(srcDirname, configs.dest.dirname);
-        configs.destJSDirname = path.join(configs.destDirname, configs.js.dest);
-        configs.destCSSDirname = path.join(configs.destDirname, configs.css.dest);
-        configs.destResourceDirname = path.join(configs.destDirname, configs.resource.dest);
-        configs.dest.host = configs.dest.host || '/';
-
-        if (!typeis.String(configs.dest.host) && !typeis.Function(configs.dest.host)) {
-            debug.error('parse coolie.config', '`dest.host` property must be an URL string');
-            process.exit(1);
-        }
-
-        configs.dest.versionLength = configs.dest.versionLength || 32;
-        configs.destHost = configs.dest.host;
-        configs.versionLength = configs.dest.versionLength;
-
-        if (!configs._noCoolieJS) {
-            check._coolieConfigJS();
-        }
-    };
-
-
     // 检查复制
     check.copy = function () {
         if (configs.copy) {
@@ -450,46 +466,29 @@ module.exports = function (options) {
 
     // 猜想 chunk 目录
     check.chunk = function () {
-        if (configs.clean) {
-            try {
-                fse.emptyDirSync(configs.destDirname);
-            } catch (err) {
-                debug.error('clean dest dirname', path.toSystem(configs.destDirname));
-                debug.error('clean dest dirname', err.message);
-                return process.exit(1);
-            }
-        }
+        var guessChunkName = guessDirnameName(configs.destJSDirname, 'chunk');
 
-        var srcChunkDirname = guessDirname(configs.destJSDirname, 'chunk');
-        var relative = path.relative(srcDirname, srcChunkDirname);
-
-        configs.destChunkModulesDirname = path.join(configs.destDirname, relative);
+        configs.destChunkModulesDirname = path.join(configs.destDirname, configs.js.dest, guessChunkName);
     };
 
 
     // 猜想 async 目录
     check.async = function () {
-        var srcAsyncDirname = guessDirname(configs.destJSDirname, 'async');
-        var relative = path.relative(srcDirname, srcAsyncDirname);
+        var guessAsyncName = guessDirnameName(configs.destJSDirname, 'async');
 
-        configs.destAsyncModulesDirname = path.join(configs.destDirname, relative);
+        configs.destAsyncModulesDirname = path.join(configs.destDirname, configs.js.dest, guessAsyncName);
     };
 
 
     check.file();
+    check.dest();
     check.js();
     check.html();
     check.css();
     check.resource();
-    check.dest();
     check.copy();
     check.chunk();
     check.async();
-
-    dato.extend(configs, {
-        srcDirname: srcDirname,
-        configPath: srcCoolieConfigJSPath
-    });
 
     debug.success('coolie config', path.toSystem(configs.configPath));
     debug.success('src dirname', configs.srcDirname);

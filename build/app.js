@@ -63,7 +63,7 @@ var defaults = {
  * @param options.versionLength {Number} 版本号长度
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.cleanCSSOptions {Object} clean-css 配置
- * @param options.destMainModulesDirname {String} coolie-config:base 目录
+ * @param options.destMainModulesDirname {String} coolie-config:main 目录
  * @param options.destChunkModulesDirname {String} coolie-config:chunk 目录
  * @param options.destAsyncModulesDirname {String} coolie-config:async 目录
  * @param options.htmlMinifyOptions {Object} 压缩 html 配置

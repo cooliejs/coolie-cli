@@ -30,6 +30,7 @@ var reLastPath = /^\.{2}\//;
  * @param options.destMainModulesDirname {String} 目标 coolie-config.js:base 目录
  * @param options.destAsyncModulesDirname {String} 目标 coolie-config.js:async 目录
  * @param options.destChunkModulesDirname {String} 目标 coolie-config.js:chunk 目录
+ * @param options.destCoolieConfigMainModulesDir {String} 目标 coolie-config.js: 目录名称
  * @param options.srcDirname {String} 构建根目录
  * @param options.destDirname {String} 目标目录
  * @param options.versionMap {Object} 版本配置 {file: version}
@@ -63,7 +64,7 @@ module.exports = function (file, options) {
 
     asyncModulesMap = JSON.stringify(asyncModulesMap);
     chunkModulesMap = JSON.stringify(chunkModulesMap);
-    destCoolieConfig.mainModulesDir = coolieConfigs.mainModulesDir;
+    destCoolieConfig.mainModulesDir = options.destCoolieConfigMainModulesDir;
     destCoolieConfig.asyncModulesDir = path.toURI(path.relative(options.destMainModulesDirname, options.destAsyncModulesDirname)) + '/';
     destCoolieConfig.chunkModulesDir = path.toURI(path.relative(options.destMainModulesDirname, options.destChunkModulesDirname)) + '/';
 
