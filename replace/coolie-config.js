@@ -73,9 +73,9 @@ var reLastPath = /^\.{2}\//;
  * 构建配置文件
  * @param file {String} 文件内容
  * @param options {Object} 配置
- * @param options.destCoolieConfigBaseDirname {String} 目标 coolie-config.js:base 目录
- * @param options.destCoolieConfigAsyncDirname {String} 目标 coolie-config.js:async 目录
- * @param options.destCoolieConfigChunkDirname {String} 目标 coolie-config.js:chunk 目录
+ * @param options.destMainModulesDirname {String} 目标 coolie-config.js:base 目录
+ * @param options.destAsyncModulesDirname {String} 目标 coolie-config.js:async 目录
+ * @param options.destChunkModulesDirname {String} 目标 coolie-config.js:chunk 目录
  * @param options.srcDirname {String} 构建根目录
  * @param options.destDirname {String} 目标目录
  * @param options.versionMap {Object} 版本配置 {file: version}
@@ -86,7 +86,7 @@ var reLastPath = /^\.{2}\//;
  * @returns {String}
  */
 module.exports = function (file, options) {
-    if (!options.destCoolieConfigBaseDirname) {
+    if (!options.destMainModulesDirname) {
         debug.ignore('overide config', '`coolie-config.js` is not defined');
         return null;
     }
@@ -108,7 +108,7 @@ module.exports = function (file, options) {
 
         dato.each(versionMap, function (_file, _version) {
             var basename = path.basename(_file, '.js');
-            var relativeAsync = path.relative(options.destCoolieConfigAsyncDirname, _file);
+            var relativeAsync = path.relative(options.destAsyncModulesDirname, _file);
 
             if(reLastPath.test(relativeAsync)){
                 chunkMap[basename] = _version;
@@ -119,8 +119,8 @@ module.exports = function (file, options) {
 
         asyncMap = JSON.stringify(asyncMap);
         chunkMap = JSON.stringify(chunkMap);
-        coolieConfig.asyncDir = path.toURI(path.relative(options.destCoolieConfigBaseDirname, options.destCoolieConfigAsyncDirname)) + '/';
-        coolieConfig.chunkDir = path.toURI(path.relative(options.destCoolieConfigBaseDirname, options.destCoolieConfigChunkDirname)) + '/';
+        coolieConfig.asyncDir = path.toURI(path.relative(options.destMainModulesDirname, options.destAsyncModulesDirname)) + '/';
+        coolieConfig.chunkDir = path.toURI(path.relative(options.destMainModulesDirname, options.destChunkModulesDirname)) + '/';
 
         debug.success('coolie-config.js', 'baseDir: "' + coolieConfig.baseDir + '"');
         debug.success('coolie-config.js', 'asyncDir: "' + coolieConfig.asyncDir + '"');

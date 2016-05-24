@@ -205,7 +205,7 @@ module.exports = function (options) {
     // base 路径必须在 coolie-config.js 以内，否则在构建之后的 main 会指向错误
     check._coolieConfigJS = function () {
         var coolieConfig = coolieConfigRuntime(coolieConfigJSFile);
-        var basePath = coolieConfig.mainModulesDir;
+        var mainModulesDir = coolieConfig.mainModulesDir;
 
         if (coolieConfig.global) {
             dato.each(coolieConfig.global, function (key, val) {
@@ -217,7 +217,7 @@ module.exports = function (options) {
 
         configs.uglifyJSOptions.global_defs.DEBUG = false;
 
-        if (!basePath) {
+        if (!mainModulesDir) {
             debug.error('parse coolie.config', path.toSystem(coolieConfigJSFile));
             debug.error('parse coolie.config', 'config.baseDir 未指定');
             return process.exit(1);
@@ -226,34 +226,34 @@ module.exports = function (options) {
         var coolieConfigJSDir = path.dirname(coolieConfigJSFile);
 
         try {
-            basePath = path.join(coolieConfigJSDir, basePath);
+            mainModulesDir = path.join(coolieConfigJSDir, mainModulesDir);
         } catch (err) {
             debug.error('parse coolie.config', path.toSystem(coolieConfigJSDir));
             debug.error('parse coolie.config', err.message);
             return process.exit(1);
         }
 
-        var toBase = path.relative(srcDirname, basePath);
+        var toMain = path.relative(srcDirname, mainModulesDir);
 
-        if (/^\.\.\//.test(toBase)) {
-            debug.error('coolie base', 'coolie base path must be under ' + srcDirname +
-                '\nbut now is ' + basePath, 'error');
+        if (/^\.\.\//.test(toMain)) {
+            debug.error('coolie-config', 'coolie `mainModulesDir` path must be under ' + srcDirname +
+                '\nbut now is ' + mainModulesDir, 'error');
             process.exit(1);
         }
 
-        configs.coolieConfigMainModulesDir = coolieConfig.baseDir;
+        configs.coolieConfigMainModulesDir = coolieConfig.mainModulesDir;
         configs.coolieConfigNodeModulesDir = coolieConfig.nodeModulesDir;
-        configs.srcCoolieConfigMainModulesDirname = basePath;
+        configs.srcCoolieConfigMainModulesDirname = mainModulesDir;
 
         if (pathURI.isRelativeFile(coolieConfig.nodeModulesDir)) {
-            configs.srcCoolieConfigNodeModulesDirname = path.join(basePath, coolieConfig.nodeModulesDir);
+            configs.srcCoolieConfigNodeModulesDirname = path.join(mainModulesDir, coolieConfig.nodeModulesDir);
             console.log(coolieConfig.nodeModulesDir);
         } else {
             configs.srcCoolieConfigNodeModulesDirname = path.join(srcDirname, coolieConfig.nodeModulesDir);
         }
 
         //var relativeBase = path.relative(srcDirname, configs.srcCoolieConfigMainModulesDirname);
-        configs.destCoolieConfigBaseDirname = path.join(configs.destDirname, configs.js.dest, coolieConfig.baseDir);
+        configs.destMainModulesDirname = path.join(configs.destDirname, configs.js.dest, coolieConfig.baseDir);
     };
 
 
@@ -460,7 +460,7 @@ module.exports = function (options) {
         var srcChunkDirname = guessDirname(configs.destJSDirname, 'chunk');
         var relative = path.relative(srcDirname, srcChunkDirname);
 
-        configs.destCoolieConfigChunkDirname = path.join(configs.destDirname, relative);
+        configs.destChunkModulesDirname = path.join(configs.destDirname, relative);
     };
 
 
@@ -469,7 +469,7 @@ module.exports = function (options) {
         var srcAsyncDirname = guessDirname(configs.destJSDirname, 'async');
         var relative = path.relative(srcDirname, srcAsyncDirname);
 
-        configs.destCoolieConfigAsyncDirname = path.join(configs.destDirname, relative);
+        configs.destAsyncModulesDirname = path.join(configs.destDirname, relative);
     };
 
 

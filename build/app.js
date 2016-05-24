@@ -62,9 +62,9 @@ var defaults = {
  * @param options.versionLength {Number} 版本号长度
  * @param options.minifyResource {Boolean} 是否压缩资源
  * @param options.cleanCSSOptions {Object} clean-css 配置
- * @param options.destCoolieConfigBaseDirname {String} coolie-config:base 目录
- * @param options.destCoolieConfigChunkDirname {String} coolie-config:chunk 目录
- * @param options.destCoolieConfigAsyncDirname {String} coolie-config:async 目录
+ * @param options.destMainModulesDirname {String} coolie-config:base 目录
+ * @param options.destChunkModulesDirname {String} coolie-config:chunk 目录
+ * @param options.destAsyncModulesDirname {String} coolie-config:async 目录
  * @param options.htmlMinifyOptions {Object} 压缩 html 配置
  * @param [options.mute=true] {Boolean} 是否静音
  * @returns {Object}
@@ -101,7 +101,7 @@ module.exports = function (options) {
         };
     }
 
-    if (mainLength && !options.destCoolieConfigBaseDirname) {
+    if (mainLength && !options.destMainModulesDirname) {
         debug.error('mainLength', mainLength);
         debug.error('build main', '`coolie-config.js` is not defined');
         return process.exit(1);
@@ -229,7 +229,7 @@ module.exports = function (options) {
     dato.each(chunkGroupMap, function (groupIndex, groupMeta) {
         var ret = writer({
             srcDirname: options.srcDirname,
-            destDirname: options.destCoolieConfigChunkDirname,
+            destDirname: options.destChunkModulesDirname,
             fileNameTemplate: groupIndex + '.${version}.js',
             signType: 'js',
             bufferList: groupMeta.bufferList,
@@ -255,7 +255,7 @@ module.exports = function (options) {
 
         var ret = writer({
             srcDirname: options.srcDirname,
-            destDirname: singleMeta.async ? options.destCoolieConfigAsyncDirname : options.destCoolieConfigBaseDirname,
+            destDirname: singleMeta.async ? options.destAsyncModulesDirname : options.destMainModulesDirname,
             fileNameTemplate: (singleMeta.async ? asyncId + '.' : '') + '${version}.js',
             signType: 'js',
             bufferList: singleMeta.bufferList,

@@ -21,9 +21,9 @@ var pathURI = require('../utils/path-uri.js');
  * @param options {Object} 配置
  * @param options.srcDirname {String} 原始目录
  * @param options.destDirname {String} 目标目录
- * @param options.destCoolieConfigBaseDirname {String} 目标 coolie-config:base 目录
- * @param options.destCoolieConfigChunkDirname {String} 目标 coolie-config:chunk 目录
- * @param options.destCoolieConfigAsyncDirname {String} 目标 coolie-config:async 目录
+ * @param options.destMainModulesDirname {String} 目标 coolie-config:base 目录
+ * @param options.destChunkModulesDirname {String} 目标 coolie-config:chunk 目录
+ * @param options.destAsyncModulesDirname {String} 目标 coolie-config:async 目录
  * @param options.buildAPPResult {Object} app 构建结果
  * @param options.buildHTMLResult {Object} html 构建结果
  */
@@ -100,7 +100,7 @@ module.exports = function (options) {
             htmlMainURIMap[mainJS] = htmlURI;
             var dependencies = options.buildAPPResult.appMap[mainJS] || [];
             var mainVersion = options.buildAPPResult.mainVersionMap[mainJS];
-            var destMainJSPath = path.join(options.destCoolieConfigBaseDirname, mainVersion + '.js');
+            var destMainJSPath = path.join(options.destMainModulesDirname, mainVersion + '.js');
 
             dependencies.shift();
             coolieMap[htmlURI].main.push({
@@ -116,10 +116,10 @@ module.exports = function (options) {
     //    var asyncList = options.buildAPPResult.mainMap[mainJS].requireAsyncList;
     //
     //    dato.each(asyncList, function (index, asyncMain) {
-    //        var noVersionAsyncMainPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.js');
+    //        var noVersionAsyncMainPath = path.join(options.destAsyncModulesDirname, asyncMain.gid + '.js');
     //        var asyncMainVersion = options.buildAPPResult.asyncVersionMap[noVersionAsyncMainPath];
     //        var dependencies = options.buildAPPResult.appMap[asyncMain.file] || [];
-    //        var destAsyncMainJSPath = path.join(options.destCoolieConfigAsyncDirname, asyncMain.gid + '.' + asyncMainVersion + '.js');
+    //        var destAsyncMainJSPath = path.join(options.destAsyncModulesDirname, asyncMain.gid + '.' + asyncMainVersion + '.js');
     //
     //        dependencies.shift();
     //        coolieMap[mainURI].async.push({
