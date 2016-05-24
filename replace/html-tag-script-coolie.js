@@ -122,9 +122,6 @@ module.exports = function (file, options) {
             return process.exit(1);
         }
 
-        console.log(options);
-        return process.exit(1);
-
         if (!options.srcCoolieConfigMainModulesDirname) {
             debug.error('coolie script', path.toSystem(file));
             debug.error('coolie script', '`coolie-config.js` is NOT defined, but used');

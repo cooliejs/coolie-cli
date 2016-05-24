@@ -21,6 +21,9 @@ coolie.config({
     // node_modules 目录指向，相对于 baseDir
     nodeModulesDir: '/node_modules/',
 
+    // 指定 node 模块的入口文件，此时将不会去加载模块的 package.json
+    nodeModuleMainPath: 'src/index.js',
+
     // 是否为调试模式，构建之后会修改为 false
     debug: true,
 
