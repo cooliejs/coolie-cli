@@ -89,6 +89,7 @@ module.exports = function (file) {
         base: coolieConfig.base,
         baseDir: coolieConfig.baseDir,
         mainModulesDir: coolieConfig.mainModulesDir,
+        nodeModulesDir: coolieConfig.nodeModulesDir,
         global: coolieConfig.global,
         moduleResolver: moduleResolver,
         moduleParser: moduleParser
