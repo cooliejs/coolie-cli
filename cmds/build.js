@@ -181,7 +181,7 @@ module.exports = function (options) {
         destCSSDirname: configs.destCSSDirname,
         destResourceDirname: configs.destResourceDirname,
         destHost: configs.destHost,
-        coolieConfigBaseDir: configs.coolieConfigBaseDir,
+        coolieConfigMainModulesDir: configs.coolieConfigBaseDir,
         srcCoolieConfigJSPath: configs.srcCoolieConfigJSPath,
         srcCoolieConfigBaseDirname: configs.srcCoolieConfigBaseDirname,
         destCoolieConfigJSPath: destCoolieConfigJSPath,

@@ -198,7 +198,7 @@ var minifyHTML = function (file, options) {
     var replaceHTMLTagScriptCoolieRet = replaceHTMLTagScriptCoolie(file, {
         code: code,
         srcDirname: options.srcDirname,
-        coolieConfigBaseDir: options.coolieConfigBaseDir,
+        coolieConfigMainModulesDir: options.coolieConfigBaseDir,
         srcCoolieConfigJSPath: options.srcCoolieConfigJSPath,
         srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
         destDirname: options.destDirname,
