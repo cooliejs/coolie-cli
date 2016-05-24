@@ -57,7 +57,7 @@ var defaults = {
  * @param [options.destHost] {String} 目标域
  * @param [options.coolieConfigMainModulesDir] {String} coolie-config:base 值
  * @param [options.srcCoolieConfigJSPath] {String} 原始 coolie-config.js 路径
- * @param [options.srcCoolieConfigBaseDirname] {String} 原始 coolie-config:base 目录
+ * @param [options.srcCoolieConfigMainModulesDirname] {String} 原始 coolie-config:base 目录
  * @param [options.destCoolieConfigJSPath] {String} 目标 coolie-config.js 路径
  * @param [options.minifyJS=true] {Boolean} 是否压缩 JS
  * @param [options.minifyCSS=true] {Boolean} 是否压缩 CSS
@@ -118,7 +118,7 @@ module.exports = function (options) {
             destHost: options.destHost,
             coolieConfigMainModulesDir: options.coolieConfigMainModulesDir,
             srcCoolieConfigJSPath: options.srcCoolieConfigJSPath,
-            srcCoolieConfigBaseDirname: options.srcCoolieConfigBaseDirname,
+            srcCoolieConfigBaseDirname: options.srcCoolieConfigMainModulesDirname,
             destCoolieConfigJSPath: options.destCoolieConfigJSPath,
             minifyJS: options.minifyJS,
             minifyCSS: options.minifyCSS,

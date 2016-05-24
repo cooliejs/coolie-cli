@@ -60,7 +60,7 @@ var minifyJSMap = {};
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param options.srcDirname {String} 构建根目录
- * @param options.srcCoolieConfigBaseDirname {String} coolie-config:base 目录
+ * @param options.srcCoolieConfigMainModulesDirname {String} coolie-config:base 目录
  * @param options.destDirname {String} 目标根目录
  * @param options.destHost {String} 目标根域
  * @param options.destJSDirname {String} 目标 JS 目录
@@ -122,13 +122,13 @@ module.exports = function (file, options) {
             return process.exit(1);
         }
 
-        if (!options.srcCoolieConfigBaseDirname) {
+        if (!options.srcCoolieConfigMainModulesDirname) {
             debug.error('coolie script', path.toSystem(file));
             debug.error('coolie script', '`coolie-config.js` is NOT defined, but used');
             return process.exit(1);
         }
 
-        var mainPath = path.join(options.srcCoolieConfigBaseDirname, dataMain);
+        var mainPath = path.join(options.srcCoolieConfigMainModulesDirname, dataMain);
         var mainVersion = options.mainVersionMap[mainPath];
 
         mainList.push(mainPath);
