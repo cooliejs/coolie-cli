@@ -67,6 +67,7 @@ module.exports = function (file, options) {
     destCoolieConfig.mainModulesDir = options.destCoolieConfigMainModulesDir;
     destCoolieConfig.asyncModulesDir = path.toURI(path.relative(options.destMainModulesDirname, options.destAsyncModulesDirname)) + '/';
     destCoolieConfig.chunkModulesDir = path.toURI(path.relative(options.destMainModulesDirname, options.destChunkModulesDirname)) + '/';
+    destCoolieConfig.global = coolieConfigs.global;
 
     debug.success('coolie-config.js', 'mainModulesDir: "' + destCoolieConfig.mainModulesDir + '"');
     debug.success('coolie-config.js', 'asyncModulesDir: "' + destCoolieConfig.asyncModulesDir + '"');

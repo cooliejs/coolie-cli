@@ -56,7 +56,7 @@ command.if('build', function (args) {
 
     cmdBuild({
         srcDirname: command.dirname(args, 'dirname'),
-        configFile: args.config || 'coolie.config.js'
+        configFile: args.config 
     });
 });
 

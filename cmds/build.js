@@ -23,7 +23,8 @@ var replaceCoolieConfig = require('../replace/coolie-config.js');
 var banner = require('./banner.js');
 
 var defaults = {
-    srcDirname: process.cwd()
+    srcDirname: process.cwd(),
+    configFile: 'coolie.config.js'
 };
 var middleware = new Middleware({
     async: false
@@ -81,6 +82,7 @@ emitter.on('exit', function (err) {
  * 构建主程序
  * @param options {Object} 配置
  * @param options.srcDirname {String} 构建根目录
+ * @param options.configFile {String} 配置文件
  */
 module.exports = function (options) {
     banner();
@@ -100,6 +102,7 @@ module.exports = function (options) {
      */
     var configs = parseCoolieConfig({
         srcDirname: options.srcDirname,
+        configFile: options.configFile,
         middleware: middleware,
         emitter: emitter
     });
@@ -146,7 +149,6 @@ module.exports = function (options) {
         htmlMinifyOptions: configs.htmlMinifyOptions,
         mute: true
     });
-
 
 
     // 4. 重写 coolie-config.js
