@@ -23,7 +23,10 @@ describe('parse/require.js', function () {
             code: code,
             async: false,
             srcDirname: srcDirname,
-            srcCoolieConfigNodeModulesDirname: nodeModulesDirname
+            srcCoolieConfigNodeModulesDirname: nodeModulesDirname,
+            coolieConfigs: {
+                nodeModuleMainPath: 'app/'
+            }
         });
 
         console.log(JSON.stringify(requires, null, 4));
@@ -49,7 +52,10 @@ describe('parse/require.js', function () {
             code: code,
             async: true,
             srcDirname: srcDirname,
-            srcCoolieConfigNodeModulesDirname: nodeModulesDirname
+            srcCoolieConfigNodeModulesDirname: nodeModulesDirname,
+            coolieConfigs: {
+                nodeModuleMainPath: 'app/'
+            }
         });
 
         console.log(JSON.stringify(requires, null, 4));

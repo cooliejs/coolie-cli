@@ -91,7 +91,10 @@ describe('build/module.js', function () {
             destDirname: destDirname,
             destResourceDirname: destResourceDirname,
             destHost: '/',
-            virtualMap: {}
+            virtualMap: {},
+            coolieConfigs: {
+                nodeModuleMainPath: 'app/'
+            }
         });
 
         var REG_CODE = /^define\("[a-z\d]*?",.*?\);$/;

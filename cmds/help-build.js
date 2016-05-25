@@ -21,7 +21,8 @@ module.exports = function () {
     banner();
     console.log('在线指南：<https://coolie.ydr.me/guide/coolie.config.js/>。');
     console.log();
-    console.log(console.styles.pretty('[warning] 2.x 及以上版本只支持 CommonJS 规范的模块构建', ['red', 'bold']));
+    console.log(console.styles.pretty('[warning] 2.x 及以上版本只支持 CommonJS 规范的模块构建\n' +
+        '虽然在一定程度上兼容了 AMD 规范，但不推荐这么做', ['red', 'bold']));
     console.log();
     console.log('1. Usage');
     console.log(console.styles.pretty('   coolie build [options]', 'yellow'));
@@ -35,6 +36,7 @@ module.exports = function () {
 
     console.log('4. Options');
     debug.success('   -d --dirname', '指定目标目录，默认为当前工作目录', options);
+    debug.success('   -C --config', '指定配置文件，默认为 coolie.config.js', options);
     debug.success('   -h --help', '打印帮助信息', options);
     console.log();
 };

@@ -31,7 +31,8 @@ command.alias({
     s: 'static',
     h: 'help',
     m: 'mongoose',
-    r: 'redis'
+    r: 'redis',
+    C: 'config'
 });
 
 command.type({
@@ -54,7 +55,8 @@ command.if('build', function (args) {
     }
 
     cmdBuild({
-        srcDirname: command.dirname(args, 'dirname')
+        srcDirname: command.dirname(args, 'dirname'),
+        configFile: args.config || 'coolie.config.js'
     });
 });
 

@@ -32,7 +32,10 @@ describe('build/module.js', function () {
             destResourceDirname: destResourceDirname,
             destHost: '/',
             destMainModulesDirname: destCoolieConfigBaseDirname,
-            virtualMap: {}
+            virtualMap: {},
+            coolieConfigs: {
+                nodeModuleMainPath: 'app/'
+            }
         });
 
         console.log(ret.dependencies);
@@ -52,7 +55,10 @@ describe('build/module.js', function () {
             destResourceDirname: destResourceDirname,
             destHost: '/',
             destMainModulesDirname: destCoolieConfigBaseDirname,
-            virtualMap: {}
+            virtualMap: {},
+            coolieConfigs: {
+                nodeModuleMainPath: 'app/'
+            }
         });
 
         assert.equal(ret.dependencies.length > 0, true);

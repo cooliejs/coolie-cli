@@ -41,7 +41,10 @@ describe('replace/coolie-config.js', function () {
             destDirname: destDirname,
             destJSDirname: destJSDirname,
             versionMap: versionMap,
-            destHost: '/'
+            destHost: '/',
+            coolieConfigs: {
+                callbacks: []
+            }
         });
 
         assert.equal(typeis.file(ret), true);
