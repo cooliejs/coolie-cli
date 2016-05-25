@@ -13,7 +13,7 @@ var debug = require('ydr-utils').debug;
 
 var globalId = require('../utils/global-id.js');
 var pathURI = require('../utils/path-uri.js');
-var requirePipeline = require('../utils/require-pipeline.js');
+var requirePipeline = require('../parse/require-pipeline.js');
 var parseRequireNodeList = require('./require-node-list.js');
 
 var PACKAGE_JSON = 'package.json';

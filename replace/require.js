@@ -10,7 +10,7 @@
 var Uglify = require("uglify-js");
 var debug = require('ydr-utils').debug;
 
-var requirePipeline = require('../utils/require-pipeline.js');
+var requirePipeline = require('../parse/require-pipeline.js');
 var parseRequireNodeList = require('../parse/require-node-list.js');
 
 

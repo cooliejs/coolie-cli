@@ -12,6 +12,9 @@ var dato = require('ydr-utils').dato;
 var debug = require('ydr-utils').debug;
 
 
+var reRelative = /^\.{1,2}\//;
+
+
 /**
  * 模块入口类型
  * @type {{}}
@@ -86,7 +89,7 @@ module.exports = function (file, name, pipeline) {
     var dftInType = 'js';
     var extension = path.extname(name).slice(1);
 
-    if (extension && !pipeline) {
+    if (reRelative.test(name) && extension && !pipeline) {
         dato.each(moduleInTypeMatches, function (index, rule) {
             var inType = rule[0];
             var regexp = rule[1];
