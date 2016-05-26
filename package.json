@@ -41,25 +41,7 @@
   "coolie": {
     "owner": "cooliejs",
     "package.json": "https://raw.githubusercontent.com/cloudcome/coolie/master/package.json",
-    "book": "https://coolie.ydr.me/",
-    "modules": {
-      "coolie": {
-        "type": "file",
-        "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/coolie.zip"
-      },
-      "coolie.js": {
-        "type": "file",
-        "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/coolie.zip"
-      },
-      "alien": {
-        "type": "directory",
-        "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/alien.zip"
-      },
-      "donkey": {
-        "type": "directory",
-        "url": "http://s-ydr-me.oss-cn-hangzhou.aliyuncs.com/p/j/donkey.zip"
-      }
-    }
+    "book": "https://coolie.ydr.me/"
   },
   "repository": {
     "type": "git",
@@ -79,7 +61,8 @@
     "ydr-utils": "^42.2.22"
   },
   "scripts": {
-    "test": "node node_modules/mocha/bin/mocha -c --recursive -t 0 --ui bdd test/**/test.*.js"
+    "test": "node node_modules/mocha/bin/mocha -c --recursive -t 0 --ui bdd test/**/test.*.js",
+    "prepublish": "npm test"
   },
   "maintainers": [
     {
