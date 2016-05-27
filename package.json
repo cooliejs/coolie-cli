@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "2.0.0-alpha3",
+  "version": "2.0.0-beta1",
   "description": "前端工程化构建工具",
   "preferGlobal": true,
   "bin": {
@@ -33,9 +33,9 @@
     "async"
   ],
   "author": {
-    "name": "cloudcome",
+    "name": "#云淡然",
     "email": "cloudcome@163.com",
-    "url": "https://ydr.me"
+    "url": "https://ydr.me/"
   },
   "homepage": "https://coolie.ydr.me/",
   "coolie": {
@@ -64,12 +64,6 @@
     "test": "node node_modules/mocha/bin/mocha -c --recursive -t 0 --ui bdd test/**/test.*.js",
     "prepublish": "npm test"
   },
-  "maintainers": [
-    {
-      "name": "cloudcome",
-      "email": "cloudcome@163.com"
-    }
-  ],
   "license": "MIT",
   "devDependencies": {
     "mocha": "^2.3.3",
