@@ -269,9 +269,12 @@ module.exports = function (options) {
         var coolieConfigs = coolieConfigRuntime(coolieConfigJSFile);
         var mainModulesDir = coolieConfigs.mainModulesDir;
 
-        if (!coolieConfigs.mode) {
-            debug.warn('warning', '未指定开发使用的模块规范`coolie-config.js:mode`，构建过程可能会出错\n' +
-                '若你的开发环境使用了 AMD 规范，推荐使用 coolie-transform 转换为 CommonJS 规范');
+        if (coolieConfigs.mode) {
+            configs.compatible = false;
+        } else {
+            debug.warn('warning', '未指定开发环境下使用的模块规范`coolie-config.js:mode`，\n' +
+                '正在使用 1.x 兼容模式，构建过程可能会出错。');
+            configs.compatible = true;
         }
 
         if (coolieConfigs.global) {

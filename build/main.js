@@ -57,6 +57,7 @@ var defaults = {
  * @param options.virtualMap {Object} 虚拟
  * @param options.mainIndex {Number} 当前序号
  * @param options.mainLength {Number} 长度
+ * @param options.compatible {Boolean} 是否兼容模式
  * @returns {{dependencies: {id: String, file: String, buffer: Buffer, md5: String}, resList: Array}}
  */
 module.exports = function (file, options) {
@@ -92,7 +93,8 @@ module.exports = function (file, options) {
             minifyResource: options.minifyResource,
             cleanCSSOptions: options.cleanCSSOptions,
             virtualMap: options.virtualMap,
-            mute: options.mute
+            mute: options.mute,
+            compatible: options.compatible
         });
 
         dato.each(ret.resList, function (index, res) {

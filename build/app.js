@@ -68,6 +68,7 @@ var defaults = {
  * @param options.destAsyncModulesDirname {String} coolie-config:async 目录
  * @param options.htmlMinifyOptions {Object} 压缩 html 配置
  * @param [options.mute=true] {Boolean} 是否静音
+ * @param options.compatible {Boolean} 是否兼容模式
  * @returns {Object}
  */
 module.exports = function (options) {
@@ -145,7 +146,8 @@ module.exports = function (options) {
             virtualMap: virtualMap,
             mainIndex: mainIndex,
             mainLength: mainLength,
-            mute: options.mute
+            mute: options.mute,
+            compatible: options.compatible
         });
         var dependencies = buildMainRet.dependencies;
         var resList = buildMainRet.resList;

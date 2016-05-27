@@ -21,6 +21,7 @@ var minifyJS = require('../minify/js.js');
 var replaceRequire = require('../replace/require.js');
 var wrapDefine = require('../replace/wrap-define.js');
 var replaceModuleWrapper = require('../replace/module-wrapper.js');
+var cmd2cjs = require('../replace/cmd2cjs.js');
 
 var defaults = {
     inType: 'js',
@@ -65,6 +66,7 @@ var defaults = {
  * @param options.htmlMinifyOptions {Object} 压缩 html 配置
  * @param options.virtualMap {Object} 虚拟
  * @param options.mute {Boolean} 是否静音
+ * @param options.compatible {Boolean} 是否兼容模式
  * @returns {{dependencies: Array, code: String, md5: String}}
  */
 module.exports = function (file, options) {
@@ -76,6 +78,13 @@ module.exports = function (file, options) {
 
     // 读取模块内容
     var code = reader(file, 'utf8', options.parent);
+
+    // 兼容 1.x
+    if (options.compatible && isJS) {
+        code = cmd2cjs(file, {
+            code: code
+        });
+    }
 
     // 分析 require.async()
     var asyncRequires = isJS ? parseRequireList(file, {

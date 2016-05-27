@@ -147,7 +147,8 @@ module.exports = function (options) {
         destChunkModulesDirname: configs.destChunkModulesDirname,
         destAsyncModulesDirname: configs.destAsyncModulesDirname,
         htmlMinifyOptions: configs.htmlMinifyOptions,
-        mute: true
+        mute: true,
+        compatible: configs.compatible
     });
 
 
