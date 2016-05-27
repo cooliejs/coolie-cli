@@ -56,7 +56,7 @@ module.exports = function (coolie) {
                 './.views/**/*.html'
             ],
             // html 压缩配置
-            minify: true
+            minify: false
         },
 
         // css 构建
@@ -64,7 +64,7 @@ module.exports = function (coolie) {
             // css 文件保存目录，相对于 dest.dirname
             dest: './static/css/',
             // css 压缩配置
-            minify: true
+            minify: false
         },
 
         // 资源

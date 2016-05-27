@@ -1,0 +1,46 @@
+{
+  "/.views/index.html": {
+    "main": [
+      {
+        "src": "../webroot-dev/static/js/app/index.js",
+        "dest": "/static/js/main/a98accbca26098fa52a301f5c2e0795f.js",
+        "deps": [
+          "../webroot-dev/static/js/utils/hehe.js",
+          "../webroot-dev/static/js/data/json.json"
+        ]
+      }
+    ],
+    "js": [
+      {
+        "dest": "/static/js/d1b72dce434b99272fede06680d58b7e.js",
+        "deps": [
+          "../webroot-dev/node_modules/coolie.js/coolie.js"
+        ]
+      }
+    ],
+    "css": [],
+    "res": []
+  },
+  "/.views/page1.html": {
+    "main": [
+      {
+        "src": "../webroot-dev/static/js/app/page1.js",
+        "dest": "/static/js/main/1f16ad2933a01d686fc2be881ebbea71.js",
+        "deps": [
+          "../webroot-dev/static/js/utils/hehe.js",
+          "../webroot-dev/node_modules/a/src/index.js"
+        ]
+      }
+    ],
+    "js": [
+      {
+        "dest": "/static/js/d1b72dce434b99272fede06680d58b7e.js",
+        "deps": [
+          "../webroot-dev/node_modules/coolie.js/coolie.js"
+        ]
+      }
+    ],
+    "css": [],
+    "res": []
+  }
+}
