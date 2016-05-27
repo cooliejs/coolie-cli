@@ -13,7 +13,7 @@
 
 coolie.config({
     // 模块模式，开发环境为 COMMONJS
-    mode: 'CJS',
+    // mode: 'CJS',
 
     // 入口模块基准路径，相对于当前文件
     mainModulesDir: '/static/js/app/',

@@ -45,7 +45,7 @@ module.exports = function (coolie) {
                 "./static/js/utils/**"
             ],
             // js 压缩配置
-            minify: true
+            minify: false
         },
 
         // html 构建

@@ -33,6 +33,7 @@ module.exports = function (file) {
             config: function (cnf) {
                 cnf = cnf || {};
 
+                coolieConfig.mode = cnf.mode || '';
                 coolieConfig.mainModulesDir = cnf.mainModulesDir || '';
                 coolieConfig.nodeModulesDir = cnf.nodeModulesDir || '';
                 coolieConfig.nodeModuleMainPath = cnf.nodeModuleMainPath || '';
@@ -69,6 +70,7 @@ module.exports = function (file) {
     }
 
     return {
+        mode: coolieConfig.mode,
         mainModulesDir: coolieConfig.mainModulesDir,
         nodeModulesDir: coolieConfig.nodeModulesDir,
         nodeModuleMainPath: coolieConfig.nodeModuleMainPath,
