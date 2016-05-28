@@ -34,7 +34,7 @@ module.exports = function (coolie) {
             // 入口模块，相对于当前文件
             main: [
                 // 支持 glob 语法
-                './static/js/app/**/*.js'
+                './static/js/main/**/*.js'
             ],
             // coolie-config.js 路径，相对于当前文件
             'coolie-config.js': './static/js/coolie-config.js',
