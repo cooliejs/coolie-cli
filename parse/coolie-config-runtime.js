@@ -34,6 +34,8 @@ module.exports = function (file) {
                 cnf = cnf || {};
 
                 coolieConfig.mode = cnf.mode || '';
+                coolieConfig.base = cnf.base || '';
+                coolieConfig.baseDir = cnf.baseDir || '';
                 coolieConfig.mainModulesDir = cnf.mainModulesDir || '';
                 coolieConfig.nodeModulesDir = cnf.nodeModulesDir || '';
                 coolieConfig.nodeModuleMainPath = cnf.nodeModuleMainPath || '';
@@ -69,12 +71,7 @@ module.exports = function (file) {
         return process.exit(1);
     }
 
-    return {
-        mode: coolieConfig.mode,
-        mainModulesDir: coolieConfig.mainModulesDir,
-        nodeModulesDir: coolieConfig.nodeModulesDir,
-        nodeModuleMainPath: coolieConfig.nodeModuleMainPath,
-        global: coolieConfig.global,
-        callbacks: callbacks
-    };
+    coolieConfig.callbacks = callbacks;
+
+    return coolieConfig;
 };

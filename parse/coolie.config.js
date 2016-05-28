@@ -289,8 +289,21 @@ module.exports = function (options) {
         configs.uglifyJSOptions.global_defs.DEBUG = false;
 
         if (!mainModulesDir) {
-            debug.error('parse coolie-cli config', path.toSystem(coolieConfigJSFile));
-            debug.error('parse coolie-cli config', 'config.mainModulesDir 未指定');
+            debug.error('coolie-config.js', path.toSystem(coolieConfigJSFile));
+            debug.error('coolie-config.js', 'config.mainModulesDir 未指定');
+
+            if (coolieConfigs.base) {
+                debug.warn('warning', '您可能使用的是 coolie.js@1.x 的模块加载器配置文件。\n' +
+                    '请阅读官网相关提示来升级到 2.x：\n' +
+                    'https://coolie.ydr.me/version/2.x/');
+            }
+
+            if (coolieConfigs.baseDir) {
+                debug.warn('warning', '您可能使用的是 coolie.js@2.x 早期的模块加载器配置文件。\n' +
+                    '请阅读官网相关提示来升级到 2.x：\n' +
+                    'https://coolie.ydr.me/version/2.x/');
+            }
+
             return process.exit(1);
         }
 
@@ -303,8 +316,8 @@ module.exports = function (options) {
                 mainModulesDir = path.join(coolieConfigJSDir, mainModulesDir);
             }
         } catch (err) {
-            debug.error('parse coolie-cli config', path.toSystem(coolieConfigJSDir));
-            debug.error('parse coolie-cli config', err.message);
+            debug.error('coolie-config.js', path.toSystem(coolieConfigJSDir));
+            debug.error('coolie-config.js', err.message);
             return process.exit(1);
         }
 

@@ -92,8 +92,18 @@ module.exports = function (file, options) {
             if (nodeModuleMainPath) {
                 id = path.join(fromDirname, nodeModuleMainPath);
             } else {
-                // 依赖模块的描述文件
-                var reqPkg = require(path.join(fromDirname, PACKAGE_JSON));
+                var reqPkg = {};
+                var pkgJSONFile = path.join(fromDirname, PACKAGE_JSON);
+                try {
+                    // 依赖模块的描述文件
+                    reqPkg = require(pkgJSONFile);
+                } catch (err) {
+                    console.log();
+                    debug.error('node_module', '`' + name + '` 模块描述文件不存在或语法错误');
+                    debug.error('package.json', path.toSystem(pkgJSONFile));
+                    return process.exit(1);
+                }
+
                 id = path.join(fromDirname, reqPkg.main || 'index.js');
             }
         }
