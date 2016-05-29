@@ -37,7 +37,7 @@ var reRelative = /^\.{1,2}\//;
 module.exports = function (file, options) {
     var code = options.code;
     var requireList = [];
-    var nodeList = parseRequireNodeList(code, options.async);
+    var nodeList = parseRequireNodeList(file, code, options.async);
     var coolieConfigs = options.coolieConfigs;
     var nodeModuleMainPath = coolieConfigs.nodeModuleMainPath;
 
@@ -87,7 +87,6 @@ module.exports = function (file, options) {
             //     fromDirname = options.srcCoolieConfigNodeModulesDirname;
             // }
 
-
             var fromDirname = path.join(options.srcCoolieConfigNodeModulesDirname, name);
 
             if (nodeModuleMainPath) {
@@ -129,8 +128,6 @@ module.exports = function (file, options) {
     };
 
     nodeList.forEach(parser);
-
-    // console.log(requireList);
 
     return requireList;
 };

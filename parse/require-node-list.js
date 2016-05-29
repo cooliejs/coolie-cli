@@ -8,11 +8,27 @@
 'use strict';
 
 
+var debug = require('ydr-utils').debug;
+var path = require('ydr-utils').path;
+
 var Uglify = require("uglify-js");
 
 
-module.exports = function (code, async) {
-    var ast = Uglify.parse(code);
+module.exports = function (file, code, async) {
+    var ast;
+
+    code = 'function parseNodeList(){' + code + '}';
+
+    try {
+        ast = Uglify.parse(code);
+    } catch (err) {
+        console.log();
+        debug.error('parse module', path.toSystem(file));
+        debug.error('parse module', '语法有误，无法解析，请检查');
+        debug.error('parse module', err.message);
+        return process.exit(1);
+    }
+
     var requireNodes = [];
 
     ast.walk(new Uglify.TreeWalker(function (node) {

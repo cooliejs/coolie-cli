@@ -7,20 +7,20 @@
 
 'use strict';
 
+var fs = require('fs');
 var assert = require('assert');
 var path = require('ydr-utils').path;
 
 var parseRequireList = require('../../parse/require.js');
-var file = __filename;
 
 var srcDirname = path.join(__dirname, 'src');
+var file = path.join(srcDirname, 'require.js');
 var nodeModulesDirname = path.join(__dirname, 'node_modules');
 
 describe('parse/require.js', function () {
     it('sync', function () {
-        var code = 'define(function(){require("a");require("./a.js");require("./a.css", "css|url");});';
         var requires = parseRequireList(file, {
-            code: code,
+            code: fs.readFileSync(file, 'utf8'),
             async: false,
             srcDirname: srcDirname,
             srcCoolieConfigNodeModulesDirname: nodeModulesDirname,
@@ -31,15 +31,6 @@ describe('parse/require.js', function () {
 
         console.log(JSON.stringify(requires, null, 4));
         assert.equal(requires.length, 3);
-        assert.equal(requires[0].name, 'a');
-        assert.equal(requires[1].name, './a.js');
-        assert.equal(requires[2].name, './a.css');
-        assert.equal(requires[0].inType, 'js');
-        assert.equal(requires[0].outType, 'js');
-        assert.equal(requires[1].inType, 'js');
-        assert.equal(requires[1].outType, 'js');
-        assert.equal(requires[2].inType, 'css');
-        assert.equal(requires[2].outType, 'url');
     });
 
     it('async', function () {
