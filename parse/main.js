@@ -58,9 +58,10 @@ module.exports = function (options) {
 
     /**
      * 分析模块
+     * @param parentFile
      * @param files
      */
-    function parseModules(files) {
+    function parseModules(parentFile, files) {
         dato.each(files, function (index, file) {
             if (parsedMap[file]) {
                 return;
@@ -68,14 +69,7 @@ module.exports = function (options) {
 
             parseLength++;
             progress.run('parse module', pathURI.toRootURL(file, options.srcDirname));
-            var code;
-            try {
-                code = reader(file, 'utf8');
-            } catch (err) {
-                debug.error('read module', path.toSystem(file));
-                process.exit();
-            }
-
+            var code = reader(file, 'utf8', parentFile);
             parsedMap[file] = true;
             // require.async()
             var requireAsyncList = parseRequireList(file, {
@@ -131,12 +125,12 @@ module.exports = function (options) {
             });
 
             dato.each(requireSyncList.concat(requireAsyncList), function (index, meta) {
-                parseModules([meta.file]);
+                parseModules(file, [meta.file]);
             });
         });
     }
 
-    parseModules(mainFiles);
+    parseModules(null, mainFiles);
     progress.stop('parse module', parseLength + ' modules parsed');
 
     return {

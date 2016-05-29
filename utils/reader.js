@@ -12,6 +12,8 @@ var path = require('ydr-utils').path;
 var typeis = require('ydr-utils').typeis;
 var debug = require('ydr-utils').debug;
 
+var bookURL = require('./book-url');
+
 var bufferMap = {};
 
 
@@ -37,6 +39,7 @@ module.exports = function (file, encoding, embedFile) {
                 debug.error('embed file', path.toSystem(embedFile));
             }
 
+            debug.warn('warning', '模块路径指南 <' + bookURL('/introduction/module-path/') + '>');
             process.exit(1);
         }
 

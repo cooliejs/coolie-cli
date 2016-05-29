@@ -15,6 +15,7 @@ var globalId = require('../utils/global-id.js');
 var pathURI = require('../utils/path-uri.js');
 var requirePipeline = require('../parse/require-pipeline.js');
 var parseRequireNodeList = require('./require-node-list.js');
+var bookURL = require('../utils/book-url');
 
 var PACKAGE_JSON = 'package.json';
 var NODE_MODULES = 'node_modules';
@@ -99,9 +100,9 @@ module.exports = function (file, options) {
                     reqPkg = require(pkgJSONFile);
                 } catch (err) {
                     console.log();
-                    console.log(node.args[0]);
                     debug.error('node_module', path.toSystem(file) + '\n依赖的`' + name + '` 模块描述文件不存在或语法错误');
                     debug.error('package.json', path.toSystem(pkgJSONFile));
+                    debug.warn('warning', '模块路径指南 <' + bookURL('/introduction/module-path/') + '>');
                     return process.exit(1);
                 }
 
