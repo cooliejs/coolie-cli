@@ -1,0 +1,1 @@
+require('../../jquery-plugins/jquery.easing.js')($);

@@ -16,7 +16,10 @@ module.exports = function (code, async) {
     var requireNodes = [];
 
     ast.walk(new Uglify.TreeWalker(function (node) {
-        if (node instanceof Uglify.AST_Node && node.start.value === 'require' && node.args) {
+        if (node instanceof Uglify.AST_Node &&
+            node.start.value === 'require' &&
+            node.expression && node.expression.name === 'require' &&
+            node.args) {
             if (node.args.length === 1 || node.args.length === 2) {
                 if (async && (node.expression.property === 'async' || node.expression.end.value === 'async')) {
                     requireNodes.push(node);

@@ -99,7 +99,8 @@ module.exports = function (file, options) {
                     reqPkg = require(pkgJSONFile);
                 } catch (err) {
                     console.log();
-                    debug.error('node_module', '`' + name + '` 模块描述文件不存在或语法错误');
+                    console.log(node.args[0]);
+                    debug.error('node_module', path.toSystem(file) + '\n依赖的`' + name + '` 模块描述文件不存在或语法错误');
                     debug.error('package.json', path.toSystem(pkgJSONFile));
                     return process.exit(1);
                 }
