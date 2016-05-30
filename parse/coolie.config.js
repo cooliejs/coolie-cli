@@ -111,7 +111,13 @@ module.exports = function (options) {
 
     // 检查文件
     check.file = function () {
-        require(srcCoolieConfigJSPath)(coolie);
+        try {
+            require(srcCoolieConfigJSPath)(coolie);
+        } catch (err) {
+            debug.error('coolie-cli config', path.toSystem(srcCoolieConfigJSPath));
+            debug.error('coolie-cli config', err.message);
+            return process.exit(1);
+        }
     };
 
 
@@ -123,12 +129,12 @@ module.exports = function (options) {
     // }
     check.dest = function () {
         if (!typeis.object(configs.dest)) {
-            debug.error('parse coolie-cli config', '`dest` property must be an object');
+            debug.error('coolie-cli config', '`dest` 属性必须是一个对象');
             process.exit(1);
         }
 
         if (!typeis.string(configs.dest.dirname)) {
-            debug.error('parse coolie-cli config', '`dest.dirname` property must be a direction name');
+            debug.error('coolie-cli config', '`dest.dirname` 必须是一个路径字符串');
             process.exit(1);
         }
 
@@ -139,7 +145,7 @@ module.exports = function (options) {
         configs.dest.host = configs.dest.host || '/';
 
         if (!typeis.String(configs.dest.host) && !typeis.Function(configs.dest.host)) {
-            debug.error('parse coolie-cli config', '`dest.host` property must be an URL string');
+            debug.error('coolie-cli config', '`dest.host` property must be an URL string');
             process.exit(1);
         }
 
@@ -173,7 +179,7 @@ module.exports = function (options) {
     // }
     check.js = function () {
         if (typeis(configs.js) !== 'object') {
-            debug.error('parse coolie-cli config', '`js` property must be an object');
+            debug.error('coolie-cli config', '`js` property must be an object');
             process.exit(1);
         }
 
@@ -182,14 +188,14 @@ module.exports = function (options) {
             var mainPathType = typeis(configs.js.main);
 
             if (mainPathType !== 'string' && mainPathType !== 'array') {
-                debug.error('parse coolie-cli config', '`js.main` property must be a string path or an array');
+                debug.error('coolie-cli config', '`js.main` property must be a string path or an array');
                 process.exit(1);
             }
 
             if (mainPathType === 'array') {
                 configs.js.main.forEach(function (mn, index) {
                     if (typeis(mn) !== 'string') {
-                        debug.error('parse coolie-cli config', '`js.main[' + index + ']` must be a string');
+                        debug.error('coolie-cli config', '`js.main[' + index + ']` must be a string');
                         process.exit(1);
                     }
                 });
@@ -203,7 +209,7 @@ module.exports = function (options) {
         // js[coolie-config.js]
         if (configs.js['coolie-config.js']) {
             if (typeis(configs.js['coolie-config.js']) !== 'string') {
-                debug.error('parse coolie-cli config', '`js[coolie-config.js]` property must be a string');
+                debug.error('coolie-cli config', '`js[coolie-config.js]` property must be a string');
                 process.exit(1);
             }
 
@@ -211,7 +217,7 @@ module.exports = function (options) {
             configs.srcCoolieConfigJSPath = coolieConfigJSFile;
 
             if (!typeis.file(coolieConfigJSFile)) {
-                debug.error('parse coolie-cli config', coolieConfigJSFile +
+                debug.error('coolie-cli config', coolieConfigJSFile +
                     '\nis NOT a file');
                 process.exit(1);
             }
@@ -221,7 +227,7 @@ module.exports = function (options) {
 
         // js.dest
         if (typeis(configs.js.dest) !== 'string') {
-            debug.error('parse coolie-cli config', '`js.dest` property must be a string path');
+            debug.error('coolie-cli config', '`js.dest` property must be a string path');
             process.exit(1);
         }
 
@@ -230,14 +236,14 @@ module.exports = function (options) {
             var chunkPathType = typeis(configs.js.chunk);
 
             if (chunkPathType !== 'string' && chunkPathType !== 'array') {
-                debug.error('parse coolie-cli config', '`js.chunk` property must be a string path or an array');
+                debug.error('coolie-cli config', '`js.chunk` property must be a string path or an array');
                 process.exit(1);
             }
 
             if (chunkPathType === 'array') {
                 configs.js.chunk.forEach(function (mn, index) {
                     if (!typeis.string(mn) && !typeis.array(mn)) {
-                        debug.error('parse coolie-cli config', '`js.chunk[' + index + ']` must be a string or an array');
+                        debug.error('coolie-cli config', '`js.chunk[' + index + ']` must be a string or an array');
                         process.exit(1);
                     }
                 });
@@ -352,7 +358,7 @@ module.exports = function (options) {
     // }
     check.html = function () {
         if (typeis(configs.html) !== 'object') {
-            debug.error('parse coolie-cli config', '`html` property must be an object');
+            debug.error('coolie-cli config', '`html` property must be an object');
             process.exit(1);
         }
 
@@ -361,14 +367,14 @@ module.exports = function (options) {
             var htmSrcType = typeis(configs.html.src);
 
             if (htmSrcType !== 'string' && htmSrcType !== 'array') {
-                debug.error('parse coolie-cli config', '`html.src` property must be a string path or an array');
+                debug.error('coolie-cli config', '`html.src` property must be a string path or an array');
                 process.exit(1);
             }
 
             if (htmSrcType === 'array') {
                 configs.html.src.forEach(function (mn, index) {
                     if (typeis(mn) !== 'string') {
-                        debug.error('parse coolie-cli config', '`html.src[' + index + ']` must be a string path');
+                        debug.error('coolie-cli config', '`html.src[' + index + ']` must be a string path');
                         process.exit(1);
                     }
                 });
@@ -405,13 +411,13 @@ module.exports = function (options) {
     // }
     check.css = function () {
         if (typeis(configs.css) !== 'object') {
-            debug.error('parse coolie-cli config', '`css` property must be an object');
+            debug.error('coolie-cli config', '`css` property must be an object');
             process.exit(1);
         }
 
         // css.dest
         if (typeis(configs.css.dest) !== 'string') {
-            debug.error('parse coolie-cli config', '`css.dest` property must be a string path');
+            debug.error('coolie-cli config', '`css.dest` property must be a string path');
             process.exit(1);
         }
 
@@ -436,7 +442,7 @@ module.exports = function (options) {
 
         // css.minify
         if (!typeis.undefined(configs.css.minify) && !typeis.object(configs.css.minify)) {
-            debug.error('parse coolie-cli config', '`css.minify` must be an object or a boolean value');
+            debug.error('coolie-cli config', '`css.minify` must be an object or a boolean value');
             process.exit(1);
         }
 
@@ -451,13 +457,13 @@ module.exports = function (options) {
     // }
     check.resource = function () {
         if (!typeis.object(configs.resource)) {
-            debug.error('parse coolie-cli config', '`resource` property must be an object');
+            debug.error('coolie-cli config', '`resource` property must be an object');
             process.exit(1);
         }
 
         // resource.dest
         if (!typeis.string(configs.resource.dest)) {
-            debug.error('parse coolie-cli config', '`resource.dest` property must be a string path');
+            debug.error('coolie-cli config', '`resource.dest` property must be a string path');
             process.exit(1);
         }
 
@@ -475,14 +481,14 @@ module.exports = function (options) {
             var copyFilesType = typeis(configs.copy);
 
             if (copyFilesType !== 'string' && copyFilesType !== 'array') {
-                debug.error('parse coolie-cli config', '`copy` property must be a string path or an array path');
+                debug.error('coolie-cli config', '`copy` property must be a string path or an array path');
                 process.exit(1);
             }
 
             if (copyFilesType === 'array') {
                 configs.copy.forEach(function (cp, index) {
                     if (typeis(cp) !== 'string') {
-                        debug.error('parse coolie-cli config', '`copy` property[' + index + '] must be a string path');
+                        debug.error('coolie-cli config', '`copy` property[' + index + '] must be a string path');
                         process.exit(1);
                     }
                 });

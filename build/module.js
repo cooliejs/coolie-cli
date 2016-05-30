@@ -38,7 +38,8 @@ var defaults = {
     uglifyJSOptions: null,
     cleanCSSOptions: null,
     htmlMinifyOptions: null,
-    mute: true
+    mute: true,
+    compatible: false
 };
 
 /**
@@ -163,7 +164,8 @@ module.exports = function (file, options) {
                 id: gid,
                 deps: depGidList,
                 factory: code,
-                rem: true
+                rem: true,
+                compatible: options.compatible
             });
             break;
 

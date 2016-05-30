@@ -21,6 +21,7 @@ var pathURI = require('../utils/path-uri.js');
  * @param options.destHost
  * @param options.inType
  * @param [options.rem]
+ * @param [options.compatible] {Boolean} 是否兼容模式
  * @returns {string}
  */
 module.exports = function (file, options) {
@@ -34,9 +35,16 @@ module.exports = function (file, options) {
     if (depsStr) {
         depsStr = '"' + depsStr + '"';
     }
-
-    console.log(file);
     
+    var findDefine = false;
+    
+    if(options.compatible) {
+        
+    } else {
+        
+    }
+    
+
     var uri = pathURI.toRootURL(file, options.srcDirname);
     var url = pathURI.joinHost(options.inType, options.destHost, uri);
 
