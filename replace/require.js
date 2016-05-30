@@ -25,8 +25,9 @@ var parseRequireNodeList = require('../parse/require-node-list.js');
 module.exports = function (file, options) {
     var code = options.code;
     var outName2IdMap = options.outName2IdMap;
-    var requireNodeList = parseRequireNodeList(code, options.async);
+    var requireNodeList = parseRequireNodeList(file, code, options.async);
     var offset = 0;
+    var beforeLength = parseRequireNodeList.beforeLength;
 
     requireNodeList.forEach(function (node) {
         var arg0 = node.args[0];
@@ -42,8 +43,8 @@ module.exports = function (file, options) {
         var replaceValue = outName2IdMap[outName];
 
         if (!replaceValue) {
-            debug.error('replace error', '未找到 ' + name + ' 构建之后的 ID');
-            debug.error('replace file', file);
+            debug.error('module file', file);
+            debug.error('module error', '未找到 ' + name + ' 构建之后的模块 ID');
             return process.exit(1);
         }
 
@@ -57,7 +58,7 @@ module.exports = function (file, options) {
             endPos = arg1.start.endpos + offset;
         }
 
-        code = code.slice(0, startPos) + replacement + code.slice(endPos);
+        code = code.slice(0, startPos - beforeLength) + replacement + code.slice(endPos - beforeLength);
         offset += replaceValue.length - nameLength;
     });
 

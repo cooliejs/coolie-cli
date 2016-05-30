@@ -34,6 +34,8 @@ module.exports = function (file, options) {
     if (depsStr) {
         depsStr = '"' + depsStr + '"';
     }
+
+    console.log(file);
     
     var uri = pathURI.toRootURL(file, options.srcDirname);
     var url = pathURI.joinHost(options.inType, options.destHost, uri);

@@ -7,28 +7,28 @@
 
 'use strict';
 
+var fs = require('fs');
 var path = require('ydr-utils').path;
 var assert = require('assert');
 
 var replaceRequire = require('../../replace/require.js');
 
-var file = __filename;
+var file = path.join(__dirname, './src/require.js');
+
 
 describe('replace/require.js', function () {
     it('async:false', function () {
-        var code = 'define(function(require){require("../libs/x.js");require.async("../libs/x.js");require(\'../libs/all.js\', \'js|js\');console.log("app/index.js")});';
         var ret = replaceRequire(file, {
-            code: code,
+            code: fs.readFileSync(file, 'utf8'),
             async: false,
             outName2IdMap: {
-                '../libs/x.js|js': 'm',
-                '../libs/all.js|js': 'n'
+                './core|js': 'x',
+                './mouse|js': 'y',
+                './widget|js': 'z'
             }
         });
-        var expect = 'define(function(require){require("m");require.async("../libs/x.js");require("n");console.log("app/index.js")});';
 
         console.log(ret);
-        assert.equal(ret, expect);
     });
 
     it('async:true', function () {

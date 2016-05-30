@@ -12,19 +12,20 @@ var debug = require('ydr-utils').debug;
 var path = require('ydr-utils').path;
 
 var Uglify = require("uglify-js");
-
+var before = 'function parseNodeList(){';
+var after = '}';
 
 module.exports = function (file, code, async) {
     var ast;
 
-    code = 'function parseNodeList(){' + code + '}';
+    code = before + code + after;
 
     try {
         ast = Uglify.parse(code);
     } catch (err) {
         console.log();
         debug.error('parse module', path.toSystem(file));
-        debug.error('parse module', '语法有误，无法解析，请检查');
+        debug.error('parse module', '语法有误，无法解析，请检查。');
         debug.error('parse module', err.message);
         return process.exit(1);
     }
@@ -49,4 +50,5 @@ module.exports = function (file, code, async) {
     return requireNodes;
 };
 
-
+module.exports.beforeLength = before.length;
+module.exports.afterLength = after.length;
