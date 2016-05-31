@@ -8,6 +8,7 @@
 'use strict';
 
 var pathURI = require('../utils/path-uri.js');
+var parseDefine = require('../parse/define');
 
 
 /**
@@ -35,24 +36,48 @@ module.exports = function (file, options) {
     if (depsStr) {
         depsStr = '"' + depsStr + '"';
     }
-    
-    var findDefine = false;
-    
-    if(options.compatible) {
-        
-    } else {
-        
-    }
-    
 
     var uri = pathURI.toRootURL(file, options.srcDirname);
     var url = pathURI.joinHost(options.inType, options.destHost, uri);
 
-    return '\n' +
-        'define("' + id + '", [' + depsStr + '], function (' + args + ') {\n' +
-        '// @ref ' + url + '\n\n' +
-        factory +
-        '\n\n});\n';
+
+    /**
+     * 标准处理
+     * @returns {string}
+     */
+    var standardProcess = function () {
+        return '' +
+            '\n/* @ref ' + url + ' */\ndefine("' + id + '", [' + depsStr + '], function (' + args + ') {' +
+            factory +
+            '\n\n});\n';
+    };
+
+
+    /**
+     * 兼容处理
+     * @returns {string}
+     */
+    var compatibleProcess = function () {
+        var before = factory.slice(0, pos[0]);
+        var end = factory.slice(pos[1]);
+
+        return before +
+            '\n/* @ref ' + url + ' */\ndefine("' + id + '", [' + depsStr + '], function(' + args + ') {\n' +
+            end;
+    };
+
+
+    if (options.compatible) {
+        var pos = parseDefine(file, factory);
+
+        if (pos[1] === 0) {
+            return standardProcess();
+        } else {
+            return compatibleProcess();
+        }
+    } else {
+        return standardProcess();
+    }
 };
 
 

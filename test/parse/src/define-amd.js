@@ -12,7 +12,7 @@
     if ( typeof define === "function" && define.amd ) {
 
         // AMD. Register as an anonymous module.
-        define(function (require,xx,yy,zz) {
+        define(function () {
             require("1j");
             require("1k");
             require("1l");
