@@ -8,7 +8,7 @@
 'use strict';
 
 var Uglify = require("uglify-js");
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 
 var requirePipeline = require('../parse/require-pipeline.js');
 var parseRequireNodeList = require('../parse/require-node-list.js');

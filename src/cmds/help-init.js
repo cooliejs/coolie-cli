@@ -7,7 +7,7 @@
 
 'use strict';
 
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var log = require('ydr-utils').log;
 
 var banner = require('./banner.js');

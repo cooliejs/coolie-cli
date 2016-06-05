@@ -9,7 +9,7 @@
 
 var U2 = require("uglify-js");
 var path = require('ydr-utils').path;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 
 var globalId = require('../utils/global-id.js');
 var pathURI = require('../utils/path-uri.js');

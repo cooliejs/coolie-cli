@@ -8,7 +8,7 @@
 'use strict';
 
 var path = require('ydr-utils').path;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 
 /**
  * 压缩 JSON string

@@ -10,7 +10,7 @@
 
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var encryption = require('ydr-utils').encryption;
 
 var parseRequireList = require('../parse/require.js');

@@ -11,7 +11,7 @@ var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var encryption = require('ydr-utils').encryption;
 var path = require('ydr-utils').path;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var fse = require('fs-extra');
 
 var pathURI = require('./path-uri.js');

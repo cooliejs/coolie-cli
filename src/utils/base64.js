@@ -13,7 +13,7 @@ var dato = require('ydr-utils').dato;
 var mime = require('ydr-utils').mime;
 var typeis = require('ydr-utils').typeis;
 var string = require('ydr-utils').string;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 
 var reader = require('./reader.js');
 

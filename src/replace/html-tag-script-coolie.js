@@ -9,7 +9,7 @@
 
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var typeis = require('ydr-utils').typeis;
 
 var pathURI = require('../utils/path-uri.js');

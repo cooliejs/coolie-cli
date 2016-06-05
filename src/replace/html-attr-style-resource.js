@@ -8,7 +8,7 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 
 var parseHTML = require('../parse/html.js');
 var replaceCSSResource = require('./css-resource.js');

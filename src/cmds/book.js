@@ -8,7 +8,7 @@
 'use strict';
 
 var openHelper = require('open');
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 
 var pkg = require('../../package.json');
 var banner = require('./banner.js');

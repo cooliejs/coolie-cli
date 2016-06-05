@@ -10,7 +10,7 @@
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var random = require('ydr-utils').random;
 var controller = require('ydr-utils').controller;
 

@@ -14,7 +14,7 @@ var typeis = require('ydr-utils').typeis;
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 var string = require('ydr-utils').string;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 
 var minifyCSS = require('../minify/css.js');
 var minifyHTML = require('../minify/html.js');

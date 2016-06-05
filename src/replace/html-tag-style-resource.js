@@ -8,7 +8,7 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 
 var htmlAttr = require('../utils/html-attr.js');
 var minifyCSS = require('../minify/css.js');

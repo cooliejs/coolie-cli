@@ -8,7 +8,7 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var Middleware = require('ydr-utils').Middleware;
 var Emitter = require('ydr-utils').Emitter;
 var date = require('ydr-utils').date;

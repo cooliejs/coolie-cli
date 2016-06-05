@@ -9,7 +9,7 @@
 
 var howdo = require('howdo');
 var fse = require('fs-extra');
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
 var date = require('ydr-utils').date;

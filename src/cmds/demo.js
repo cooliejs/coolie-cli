@@ -8,7 +8,7 @@
 'use strict';
 
 var howdo = require('howdo');
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var openHelper = require('open');
 
 var banner = require('./banner.js');

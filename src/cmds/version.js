@@ -8,7 +8,7 @@
 'use strict';
 
 var npm = require('ydr-utils').npm;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var howdo = require('howdo');
 
 var pkg = require('../../package.json');

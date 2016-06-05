@@ -9,7 +9,7 @@
 
 var path = require('ydr-utils').path;
 var encryption = require('ydr-utils').encryption;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var dato = require('ydr-utils').dato;
 var fse = require('fs-extra');
 

@@ -8,7 +8,7 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var path = require('ydr-utils').path;
 var controller = require('ydr-utils').controller;
 

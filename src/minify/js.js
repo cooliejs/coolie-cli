@@ -9,7 +9,7 @@
 
 
 var uglifyJS = require('uglify-js');
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 

@@ -13,7 +13,7 @@ var glob = require('glob');
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 var url = require('url');
 
 var copy = require('../utils/copy.js');

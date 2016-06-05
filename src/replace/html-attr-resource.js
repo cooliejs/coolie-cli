@@ -10,7 +10,7 @@
 var fs = require('fs-extra');
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
