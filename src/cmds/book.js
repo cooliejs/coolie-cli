@@ -9,6 +9,8 @@
 
 var openHelper = require('open');
 var debug = require('blear.node.debug');
+var console = require('blear.node.console');
+
 
 var pkg = require('../../package.json');
 var banner = require('./banner.js');

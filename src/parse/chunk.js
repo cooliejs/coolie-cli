@@ -11,6 +11,8 @@ var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var debug = require('blear.node.debug');
 var path = require('ydr-utils').path;
+var console = require('blear.node.console');
+
 
 var defaults = {
     chunkList: [],

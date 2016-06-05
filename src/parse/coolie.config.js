@@ -15,6 +15,8 @@ var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
 var debug = require('blear.node.debug');
 var url = require('url');
+var console = require('blear.node.console');
+
 
 var copy = require('../utils/copy.js');
 var pathURI = require('../utils/path-uri.js');

@@ -10,6 +10,8 @@
 var howdo = require('howdo');
 var debug = require('blear.node.debug');
 var openHelper = require('open');
+var console = require('blear.node.console');
+
 
 var banner = require('./banner.js');
 var gitClone = require('../utils/git-clone.js');

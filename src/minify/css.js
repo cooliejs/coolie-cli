@@ -12,6 +12,8 @@ var CleanCSS = require("clean-css");
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
 var debug = require('blear.node.debug');
+var console = require('blear.node.console');
+
 
 var replaceCSSResource = require('../replace/css-resource.js');
 

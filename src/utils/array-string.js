@@ -7,6 +7,8 @@
 
 'use strict';
 
+var console = require('blear.node.console');
+
 
 var REG_START = /^\[\s*?/;
 var REG_END = /\s*?]$/;

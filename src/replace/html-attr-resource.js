@@ -11,6 +11,8 @@ var fs = require('fs-extra');
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
 var debug = require('blear.node.debug');
+var console = require('blear.node.console');
+
 
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');

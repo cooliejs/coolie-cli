@@ -8,6 +8,7 @@
 var path = require('ydr-utils').path;
 var debug = require('blear.node.debug');
 var fse = require('fs-extra');
+var console = require('blear.node.console');
 
 
 var reFunctionStart = /^function\s*?\(\s*\)\s*\{/;

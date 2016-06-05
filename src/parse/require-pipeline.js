@@ -10,6 +10,7 @@
 var path = require('path');
 var dato = require('ydr-utils').dato;
 var debug = require('blear.node.debug');
+var console = require('blear.node.console');
 
 
 var reRelative = /^\.{1,2}\//;

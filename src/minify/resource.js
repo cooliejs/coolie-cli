@@ -8,3 +8,5 @@
 'use strict';
 
 var path = require("ydr-utils").path;
+var debug = require('blear.node.debug');
+var console = require('blear.node.console');

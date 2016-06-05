@@ -10,6 +10,8 @@
 var Uglify = require("uglify-js");
 var debug = require('blear.node.debug');
 var path = require('ydr-utils').path;
+var console = require('blear.node.console');
+
 
 module.exports = function (file, code) {
     var start = 0;

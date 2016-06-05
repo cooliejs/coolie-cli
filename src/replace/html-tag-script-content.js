@@ -8,6 +8,8 @@
 'use strict';
 
 var dato = require('ydr-utils').dato;
+var console = require('blear.node.console');
+
 
 var copy = require('../utils/copy.js');
 var sign = require('../utils/sign.js');

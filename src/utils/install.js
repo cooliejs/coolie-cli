@@ -18,6 +18,7 @@ var dato = require('ydr-utils').dato;
 var AdmZip = require('adm-zip');
 var glob = require('glob');
 var os = require('os');
+var console = require('blear.node.console');
 
 
 /**

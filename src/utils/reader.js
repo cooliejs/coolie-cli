@@ -11,8 +11,11 @@ var fs = require('fs');
 var path = require('ydr-utils').path;
 var typeis = require('ydr-utils').typeis;
 var debug = require('blear.node.debug');
+var console = require('blear.node.console');
+
 
 var bookURL = require('./book-url');
+
 
 var bufferMap = {};
 

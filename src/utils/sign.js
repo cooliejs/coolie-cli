@@ -7,6 +7,9 @@
 
 'use strict';
 
+var console = require('blear.node.console');
+
+
 var pkg = require('../../package.json');
 
 var sign = module.exports = function (type) {

@@ -13,6 +13,7 @@ var debug = require('blear.node.debug');
 var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
 var encryption = require('ydr-utils').encryption;
+var console = require('blear.node.console');
 
 var sign = require('./sign.js');
 var pathURI = require('./path-uri.js');

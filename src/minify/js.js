@@ -12,6 +12,8 @@ var uglifyJS = require('uglify-js');
 var debug = require('blear.node.debug');
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
+var console = require('blear.node.console');
+
 
 var compressorOptions = {
     // 连续单语句，逗号分开

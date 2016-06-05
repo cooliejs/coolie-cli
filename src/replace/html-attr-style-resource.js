@@ -9,6 +9,8 @@
 
 var dato = require('ydr-utils').dato;
 var debug = require('blear.node.debug');
+var console = require('blear.node.console');
+
 
 var parseHTML = require('../parse/html.js');
 var replaceCSSResource = require('./css-resource.js');

@@ -8,6 +8,7 @@
 'use strict';
 
 var klass = require('ydr-utils').class;
+var console = require('blear.node.console');
 
 
 var Increase = klass.create({

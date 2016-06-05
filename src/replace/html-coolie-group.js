@@ -13,6 +13,8 @@ var encryption = require('ydr-utils').encryption;
 var debug = require('blear.node.debug');
 var dato = require('ydr-utils').dato;
 var fse = require('fs-extra');
+var console = require('blear.node.console');
+
 
 var reader = require('../utils/reader.js');
 var sign = require('../utils/sign.js');

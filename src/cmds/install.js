@@ -8,6 +8,8 @@
 'use strict';
 
 var debug = require('blear.node.debug');
+var console = require('blear.node.console');
+
 
 var pkg = require('../../package.json');
 var install = require('../utils/install.js');

@@ -7,6 +7,9 @@
 
 'use strict';
 
+var console = require('blear.node.console');
+
+
 var buildRegExp = function (attr) {
     return new RegExp('\\s\\b' + attr + '\\b\\s*(=\\s*([\'"])([\\s\\S]*?)\\2|)', 'i');
 };

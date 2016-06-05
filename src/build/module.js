@@ -12,6 +12,8 @@ var path = require('ydr-utils').path;
 var dato = require('ydr-utils').dato;
 var debug = require('blear.node.debug');
 var encryption = require('ydr-utils').encryption;
+var console = require('blear.node.console');
+
 
 var parseRequireList = require('../parse/require.js');
 var reader = require('../utils/reader.js');

@@ -10,6 +10,8 @@
 
 var path = require('ydr-utils').path;
 var typeis = require('ydr-utils').typeis;
+var console = require('blear.node.console');
+
 
 var REG_ABSOLUTE = /^((?:(?:http|ftp)s?:|)\/\/)/i;
 var REG_RELATIVE_ROOT = /^\//;

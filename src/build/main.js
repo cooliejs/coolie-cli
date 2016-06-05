@@ -11,6 +11,8 @@ var dato = require('ydr-utils').dato;
 var debug = require('blear.node.debug');
 var path = require('ydr-utils').path;
 var controller = require('ydr-utils').controller;
+var console = require('blear.node.console');
+
 
 var pathURI = require('../utils/path-uri.js');
 var progress = require('../utils/progress.js');

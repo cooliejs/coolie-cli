@@ -12,6 +12,7 @@ var path = require('ydr-utils').path;
 var encryption = require('ydr-utils').encryption;
 var debug = require('blear.node.debug');
 var dato = require('ydr-utils').dato;
+var console = require('blear.node.console');
 
 var pathURI = require('../utils/path-uri.js');
 var reader = require('../utils/reader.js');

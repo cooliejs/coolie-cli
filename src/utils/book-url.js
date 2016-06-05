@@ -8,6 +8,8 @@
 'use strict';
 
 var url = require('blear.utils.url');
+var console = require('blear.node.console');
+
 
 var pkg = require('../../package.json');
 

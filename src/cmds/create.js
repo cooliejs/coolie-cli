@@ -16,6 +16,8 @@ var Template = require('ydr-utils').Template;
 var glob = require('glob');
 var fse = require('fs-extra');
 var howdo = require('howdo');
+var console = require('blear.node.console');
+
 
 var banner = require('./banner.js');
 var pkg = require('../../package.json');

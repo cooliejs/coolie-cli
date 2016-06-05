@@ -9,6 +9,8 @@
 
 var request = require('ydr-utils').request;
 var path = require('ydr-utils').path;
+var console = require('blear.node.console');
+
 
 var pkg = require('../../package.json');
 

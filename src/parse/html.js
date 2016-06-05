@@ -12,6 +12,8 @@ var dato = require('ydr-utils').dato;
 var string = require('ydr-utils').string;
 var typeis = require('ydr-utils').typeis;
 var debug = require('blear.node.debug');
+var console = require('blear.node.console');
+
 
 var UNCLOSED_TAGS_LIST = ('AREA BASE BASEFONT BR COL COMMAND EMBED FRAME HR IMG INPUT ISINDEX KEYGEN LINK META ' +
 'PARAM SOURCE TRACK WEB ' +

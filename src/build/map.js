@@ -12,6 +12,8 @@ var path = require('ydr-utils').path;
 var debug = require('blear.node.debug');
 var dato = require('ydr-utils').dato;
 var typeis = require('ydr-utils').typeis;
+var console = require('blear.node.console');
+
 
 var pathURI = require('../utils/path-uri.js');
 

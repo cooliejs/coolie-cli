@@ -14,6 +14,8 @@ var typeis = require('ydr-utils').typeis;
 var path = require('ydr-utils').path;
 var date = require('ydr-utils').date;
 var Template = require('ydr-utils').Template;
+var console = require('blear.node.console');
+
 
 var banner = require('./banner.js');
 var pkg = require('../../package.json');

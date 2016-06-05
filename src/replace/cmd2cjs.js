@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * cmd 模块转换为 cjs 模式
  * @author ydr.me
  * @create 2016-05-27 22:27
  */
@@ -9,6 +9,8 @@
 
 
 var Uglify = require("uglify-js");
+var console = require('blear.node.console');
+
 
 var reDefine = /define(function\(\)\{});/;
 

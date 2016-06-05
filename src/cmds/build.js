@@ -12,6 +12,8 @@ var debug = require('blear.node.debug');
 var Middleware = require('ydr-utils').Middleware;
 var Emitter = require('ydr-utils').Emitter;
 var date = require('ydr-utils').date;
+var console = require('blear.node.console');
+
 
 var parseCoolieConfig = require('../parse/coolie.config.js');
 var buildAPP = require('../build/app.js');

@@ -9,6 +9,7 @@
 
 var controller = require('ydr-utils').controller;
 var debug = require('blear.node.debug');
+var console = require('blear.node.console');
 
 
 /**

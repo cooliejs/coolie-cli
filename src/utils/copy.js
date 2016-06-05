@@ -13,6 +13,8 @@ var encryption = require('ydr-utils').encryption;
 var path = require('ydr-utils').path;
 var debug = require('blear.node.debug');
 var fse = require('fs-extra');
+var console = require('blear.node.console');
+
 
 var pathURI = require('./path-uri.js');
 

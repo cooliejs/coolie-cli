@@ -12,6 +12,7 @@ var howdo = require('howdo');
 var dato = require('ydr-utils').dato;
 var npm = require('ydr-utils').npm;
 var allocation = require('ydr-utils').allocation;
+var console = require('blear.node.console');
 
 
 /**

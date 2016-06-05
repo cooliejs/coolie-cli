@@ -10,6 +10,8 @@
 
 var dato = require('ydr-utils').dato;
 var random = require('ydr-utils').random;
+var console = require('blear.node.console');
+
 
 var sign = require('../utils/sign.js');
 

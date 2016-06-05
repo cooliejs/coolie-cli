@@ -7,6 +7,8 @@
 
 'use strict';
 
+var console = require('blear.node.console');
+
 
 var REG_HUA_START = /^.*?:/;
 var REG_HUA_END = /}$/;

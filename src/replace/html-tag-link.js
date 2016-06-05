@@ -9,6 +9,8 @@
 
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
+var console = require('blear.node.console');
+
 
 var copy = require('../utils/copy.js');
 var parseHTML = require('../parse/html.js');

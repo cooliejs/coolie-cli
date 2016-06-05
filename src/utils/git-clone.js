@@ -19,6 +19,8 @@ var random = require('ydr-utils').random;
 var fse = require('fs-extra');
 var AdmZip = require('adm-zip');
 var os = require('os');
+var console = require('blear.node.console');
+
 
 var defaults = {
     git: 'https://github.com',

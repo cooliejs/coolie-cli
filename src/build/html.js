@@ -12,6 +12,7 @@ var path = require('ydr-utils').path;
 var debug = require('blear.node.debug');
 var typeis = require('ydr-utils').typeis;
 var fse = require('fs-extra');
+var console = require('blear.node.console');
 
 
 var minifyHTML = require('../minify/html.js');

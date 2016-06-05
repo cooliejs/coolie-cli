@@ -9,6 +9,7 @@
 
 var pathURI = require('../utils/path-uri.js');
 var parseDefine = require('../parse/define');
+var console = require('blear.node.console');
 
 
 /**

@@ -11,6 +11,8 @@
 var path = require('ydr-utils').path;
 var debug = require('blear.node.debug');
 var dato = require('ydr-utils').dato;
+var console = require('blear.node.console');
+
 
 var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');

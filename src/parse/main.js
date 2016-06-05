@@ -13,6 +13,8 @@ var path = require('ydr-utils').path;
 var debug = require('blear.node.debug');
 var random = require('ydr-utils').random;
 var controller = require('ydr-utils').controller;
+var console = require('blear.node.console');
+
 
 var reader = require('../utils/reader.js');
 var pathURI = require('../utils/path-uri.js');

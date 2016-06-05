@@ -8,6 +8,8 @@
 
 var dato = require('ydr-utils').dato;
 var path = require('ydr-utils').path;
+var console = require('blear.node.console');
+
 
 var pathURI = require('../utils/path-uri.js');
 var copy = require('../utils/copy.js');
