@@ -12,11 +12,12 @@
  */
 
 coolie.config({
-    // 模块模式，开发环境为 COMMONJS
+    // 模块模式，开发环境为 COMMONJS，
+    // 如果你模块规范是 CMD，请填写为 CMD
     mode: 'CJS',
 
     // 入口模块基准路径，相对于当前文件
-    mainModulesDir: './main/',
+    mainModulesDir: '/static/js/main/',
 
     // node_modules 目录指向，相对于 mainModulesDir
     nodeModulesDir: '/node_modules/',

@@ -6,22 +6,21 @@ var fs = require('fs');
 var path = require('path');
 var command = require('ydr-utils').command;
 var debug = require('ydr-utils').debug;
-var console = require('ydr-utils').console;
 
-var cmdBanner = require('../cmds/banner.js');
-var cmdBuild = require('../cmds/build.js');
-var cmdVersion = require('../cmds/version.js');
-var cmdInit = require('../cmds/init.js');
-var cmdBook = require('../cmds/book.js');
-var cmdInstall = require('../cmds/install.js');
-var cmdCreate = require('../cmds/create.js');
-var cmdDemo = require('../cmds/demo.js');
-var cmdHelp = require('../cmds/help.js');
-var cmdHelpBuild = require('../cmds/help-build.js');
-var cmdHelpCreate = require('../cmds/help-create.js');
-var cmdHelpInit = require('../cmds/help-init.js');
-var cmdHelpDemo = require('../cmds/help-demo.js');
-var cmdHelpInstall = require('../cmds/help-install.js');
+var cmdBanner = require('../src/cmds/banner.js');
+var cmdBuild = require('../src/cmds/build.js');
+var cmdVersion = require('../src/cmds/version.js');
+var cmdInit = require('../src/cmds/init.js');
+var cmdBook = require('../src/cmds/book.js');
+var cmdInstall = require('../src/cmds/install.js');
+var cmdCreate = require('../src/cmds/create.js');
+var cmdDemo = require('../src/cmds/demo.js');
+var cmdHelp = require('../src/cmds/help.js');
+var cmdHelpBuild = require('../src/cmds/help-build.js');
+var cmdHelpCreate = require('../src/cmds/help-create.js');
+var cmdHelpInit = require('../src/cmds/help-init.js');
+var cmdHelpDemo = require('../src/cmds/help-demo.js');
+var cmdHelpInstall = require('../src/cmds/help-install.js');
 
 command.alias({
     d: 'dirname',
