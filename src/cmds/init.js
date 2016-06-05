@@ -16,7 +16,7 @@ var date = require('ydr-utils').date;
 var Template = require('ydr-utils').Template;
 
 var banner = require('./banner.js');
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 
 
 /**

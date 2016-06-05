@@ -7,7 +7,7 @@
 
 'use strict';
 
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 
 var sign = module.exports = function (type) {
     var banner = pkg.name + ' built';

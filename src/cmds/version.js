@@ -11,7 +11,7 @@ var npm = require('ydr-utils').npm;
 var debug = require('ydr-utils').debug;
 var howdo = require('howdo');
 
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 var banner = require('./banner.js');
 
 module.exports = function () {

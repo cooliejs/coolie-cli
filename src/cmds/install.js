@@ -9,7 +9,7 @@
 
 var debug = require('ydr-utils').debug;
 
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 var install = require('../utils/install.js');
 var helpInstall = require('./help-install.js');
 

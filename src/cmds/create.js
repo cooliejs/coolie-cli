@@ -18,7 +18,7 @@ var fse = require('fs-extra');
 var howdo = require('howdo');
 
 var banner = require('./banner.js');
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 
 var template_root = path.join(__dirname, '../template/');
 var TEMPLATE_MAP = {

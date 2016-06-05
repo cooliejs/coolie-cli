@@ -10,7 +10,7 @@
 var request = require('ydr-utils').request;
 var path = require('ydr-utils').path;
 
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 
 var owner = pkg.coolie.owner;
 var REPO_URL = 'https://api.github.com/repos';

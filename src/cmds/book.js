@@ -10,7 +10,7 @@
 var openHelper = require('open');
 var debug = require('ydr-utils').debug;
 
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 var banner = require('./banner.js');
 var bookURL = require('../utils/book-url');
 

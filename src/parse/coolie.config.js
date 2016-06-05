@@ -18,7 +18,7 @@ var url = require('url');
 
 var copy = require('../utils/copy.js');
 var pathURI = require('../utils/path-uri.js');
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 var coolieConfigRuntime = require('./coolie-config-runtime');
 
 var DEBUG = !Boolean(pkg.dist || pkg.publish_time);

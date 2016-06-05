@@ -11,7 +11,7 @@ var path = require('ydr-utils').path;
 var debug = require('ydr-utils').debug;
 var fse = require('fs-extra');
 
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 
 
 var writePackageJSON = function (json, destDirname) {

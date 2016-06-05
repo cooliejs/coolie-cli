@@ -17,7 +17,7 @@ var pathURI = require('../utils/path-uri.js');
 var reader = require('../utils/reader.js');
 var sign = require('../utils/sign.js');
 var minifyJS = require('../minify/js.js');
-var pkg = require('../package.json');
+var pkg = require('../../package.json');
 
 var reLastPath = /^\.{2}\//;
 
