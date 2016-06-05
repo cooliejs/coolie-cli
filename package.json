@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "2.0.0-beta2",
+  "version": "2.0.0-beta3",
   "description": "前端工程化构建工具",
   "preferGlobal": true,
   "bin": {
@@ -52,6 +52,8 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
+    "blear.node.console": "^1.0.3",
+    "blear.node.debug": "^1.0.1",
     "blear.polyfills.array": "^1.0.3",
     "blear.polyfills.object": "^1.0.1",
     "blear.polyfills.string": "^1.0.1",
