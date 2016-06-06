@@ -5,7 +5,7 @@
 var fs = require('fs');
 var path = require('path');
 var command = require('ydr-utils').command;
-var debug = require('ydr-utils').debug;
+var debug = require('blear.node.debug');
 
 var cmdBanner = require('../src/cmds/banner.js');
 var cmdBuild = require('../src/cmds/build.js');
