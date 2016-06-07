@@ -18,6 +18,7 @@ var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
 var buildResPath = require('../build/res-path.js');
+var progress = require('../utils/progress');
 
 // background: url("...");
 var REG_URL = /url\s*?\((.*?)\)/ig;
@@ -61,6 +62,7 @@ var defaults = {
  * @param options.mute {Boolean} 是否静音
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
+ * @param [options.progressKey] {String} 进度日志键
  * @returns {Object}
  */
 module.exports = function (file, options) {
@@ -113,6 +115,10 @@ module.exports = function (file, options) {
             }
 
             url = path.toURI(url) + pathRet.suffix;
+
+            if (options.progressKey) {
+                progress.run(options.progressKey, url);
+            }
 
             return item.before + url + item.after;
         });

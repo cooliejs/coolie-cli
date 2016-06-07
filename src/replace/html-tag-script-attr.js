@@ -12,6 +12,7 @@ var path = require('ydr-utils').path;
 var console = require('blear.node.console');
 
 
+var progress = require('../utils/progress.js');
 var copy = require('../utils/copy.js');
 var parseHTML = require('../parse/html.js');
 var buildJSPath = require('../build/js-path.js');
@@ -55,6 +56,7 @@ var defaults = {
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
  * @param [options.signJS] {Boolean} 是否签名 JS 文件
  * @param [options.mute] {Boolean} 是否静音
+ * @param [options.progressKey] {String} 进度日志键
  * @returns {Object}
  */
 module.exports = function (file, options) {
@@ -107,6 +109,10 @@ module.exports = function (file, options) {
             destPath: ret.destFile,
             dependencies: [ret.srcFile]
         });
+
+        if (options.progressKey) {
+            progress.run(options.progressKey, ret.url);
+        }
 
         node.attrs.src = ret.url;
         return node;

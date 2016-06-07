@@ -16,6 +16,7 @@ var console = require('blear.node.console');
 
 var pathURI = require('../utils/path-uri.js');
 var copy = require('../utils/copy.js');
+var progress = require('../utils/progress.js');
 var parseHTML = require('../parse/html.js');
 
 var JS_TYPES = {
@@ -73,6 +74,7 @@ var minifyJSMap = {};
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
  * @param [options.signJS] {Boolean} 是否签名 JS 文件
  * @param [options.mute] {Boolean} 是否静音
+ * @param [options.progressKey] {String} 进度日志键
  * @returns {Object}
  */
 module.exports = function (file, options) {
@@ -155,6 +157,10 @@ module.exports = function (file, options) {
         // 本域并且 src 为静态
         if (!pathURI.isURL(coolieConfigURI) && isStaticSrc) {
             coolieConfigURI = '~' + coolieConfigURI;
+        }
+
+        if (options.progressKey) {
+            progress.run(options.progressKey, coolieConfigURI);
         }
 
         node.attrs[DATA_MAIN] = mainVersion + '.js';

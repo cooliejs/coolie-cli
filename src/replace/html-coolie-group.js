@@ -21,6 +21,8 @@ var sign = require('../utils/sign.js');
 var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
 var minifyCSS = require('../minify/css.js');
+var progress = require('../utils/progress.js');
+
 
 // <!--coolie-->
 var REG_COOLIE_GROUP = /<!--\s*?coolie\s*?-->([\s\S]*?)<!--\s*?\/coolie\s*?-->/gi;
@@ -76,6 +78,7 @@ var defaults = {
  * @param [options.signJS] {Boolean} 是否签名 js 文件
  * @param [options.signCSS] {Boolean} 是否签名 css 文件
  * @param [options.mute] {Boolean} 是否静音
+ * @param [options.progressKey] {String} 进度日志键
  * @returns {{code: String, cssList: Array, jsList: Array}}
  */
 module.exports = function (file, options) {
@@ -129,9 +132,14 @@ module.exports = function (file, options) {
                 files.push(cssFile);
                 md5List.push(encryption.md5(cssCode));
                 bfList.push(new Buffer(cssCode, ENCODING));
+                var url = pathURI.toRootURL(cssFile, options.srcDirname);
 
                 if (!options.mute) {
-                    debug.success('build css', pathURI.toRootURL(cssFile, options.srcDirname));
+                    debug.success('build css', url);
+                }
+
+                if (options.progressKey) {
+                    progress.run(options.progressKey, url);
                 }
             });
 
@@ -162,7 +170,7 @@ module.exports = function (file, options) {
                 return process.exit(1);
             }
 
-            concatRet = '<link rel="stylesheet" href="' + pathURI.joinHost('css',options.destHost, concatURI) + '">';
+            concatRet = '<link rel="stylesheet" href="' + pathURI.joinHost('css', options.destHost, concatURI) + '">';
             cacheFilesList.push(files);
             cacheResultList.push(concatRet);
 
@@ -189,9 +197,14 @@ module.exports = function (file, options) {
                 files.push(jsFile);
                 md5List.push(encryption.md5(jsCode));
                 bfList.push(new Buffer(jsCode, ENCODING));
+                var url = pathURI.toRootURL(jsFile, options.srcDirname);
 
                 if (!options.mute) {
-                    debug.success('build js', pathURI.toRootURL(jsFile, options.srcDirname));
+                    debug.success('build js', url);
+                }
+
+                if (options.progressKey) {
+                    progress.run(options.progressKey, url);
                 }
             });
 
@@ -217,7 +230,7 @@ module.exports = function (file, options) {
                 return process.exit(1);
             }
 
-            concatRet = '<script src="' + pathURI.joinHost('js',options.destHost, concatURI) + '"></script>';
+            concatRet = '<script src="' + pathURI.joinHost('js', options.destHost, concatURI) + '"></script>';
             cacheFilesList.push(files);
             cacheResultList.push(concatRet);
 

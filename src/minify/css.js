@@ -69,6 +69,7 @@ var cssminify = null;
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.replaceCSSResource] {Boolean} 是否替换 css 内引用文件
+ * @param [options.progressKey] {String} 进度日志键
  * @returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
@@ -92,7 +93,8 @@ module.exports = function (file, options) {
                 destResourceDirname: options.destResourceDirname,
                 destCSSDirname: options.destCSSDirname,
                 minifyResource: options.minifyResource,
-                mute: options.mute
+                mute: options.mute,
+                progressKey: options.progressKey
             });
             code = replaceCSSResourceRet.code;
             resList = replaceCSSResourceRet.resList;

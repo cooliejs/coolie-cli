@@ -14,6 +14,7 @@ var console = require('blear.node.console');
 
 var parseHTML = require('../parse/html.js');
 var replaceCSSResource = require('./css-resource.js');
+var progress = require('../utils/progress.js');
 
 var COOLIE_IGNORE = 'coolieignore';
 var COOLIE_BASE64 = 'cooliebase64';
@@ -46,6 +47,7 @@ var defaults = {
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
  * @param [options.mute] {Boolean} 是否静音
+ * @param [options.progressKey] {String} 进度日志键
  * returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
@@ -75,7 +77,8 @@ module.exports = function (file, options) {
             destHost: options.destHost,
             destResourceDirname: options.destResourceDirname,
             mute: false,
-            base64: Boolean(node.attrs[COOLIE_BASE64])
+            base64: Boolean(node.attrs[COOLIE_BASE64]),
+            progressKey: options.progressKey
         });
 
         styleCode = replaceCSSResourceRet.code;

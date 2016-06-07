@@ -14,6 +14,7 @@ var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
 
+var progress = require('../utils/progress.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');
 var buildResPath = require('../build/res-path.js');
@@ -67,6 +68,7 @@ var defaults = {
  * @param options.destResourceDirname {String} 目标资源文件保存目录
  * @param [options.minifyResource] {Boolean} 是否压缩资源文件
  * @param [options.mute] {Boolean} 是否静音
+ * @param [options.progressKey] {String} 进度日志键
  * @returns {Object}
  */
 module.exports = function (file, options) {
@@ -127,6 +129,10 @@ module.exports = function (file, options) {
 
             if (!resMap[ret.srcFile]) {
                 resList.push(ret.srcFile);
+            }
+
+            if (options.progressKey) {
+                progress.run(options.progressKey, ret.url);
             }
 
             node.attrs[attr] = ret.url;

@@ -18,6 +18,7 @@ var console = require('blear.node.console');
 var minifyHTML = require('../minify/html.js');
 var pathURI = require('../utils/path-uri.js');
 var reader = require('../utils/reader.js');
+var progress = require('../utils/progress.js');
 
 var defaults = {
     middleware: null,
@@ -107,6 +108,7 @@ module.exports = function (options) {
             }
         }
 
+        var logKey = (index + 1) + '/' + htmlLength;
         var ret = minifyHTML(htmlFile, {
             code: code,
             htmlMinifyOptions: options.htmlMinifyOptions,
@@ -131,7 +133,8 @@ module.exports = function (options) {
             signHTML: true,
             signJS: false,
             signCSS: false,
-            mute: options.mute
+            mute: options.mute,
+            logKey: logKey
         });
 
         var relative = path.relative(options.srcDirname, htmlFile);
@@ -155,13 +158,9 @@ module.exports = function (options) {
             }
         }
 
-        if (options.mute) {
-            debug.waitEnd();
-        }
-
         try {
             fse.outputFileSync(destFile, ret.code, 'utf8');
-            debug.success((index + 1) + '/' + htmlLength, htmlURI);
+            progress.stop(logKey, htmlURI);
         } catch (err) {
             debug.error('write html', path.toSystem(htmlFile));
             debug.error('write file', err.message);

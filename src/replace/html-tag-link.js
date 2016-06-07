@@ -15,6 +15,7 @@ var console = require('blear.node.console');
 var copy = require('../utils/copy.js');
 var parseHTML = require('../parse/html.js');
 var buildCSSPath = require('../build/css-path.js');
+var progress = require('../utils/progress.js');
 
 
 var COOLIE_IGNORE = 'coolieignore';
@@ -50,6 +51,7 @@ var defaults = {
  * @param [options.signCSS] {Boolean} 是否签名 CSS 文件
  * @param [options.mute] {Boolean} 是否静音
  * @returns {{code: String, cssList: Array}}
+ * @param [options.progressKey] {String} 进度日志键
  */
 module.exports = function (file, options) {
     options = dato.extend({}, defaults, options);
@@ -99,6 +101,11 @@ module.exports = function (file, options) {
             }]
         });
         node.attrs.href = ret.url;
+
+        if (options.progressKey) {
+            progress.run(options.progressKey, ret.url);
+        }
+        
         return node;
     }).exec();
 

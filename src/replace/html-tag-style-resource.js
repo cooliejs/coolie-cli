@@ -14,6 +14,7 @@ var console = require('blear.node.console');
 
 var htmlAttr = require('../utils/html-attr.js');
 var minifyCSS = require('../minify/css.js');
+var progress = require('../utils/progress.js');
 
 var COOLIE_IGNOE = 'coolieignore';
 var REG_STYLE_TAG = /(<style\b[\s\S]*?>)([\s\S]*?)<\/style>/ig;
@@ -46,6 +47,7 @@ var defaults = {
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 内的资源
  * @param [options.mute=false] {Boolean} 是否静音
+ * @param [options.progressKey] {String} 进度日志键
  * @returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
@@ -78,7 +80,8 @@ module.exports = function (file, options) {
                     destDirname: options.destDirname,
                     destHost: options.destHost,
                     destResourceDirname: options.destResourceDirname,
-                    mute: options.mute
+                    mute: options.mute,
+                    progressKey: options.progressKey
                 });
 
                 styleCode = minifyCSSRet.code;

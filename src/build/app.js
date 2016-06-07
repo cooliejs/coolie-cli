@@ -195,8 +195,9 @@ module.exports = function (options) {
         mainIndex++;
     });
 
+
     //debug.warn('mainMap', mainMap);
-    //debug.warn('chunkDependingCountMap', chunkDependingCountMap);
+    // debug.warn('chunkDependingCountMap', chunkDependingCountMap);
     //debug.warn('singleModuleMap', singleModuleMap);
     //return process.exit();
     // 4、chunk 分组
@@ -229,6 +230,7 @@ module.exports = function (options) {
             singleModuleMap[mainIndex0].md5List.push(chunkMeta.md5);
         }
     });
+
 
     // 5、chunk 新建
     // [{bufferList: Array, md5List: Array}]

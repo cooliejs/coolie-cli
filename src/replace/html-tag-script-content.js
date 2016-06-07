@@ -10,11 +10,11 @@
 var dato = require('ydr-utils').dato;
 var console = require('blear.node.console');
 
-
 var copy = require('../utils/copy.js');
 var sign = require('../utils/sign.js');
 var minifyJS = require('../minify/js.js');
 var parseHTML = require('../parse/html.js');
+var progress = require('../utils/progress.js');
 
 var JS_TYPES = {
     'javascript': true,
@@ -45,6 +45,7 @@ var defaults = {
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
  * @param [options.signJS] {Boolean} 是否签名 JS 文件
  * @param [options.mute] {Boolean} 是否静音
+ * @param [options.progressKey] {String} 进度日志键
  * @returns {Object}
  */
 module.exports = function (file, options) {

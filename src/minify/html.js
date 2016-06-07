@@ -69,7 +69,8 @@ var defaults = {
     signHTML: false,
     signJS: false,
     signCSS: false,
-    mute: false
+    mute: false,
+    progressKey: null
 };
 var htmlMinifyDefaults = {
     removeHTMLOneLineComments: true,
@@ -106,6 +107,7 @@ var htmlMinifyDefaults = {
  * @param [options.signJS] {Boolean} 是否签名 js 文件
  * @param [options.signCSS] {Boolean} 是否签名 css 文件
  * @param [options.mute] {Boolean} 是否静音
+ * @param [options.progressKey] {String} 日期键
  * @returns {Object}
  */
 var minifyHTML = function (file, options) {
@@ -189,12 +191,12 @@ var minifyHTML = function (file, options) {
         destHost: options.destHost,
         destResourceDirname: options.destResourceDirname,
         minifyResource: options.minifyResource,
-        mute: options.mute
+        mute: options.mute,
+        progressKey: options.progressKey
     });
 
     code = replaceHTMLAttrResourceRet.code;
     resList = resList.concat(replaceHTMLAttrResourceRet.resList);
-
 
     // replace <script coolie>
     var replaceHTMLTagScriptCoolieRet = replaceHTMLTagScriptCoolie(file, {
@@ -212,7 +214,8 @@ var minifyHTML = function (file, options) {
         minifyJS: options.minifyJS,
         uglifyJSOptions: options.uglifyJSOptions,
         signJS: options.signJS,
-        mute: options.mute
+        mute: options.mute,
+        progressKey: options.progressKey
     });
 
     code = replaceHTMLTagScriptCoolieRet.code;
@@ -232,7 +235,8 @@ var minifyHTML = function (file, options) {
         minifyJS: options.minifyJS,
         uglifyJSOptions: options.uglifyJSOptions,
         signJS: options.signJS,
-        mute: options.mute
+        mute: options.mute,
+        progressKey: options.progressKey
     });
 
     code = replaceHTMLTagScriptAttrRet.code;
@@ -246,7 +250,8 @@ var minifyHTML = function (file, options) {
         minifyJS: options.minifyJS,
         uglifyJSOptions: options.uglifyJSOptions,
         signJS: options.signJS,
-        mute: options.mute
+        mute: options.mute,
+        progressKey: options.progressKey
     });
 
     code = replaceHTMLTagScriptContentRet.code;
@@ -265,7 +270,8 @@ var minifyHTML = function (file, options) {
         minifyCSS: options.minifyCSS,
         cleanCSSOptions: options.cleanCSSOptions,
         signCSS: options.signCSS,
-        mute: options.mute
+        mute: options.mute,
+        progressKey: options.progressKey
     });
 
     code = replaceHTMLTagLinkRet.code;
@@ -295,7 +301,8 @@ var minifyHTML = function (file, options) {
         replaceCSSResource: options.replaceCSSResource,
         signJS: options.signJS,
         signCSS: options.signCSS,
-        mute: options.mute
+        mute: options.mute,
+        progressKey: options.progressKey
     });
 
     code = replaceHTMLCoolieGroupRet.code;
@@ -314,7 +321,8 @@ var minifyHTML = function (file, options) {
         minifyCSS: options.minifyCSS,
         cleanCSSOptions: options.cleanCSSOptions,
         minifyResource: options.minifyResource,
-        mute: options.mute
+        mute: options.mute,
+        progressKey: options.progressKey
     });
 
     code = replaceHTMLTagStyleResourceRet.code;
@@ -330,7 +338,8 @@ var minifyHTML = function (file, options) {
         destHost: options.destHost,
         destResourceDirname: options.destResourceDirname,
         minifyResource: options.minifyResource,
-        mute: options.mute
+        mute: options.mute,
+        progressKey: options.progressKey
     });
     code = replaceHTMLAttrStyleResourceRet.code;
     resList = resList.concat(replaceHTMLAttrStyleResourceRet.resList);

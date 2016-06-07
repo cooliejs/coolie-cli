@@ -19,7 +19,9 @@
       }
     ],
     "css": [],
-    "res": []
+    "res": [
+      "../webroot-dev/static/img/abc.png"
+    ]
   },
   "/.views/page1.html": {
     "main": [
