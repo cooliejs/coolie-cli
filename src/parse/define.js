@@ -31,12 +31,28 @@ module.exports = function (file, code) {
         if (node.start.type === 'name' &&
             node.start.value === 'define' &&
             // define(id, deps, factory)
-            node.body && node.body.args && node.body.args.length >= 1 && node.body.args.length <= 3) {
+            (
+                node.body && node.body.args && node.body.args.length >= 1 && node.body.args.length <= 3 ||
+                node.args && node.args.length >= 1 && node.args.length <= 3
+            )) {
             start = node.start.pos;
 
-            var larstArg = node.body.args[node.body.args.length - 1];
+            var larstArg;
 
-            end = larstArg.body[0].start.pos;
+            try {
+                if (node.body && node.body.args) {
+                    larstArg = node.body.args.slice(-1);
+                    end = larstArg.body[0].start.pos;
+                } else {
+                    larstArg = node.args.slice(-1);
+                    end = larstArg[0].body[0].start.pos;
+                }
+            } catch (err) {
+                console.log();
+                debug.error('parse error', file);
+                debug.error('parse error', err.message);
+                return process.exit(1);
+            }
         }
     }));
 

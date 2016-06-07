@@ -17,7 +17,7 @@ var codeAMD = fs.readFileSync(fileAMD, 'utf8');
 var codeCMD = fs.readFileSync(fileCMD, 'utf8');
 
 
-var parseDefine = require('../../parse/define');
+var parseDefine = require('../../src/parse/define');
 
 
 describe('parse/define.js', function () {
