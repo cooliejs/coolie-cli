@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * 解析依赖传输链
  * @author ydr.me
  * @create 2016-05-16 14:25
  */
@@ -25,7 +25,7 @@ var moduleInTypeMap = {
     image: 'file',
     file: 'file',
     text: 'text',
-    html: 'text',
+    html: 'html',
     json: 'json',
     css: 'css'
 };
@@ -45,6 +45,12 @@ var moduleOutTypeMap = {
         d: 'url'
     },
     text: {
+        text: 1,
+        url: 2,
+        base64: 2,
+        d: 'text'
+    },
+    html: {
         text: 1,
         url: 2,
         base64: 2,
