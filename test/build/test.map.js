@@ -11,7 +11,7 @@ var assert = require('assert');
 var path = require('ydr-utils').path;
 var typeis = require('ydr-utils').typeis;
 
-var buildMap = require('../../build/map.js');
+var buildMap = require('../../src/build/map.js');
 
 var srcDirname = path.join(__dirname, 'src');
 var destDirname = path.join(__dirname, 'dest');

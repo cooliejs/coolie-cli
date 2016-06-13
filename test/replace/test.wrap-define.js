@@ -10,7 +10,7 @@
 var path = require('ydr-utils').path;
 var assert = require('assert');
 
-var wrapDefine = require('../../replace/wrap-define.js');
+var wrapDefine = require('../../src/replace/wrap-define.js');
 
 describe('replace/wrap-define.js', function () {
     it('deps:empty', function () {

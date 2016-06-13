@@ -7,7 +7,7 @@
 
 'use strict';
 
-var gitRepo = require('../../utils/git-repo.js');
+var gitRepo = require('../../src/utils/git-repo.js');
 
 describe('utils/git-repo.js', function () {
     it('e', function (done) {

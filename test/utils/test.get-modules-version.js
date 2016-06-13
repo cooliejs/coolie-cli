@@ -9,7 +9,7 @@
 
 var assert = require('assert');
 
-var getModulesVersion = require('../../utils/get-modules-version.js');
+var getModulesVersion = require('../../src/utils/get-modules-version.js');
 
 describe('utils/get-modules-version', function () {
     it('e', function (done) {

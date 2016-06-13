@@ -12,7 +12,7 @@ var fs = require('fs');
 var assert = require('assert');
 var typeis = require('ydr-utils').typeis;
 
-var copy = require('../../utils/copy.js');
+var copy = require('../../src/utils/copy.js');
 
 //var code = fs.readFileSync(file, 'utf8');
 var srcDirname = path.join(__dirname, 'src/');

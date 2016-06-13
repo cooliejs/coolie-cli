@@ -10,7 +10,7 @@
 var assert = require('assert');
 var path = require('ydr-utils').path;
 
-var parseChunk = require('../../parse/chunk.js');
+var parseChunk = require('../../src/parse/chunk.js');
 
 var srcDirname = path.join(__dirname, 'src/');
 

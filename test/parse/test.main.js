@@ -10,7 +10,7 @@
 var assert = require('assert');
 var path = require('ydr-utils').path;
 
-var parseMain = require('../../parse/main.js');
+var parseMain = require('../../src/parse/main.js');
 
 var srcDirname = path.join(__dirname, '../../example/src/');
 

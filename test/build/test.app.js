@@ -11,7 +11,7 @@
 var assert = require('assert');
 var path = require('ydr-utils').path;
 
-var buildAPP = require('../../build/app.js');
+var buildAPP = require('../../src/build/app.js');
 
 var srcDirname = path.join(__dirname, '../../example/src/');
 var destDirname = path.join(__dirname, '../../example/dest/');

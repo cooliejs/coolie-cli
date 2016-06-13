@@ -10,7 +10,7 @@
 var assert = require('assert');
 var path = require('ydr-utils').path;
 
-var buildHTML = require('../../build/html.js');
+var buildHTML = require('../../src/build/html.js');
 
 var srcDirname = path.join(__dirname, 'src/');
 var srcCoolieConfigMainModulesDirname = path.join(srcDirname, './');

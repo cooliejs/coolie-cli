@@ -11,7 +11,7 @@ var path = require('ydr-utils').path;
 var fs = require('fs');
 var assert = require('assert');
 
-var replaceHTMLTagLink = require('../../replace/html-tag-link.js');
+var replaceHTMLTagLink = require('../../src/replace/html-tag-link.js');
 
 var srcDirname = path.join(__dirname, 'src/');
 var file = path.join(srcDirname, 'html-tag-link.html');

@@ -9,7 +9,7 @@
 
 var assert = require('assert');
 
-var htmlAttr = require('../../utils/html-attr.js');
+var htmlAttr = require('../../src/utils/html-attr.js');
 
 
 describe('utils/html-attr.js', function () {

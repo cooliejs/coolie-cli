@@ -12,7 +12,7 @@ var fs = require('fs');
 var typeis = require('ydr-utils').typeis;
 var assert = require('assert');
 
-var replaceCSSResource = require('../../replace/css-resource.js');
+var replaceCSSResource = require('../../src/replace/css-resource.js');
 var file = path.join(__dirname, 'src/css-resource.css');
 
 var code = fs.readFileSync(file, 'utf8');

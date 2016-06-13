@@ -11,7 +11,7 @@ var fs = require('fs');
 var assert = require('assert');
 var path = require('ydr-utils').path;
 
-var parseRequireList = require('../../parse/require.js');
+var parseRequireList = require('../../src/parse/require.js');
 
 var srcDirname = path.join(__dirname, 'src');
 var file = path.join(srcDirname, 'require.js');

@@ -10,7 +10,7 @@
 var path = require('ydr-utils').path;
 var assert = require('assert');
 
-var base64 = require('../../utils/base64.js');
+var base64 = require('../../src/utils/base64.js');
 
 var base64File = path.join(__dirname, './src/base64.js');
 

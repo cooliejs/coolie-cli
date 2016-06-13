@@ -9,7 +9,7 @@
 
 var assert = require('assert');
 
-var stringify = require('../../utils/stringify.js');
+var stringify = require('../../src/utils/stringify.js');
 
 describe('utils/stringify', function () {
     it('stringify', function () {

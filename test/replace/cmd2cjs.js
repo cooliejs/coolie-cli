@@ -12,7 +12,7 @@ var path = require('path');
 var fs = require('fs');
 
 var srcDirname = path.join(__dirname, './src/');
-var cmd2cjs = require('../../replace/cmd2cjs.js');
+var cmd2cjs = require('../../src/replace/cmd2cjs.js');
 
 var file = path.join(srcDirname, 'cmd2cjs.js');
 

@@ -11,7 +11,7 @@ var path = require('ydr-utils').path;
 var fs = require('fs');
 var assert = require('assert');
 
-var reader = require('../../utils/reader.js');
+var reader = require('../../src/utils/reader.js');
 
 
 describe('utils/reader.js', function () {

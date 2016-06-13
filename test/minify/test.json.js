@@ -12,7 +12,7 @@ var jsonString = JSON.stringify(json, null, 4);
 
 describe('minify/json.js', function () {
     it('e', function () {
-        var minifyJSON = require('../../minify/json.js');
+        var minifyJSON = require('../../src/minify/json.js');
         var ret = minifyJSON(__filename, {
             code: jsonString
         });

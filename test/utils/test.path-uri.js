@@ -10,7 +10,7 @@
 var path = require('ydr-utils').path;
 var assert = require('assert');
 
-var pathURI = require('../../utils/path-uri.js');
+var pathURI = require('../../src/utils/path-uri.js');
 
 describe('utils/path-uri.js', function () {
     it('.toRootURL', function () {

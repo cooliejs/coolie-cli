@@ -11,7 +11,7 @@ var path = require('ydr-utils').path;
 var fs = require('fs');
 var assert = require('assert');
 
-var replaceHTMLCoolieGroup = require('../../replace/html-coolie-group.js');
+var replaceHTMLCoolieGroup = require('../../src/replace/html-coolie-group.js');
 
 var srcDirname = path.join(__dirname, 'src/');
 var file = path.join(srcDirname, 'html-coolie-group.html');

@@ -11,7 +11,7 @@ var fs = require('fs');
 var path = require('ydr-utils').path;
 var assert = require('assert');
 
-var replaceRequire = require('../../replace/require.js');
+var replaceRequire = require('../../src/replace/require.js');
 
 var file = path.join(__dirname, './src/require.js');
 

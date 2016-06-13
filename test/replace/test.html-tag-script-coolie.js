@@ -11,7 +11,7 @@ var path = require('ydr-utils').path;
 var fs = require('fs');
 var assert = require('assert');
 
-var replaceHTMLTagScriptCoolie = require('../../replace/html-tag-script-coolie.js');
+var replaceHTMLTagScriptCoolie = require('../../src/replace/html-tag-script-coolie.js');
 
 var srcDirname = path.join(__dirname, 'src/');
 var file = path.join(srcDirname, 'html-tag-script-coolie.html');

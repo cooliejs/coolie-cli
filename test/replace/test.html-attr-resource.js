@@ -11,7 +11,7 @@ var path = require('ydr-utils').path;
 var fs = require('fs');
 var assert = require('assert');
 
-var replaceHTMLAttrResource = require('../../replace/html-attr-resource.js');
+var replaceHTMLAttrResource = require('../../src/replace/html-attr-resource.js');
 var file = path.join(__dirname, 'src/html-attr-resource.html');
 
 var code = fs.readFileSync(file, 'utf8');

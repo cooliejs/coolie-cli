@@ -11,7 +11,7 @@ var path = require('ydr-utils').path;
 var fs = require('fs');
 var assert = require('assert');
 
-var replaceHTMLTagScriptContent = require('../../replace/html-tag-script-content.js');
+var replaceHTMLTagScriptContent = require('../../src/replace/html-tag-script-content.js');
 var file = path.join(__dirname, 'src/html-tag-script-content.html');
 
 var code = fs.readFileSync(file, 'utf8');

@@ -9,7 +9,7 @@
 
 var assert = require('assert');
 
-var arrayString = require('../../utils/array-string.js');
+var arrayString = require('../../src/utils/array-string.js');
 
 
 describe('utils/array-string.js', function () {

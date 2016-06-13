@@ -10,7 +10,7 @@
 var assert = require('assert');
 var typeis = require('ydr-utils').typeis;
 
-var writer = require('../../utils/writer.js');
+var writer = require('../../src/utils/writer.js');
 
 describe('utils/writer.js', function () {
     it('e', function () {

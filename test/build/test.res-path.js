@@ -10,7 +10,7 @@
 var path = require('ydr-utils').path;
 var assert = require('assert');
 
-var buildResPath = require('../../build/res-path.js');
+var buildResPath = require('../../src/build/res-path.js');
 var srcDirname = path.join(__dirname, 'src');
 var destDirname = path.join(__dirname, 'dest');
 var destResourceDirname = path.join(destDirname, 'static/res');

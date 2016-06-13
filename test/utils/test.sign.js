@@ -10,7 +10,7 @@
 var assert = require('assert');
 
 var pkg = require('../../package.json');
-var sign = require('../../utils/sign.js');
+var sign = require('../../src/utils/sign.js');
 
 var banner = pkg.name + ' built';
 

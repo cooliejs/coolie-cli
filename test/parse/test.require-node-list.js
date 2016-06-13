@@ -12,7 +12,7 @@ var path = require('path');
 var assert = require('assert');
 
 
-var parseRequireNodeList = require('../../parse/require-node-list.js');
+var parseRequireNodeList = require('../../src/parse/require-node-list.js');
 
 
 var file = path.join(__dirname, './src/require-node-list.js');

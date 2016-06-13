@@ -7,7 +7,7 @@
 
 'use strict';
 
-var progress = require('../../utils/progress.js');
+var progress = require('../../src/utils/progress.js');
 
 
 describe('utils/progress.js', function () {

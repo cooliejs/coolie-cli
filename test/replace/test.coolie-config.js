@@ -13,7 +13,7 @@ var fs = require('fs');
 var encryption = require('ydr-utils').encryption;
 var typeis = require('ydr-utils').typeis;
 
-var replaceCoolieConfig = require('../../replace/coolie-config.js');
+var replaceCoolieConfig = require('../../src/replace/coolie-config.js');
 
 var srcDirname = path.join(__dirname, 'src/');
 var file = path.join(srcDirname, 'coolie-config.js');

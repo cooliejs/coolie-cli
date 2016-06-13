@@ -10,7 +10,7 @@ var path = require('ydr-utils').path;
 var fs = require('fs');
 var assert = require('assert');
 
-var minifyJS = require('../../minify/js.js');
+var minifyJS = require('../../src/minify/js.js');
 var file = path.join(__dirname, '../../example/src/static/js/index3-1.js');
 
 function test() {

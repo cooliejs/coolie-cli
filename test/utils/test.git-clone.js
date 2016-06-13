@@ -9,7 +9,7 @@
 
 var assert = require('assert');
 
-var gitClone = require('../../utils/git-clone.js');
+var gitClone = require('../../src/utils/git-clone.js');
 
 var lazy  = function (done) {
     return function () {

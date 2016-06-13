@@ -11,7 +11,7 @@ var path = require('ydr-utils').path;
 var fs = require('fs');
 var assert = require('assert');
 
-var replaceHTMLTagScriptAttr = require('../../replace/html-tag-script-attr.js');
+var replaceHTMLTagScriptAttr = require('../../src/replace/html-tag-script-attr.js');
 var file = path.join(__dirname, 'src/html-tag-script-attr.html');
 
 var code = fs.readFileSync(file, 'utf8');

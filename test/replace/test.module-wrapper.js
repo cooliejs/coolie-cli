@@ -12,8 +12,8 @@ var assert = require('assert');
 var fs = require('fs');
 var dato = require('ydr-utils').dato;
 
-var replaceModuleWrapper = require('../../replace/module-wrapper.js');
-var globalId = require('../../utils/global-id.js');
+var replaceModuleWrapper = require('../../src/replace/module-wrapper.js');
+var globalId = require('../../src/utils/global-id.js');
 
 var srcDirname = path.join(__dirname, 'src/');
 var destDirname = path.join(__dirname, 'dest/');

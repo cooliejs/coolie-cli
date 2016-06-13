@@ -11,7 +11,7 @@ var path = require('ydr-utils').path;
 var fs = require('fs');
 var assert = require('assert');
 
-var replaceHTMLTagStyleResource = require('../../replace/html-tag-style-resource.js');
+var replaceHTMLTagStyleResource = require('../../src/replace/html-tag-style-resource.js');
 
 var srcDirname = path.join(__dirname, 'src/');
 var file = path.join(srcDirname, 'html-tag-style-resource.html');

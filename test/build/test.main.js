@@ -10,7 +10,7 @@
 var assert = require('assert');
 var path = require('ydr-utils').path;
 
-var buildMain = require('../../build/main.js');
+var buildMain = require('../../src/build/main.js');
 
 var srcDirname = path.join(__dirname, 'src/');
 var destDirname = path.join(__dirname, 'dest/');

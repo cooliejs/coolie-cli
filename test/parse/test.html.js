@@ -11,7 +11,7 @@
 var path = require('ydr-utils').path;
 var fs = require('fs');
 
-var parseHTML = require('../../parse/html.js');
+var parseHTML = require('../../src/parse/html.js');
 
 
 var file = path.join(__dirname, 'test.html');

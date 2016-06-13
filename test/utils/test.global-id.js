@@ -10,7 +10,7 @@
 var path = require('ydr-utils').path;
 var assert = require('assert');
 
-var globalId = require('../../utils/global-id.js');
+var globalId = require('../../src/utils/global-id.js');
 
 var file1 = 'abc';
 var file2 = 'def';

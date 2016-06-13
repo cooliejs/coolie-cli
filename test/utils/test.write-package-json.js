@@ -11,7 +11,7 @@ var assert = require('assert');
 var path = require('ydr-utils').path;
 var typeis = require('ydr-utils').typeis;
 
-var writePackageJSON = require('../../utils/write-package-json');
+var writePackageJSON = require('../../src/utils/write-package-json');
 
 describe('utils/write-package-json', function () {
     it('e', function () {
