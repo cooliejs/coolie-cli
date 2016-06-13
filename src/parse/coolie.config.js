@@ -20,6 +20,7 @@ var console = require('blear.node.console');
 
 var copy = require('../utils/copy.js');
 var pathURI = require('../utils/path-uri.js');
+var bookURL = require('../utils/book-url');
 var pkg = require('../../package.json');
 var coolieConfigRuntime = require('./coolie-config-runtime');
 
@@ -88,14 +89,10 @@ module.exports = function (options) {
      */
     coolie.use = function (middleware) {
         if (options.middleware) {
-            if (!typeis.function(middleware)) {
-                debug.warn('invalid middleware', 'some middleware is not a function');
-                debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie-*"');
-            }
-
-            if (!middleware.package) {
-                debug.warn('invalid middleware', 'some middleware has lost its `package` property');
-                debug.warn('coolie tips', 'please use npm install coolie middleware, their names are "coolie-*"');
+            if (!typeis.function(middleware) || !middleware.package) {
+                debug.warn('invalid middleware', '不符合规范的 coolie 中间件');
+                debug.warn('coolie book', '相关 coolie 中间件开发规范，请参阅 ' + bookURL('/document/coolie-middleware/'));
+                debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-*` 为前缀');
             }
 
             options.middleware.use(middleware);

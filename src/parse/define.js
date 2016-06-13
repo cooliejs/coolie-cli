@@ -42,11 +42,11 @@ module.exports = function (file, code) {
             try {
                 if (node.body && node.body.args) {
                     larstArg = node.body.args.slice(-1);
-                    end = larstArg.body[0].start.pos;
                 } else {
                     larstArg = node.args.slice(-1);
-                    end = larstArg[0].body[0].start.pos;
                 }
+
+                end = larstArg[0].body[0].start.pos;
             } catch (err) {
                 console.log();
                 debug.error('parse error', file);
