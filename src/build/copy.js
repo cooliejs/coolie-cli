@@ -9,7 +9,7 @@
 
 
 var copy = require('../utils/copy.js');
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var console = require('blear.node.console');
 
 
