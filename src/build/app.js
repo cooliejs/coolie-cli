@@ -9,8 +9,8 @@
 
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
-var path = require('ydr-utils').path;
-var dato = require('ydr-utils').dato;
+var collection = require('blear.utils.collection');
+var object = require('blear.utils.object');
 
 var parseMain = require('../parse/main.js');
 var parseChunk = require('../parse/chunk.js');
@@ -73,7 +73,7 @@ var defaults = {
  * @returns {Object}
  */
 module.exports = function (options) {
-    options = dato.extend(true, {}, defaults, options);
+    options = object.assign(true, {}, defaults, options);
 
     var mainVersionMap = {};
     var chunkVersionMap = {};
@@ -128,7 +128,7 @@ module.exports = function (options) {
 
     debug.success('build main', 'will build ' + mainLength + ' main modules');
     // 3、chunk 计数统计
-    dato.each(mainMap, function (mainFile, mainMeta) {
+    collection.each(mainMap, function (mainFile, mainMeta) {
         var buildMainRet = buildMain(mainFile, {
             uglifyJSOptions: options.uglifyJSOptions,
             srcDirname: options.srcDirname,
@@ -156,12 +156,12 @@ module.exports = function (options) {
         appMap[mainFile] = dependencies.map(function (dependency) {
             return dependency.file;
         });
-        dato.each(resList, function (index, res) {
+        collection.each(resList, function (index, res) {
             appMap[mainFile].push(res);
         });
 
         // [{id: String, file: String, buffer: Buffer, md5: String}]
-        dato.each(dependencies, function (index, dependency) {
+        collection.each(dependencies, function (index, dependency) {
             var chunkIndex = chunkFileMap[dependency.file];
 
             // 符合分块策略 && 不是入口模块
@@ -203,7 +203,7 @@ module.exports = function (options) {
     // 4、chunk 分组
     var chunkGroupMap = {};
     // [{chunkIndex, Number, id: String, file: String, buffer: Buffer, md5: String, count: Number, mainIndex: Number}]
-    dato.each(chunkDependingCountMap, function (chunkId, chunkMeta) {
+    collection.each(chunkDependingCountMap, function (chunkId, chunkMeta) {
         var chunkIndex = chunkMeta.chunkIndex;
         var mainIndexList = chunkMeta.mainIndexList;
         var mainIndex0 = mainIndexList[0];
@@ -217,7 +217,7 @@ module.exports = function (options) {
             chunkGroupMap[chunkIndex].bufferList.push(chunkMeta.buffer);
             chunkGroupMap[chunkIndex].md5List.push(chunkMeta.md5);
 
-            dato.each(mainIndexList, function (index, _mainIndex) {
+            collection.each(mainIndexList, function (index, _mainIndex) {
                 if (!singleModuleMap[_mainIndex].chunkMap[chunkIndex]) {
                     singleModuleMap[_mainIndex].chunkMap[chunkIndex] = true;
                     singleModuleMap[_mainIndex].chunkList.push(chunkIndex);
@@ -234,7 +234,7 @@ module.exports = function (options) {
 
     // 5、chunk 新建
     // [{bufferList: Array, md5List: Array}]
-    dato.each(chunkGroupMap, function (groupIndex, groupMeta) {
+    collection.each(chunkGroupMap, function (groupIndex, groupMeta) {
         var ret = writer({
             srcDirname: options.srcDirname,
             destDirname: options.destChunkModulesDirname,
@@ -250,7 +250,7 @@ module.exports = function (options) {
 
     // 6、single 重建
     // [{srcFile: String, bufferList: Array, md5List: Array, chunkList: Array, chunkMap: Object, async: Boolean, mainIndex: Number, file: String}]
-    dato.each(singleModuleMap, function (singleIndex, singleMeta) {
+    collection.each(singleModuleMap, function (singleIndex, singleMeta) {
         if (singleMeta.chunkList.length) {
             singleMeta.bufferList.push(new Buffer('\ncoolie.chunk(' + arrayString.stringify(singleMeta.chunkList) + ');'));
         }
