@@ -55,7 +55,7 @@
     "blear.node.console": "^1.0.3",
     "blear.node.debug": "^1.0.2",
     "blear.node.encryption": "^1.0.1",
-    "blear.node.path": "^1.0.1",
+    "blear.node.path": "^1.0.2",
     "blear.polyfills.array": "^1.0.3",
     "blear.polyfills.object": "^1.0.1",
     "blear.polyfills.string": "^1.0.1",

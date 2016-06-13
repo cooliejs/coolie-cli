@@ -7,10 +7,11 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
-var path = require('ydr-utils').path;
+var object = require('blear.utils.object');
+var collection = require('blear.utils.collection');
+var path = require('blear.node.path');
 var debug = require('blear.node.debug');
-var typeis = require('ydr-utils').typeis;
+var typeis = require('blear.utils.typeis');
 var fse = require('fs-extra');
 var console = require('blear.node.console');
 
@@ -86,13 +87,13 @@ module.exports = function (options) {
     var htmlRESMap = {};
     var htmlLength = htmlList.length;
 
-    dato.each(htmlList, function (index, htmlFile) {
+    collection.each(htmlList, function (index, htmlFile) {
         var code;
 
         try {
             code = reader(htmlFile, 'utf8', htmlFile);
         } catch (err) {
-            debug.error('build html', path.toSystem(htmlFile));
+            debug.error('build html', path.normalize(htmlFile));
             process.exit(1);
         }
 
@@ -162,7 +163,7 @@ module.exports = function (options) {
             fse.outputFileSync(destFile, ret.code, 'utf8');
             progress.stop(logKey, htmlURI);
         } catch (err) {
-            debug.error('write html', path.toSystem(htmlFile));
+            debug.error('write html', path.normalize(htmlFile));
             debug.error('write file', err.message);
             return process.exit(1);
         }
