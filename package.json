@@ -81,7 +81,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^2.3.3",
-    "ydr-utils": "^42.2.22"
+    "mocha": "^2.3.3"
   }
 }

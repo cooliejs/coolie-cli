@@ -7,7 +7,7 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
+var object = require('blear.utils.object');
 var console = require('blear.node.console');
 
 var parseHTML = require('../parse/html.js');
@@ -56,7 +56,7 @@ var defaults = {
  * @returns {{}}
  */
 module.exports = function (options, middleware) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
     var coolieAPI = options.coolieAPI;
 
     middleware.bindContext(coolieAPI);
@@ -91,7 +91,7 @@ module.exports = function (options, middleware) {
      * @returns {{url, srcFile, destFile, resList}|*}
      */
     coolieAPI.buildCSSPath = function (url, file, _options) {
-        _options = dato.extend({}, options, _options);
+        _options = object.assign({}, options, _options);
         return buildCSSPath(url, {
             file: file,
             srcDirname: _options.srcDirname,
@@ -124,7 +124,7 @@ module.exports = function (options, middleware) {
      * @returns {{srcFile, destFile, url}|*}
      */
     coolieAPI.buildJSPath = function (url, file, _options) {
-        _options = dato.extend({}, options, _options);
+        _options = object.assign({}, options, _options);
         return buildJSPath(url, {
             file: file,
             srcDirname: _options.srcDirname,
@@ -152,7 +152,7 @@ module.exports = function (options, middleware) {
      * @returns {{srcFile, destFile, url}|*}
      */
     coolieAPI.buildResPath = function (url, file, _options) {
-        _options = dato.extend({}, options, _options);
+        _options = object.assign({}, options, _options);
         return buildResPath(url, {
             file: file,
             versionLength: _options.versionLength,
