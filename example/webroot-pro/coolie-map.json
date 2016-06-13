@@ -20,6 +20,7 @@
     ],
     "css": [],
     "res": [
+      "../webroot-dev/favicon.ico",
       "../webroot-dev/static/img/abc.png"
     ]
   },
