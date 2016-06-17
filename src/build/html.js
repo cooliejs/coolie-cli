@@ -73,7 +73,7 @@ var defaults = {
  * @returns {Object}
  */
 module.exports = function (options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
 
     // 1. 找出 html
     var htmlList = path.glob(options.glob, {

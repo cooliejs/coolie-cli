@@ -21,10 +21,15 @@ module.exports = function (file, code) {
     try {
         ast = Uglify.parse(code);
     } catch (err) {
-        debug.error('parse define', path.toSystem(file));
-        debug.error('parse define', '模块语法有误，请检查。');
-        debug.error('parse define', err.message);
-        return process.exit(1);
+        // console.log();
+        // throw new Error('...');
+        // console.log(code);
+        // debug.error('parse define', path.toSystem(file));
+        // debug.error('parse define', '模块语法有误，请检查。');
+        // debug.error('parse define', err.message);
+        // return process.exit(1);
+        // 找出 define 那一块，然后整块替换
+        return [start, end];
     }
 
     ast.walk(new Uglify.TreeWalker(function (node) {
