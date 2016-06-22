@@ -1,1 +1,0 @@
-coolie.config({cache:!0,debug:!1,version:{"../index3-1.js":"cfcd208495d565ef66e7dff9f98764da","user/index.js":"cfcd208495d565ef66e7dff9f98764da"},built:"coolie@1.10.5",base:"./app",a:"1",b:"2",global:{CLaasscial:!0,debug:!1},hhe:function(){},async:"../async/",chunk:"../chunk/"}).use();
