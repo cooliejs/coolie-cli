@@ -12,11 +12,16 @@ var Uglify = require("uglify-js");
 var console = require('blear.node.console');
 
 
-var reDefine = /define(function\(\)\{});/;
-
 module.exports = function (file, options) {
     var code = options.code;
-    var ast = Uglify.parse(code);
+    var ast;
+
+    try {
+        ast = Uglify.parse(code);
+    } catch (err) {
+        return code;
+    }
+
     var hasDefine = false;
     var first = true;
     var start = 0;

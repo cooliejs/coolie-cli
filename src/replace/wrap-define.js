@@ -67,7 +67,7 @@ module.exports = function (file, options) {
             end;
     };
 
-
+    
     if (options.compatible) {
         var pos = parseDefine(file, factory);
 

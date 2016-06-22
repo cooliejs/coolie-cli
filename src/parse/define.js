@@ -21,14 +21,6 @@ module.exports = function (file, code) {
     try {
         ast = Uglify.parse(code);
     } catch (err) {
-        // console.log();
-        // throw new Error('...');
-        // console.log(code);
-        // debug.error('parse define', path.toSystem(file));
-        // debug.error('parse define', '模块语法有误，请检查。');
-        // debug.error('parse define', err.message);
-        // return process.exit(1);
-        // 找出 define 那一块，然后整块替换
         return [start, end];
     }
 
@@ -42,21 +34,18 @@ module.exports = function (file, code) {
             )) {
             start = node.start.pos;
 
-            var larstArg;
+            var lastArg;
 
             try {
                 if (node.body && node.body.args) {
-                    larstArg = node.body.args.slice(-1);
+                    lastArg = node.body.args.slice(-1);
                 } else {
-                    larstArg = node.args.slice(-1);
+                    lastArg = node.args.slice(-1);
                 }
 
-                end = larstArg[0].body[0].start.pos;
+                end = lastArg[0].body[0].start.pos;
             } catch (err) {
-                console.log();
-                debug.error('parse error', file);
-                debug.error('parse error', err.message);
-                return process.exit(1);
+                //;
             }
         }
     }));
