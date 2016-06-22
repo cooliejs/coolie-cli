@@ -220,9 +220,6 @@ var minifyHTML = function (file, options) {
     });
 
     code = replaceHTMLTagScriptCoolieRet.code;
-    console.log('---------------------------');
-    console.log(code);
-    console.log('---------------------------');
     mainList = mainList.concat(replaceHTMLTagScriptCoolieRet.mainList);
     jsList = jsList.concat(replaceHTMLTagScriptCoolieRet.jsList);
 
