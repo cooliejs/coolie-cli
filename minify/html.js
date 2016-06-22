@@ -123,7 +123,8 @@ var minifyHTML = function (file, options) {
             var matchConditionsCommentsRet = matchConditionsComments(file, options, source);
 
             if (!matchConditionsCommentsRet.start || !matchConditionsCommentsRet.end) {
-                pack[key] = source;
+                // 防止 $ 符号影响原内容
+                pack[key] = source.replace(/\$/, '$$$$');
                 return key;
             }
 

@@ -15,7 +15,7 @@ var debug = require('ydr-utils').debug;
 
 var UNCLOSED_TAGS_LIST = ('AREA BASE BASEFONT BR COL COMMAND EMBED FRAME HR IMG INPUT ISINDEX KEYGEN LINK META ' +
 'PARAM SOURCE TRACK WEB ' +
-    // svg elements
+// svg elements
 'PATH CIRCLE ELLIPSE LINE RECT USE STOP POLYLINE POLYGON').split(' ');
 var UNCLOSED_TAGS_MAP = {
     '*': false
@@ -275,7 +275,7 @@ var transformHTML = function (matched, transform) {
             return;
         }
 
-        matched.html = matched.html.replace(item.source, renderHTML(item));
+        matched.html = matched.html.replace(item.source, renderHTML(item).replace(/\$/, '$$$$'));
     });
 
     return matched.html;
