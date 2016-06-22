@@ -277,7 +277,7 @@ var transformHTML = function (matched, transform) {
             return;
         }
 
-        matched.html = matched.html.replace(item.source, renderHTML(item));
+        matched.html = matched.html.replace(item.source, renderHTML(item).replace(/\$/, '$$$$'));
     });
 
     return matched.html;

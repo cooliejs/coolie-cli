@@ -127,7 +127,8 @@ var minifyHTML = function (file, options) {
             var matchConditionsCommentsRet = matchConditionsComments(file, options, source);
 
             if (!matchConditionsCommentsRet.start || !matchConditionsCommentsRet.end) {
-                pack[key] = source;
+                // 防止正则标记符影响原内容
+                pack[key] = source.replace(/\$/g, '$$$$');
                 return key;
             }
 
@@ -219,6 +220,9 @@ var minifyHTML = function (file, options) {
     });
 
     code = replaceHTMLTagScriptCoolieRet.code;
+    console.log('---------------------------');
+    console.log(code);
+    console.log('---------------------------');
     mainList = mainList.concat(replaceHTMLTagScriptCoolieRet.mainList);
     jsList = jsList.concat(replaceHTMLTagScriptCoolieRet.jsList);
 
