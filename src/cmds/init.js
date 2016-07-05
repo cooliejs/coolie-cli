@@ -10,10 +10,10 @@
 var howdo = require('howdo');
 var fse = require('fs-extra');
 var debug = require('blear.node.debug');
-var typeis = require('ydr-utils').typeis;
-var path = require('ydr-utils').path;
-var date = require('ydr-utils').date;
-var Template = require('ydr-utils').Template;
+var typeis = require('blear.utils.typeis');
+var path = require('blear.node.path');
+var date = require('blear.utils.date');
+var Template = require('blear.classes.template');
 var console = require('blear.node.console');
 
 
@@ -30,10 +30,10 @@ var pkg = require('../../package.json');
  */
 var writeFile = function (name, destDirname, callback) {
     var destPath = path.join(destDirname, name);
-    var srcPath = path.join(__dirname, '../data/', name);
+    var srcPath = path.join(__dirname, '../../scaffolds/coolie-cli/', name);
 
-    if (typeis.file(destPath)) {
-        debug.error('init error', path.toSystem(destPath) + ' is exist');
+    if (path.isFile(destPath)) {
+        debug.error('init error', path.toSystem(destPath) + ' 已存在');
         return callback();
     }
 
@@ -59,9 +59,10 @@ var writeFile = function (name, destDirname, callback) {
     } catch (err) {
         debug.error(name, path.toSystem(destPath));
         debug.error('init error', err.message);
-        process.exit(1);
+        return process.exit(1);
     }
 
+    debug.success('init success', destData);
     debug.success('init success', path.toSystem(destPath));
     callback();
 };
@@ -77,7 +78,7 @@ module.exports = function (options) {
     banner();
 
     if (!options['coolie-cli'] && !options['coolie.js']) {
-        debug.warn('coolie tips', 'missing config type');
+        debug.warn('coolie tips', '请选择初始化类型，可选：`--coolie-cli` 或 `--coolie.js`');
         return;
     }
 
