@@ -7,10 +7,9 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
-var typeis = require('ydr-utils').typeis;
+var object = require('blear.utils.object');
 var debug = require('blear.node.debug');
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var console = require('blear.node.console');
 
 
@@ -32,7 +31,7 @@ var defaults = {
  * @returns {{}}
  */
 module.exports = function (options) {
-    options = dato.extend(true, {}, defaults, options);
+    options = object.assign(true, {}, defaults, options);
     var chunkFileMap = {};
 
     path.glob(options.chunk, {

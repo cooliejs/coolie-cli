@@ -7,7 +7,6 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
@@ -25,7 +24,7 @@ module.exports = function (file, options) {
     try {
         json = JSON.parse(code);
     } catch (err) {
-        debug.error('jsonminify', path.toSystem(file));
+        debug.error('jsonminify', file);
         debug.error('jsonminify', err.message);
         process.exit(1);
     }
