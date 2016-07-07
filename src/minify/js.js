@@ -10,8 +10,7 @@
 
 var uglifyJS = require('uglify-js');
 var debug = require('blear.node.debug');
-var dato = require('ydr-utils').dato;
-var path = require('ydr-utils').path;
+var object = require('blear.utils.object');
 var console = require('blear.node.console');
 
 
@@ -111,11 +110,11 @@ module.exports = function (file, options) {
             // 变量管理
             mangle: true,
             // 是否压缩
-            compress: dato.extend(true, {}, compressorOptions, options.uglifyJSOptions)
+            compress: object.assign(true, {}, compressorOptions, options.uglifyJSOptions)
         }).code;
     } catch (err) {
         debug.error('js code', code);
-        debug.error('jsminify', path.toSystem(file));
+        debug.error('jsminify', file);
         debug.error('jsminify', err.message);
         process.exit(1);
     }
