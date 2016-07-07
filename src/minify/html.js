@@ -8,9 +8,10 @@
 'use strict';
 
 
-var dato = require('ydr-utils').dato;
-var random = require('ydr-utils').random;
+var object = require('blear.utils.object');
+var random = require('blear.utils.random');
 var console = require('blear.node.console');
+var collection = require('blear.utils.collection');
 
 
 var sign = require('../utils/sign.js');
@@ -111,8 +112,8 @@ var htmlMinifyDefaults = {
  * @returns {Object}
  */
 var minifyHTML = function (file, options) {
-    options = dato.extend({}, defaults, options);
-    var htmlMinifyOptions = dato.extend({}, htmlMinifyDefaults, options.htmlMinifyOptions);
+    options = object.assign({}, defaults, options);
+    var htmlMinifyOptions = object.assign({}, htmlMinifyDefaults, options.htmlMinifyOptions);
     var coolieMap = {};
     var preMap = {};
     var commentsMap = {};
@@ -178,7 +179,7 @@ var minifyHTML = function (file, options) {
     }
 
     // 恢复 pre tagName
-    dato.each(preMap, function (key, val) {
+    collection.each(preMap, function (key, val) {
         code = code.replace(key, val);
     });
 
@@ -280,7 +281,7 @@ var minifyHTML = function (file, options) {
 
 
     // 恢复 coolie group
-    dato.each(coolieMap, function (key, val) {
+    collection.each(coolieMap, function (key, val) {
         code = code.replace(key, val);
     });
 
@@ -347,7 +348,7 @@ var minifyHTML = function (file, options) {
 
 
     // 恢复注释
-    dato.each(commentsMap, function (key, val) {
+    collection.each(commentsMap, function (key, val) {
         code = code.replace(key, val);
     });
 
@@ -374,7 +375,7 @@ var minifyHTML = function (file, options) {
  */
 var matchConditionsComments = function (file, options, source) {
     var start = '';
-    dato.each(reConditionsCommentsStarts, function (index, reg) {
+    collection.each(reConditionsCommentsStarts, function (index, reg) {
         start = (source.match(reg) || [''])[0];
 
         if (start) {
@@ -385,7 +386,7 @@ var matchConditionsComments = function (file, options, source) {
     });
 
     var end = '';
-    dato.each(reConditionsCommentsEnds, function (index, reg) {
+    collection.each(reConditionsCommentsEnds, function (index, reg) {
         end = (source.match(reg) || [''])[0];
 
         if (end) {
@@ -413,7 +414,7 @@ function minifyConditionsComments(file, options, matched) {
     var source = matched.source;
     var start = matched.start;
     var end = matched.end;
-    var options2 = dato.extend({}, options);
+    var options2 = object.assign({}, options);
 
     options2.code = source;
     options2.signHTML = false;
