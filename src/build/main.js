@@ -7,12 +7,10 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
+var object = require('blear.utils.object');
 var debug = require('blear.node.debug');
-var path = require('ydr-utils').path;
-var controller = require('ydr-utils').controller;
 var console = require('blear.node.console');
-
+var collection = require('blear.utils.collection');
 
 var pathURI = require('../utils/path-uri.js');
 var progress = require('../utils/progress.js');
@@ -63,6 +61,7 @@ var defaults = {
  * @returns {{dependencies: {id: String, file: String, buffer: Buffer, md5: String}, resList: Array}}
  */
 module.exports = function (file, options) {
+    options = object.assign({}, defaults, options);
     var mainFile = file;
     var virtualMap = options.virtualMap;
     // 依赖长度
@@ -99,7 +98,7 @@ module.exports = function (file, options) {
             compatible: options.compatible
         });
 
-        dato.each(ret.resList, function (index, res) {
+        collection.each(ret.resList, function (index, res) {
             if (!resMap[res]) {
                 resMap[res] = true;
                 resList.push(res);
@@ -114,14 +113,14 @@ module.exports = function (file, options) {
         });
 
         if (ret.dependencies.length) {
-            dato.each(ret.dependencies, function (index, dependency) {
+            collection.each(ret.dependencies, function (index, dependency) {
                 if (buildMap[dependency.id]) {
                     return;
                 }
 
                 buildMap[dependency.id] = true;
                 dependencyLength++;
-                var options3 = dato.extend({}, options, {
+                var options3 = object.assign({}, options, {
                     file: dependency.file,
                     inType: dependency.inType,
                     outType: dependency.outType,
@@ -140,7 +139,7 @@ module.exports = function (file, options) {
             progress.stop((options.mainIndex + 1) + '/' + options.mainLength, srcMainURI);
         }
     };
-    var options2 = dato.extend({}, options, {
+    var options2 = object.assign({}, options, {
         file: file,
         inType: 'js',
         outType: 'js',

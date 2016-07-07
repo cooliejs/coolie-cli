@@ -7,12 +7,12 @@
 
 'use strict';
 
-var fse = require('fs-extra');
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var debug = require('blear.node.debug');
-var dato = require('ydr-utils').dato;
-var typeis = require('ydr-utils').typeis;
+var collection = require('blear.utils.collection');
+var typeis = require('blear.utils.typeis');
 var console = require('blear.node.console');
+var fse = require('fs-extra');
 
 
 var pathURI = require('../utils/path-uri.js');
@@ -69,7 +69,7 @@ module.exports = function (options) {
         //}
     };
     var parseURI = function (_path, root) {
-        var isArray = typeis.array(_path);
+        var isArray = typeis.Array(_path);
         var _path2 = isArray ? _path : [_path];
         var _path3 = [];
         var _map = {};
@@ -88,7 +88,7 @@ module.exports = function (options) {
     var htmlMainURIMap = {};
 
     // 集合 main
-    dato.each(options.buildHTMLResult.htmlMainMap, function (mainFile, mainList) {
+    collection.each(options.buildHTMLResult.htmlMainMap, function (mainFile, mainList) {
         var htmlURI = parseURI(mainFile, options.srcDirname);
 
         coolieMap[htmlURI] = {
@@ -98,7 +98,7 @@ module.exports = function (options) {
             css: []
         };
 
-        dato.each(mainList, function (index, mainJS) {
+        collection.each(mainList, function (index, mainJS) {
             htmlMainURIMap[mainJS] = htmlURI;
             var dependencies = options.buildAPPResult.appMap[mainJS] || [];
             var mainVersion = options.buildAPPResult.mainVersionMap[mainJS];
@@ -113,30 +113,11 @@ module.exports = function (options) {
         });
     });
 
-    //// 集合 async
-    //dato.each(htmlMainURIMap, function (mainJS, mainURI) {
-    //    var asyncList = options.buildAPPResult.mainMap[mainJS].requireAsyncList;
-    //
-    //    dato.each(asyncList, function (index, asyncMain) {
-    //        var noVersionAsyncMainPath = path.join(options.destAsyncModulesDirname, asyncMain.gid + '.js');
-    //        var asyncMainVersion = options.buildAPPResult.asyncVersionMap[noVersionAsyncMainPath];
-    //        var dependencies = options.buildAPPResult.appMap[asyncMain.file] || [];
-    //        var destAsyncMainJSPath = path.join(options.destAsyncModulesDirname, asyncMain.gid + '.' + asyncMainVersion + '.js');
-    //
-    //        dependencies.shift();
-    //        coolieMap[mainURI].async.push({
-    //            src: parseURI(asyncMain.file),
-    //            dest: parseURI(destAsyncMainJSPath),
-    //            deps: parseURI(dependencies)
-    //        });
-    //    });
-    //});
-
     // 集合 js
-    dato.each(options.buildHTMLResult.htmlJSMap, function (htmlFile, jsList) {
+    collection.each(options.buildHTMLResult.htmlJSMap, function (htmlFile, jsList) {
         var htmlURI = parseURI(htmlFile, options.srcDirname);
 
-        dato.each(jsList, function (index, jsItem) {
+        collection.each(jsList, function (index, jsItem) {
             coolieMap[htmlURI].js.push({
                 dest: parseURI(jsItem.destPath),
                 deps: parseURI(jsItem.dependencies)
@@ -145,16 +126,16 @@ module.exports = function (options) {
     });
 
     // 集合 css
-    dato.each(options.buildHTMLResult.htmlCSSMap, function (htmlFile, cssList) {
+    collection.each(options.buildHTMLResult.htmlCSSMap, function (htmlFile, cssList) {
         var htmlURI = parseURI(htmlFile, options.srcDirname);
 
-        dato.each(cssList, function (index, cssItem) {
+        collection.each(cssList, function (index, cssItem) {
             var coolieHTMLCSSItem = {
                 dest: parseURI(cssItem.destPath),
                 deps: []
             };
 
-            dato.each(cssItem.dependencies, function (index, depCSSItem) {
+            collection.each(cssItem.dependencies, function (index, depCSSItem) {
                 coolieHTMLCSSItem.deps.push({
                     src: parseURI(depCSSItem.srcPath),
                     res: parseURI(depCSSItem.resList)
@@ -165,7 +146,7 @@ module.exports = function (options) {
     });
 
     // 集合 res
-    dato.each(options.buildHTMLResult.htmlRESMap, function (htmlFile, resList) {
+    collection.each(options.buildHTMLResult.htmlRESMap, function (htmlFile, resList) {
         var htmlURI = parseURI(htmlFile, options.srcDirname);
 
         coolieMap[htmlURI].res = parseURI(resList);
@@ -176,7 +157,7 @@ module.exports = function (options) {
         debug.success('coolie map', pathURI.toRootURL(coolieMapPath, options.srcDirname));
         return coolieMapPath;
     } catch (err) {
-        debug.error('write coolie map', path.toSystem(coolieMapPath));
+        debug.error('write coolie map', coolieMapPath);
         debug.error('write coolie map', err.message);
         return process.exit(1);
     }

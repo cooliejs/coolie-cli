@@ -7,12 +7,12 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
-var encryption = require('ydr-utils').encryption;
+var path = require('blear.node.path');
+var encryption = require('blear.node.encryption');
 var debug = require('blear.node.debug');
-var dato = require('ydr-utils').dato;
-var fse = require('fs-extra');
+var object = require('blear.utils.object');
 var console = require('blear.node.console');
+var fse = require('fs-extra');
 
 
 var pathURI = require('../utils/path-uri.js');
@@ -43,7 +43,7 @@ var defaults = {
  * @returns {*}
  */
 module.exports = function (src, options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
     var isRelatived = pathURI.isRelatived(src);
 
     if (!isRelatived) {
@@ -84,7 +84,7 @@ module.exports = function (src, options) {
                 debug.success('build js', pathURI.toRootURL(srcPath, options.srcDirname));
             }
         } catch (err) {
-            debug.error('write file', path.toSystem(destPath));
+            debug.error('write file', destPath);
             debug.error('write file', err.message);
             return process.exit(1);
         }
