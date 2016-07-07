@@ -7,13 +7,10 @@
 
 'use strict';
 
-var fs = require('fs-extra');
 var CleanCSS = require("clean-css");
-var dato = require('ydr-utils').dato;
-var path = require('ydr-utils').path;
+var object = require('blear.utils.object');
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
-
 
 var replaceCSSResource = require('../replace/css-resource.js');
 
@@ -73,12 +70,12 @@ var cssminify = null;
  * @returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
     var code = options.code;
     var resList = [];
 
     if (!cssminify) {
-        cssminify = new CleanCSS(dato.extend({}, cleanCSSOptions, options.cleanCSSOptions));
+        cssminify = new CleanCSS(object.assign({}, cleanCSSOptions, options.cleanCSSOptions));
     }
 
     try {
@@ -105,7 +102,7 @@ module.exports = function (file, options) {
             resList: resList
         };
     } catch (err) {
-        debug.error('cssminify', path.toSystem(file));
+        debug.error('cssminify', file);
         debug.error('cssminify', err.message);
         process.exit(1);
     }
