@@ -24,12 +24,13 @@ var pathURI = require('../utils/path-uri.js');
 var COOLIE_IGNORE = 'coolieignore';
 var COOLIE_BASE64 = 'cooliebase64';
 var linkRelList = [
-    /apple-touch-icon/,
-    /apple-touch-icon-precomposed/,
-    /apple-touch-startup-image/,
-    /icon/,
-    /og:image/,
-    /msapplication-TileImage/
+    /apple-touch-icon/i,
+    /apple-touch-icon-precomposed/i,
+    /apple-touch-startup-image/i,
+    /icon/i,
+    /og:image/i,
+    /msapplication-TileImage/i,
+    /bookmark/i
 ];
 var replaceList = [{
     tags: ['link'],

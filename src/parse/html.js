@@ -17,7 +17,7 @@ var console = require('blear.node.console');
 
 var UNCLOSED_TAGS_LIST = ('AREA BASE BASEFONT BR COL COMMAND EMBED FRAME HR IMG INPUT ISINDEX KEYGEN LINK META ' +
 'PARAM SOURCE TRACK WEB ' +
-    // svg elements
+// svg elements
 'PATH CIRCLE ELLIPSE LINE RECT USE STOP POLYLINE POLYGON').split(' ');
 var UNCLOSED_TAGS_MAP = {
     '*': false
