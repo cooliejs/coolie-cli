@@ -5,7 +5,6 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
 var debug = require('blear.node.debug');
 var fse = require('fs-extra');
 var console = require('blear.node.console');
@@ -21,8 +20,8 @@ module.exports = function (file) {
     try {
         code = fse.readFileSync(file, 'utf8');
     } catch (err) {
-        debug.error('parse coolie.config', path.toSystem(file));
-        debug.error('read file', path.toSystem(file));
+        debug.error('parse coolie.config', file);
+        debug.error('read file', file);
         debug.error('read file', err.message);
         process.exit(1);
     }
@@ -67,7 +66,7 @@ module.exports = function (file) {
     try {
         runtime(coolieConfig, callbacks);
     } catch (err) {
-        debug.error('parse coolie.config', path.toSystem(file));
+        debug.error('parse coolie.config', file);
         debug.error('parse coolie.config', err.message);
         return process.exit(1);
     }
