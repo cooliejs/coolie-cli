@@ -8,16 +8,14 @@
 'use strict';
 
 var debug = require('blear.node.debug');
-var dato = require('ydr-utils').dato;
-var date = require('ydr-utils').date;
-var path = require('ydr-utils').path;
-var typeis = require('ydr-utils').typeis;
-var Template = require('ydr-utils').Template;
+var collection = require('blear.utils.collection');
+var date = require('blear.utils.date');
+var path = require('blear.node.path');
+var Template = require('blear.classes.template');
+var console = require('blear.node.console');
 var glob = require('glob');
 var fse = require('fs-extra');
 var howdo = require('howdo');
-var console = require('blear.node.console');
-
 
 var banner = require('./banner.js');
 var pkg = require('../../package.json');
@@ -77,7 +75,7 @@ var createTemplate = function (meta, options, callback) {
     var convert2 = {};
     var converted = {};
 
-    dato.each(convert, function (rela, transi) {
+    collection.each(convert, function (rela, transi) {
         convert2[path.join(root, rela)] = transi;
     });
 
@@ -108,7 +106,7 @@ var createTemplate = function (meta, options, callback) {
 
             if (transiType) {
                 srcName = path.relative(root, relFile);
-                dato.each(transiType, function (key, originFile) {
+                collection.each(transiType, function (key, originFile) {
                     if (options[key]) {
                         file = originFile;
                         findConvert = true;
@@ -145,7 +143,7 @@ var createTemplate = function (meta, options, callback) {
             // ignore
         }
 
-        debug.success('create', path.toSystem(path.join(destName, srcName)));
+        debug.success('create', path.join(destName, srcName));
         setTimeout(next, 45);
     }).follow(callback);
 };
@@ -160,7 +158,7 @@ var createReadmeMD = function (options) {
     var destName = path.basename(destDirname);
     var srcName = 'readme.md';
     var destFile = path.join(destDirname, srcName);
-    var readmeMDTemplatePath = path.join(__dirname, '../data/template-readme.md');
+    var readmeMDTemplatePath = path.join(__dirname, '../../scaffolds/coolie-cli/template-readme.md');
     var readmeMDTemplateData = fse.readFileSync(readmeMDTemplatePath, 'utf8');
     var tpl = new Template(readmeMDTemplateData, {
         compress: false
@@ -177,7 +175,7 @@ var createReadmeMD = function (options) {
         // ignore
     }
 
-    debug.success('create', path.toSystem(path.join(destName, srcName)));
+    debug.success('create', path.join(destName, srcName));
 };
 
 

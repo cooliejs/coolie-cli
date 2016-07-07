@@ -8,7 +8,6 @@
 'use strict';
 
 var debug = require('blear.node.debug');
-var log = require('ydr-utils').log;
 var console = require('blear.node.console');
 
 

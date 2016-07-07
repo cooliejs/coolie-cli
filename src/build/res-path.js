@@ -6,8 +6,8 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
-var path = require('ydr-utils').path;
+var object = require('blear.utils.object');
+var path = require('blear.node.path');
 var console = require('blear.node.console');
 
 
@@ -34,7 +34,7 @@ var defaults = {
  * @returns {*}
  */
 module.exports = function (value, options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
 
     var pathRet = pathURI.parseURI2Path(value);
 

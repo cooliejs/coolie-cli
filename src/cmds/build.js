@@ -7,11 +7,11 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
+var object = require('blear.utils.object');
 var debug = require('blear.node.debug');
 var Middleware = require('ydr-utils').Middleware;
 var Emitter = require('ydr-utils').Emitter;
-var date = require('ydr-utils').date;
+var date = require('blear.utils.date');
 var console = require('blear.node.console');
 
 
@@ -88,7 +88,7 @@ emitter.on('exit', function (err) {
  */
 module.exports = function (options) {
     banner();
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
 
     var stepIndex = 0;
     var stepLength = 6;
@@ -167,7 +167,7 @@ module.exports = function (options) {
         srcDirname: srcDirname,
         destDirname: destDirname,
         destJSDirname: configs.destJSDirname,
-        versionMap: dato.extend({}, buildAPPResult.chunkVersionMap, buildAPPResult.asyncVersionMap),
+        versionMap: object.assign({}, buildAPPResult.chunkVersionMap, buildAPPResult.asyncVersionMap),
         destHost: configs.destHost,
         uglifyJSOptions: configs.uglifyJSOptions,
         sign: true

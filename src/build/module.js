@@ -8,10 +8,10 @@
 'use strict';
 
 
-var path = require('ydr-utils').path;
-var dato = require('ydr-utils').dato;
+var collection = require('blear.utils.collection');
+var object = require('blear.utils.object');
 var debug = require('blear.node.debug');
-var encryption = require('ydr-utils').encryption;
+var encryption = require('blear.node.encryption');
 var console = require('blear.node.console');
 
 
@@ -73,7 +73,7 @@ var defaults = {
  * @returns {{dependencies: Array, code: String, md5: String}}
  */
 module.exports = function (file, options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
 
     var resList = [];
     var virtualMap = options.virtualMap;
@@ -99,7 +99,7 @@ module.exports = function (file, options) {
     }) : [];
     var asyncOutName2IdMap = {};
 
-    dato.each(asyncRequires, function (index, item) {
+    collection.each(asyncRequires, function (index, item) {
         // 虚拟文件
         var replacedFile = virtualMap[item.file] || item.file;
 
@@ -119,7 +119,7 @@ module.exports = function (file, options) {
     var depGidList = [];
     var dependencies = [];
 
-    dato.each(syncRequires, function (index, item) {
+    collection.each(syncRequires, function (index, item) {
         syncOutName2IdMap[item.outName] = item.gid;
 
         if (!syncDepFileMap[item.gid]) {
