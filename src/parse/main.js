@@ -7,14 +7,12 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
-var typeis = require('ydr-utils').typeis;
-var path = require('ydr-utils').path;
+var object = require('blear.utils.object');
+var collection = require('blear.utils.collection');
+var path = require('blear.node.path');
 var debug = require('blear.node.debug');
-var random = require('ydr-utils').random;
-var controller = require('ydr-utils').controller;
+var random = require('blear.utils.random');
 var console = require('blear.node.console');
-
 
 var reader = require('../utils/reader.js');
 var pathURI = require('../utils/path-uri.js');
@@ -41,7 +39,7 @@ var defaults = {
  * @param options.srcCoolieConfigNodeModulesDirname {String} node_modules 根目录
  */
 module.exports = function (options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
 
     var mainMap = {};
     var virtualMap = {};
@@ -54,7 +52,7 @@ module.exports = function (options) {
     var parsedMap = {};
     var parseLength = 0;
 
-    dato.each(mainFiles, function (index, mainFile) {
+    collection.each(mainFiles, function (index, mainFile) {
         mainFilesMap[mainFile] = true;
     });
 
@@ -64,7 +62,7 @@ module.exports = function (options) {
      * @param files
      */
     function parseModules(parentFile, files) {
-        dato.each(files, function (index, file) {
+        collection.each(files, function (index, file) {
             if (parsedMap[file]) {
                 return;
             }
@@ -105,7 +103,7 @@ module.exports = function (options) {
                 };
             }
 
-            dato.each(requireAsyncList, function (index, asyncMeta) {
+            collection.each(requireAsyncList, function (index, asyncMeta) {
                 // 将 async 模块虚拟出来
                 var originalFile = asyncMeta.file;
                 var virtualName = '[coolie-virtual-file]-' + random.guid();
@@ -126,7 +124,7 @@ module.exports = function (options) {
                 };
             });
 
-            dato.each(requireSyncList.concat(requireAsyncList), function (index, meta) {
+            collection.each(requireSyncList.concat(requireAsyncList), function (index, meta) {
                 parseModules(file, [meta.file]);
             });
         });

@@ -8,7 +8,7 @@
 'use strict';
 
 var path = require('path');
-var dato = require('ydr-utils').dato;
+var collection = require('blear.utils.collection');
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
@@ -97,7 +97,7 @@ module.exports = function (file, name, pipeline) {
     var extension = path.extname(name).slice(1);
 
     if (reRelative.test(name) && extension && !pipeline) {
-        dato.each(moduleInTypeMatches, function (index, rule) {
+        collection.each(moduleInTypeMatches, function (index, rule) {
             var inType = rule[0];
             var regexp = rule[1];
 

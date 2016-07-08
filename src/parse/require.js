@@ -8,7 +8,7 @@
 'use strict';
 
 var U2 = require("uglify-js");
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
@@ -101,8 +101,8 @@ module.exports = function (file, options) {
                     reqPkg = require(pkgJSONFile);
                 } catch (err) {
                     console.log();
-                    debug.error('node_module', path.toSystem(file) + '\n依赖的`' + name + '` 模块描述文件不存在或语法错误');
-                    debug.error('package.json', path.toSystem(pkgJSONFile));
+                    debug.error('node_module',file + '\n依赖的`' + name + '` 模块描述文件不存在或语法错误');
+                    debug.error('package.json', pkgJSONFile);
                     debug.warn('warning', '模块路径指南 <' + bookURL('/introduction/module-path/') + '>');
                     return process.exit(1);
                 }

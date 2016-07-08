@@ -9,7 +9,6 @@
 
 
 var debug = require('blear.node.debug');
-var path = require('ydr-utils').path;
 var console = require('blear.node.console');
 
 
@@ -26,7 +25,7 @@ module.exports = function (file, code, async) {
         ast = Uglify.parse(code);
     } catch (err) {
         console.log();
-        debug.error('parse module', path.toSystem(file));
+        debug.error('parse module', file);
         debug.error('parse module', '语法有误，无法解析，请检查。');
         debug.error('parse module', err.message);
         return process.exit(1);
