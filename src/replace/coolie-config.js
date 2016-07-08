@@ -7,9 +7,9 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
-var encryption = require('ydr-utils').encryption;
-var path = require('ydr-utils').path;
+var collection = require('blear.utils.collection');
+var encryption = require('blear.node.encryption');
+var path = require('blear.node.path');
 var debug = require('blear.node.debug');
 var fse = require('fs-extra');
 var console = require('blear.node.console');
@@ -53,7 +53,7 @@ module.exports = function (file, options) {
     var asyncModulesMap = {};
     var chunkModulesMap = {};
 
-    dato.each(options.versionMap, function (_file, _version) {
+    collection.each(options.versionMap, function (_file, _version) {
         var basename = path.basename(_file, '.js');
         var relativeAsync = path.relative(options.destAsyncModulesDirname, _file);
 
@@ -67,8 +67,8 @@ module.exports = function (file, options) {
     asyncModulesMap = JSON.stringify(asyncModulesMap);
     chunkModulesMap = JSON.stringify(chunkModulesMap);
     destCoolieConfig.mainModulesDir = options.destCoolieConfigMainModulesDir;
-    destCoolieConfig.asyncModulesDir = path.toURI(path.relative(options.destMainModulesDirname, options.destAsyncModulesDirname)) + '/';
-    destCoolieConfig.chunkModulesDir = path.toURI(path.relative(options.destMainModulesDirname, options.destChunkModulesDirname)) + '/';
+    destCoolieConfig.asyncModulesDir = path.relative(options.destMainModulesDirname, options.destAsyncModulesDirname) + '/';
+    destCoolieConfig.chunkModulesDir = path.relative(options.destMainModulesDirname, options.destChunkModulesDirname) + '/';
     destCoolieConfig.global = coolieConfigs.global;
 
     debug.success('coolie-config.js', 'mainModulesDir: "' + destCoolieConfig.mainModulesDir + '"');
@@ -86,7 +86,7 @@ module.exports = function (file, options) {
     configList.push('chunkModulesMap: ' + chunkModulesMap);
     configList.push('built: ' + '"' + pkg.name + '@' + pkg.version + '"');
 
-    dato.each(destCoolieConfig, function (key, val) {
+    collection.each(destCoolieConfig, function (key, val) {
         var one = '';
 
         if (typeof val === 'object') {
@@ -109,7 +109,7 @@ module.exports = function (file, options) {
     destCoolieConfigCode += configList.join(',\n');
     destCoolieConfigCode += '\n}).use()';
 
-    dato.each(coolieConfigs.callbacks, function (index, callback) {
+    collection.each(coolieConfigs.callbacks, function (index, callback) {
         destCoolieConfigCode += '.callback(' + callback.toString() + ')';
     });
 
