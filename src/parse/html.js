@@ -7,10 +7,11 @@
 
 'use strict';
 
-var klass = require('ydr-utils').class;
-var dato = require('ydr-utils').dato;
-var string = require('ydr-utils').string;
-var typeis = require('ydr-utils').typeis;
+var Class = require('blear.classes.class');
+var object = require('blear.utils.object');
+var collection = require('blear.utils.collection');
+var string = require('blear.utils.string');
+var typeis = require('blear.utils.typeis');
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
@@ -23,7 +24,7 @@ var UNCLOSED_TAGS_MAP = {
     '*': false
 };
 
-dato.each(UNCLOSED_TAGS_LIST, function (index, tag) {
+collection.each(UNCLOSED_TAGS_LIST, function (index, tag) {
     UNCLOSED_TAGS_MAP[tag] = true;
 });
 
@@ -41,7 +42,7 @@ var REG_DOUBLE_QUOTE_S = /\\"/g;
  * @returns {{reg: RegExp, options: Object}}
  */
 var buildTagReg = function (tagName, options) {
-    options = dato.extend({
+    options = object.assign({
         closed: undefined,
         global: true,
         ignoreCase: true
@@ -104,7 +105,7 @@ var parseTag = function (html, conditions) {
         var val = matched[2];
         var quote = null;
 
-        if (typeis.empty(val)) {
+        if (typeis.Null(val) || typeis.Undefined(val)) {
             val = true;
         } else {
             quote = val.slice(0, 1);
@@ -168,9 +169,9 @@ var matchHTML = function (html, conditions) {
     matches = [];
 
     if (conditions.attrs) {
-        dato.each(find, function (index, item) {
+        collection.each(find, function (index, item) {
             var find = true;
-            dato.each(conditions.attrs, function (key, val) {
+            collection.each(conditions.attrs, function (key, val) {
                 switch (typeis(val)) {
                     case 'string':
                         find = item.attrs[key] === val;
@@ -214,12 +215,12 @@ var renderHTML = function (node) {
     var html = '<' + node.tag;
     var attrList = [];
 
-    dato.each(node.attrs, function (key, val) {
+    collection.each(node.attrs, function (key, val) {
         var attr = key;
 
         if (val === true) {
             attr += '';
-        } else if (val === false || typeis.empty(val)) {
+        } else if (val === false || typeis.Null(val) || typeis.Undefined(val)) {
             return;
         } else {
             var quote = node.quotes[key];
@@ -267,12 +268,12 @@ var renderHTML = function (node) {
  */
 var transformHTML = function (matched, transform) {
     // transform
-    dato.each(matched.list, function (index, item) {
+    collection.each(matched.list, function (index, item) {
         matched.list[index] = transform(item);
     });
 
     // render
-    dato.each(matched.list, function (index, item) {
+    collection.each(matched.list, function (index, item) {
         if (!item) {
             return;
         }
@@ -284,12 +285,13 @@ var transformHTML = function (matched, transform) {
 };
 
 
-var HTMLParser = klass.create({
+var HTMLParser = Class.extend({
+    className: 'HTMLParser',
     constructor: function (html, options) {
         var the = this;
 
         the._html = html;
-        the._options = dato.extend({}, options);
+        the._options = object.assign({}, options);
         the._matchList = [];
     },
 
@@ -307,8 +309,8 @@ var HTMLParser = klass.create({
         }
 
         if (typeis.Array(conditions.tag)) {
-            dato.each(conditions.tag, function (index, tag) {
-                var childConditions = dato.extend({}, conditions, {
+            collection.each(conditions.tag, function (index, tag) {
+                var childConditions = object.assign({}, conditions, {
                     tag: tag
                 });
                 the.match(childConditions, transform);
@@ -331,7 +333,7 @@ var HTMLParser = klass.create({
     exec: function () {
         var the = this;
 
-        dato.each(the._matchList, function (index, match) {
+        collection.each(the._matchList, function (index, match) {
             the._html = transformHTML(matchHTML(the._html, match[0]), match[1]);
         });
 

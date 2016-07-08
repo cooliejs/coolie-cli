@@ -10,9 +10,10 @@
 
 var fse = require('fs-extra');
 var glob = require('glob');
-var path = require('ydr-utils').path;
-var dato = require('ydr-utils').dato;
-var typeis = require('ydr-utils').typeis;
+var path = require('blear.node.path');
+var collection = require('blear.utils.collection');
+var object = require('blear.utils.object');
+var typeis = require('blear.utils.typeis');
 var debug = require('blear.node.debug');
 var url = require('url');
 var console = require('blear.node.console');
@@ -71,9 +72,8 @@ module.exports = function (options) {
      * @returns {{}}
      */
     coolie.config = function (_configs) {
-        dato.extend(configs, _configs);
-
-        dato.extend(configs, {
+        object.assign(configs, _configs);
+        object.assign(configs, {
             srcDirname: srcDirname,
             configPath: srcCoolieConfigJSPath
         });
@@ -89,7 +89,7 @@ module.exports = function (options) {
      */
     coolie.use = function (middleware) {
         if (options.middleware) {
-            if (!typeis.function(middleware) || !middleware.package) {
+            if (!typeis.Function(middleware) || !middleware.package) {
                 debug.warn('invalid middleware', '不符合规范的 coolie 中间件');
                 debug.warn('coolie book', '相关 coolie 中间件开发规范，请参阅 ' + bookURL('/document/coolie-middleware/'));
                 debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-*` 为前缀');
@@ -113,7 +113,7 @@ module.exports = function (options) {
         try {
             require(srcCoolieConfigJSPath)(coolie);
         } catch (err) {
-            debug.error('coolie-cli config', path.toSystem(srcCoolieConfigJSPath));
+            debug.error('coolie-cli config', srcCoolieConfigJSPath);
             debug.error('coolie-cli config', err.message);
             return process.exit(1);
         }
@@ -127,12 +127,12 @@ module.exports = function (options) {
     //     versionLength: 32
     // }
     check.dest = function () {
-        if (!typeis.object(configs.dest)) {
+        if (!typeis.Object(configs.dest)) {
             debug.error('coolie-cli config', '`dest` 属性必须是一个对象');
             process.exit(1);
         }
 
-        if (!typeis.string(configs.dest.dirname)) {
+        if (!typeis.String(configs.dest.dirname)) {
             debug.error('coolie-cli config', '`dest.dirname` 必须是一个路径字符串');
             process.exit(1);
         }
@@ -161,7 +161,7 @@ module.exports = function (options) {
             try {
                 fse.emptyDirSync(configs.destDirname);
             } catch (err) {
-                debug.error('clean dest dirname', path.toSystem(configs.destDirname));
+                debug.error('clean dest dirname', configs.destDirname);
                 debug.error('clean dest dirname', err.message);
                 return process.exit(1);
             }
@@ -215,7 +215,7 @@ module.exports = function (options) {
             coolieConfigJSFile = path.join(srcDirname, configs.js['coolie-config.js']);
             configs.srcCoolieConfigJSPath = coolieConfigJSFile;
 
-            if (!typeis.file(coolieConfigJSFile)) {
+            if (!path.isFile(coolieConfigJSFile)) {
                 debug.error('coolie-cli config', coolieConfigJSFile +
                     '\nis NOT a file');
                 process.exit(1);
@@ -241,7 +241,7 @@ module.exports = function (options) {
 
             if (chunkPathType === 'array') {
                 configs.js.chunk.forEach(function (mn, index) {
-                    if (!typeis.string(mn) && !typeis.array(mn)) {
+                    if (!typeis.String(mn) && !typeis.Array(mn)) {
                         debug.error('coolie-cli config', '`js.chunk[' + index + ']` must be a string or an array');
                         process.exit(1);
                     }
@@ -287,7 +287,7 @@ module.exports = function (options) {
         }
 
         if (coolieConfigs.global) {
-            dato.each(coolieConfigs.global, function (key, val) {
+            collection.each(coolieConfigs.global, function (key, val) {
                 if (typeis.Boolean(val)) {
                     configs.uglifyJSOptions.global_defs[key] = val;
                 }
@@ -298,7 +298,7 @@ module.exports = function (options) {
         configs.uglifyJSOptions.global_defs.DEBUG = false;
 
         if (!mainModulesDir) {
-            debug.error('coolie-config.js', path.toSystem(coolieConfigJSFile));
+            debug.error('coolie-config.js', coolieConfigJSFile);
             debug.error('coolie-config.js', 'config.mainModulesDir 未指定');
 
             if (coolieConfigs.base) {
@@ -325,7 +325,7 @@ module.exports = function (options) {
                 mainModulesDir = path.join(coolieConfigJSDir, mainModulesDir);
             }
         } catch (err) {
-            debug.error('coolie-config.js', path.toSystem(coolieConfigJSDir));
+            debug.error('coolie-config.js', coolieConfigJSDir);
             debug.error('coolie-config.js', err.message);
             return process.exit(1);
         }
@@ -444,7 +444,7 @@ module.exports = function (options) {
         }
 
         // css.minify
-        if (!typeis.undefined(configs.css.minify) && !typeis.object(configs.css.minify)) {
+        if (!typeis.Undefined(configs.css.minify) && !typeis.Object(configs.css.minify)) {
             debug.error('coolie-cli config', '`css.minify` must be an object or a boolean value');
             process.exit(1);
         }
@@ -459,18 +459,18 @@ module.exports = function (options) {
     //     minify: true
     // }
     check.resource = function () {
-        if (!typeis.object(configs.resource)) {
+        if (!typeis.Object(configs.resource)) {
             debug.error('coolie-cli config', '`resource` property must be an object');
             process.exit(1);
         }
 
         // resource.dest
-        if (!typeis.string(configs.resource.dest)) {
+        if (!typeis.String(configs.resource.dest)) {
             debug.error('coolie-cli config', '`resource.dest` property must be a string path');
             process.exit(1);
         }
 
-        if (typeis.undefined(configs.resource.minify) !== false) {
+        if (typeis.Undefined(configs.resource.minify) !== false) {
             configs.resource.minify = true;
         }
 
@@ -526,7 +526,7 @@ module.exports = function (options) {
     check.chunk();
     check.async();
 
-    debug.success('coolie config', path.toSystem(configs.configPath));
+    debug.success('coolie config', configs.configPath);
     debug.success('src dirname', configs.srcDirname);
     debug.success('dest dirname', configs.destDirname);
     //debug.success('coolie configs', JSON.stringify(configs, null, 4));
