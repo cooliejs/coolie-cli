@@ -350,7 +350,7 @@ module.exports = function (options) {
 
         configs.destMainModulesDirname = path.join(configs.destDirname, configs.js.dest, MAIN_NAME);
         configs.destCoolieConfigMainModulesDir = '/' + path.relative(configs.destDirname, configs.destMainModulesDirname) + '/';
-        configs.destCoolieConfigMainModulesDir = path.joinURI(configs.destPathname, configs.destCoolieConfigMainModulesDir);
+        configs.destCoolieConfigMainModulesDir = path.join(configs.destPathname, configs.destCoolieConfigMainModulesDir);
     };
 
 
