@@ -8,8 +8,8 @@
 'use strict';
 
 var fs = require('fs-extra');
-var path = require('ydr-utils').path;
-var dato = require('ydr-utils').dato;
+var object = require('blear.utils.object');
+var collection = require('blear.utils.collection');
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
@@ -73,13 +73,13 @@ var defaults = {
  * @returns {Object}
  */
 module.exports = function (file, options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
     var code = options.code;
     var resList = [];
     var resMap = {};
     var parser = parseHTML(code);
 
-    dato.each(replaceList, function (index, item) {
+    collection.each(replaceList, function (index, item) {
         var attr = item.attr;
 
         parser.match({
@@ -100,7 +100,7 @@ module.exports = function (file, options) {
                 case 'link':
                     var linkRel = node.attrs.rel;
                     isResourceTag = false;
-                    dato.each(linkRelList, function (index, regRel) {
+                    collection.each(linkRelList, function (index, regRel) {
                         isResourceTag = regRel.test(linkRel);
                         return !isResourceTag;
                     });

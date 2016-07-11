@@ -8,9 +8,9 @@
 'use strict';
 
 
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var debug = require('blear.node.debug');
-var dato = require('ydr-utils').dato;
+var object = require('blear.utils.object');
 var console = require('blear.node.console');
 
 
@@ -66,7 +66,7 @@ var defaults = {
  * @returns {Object}
  */
 module.exports = function (file, options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
     var deps = [];
     var depsMap = {};
     var code = options.code;
@@ -114,7 +114,7 @@ module.exports = function (file, options) {
                 url = path.relative(options.destCSSDirname, destFile);
             }
 
-            url = path.toURI(url) + pathRet.suffix;
+            url = url + pathRet.suffix;
 
             if (options.progressKey) {
                 progress.run(options.progressKey, url);
