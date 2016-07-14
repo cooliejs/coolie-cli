@@ -7,7 +7,7 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
+var object = require('blear.utils.object');
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
@@ -51,7 +51,7 @@ var defaults = {
  * returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
     var code = options.code;
     var resList = [];
 

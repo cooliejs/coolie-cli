@@ -8,12 +8,14 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
-var encryption = require('ydr-utils').encryption;
+var path = require('blear.node.path');
+var encryption = require('blear.node.encryption');
 var debug = require('blear.node.debug');
 var dato = require('ydr-utils').dato;
 var fse = require('fs-extra');
 var console = require('blear.node.console');
+var object = require('blear.utils.object');
+var collection = require('blear.utils.collection');
 
 
 var reader = require('../utils/reader.js');
@@ -82,7 +84,7 @@ var defaults = {
  * @returns {{code: String, cssList: Array, jsList: Array}}
  */
 module.exports = function (file, options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
     var code = options.code;
     var cssList = [];
     var jsList = [];
@@ -165,7 +167,7 @@ module.exports = function (file, options) {
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
             } catch (err) {
-                debug.error('write css', path.toSystem(concatFile));
+                debug.error('write css', concatFile);
                 debug.error('write css', err.message);
                 return process.exit(1);
             }
@@ -215,7 +217,7 @@ module.exports = function (file, options) {
             }
 
             version = encryption.md5(md5List.join('')).slice(0, options.versionLength);
-            concatFile = path.join(path.toURI(options.destJSDirname), version + '.js');
+            concatFile = path.join(options.destJSDirname, version + '.js');
             concatURI = pathURI.toRootURL(concatFile, options.destDirname);
             jsList.push({
                 destPath: concatFile,
@@ -225,7 +227,7 @@ module.exports = function (file, options) {
             try {
                 fse.outputFileSync(concatFile, Buffer.concat(bfList));
             } catch (err) {
-                debug.error('write js', path.toSystem(concatFile));
+                debug.error('write js', concatFile);
                 debug.error('write js', err.message);
                 return process.exit(1);
             }
@@ -263,7 +265,7 @@ module.exports.getCache = function () {
 function hasCache(files) {
     var find = -1;
 
-    dato.each(cacheFilesList, function (index, cache) {
+    collection.each(cacheFilesList, function (index, cache) {
         var compare = dato.compare(cache, files);
 
         // 没有不同 && 没有独有
