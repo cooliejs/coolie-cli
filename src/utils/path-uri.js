@@ -8,8 +8,9 @@
 'use strict';
 
 
-var path = require('ydr-utils').path;
-var typeis = require('ydr-utils').typeis;
+var path = require('blear.node.path');
+var typeis = require('blear.utils.typeis');
+var url = require('blear.utils.url');
 var console = require('blear.node.console');
 
 
@@ -29,8 +30,8 @@ var REG_COOLIE_BASE64 = /#cooliebase64$/i;
  * @returns {String}
  */
 exports.toRootURL = function (p, root) {
-    p = path.toURI(p);
-    root = path.toURI(root);
+    p = path.normalize(p);
+    root = path.normalize(root);
 
     var relative = path.relative(root, p);
 
@@ -48,8 +49,7 @@ exports.toRootURL = function (p, root) {
  * @returns {boolean}
  */
 exports.isRelatived = function (p) {
-    p = path.toURI(p);
-
+    p = path.normalize(p);
     return !REG_ABSOLUTE.test(p) && !REG_BLANK.test(p);
 };
 
@@ -60,8 +60,7 @@ exports.isRelatived = function (p) {
  * @returns {boolean}
  */
 exports.isRelativeFile = function (p) {
-    p = path.toURI(p);
-
+    p = path.normalize(p);
     return !REG_ABSOLUTE.test(p) && !REG_RELATIVE_ROOT.test(p);
 };
 
@@ -72,8 +71,7 @@ exports.isRelativeFile = function (p) {
  * @returns {boolean}
  */
 exports.isRelativeRoot = function (p) {
-    p = path.toURI(p);
-
+    p = path.normalize(p);
     return !REG_ABSOLUTE.test(p) && REG_RELATIVE_ROOT.test(p);
 };
 
@@ -92,7 +90,6 @@ exports.toAbsoluteFile = function (p, parentFile, rootDirname) {
     // 相对文件
     if (exports.isRelativeFile(p)) {
         var parentDirname = path.dirname(parentFile);
-        parentDirname = path.toSystem(parentDirname);
         return path.join(parentDirname, p);
     }
 
@@ -108,9 +105,7 @@ exports.toAbsoluteFile = function (p, parentFile, rootDirname) {
  */
 exports.isImage = function (p) {
     var extname = path.extname(p);
-
     extname = extname.toLowerCase();
-
     return ['.png', '.gif', '.jpg', '.jpeg', '.webp'].indexOf(extname) > -1;
 };
 
@@ -121,8 +116,7 @@ exports.isImage = function (p) {
  * @returns {boolean}
  */
 exports.isBlank = function (uri) {
-    uri = path.toURI(uri);
-
+    uri = path.normalize(uri);
     return REG_BLANK.test(uri.trim());
 };
 
@@ -176,17 +170,17 @@ exports.replaceVersion = function (uri, version) {
     var dir = path.dirname(uri);
     var extname = path.extname(uri);
 
-    return path.joinURI(dir, version + extname);
+    return path.join(dir, version + extname);
 };
 
 
 /**
  * 版本替换
- * @param file
+ * @param _path
  * @returns {*}
  */
-exports.removeVersion = function (file) {
-    return file.replace(REG_END, '.$1');
+exports.removeVersion = function (_path) {
+    return path.normalize(_path).replace(REG_END, '.$1');
 };
 
 
@@ -198,13 +192,13 @@ exports.removeVersion = function (file) {
  */
 exports.joinHost = function (type, host, _path) {
     if (typeis.String(host)) {
-        return path.joinURI(host, _path);
+        return url.join(host, _path);
     }
 
     // 转换为绝对路径
-    _path = path.joinURI('/', _path);
+    _path = url.join('/', _path);
 
-    return path.joinURI(host(type, _path), _path);
+    return url.join(host(type, _path), _path);
 };
 
 

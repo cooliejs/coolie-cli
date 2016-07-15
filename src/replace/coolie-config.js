@@ -66,7 +66,7 @@ module.exports = function (file, options) {
 
     asyncModulesMap = JSON.stringify(asyncModulesMap);
     chunkModulesMap = JSON.stringify(chunkModulesMap);
-    destCoolieConfig.mainModulesDir = options.destCoolieConfigMainModulesDir;
+    destCoolieConfig.mainModulesDir = path.normalize(options.destCoolieConfigMainModulesDir);
     destCoolieConfig.asyncModulesDir = path.relative(options.destMainModulesDirname, options.destAsyncModulesDirname) + '/';
     destCoolieConfig.chunkModulesDir = path.relative(options.destMainModulesDirname, options.destChunkModulesDirname) + '/';
     destCoolieConfig.global = coolieConfigs.global;

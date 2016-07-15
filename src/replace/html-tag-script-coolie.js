@@ -7,7 +7,7 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
+var object = require('blear.utils.object');
 var path = require('ydr-utils').path;
 var debug = require('blear.node.debug');
 var typeis = require('ydr-utils').typeis;
@@ -78,7 +78,7 @@ var minifyJSMap = {};
  * @returns {Object}
  */
 module.exports = function (file, options) {
-    options = dato.extend(true, {}, defaults, options);
+    options = object.assign(true, {}, defaults, options);
     var code = options.code;
     var mainList = [];
     var jsList = [];

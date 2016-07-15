@@ -7,8 +7,7 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
-var path = require('ydr-utils').path;
+var object = require('blear.utils.object');
 var console = require('blear.node.console');
 
 
@@ -54,7 +53,7 @@ var defaults = {
  * @param [options.progressKey] {String} 进度日志键
  */
 module.exports = function (file, options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
     var code = options.code;
     var cssList = [];
 
