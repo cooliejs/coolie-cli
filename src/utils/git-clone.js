@@ -8,14 +8,14 @@
 'use strict';
 
 
-var request = require('ydr-utils').request;
-var dato = require('ydr-utils').dato;
-var path = require('ydr-utils').path;
-var log = require('ydr-utils').log;
+var request = require('blear.node.request');
+var object = require('blear.utils.object');
+var path = require('blear.node.path');
+var url = require('blear.utils.url');
 var debug = require('blear.node.debug');
-var controller = require('ydr-utils').controller;
-var typeis = require('ydr-utils').typeis;
-var random = require('ydr-utils').random;
+var fun = require('blear.utils.function');
+var typeis = require('blear.utils.typeis');
+var random = require('blear.utils.random');
 var fse = require('fs-extra');
 var AdmZip = require('adm-zip');
 var os = require('os');
@@ -41,7 +41,7 @@ var defaults = {
  * @param [callback] {Function} 回调
  */
 module.exports = function (options, callback) {
-    options = dato.extend({}, defaults, options);
+    options = object.extend({}, defaults, options);
 
     if (!typeis.Function(callback)) {
         callback = function () {
@@ -49,14 +49,14 @@ module.exports = function (options, callback) {
     }
 
     //log.success(options);
-    var url = path.joinURI(options.git, options.registry, options.repository, 'archive', options.branch + '.zip');
+    var url = url.join(options.git, options.registry, options.repository, 'archive', options.branch + '.zip');
     debug.ignore('git clone', url);
     console.loading();
     var tempFile = path.join(os.tmpdir(), random.guid());
     var filename = options.repository + '-' + options.branch;
     var unzipPath = path.join(options.dirname, filename);
     var ws = fse.createWriteStream(tempFile);
-    var complete = controller.once(function (err) {
+    var complete = fun.once(function (err) {
         console.loadingEnd();
 
         if (err) {
@@ -64,12 +64,12 @@ module.exports = function (options, callback) {
             return remoteTempfile();
         }
 
-        debug.ignore('unzip', path.toSystem(tempFile));
+        debug.ignore('unzip', tempFile);
 
         try {
             var zip = new AdmZip(tempFile);
             zip.extractAllTo(options.dirname, true);
-            debug.success(options.repository, path.toSystem(unzipPath));
+            debug.success(options.repository, unzipPath);
             callback();
         } catch (err) {
             debug.error('unzip ' + options.repository, unzipPath);
@@ -95,7 +95,7 @@ module.exports = function (options, callback) {
         debug.error('git clone', err.message);
         complete(err);
     }).on('close', complete).pipe(ws).on('error', function (err) {
-        debug.error('write file', path.toSystem(tempFile));
+        debug.error('write file', tempFile);
         debug.error('write error', err.message);
         complete(err);
     }).on('close', complete);

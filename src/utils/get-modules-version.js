@@ -9,9 +9,9 @@
 
 
 var howdo = require('howdo');
-var dato = require('ydr-utils').dato;
+var collection = require('blear.utils.collection');
 var npm = require('ydr-utils').npm;
-var allocation = require('ydr-utils').allocation;
+var access = require('blear.utils.access');
 var console = require('blear.node.console');
 
 
@@ -29,10 +29,10 @@ var getModulesVersion = function (modules, callback) {
         })
         .together()
         .try(function () {
-            var args = allocation.args(arguments);
+            var args = access.args(arguments);
             var deps = {};
 
-            dato.each(args, function (index, version) {
+            collection.each(args, function (index, version) {
                 var name = modules[index];
                 deps[name] = version;
             });
