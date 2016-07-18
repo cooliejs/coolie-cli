@@ -8,11 +8,9 @@
 'use strict';
 
 var object = require('blear.utils.object');
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var debug = require('blear.node.debug');
-var typeis = require('ydr-utils').typeis;
 var console = require('blear.node.console');
-
 
 var pathURI = require('../utils/path-uri.js');
 var copy = require('../utils/copy.js');
@@ -115,19 +113,19 @@ module.exports = function (file, options) {
         var dataConfig = node.attrs[DATA_CONFIG];
 
         if (!dataMain) {
-            debug.error('coolie script', path.toSystem(file));
+            debug.error('coolie script', file);
             debug.error('coolie script', '`' + DATA_MAIN + '` is empty');
             return process.exit(1);
         }
 
         if (!dataConfig) {
-            debug.error('coolie script', path.toSystem(file));
+            debug.error('coolie script', file);
             debug.error('coolie script', '`' + DATA_CONFIG + '` is empty');
             return process.exit(1);
         }
 
         if (!options.srcCoolieConfigMainModulesDirname) {
-            debug.error('coolie script', path.toSystem(file));
+            debug.error('coolie script', file);
             debug.error('coolie script', '`coolie-config.js` is NOT defined, but used');
             return process.exit(1);
         }
@@ -137,16 +135,16 @@ module.exports = function (file, options) {
 
         mainList.push(mainPath);
 
-        if (!typeis.file(mainPath)) {
-            debug.error('coolie main', '`' + path.toSystem(mainPath) + '` is NOT a file');
+        if (!path.isFile(mainPath)) {
+            debug.error('coolie main', '`' + mainPath + '` is NOT a file');
             return process.exit(1);
         }
 
         if (!mainVersion) {
             debug.error('coolie script', 'can not found `data-main` version');
             debug.error('coolie `data-main`', dataMain);
-            debug.error('main file', path.toSystem(mainPath));
-            debug.error('html file', path.toSystem(file));
+            debug.error('main file', mainPath);
+            debug.error('html file', file);
             return process.exit(1);
         }
 
