@@ -1,4 +1,4 @@
-/*!
+/**
  * 复制文件
  * @author ydr.me
  * @create 2015-06-03 11:51
@@ -7,14 +7,12 @@
 
 'use strict';
 
-var dato = require('ydr-utils').dato;
-var typeis = require('ydr-utils').typeis;
-var encryption = require('ydr-utils').encryption;
-var path = require('ydr-utils').path;
+var object = require('blear.utils.object');
+var encryption = require('blear.node.encryption');
+var path = require('blear.node.path');
 var debug = require('blear.node.debug');
 var fse = require('fs-extra');
 var console = require('blear.node.console');
-
 
 var pathURI = require('./path-uri.js');
 
@@ -60,7 +58,7 @@ var defaults = {
  * @param [options.logType=2] {Number} 日志类型
  */
 module.exports = function (file, options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
 
     var fromTo = path.relative(options.srcDirname, file);
 
@@ -72,16 +70,16 @@ module.exports = function (file, options) {
         }
     }
 
-    if (!typeis.file(file)) {
+    if (!path.isFile(file)) {
         if (options.embedFile) {
-            debug.error('embed file', path.toSystem(options.embedFile));
+            debug.error('embed file', options.embedFile);
         }
 
         if (options.embedCode) {
             debug.error('embed code', options.embedCode);
         }
 
-        debug.error('copy error', path.toSystem(file) + ' is NOT a local file');
+        debug.error('copy error', file + ' is NOT a local file');
         return process.exit(1);
     }
 
@@ -119,8 +117,8 @@ module.exports = function (file, options) {
                 break;
         }
     } catch (err) {
-        debug.error('copy from', path.toSystem(file));
-        debug.error('copy to', path.toSystem(toFile));
+        debug.error('copy from', file);
+        debug.error('copy to', toFile);
         debug.error('copy error', err.message);
         return process.exit(1);
     }
