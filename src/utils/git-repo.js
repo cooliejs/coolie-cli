@@ -7,10 +7,9 @@
 
 'use strict';
 
-var request = require('ydr-utils').request;
-var path = require('ydr-utils').path;
+var request = require('blear.node.request');
+var url = require('blear.utils.url');
 var console = require('blear.node.console');
-
 
 var pkg = require('../../package.json');
 
@@ -24,7 +23,7 @@ var REPO_URL = 'https://api.github.com/repos';
  * @param callback
  */
 module.exports = function (repo, callback) {
-    var url = path.joinURI(REPO_URL, owner, repo);
+    var url = url.join(REPO_URL, owner, repo);
 
     console.loading();
     request({
