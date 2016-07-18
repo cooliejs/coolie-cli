@@ -9,11 +9,11 @@
 
 
 var fse = require('fs-extra');
-var encryption = require('ydr-utils').encryption;
-var typeis = require('ydr-utils').typeis;
-var dato = require('ydr-utils').dato;
-var path = require('ydr-utils').path;
-var string = require('ydr-utils').string;
+var encryption = require('blear.node.encryption');
+var typeis = require('blear.utils.typeis');
+var collection = require('blear.utils.collection');
+var object = require('blear.utils.object');
+var path = require('blear.node.path');
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
@@ -84,7 +84,7 @@ var createURL = function (file, options) {
         try {
             fse.outputFileSync(destFile, code, 'utf-8');
         } catch (err) {
-            debug.error('write file', path.toSystem(file));
+            debug.error('write file', file);
             debug.error('write file', err.message);
             process.exit(1);
         }
@@ -166,8 +166,8 @@ var mergeRes = function (result) {
     var jsList = result.jsList;
     var cssList = result.cssList;
 
-    dato.each(cssList, function (index, item) {
-        dato.each(item.dependencies, function (index, dep) {
+    collection.each(cssList, function (index, item) {
+        collection.each(item.dependencies, function (index, dep) {
             resList.push(dep.srcPath);
             resList = resList.concat(dep.resList);
         });
@@ -221,13 +221,13 @@ var defaults = {
  * @return {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
-    options = dato.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
     var uri;
     var extname = path.extname(file);
     var code = options.code ?
         options.code :
         (['image', 'file'].indexOf(options.inType) > -1 ? null : reader(file, 'utf8', options.parent));
-    var options2 = dato.extend(options, {
+    var options2 = object.assign(options, {
         code: code
     });
 
