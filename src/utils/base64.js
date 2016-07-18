@@ -8,11 +8,8 @@
 'use strict';
 
 var fs = require('fs');
-var path = require('ydr-utils').path;
-var dato = require('ydr-utils').dato;
-var mime = require('ydr-utils').mime;
-var typeis = require('ydr-utils').typeis;
-var string = require('ydr-utils').string;
+var path = require('blear.node.path');
+var mime = require('blear.node.mime');
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
@@ -26,7 +23,7 @@ var reader = require('./reader.js');
  * @returns {string}
  */
 exports.string = function (source, extname) {
-    var ret = string.base64(source);
+    var ret = Buffer(source, 'utf8').toString('base64')
     var prefix = '';
 
     if (extname) {
@@ -48,16 +45,16 @@ exports.file = function (file, extname) {
     var binary;
 
     // 文件
-    if (typeis.file(file)) {
+    if (path.isFile(file)) {
         extname = extname || path.extname(file);
         try {
             binary = reader(file, 'binary');
         } catch (err) {
-            debug.error('base64 file', path.toSystem(file));
+            debug.error('base64 file', file);
             return process.exit(1);
         }
     } else {
-        debug.error('base64 file', path.toSystem(file) + ' is NOT a local file');
+        debug.error('base64 file', file + ' is NOT a local file');
         return process.exit(1);
     }
 
@@ -68,7 +65,7 @@ exports.file = function (file, extname) {
     try {
         base64 = new Buffer(binary, 'binary').toString('base64');
     } catch (err) {
-        debug.error('base64 file', path.toSystem(file));
+        debug.error('base64 file', file);
         debug.error('base64 error', err.message);
         return process.exit(1);
     }
