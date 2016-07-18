@@ -9,12 +9,12 @@
 
 
 var fse = require('fs-extra');
-var path = require('ydr-utils').path;
-var request = require('ydr-utils').request;
-var random = require('ydr-utils').random;
+var path = require('blear.node.path');
+var request = require('blear.node.request');
+var random = require('blear.utils.random');
 var debug = require('blear.node.debug');
-var typeis = require('ydr-utils').typeis;
-var dato = require('ydr-utils').dato;
+var typeis = require('blear.utils.typeis');
+var collection = require('blear.utils.collection');
 var AdmZip = require('adm-zip');
 var glob = require('glob');
 var os = require('os');
@@ -40,7 +40,7 @@ module.exports = function (options, callback) {
     var tempStream = fse.createWriteStream(tempFile);
     var unzipDirname = path.join(destDirname, './' + unzipName);
 
-    if (!typeis.function(callback)) {
+    if (!typeis.Function(callback)) {
         callback = function () {
             // ignore
         };
@@ -82,15 +82,15 @@ module.exports = function (options, callback) {
             var globFile = path.join(options.destDirname, tempName, './**/*');
             var files = glob.sync(globFile);
 
-            dato.each(files, function (index, file) {
+            collection.each(files, function (index, file) {
                 var basename = path.basename(file);
                 var destPath = path.join(options.destDirname, basename);
 
                 try {
                     fse.copySync(file, destPath);
-                    debug.success(name + ' file', path.toSystem(destPath));
+                    debug.success(name + ' file', destPath);
                 } catch (err) {
-                    debug.error(name + ' file', path.toSystem(destPath));
+                    debug.error(name + ' file', destPath);
                     debug.error('copy error', err.message);
                     return process.exit(1);
                 }
@@ -102,7 +102,7 @@ module.exports = function (options, callback) {
                 // ignore
             }
         } else {
-            debug.success(name + ' directory', path.toSystem(unzipDirname));
+            debug.success(name + ' directory', unzipDirname);
         }
 
         try {
