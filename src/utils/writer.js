@@ -1,5 +1,5 @@
 /**
- * 文件描述
+ * 文件写入
  * @author ydr.me
  * @create 2015-10-27 23:38
  */
@@ -8,11 +8,11 @@
 'use strict';
 
 var fse = require('fs-extra');
-var string = require('ydr-utils').string;
+var string = require('blear.utils.string');
 var debug = require('blear.node.debug');
-var path = require('ydr-utils').path;
-var dato = require('ydr-utils').dato;
-var encryption = require('ydr-utils').encryption;
+var path = require('blear.node.path');
+var object = require('blear.utils.object');
+var encryption = require('blear.node.encryption');
 var console = require('blear.node.console');
 
 var sign = require('./sign.js');
@@ -44,7 +44,7 @@ var defaults = {
  * @returns {{path: String, version: String}}
  */
 module.exports = function (options) {
-    options = dato.extend({}, defaults, options);
+    options = object.extend({}, defaults, options);
 
     var version = encryption.md5(options.versionList.join('')).slice(0, options.versionLength);
     var outputPath = path.join(options.destDirname, string.assign(options.fileNameTemplate, {
@@ -65,7 +65,7 @@ module.exports = function (options) {
             debug.success('write file', outputURI);
         }
     } catch (err) {
-        debug.error('write file', path.toSystem(outputPath));
+        debug.error('write file', outputPath);
         debug.error('write file', err.message);
         return process.exit(1);
     }
