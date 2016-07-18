@@ -8,8 +8,7 @@
 'use strict';
 
 var fs = require('fs');
-var path = require('ydr-utils').path;
-var typeis = require('ydr-utils').typeis;
+var path = require('blear.node.path');
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
@@ -33,13 +32,13 @@ module.exports = function (file, encoding, embedFile) {
     var bf = bufferMap[encoding][file];
 
     if (!bf) {
-        if (!typeis.file(file)) {
+        if (!path.isFile(file)) {
             console.log();
-            debug.error('read file', path.toSystem(file));
+            debug.error('read file', file);
             debug.error('read file', '该文件不存在');
 
             if (embedFile) {
-                debug.error('embed file', path.toSystem(embedFile));
+                debug.error('embed file', embedFile);
             }
 
             debug.warn('warning', '模块路径指南 <' + bookURL('/introduction/module-path/') + '>');
@@ -51,11 +50,11 @@ module.exports = function (file, encoding, embedFile) {
 
             bf = bufferMap[encoding][file] = new Buffer(ret, encoding);
         } catch (err) {
-            debug.error('read file', path.toSystem(file));
+            debug.error('read file', file);
             debug.error('read file', err.message);
 
             if (embedFile) {
-                debug.error('embed file', path.toSystem(embedFile));
+                debug.error('embed file', embedFile);
             }
 
             process.exit(1);

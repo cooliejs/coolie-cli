@@ -7,7 +7,7 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var debug = require('blear.node.debug');
 var fse = require('fs-extra');
 var console = require('blear.node.console');
@@ -23,9 +23,9 @@ var writePackageJSON = function (json, destDirname) {
 
     try {
         fse.outputFileSync(file, JSON.stringify(json, null, 2), 'utf8');
-        debug.success('create', path.toSystem(file));
+        debug.success('create', file);
     } catch (err) {
-        debug.danger('create', path.toSystem(file));
+        debug.danger('create', file);
         debug.danger('error', err.message);
     }
 };

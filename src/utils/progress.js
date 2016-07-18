@@ -7,7 +7,7 @@
 
 'use strict';
 
-var controller = require('ydr-utils').controller;
+var fun = require('blear.utils.function');
 var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
@@ -16,7 +16,7 @@ var console = require('blear.node.console');
  * 显示进度
  * @type {Function}
  */
-exports.run = controller.throttle(function (key, val) {
+exports.run = fun.throttle(function (key, val) {
     debug.wait(key, val, {
         colors: 'yellow'
     });
