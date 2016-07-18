@@ -7,11 +7,12 @@
 
 'use strict';
 
-var klass = require('ydr-utils').class;
+var Class = require('blear.classes.class');
 var console = require('blear.node.console');
 
 
-var Increase = klass.create({
+var Increase = Class.extend({
+    className: 'Increase',
     constructor: function (init10) {
         if (init10 === undefined) {
             init10 = 0;
