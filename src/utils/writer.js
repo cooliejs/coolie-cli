@@ -44,7 +44,7 @@ var defaults = {
  * @returns {{path: String, version: String}}
  */
 module.exports = function (options) {
-    options = object.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
 
     var version = encryption.md5(options.versionList.join('')).slice(0, options.versionLength);
     var outputPath = path.join(options.destDirname, string.assign(options.fileNameTemplate, {
