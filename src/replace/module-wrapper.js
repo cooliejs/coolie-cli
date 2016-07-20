@@ -68,7 +68,7 @@ var createURL = function (file, options) {
 
         destFile = path.join(destDirname, version + extname);
 
-        if (code !== null && typeis.function(options.filter)) {
+        if (code !== null && typeis.Function(options.filter)) {
             filterRet = options.filter(destFile);
 
             if (typeis.String(filterRet)) {

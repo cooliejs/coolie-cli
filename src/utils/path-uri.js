@@ -59,7 +59,6 @@ exports.isRelatived = function (p) {
  * @returns {boolean}
  */
 exports.isRelativeFile = function (p) {
-    p = path.normalize(p);
     return !REG_ABSOLUTE.test(p) && !REG_RELATIVE_ROOT.test(p);
 };
 

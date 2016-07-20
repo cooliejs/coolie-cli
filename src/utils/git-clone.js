@@ -11,7 +11,7 @@
 var request = require('blear.node.request');
 var object = require('blear.utils.object');
 var path = require('blear.node.path');
-var url = require('blear.utils.url');
+var urlUtil = require('blear.utils.url');
 var debug = require('blear.node.debug');
 var fun = require('blear.utils.function');
 var typeis = require('blear.utils.typeis');
@@ -41,7 +41,7 @@ var defaults = {
  * @param [callback] {Function} 回调
  */
 module.exports = function (options, callback) {
-    options = object.extend({}, defaults, options);
+    options = object.assign({}, defaults, options);
 
     if (!typeis.Function(callback)) {
         callback = function () {
@@ -49,7 +49,7 @@ module.exports = function (options, callback) {
     }
 
     //log.success(options);
-    var url = url.join(options.git, options.registry, options.repository, 'archive', options.branch + '.zip');
+    var url = urlUtil.join(options.git, options.registry, options.repository, 'archive', options.branch + '.zip');
     debug.ignore('git clone', url);
     console.loading();
     var tempFile = path.join(os.tmpdir(), random.guid());

@@ -18,7 +18,7 @@ var replaceCoolieConfig = require('../../src/replace/coolie-config.js');
 var srcDirname = path.join(__dirname, 'src/');
 var file = path.join(srcDirname, 'coolie-config.js');
 var destDirname = path.join(__dirname, 'dest/');
-var destCoolieConfigBaseDirname = path.join(destDirname, 'static/js/app/');
+var destMainModulesDirname = path.join(destDirname, 'static/js/app/');
 var destCoolieConfigAsyncDirname = path.join(destDirname, 'static/js/async/');
 var destCoolieConfigChunkDirname = path.join(destDirname, 'static/js/chunk/');
 var destJSDirname = path.join(destDirname, 'static/js/');
@@ -34,7 +34,8 @@ describe('replace/coolie-config.js', function () {
 
         var ret = replaceCoolieConfig(file, {
             versionLength: 32,
-            destMainModulesDirname: destCoolieConfigBaseDirname,
+            destCoolieConfigMainModulesDir: '/static/js/main/',
+            destMainModulesDirname: destMainModulesDirname,
             destAsyncModulesDirname: destCoolieConfigAsyncDirname,
             destChunkModulesDirname: destCoolieConfigChunkDirname,
             srcDirname: srcDirname,

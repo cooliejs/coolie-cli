@@ -8,7 +8,7 @@
 'use strict';
 
 var request = require('blear.node.request');
-var url = require('blear.utils.url');
+var urlUtil = require('blear.utils.url');
 var console = require('blear.node.console');
 
 var pkg = require('../../package.json');
@@ -23,7 +23,7 @@ var REPO_URL = 'https://api.github.com/repos';
  * @param callback
  */
 module.exports = function (repo, callback) {
-    var url = url.join(REPO_URL, owner, repo);
+    var url = urlUtil.join(REPO_URL, owner, repo);
 
     console.loading();
     request({
