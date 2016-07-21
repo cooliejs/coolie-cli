@@ -56,7 +56,7 @@ module.exports = function (coolie) {
                 './.views/index.html'
             ],
             // html 压缩配置
-            minify: false
+            minify: true
         },
 
         // css 构建
