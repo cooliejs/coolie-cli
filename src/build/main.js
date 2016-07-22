@@ -58,7 +58,7 @@ var defaults = {
  * @param options.mainIndex {Number} 当前序号
  * @param options.mainLength {Number} 长度
  * @param options.compatible {Boolean} 是否兼容模式
- * @returns {{dependencies: {id: String, file: String, buffer: Buffer, md5: String}, resList: Array}}
+ * @returns {{dependencies: Object, resList: Array}}
  */
 module.exports = function (file, options) {
     options = object.assign({}, defaults, options);
