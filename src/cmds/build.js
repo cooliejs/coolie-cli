@@ -217,9 +217,34 @@ module.exports = function (options) {
         buildHTMLResult: buildHTMLResult
     });
 
-    var pastTime = Date.now() - beginTime;
+    var elapsedTime = Date.now() - beginTime;
+    var humanizeTime = '';
+    var humanizeMinutes = 0;
+    var humanizeSeconds = 0;
+
+    if (elapsedTime > date.MINUTE_TIME) {
+        humanizeMinutes = Math.floor(elapsedTime / date.MINUTE_TIME);
+        elapsedTime -= humanizeMinutes * date.MINUTE_TIME;
+    }
+
+    if (elapsedTime > date.SECOND_TIME) {
+        humanizeSeconds = Math.floor(elapsedTime / date.SECOND_TIME);
+        elapsedTime -= humanizeSeconds * date.SECOND_TIME;
+    }
+
+    if (humanizeMinutes) {
+        humanizeTime += humanizeMinutes + 'h';
+    }
+
+    if (humanizeSeconds) {
+        humanizeTime += humanizeSeconds + 's';
+    }
+
+    humanizeTime += elapsedTime + 'ms';
+
     console.log();
-    debug.primary('build success', 'elapsed ' + pastTime + 'ms, at ' + date.format('YYYY-MM-DD HH:mm:ss.SSS'));
+    debug.primary('build success', 'elapsed ' + humanizeTime + ', ' +
+        'at ' + date.format('YYYY-MM-DD HH:mm:ss.SSS'));
     console.log();
 };
 
