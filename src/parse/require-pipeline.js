@@ -118,7 +118,7 @@ module.exports = function (file, name, pipeline) {
     inType = moduleInTypeMap[inType];
 
     if (!inType) {
-        debug.error('错误', '不支持的入口类型：' + inType + '\n' + path.toSystem(file));
+        debug.error('错误', '不支持的入口类型：' + inType + '\n' + file);
         return process.exit(1);
     }
 

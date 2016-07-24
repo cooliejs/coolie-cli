@@ -33,14 +33,14 @@ var writeFile = function (name, destDirname, callback) {
     var srcPath = path.join(__dirname, '../../scaffolds/coolie-cli/', name);
 
     if (path.isFile(destPath)) {
-        debug.error('init error', path.toSystem(destPath) + ' 已存在');
+        debug.error('init error', destPath + ' 已存在');
         return callback();
     }
 
     try {
         fse.ensureFileSync(destPath);
     } catch (err) {
-        debug.error(name, path.toSystem(destPath));
+        debug.error(name, destPath);
         debug.error('init error', err.message);
         process.exit(1);
     }
@@ -57,13 +57,13 @@ var writeFile = function (name, destDirname, callback) {
     try {
         fse.outputFileSync(destPath, destData, 'utf8');
     } catch (err) {
-        debug.error(name, path.toSystem(destPath));
+        debug.error(name, destPath);
         debug.error('init error', err.message);
         return process.exit(1);
     }
 
     debug.success('init success', destData);
-    debug.success('init success', path.toSystem(destPath));
+    debug.success('init success', destPath);
     callback();
 };
 
