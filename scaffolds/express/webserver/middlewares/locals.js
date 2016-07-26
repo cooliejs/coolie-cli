@@ -18,7 +18,6 @@ var configs = require('../../configs');
 exports.$configs = function () {
     return function (req, res, next) {
         res.locals.$configs = configs;
-        configs.weixin.authState = random.string();
         next();
     };
 };

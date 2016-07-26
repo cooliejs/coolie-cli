@@ -19,7 +19,7 @@ var pkg = require('../../package.json');
 var router = new Router();
 
 router.get('/', function (req, res, next) {
-    res.render('main.html', {
+    res.render('index.html', {
         pkg: pkg
     });
 });
