@@ -1,15 +1,18 @@
+'use strict';
+
 var configs = require('./configs.js');
+
 // 当前 express 的 url
 var EXPRESS_URL = 'http://localhost:' + configs.port;
 
 //  Browser-sync 启动的端口，不能与 express 端口一致
-var BROWSER_SYNC_MAIN_PORT = configs.port + 100;
+var BROWSER_SYNC_MAIN_PORT = configs.port + 1;
 
 // Browser-sync ui 端口，不能与 express 端口一致
-var BROWSER_SYNC_UI_PORT = configs.port + 101;
+var BROWSER_SYNC_UI_PORT = configs.port + 2;
 
 // weinre 端口，不能与 express 端口一致
-var BROWSER_SYNC_WEINRE_PORT = configs.port + 102;
+var BROWSER_SYNC_WEINRE_PORT = configs.port + 3;
 
 
 /*
