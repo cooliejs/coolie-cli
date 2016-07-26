@@ -23,6 +23,12 @@ module.exports = {
         // 30d
         expires: 30 * 24 * 60 * 60 * 1000
     },
+    logLevel: {
+        local: ['log', 'info', 'warn', 'error'],
+        dev: ['log', 'info', 'warn', 'error'],
+        test: ['log', 'info', 'warn', 'error'],
+        pro: ['warn', 'error']
+    }[env],
     api: 'http://api.com'
 };
 
