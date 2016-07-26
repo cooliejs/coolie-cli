@@ -1,7 +1,7 @@
 /**
- * home 控制器
+ * 活动相关
  * @author ydr.me
- * @create 2016-01-13 14:45
+ * @create 2016-05-27 17:25
  */
 
 
@@ -9,10 +9,17 @@
 
 var Router = require('express').Router;
 
+
+var api = require('../../utils/api');
+
+
 var router = new Router();
 
+
+// 活动详情
 router.get('/', function (req, res, next) {
-    res.render('home.html');
+    res.api(Math.random());
 });
+
 
 module.exports = router;

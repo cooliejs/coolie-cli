@@ -7,24 +7,26 @@
 
 'use strict';
 
-var REG_API = /^\/api\//;
+var reAPI = /^\/api\//;
 
 // 解析 404
 exports.clientError = function clientError(req, res, next) {
-    var isAPI = REG_API.test(req.originalUrl);
+    var isAPI = reAPI.test(req.originalUrl);
+    var errCode = 404;
+    var errMsg = '当前页面不存在哦';
 
     if (isAPI) {
-        return res.api(404);
+        return res.api(errCode, errMsg);
     }
 
     res.status(404);
-    res.send('404');
+    res.send(errMsg);
 };
 
 
 // 解析 500
 exports.serverError = function serverError(err, req, res, next) {
-    var isAPI = REG_API.test(req.originalUrl);
+    var isAPI = reAPI.test(req.originalUrl);
     var errCode = err.code || 500;
     var errMsg = err.message || '网络错误';
 
@@ -33,7 +35,7 @@ exports.serverError = function serverError(err, req, res, next) {
     }
 
     res.status(500);
-    res.send(errCode + '\n' + errMsg);
+    res.send(errMsg);
 };
 
 

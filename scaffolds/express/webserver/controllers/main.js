@@ -1,0 +1,27 @@
+/**
+ * home 控制器
+ * @author ydr.me
+ * @create 2016-01-13 14:45
+ */
+
+
+'use strict';
+
+var Router = require('express').Router;
+var howdo = require('blear.utils.howdo');
+var weixin = require('blear.node.weixin');
+
+var api = require('../utils/api');
+var configs = require('../../configs');
+var pkg = require('../../package.json');
+
+
+var router = new Router();
+
+router.get('/', function (req, res, next) {
+    res.render('main.html', {
+        pkg: pkg
+    });
+});
+
+module.exports = router;

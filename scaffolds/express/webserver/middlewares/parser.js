@@ -10,13 +10,17 @@
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var sessionParser = require('express-session');
-var random = require('ydr-utils').random;
-var encryption = require('ydr-utils').encryption;
 var multer = require('multer');
 var os = require('os');
-var ur = require('url');
+var object = require('blear.utils.object');
+var system = require('blear.node.system');
+var console = require('blear.node.console');
+
 
 var configs = require('../../configs.js');
+var api = require('../utils/api');
+var redisKey = require('../static/redis-key');
+
 
 var upload = multer({
     dest: os.tmpdir()
@@ -24,71 +28,89 @@ var upload = multer({
 
 
 // 解析 cookie
-exports.parseCookie = cookieParser(configs.cookie.secret);
+exports.parseCookie = function () {
+    return cookieParser(configs.cookie.secret);
+};
 
 
 // 解析 session
-exports.parseSession = function (store) {
+exports.parseSession = function (redis) {
     return sessionParser({
-        genid: function () {
-            return random.string() + encryption.md5(random.guid());
-        },
         resave: true,
         saveUninitialized: true,
         secret: configs.cookie.secret,
-        store: store
+        store: redis ? redis.expressSessionStorage(sessionParser, redisKey.SESSION) : null
     });
 };
 
 
+// 解析完整 URL
+exports.parseFullURL = function () {
+    return function (req, res, next) {
+        req.$fullURL = req.protocol + '://' + req.headers.host + req.originalUrl;
+        next();
+    };
+};
+
+
+// 解析 IP
+exports.parseIP = function () {
+    return function (req, res, next) {
+        if (req.session.$ip) {
+            req.$ip = req.session.$ip;
+            return next();
+        }
+
+        system.remoteIP(req, function (ip) {
+            req.$ip = ip;
+            req.session.$ip = ip;
+            next();
+        });
+    };
+};
+
+
+// 解析访问信息
+exports.parseAccess = function () {
+    return function (req, res, next) {
+        console.infoWithTime(req.$ip, req.method, req.$fullURL, req.headers);
+        next();
+    };
+};
+
+
 // 解析 application/json
-exports.parseApplicationJSON = bodyParser.json({
-    strict: true,
-    limit: '100kb',
-    type: 'json'
-});
+exports.parseApplicationJSON = function () {
+    return bodyParser.json({
+        strict: true,
+        limit: '100kb',
+        type: 'json'
+    });
+};
 
 
 // 解析 application/x-www-form-urlencoded
-exports.parseApplicationXwwwFormUrlencoded = bodyParser.urlencoded({
-    extended: false
-});
+exports.parseApplicationXwwwFormUrlencoded = function () {
+    return bodyParser.urlencoded({
+        extended: false
+    });
+};
 
 
 // 解析 multipart/form-data text
 exports.parseMultipartFormData = upload.array();
 
 
-// 解析 ua
-exports.parseUA = function (req, res, next) {
-    var ua = req.headers['user-agent'];
-    var isMobile = /mobile|iphone|ipad|ipod|andorid/i.test(ua);
-    var isWeixin = /MicroMessenger\b/i.test(ua);
-    var isDangkr = /dangkr\b/.test(ua);
-    var isIOS = /iphone|ipod|ipad/i.test(ua);
-    var isAOS = /android/i.test(ua);
+// 附加 req.redis res.redis
+exports.parseRedis = function (redis) {
+    return function (req, res, next) {
+        if (redis) {
+            req.redis = res.redis = redis;
+        }
 
-    res.locals.$ua = req.session.$ua = {
-        isMobile: isMobile,
-        isWeixin: isWeixin,
-        isDangkr: isDangkr,
-        isIOS: isIOS,
-        isAOS: isAOS
+        next();
     };
-    next();
 };
 
 
-// 解析 URL
-exports.parseURL = function (req, res, next) {
-    res.locals.$url = ur.parse(req.originalUrl, true);
-    next();
-};
-
-
-// 解析配置
-exports.parseConfigs = function (req, res, next) {
-    res.locals.$configs = configs;
-    next();
-};
 
