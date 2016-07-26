@@ -11,7 +11,6 @@ var Router = require('express').Router;
 var howdo = require('blear.utils.howdo');
 var weixin = require('blear.node.weixin');
 
-var api = require('../utils/api');
 var configs = require('../../configs');
 var pkg = require('../../package.json');
 
