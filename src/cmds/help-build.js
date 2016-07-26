@@ -22,14 +22,14 @@ module.exports = function () {
     banner();
     console.log('在线指南：<https://coolie.ydr.me/guide/coolie.config.js/>。');
     console.log();
-    console.log(console.styles.pretty('[warning] 2.x 及以上版本只支持 CommonJS 规范的模块构建\n' +
+    console.log(console.pretty('[警告] 2.x 及以上版本只支持 CommonJS 规范的模块构建\n' +
         '虽然在一定程度上兼容了 AMD 规范，但不推荐这么做', ['red', 'bold']));
     console.log();
     console.log('1. Usage');
-    console.log(console.styles.pretty('   coolie build [options]', 'yellow'));
+    console.log(console.pretty('   coolie build [options]', 'yellow'));
     console.log();
     console.log('2. Example');
-    console.log(console.styles.pretty('   coolie build', 'yellow'));
+    console.log(console.pretty('   coolie build', 'yellow'));
     console.log();
     console.log('3. Command');
     debug.success('   build', '前端工程化构建', options);

@@ -34,14 +34,14 @@ module.exports = function () {
 
     console.log('2. Options');
     debug.normal('   -h --help', '打印命令的帮助信息', options);
-    debug.normal('   -d --dirname', '指定目标目录，默认为当前工作目录', options);
-    debug.normal('   -j --coolie.js', '初始化模块加载器配置文件，生成文件名为`coolie-config.js', options);
-    debug.normal('   -c --coolie-cli', '初始化前端工程化构建配置文件，生成文件名为`coolie.config.js', options);
-    debug.normal('   -C --configFile', '指定构建时使用的配置文件，默认为`coolie.config.js`', options);
-    debug.normal('   -e --express', '选择 express 全栈工程脚手架', options);
-    debug.normal('   -s --static', '选择静态工程脚手架', options);
-    debug.normal('   -r --redis', '是否在 express 工程脚手架中使用 redis', options);
-    debug.normal('   -m --mongoose', '是否在 express 工程脚手架中使用 mongoose', options);
+    // debug.normal('   -d --dirname', '指定目标目录，默认为当前工作目录', options);
+    // debug.normal('   -j --coolie.js', '初始化模块加载器配置文件，生成文件名为`coolie-config.js', options);
+    // debug.normal('   -c --coolie-cli', '初始化前端工程化构建配置文件，生成文件名为`coolie.config.js', options);
+    // debug.normal('   -C --configFile', '指定构建时使用的配置文件，默认为`coolie.config.js`', options);
+    // debug.normal('   -e --express', '选择 express 全栈工程脚手架', options);
+    // debug.normal('   -s --static', '选择静态工程脚手架', options);
+    // debug.normal('   -r --redis', '是否在 express 工程脚手架中使用 redis', options);
+    // debug.normal('   -m --mongoose', '是否在 express 工程脚手架中使用 mongoose', options);
     console.log();
 };
 

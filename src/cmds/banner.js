@@ -111,10 +111,10 @@ module.exports = function () {
     console.log();
     console.log(
         console.colors.original(blank(1)),
-        console.colors.grey(new Array(20).join('━')),
+        console.colors.grey(new Array(25).join('━')),
         console.colors.original(blank(1)),
         console.colors.original(pkg.description),
-        console.colors.grey(new Array(20).join('━')),
+        console.colors.grey(new Array(25).join('━')),
         console.colors.original(blank(1))
     );
     console.log();
