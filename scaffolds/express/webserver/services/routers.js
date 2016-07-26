@@ -38,7 +38,7 @@ module.exports = function (next, app, redis) {
     app.use(midParser.parseApplicationJSON());
     app.use(midParser.parseApplicationXwwwFormUrlencoded());
     app.use(midParser.parseRedis(redis));
-    app.use(midSafe.mustHasHeaderHost());
+    app.use(midSafe.requestHeadersSafe());
     app.use(midSafe.addUACompatibleHeader());
     app.use(midSafe.addFrameOptionsHeader());
     app.use(midLocals.$configs());
