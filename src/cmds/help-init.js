@@ -16,7 +16,7 @@ var banner = require('./banner.js');
 
 module.exports = function () {
     var options = {
-        nameAlign: 'left'
+        align: 'left'
     };
 
     banner();

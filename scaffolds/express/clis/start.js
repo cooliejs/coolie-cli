@@ -14,11 +14,13 @@ var util = require('util');
 var childProcess = require('child_process');
 
 var pkg = require('../package.json');
+var pm2 = require('../pm2.json');
 var configs = require('../configs.js');
 
 var startTime = Date.now();
 var NPM_REGISTRY = 'http://registry.npm.taobao.org';
 var ROOT = path.join(__dirname, '../');
+var WEBROOT_DEV = path.join(ROOT, 'webroot-dev');
 var isDebug = process.argv[2] === '--debug';
 
 
@@ -165,7 +167,7 @@ var isDirectory = function (_path) {
 
 // 更新代码
 var gitPull = function (callback) {
-    logNormal('\n\n───────────[ 1/3 ]───────────');
+    logNormal('\n\n───────────[ 1/4 ]───────────');
 
     if (!isDirectory(path.join(ROOT, '.git'))) {
         logWarning('fatal: Not a git repository (or any of the parent directories): .git');
@@ -183,11 +185,34 @@ var gitPull = function (callback) {
 };
 
 
-// 更新代码
+// 更新后端模块
 var installNodeModules = function (callback) {
-    logNormal('\n\n───────────[ 2/3 ]───────────');
-    exec('npm install --registry=' + NPM_REGISTRY, function () {
-        logSuccess('install node modules success');
+    logNormal('\n\n───────────[ 2/4 ]───────────');
+    exec([
+        'cd ' + ROOT,
+        'npm update --registry=' + NPM_REGISTRY
+    ], function () {
+        logSuccess('update node modules success');
+        callback();
+    });
+};
+
+
+// 更新前端模块
+var installFrontModules = function (callback) {
+    logNormal('\n\n───────────[ 3/4 ]───────────');
+
+    if (configs.env !== 'local') {
+        logNormal('ignore front modules');
+        return callback();
+    }
+
+    exec([
+        'cd ' + WEBROOT_DEV,
+        'npm update --registry=' + NPM_REGISTRY,
+        'cd ' + ROOT
+    ], function () {
+        logSuccess('update front modules success');
         callback();
     });
 };
@@ -221,14 +246,14 @@ var startDebug = function (callback) {
 var startPM2 = function (callback) {
     exec([
         'pm2 start pm2.json',
-        'pm2 show ' + pkg.name
+        'pm2 show ' + pm2.name
     ], callback);
 };
 
 
 // 启动
 var start = function () {
-    logNormal('\n\n───────────[ 3/3 ]───────────');
+    logNormal('\n\n───────────[ 4/4 ]───────────');
 
     var done = function () {
         logNormal('');
@@ -296,6 +321,8 @@ banner();
 // 更新代码安装模块并启动
 gitPull(function () {
     installNodeModules(function () {
-        start();
+        installFrontModules(function () {
+            start();
+        });
     });
 });

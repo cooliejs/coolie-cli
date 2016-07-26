@@ -20,7 +20,7 @@ var howdo = require('howdo');
 var banner = require('./banner.js');
 var pkg = require('../../package.json');
 
-var template_root = path.join(__dirname, '../template/');
+var template_root = path.join(__dirname, '../../scaffolds/');
 var TEMPLATE_MAP = {
     express: {
         root: path.join(template_root, 'express'),
@@ -221,7 +221,8 @@ module.exports = function (options) {
     banner();
 
     if (!options.express && !options['static']) {
-        debug.warn('coolie tips', 'missing template type, can be --express(-e), --static(-s)');
+        debug.warn('coolie tips', '请选择创建的样板类型，如：--express 或 --static，' +
+            '\n使用 --help 查看帮助');
         return;
     }
 

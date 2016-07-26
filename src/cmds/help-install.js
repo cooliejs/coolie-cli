@@ -19,7 +19,7 @@ module.exports = function () {
         '下载 coolie.js 请使用 npm install coolie.js');
 
     // var options = {
-    //     nameAlign: 'left'
+    //     align: 'left'
     // };
     //
     // banner();
