@@ -8,16 +8,11 @@
 'use strict';
 
 var howdo = require('howdo');
-var cache = require('ydr-utils').cache;
-var log = require('ydr-utils').log;
-var system = require('ydr-utils').system;
-var request = require('ydr-utils').request;
-var console = require('ydr-utils').console;
-var date = require('ydr-utils').date;
+var system = require('blear.node.system');
+var console = require('blear.node.console');
+var date = require('blear.utils.date');
 
-var serviceCache = require('./services/cache.js');
 var serviceConsole = require('./services/console.js');
-var serviceRequest = require('./services/request.js');
 var serviceLog = require('./services/log.js');
 var serviceExpress = require('./services/express.js');
 var serviceRedis = require('./services/redis.js');
@@ -27,9 +22,7 @@ var pkg = require('../package.json');
 
 module.exports = function (callback) {
     howdo
-        .task(serviceCache)
         .task(serviceConsole)
-        .task(serviceRequest)
         .task(serviceLog)
         .task(serviceExpress)
         .task(serviceRedis)
@@ -44,11 +37,11 @@ module.exports = function (callback) {
                 ['app root', configs.root],
                 ['node version', process.versions.node],
                 ['node env', process.env.NODE_ENV],
-                ['express version', pkg.dependencies.express]
+                ['express version', require('express/package.json').version]
             ];
 
             console.table(table, {
-                tdBorder: true,
+                border: true,
                 colors: ['green', 'bold']
             });
         })
