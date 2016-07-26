@@ -7,14 +7,15 @@
 
 'use strict';
 
-var console = require('ydr-utils').console;
+var console = require('blear.node.console');
 
 var configs = require('../../configs.js');
 
 module.exports = function (next) {
     // 控制台设置
     console.config({
-        color: 'local' === configs.env
+        colorful: 'local' === configs.env,
+        level: configs.logLevel
     });
 
     next();

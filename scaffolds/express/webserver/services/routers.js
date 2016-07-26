@@ -8,19 +8,21 @@
 'use strict';
 
 var express = require('express');
-var log = require('ydr-utils').log;
+var log = require('blear.node.log');
+var expressResAPI = require('blear.express.res-api');
 
 var configs = require('../../configs.js');
 var midParser = require('../middlewares/parser.js');
 var midSafe = require('../middlewares/safe.js');
-var midURL = require('../middlewares/url.js');
-var midAPI = require('../middlewares/api.js');
 var midError = require('../middlewares/error.js');
+var midLocals = require('../middlewares/locals.js');
 
 
-module.exports = function (next, app, sessionStore) {
+module.exports = function (next, app, redis) {
     // res.api
-    app.use(midAPI.resAPI(app));
+    app.use(expressResAPI(app, {
+        rewriteError: false
+    }));
 
 
     // 静态文件
@@ -28,29 +30,33 @@ module.exports = function (next, app, sessionStore) {
 
 
     // 前置
-    app.use(midParser.parseCookie);
-    app.use(midParser.parseSession(sessionStore));
-    app.use(midParser.parseApplicationJSON);
-    app.use(midParser.parseApplicationXwwwFormUrlencoded);
-    app.use(midParser.parseUA);
-    app.use(midParser.parseURL);
-    app.use(midSafe.mustHasHeaderHost);
-    app.use(midSafe.addUACompatibleHeader);
-    app.use(midSafe.addFrameOptionsHeader);
-    app.use(midURL.strictRouting);
-    app.use(log.__expressStart());
+    app.use(midParser.parseCookie());
+    app.use(midParser.parseSession(redis));
+    app.use(midParser.parseFullURL());
+    app.use(midParser.parseIP());
+    app.use(midParser.parseAccess());
+    app.use(midParser.parseApplicationJSON());
+    app.use(midParser.parseApplicationXwwwFormUrlencoded());
+    app.use(midParser.parseRedis(redis));
+    app.use(midSafe.mustHasHeaderHost());
+    app.use(midSafe.addUACompatibleHeader());
+    app.use(midSafe.addFrameOptionsHeader());
+    app.use(midLocals.$configs());
+    app.use(midLocals.$url());
+    app.use(midLocals.$ua());
+
 
 
     // 页面
-    app.use('/', require('../controllers/home.js'));
+    app.use('/', require('../controllers/main.js'));
 
 
     // 接口
-    app.use('/api/', require('../controllers/api.js'));
+    app.use('/m/api/example/', require('../controllers/api/example.js'));
 
 
     // 后置
-    app.use(log.__expressEnd());
+    app.use(log.expressMiddleware());
     app.use(midError.clientError);
     app.use(midError.serverError);
 

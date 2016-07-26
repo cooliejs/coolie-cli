@@ -7,33 +7,29 @@
 
 'use strict';
 
-var sessionParser = require('express-session');
-var RedisStore = require('connect-redis')(sessionParser);
-var controller = require('ydr-utils').controller;
+var Redis = require('blear.classes.redis');
+var console = require('blear.node.console');
+var fun = require('blear.utils.function');
 
 var configs = require('../../configs.js');
 
 module.exports = function (next, app) {
-    var sessionStore = new RedisStore(configs.redis);
-    var complete = controller.once(function (err) {
+    var redis = new Redis(configs.redis);
+    var complete = fun.once(function (err) {
         if (err) {
             err.redisURL = configs.redis;
         }
 
-        next(err, app, sessionStore);
+        next(err, app, redis);
     });
 
-    sessionStore.on('connect', function () {
+    redis.on('connect', function () {
         console.info('connect redis store success');
         complete();
     });
 
-    sessionStore.on('disconnect', function () {
+    redis.on('disconnect', function () {
         var err = new Error('disconnect redis store');
-        complete(err);
-    });
-
-    sessionStore.on('error', function (err) {
         complete(err);
     });
 };

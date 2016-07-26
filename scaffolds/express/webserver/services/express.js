@@ -8,27 +8,21 @@
 'use strict';
 
 var express = require('express');
-var path = require('ydr-utils').path;
-var Template = require('ydr-utils').Template;
-var cache = require('ydr-utils').cache;
+var path = require('blear.node.path');
+var Template = require('blear.node.template');
 
 var configs = require('../../configs.js');
 
-require('../utils/template-filters.js')(Template);
 
 module.exports = function (next) {
     var app = express();
 
-    Template.config({
-        debug: 'local' === configs.env,
-        cache: 'local' !== configs.env,
-        compress: false
-    });
-
     app.set('env', configs.env);
     app.set('port', configs.port);
     app.set('views', path.join(configs.webroot, './.views/'));
-    app.engine('html', Template.__express);
+    app.engine('html', Template.express({
+        compress: true
+    }));
     app.set('view engine', 'html');
 
     // 路由区分大小写，默认 disabled

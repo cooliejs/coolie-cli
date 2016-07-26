@@ -8,12 +8,13 @@
 
 
 var mongoose = require('mongoose');
-var controller = require('ydr-utils').controller;
+var fun = require('blear.utils.function');
+var console = require('blear.node.console');
 
 var configs = require('../../configs.js');
 
 module.exports = function (next) {
-    var complete = controller.once(function (err) {
+    var complete = fun.once(function (err) {
         if (err) {
             err.mongodbURL = configs.mongodb;
         }

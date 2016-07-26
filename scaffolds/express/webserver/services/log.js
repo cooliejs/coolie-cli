@@ -7,8 +7,8 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
-var log = require('ydr-utils').log;
+var path = require('blear.node.path');
+var log = require('blear.node.log');
 
 var configs = require('../../configs.js');
 
