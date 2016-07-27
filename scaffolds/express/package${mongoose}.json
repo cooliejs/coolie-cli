@@ -5,7 +5,7 @@
   "description": "express-template description",
   "scripts": {
     "start": "node ./clis/start.js",
-    "release": "rm -rf ./webroot-pro && coolie build -d webroot-dev && git add webroot-pro && git commit -am release && git push",
+    "release": "coolie build -d webroot-dev && git add webroot-pro && git commit -am release && git push",
     "live": "browser-sync start --config bs-config.js"
   },
   "preferGlobal": false,
