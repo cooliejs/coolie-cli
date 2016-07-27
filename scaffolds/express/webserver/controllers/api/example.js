@@ -9,12 +9,7 @@
 
 var Router = require('express').Router;
 
-
-var api = require('../../utils/api');
-
-
 var router = new Router();
-
 
 // 活动详情
 router.get('/', function (req, res, next) {

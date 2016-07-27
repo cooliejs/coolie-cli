@@ -18,7 +18,6 @@ var console = require('blear.node.console');
 
 
 var configs = require('../../configs.js');
-var api = require('../utils/api');
 var redisKey = require('../static/redis-key');
 
 
