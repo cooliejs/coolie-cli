@@ -12,8 +12,13 @@ var gitRepo = require('../../src/utils/git-repo.js');
 describe('utils/git-repo.js', function () {
     it('e', function (done) {
         gitRepo('coolie-demo1', function (err, json) {
-            console.log(json.homepage);
-            console.log(json.html_url);
+            if (err) {
+                console.log(err);
+                done();
+                return;
+            }
+
+            console.log(json);
             done();
         });
     });

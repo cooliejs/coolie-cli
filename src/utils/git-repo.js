@@ -38,7 +38,6 @@ module.exports = function (repo, callback) {
         }
 
         var json = {};
-
         try {
             json = JSON.parse(body);
         } catch (err) {
