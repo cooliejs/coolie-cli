@@ -10,7 +10,7 @@
 
 var path = require('blear.node.path');
 var typeis = require('blear.utils.typeis');
-var url = require('blear.utils.url');
+var url = require('url');
 var console = require('blear.node.console');
 
 
@@ -190,13 +190,13 @@ exports.removeVersion = function (_path) {
  */
 exports.joinHost = function (type, host, _path) {
     if (typeis.String(host)) {
-        return url.join(host, _path);
+        return url.resolve(host, _path);
     }
 
     // 转换为绝对路径
-    _path = url.join('/', _path);
+    _path = url.resolve('/', _path);
 
-    return url.join(host(type, _path), _path);
+    return url.resolve(host(type, _path), _path);
 };
 
 

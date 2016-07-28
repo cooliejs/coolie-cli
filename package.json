@@ -84,7 +84,7 @@
     "blear.utils.time": "^1.0.3",
     "blear.utils.typeis": "^1.0.2",
     "blear.utils.uri": "^1.0.1",
-    "blear.utils.url": "^1.0.4",
+    "blear.utils.url": "^1.0.9",
     "clean-css": "^3.4.6",
     "fs-extra": "^0.26.0",
     "glob": "^5.0.15",
@@ -94,8 +94,8 @@
     "ydr-utils": "^42.2.22"
   },
   "scripts": {
-    "test2": "node node_modules/mocha/bin/mocha -c --recursive -t 0 --ui bdd test/**/test.*.js",
-    "test": "node node_modules/mocha/bin/mocha -c --recursive -t 0 --ui bdd test/test.index.js",
+    "test": "node node_modules/mocha/bin/mocha -c --recursive -t 0 --ui bdd test/**/test.*.js",
+    "test2": "node node_modules/mocha/bin/mocha -c --recursive -t 0 --ui bdd test/test.index.js",
     "prepublish": "npm test"
   },
   "license": "MIT",
