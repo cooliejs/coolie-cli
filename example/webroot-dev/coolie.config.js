@@ -24,7 +24,7 @@ module.exports = function (coolie) {
             // 目标目录，相对于当前文件
             dirname: '../webroot-pro/',
             // 目标根域
-            host: '/',
+            host: 'http://abc.com/1/2/3/',
             // 版本号长度
             versionLength: 32
         },

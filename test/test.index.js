@@ -75,7 +75,7 @@ var join = buildExports(JOIN);
 describe('index.js', function () {
     it('e', function () {
         console.log(url.parse('static/res/abc.png'));
-        console.log(url.join('/','static/res/abc.png'));
+        console.log(url.join('/', 'static/res/abc.png'));
     });
 });
 

@@ -3,7 +3,7 @@
     "main": [
       {
         "src": "../webroot-dev/static/js/app/index.js",
-        "dest": "/static/js/main/6ae8d2e47dfd34876a8540cd36b5f298.js",
+        "dest": "/static/js/main/b5753a2aa411527dfcae0762eeb5c4cf.js",
         "deps": [
           "../webroot-dev/static/js/utils/hehe.js",
           "../webroot-dev/static/js/data/json.json"
