@@ -83,7 +83,7 @@ exports.parseAccess = function () {
 exports.parseApplicationJSON = function () {
     return bodyParser.json({
         strict: true,
-        limit: '100kb',
+        limit: '1mb',
         type: 'json'
     });
 };
