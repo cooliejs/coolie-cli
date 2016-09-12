@@ -38,6 +38,7 @@ exports.parseSession = function (redis) {
         resave: true,
         saveUninitialized: true,
         secret: configs.cookie.secret,
+        name: configs.cookie.sessionName,
         store: redis ? redis.expressSessionStorage(sessionParser, redisKey.SESSION) : null
     });
 };

@@ -13,9 +13,10 @@ var pkg = require('./package.json');
 var env = getEnv();
 var webroot = env === 'local' ? 'dev' : 'pro';
 var root = __dirname;
+var port = 10000;
 
 module.exports = {
-    port: 10000,
+    port: port,
     env: env,
     root: root,
     webroot: path.join(root, './webroot-' + webroot),
@@ -54,7 +55,8 @@ module.exports = {
     cookie: {
         secret: 'express-template',
         // 30d
-        expires: 30 * 24 * 60 * 60 * 1000
+        expires: 30 * 24 * 60 * 60 * 1000,
+        sessionName: 's' + port
     },
     logLevel: {
         local: ['log', 'info', 'warn', 'error'],
