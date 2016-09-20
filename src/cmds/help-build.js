@@ -12,7 +12,7 @@ var console = require('blear.node.console');
 
 
 var banner = require('./banner.js');
-
+var bookURL = require('../utils/book-url');
 
 module.exports = function () {
     var options = {
@@ -20,7 +20,7 @@ module.exports = function () {
     };
 
     banner();
-    console.log('在线指南：<https://coolie.ydr.me/guide/coolie.config.js/>。');
+    console.log('在线指南：' + bookURL('/guide/coolie.config.js/'));
     console.log();
     console.log(console.pretty('[警告] 2.x 及以上版本只支持 CommonJS 规范的模块构建\n' +
         '虽然在一定程度上兼容了 AMD 规范，但不推荐这么做', ['red', 'bold']));
