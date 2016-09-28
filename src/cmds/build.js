@@ -233,7 +233,7 @@ module.exports = function (options) {
     }
 
     if (humanizeMinutes) {
-        humanizeTime += humanizeMinutes + 'h';
+        humanizeTime += humanizeMinutes + 'm';
     }
 
     if (humanizeSeconds) {
