@@ -52,7 +52,7 @@ module.exports = function (next, app, redis) {
 
 
     // 接口
-    app.use('/m/api/example/', require('../controllers/api/example.js'));
+    app.use('/api/example/', require('../controllers/api/example.js'));
 
 
     // 后置

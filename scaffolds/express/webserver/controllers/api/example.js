@@ -11,7 +11,7 @@ var Router = require('express').Router;
 
 var router = new Router();
 
-// 活动详情
+// xx 接口
 router.get('/', function (req, res, next) {
     res.api(Math.random());
 });
