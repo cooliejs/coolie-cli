@@ -20,6 +20,7 @@ var Increase = Class.extend({
 
         this._init10 = init10;
         this._init36 = this._init10.toString(36);
+        Increase.parent(this);
     },
 
     /**

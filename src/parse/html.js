@@ -293,6 +293,7 @@ var HTMLParser = Class.extend({
         the._html = html;
         the._options = object.assign({}, options);
         the._matchList = [];
+        HTMLParser.parent(the);
     },
 
     /**

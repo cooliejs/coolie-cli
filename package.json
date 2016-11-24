@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
-    "blear.classes.class": "^1.0.9",
+    "blear.classes.class": "^1.1.1",
     "blear.classes.events": "^1.0.4",
     "blear.classes.template": "^1.0.28",
     "blear.node.console": "^1.0.3",
@@ -61,7 +61,7 @@
     "blear.node.encryption": "^1.0.1",
     "blear.node.mime": "^1.0.1",
     "blear.node.path": "^1.0.6",
-    "blear.node.request": "^1.0.1",
+    "blear.node.request": "^1.0.2",
     "blear.polyfills.array": "^1.0.3",
     "blear.polyfills.date": "^1.0.1",
     "blear.polyfills.function": "^1.0.1",
