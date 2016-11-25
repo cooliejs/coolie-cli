@@ -53,7 +53,7 @@
   },
   "dependencies": {
     "adm-zip": "^0.4.7",
-    "blear.classes.class": "^1.1.1",
+    "blear.classes.class": "^1.1.2",
     "blear.classes.events": "^1.0.4",
     "blear.classes.template": "^1.0.28",
     "blear.node.console": "^1.0.3",
@@ -73,7 +73,6 @@
     "blear.utils.array": "^1.0.6",
     "blear.utils.collection": "^1.0.3",
     "blear.utils.date": "^1.0.2",
-    "blear.utils.debug": "^1.0.1",
     "blear.utils.function": "^1.0.1",
     "blear.utils.json": "^1.0.1",
     "blear.utils.number": "^1.0.1",
