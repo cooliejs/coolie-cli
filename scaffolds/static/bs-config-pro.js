@@ -23,11 +23,11 @@ module.exports = {
         }
     },
     "files": [
-        './webroot-dev/**'
+        './webroot-pro/**'
     ],
     "watchOptions": {},
     "server": {
-        baseDir: "./webroot-dev"
+        baseDir: "./webroot-pro"
     },
     "proxy": false,
     "port": BROWSER_SYNC_PORT,
