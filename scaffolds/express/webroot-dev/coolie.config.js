@@ -33,14 +33,21 @@ module.exports = function (coolie) {
         js: {
             // 入口模块，相对于当前文件
             main: [
-                './static/js/app/**/*.js'
+                './static/js/main/**/*.js'
             ],
             // coolie-config.js 路径，相对于当前文件
             'coolie-config.js': './static/js/coolie-config.js',
             // js 文件保存目录，相对于 dest.dirname
             dest: './static/js/',
             // 分块配置
-            chunk: []
+            chunk: [],
+            // js 压缩配置
+            minify: {
+                global_defs: {
+                    DEBUG: false,
+                    CLASSICAL: false
+                }
+            }
         },
 
         // html 构建
