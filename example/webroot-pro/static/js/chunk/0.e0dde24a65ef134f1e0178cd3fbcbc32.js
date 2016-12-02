@@ -1,6 +1,6 @@
 /*coolie built*/
 
-/* @ref http://abc.com/1/2/3/static/js/utils/hehe.js */
+/* @ref //abc.com/1/2/3/static/js/utils/hehe.js */
 define("2", [], function (require, exports, module) {/**
  * 文件描述
  * @author ydr.me

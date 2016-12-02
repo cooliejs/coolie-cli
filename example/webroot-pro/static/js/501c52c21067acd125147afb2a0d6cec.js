@@ -2,9 +2,9 @@
 coolie.config({
     debug: false,
     mode: "AMD",
-    asyncModulesMap: {"5":"e10b5265875b870c598d21aeee6433c9"},
-    chunkModulesMap: {"0":"9d7022cd173f9e24d42a11e645ab2343"},
-    built: "coolie@2.0.1",
+    asyncModulesMap: {"5":"da5c077803387aaca90d5c59c51bf5e5"},
+    chunkModulesMap: {"0":"e0dde24a65ef134f1e0178cd3fbcbc32"},
+    built: "coolie@2.0.7",
     mainModulesDir:"/1/2/3/static/js/main/",
     asyncModulesDir:"../async/",
     chunkModulesDir:"../chunk/",

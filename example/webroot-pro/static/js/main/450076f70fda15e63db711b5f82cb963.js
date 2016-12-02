@@ -1,6 +1,6 @@
 /*coolie built*/
 
-/* @ref http://abc.com/1/2/3/static/js/app/index.js */
+/* @ref //abc.com/1/2/3/static/js/app/index.js */
 define("0", ["2", "3"], function (require, exports, module) {
 
 
@@ -22,7 +22,7 @@ define("0", ["2", "3"], function (require, exports, module) {
 });
 
 
-/* @ref http://abc.com/1/2/3/static/js/data/json.json */
+/* @ref //abc.com/1/2/3/static/js/data/json.json */
 define("3", [], function () {return {"name":"json"};
 
 });
