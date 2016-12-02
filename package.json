@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "description": "前端工程构建工具",
   "preferGlobal": true,
   "bin": {
@@ -73,6 +73,7 @@
     "blear.utils.array": "^1.0.6",
     "blear.utils.collection": "^1.0.3",
     "blear.utils.date": "^1.0.2",
+    "blear.utils.debug": "1.x",
     "blear.utils.function": "^1.0.1",
     "blear.utils.json": "^1.0.1",
     "blear.utils.number": "^1.0.1",
