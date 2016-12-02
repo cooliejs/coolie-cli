@@ -189,7 +189,6 @@ exports.removeVersion = function (_path) {
  * @param _path {String} 路径
  */
 exports.joinHost = function (type, host, _path) {
-    console.log('joinHost', host, _path);
     if (typeis.String(host)) {
         return url.join(host, _path);
     }
