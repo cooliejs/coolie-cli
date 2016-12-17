@@ -8,12 +8,13 @@
 'use strict';
 
 var express = require('express');
+var path = require('blear.node.path');
 
 
 var configs = require('../../configs.js');
 
-
-module.exports = express.static(configs.webroot, {
+var staticPath = path.join(configs.webroot, 'static');
+module.exports = express.static(staticPath, {
     dotfiles: 'ignore',
     etag: configs.env !== 'local',
     extensions: ['html'],

@@ -14,7 +14,7 @@
     "node": ">= 1.0.0",
     "iojs": ">= 1.0.0"
   },
-  "main": "index.js",
+  "main": "app.js",
   "keywords": [
     "cloudcome",
     "ydr.me"

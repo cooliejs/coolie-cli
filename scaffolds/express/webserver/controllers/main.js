@@ -17,7 +17,7 @@ var pkg = require('../../package.json');
 
 var router = new Router();
 
-// xx 页面
+// 首页
 router.get('/', function (req, res, next) {
     res.render('index.html', {
         pkg: pkg

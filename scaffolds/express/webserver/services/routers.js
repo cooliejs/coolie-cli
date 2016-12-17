@@ -26,8 +26,8 @@ module.exports = function (next, app, redis) {
 
 
     // 静态文件
-    app.use('/', require('../controllers/static.js'));
     app.use('/', require('../controllers/public.js'));
+    app.use('/static', require('../controllers/static.js'));
 
 
     // 前置

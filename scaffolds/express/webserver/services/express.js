@@ -19,7 +19,7 @@ module.exports = function (next) {
 
     app.set('env', configs.env);
     app.set('port', configs.port);
-    app.set('views', path.join(configs.webroot, './.views/'));
+    app.set('views', path.join(configs.webroot, './views/'));
     app.engine('html', Template.express({
         compress: true
     }));
