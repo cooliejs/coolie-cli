@@ -28,8 +28,8 @@ module.exports = function (next, app, redis) {
 
     // 静态文件
     app.use('/', ctrlStatical.public());
-    app.use('/', ctrlStatical.static());
-    app.use('/', ctrlStatical.nodeModules());
+    app.use('/static', ctrlStatical.static());
+    app.use('/node_modules', ctrlStatical.nodeModules());
 
 
     // 前置
