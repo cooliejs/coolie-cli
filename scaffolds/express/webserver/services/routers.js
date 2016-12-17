@@ -1,7 +1,7 @@
 /**
  * 路由
  * @author ydr.me
- * @create 2015-04-29 14:32
+ * @created 2016-12-17 13:14:31
  */
 
 
@@ -16,6 +16,7 @@ var midParser = require('../middlewares/parser.js');
 var midSafe = require('../middlewares/safe.js');
 var midError = require('../middlewares/error.js');
 var midLocals = require('../middlewares/locals.js');
+var ctrlStatical = require('../controllers/statical');
 
 
 module.exports = function (next, app, redis) {
@@ -26,8 +27,9 @@ module.exports = function (next, app, redis) {
 
 
     // 静态文件
-    app.use('/', require('../controllers/public.js'));
-    app.use('/static', require('../controllers/static.js'));
+    app.use('/', ctrlStatical.public());
+    app.use('/', ctrlStatical.static());
+    app.use('/', ctrlStatical.nodeModules());
 
 
     // 前置
