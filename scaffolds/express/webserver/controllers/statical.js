@@ -39,22 +39,14 @@ exports.public = function () {
 };
 
 /**
- * static 控制器
+ * webroot 控制器
  * @returns {*}
  */
-exports.static = function () {
-    var staticDirname = path.join(configs.webroot, 'static');
-    return express.static(staticDirname, staticOptions);
+exports.webroot = function () {
+    var webrootDirname = path.join(configs.webroot);
+    return express.static(webrootDirname, staticOptions);
 };
 
-/**
- * node_modules 控制器
- * @returns {*}
- */
-exports.nodeModules = function () {
-    var nodeModulesDirname = path.join(configs.webroot, 'node_modules');
-    return express.static(nodeModulesDirname, staticOptions);
-};
 
 
 

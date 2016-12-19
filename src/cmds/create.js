@@ -67,9 +67,15 @@ var createTemplate = function (meta, options, callback) {
     var root = meta.root;
     var convert = meta.convert;
     var destDirname = options.destDirname;
-    var files = glob.sync(path.join(root, '**/*'), {
-        dot: false,
-        nodir: true
+    var files = path.glob('**/*', {
+        srcDirname: root,
+        globOptions: {
+            dot: true,
+            nodir: true
+        },
+        filter: function (indexGlob, indexFile, file) {
+            return !/\/\.[^/]+$/.test(file);
+        }
     });
 
     var convert2 = {};
