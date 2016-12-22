@@ -162,40 +162,40 @@ var matchHTML = function (html, conditions) {
         };
     }
 
-    var find = matches.map(function (matched) {
+    var foundTags = matches.map(function (matched) {
         return parseTag(matched, conditions);
     });
 
     matches = [];
 
     if (conditions.attrs) {
-        collection.each(find, function (index, item) {
-            var find = true;
+        collection.each(foundTags, function (index, tag) {
+            var foundAttr = true;
             collection.each(conditions.attrs, function (key, val) {
                 switch (typeis(val)) {
                     case 'string':
-                        find = item.attrs[key] === val;
+                        foundAttr = tag.attrs[key] === val;
                         break;
 
                     case 'regexp':
-                        find = val.test(item.attrs[key]);
+                        foundAttr = val.test(tag.attrs[key]);
                         break;
 
                     default:
-                        find = false;
+                        foundAttr = false;
                 }
 
-                if (!find) {
+                if (!foundAttr) {
                     return false;
                 }
             });
 
-            if (find) {
-                matches.push(item);
+            if (foundAttr) {
+                matches.push(tag);
             }
         });
     } else {
-        matches = find;
+        matches = foundTags;
     }
 
     return {
