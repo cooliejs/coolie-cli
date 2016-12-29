@@ -37,6 +37,7 @@ exports.parseSession = function (redis) {
     return sessionParser({
         resave: true,
         saveUninitialized: true,
+        cookie: configs.cookie,
         secret: configs.cookie.secret,
         name: configs.cookie.sessionName,
         store: redis ? redis.expressSessionStorage(sessionParser, redisKey.SESSION) : null
