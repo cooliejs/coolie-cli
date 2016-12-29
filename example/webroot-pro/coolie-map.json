@@ -3,7 +3,7 @@
     "main": [
       {
         "src": "../webroot-dev/static/js/app/index.js",
-        "dest": "/static/js/main/e5311403d0829590d645bd15c93cf80d.js",
+        "dest": "/static/js/main/369c247cb2f91fda5a3e1ec28031213d.js",
         "deps": [
           "../webroot-dev/static/js/utils/hehe.js",
           "../webroot-dev/static/js/data/json.json"
@@ -12,7 +12,7 @@
     ],
     "js": [
       {
-        "dest": "/static/js/d1b72dce434b99272fede06680d58b7e.js",
+        "dest": "/static/js/a96e2a0ff25e92ab1451d4495d35f978.js",
         "deps": [
           "../webroot-dev/node_modules/coolie.js/coolie.js"
         ]
