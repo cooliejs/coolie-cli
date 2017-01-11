@@ -54,7 +54,7 @@ module.exports = function (coolie) {
         html: {
             // html 文件，相对于当前文件
             src: [
-                './.views/**/*.html'
+                '**/*.html'
             ],
             // 是否压缩
             minify: true
