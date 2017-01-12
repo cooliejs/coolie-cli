@@ -7,7 +7,7 @@
 
 'use strict';
 
-var howdo = require('howdo');
+var plan = require('blear.utils.plan');
 var system = require('blear.node.system');
 var console = require('blear.node.console');
 var date = require('blear.utils.date');
@@ -21,13 +21,13 @@ var configs = require('../configs.js');
 var pkg = require('../package.json');
 
 module.exports = function (callback) {
-    howdo
+    plan
         .task(serviceConsole)
         .task(serviceLog)
         .task(serviceExpress)
         .task(serviceRedis)
         .task(serviceRouters)
-        .follow(callback)
+        .serial(callback)
         .try(function (app) {
             var table = [
                 ['start time', date.format('YYYY-MM-DD HH:mm:ss.SSS')],
