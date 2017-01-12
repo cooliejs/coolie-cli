@@ -62,6 +62,10 @@ exports.parseIP = function () {
             return next();
         }
 
+        if (!req.headers['x-forwarded-for'] && configs.env === 'local') {
+            req.headers['x-forwarded-for'] = '127.0.0.1';
+        }
+
         system.remoteIP(req, function (ip) {
             req.$ip = ip;
             req.session.$ip = ip;
