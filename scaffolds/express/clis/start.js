@@ -2,6 +2,7 @@
  * 启动文件
  * @author ydr.me
  * @create 2016年01月13日14:27:23
+ * @update 2017年01月14日14:24:39
  */
 
 
@@ -19,9 +20,12 @@ var configs = require('../configs.js');
 
 var startTime = Date.now();
 var NPM_REGISTRY = 'http://registry.npm.taobao.org';
-var ROOT = path.join(__dirname, '../');
+var ROOT = path.join(__dirname, '..');
 var WEBROOT_DEV = path.join(ROOT, 'webroot-dev');
 var isDebug = process.argv[2] === '--debug';
+var NPM_INSTALL = 'npm install --registry=' + NPM_REGISTRY +
+    (configs.env === 'local' ? '' : ' --production');
+var APP_PATH = path.join(ROOT, 'app.js');
 
 
 /**
@@ -76,11 +80,12 @@ var logNormal = function () {
 /**
  * 执行系统命令
  * @param cmds {Array|String} 命令数组
- * @param [callback] {Function} 执行完毕回调
+ * @param callback {Function} 执行完毕回调
  */
 var exec = function (cmds, callback) {
     cmds = typeof(cmds) === 'string' ? [cmds] : cmds;
     var command = cmds.join(' && ');
+
     logNormal(command);
 
     var point = 1;
@@ -97,6 +102,7 @@ var exec = function (cmds, callback) {
 
     childProcess.exec(command, function (err, stdout, stderr) {
         clearInterval(interval);
+
         try {
             process.stdout.clearLine();
         } catch (err) {
@@ -114,7 +120,7 @@ var exec = function (cmds, callback) {
         }
 
         logSuccess(stdout);
-        callback();
+        callback(null, stdout.trim());
     });
 };
 
@@ -165,7 +171,11 @@ var isDirectory = function (_path) {
 };
 
 
-// 更新代码
+/**
+ * 更新代码
+ * @param callback
+ * @returns {*}
+ */
 var gitPull = function (callback) {
     logNormal('\n\n───────────[ 1/4 ]───────────');
 
@@ -185,20 +195,38 @@ var gitPull = function (callback) {
 };
 
 
-// 更新后端模块
-var installNodeModules = function (callback) {
-    logNormal('\n\n───────────[ 2/4 ]───────────');
+/**
+ * 安装 Node 模块
+ * @param parent
+ * @param callback
+ */
+var installNodeModules = function (parent, callback) {
     exec([
-        'cd ' + ROOT,
-        'npm update --registry=' + NPM_REGISTRY
-    ], function () {
-        logSuccess('update node modules success');
+        'cd ' + parent,
+        NPM_INSTALL
+    ], callback);
+};
+
+
+/**
+ * 更新后端模块
+ * @param callback
+ */
+var installWebserverModules = function (callback) {
+    logNormal('\n\n───────────[ 2/4 ]───────────');
+
+    installNodeModules(ROOT, function () {
+        logSuccess('install webserver modules success');
         callback();
     });
 };
 
 
-// 更新前端模块
+/**
+ * 更新前端模块
+ * @param callback
+ * @returns {*}
+ */
 var installFrontModules = function (callback) {
     logNormal('\n\n───────────[ 3/4 ]───────────');
 
@@ -207,42 +235,50 @@ var installFrontModules = function (callback) {
         return callback();
     }
 
-    exec([
-        'cd ' + WEBROOT_DEV,
-        'npm update --registry=' + NPM_REGISTRY,
-        'cd ' + ROOT
-    ], function () {
-        logSuccess('update front modules success');
+    installNodeModules(WEBROOT_DEV, function () {
+        logSuccess('install front modules success');
         callback();
     });
 };
 
 
-// 本地启动
+/**
+ * 本地启动
+ * @param callback
+ */
 var startLocal = function (callback) {
     var supervisor = require('supervisor');
     var args = [];
 
-    args.push(__filename);
-    args.push('-w');
-    args.push('./webserver/');
-    args.push('-e');
+    args.push('--watch');
+    args.push(
+        [
+            path.join(ROOT, 'webserver'),
+            path.join(ROOT, 'bookroot')
+        ].join(',')
+    );
+    args.push('--extensions');
     args.push('js,md');
-    args.push('app.js');
-
+    args.push(APP_PATH);
     supervisor.run(args);
     callback();
 };
 
 
-// debug 启动
+/**
+ * debug 启动
+ * @param callback
+ */
 var startDebug = function (callback) {
     require('../app.js');
     callback();
 };
 
 
-// pm2 启动
+/**
+ * pm2 启动
+ * @param callback
+ */
 var startPM2 = function (callback) {
     exec([
         'pm2 start pm2.json',
@@ -251,7 +287,9 @@ var startPM2 = function (callback) {
 };
 
 
-// 启动
+/**
+ * 启动
+ */
 var start = function () {
     logNormal('\n\n───────────[ 4/4 ]───────────');
 
@@ -280,6 +318,9 @@ var start = function () {
 };
 
 
+/**
+ * 输出 banner
+ */
 var banner = function () {
     var list = [];
     var padding = 4;
@@ -316,13 +357,19 @@ var banner = function () {
 };
 
 
+// ======================================================================
+// ======================================================================
+// ======================================================================
+
 banner();
 
 // 更新代码安装模块并启动
 gitPull(function () {
-    installNodeModules(function () {
+    installWebserverModules(function () {
         installFrontModules(function () {
             start();
         });
     });
 });
+
+
