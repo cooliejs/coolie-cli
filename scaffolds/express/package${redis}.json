@@ -49,11 +49,9 @@
     "express": "^4.14.0",
     "express-session": "^1.14.2",
     "multer": "^1.2.1"
-
   },
   "peerDependencies": {},
   "devDependencies": {
-    "mocha": "^2.3.4",
     "supervisor": "^0.9.1"
   },
   "license": "MIT"

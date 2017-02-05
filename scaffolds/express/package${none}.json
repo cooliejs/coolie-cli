@@ -51,7 +51,6 @@
   },
   "peerDependencies": {},
   "devDependencies": {
-    "mocha": "^2.3.4",
     "supervisor": "^0.9.1"
   },
   "license": "MIT"
