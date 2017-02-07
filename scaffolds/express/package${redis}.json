@@ -42,7 +42,7 @@
     "blear.node.system": "^1.0.5",
     "blear.node.template": "^1.0.18",
     "blear.utils.date": "^1.0.7",
-    "blear.utils.plan": "^2.0.0",
+    "blear.utils.plan": "^2.1.2",
     "blear.utils.url": "^1.0.16",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
