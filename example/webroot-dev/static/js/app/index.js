@@ -12,6 +12,7 @@ define(function (require, exports, module) {
     var hehe = require('../utils/hehe');
     var hehe2 = require('../utils/hehe', 'js');
     var hehe3 = require('../utils/hehe', 'js|js');
+    require('../data/data.css');
 
     require('../data/json.json', 'json');
 
