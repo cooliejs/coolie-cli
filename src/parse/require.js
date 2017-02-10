@@ -23,6 +23,7 @@ var PACKAGE_JSON = 'package.json';
 var NODE_MODULES = 'node_modules';
 var reAbsolute = /^\//;
 var reRelative = /^\.{1,2}\//;
+var pathRE = /\//;
 
 
 /**
@@ -89,9 +90,19 @@ module.exports = function (file, options) {
             //     fromDirname = options.srcCoolieConfigNodeModulesDirname;
             // }
 
-            var fromDirname = path.join(options.srcCoolieConfigNodeModulesDirname, name);
+            var nodeModuleDirname = name;
+            var nodeModulePath = nodeModuleMainPath;
 
-            if (nodeModuleMainPath) {
+            // require('node-module/path/to/module.js');
+            if(pathRE.test(name)) {
+                var com = name.split(pathRE);
+                nodeModuleDirname = com.shift();
+                nodeModulePath = com.join('/');
+            }
+
+            var fromDirname = path.join(options.srcCoolieConfigNodeModulesDirname, nodeModuleDirname);
+
+            if (nodeModulePath) {
                 id = path.join(fromDirname, nodeModuleMainPath);
             } else {
                 var reqPkg = {};
