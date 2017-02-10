@@ -1,0 +1,28 @@
+{
+  "/.views/index.html": {
+    "main": [
+      {
+        "src": "../webroot-dev/static/js/app/index.js",
+        "dest": "/static/js/main/7e64ce1cdc961f0397022a865fc7bcbd.js",
+        "deps": [
+          "../webroot-dev/static/js/data/data.css",
+          "../webroot-dev/static/js/data/json.json",
+          "../webroot-dev/node_modules/a/src/index.js"
+        ]
+      }
+    ],
+    "js": [
+      {
+        "dest": "/static/js/a96e2a0ff25e92ab1451d4495d35f978.js",
+        "deps": [
+          "../webroot-dev/node_modules/coolie.js/coolie.js"
+        ]
+      }
+    ],
+    "css": [],
+    "res": [
+      "../webroot-dev/favicon.ico",
+      "../webroot-dev/static/img/abc.png"
+    ]
+  }
+}
