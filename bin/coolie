@@ -6,6 +6,7 @@ var fs = require('fs');
 var path = require('path');
 var command = require('ydr-utils').command;
 var debug = require('blear.node.debug');
+var console = require('blear.node.console');
 
 var cmdBanner = require('../src/cmds/banner.js');
 var cmdBuild = require('../src/cmds/build.js');
@@ -22,6 +23,9 @@ var cmdHelpInit = require('../src/cmds/help-init.js');
 var cmdHelpDemo = require('../src/cmds/help-demo.js');
 var cmdHelpInstall = require('../src/cmds/help-install.js');
 
+console.config({
+    level: process.env.CLOUDCOME_MAC === 'YES' ? ['log', 'error'] : ['log']
+});
 command.alias({
     d: 'dirname',
     j: 'coolie.js',
@@ -55,7 +59,7 @@ command.if('build', function (args) {
 
     cmdBuild({
         srcDirname: command.dirname(args, 'dirname'),
-        configFile: args.config 
+        configFile: args.config
     });
 });
 

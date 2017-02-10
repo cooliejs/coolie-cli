@@ -13,7 +13,7 @@ var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
 
-var reRelative = /^\.{1,2}\//;
+var relativeOrAbsoluteRE = /^\.{0,2}\//;
 
 
 /**
@@ -96,7 +96,7 @@ module.exports = function (file, name, pipeline) {
     var dftInType = 'js';
     var extension = path.extname(name).slice(1);
 
-    if (reRelative.test(name) && extension && !pipeline) {
+    if (relativeOrAbsoluteRE.test(name) && extension && !pipeline) {
         collection.each(moduleInTypeMatches, function (index, rule) {
             var inType = rule[0];
             var regexp = rule[1];

@@ -43,7 +43,7 @@ module.exports = function (file, options) {
     var coolieConfigs = options.coolieConfigs;
     var nodeModuleMainPath = coolieConfigs.nodeModuleMainPath;
 
-    var parser = function (node) {
+    nodeList.forEach(function (node) {
         var async = node.expression.property === 'async';
         var arg0 = node.args[0];
         var arg1 = node.args[1];
@@ -127,9 +127,7 @@ module.exports = function (file, options) {
             gid: globalId.get(id, outType),
             async: async
         });
-    };
-
-    nodeList.forEach(parser);
+    });
 
     return requireList;
 };

@@ -9,16 +9,7 @@ define(function (require, exports, module) {
 
     'use strict';
 
-    var hehe = require('../utils/hehe');
-    var hehe2 = require('../utils/hehe', 'js');
-    var hehe3 = require('../utils/hehe', 'js|js');
-    require('../data/data.css');
-
-    require('../data/json.json', 'json');
-
-    require.async('../async/page1.js', function (page1) {
-        alert(page1);
-    });
-
-    alert('正确');
+    require('/static/js/data/data.css');
+    require('../data/json.json');
+    require('a/src/index');
 });
