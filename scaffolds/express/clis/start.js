@@ -251,12 +251,7 @@ var startLocal = function (callback) {
     var args = [];
 
     args.push('--watch');
-    args.push(
-        [
-            path.join(ROOT, 'webserver'),
-            path.join(ROOT, 'bookroot')
-        ].join(',')
-    );
+    args.push(path.join(ROOT, 'webserver'));
     args.push('--extensions');
     args.push('js,md');
     args.push(APP_PATH);
