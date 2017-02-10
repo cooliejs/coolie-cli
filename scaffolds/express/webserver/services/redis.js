@@ -20,7 +20,8 @@ module.exports = function (next, app) {
             err.redisURL = configs.redis;
         }
 
-        next(err, app, redis);
+        app.redis = redis;
+        next(err, app);
     });
 
     redis.on('connect', function () {

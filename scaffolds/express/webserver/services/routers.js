@@ -19,7 +19,9 @@ var midLocals = require('../middlewares/locals.js');
 var ctrlStatical = require('../controllers/statical');
 
 
-module.exports = function (next, app, redis) {
+module.exports = function (next, app) {
+    var redis = app.redis;
+
     // res.api
     app.use(expressResAPI(app, {
         rewriteError: false
