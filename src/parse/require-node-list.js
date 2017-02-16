@@ -14,7 +14,7 @@ var console = require('blear.node.console');
 
 var Uglify = require("uglify-js");
 var beforeWrap = 'function parseNodeList(){';
-var afterWrap = '}';
+var afterWrap = '\n}';
 
 module.exports = function (file, code, async) {
     var ast;
