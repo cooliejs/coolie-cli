@@ -10,10 +10,8 @@
 var object = require('blear.utils.object');
 var debug = require('blear.node.debug');
 var Middleware = require('ydr-utils').Middleware;
-var Emitter = require('ydr-utils').Emitter;
 var date = require('blear.utils.date');
 var console = require('blear.node.console');
-
 
 var parseCoolieConfig = require('../parse/coolie.config.js');
 var buildAPP = require('../build/app.js');
@@ -31,7 +29,6 @@ var defaults = {
 var middleware = new Middleware({
     async: false
 });
-var emitter = new Emitter();
 
 
 // 重写 err
@@ -75,10 +72,6 @@ middleware.on('error', function (err) {
     return process.exit(1);
 });
 
-emitter.on('exit', function (err) {
-    debug.error(err.name, err.message);
-    return process.exit(1);
-});
 
 /**
  * 构建主程序
@@ -105,8 +98,7 @@ module.exports = function (options) {
     var configs = parseCoolieConfig({
         srcDirname: options.srcDirname,
         configFile: options.configFile,
-        middleware: middleware,
-        emitter: emitter
+        middleware: middleware
     });
     var srcDirname = configs.srcDirname;
     var destDirname = configs.destDirname;
@@ -178,7 +170,6 @@ module.exports = function (options) {
     debug.primary('step ' + (++stepIndex) + '/' + stepLength, 'build htmls');
     var buildHTMLResult = buildHTML({
         middleware: middleware,
-        emitter: emitter,
         glob: configs.html.src,
         htmlMinifyOptions: configs.htmlMinifyOptions,
         versionLength: configs.versionLength,

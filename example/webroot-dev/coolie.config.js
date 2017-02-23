@@ -34,7 +34,8 @@ module.exports = function (coolie) {
             // 入口模块，相对于当前文件
             main: [
                 // 支持 glob 语法
-                './static/js/app/index.js'
+                './static/js/app/index.js',
+                './static/js/main/**.js'
             ],
             // coolie-config.js 路径，相对于当前文件
             'coolie-config.js': './static/js/coolie-config.js',
@@ -87,8 +88,8 @@ module.exports = function (coolie) {
     // coolie.use(require('coolie-*'));
 
     // 自定义 coolie 中间件
-    //coolie.use(function (options) {
-    //    // do sth.
-    //    return options;
-    //});
+    coolie.use(function (options) {
+       // do sth.
+       return options;
+    });
 };
