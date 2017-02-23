@@ -25,3 +25,7 @@
 - cooliebase64: css file √
 - 支持 host 函数 √
 - 使用 -c 指定配置文件
+- 移除 ydr-utils 模块
+- 支持 sourcemap
+
+
