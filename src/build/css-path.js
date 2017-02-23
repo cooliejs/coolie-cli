@@ -65,6 +65,7 @@ module.exports = function (href, options) {
     }
 
     var srcPath = pathURI.toAbsoluteFile(href, options.file, options.srcDirname);
+    var extname = path.extname(srcPath);
     var destPath = minifyPathmap[srcPath];
     var destURI = minifyCSSmap[srcPath];
     var resList = resourceMap[srcPath];
@@ -92,9 +93,9 @@ module.exports = function (href, options) {
 
         var destVersion = encryption.md5(destCode).slice(0, options.versionLength);
 
-        destPath = path.join(options.destCSSDirname, destVersion + '.css');
+        destPath = path.join(options.destCSSDirname, destVersion + extname);
         destURI = pathURI.toRootURL(destPath, options.destDirname);
-        destURI = pathURI.joinHost('css',options.destHost, destURI);
+        destURI = pathURI.joinHost('css', options.destHost, destURI);
 
         if (options.signCSS) {
             destCode = sign('css') + '\n' + destCode;

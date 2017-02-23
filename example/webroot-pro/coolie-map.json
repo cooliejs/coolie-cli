@@ -19,7 +19,17 @@
         ]
       }
     ],
-    "css": [],
+    "css": [
+      {
+        "dest": "/static/css/39620eccffbab13afd3b4eb17e0cddb6.wxss",
+        "deps": [
+          {
+            "src": "../webroot-dev/static/css/index.wxss",
+            "res": []
+          }
+        ]
+      }
+    ],
     "res": [
       "../webroot-dev/favicon.ico",
       "../webroot-dev/static/img/abc.png"
