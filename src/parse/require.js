@@ -53,6 +53,7 @@ module.exports = function (file, options) {
         var inType = pipeLine[0];
         var outType = pipeLine[1];
         var id;
+        var nodeModule = false;
 
         // 相对于根目录
         if (reAbsolute.test(name)) {
@@ -90,6 +91,7 @@ module.exports = function (file, options) {
             //     fromDirname = options.srcCoolieConfigNodeModulesDirname;
             // }
 
+            nodeModule = true;
             var nodeModuleDirname = name;
             var nodeModulePath = nodeModuleMainPath;
 
@@ -136,7 +138,9 @@ module.exports = function (file, options) {
             inType: inType,
             outType: outType,
             gid: globalId.get(id, outType),
-            async: async
+            async: async,
+            nodeModule: nodeModule,
+            dependent: file
         });
     });
 

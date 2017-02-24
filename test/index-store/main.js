@@ -9,5 +9,6 @@
 'use strict';
 
 require('./app');
+require('a');
 
 

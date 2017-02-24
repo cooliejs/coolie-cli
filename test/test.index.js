@@ -7,11 +7,20 @@
 
 'use strict';
 
+var path = require('blear.node.path');
+
 var coolie = require('../index');
 
 describe('index.js', function () {
     it('parseRequire', function () {
-        coolie.parseRequire();
+        var ret = coolie.parseRequire(
+            path.join(__dirname, 'index-store/main.js'),
+            {
+                nodeModulesDirname: path.join(__dirname, 'index-store/node-modules')
+            }
+        );
+
+        console.log(ret);
     });
 });
 
