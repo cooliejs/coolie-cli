@@ -52,6 +52,9 @@ module.exports = {
             prefix: pkg.name + ':'
         }
     }[env],
+    redisKey: {
+        session: pkg.name + ':session:'
+    },
     cookie: {
         secret: 'express-template',
         // 30d

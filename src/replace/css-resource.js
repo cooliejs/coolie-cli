@@ -13,7 +13,6 @@ var debug = require('blear.node.debug');
 var object = require('blear.utils.object');
 var console = require('blear.node.console');
 
-
 var pathURI = require('../utils/path-uri.js');
 var base64 = require('../utils/base64.js');
 var copy = require('../utils/copy.js');

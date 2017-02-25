@@ -40,7 +40,7 @@ exports.parseSession = function (redis) {
         cookie: configs.cookie,
         secret: configs.cookie.secret,
         name: configs.cookie.sessionName,
-        store: redis ? redis.expressSessionStorage(sessionParser, redisKey.SESSION) : null
+        store: redis ? redis.expressSessionStorage(sessionParser, configs.redisKey.session) : null
     });
 };
 

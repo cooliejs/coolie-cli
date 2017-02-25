@@ -25,6 +25,9 @@ module.exports = {
         test: 'mongodb://localhost:27017/express-template',
         pro: 'mongodb://localhost:27017/express-template'
     }[env],
+    redisKey: {
+        session: pkg.name + ':session:'
+    },
     cookie: {
         secret: 'express-template',
         // 30d

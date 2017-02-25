@@ -19,6 +19,9 @@ module.exports = {
     env: env,
     root: root,
     webroot: path.join(root, './webroot-' + webroot),
+    redisKey: {
+        session: pkg.name + ':session:'
+    },
     cookie: {
         secret: 'express-template',
         // 30d
