@@ -35,5 +35,5 @@ node_modules
 sea-modules
 _site
 .cache
-dist
-example
+/dist
+/example
