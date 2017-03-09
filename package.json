@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "1.10.7",
+  "version": "1.10.8",
   "description": "The front-end development builder.",
   "preferGlobal": true,
   "bin": {
@@ -69,14 +69,14 @@
     "url": "https://github.com/cooliejs/coolie-cli/issues"
   },
   "dependencies": {
-    "adm-zip": "^0.4.7",
-    "clean-css": "^3.4.6",
-    "fs-extra": "^0.26.0",
-    "glob": "^5.0.15",
-    "howdo": "^2.0.2",
+    "adm-zip": "0.4.7",
+    "clean-css": "3.4.6",
+    "fs-extra": "0.26.0",
+    "glob": "5.0.15",
+    "howdo": "2.0.2",
     "open": "0.0.5",
-    "uglify-js": "^2.5.0",
-    "ydr-utils": "^42.2.22"
+    "uglify-js": "2.5.0",
+    "ydr-utils": "42.2.22"
   },
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha -c --recursive --ui bdd test -t 0"
@@ -89,7 +89,7 @@
   ],
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^2.3.3",
-    "ydr-utils": "^42.2.22"
+    "mocha": "2.3.3",
+    "ydr-utils": "42.2.22"
   }
 }
