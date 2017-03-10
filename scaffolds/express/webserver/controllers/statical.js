@@ -9,11 +9,10 @@
 
 var express = require('express');
 var path = require('blear.node.path');
-
+var object = require('blear.utils.object');
 
 var configs = require('../../configs.js');
 var staticOptions = {
-    dotfiles: 'ignore',
     etag: configs.env !== 'local',
     extensions: ['html'],
     index: false,
@@ -35,7 +34,9 @@ var staticOptions = {
  */
 exports.public = function () {
     var publicDirname = path.join(configs.root, 'public');
-    return express.static(publicDirname, staticOptions);
+    return express.static(publicDirname, object.assign({}, staticOptions, {
+        dotfiles: 'allow'
+    }));
 };
 
 /**
@@ -44,7 +45,9 @@ exports.public = function () {
  */
 exports.webroot = function () {
     var webrootDirname = path.join(configs.webroot);
-    return express.static(webrootDirname, staticOptions);
+    return express.static(webrootDirname, object.assign({}, staticOptions, {
+        dotfiles: 'ignore'
+    }));
 };
 
 
