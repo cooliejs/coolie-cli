@@ -18,7 +18,6 @@ var console = require('blear.node.console');
 
 
 var configs = require('../../configs.js');
-var redisKey = require('../static/redis-key');
 
 
 var upload = multer({
