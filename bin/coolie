@@ -23,9 +23,6 @@ var cmdHelpInit = require('../src/cmds/help-init.js');
 var cmdHelpDemo = require('../src/cmds/help-demo.js');
 var cmdHelpInstall = require('../src/cmds/help-install.js');
 
-console.config({
-    level: process.env.CLOUDCOME_MAC === 'YES' ? ['log', 'error'] : ['log']
-});
 command.alias({
     d: 'dirname',
     j: 'coolie.js',

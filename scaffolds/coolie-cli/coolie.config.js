@@ -4,7 +4,7 @@
  * 使用 `coolie init -c` 生成 `coolie.config.js` 文件模板
  * 当前配置文件所在的目录为构建的根目录
  *
- * @link http://coolie.ydr.me/guide/coolie.config.js/
+ * @link https://coolie.ydr.me/guide/coolie.config.js/
  * @author ydr.me
  * @version {{version}}
  * @create {{datetime}}
