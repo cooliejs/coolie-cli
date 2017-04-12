@@ -4,10 +4,10 @@
  * 使用 `coolie init -c` 生成 `coolie.config.js` 文件模板
  * 当前配置文件所在的目录为构建的根目录
  *
- * @link http://coolie.ydr.me/guide/coolie.config.js/
+ * @link https://coolie.ydr.me/guide/coolie.config.js/
  * @author ydr.me
- * @version 1.2.0
- * @create 2016-01-13 14:19:37
+ * @version 2.0.13
+ * @create 2017-03-30 17:48:01
  * =======================================================
  */
 
@@ -24,7 +24,7 @@ module.exports = function (coolie) {
             // 目标目录，相对于当前文件
             dirname: '../webroot-pro/',
             // 目标根域
-            host: '',
+            host: '/',
             // 版本号长度
             versionLength: 32
         },
@@ -33,6 +33,7 @@ module.exports = function (coolie) {
         js: {
             // 入口模块，相对于当前文件
             main: [
+                // 支持 glob 语法
                 './static/js/main/**/*.js'
             ],
             // coolie-config.js 路径，相对于当前文件
@@ -44,8 +45,7 @@ module.exports = function (coolie) {
             // js 压缩配置
             minify: {
                 global_defs: {
-                    DEBUG: false,
-                    CLASSICAL: false
+                    DEBUG: false
                 }
             }
         },
@@ -54,9 +54,10 @@ module.exports = function (coolie) {
         html: {
             // html 文件，相对于当前文件
             src: [
+                // 支持 glob 语法
                 '**/*.html'
             ],
-            // 是否压缩
+            // html 压缩配置
             minify: true
         },
 
@@ -65,9 +66,7 @@ module.exports = function (coolie) {
             // css 文件保存目录，相对于 dest.dirname
             dest: './static/css/',
             // css 压缩配置
-            minify: {
-                compatibility: 'ie7'
-            }
+            minify: true
         },
 
         // 资源
@@ -80,8 +79,8 @@ module.exports = function (coolie) {
 
         // 原样复制文件，相对于当前文件
         copy: [
-            './favicon.ico',
-            './robots.txt'
+            // 支持 glob 语法
+            './favicon.ico'
         ]
     });
 

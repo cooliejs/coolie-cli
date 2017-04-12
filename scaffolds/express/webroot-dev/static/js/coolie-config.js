@@ -4,10 +4,10 @@
  * 使用 `coolie init -j` 生成 `coolie-config.js` 文件模板
  * 前端模块加载器配置文件
  *
- * @link http://coolie.ydr.me/guide/coolie-config.js/
+ * @link https://coolie.ydr.me/guide/coolie-config.js/
  * @author ydr.me
- * @version 2.0.9
- * @create 2016-12-12 21:11:14
+ * @version 2.0.13
+ * @create 2017-03-30 17:50:06
  * ======================================================
  */
 
