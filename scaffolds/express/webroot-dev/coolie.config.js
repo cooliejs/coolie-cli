@@ -80,7 +80,6 @@ module.exports = function (coolie) {
         // 原样复制文件，相对于当前文件
         copy: [
             // 支持 glob 语法
-            './favicon.ico'
         ]
     });
 

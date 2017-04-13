@@ -25,9 +25,6 @@ module.exports = {
         test: 'mongodb://localhost:27017/express-template',
         pro: 'mongodb://localhost:27017/express-template'
     }[env],
-    redisKey: {
-        session: pkg.name + ':session:'
-    },
     cookie: {
         secret: 'express-template',
         // 30d
@@ -46,7 +43,7 @@ module.exports = {
 
 /**
  * 获取当前环境变量
- * @returns {*|string}
+ * @returns {string}
  */
 function getEnv() {
     var LOCAL_ENV = 'local';
@@ -62,8 +59,10 @@ function getEnv() {
         env = PRODUCTION_ENV;
     } else if (env.indexOf(TEST_ENV) > -1) {
         env = TEST_ENV;
+    } else {
+        env = LOCAL_ENV;
     }
 
-    return (process.env.NODE_ENV = env);
+    return env;
 }
 
