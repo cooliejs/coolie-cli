@@ -10,30 +10,28 @@
 var express = require('express');
 var log = require('blear.node.log');
 var expressResAPI = require('blear.express.res-api');
+var expressHttpMethodOverride = require('blear.express.http-method-override');
 
-var configs = require('../../configs.js');
-var midParser = require('../middlewares/parser.js');
-var midSafe = require('../middlewares/safe.js');
-var midError = require('../middlewares/error.js');
-var midLocals = require('../middlewares/locals.js');
+var configs = require('../../configs');
+var midParser = require('../middlewares/parser');
+var midSafe = require('../middlewares/safe');
+var midError = require('../middlewares/error');
+var midLocals = require('../middlewares/locals');
 var ctrlStatical = require('../controllers/statical');
 
 
 module.exports = function (next, app) {
     var redis = app.redis;
 
-    // res.api
-    app.use(expressResAPI(app, {
-        rewriteError: false
-    }));
-
-
     // 静态文件
     app.use('/', ctrlStatical.public());
     app.use('/', ctrlStatical.webroot());
 
-
-    // 前置
+    // 前置中间件
+    app.use(expressResAPI(app, {
+        rewriteError: false
+    }));
+    app.use(expressHttpMethodOverride());
     app.use(midParser.parseCookie());
     app.use(midParser.parseSession(redis));
     app.use(midParser.parseFullURL());
@@ -49,21 +47,16 @@ module.exports = function (next, app) {
     app.use(midLocals.$url());
     app.use(midLocals.$ua());
 
-
-
     // 页面
-    app.use('/', require('../controllers/main.js'));
-
+    app.use('/', require('../controllers/main'));
 
     // 接口
-    app.use('/api/example/', require('../controllers/api/example.js'));
+    app.use('/api/example/', require('../controllers/api/example'));
 
-
-    // 后置
+    // 后置中间件
     app.use(log.expressMiddleware());
     app.use(midError.clientError);
     app.use(midError.serverError);
-
 
     // 监听端口
     app.listen(configs.port, function (err) {

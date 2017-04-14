@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "blear.classes.redis": "1.x",
+    "blear.express.http-method-override": "^1.0.0",
     "blear.express.res-api": "^1.1.2",
     "blear.node.console": "^1.0.7",
     "blear.node.log": "^1.0.9",
