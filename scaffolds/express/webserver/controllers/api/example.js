@@ -1,5 +1,5 @@
 /**
- * 活动相关
+ * 示例
  * @author ydr.me
  * @create 2016-05-27 17:25
  */
@@ -11,7 +11,7 @@ var Router = require('express').Router;
 
 var router = new Router();
 
-// xx 接口
+// 获取 xxxx
 router.get('/', function (req, res, next) {
     res.api(Math.random());
 });
