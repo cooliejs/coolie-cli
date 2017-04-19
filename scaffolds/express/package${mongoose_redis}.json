@@ -11,7 +11,7 @@
   "preferGlobal": false,
   "bin": {},
   "engines": {
-    "node": ">= 1.0.0",
+    "node": ">= 6.0.0",
     "iojs": ">= 1.0.0"
   },
   "main": "app.js",
@@ -22,7 +22,7 @@
   "author": {
     "name": "cloudcome",
     "email": "cloudcome@163.com",
-    "url": "http://ydr.me"
+    "url": "https://ydr.me"
   },
   "contributors": [],
   "homepage": "https://github.com/express-template",
