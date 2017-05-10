@@ -2,6 +2,6 @@
   "name": "webroot",
   "version": "0.0.1",
   "dependencies": {
-    "coolie.js": "2.2.0"
+    "coolie.js": "2.2.1"
   }
 }
