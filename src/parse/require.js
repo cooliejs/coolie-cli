@@ -105,7 +105,7 @@ module.exports = function (file, options) {
             var fromDirname = path.join(options.srcCoolieConfigNodeModulesDirname, nodeModuleDirname);
 
             if (nodeModulePath) {
-                id = path.join(fromDirname, nodeModuleMainPath);
+                id = path.join(fromDirname, nodeModulePath);
             } else {
                 var reqPkg = {};
                 var pkgJSONFile = path.join(fromDirname, PACKAGE_JSON);

@@ -16,7 +16,7 @@ coolie.config({
     // mode: 'CJS',
 
     // 入口模块基准路径，相对于当前文件
-    mainModulesDir: '/static/js/app/',
+    mainModulesDir: '/static/js/main/',
 
     // node_modules 目录指向，相对于 baseDir
     nodeModulesDir: '/node_modules/',

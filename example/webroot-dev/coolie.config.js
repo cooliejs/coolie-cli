@@ -34,8 +34,8 @@ module.exports = function (coolie) {
             // 入口模块，相对于当前文件
             main: [
                 // 支持 glob 语法
-                './static/js/app/index.js',
-                './static/js/main/**.js'
+                // './static/js/app/index.js',
+                './static/js/main/page1.js'
             ],
             // coolie-config.js 路径，相对于当前文件
             'coolie-config.js': './static/js/coolie-config.js',
@@ -54,7 +54,7 @@ module.exports = function (coolie) {
             // html 文件，相对于当前文件
             src: [
                 // 支持 glob 语法
-                './.views/index.html'
+                './.views/page1.html'
             ],
             // html 压缩配置
             minify: false

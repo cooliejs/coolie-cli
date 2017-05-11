@@ -36,4 +36,4 @@ sea-modules
 _site
 .cache
 dist
-/example
+/example/

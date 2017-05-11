@@ -1,13 +1,13 @@
 {
-  "/.views/index.html": {
+  "/.views/page1.html": {
     "main": [
       {
-        "src": "../webroot-dev/static/js/app/index.js",
-        "dest": "/static/js/main/7e64ce1cdc961f0397022a865fc7bcbd.js",
+        "src": "../webroot-dev/static/js/main/page1.js",
+        "dest": "/static/js/main/327f8832cae583970ef3ea858be04cdf.js",
         "deps": [
-          "../webroot-dev/static/js/data/data.css",
-          "../webroot-dev/static/js/data/json.json",
-          "../webroot-dev/node_modules/a/src/index.js"
+          "../webroot-dev/node_modules/a/src/index.js",
+          "../webroot-dev/node_modules/a/index.js",
+          "../webroot-dev/node_modules/b/src/index.js"
         ]
       }
     ],
@@ -19,20 +19,7 @@
         ]
       }
     ],
-    "css": [
-      {
-        "dest": "/static/css/39620eccffbab13afd3b4eb17e0cddb6.wxss",
-        "deps": [
-          {
-            "src": "../webroot-dev/static/css/index.wxss",
-            "res": []
-          }
-        ]
-      }
-    ],
-    "res": [
-      "../webroot-dev/favicon.ico",
-      "../webroot-dev/static/img/abc.png"
-    ]
+    "css": [],
+    "res": []
   }
 }
