@@ -35,6 +35,7 @@ var defaults = {
  * @param options {Object}
  * @param options.dirname {String} 目录
  * @param options.git {String} git 地址
+ * @param options.alias {String} 仓库别名，用于显示
  * @param options.registry {String} 仓库名称
  * @param options.repository {String} 代码库
  * @param [options.branch=master] {String} 分支
@@ -70,7 +71,8 @@ module.exports = function (options, callback) {
         try {
             var zip = new AdmZip(tempFile);
             zip.extractAllTo(dirname, true);
-            debug.success(options.repository, unzipPath);
+            debug.success(options.alias || options.repository, unzipPath);
+            remoteTempfile();
             callback(null, {
                 url: url,
                 dirname: dirname,
@@ -79,10 +81,9 @@ module.exports = function (options, callback) {
         } catch (err) {
             debug.error('unzip ' + options.repository, unzipPath);
             debug.error('unzip ' + options.repository, err.message);
+            remoteTempfile();
             callback(err);
         }
-
-        remoteTempfile();
     });
     var remoteTempfile = function () {
         try {

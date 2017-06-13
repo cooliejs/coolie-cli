@@ -19,6 +19,7 @@ var console = require('blear.node.console');
 
 var banner = require('./banner.js');
 var pkg = require('../../package.json');
+var scaffold = require('../utils/scaffold');
 
 
 /**
@@ -29,48 +30,60 @@ var pkg = require('../../package.json');
  * @returns {*}
  */
 var writeFile = function (name, destDirname, callback) {
-    howdo
-        .task(function () {
-
-        })
-
-
     var destPath = path.join(destDirname, name);
-    var srcPath = path.join(__dirname, '../../scaffolds/coolie-cli/', name);
+    var chineseName = {
+        'coolie.config.js': '构建配置文件',
+        'coolie-config.js': '模块配置文件'
+    }[name];
 
     if (path.isFile(destPath)) {
-        debug.error('init error', destPath + ' 已存在');
-        return callback();
-    }
-
-    try {
-        fse.ensureFileSync(destPath);
-    } catch (err) {
-        debug.error(name, destPath);
-        debug.error('init error', err.message);
-        process.exit(1);
-    }
-
-    var srcData = fse.readFileSync(srcPath, 'utf8');
-    var tpl = new Template(srcData, {
-        compress: false
-    });
-    var destData = tpl.render({
-        version: pkg.version,
-        datetime: date.format('YYYY-MM-DD HH:mm:ss')
-    });
-
-    try {
-        fse.outputFileSync(destPath, destData, 'utf8');
-    } catch (err) {
-        debug.error(name, destPath);
-        debug.error('init error', err.message);
+        debug.error('init error', chineseName + ' `' + name + '` 已存在');
         return process.exit(1);
     }
 
-    debug.success('init success', destData);
-    debug.success('init success', destPath);
-    callback();
+    howdo
+        .task(function (next) {
+            scaffold('self', next);
+        })
+        .task(function (next, options) {
+            var srcPath = path.join(options.dirname, options.filename, name);
+
+            try {
+                fse.ensureFileSync(destPath);
+            } catch (err) {
+                debug.error(name, destPath);
+                options.empty();
+                return next(err);
+            }
+
+            var srcData = fse.readFileSync(srcPath, 'utf8');
+            var tpl = new Template(srcData, {
+                compress: false
+            });
+            var destData = tpl.render({
+                version: pkg.version,
+                datetime: date.format('YYYY-MM-DD HH:mm:ss')
+            });
+
+            try {
+                fse.outputFileSync(destPath, destData, 'utf8');
+            } catch (err) {
+                debug.error(name, destPath);
+                options.empty();
+                return next(err);
+            }
+
+            debug.success('init success', destData);
+            debug.success('init success', destPath);
+            options.empty();
+            next();
+        })
+        .follow()
+        .try(callback)
+        .catch(function (err) {
+            debug.error('init error', err.message);
+            return process.exit(1);
+        });
 };
 
 /**
