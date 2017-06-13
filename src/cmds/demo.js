@@ -14,7 +14,7 @@ var console = require('blear.node.console');
 
 
 var banner = require('./banner.js');
-var gitClone = require('../utils/git-clone.js');
+var gitDownload = require('../utils/git-download.js');
 var gitRepo = require('../utils/git-repo.js');
 
 
@@ -38,7 +38,7 @@ module.exports = function (options) {
                 return next(new Error('Not Found'));
             }
 
-            gitClone({
+            gitDownload({
                 dirname: options.destDirname,
                 repository: repo
             }, function (err) {

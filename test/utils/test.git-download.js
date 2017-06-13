@@ -9,7 +9,7 @@
 
 var assert = require('assert');
 
-var gitClone = require('../../src/utils/git-clone.js');
+var gitDownload = require('../../src/utils/git-download.js');
 
 var lazy  = function (done) {
     return function () {
@@ -19,7 +19,7 @@ var lazy  = function (done) {
 
 describe('utils/git-clone.js', function () {
     it('e', function (done) {
-        gitClone({
+        gitDownload({
             dirname: __dirname,
             registry: 'cooliejs',
             repository: 'coolie-demo1',

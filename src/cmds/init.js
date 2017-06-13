@@ -29,6 +29,12 @@ var pkg = require('../../package.json');
  * @returns {*}
  */
 var writeFile = function (name, destDirname, callback) {
+    howdo
+        .task(function () {
+
+        })
+
+
     var destPath = path.join(destDirname, name);
     var srcPath = path.join(__dirname, '../../scaffolds/coolie-cli/', name);
 

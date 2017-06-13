@@ -50,11 +50,12 @@ module.exports = function (options, callback) {
 
     //log.success(options);
     var url = urlUtil.join(options.git, options.registry, options.repository, 'archive', options.branch + '.zip');
-    debug.ignore('git clone', url);
+    debug.ignore('git download', url);
     console.loading();
-    var tempFile = path.join(os.tmpdir(), random.guid());
+    var tempFile = path.join(os.tmpDir(), random.guid());
     var filename = options.repository + '-' + options.branch;
-    var unzipPath = path.join(options.dirname, filename);
+    var dirname = options.dirname || os.tmpDir();
+    var unzipPath = path.join(dirname, filename);
     var ws = fse.createWriteStream(tempFile);
     var complete = fun.once(function (err) {
         console.loadingEnd();
@@ -68,9 +69,13 @@ module.exports = function (options, callback) {
 
         try {
             var zip = new AdmZip(tempFile);
-            zip.extractAllTo(options.dirname, true);
+            zip.extractAllTo(dirname, true);
             debug.success(options.repository, unzipPath);
-            callback();
+            callback(null, {
+                url: url,
+                dirname: dirname,
+                filename: filename
+            });
         } catch (err) {
             debug.error('unzip ' + options.repository, unzipPath);
             debug.error('unzip ' + options.repository, err.message);
@@ -92,7 +97,7 @@ module.exports = function (options, callback) {
         encoding: 'binary',
         debug: false
     }).on('error', function (err) {
-        debug.error('git clone', err.message);
+        debug.error('git download', err.message);
         complete(err);
     }).on('close', complete).pipe(ws).on('error', function (err) {
         debug.error('write file', tempFile);

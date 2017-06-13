@@ -14,7 +14,7 @@ describe('utils/progress.js', function () {
     it('run & stop', function (done) {
         var index = 1;
 
-        while (index < 2E7) {
+        while (index < 10000) {
             progress.run('测试', index);
             index++;
         }
