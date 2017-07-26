@@ -7,12 +7,12 @@
 
 'use strict';
 
-
+// @see http://www.52cik.com/2017/04/13/webpack-ie8.html
+// 最高只能使用 2.6.4 版本
 var uglifyJS = require('uglify-js');
 var debug = require('blear.node.debug');
 var object = require('blear.utils.object');
 var console = require('blear.node.console');
-
 
 var compressorOptions = {
     // 连续单语句，逗号分开
@@ -109,11 +109,7 @@ module.exports = function (file, options) {
             // 变量管理
             mangle: true,
             // 是否压缩
-            compress: object.assign(true, {}, compressorOptions, options.uglifyJSOptions),
-            output: {
-                // 兼容 IE6/7/8
-                screw_ie8: false
-            }
+            compress: object.assign(true, {}, compressorOptions, options.uglifyJSOptions)
         }).code;
     } catch (err) {
         debug.error('js code', code);

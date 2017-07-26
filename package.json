@@ -96,7 +96,7 @@
     "glob": "5.0.15",
     "howdo": "2.0.2",
     "open": "0.0.5",
-    "uglify-js": "2.8.29",
+    "uglify-js": "^2.6.4",
     "ydr-utils": "42.2.22"
   },
   "license": "MIT",
