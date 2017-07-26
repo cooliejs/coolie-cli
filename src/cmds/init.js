@@ -102,19 +102,19 @@ module.exports = function (options) {
     }
 
     plan
-        .task(function (done) {
+        .task(function (next) {
             if (!options['coolie-cli']) {
-                return done();
+                return next();
             }
 
-            writeFile('coolie.config.js', options.destDirname, done);
+            writeFile('coolie.config.js', options.destDirname, next);
         })
-        .task(function (done) {
+        .task(function (next) {
             if (!options['coolie.js']) {
-                return done();
+                return next();
             }
 
-            writeFile('coolie-config.js', options.destDirname, done);
+            writeFile('coolie-config.js', options.destDirname, next);
         })
         .serial(function () {
             process.exit(1);
