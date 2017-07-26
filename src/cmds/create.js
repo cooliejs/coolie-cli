@@ -54,7 +54,7 @@ var IGNORE_MAP = {
     gitignore: '.gitignore',
     npmignore: '.npmignore'
 };
-var REG_REPLACE = /\$\{.*?}\./;
+var REG_REPLACE = /\${.*?}\./;
 
 
 /**
