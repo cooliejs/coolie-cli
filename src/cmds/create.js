@@ -52,10 +52,16 @@ var TEMPLATE_MAP = {
         // root: path.join(template_root, 'static')
     }
 };
-// 忽略复制的文件
-var IGNORE_MAP = {
+// 重命名的文件
+var renameMap = {
     gitignore: '.gitignore',
     npmignore: '.npmignore'
+};
+// 忽略的文件
+var ignoreMap = {
+    'readme.md': true,
+    '.gitignore': true,
+    '.npmignore': true
 };
 var REG_REPLACE = /\${.*?}\./;
 
@@ -67,6 +73,7 @@ var REG_REPLACE = /\${.*?}\./;
  * @param meta.name
  * @param meta.convert
  * @param options
+ * @param options.destDirname
  * @param callback
  */
 var createTemplate = function (meta, options, callback) {
@@ -86,22 +93,30 @@ var createTemplate = function (meta, options, callback) {
 
     var convert2 = {};
     var converted = {};
+    var ignore2 = {};
 
     collection.each(convert, function (rela, transi) {
         convert2[path.join(root, rela)] = transi;
     });
 
+    collection.each(ignoreMap, function (rela) {
+        ignore2[path.join(root, rela)] = true;
+    });
+
     howdo.each(files, function (index, file, next) {
         var dir = path.dirname(file);
         var basename = path.basename(file);
-        var ignoreType = IGNORE_MAP[basename];
+        var renameType = renameMap[basename];
         var srcName = path.relative(root, file);
         var transiType = convert2[file];
         var relName = '';
         var relFile = '';
         var findConvert = false;
-
         var isDynamic = REG_REPLACE.test(basename);
+
+        if (ignoreMap[srcName]) {
+            return next();
+        }
 
         if (isDynamic) {
             relName = basename.replace(REG_REPLACE, '.');
@@ -139,8 +154,8 @@ var createTemplate = function (meta, options, callback) {
             }
         }
 
-        if (ignoreType) {
-            srcName = path.join(path.dirname(srcName), ignoreType);
+        if (renameType) {
+            srcName = path.join(path.dirname(srcName), renameType);
         }
 
         var destFile = path.join(destDirname, srcName);
@@ -163,14 +178,19 @@ var createTemplate = function (meta, options, callback) {
 
 /**
  * 创建 readme.md
+ * @param meta
+ * @param meta.root
+ * @param meta.name
+ * @param meta.convert
  * @param options
+ * @param options.destDirname
  */
-var createReadmeMD = function (options) {
+var createReadmeMD = function (meta, options) {
     var destDirname = options.destDirname;
     var destName = path.basename(destDirname);
     var srcName = 'readme.md';
     var destFile = path.join(destDirname, srcName);
-    var readmeMDTemplatePath = path.join(__dirname, '../../scaffolds/coolie-cli/template-readme.md');
+    var readmeMDTemplatePath = path.join(meta.root, 'readme.md');
     var readmeMDTemplateData = fse.readFileSync(readmeMDTemplatePath, 'utf8');
     var tpl = new Template(readmeMDTemplateData, {
         compress: false
@@ -221,9 +241,9 @@ var deepCreate = function (type, options) {
             return;
         }
 
-        meta.root  = template.path;
+        meta.root = template.path;
         createTemplate(meta, options, function () {
-            createReadmeMD(options);
+            createReadmeMD(meta, options);
             template.empty();
         });
     });
