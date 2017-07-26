@@ -7,7 +7,7 @@
 
 'use strict';
 
-var howdo = require('howdo');
+var plan = require('blear.utils.plan');
 var fse = require('fs-extra');
 var debug = require('blear.node.debug');
 var typeis = require('blear.utils.typeis');
@@ -41,7 +41,7 @@ var writeFile = function (name, destDirname, callback) {
         return process.exit(1);
     }
 
-    howdo
+    plan
         .task(function (next) {
             scaffold('self', next);
         })
@@ -78,7 +78,7 @@ var writeFile = function (name, destDirname, callback) {
             template.empty();
             next();
         })
-        .follow()
+        .serial()
         .try(callback)
         .catch(function (err) {
             debug.error('init error', err.message);
@@ -101,7 +101,7 @@ module.exports = function (options) {
         return;
     }
 
-    howdo
+    plan
         .task(function (done) {
             if (!options['coolie-cli']) {
                 return done();
@@ -116,7 +116,7 @@ module.exports = function (options) {
 
             writeFile('coolie-config.js', options.destDirname, done);
         })
-        .together(function () {
+        .serial(function () {
             process.exit(1);
         });
 };
