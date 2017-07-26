@@ -15,7 +15,7 @@ var Template = require('blear.classes.template');
 var console = require('blear.node.console');
 var glob = require('glob');
 var fse = require('fs-extra');
-var howdo = require('howdo');
+var plan = require('blear.utils.plan');
 
 var banner = require('./banner.js');
 var pkg = require('../../package.json');
@@ -103,7 +103,7 @@ var createTemplate = function (meta, options, callback) {
         ignore2[path.join(root, rela)] = true;
     });
 
-    howdo.each(files, function (index, file, next) {
+    plan.each(files, function (index, file, next) {
         var dir = path.dirname(file);
         var basename = path.basename(file);
         var renameType = renameMap[basename];
@@ -172,7 +172,7 @@ var createTemplate = function (meta, options, callback) {
 
         debug.success('create', path.join(destName, srcName));
         setTimeout(next, 45);
-    }).follow(callback);
+    }).serial(callback);
 };
 
 

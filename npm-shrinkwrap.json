@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "dependencies": {
     "addressparser": {
       "version": "0.3.2",
@@ -168,6 +168,11 @@
       "version": "1.0.5",
       "from": "blear.utils.path@1.0.5",
       "resolved": "http://registry.npm.taobao.org/blear.utils.path/download/blear.utils.path-1.0.5.tgz"
+    },
+    "blear.utils.plan": {
+      "version": "2.1.2",
+      "from": "blear.utils.plan@latest",
+      "resolved": "http://registry.npm.taobao.org/blear.utils.plan/download/blear.utils.plan-2.1.2.tgz"
     },
     "blear.utils.querystring": {
       "version": "1.0.3",

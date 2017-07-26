@@ -84,6 +84,7 @@
     "blear.utils.number": "1.0.1",
     "blear.utils.object": "1.0.2",
     "blear.utils.path": "1.0.5",
+    "blear.utils.plan": "^2.1.2",
     "blear.utils.querystring": "1.0.3",
     "blear.utils.random": "1.0.1",
     "blear.utils.string": "1.0.3",
