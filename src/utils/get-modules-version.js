@@ -8,7 +8,7 @@
 'use strict';
 
 
-var howdo = require('howdo');
+var plan = require('blear.utils.plan');
 var collection = require('blear.utils.collection');
 var npm = require('ydr-utils').npm;
 var access = require('blear.utils.access');
@@ -21,13 +21,13 @@ var console = require('blear.node.console');
  * @param callback
  */
 var getModulesVersion = function (modules, callback) {
-    howdo
-        .each(modules, function (index, dep, done) {
+    plan
+        .each(modules, function (index, dep, next) {
             npm.getLatestVersion(dep, function (err, version) {
-                done(err, version);
+                next(err, version);
             });
         })
-        .together()
+        .parallel()
         .try(function () {
             var args = access.args(arguments);
             var deps = {};

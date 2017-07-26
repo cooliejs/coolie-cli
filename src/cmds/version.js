@@ -9,7 +9,7 @@
 
 var npm = require('ydr-utils').npm;
 var debug = require('blear.node.debug');
-var howdo = require('howdo');
+var plan = require('blear.utils.plan');
 var console = require('blear.node.console');
 
 
@@ -20,28 +20,28 @@ module.exports = function () {
     banner();
     debug.success('local coolie-cli', pkg.version);
     console.loading();
-    howdo
+    plan
         // 获取 coolie-cli 版本
-        .task(function (done) {
+        .task(function (next) {
             npm.getLatestVersion(pkg.name, function (err, version) {
                 if (err) {
-                    return done(err);
+                    return next(err);
                 }
 
-                done(err, version);
+                next(err, version);
             });
         })
         // 获取 coolie.js 版本
-        .task(function (done) {
+        .task(function (next) {
             npm.getLatestVersion('coolie.js', function (err, version) {
                 if (err) {
-                    return done(err);
+                    return next(err);
                 }
 
-                done(err, version);
+                next(err, version);
             });
         })
-        .together(function () {
+        .parallel(function () {
             console.loadingEnd();
         })
         .try(function (coolieCliVersion, coolieJSVersion) {
