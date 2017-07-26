@@ -33,7 +33,7 @@ module.exports = function () {
 
     console.log('4. Options');
     debug.success('   -d --dirname', '指定目标目录，默认为当前工作目录', options);
-    debug.success('   -h --help', '打印命名的帮助信息', options);
+    debug.success('   -h --help', '打印命令的帮助信息', options);
     console.log();
 };
 

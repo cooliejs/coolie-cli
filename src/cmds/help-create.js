@@ -38,7 +38,7 @@ module.exports = function () {
     debug.success('   -s --static', '选择静态工程样板', options);
     debug.success('   -r --redis', '是否在 express 样板中使用 redis', options);
     debug.success('   -m --mongoose', '是否在 express 样板中使用 mongoose', options);
-    debug.success('   -h --help', '打印命名的帮助信息', options);
+    debug.success('   -h --help', '打印命令的帮助信息', options);
     console.log();
 };
 
