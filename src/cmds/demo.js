@@ -7,11 +7,9 @@
 
 'use strict';
 
-var howdo = require('howdo');
+var plan = require('blear.utils.plan');
 var debug = require('blear.node.debug');
 var openHelper = require('open');
-var console = require('blear.node.console');
-
 
 var banner = require('./banner.js');
 var gitDownload = require('../utils/git-download.js');
@@ -29,7 +27,7 @@ module.exports = function (options) {
 
     var repo = 'coolie-demo' + options.demo;
 
-    howdo
+    plan
         .task(function (next) {
             gitRepo(repo, next);
         })
@@ -56,8 +54,7 @@ module.exports = function (options) {
                 next();
             });
         })
-        .follow()
-        .try()
+        .serial()
         .catch(function (err) {
             debug.error(repo, err.message);
         });
