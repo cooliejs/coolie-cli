@@ -101,7 +101,6 @@ module.exports = function (file, options) {
     options.uglifyJSOptions.global_defs = options.uglifyJSOptions.global_defs || {};
     delete(options.uglifyJSOptions.minify);
 
-
     try {
         return uglifyJS.minify(code, {
             fromString: true,
@@ -110,7 +109,11 @@ module.exports = function (file, options) {
             // 变量管理
             mangle: true,
             // 是否压缩
-            compress: object.assign(true, {}, compressorOptions, options.uglifyJSOptions)
+            compress: object.assign(true, {}, compressorOptions, options.uglifyJSOptions),
+            output: {
+                // 兼容 IE6/7/8
+                screw_ie8: false
+            }
         }).code;
     } catch (err) {
         debug.error('js code', code);
