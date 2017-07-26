@@ -19,11 +19,13 @@ var howdo = require('howdo');
 
 var banner = require('./banner.js');
 var pkg = require('../../package.json');
+var scaffold = require('../utils/scaffold');
 
 var template_root = path.join(__dirname, '../../scaffolds/');
 var TEMPLATE_MAP = {
     express: {
-        root: path.join(template_root, 'express'),
+        name: 'express',
+        // root: path.join(template_root, 'express'),
         convert: {
             'package.json': {
                 mongoose: 'package${mongoose}.json',
@@ -46,7 +48,8 @@ var TEMPLATE_MAP = {
         }
     },
     'static': {
-        root: path.join(template_root, 'static')
+        name: 'static'
+        // root: path.join(template_root, 'static')
     }
 };
 // 忽略复制的文件
@@ -60,6 +63,9 @@ var REG_REPLACE = /\${.*?}\./;
 /**
  * 创建模板
  * @param meta
+ * @param meta.root
+ * @param meta.name
+ * @param meta.convert
  * @param options
  * @param callback
  */
@@ -210,8 +216,16 @@ var deepCreate = function (type, options) {
         debug.success('create', type + ' template');
     }
 
-    createTemplate(meta, options, function () {
-        createReadmeMD(options);
+    scaffold(meta.name, function (err, template) {
+        if (err) {
+            return;
+        }
+
+        meta.root  = template.path;
+        createTemplate(meta, options, function () {
+            createReadmeMD(options);
+            template.empty();
+        });
     });
 };
 

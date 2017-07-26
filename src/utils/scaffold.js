@@ -22,21 +22,19 @@ module.exports = function (name, callback) {
     gitDownload({
         alias: 'scaffold ' + name,
         repository: 'coolie-scaffold-' + name
-    }, function (err, options) {
+    }, function (err, template) {
         if (err) {
             return callback(err);
         }
 
-        options.empty = function () {
+        template.empty = function () {
             try {
-                fse.removeSync(
-                    path.join(options.dirname, options.filename)
-                );
+                fse.removeSync(template.path);
             } catch (err) {
                 // ignore
             }
         };
-        callback(err, options);
+        callback(err, template);
     });
 };
 

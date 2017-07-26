@@ -45,14 +45,14 @@ var writeFile = function (name, destDirname, callback) {
         .task(function (next) {
             scaffold('self', next);
         })
-        .task(function (next, options) {
-            var srcPath = path.join(options.dirname, options.filename, name);
+        .task(function (next, template) {
+            var srcPath = path.join(template.dirname, template.filename, name);
 
             try {
                 fse.ensureFileSync(destPath);
             } catch (err) {
                 debug.error(name, destPath);
-                options.empty();
+                template.empty();
                 return next(err);
             }
 
@@ -69,13 +69,13 @@ var writeFile = function (name, destDirname, callback) {
                 fse.outputFileSync(destPath, destData, 'utf8');
             } catch (err) {
                 debug.error(name, destPath);
-                options.empty();
+                template.empty();
                 return next(err);
             }
 
             debug.success('init success', destData);
             debug.success('init success', destPath);
-            options.empty();
+            template.empty();
             next();
         })
         .follow()

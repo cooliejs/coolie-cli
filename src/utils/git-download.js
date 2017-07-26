@@ -55,7 +55,7 @@ module.exports = function (options, callback) {
     console.loading();
     var tempFile = path.join(os.tmpDir(), random.guid());
     var filename = options.repository + '-' + options.branch;
-    var dirname = options.dirname || os.tmpDir();
+    var dirname = options.dirname || path.join(os.tmpDir(), random.guid());
     var unzipPath = path.join(dirname, filename);
     var ws = fse.createWriteStream(tempFile);
     var complete = fun.once(function (err) {
@@ -75,6 +75,7 @@ module.exports = function (options, callback) {
             remoteTempfile();
             callback(null, {
                 url: url,
+                path: unzipPath,
                 dirname: dirname,
                 filename: filename
             });
