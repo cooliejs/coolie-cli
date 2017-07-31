@@ -78,6 +78,10 @@ var buildTagReg = function (tagName, options) {
         options.closed = !UNCLOSED_TAGS_MAP[tagName.toUpperCase()];
     }
 
+    if (!typeis.Boolean(options.nest)) {
+        options.nest = true;
+    }
+
     // 闭合标签有内容
     if (options.closed) {
         regString += '>([\\s\\S]*?)';
@@ -115,7 +119,10 @@ var buildTagReg = function (tagName, options) {
  * @returns {{tag: String, attrs: {}, content: String, closed: Boolean}}
  */
 var parseTag = function (html, conditions) {
-    var buildTagRegRet = buildTagReg(conditions.tag, {closed: false});
+    var buildTagRegRet = buildTagReg(conditions.tag, {
+        closed: false,
+        nest: conditions.nest
+    });
     var tag = html.match(buildTagRegRet.reg)[0];
     var tagName = tag.match(REG_TAG_NAME)[0].slice(1);
     var attrString = tag.replace(REG_TAG_NAME, '');
@@ -143,7 +150,8 @@ var parseTag = function (html, conditions) {
     if (!UNCLOSED_TAGS_MAP[conditions.tag.toUpperCase()]) {
         buildTagRegRet = buildTagReg(conditions.tag, {
             closed: true,
-            global: false
+            global: false,
+            nest: conditions.nest
         });
         content = html.match(buildTagRegRet.reg)[5];
     }
@@ -168,12 +176,18 @@ var parseTag = function (html, conditions) {
  */
 var matchHTML = function (html, conditions) {
     conditions.tag = conditions.tag || conditions.tagName;
-    var buildTagRegRet = buildTagReg(conditions.tag, conditions.closed);
+    var buildTagRegRet = buildTagReg(conditions.tag, {
+        closed: conditions.closed,
+        nest: conditions.nest
+    });
     var reg = buildTagRegRet.reg;
     var matches = html.match(reg);
 
     if (!matches && buildTagRegRet.options.closed) {
-        buildTagRegRet = buildTagReg(conditions.tag, {closed: false});
+        buildTagRegRet = buildTagReg(conditions.tag, {
+            closed: false,
+            nest: conditions.nest
+        });
         reg = buildTagRegRet.reg;
         matches = html.match(reg);
     }
@@ -280,7 +294,6 @@ var renderHTML = function (node) {
         html += node.content;
     }
 
-    console.log(node);
     if (!node.nest) {
         html += '</' + node.tag + '>';
     }

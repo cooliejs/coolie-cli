@@ -73,14 +73,17 @@ describe('parse/html.js', function () {
                 nest: true
             }, function (node) {
                 list.push(node);
+                console.log(node);
                 return node;
             })
             .exec();
 
         expect(list.length).toBe(2);
+        expect(list[0].content).toBe('');
+        expect(list[1].content).toBe('');
+        expect(list[0].source).toBe('<div class="a1">');
+        expect(list[1].source).toBe('<div class="b1">');
         expect(ret).toBe(html2);
-        console.log('================================');
-        console.log(ret);
     });
 
     it('matchHTML > !nest', function () {
@@ -91,14 +94,17 @@ describe('parse/html.js', function () {
                 nest: false
             }, function (node) {
                 list.push(node);
+                console.log(node);
                 return node;
             })
             .exec();
 
         expect(list.length).toBe(2);
+        expect(list[0].content).toBe('1');
+        expect(list[1].content).toBe('2');
+        expect(list[0].source).toBe('<script 1>1</script>');
+        expect(list[1].source).toBe('<script 2>2</script>');
         expect(ret).toBe(html3);
-        console.log('================================');
-        console.log(ret);
     });
 });
 
