@@ -8,10 +8,9 @@
 [shields-img]: https://img.shields.io/npm/v/coolie.svg
 [shields-url]: https://www.npmjs.com/package/coolie
 
-__The front-end development builder.__
 
-__前端开发构建工具。__配合[coolie.js](https://github.com/cooliejs/coolie.js)（前端模块加载器）完成前端工程化构建。
+__前端开发构建工具。__
 
 
 - coolie 官方指南 <https://coolie.ydr.me/>
-- 社区 <http://FrontEndDev.org/>
+- 社区支持 <http://FrontEndDev.org/>
