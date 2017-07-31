@@ -17,9 +17,9 @@ var console = require('blear.node.console');
 
 
 var UNCLOSED_TAGS_LIST = ('AREA BASE BASEFONT BR COL COMMAND EMBED FRAME HR IMG INPUT ISINDEX KEYGEN LINK META ' +
-'PARAM SOURCE TRACK WEB ' +
-// svg elements
-'PATH CIRCLE ELLIPSE LINE RECT USE STOP POLYLINE POLYGON').split(' ');
+    'PARAM SOURCE TRACK WEB ' +
+    // svg elements
+    'PATH CIRCLE ELLIPSE LINE RECT USE STOP POLYLINE POLYGON').split(' ');
 var UNCLOSED_TAGS_MAP = {
     '*': false
 };
@@ -39,13 +39,29 @@ var REG_DOUBLE_QUOTE_S = /\\"/g;
  * @param options.closed
  * @param options.global
  * @param options.ignoreCase
+ * @param options.nest
  * @returns {{reg: RegExp, options: Object}}
  */
 var buildTagReg = function (tagName, options) {
     options = object.assign({
+        /**
+         * 是闭合标签
+         * undefined: 自动处理
+         * boolean：指定值
+         */
         closed: undefined,
+        /**
+         * 是否全局匹配
+         */
         global: true,
-        ignoreCase: true
+        /**
+         * 是否忽略大小写
+         */
+        ignoreCase: true,
+        /**
+         * 是否能嵌套
+         */
+        nest: true
     }, options);
 
     if (tagName === '*') {
@@ -62,8 +78,15 @@ var buildTagReg = function (tagName, options) {
         options.closed = !UNCLOSED_TAGS_MAP[tagName.toUpperCase()];
     }
 
+    // 闭合标签有内容
     if (options.closed) {
-        regString += '>([\\s\\S]*?)</\\1>';
+        regString += '>([\\s\\S]*?)';
+
+        // 如果不能嵌套，则加上尾部，如：script、textarea 等
+        // 由应用指定
+        if (!options.nest) {
+            regString += '</\\1>';
+        }
     } else {
         regString += '(\\/\\s*)?>';
     }
@@ -131,7 +154,8 @@ var parseTag = function (html, conditions) {
         quotes: quotes,
         source: html,
         content: content,
-        closed: buildTagRegRet.options.closed
+        closed: buildTagRegRet.options.closed,
+        nest: buildTagRegRet.options.nest
     };
 };
 
@@ -253,7 +277,12 @@ var renderHTML = function (node) {
     html += '>';
 
     if (node.closed) {
-        html += node.content + '</' + node.tag + '>';
+        html += node.content;
+    }
+
+    console.log(node);
+    if (!node.nest) {
+        html += '</' + node.tag + '>';
     }
 
     return html;
@@ -334,8 +363,8 @@ var HTMLParser = Class.extend({
     exec: function () {
         var the = this;
 
-        collection.each(the._matchList, function (index, match) {
-            the._html = transformHTML(matchHTML(the._html, match[0]), match[1]);
+        collection.each(the._matchList, function (index, matches) {
+            the._html = transformHTML(matchHTML(the._html, matches[0]), matches[1]);
         });
 
         return the._html;

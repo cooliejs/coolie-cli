@@ -55,7 +55,8 @@ module.exports = function (file, options) {
     var jsList = [];
 
     code = parseHTML(code).match({
-        tag: 'script'
+        tag: 'script',
+        nest: false
     }, function (node) {
         if (node.attrs.hasOwnProperty('src')) {
             return node;

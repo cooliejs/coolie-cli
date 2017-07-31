@@ -94,6 +94,8 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "mocha": "2.3.3"
+    "chai-jasmine": "^1.0.7",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.4.5"
   }
 }

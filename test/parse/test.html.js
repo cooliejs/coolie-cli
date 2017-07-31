@@ -10,16 +10,23 @@
 
 var path = require('ydr-utils').path;
 var fs = require('fs');
+var expect = require('chai-jasmine').expect;
 
-var parseHTML = require('../../src/parse/html.js');
+var matchHTML = require('../../src/parse/html.js');
 
 
-var file = path.join(__dirname, 'test.html');
-var code = fs.readFileSync(file, 'utf8');
+var file1 = path.join(__dirname, 'test-1.html');
+var html1 = fs.readFileSync(file1, 'utf8');
+
+var file2 = path.join(__dirname, 'test-2.html');
+var html2 = fs.readFileSync(file2, 'utf8');
+
+var file3 = path.join(__dirname, 'test-3.html');
+var html3 = fs.readFileSync(file3, 'utf8');
 
 describe('parse/html.js', function () {
     it('parseHTML', function () {
-        var ret = parseHTML(code)
+        var ret = matchHTML(html1)
             .match({
                 tag: 'body'
             }, function (node) {
@@ -57,9 +64,43 @@ describe('parse/html.js', function () {
         console.log('----------------------------------------------');
         console.log(ret);
     });
+
+    it('matchHTML > nest', function () {
+        var list = [];
+        var ret = matchHTML(html2)
+            .match({
+                tag: 'div',
+                nest: true
+            }, function (node) {
+                list.push(node);
+                return node;
+            })
+            .exec();
+
+        expect(list.length).toBe(2);
+        expect(ret).toBe(html2);
+        console.log('================================');
+        console.log(ret);
+    });
+
+    it('matchHTML > !nest', function () {
+        var list = [];
+        var ret = matchHTML(html3)
+            .match({
+                tag: 'script',
+                nest: false
+            }, function (node) {
+                list.push(node);
+                return node;
+            })
+            .exec();
+
+        expect(list.length).toBe(2);
+        expect(ret).toBe(html3);
+        console.log('================================');
+        console.log(ret);
+    });
 });
-
-
 
 
 
