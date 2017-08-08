@@ -158,7 +158,7 @@ module.exports = function (file, options) {
         }
 
         if (options.progressKey) {
-            progress.run(options.progressKey, coolieConfigURI);
+            progress.run(options.progressKey, dataConfig);
         }
 
         node.attrs[DATA_MAIN] = mainVersion + '.js';
