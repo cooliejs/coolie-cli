@@ -53,6 +53,7 @@ module.exports = function (src, options) {
     var srcPath = pathURI.toAbsoluteFile(src, options.file, options.srcDirname);
     var destURI = minifyJSMap[srcPath];
     var destPath = minifyPathMap[srcPath];
+    var srcURL = pathURI.toRootURL(srcPath, options.srcDirname);
 
     if (!destURI) {
         var srcCode = reader(srcPath, 'utf8', options.file);
@@ -81,7 +82,7 @@ module.exports = function (src, options) {
             minifyJSMap[srcPath] = destURI;
 
             if (!options.mute) {
-                debug.success('build js', pathURI.toRootURL(srcPath, options.srcDirname));
+                debug.success('build js', srcURL);
             }
         } catch (err) {
             debug.error('write file', destPath);
@@ -93,6 +94,8 @@ module.exports = function (src, options) {
     return {
         srcFile: srcPath,
         destFile: destPath,
+        srcURL: srcURL,
+        destURL: destURI,
         url: destURI
     };
 };

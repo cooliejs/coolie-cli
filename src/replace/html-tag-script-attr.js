@@ -110,7 +110,7 @@ module.exports = function (file, options) {
         });
 
         if (options.progressKey) {
-            progress.run(options.progressKey, ret.url);
+            progress.run(options.progressKey, ret.srcURL);
         }
 
         node.attrs.src = ret.url;
