@@ -118,6 +118,8 @@ module.exports = function (href, options) {
     }
 
     return {
+        srcURL: pathURI.toRootURL(srcPath, options.srcDirname),
+        destURL: destURI,
         url: destURI,
         srcFile: srcPath,
         destFile: destPath,

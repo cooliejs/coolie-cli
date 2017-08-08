@@ -102,7 +102,7 @@ module.exports = function (file, options) {
         node.attrs.href = ret.url;
 
         if (options.progressKey) {
-            progress.run(options.progressKey, ret.url);
+            progress.run(options.progressKey, ret.srcURL);
         }
         
         return node;
