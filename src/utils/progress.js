@@ -20,7 +20,7 @@ exports.run = fun.throttle(function (key, val) {
     debug.wait(key, val, {
         colors: 'yellow'
     });
-});
+}, 10);
 
 
 /**
