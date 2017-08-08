@@ -76,7 +76,7 @@ module.exports = function (file, options) {
             destDirname: options.destDirname,
             destHost: options.destHost,
             destResourceDirname: options.destResourceDirname,
-            mute: false,
+            mute: options.mute,
             base64: Boolean(node.attrs[COOLIE_BASE64]),
             progressKey: options.progressKey
         });

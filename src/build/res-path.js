@@ -63,9 +63,13 @@ module.exports = function (value, options) {
         url = pathURI.joinHost('res', options.destHost, resRelative);
     }
 
+    var destURL = url + (options.base64 ? '' : pathRet.suffix);
+
     return {
         srcFile: absFile,
         destFile: resFile,
-        url: url + (options.base64 ? '' : pathRet.suffix)
+        srcURL: pathURI.toRootURL(absFile, options.srcDirname),
+        destURL: destURL,
+        url: destURL
     };
 };

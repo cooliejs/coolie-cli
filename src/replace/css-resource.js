@@ -116,7 +116,7 @@ module.exports = function (file, options) {
             url = url + pathRet.suffix;
 
             if (options.progressKey) {
-                progress.run(options.progressKey, url);
+                progress.run(options.progressKey, ret.srcURL);
             }
 
             return item.before + url + item.after;

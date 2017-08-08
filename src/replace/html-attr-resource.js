@@ -128,12 +128,12 @@ module.exports = function (file, options) {
                 return node;
             }
 
-            if (!resMap[ret.srcFile]) {
-                resList.push(ret.srcFile);
+            if (options.progressKey) {
+                progress.run(options.progressKey, ret.srcURL);
             }
 
-            if (options.progressKey) {
-                progress.run(options.progressKey, ret.url);
+            if (!resMap[ret.srcFile]) {
+                resList.push(ret.srcFile);
             }
 
             node.attrs[attr] = ret.url;

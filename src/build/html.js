@@ -109,7 +109,7 @@ module.exports = function (options) {
             }
         }
 
-        var logKey = (index + 1) + '/' + htmlLength;
+        var progressKey = (index + 1) + '/' + htmlLength;
         var ret = minifyHTML(htmlFile, {
             code: code,
             htmlMinifyOptions: options.htmlMinifyOptions,
@@ -135,7 +135,7 @@ module.exports = function (options) {
             signJS: false,
             signCSS: false,
             mute: options.mute,
-            logKey: logKey
+            progressKey: progressKey
         });
 
         var relative = path.relative(options.srcDirname, htmlFile);
@@ -161,7 +161,7 @@ module.exports = function (options) {
 
         try {
             fse.outputFileSync(destFile, ret.code, 'utf8');
-            progress.stop(logKey, htmlURI);
+            progress.stop(progressKey, htmlURI);
         } catch (err) {
             debug.error('write html', path.normalize(htmlFile));
             debug.error('write file', err.message);
