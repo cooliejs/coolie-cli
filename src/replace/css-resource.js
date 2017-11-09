@@ -11,6 +11,7 @@
 var path = require('blear.node.path');
 var debug = require('blear.node.debug');
 var object = require('blear.utils.object');
+var typeis = require('blear.utils.typeis');
 var console = require('blear.node.console');
 
 var pathURI = require('../utils/path-uri.js');
@@ -21,18 +22,18 @@ var progress = require('../utils/progress');
 
 // background: url("...");
 var REG_URL = /url\s*?\((.*?)\)/ig;
-// _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="...");
+// _filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='...',sizingMethod='scale');
 var REG_SRC = /\(src\s*?=\s*?(.*?)\)/;
-var REG_QUOTE = /^["']|['"]$/g;
+var REG_QUOTE = /^.*?["']|['"].*?$/g;
 var regs = [{
-    before: 'url(',
+    before: /^(url\()/i,
     reg: REG_URL,
-    after: ')',
+    after: /(\))$/,
     quote: false
 }, {
-    before: '(src=',
+    before: /^(\(.*?src=)/i,
     reg: REG_SRC,
-    after: ')',
+    after: /src\s*?=\s*?['"].*?['"](.*?\))$/i,
     quote: true
 }];
 var defaults = {
@@ -102,8 +103,16 @@ module.exports = function (file, options) {
                 deps.push(srcFile);
             }
 
+            var before = (all.match(item.before) || ['', ''])[1];
+            var after = (all.match(item.after) || ['', ''])[1];
+
+            console.log('quote==', quote);
+            console.log('all==', all);
+            console.log('before==', before);
+            console.log('after==', after);
+
             if (pathRet.coolieBase64) {
-                return item.before + quote + ret.url + quote + item.after;
+                return before + quote + ret.url + quote + after;
             }
 
             var url = ret.url;
@@ -119,7 +128,7 @@ module.exports = function (file, options) {
                 progress.run(options.progressKey, ret.srcURL);
             }
 
-            return item.before + url + item.after;
+            return before + quote + url + quote + after;
         });
     });
 
