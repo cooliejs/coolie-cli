@@ -106,11 +106,6 @@ module.exports = function (file, options) {
             var before = (all.match(item.before) || ['', ''])[1];
             var after = (all.match(item.after) || ['', ''])[1];
 
-            console.log('quote==', quote);
-            console.log('all==', all);
-            console.log('before==', before);
-            console.log('after==', after);
-
             if (pathRet.coolieBase64) {
                 return before + quote + ret.url + quote + after;
             }
