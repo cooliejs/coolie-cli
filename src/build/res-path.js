@@ -61,11 +61,14 @@ module.exports = function (value, options) {
         });
         var resRelative = path.relative(options.destDirname, resFile);
         url = pathURI.joinHost('res', options.destHost, resRelative);
-        options.middleware.use({
+        url = options.middleware.exec({
             file: absFile,
             url: url,
             progress: 'post-resource'
-        });
+        }).url;
+        console.log('-------------------------')
+        console.log(url)
+        console.log('-------------------------')
     }
 
     var destURL = url + (options.base64 ? '' : pathRet.suffix);

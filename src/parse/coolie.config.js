@@ -94,14 +94,15 @@ module.exports = function (options) {
 
         if (args.length === 1) {
             middleware = args[0];
-            progress = '';
+            progress = null;
         }
 
         if (options.middleware) {
-            if (!typeis.Function(middleware) || !middleware.package) {
+            if (!typeis.Function(middleware)) {
                 debug.warn('invalid middleware', '不符合规范的 coolie 中间件');
                 debug.warn('coolie book', '相关 coolie 中间件开发规范，请参阅 ' + bookURL('/document/coolie-middleware/'));
                 debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-*` 为前缀');
+                process.exit(1);
             }
 
             options.middleware.use(function (options) {
