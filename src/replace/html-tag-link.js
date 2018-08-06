@@ -92,7 +92,8 @@ module.exports = function (file, options) {
             versionLength: options.versionLength,
             signCSS: options.signCSS,
             cleanCSSOptions: options.cleanCSSOptions,
-            mute: options.mute
+            mute: options.mute,
+            middleware: _options.middleware
         });
 
         if (!ret) {

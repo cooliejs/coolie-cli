@@ -70,6 +70,7 @@ var defaults = {
  * @param options.htmlMinifyOptions {Object} 压缩 html 配置
  * @param [options.mute=true] {Boolean} 是否静音
  * @param options.compatible {Boolean} 是否兼容模式
+ * @param options.middleware
  * @returns {Object}
  */
 module.exports = function (options) {
@@ -87,7 +88,8 @@ module.exports = function (options) {
         srcDirname: options.srcDirname,
         globOptions: options.globOptions,
         coolieConfigs: options.coolieConfigs,
-        srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
+        srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname,
+        middleware: options.middleware
     });
     var mainMap = parseMainRet.mainMap;
     var virtualMap = parseMainRet.virtualMap;
@@ -116,7 +118,8 @@ module.exports = function (options) {
     var chunkFileMap = parseChunk({
         chunk: options.chunk,
         srcDirname: options.srcDirname,
-        globOptions: options.globOptions
+        globOptions: options.globOptions,
+        middleware: options.middleware
     });
     // 独立模块
     var singleModuleMap = {};
@@ -148,7 +151,8 @@ module.exports = function (options) {
             mainIndex: mainIndex,
             mainLength: mainLength,
             mute: options.mute,
-            compatible: options.compatible
+            compatible: options.compatible,
+            middleware: options.middleware
         });
         var dependencies = buildMainRet.dependencies;
         var resList = buildMainRet.resList;
@@ -242,7 +246,8 @@ module.exports = function (options) {
             signType: 'js',
             bufferList: groupMeta.bufferList,
             versionList: groupMeta.md5List,
-            versionLength: options.versionLength
+            versionLength: options.versionLength,
+            middleware: options.middleware
         });
 
         chunkVersionMap[pathURI.removeVersion(ret.path)] = ret.version;
@@ -268,7 +273,8 @@ module.exports = function (options) {
             signType: 'js',
             bufferList: singleMeta.bufferList,
             versionList: singleMeta.md5List,
-            versionLength: options.versionLength
+            versionLength: options.versionLength,
+            middleware: options.middleware
         });
 
         if (asyncId) {

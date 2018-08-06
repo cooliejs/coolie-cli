@@ -35,6 +35,7 @@ var pathRE = /\//;
  * @param options.srcDirname {String} 构建目录
  * @param options.srcCoolieConfigNodeModulesDirname {String} node_modules 根目录
  * @param options.coolieConfigs {Object} coolie-configs 配置
+ * @param options.middleware
  * @returns {Array}
  */
 module.exports = function (file, options) {

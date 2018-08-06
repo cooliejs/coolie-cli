@@ -44,6 +44,7 @@ var wrapDefine = require('./wrap-define.js');
  * @param options.destDirname {String} 目标目录
  * @param options.destHost {String} 目标域
  * @param options.filter {Function} 过滤器
+ * @param options.middleware
  */
 var createURL = function (file, options) {
     var code = options.code;
@@ -60,7 +61,8 @@ var createURL = function (file, options) {
             version: true,
             versionLength: options.versionLength,
             copyPath: false,
-            logType: 0
+            logType: 0,
+            middleware: options.middleware
         });
     } else {
         var extname = path.extname(file);
@@ -119,6 +121,7 @@ var createURL = function (file, options) {
  * @param options.versionLength {Number} 版本号长度
  * @param [options.minifyResource] {Boolean} 是否压缩静态资源
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
+ * @param options.middleware
  * @returns {Object}
  */
 var wrapModuleDefine = function (file, ret, options) {
@@ -149,7 +152,8 @@ var wrapModuleDefine = function (file, ret, options) {
         id: id,
         deps: deps,
         factory: factory,
-        rem: false
+        rem: false,
+        middleware: options.middleware
     });
     ret.resList = ret.resList || [];
 
@@ -218,6 +222,7 @@ var defaults = {
  * @param [options.cleanCSSOptions] {Object} clean-css 配置
  * @param [options.uglifyJSOptions] {Object} uglify-js 配置
  * @param options.htmlMinifyOptions {Object} 压缩 html 配置
+ * @param options.middleware
  * @return {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
@@ -277,7 +282,8 @@ module.exports = function (file, options) {
                             destCSSDirname: null,
                             minifyResource: options.minifyResource,
                             replaceCSSResource: true,
-                            mute: options.mute
+                            mute: options.mute,
+                            middleware: options.middleware
                         });
                     };
                     var createURLRet = createURL(file, options2);
@@ -298,7 +304,8 @@ module.exports = function (file, options) {
                         destCSSDirname: null,
                         minifyResource: options.minifyResource,
                         replaceCSSResource: true,
-                        mute: options.mute
+                        mute: options.mute,
+                        middleware: options.middleware
                     });
                     code = base64.string(code, extname);
                     minifyCSSRet.code = code;
@@ -318,7 +325,8 @@ module.exports = function (file, options) {
                         destCSSDirname: null,
                         minifyResource: options.minifyResource,
                         replaceCSSResource: true,
-                        mute: options.mute
+                        mute: options.mute,
+                        middleware: options.middleware
                     });
                     return wrapModuleDefine(file, minifyCSSRet3, options);
             }
@@ -365,7 +373,8 @@ module.exports = function (file, options) {
                             uglifyJSOptions: options.uglifyJSOptions,
                             cleanCSSOptions: options.cleanCSSOptions,
                             replaceCSSResource: true,
-                            mute: options.mute
+                            mute: options.mute,
+                            middleware: options.middleware
                         });
                     };
                     var createURLRet3 = createURL(file, options2);
@@ -396,7 +405,8 @@ module.exports = function (file, options) {
                         uglifyJSOptions: options.uglifyJSOptions,
                         cleanCSSOptions: options.cleanCSSOptions,
                         replaceCSSResource: true,
-                        mute: options.mute
+                        mute: options.mute,
+                        middleware: options.middleware
                     });
                     code = base64.string(code, extname);
                     minifyHTMLRet.code = code;
@@ -426,7 +436,8 @@ module.exports = function (file, options) {
                         uglifyJSOptions: options.uglifyJSOptions,
                         cleanCSSOptions: options.cleanCSSOptions,
                         replaceCSSResource: true,
-                        mute: options.mute
+                        mute: options.mute,
+                        middleware: options.middleware
                     });
                     minifyHTMLRet2.resList = mergeRes(minifyHTMLRet2);
                     return wrapModuleDefine(file, minifyHTMLRet2, options);

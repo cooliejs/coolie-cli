@@ -132,7 +132,8 @@ module.exports = function (file, options) {
                         destCSSDirname: options.destCSSDirname,
                         minifyResource: options.minifyResource,
                         replaceCSSResource: options.replaceCSSResource,
-                        mute: options.mute
+                        mute: options.mute,
+                        middleware: options.middleware
                     });
                     cssCode = minifyCSSRet.code + '\n';
                     cssFileResMap[cssFile] = minifyCSSRet.resList;

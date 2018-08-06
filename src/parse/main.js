@@ -37,6 +37,7 @@ var defaults = {
  * @param options.srcDirname {String} 原始目录
  * @param options.coolieConfigs {String} coolie-configs.js 配置
  * @param options.srcCoolieConfigNodeModulesDirname {String} node_modules 根目录
+ * @param options.middleware
  */
 module.exports = function (options) {
     options = object.assign({}, defaults, options);
@@ -77,7 +78,8 @@ module.exports = function (options) {
                 async: true,
                 srcDirname: options.srcDirname,
                 coolieConfigs: options.coolieConfigs,
-                srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
+                srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname,
+                middleware: options.middleware
             });
 
             requireAsyncList = requireAsyncList.filter(function (meta) {
@@ -90,7 +92,8 @@ module.exports = function (options) {
                 async: false,
                 srcDirname: options.srcDirname,
                 coolieConfigs: options.coolieConfigs,
-                srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
+                srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname,
+                middleware: options.middleware
             });
 
             requireSyncList = requireSyncList.filter(function (meta) {

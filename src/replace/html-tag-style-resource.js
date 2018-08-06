@@ -82,7 +82,8 @@ module.exports = function (file, options) {
                     destHost: options.destHost,
                     destResourceDirname: options.destResourceDirname,
                     mute: options.mute,
-                    progressKey: options.progressKey
+                    progressKey: options.progressKey,
+                    middleware: options.middleware
                 });
 
                 styleCode = minifyCSSRet.code;

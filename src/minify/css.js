@@ -67,6 +67,7 @@ var cssminify = null;
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.replaceCSSResource] {Boolean} 是否替换 css 内引用文件
  * @param [options.progressKey] {String} 进度日志键
+ * @param options.middleware 中间件
  * @returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {
@@ -91,7 +92,8 @@ module.exports = function (file, options) {
                 destCSSDirname: options.destCSSDirname,
                 minifyResource: options.minifyResource,
                 mute: options.mute,
-                progressKey: options.progressKey
+                progressKey: options.progressKey,
+                middleware: options.middleware
             });
             code = replaceCSSResourceRet.code;
             resList = replaceCSSResourceRet.resList;

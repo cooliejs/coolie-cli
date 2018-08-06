@@ -111,7 +111,8 @@ module.exports = function (options) {
     var copiedList = buildCopy({
         srcDirname: srcDirname,
         destDirname: destDirname,
-        copy: configs.copy
+        copy: configs.copy,
+        middleware: middleware
     });
     if (!copiedList.length) {
         debug.ignore('copy files', 'no files are copied');
@@ -142,7 +143,8 @@ module.exports = function (options) {
         destAsyncModulesDirname: configs.destAsyncModulesDirname,
         htmlMinifyOptions: configs.htmlMinifyOptions,
         mute: true,
-        compatible: configs.compatible
+        compatible: configs.compatible,
+        middleware: middleware
     });
 
     // 4. 重写 coolie-config.js
@@ -161,7 +163,8 @@ module.exports = function (options) {
         versionMap: object.assign({}, buildAPPResult.chunkVersionMap, buildAPPResult.asyncVersionMap),
         destHost: configs.destHost,
         uglifyJSOptions: configs.uglifyJSOptions,
-        sign: true
+        sign: true,
+        middleware: middleware
     });
 
 

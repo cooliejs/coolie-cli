@@ -54,6 +54,7 @@ var defaults = {
  * @param options.signCSS
  * @param options.cleanCSSOptions
  * @param options.mute
+ * @param options.middleware
  * @returns {*}
  */
 module.exports = function (href, options) {
@@ -85,7 +86,8 @@ module.exports = function (href, options) {
                 destResourceDirname: options.destResourceDirname,
                 minifyResource: options.minifyResource,
                 replaceCSSResource: true,
-                mute: options.mute
+                mute: options.mute,
+                middleware: options.middleware
             });
             destCode = minifyCSSRet.code;
             resList = minifyCSSRet.resList;

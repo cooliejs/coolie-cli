@@ -58,6 +58,7 @@ var defaults = {
  * @param options.mainIndex {Number} 当前序号
  * @param options.mainLength {Number} 长度
  * @param options.compatible {Boolean} 是否兼容模式
+ * @param options.middleware
  * @returns {{dependencies: Object, resList: Array}}
  */
 module.exports = function (file, options) {
@@ -95,7 +96,8 @@ module.exports = function (file, options) {
             cleanCSSOptions: options.cleanCSSOptions,
             virtualMap: options.virtualMap,
             mute: options.mute,
-            compatible: options.compatible
+            compatible: options.compatible,
+            middleware: options.middleware
         });
 
         collection.each(ret.resList, function (index, res) {

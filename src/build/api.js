@@ -103,7 +103,8 @@ module.exports = function (options, middleware) {
             minifyResource: _options.minifyResource,
             versionLength: _options.versionLength,
             signCSS: _options.signCSS,
-            cleanCSSOptions: _options.cleanCSSOptions
+            cleanCSSOptions: _options.cleanCSSOptions,
+            middleware: _options.middleware
         });
     };
 

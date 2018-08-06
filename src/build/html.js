@@ -70,6 +70,7 @@ var defaults = {
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 引用资源
  * @param [options.mainVersionMap] {Object} 入口模块版本信息
  * @param [options.mute] {Boolean} 是否静音，隐藏多余日志的打印
+ * @param options.middleware
  * @returns {Object}
  */
 module.exports = function (options) {

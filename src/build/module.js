@@ -70,6 +70,7 @@ var defaults = {
  * @param options.virtualMap {Object} 虚拟
  * @param options.mute {Boolean} 是否静音
  * @param options.compatible {Boolean} 是否兼容模式
+ * @param options.middleware
  * @returns {{dependencies: Array, code: String, md5: String}}
  */
 module.exports = function (file, options) {
@@ -95,7 +96,8 @@ module.exports = function (file, options) {
         async: true,
         srcDirname: options.srcDirname,
         srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname,
-        coolieConfigs: options.coolieConfigs
+        coolieConfigs: options.coolieConfigs,
+        middleware: options.middleware
     }) : [];
     var asyncOutName2IdMap = {};
 
@@ -112,7 +114,8 @@ module.exports = function (file, options) {
         async: false,
         srcDirname: options.srcDirname,
         srcCoolieConfigNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname,
-        coolieConfigs: options.coolieConfigs
+        coolieConfigs: options.coolieConfigs,
+        middleware: options.middleware
     }) : [];
     var syncOutName2IdMap = {};
     var syncDepFileMap = {};
@@ -167,7 +170,8 @@ module.exports = function (file, options) {
                 deps: depGidList,
                 factory: code,
                 rem: true,
-                compatible: options.compatible
+                compatible: options.compatible,
+                middleware: options.middleware
             });
             break;
 
@@ -187,7 +191,8 @@ module.exports = function (file, options) {
                 cleanCSSOptions: options.cleanCSSOptions,
                 uglifyJSOptions: options.uglifyJSOptions,
                 htmlMinifyOptions: options.htmlMinifyOptions,
-                mute: options.mute
+                mute: options.mute,
+                middleware: options.middleware
             });
             code = replaceModuleWrapperRet.code;
             resList = replaceModuleWrapperRet.resList;
