@@ -77,7 +77,7 @@ var minifyJSMap = {};
  * @returns {Object}
  */
 module.exports = function (file, options) {
-    options = object.assign(true, {}, defaults, options);
+    options = object.assign({}, defaults, options);
     var code = options.code;
     var mainList = [];
     var jsList = [];

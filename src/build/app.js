@@ -73,7 +73,7 @@ var defaults = {
  * @returns {Object}
  */
 module.exports = function (options) {
-    options = object.assign(true, {}, defaults, options);
+    options = object.assign({}, defaults, options);
 
     var mainVersionMap = {};
     var chunkVersionMap = {};

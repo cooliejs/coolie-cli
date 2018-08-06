@@ -31,7 +31,7 @@ var defaults = {
  * @returns {{}}
  */
 module.exports = function (options) {
-    options = object.assign(true, {}, defaults, options);
+    options = object.assign( {}, defaults, options);
     var chunkFileMap = {};
 
     path.glob(options.chunk, {

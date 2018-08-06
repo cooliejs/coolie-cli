@@ -60,10 +60,9 @@ var defaults = {
  * @returns {Object}
  */
 module.exports = function (file, options) {
-    options = object.assign(true, {}, defaults, options);
+    options = object.assign({}, defaults, options);
     var code = options.code;
     var jsList = [];
-
 
     code = parseHTML(code).match({
         tag: 'script'
@@ -88,7 +87,14 @@ module.exports = function (file, options) {
             return node;
         }
 
-        var ret = buildJSPath(node.attrs.src, {
+        var src = node.attrs.src;
+        src = options.middleware.exec({
+            file: file,
+            progress: 'pre-static',
+            type: 'js',
+            path: src
+        }).path || src;
+        var ret = buildJSPath(src, {
             file: file,
             srcDirname: options.srcDirname,
             destDirname: options.destDirname,
@@ -98,7 +104,8 @@ module.exports = function (file, options) {
             uglifyJSOptions: options.uglifyJSOptions,
             versionLength: options.versionLength,
             signJS: options.signJS,
-            mute: options.mute
+            mute: options.mute,
+            middleware: options.middleware
         });
 
         if (!ret) {

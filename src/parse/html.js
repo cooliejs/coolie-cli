@@ -40,6 +40,7 @@ var REG_DOUBLE_QUOTE_S = /\\"/g;
  * @param options.global
  * @param options.ignoreCase
  * @param options.nest
+ * @param options.middleware
  * @returns {{reg: RegExp, options: Object}}
  */
 var buildTagReg = function (tagName, options) {
@@ -306,7 +307,7 @@ var renderHTML = function (node) {
  * 转换 HTML
  * @param matched
  * @param transform
- * @returns {XML|void|string|*}
+ * @returns {string}
  */
 var transformHTML = function (matched, transform) {
     // transform
