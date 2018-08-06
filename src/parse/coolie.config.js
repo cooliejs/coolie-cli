@@ -542,6 +542,8 @@ module.exports = function (options) {
     check.chunk();
     check.async();
 
+    // 先执行一个空的中间件，以便动态的中间件能够被执行
+    options.middleware.exec('-');
     options.middleware.exec({
         progress: 'post-init',
         configs: configs
