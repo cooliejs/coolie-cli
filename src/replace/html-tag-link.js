@@ -93,7 +93,7 @@ module.exports = function (file, options) {
             signCSS: options.signCSS,
             cleanCSSOptions: options.cleanCSSOptions,
             mute: options.mute,
-            middleware: _options.middleware
+            middleware: options.middleware
         });
 
         if (!ret) {
