@@ -127,7 +127,8 @@ module.exports = function (file, options) {
                 destResourceDirname: options.destResourceDirname,
                 destHost: options.destHost,
                 mute: options.mute,
-                base64: pathRet.coolieBase64
+                base64: pathRet.coolieBase64,
+                middleware: options.middleware
             });
 
             if (!ret) {
