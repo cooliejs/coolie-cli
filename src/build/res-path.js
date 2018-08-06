@@ -64,11 +64,9 @@ module.exports = function (value, options) {
         url = options.middleware.exec({
             file: absFile,
             url: url,
-            progress: 'post-resource'
+            type: 'resource',
+            progress: 'post-static'
         }).url;
-        console.log('-------------------------')
-        console.log(url)
-        console.log('-------------------------')
     }
 
     var destURL = url + (options.base64 ? '' : pathRet.suffix);

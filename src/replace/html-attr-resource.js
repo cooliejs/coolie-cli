@@ -115,7 +115,8 @@ module.exports = function (file, options) {
             var resource = node.attrs[attr];
             resource = options.middleware.exec({
                 file: file,
-                progress: 'pre-resource',
+                progress: 'pre-static',
+                type: 'resource',
                 path: resource
             }).path;
             var pathRet = pathURI.parseURI2Path(resource);
