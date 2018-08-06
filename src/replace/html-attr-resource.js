@@ -118,7 +118,7 @@ module.exports = function (file, options) {
                 progress: 'pre-static',
                 type: 'resource',
                 path: resource
-            }).path;
+            }).path || resource;
             var pathRet = pathURI.parseURI2Path(resource);
             var ret = buildResPath(resource, {
                 file: file,

@@ -79,7 +79,8 @@ module.exports = function (file, options) {
             destResourceDirname: options.destResourceDirname,
             mute: options.mute,
             base64: Boolean(node.attrs[COOLIE_BASE64]),
-            progressKey: options.progressKey
+            progressKey: options.progressKey,
+            middleware: options.middleware
         });
 
         styleCode = replaceCSSResourceRet.code;

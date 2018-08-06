@@ -31,6 +31,15 @@ var defaults = {
  * 资源路径
  * @param value
  * @param options
+ * @param options.file
+ * @param options.srcDirname
+ * @param options.destName
+ * @param options.base64
+ * @param options.type
+ * @param options.middleware
+ * @param options.destResourceDirname
+ * @param options.mute
+ * @param options.versionLength
  * @returns {*}
  */
 module.exports = function (value, options) {
@@ -64,9 +73,9 @@ module.exports = function (value, options) {
         url = options.middleware.exec({
             file: absFile,
             url: url,
-            type: 'resource',
+            type: options.type || 'resource',
             progress: 'post-static'
-        }).url;
+        }).url || url;
     }
 
     var destURL = url + (options.base64 ? '' : pathRet.suffix);

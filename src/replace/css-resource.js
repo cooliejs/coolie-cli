@@ -63,6 +63,7 @@ var defaults = {
  * @param [options.destCSSDirname] {String} 目标样式文件目录，如果存在，则资源相对路径
  * @param [options.minifyResource] {Boolean} 压缩资源文件
  * @param [options.progressKey] {String} 进度日志键
+ * @param [options.middleware] {Object} 中间件
  * @returns {Object}
  */
 module.exports = function (file, options) {
@@ -78,7 +79,12 @@ module.exports = function (file, options) {
             quote = quote === "'" || quote === '"' ? quote : '';
             quote = item.quote ? quote : '';
             resource = resource.replace(REG_QUOTE, '');
-
+            resource = options.middleware.exec({
+                file: file,
+                path: resource,
+                type: 'css',
+                progress: 'pre-static'
+            }).path || resource;
             var pathRet = pathURI.parseURI2Path(resource);
             var ret = buildResPath(resource, {
                 file: file,
@@ -88,7 +94,9 @@ module.exports = function (file, options) {
                 destResourceDirname: options.destResourceDirname,
                 destHost: options.destHost,
                 mute: options.mute,
-                base64: pathRet.coolieBase64
+                base64: pathRet.coolieBase64,
+                type: 'css',
+                middleware: options.middleware
             });
 
             if (!ret) {

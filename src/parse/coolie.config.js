@@ -110,7 +110,7 @@ module.exports = function (options) {
                     return options;
                 }
 
-                return middleware(options) || options;
+                return middleware.call(coolie, options) || options;
             });
         }
 
