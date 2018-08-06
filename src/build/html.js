@@ -135,7 +135,8 @@ module.exports = function (options) {
             signJS: false,
             signCSS: false,
             mute: options.mute,
-            progressKey: progressKey
+            progressKey: progressKey,
+            middleware: options.middleware
         });
 
         var relative = path.relative(options.srcDirname, htmlFile);

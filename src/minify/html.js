@@ -109,6 +109,7 @@ var htmlMinifyDefaults = {
  * @param [options.signCSS] {Boolean} 是否签名 css 文件
  * @param [options.mute] {Boolean} 是否静音
  * @param [options.progressKey] {String} 日期键
+ * @param [options.middleware] {Object} 中间件
  * @returns {Object}
  */
 var minifyHTML = function (file, options) {
@@ -194,7 +195,8 @@ var minifyHTML = function (file, options) {
         destResourceDirname: options.destResourceDirname,
         minifyResource: options.minifyResource,
         mute: options.mute,
-        progressKey: options.progressKey
+        progressKey: options.progressKey,
+        middleware: options.middleware
     });
 
     code = replaceHTMLAttrResourceRet.code;
@@ -217,7 +219,8 @@ var minifyHTML = function (file, options) {
         uglifyJSOptions: options.uglifyJSOptions,
         signJS: options.signJS,
         mute: options.mute,
-        progressKey: options.progressKey
+        progressKey: options.progressKey,
+        middleware: options.middleware
     });
 
     code = replaceHTMLTagScriptCoolieRet.code;
@@ -238,7 +241,8 @@ var minifyHTML = function (file, options) {
         uglifyJSOptions: options.uglifyJSOptions,
         signJS: options.signJS,
         mute: options.mute,
-        progressKey: options.progressKey
+        progressKey: options.progressKey,
+        middleware: options.middleware
     });
 
     code = replaceHTMLTagScriptAttrRet.code;
@@ -253,7 +257,8 @@ var minifyHTML = function (file, options) {
         uglifyJSOptions: options.uglifyJSOptions,
         signJS: options.signJS,
         mute: options.mute,
-        progressKey: options.progressKey
+        progressKey: options.progressKey,
+        middleware: options.middleware
     });
 
     code = replaceHTMLTagScriptContentRet.code;
@@ -273,7 +278,8 @@ var minifyHTML = function (file, options) {
         cleanCSSOptions: options.cleanCSSOptions,
         signCSS: options.signCSS,
         mute: options.mute,
-        progressKey: options.progressKey
+        progressKey: options.progressKey,
+        middleware: options.middleware
     });
 
     code = replaceHTMLTagLinkRet.code;
@@ -304,7 +310,8 @@ var minifyHTML = function (file, options) {
         signJS: options.signJS,
         signCSS: options.signCSS,
         mute: options.mute,
-        progressKey: options.progressKey
+        progressKey: options.progressKey,
+        middleware: options.middleware
     });
 
     code = replaceHTMLCoolieGroupRet.code;
@@ -324,7 +331,8 @@ var minifyHTML = function (file, options) {
         cleanCSSOptions: options.cleanCSSOptions,
         minifyResource: options.minifyResource,
         mute: options.mute,
-        progressKey: options.progressKey
+        progressKey: options.progressKey,
+        middleware: options.middleware
     });
 
     code = replaceHTMLTagStyleResourceRet.code;
@@ -341,7 +349,8 @@ var minifyHTML = function (file, options) {
         destResourceDirname: options.destResourceDirname,
         minifyResource: options.minifyResource,
         mute: options.mute,
-        progressKey: options.progressKey
+        progressKey: options.progressKey,
+        middleware: options.middleware
     });
     code = replaceHTMLAttrStyleResourceRet.code;
     resList = resList.concat(replaceHTMLAttrStyleResourceRet.resList);

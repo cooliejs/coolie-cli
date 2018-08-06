@@ -70,6 +70,7 @@ var defaults = {
  * @param [options.minifyResource] {Boolean} 是否压缩资源文件
  * @param [options.mute] {Boolean} 是否静音
  * @param [options.progressKey] {String} 进度日志键
+ * @param [options.middleware] {Object} 中间件
  * @returns {Object}
  */
 module.exports = function (file, options) {
@@ -112,6 +113,11 @@ module.exports = function (file, options) {
             }
 
             var resource = node.attrs[attr];
+            resource = options.middleware.exec({
+                file: file,
+                progress: 'pre-resource',
+                path: resource
+            }).path;
             var pathRet = pathURI.parseURI2Path(resource);
             var ret = buildResPath(resource, {
                 file: file,

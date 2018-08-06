@@ -51,6 +51,7 @@ var defaults = {
  * @param [options.mute] {Boolean} 是否静音
  * @returns {{code: String, cssList: Array}}
  * @param [options.progressKey] {String} 进度日志键
+ * @param [options.middleware] {Object} 中间件
  */
 module.exports = function (file, options) {
     options = object.assign({}, defaults, options);

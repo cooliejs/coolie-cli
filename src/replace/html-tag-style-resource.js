@@ -48,6 +48,7 @@ var defaults = {
  * @param [options.replaceCSSResource=true] {Boolean} 是否替换 css 内的资源
  * @param [options.mute=false] {Boolean} 是否静音
  * @param [options.progressKey] {String} 进度日志键
+ * @param [options.middleware] {Object} 中间件
  * @returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {

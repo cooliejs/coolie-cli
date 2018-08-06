@@ -48,6 +48,7 @@ var defaults = {
  * @param [options.minifyCSS] {Boolean} 是否压缩 CSS
  * @param [options.mute] {Boolean} 是否静音
  * @param [options.progressKey] {String} 进度日志键
+ * @param [options.middleware] {Object} 中间件
  * returns {{code: String, resList: Array}}
  */
 module.exports = function (file, options) {

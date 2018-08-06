@@ -73,6 +73,7 @@ var minifyJSMap = {};
  * @param [options.signJS] {Boolean} 是否签名 JS 文件
  * @param [options.mute] {Boolean} 是否静音
  * @param [options.progressKey] {String} 进度日志键
+ * @param [options.middleware] {Object} 中间件
  * @returns {Object}
  */
 module.exports = function (file, options) {
