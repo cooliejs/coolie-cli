@@ -14,6 +14,7 @@ var path = require('blear.node.path');
 var collection = require('blear.utils.collection');
 var object = require('blear.utils.object');
 var typeis = require('blear.utils.typeis');
+var access = require('blear.utils.access');
 var debug = require('blear.node.debug');
 var url = require('url');
 var console = require('blear.node.console');
@@ -84,10 +85,18 @@ module.exports = function (options) {
 
     /**
      * coolie 中间件
+     * @param [progress] {String}
      * @param middleware {Function}
      * @returns {{coolie}}
      */
-    coolie.use = function (middleware) {
+    coolie.use = function (progress, middleware) {
+        var args = access.args(arguments);
+
+        if (args.length === 1) {
+            middleware = args[0];
+            progress = '';
+        }
+
         if (options.middleware) {
             if (!typeis.Function(middleware) || !middleware.package) {
                 debug.warn('invalid middleware', '不符合规范的 coolie 中间件');
@@ -95,7 +104,13 @@ module.exports = function (options) {
                 debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-*` 为前缀');
             }
 
-            options.middleware.use(middleware);
+            options.middleware.use(function (options) {
+                if (progress && options.progress !== progress) {
+                    return options;
+                }
+
+                return middleware(options) || options;
+            });
         }
 
         return coolie;
