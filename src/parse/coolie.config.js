@@ -542,6 +542,11 @@ module.exports = function (options) {
     check.chunk();
     check.async();
 
+    options.middleware.exec({
+        progress: 'post-init',
+        configs: configs
+    });
+
     debug.success('coolie config', configs.configPath);
     debug.success('src dirname', configs.srcDirname);
     debug.success('dest dirname', configs.destDirname);
