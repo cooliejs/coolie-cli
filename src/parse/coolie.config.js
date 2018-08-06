@@ -89,31 +89,15 @@ module.exports = function (options) {
      * @param middleware {Function}
      * @returns {{coolie}}
      */
-    coolie.use = function (progress, middleware) {
-        var args = access.args(arguments);
-
-        if (args.length === 1) {
-            middleware = args[0];
-            progress = null;
+    coolie.use = function (middleware) {
+        if (!typeis.Function(middleware)) {
+            debug.warn('invalid middleware', '不符合规范的 coolie 中间件');
+            debug.warn('coolie book', '相关 coolie 中间件开发规范，请参阅 ' + bookURL('/document/coolie-middleware/'));
+            debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-*` 为前缀');
+            process.exit(1);
         }
 
-        if (options.middleware) {
-            if (!typeis.Function(middleware)) {
-                debug.warn('invalid middleware', '不符合规范的 coolie 中间件');
-                debug.warn('coolie book', '相关 coolie 中间件开发规范，请参阅 ' + bookURL('/document/coolie-middleware/'));
-                debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-*` 为前缀');
-                process.exit(1);
-            }
-
-            options.middleware.use(function (options) {
-                if (progress && options.progress !== progress) {
-                    return options;
-                }
-
-                return middleware.call(coolie, options) || options;
-            });
-        }
-
+        options.middleware.use(middleware);
         return coolie;
     };
 
@@ -334,6 +318,13 @@ module.exports = function (options) {
 
         var coolieConfigJSDir = path.dirname(coolieConfigJSFile);
 
+        mainModulesDir = options.middleware.exec({
+            file: srcCoolieConfigJSPath,
+            path: mainModulesDir,
+            type: 'js',
+            progress: 'pre-static'
+        }).path;
+
         try {
             if (pathURI.isRelativeRoot(mainModulesDir)) {
                 mainModulesDir = path.join(srcDirname, mainModulesDir);
@@ -345,6 +336,7 @@ module.exports = function (options) {
             debug.error('coolie-config.js', err.message);
             return process.exit(1);
         }
+
 
         var toMain = path.relative(srcDirname, mainModulesDir);
 
@@ -532,6 +524,7 @@ module.exports = function (options) {
     };
 
 
+    // ====================================
     check.file();
     check.dest();
     check.js();
@@ -542,8 +535,6 @@ module.exports = function (options) {
     check.chunk();
     check.async();
 
-    // 先执行一个空的中间件，以便动态的中间件能够被执行
-    options.middleware.exec('-');
     options.middleware.exec({
         progress: 'post-init',
         configs: configs

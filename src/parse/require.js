@@ -42,8 +42,14 @@ module.exports = function (file, options) {
     var requireList = [];
     var nodeList = parseRequireNodeList(file, code, options.async);
     var coolieConfigs = options.coolieConfigs;
-    var nodeModuleMainPath = coolieConfigs.nodeModuleMainPath;
 
+    if (!coolieConfigs) {
+        console.log();
+        debug.error('parse require', '工程中使用了模块化脚本，但配置文件里未显示声明`coolie-config.js`配置');
+        process.exit(1);
+    }
+
+    var nodeModuleMainPath = coolieConfigs.nodeModuleMainPath;
     nodeList.forEach(function (node) {
         var async = node.expression.property === 'async';
         var arg0 = node.args[0];
@@ -96,7 +102,7 @@ module.exports = function (file, options) {
             var nodeModulePath = nodeModuleMainPath;
 
             // require('node-module/path/to/module.js');
-            if(pathRE.test(name)) {
+            if (pathRE.test(name)) {
                 var com = name.split(pathRE);
                 nodeModuleDirname = com.shift();
                 nodeModulePath = com.join('/');
@@ -114,7 +120,7 @@ module.exports = function (file, options) {
                     reqPkg = require(pkgJSONFile);
                 } catch (err) {
                     console.log();
-                    debug.error('node_module',file + '\n依赖的`' + name + '` 模块描述文件不存在或语法错误');
+                    debug.error('node_module', file + '\n依赖的`' + name + '` 模块描述文件不存在或语法错误');
                     debug.error('package.json', pkgJSONFile);
                     debug.warn('warning', '模块路径指南 <' + bookURL('/introduction/module-path/') + '>');
                     return process.exit(1);
