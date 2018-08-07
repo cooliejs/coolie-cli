@@ -53,9 +53,9 @@ module.exports = function (options, callback) {
     var url = urlUtil.join(options.git, options.registry, options.repository, 'archive', options.branch + '.zip');
     debug.ignore('git download', url);
     console.loading();
-    var tempFile = path.join(os.tmpDir(), random.guid());
+    var tempFile = path.join(os.tmpdir(), random.guid());
     var filename = options.repository + '-' + options.branch;
-    var dirname = options.dirname || path.join(os.tmpDir(), random.guid());
+    var dirname = options.dirname || path.join(os.tmpdir(), random.guid());
     var unzipPath = path.join(dirname, filename);
     var ws = fse.createWriteStream(tempFile);
     var complete = fun.once(function (err) {
