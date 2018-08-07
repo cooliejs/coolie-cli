@@ -536,7 +536,7 @@ module.exports = function (options) {
     check.async();
 
     options.middleware.exec({
-        progress: 'post-init',
+        progress: 'post-config',
         configs: configs
     });
 
