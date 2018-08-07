@@ -79,12 +79,15 @@ module.exports = function (file, options) {
             quote = quote === "'" || quote === '"' ? quote : '';
             quote = item.quote ? quote : '';
             resource = resource.replace(REG_QUOTE, '');
-            resource = options.middleware.exec({
-                file: file,
-                path: resource,
-                type: 'css',
-                progress: 'pre-static'
-            }).path || resource;
+            if (options.middleware) {
+                resource = options.middleware.exec({
+                    file: file,
+                    path: resource,
+                    type: 'css',
+                    progress: 'pre-static'
+                }).path || resource;
+            }
+
             var pathRet = pathURI.parseURI2Path(resource);
             var ret = buildResPath(resource, {
                 file: file,

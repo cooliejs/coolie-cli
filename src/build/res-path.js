@@ -70,12 +70,15 @@ module.exports = function (value, options) {
         });
         var resRelative = path.relative(options.destDirname, resFile);
         url = pathURI.joinHost('res', options.destHost, resRelative);
-        url = options.middleware.exec({
-            file: absFile,
-            url: url,
-            type: options.type || 'resource',
-            progress: 'post-static'
-        }).url || url;
+
+        if (options.middleware) {
+            url = options.middleware.exec({
+                file: absFile,
+                url: url,
+                type: options.type || 'resource',
+                progress: 'post-static'
+            }).url || url;
+        }
     }
 
     var destURL = url + (options.base64 ? '' : pathRet.suffix);

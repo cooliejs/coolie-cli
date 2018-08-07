@@ -113,12 +113,16 @@ module.exports = function (file, options) {
             }
 
             var resource = node.attrs[attr];
-            resource = options.middleware.exec({
-                file: file,
-                progress: 'pre-static',
-                type: 'resource',
-                path: resource
-            }).path || resource;
+
+            if (options.middleware) {
+                resource = options.middleware.exec({
+                    file: file,
+                    progress: 'pre-static',
+                    type: 'resource',
+                    path: resource
+                }).path || resource;
+            }
+
             var pathRet = pathURI.parseURI2Path(resource);
             var ret = buildResPath(resource, {
                 file: file,

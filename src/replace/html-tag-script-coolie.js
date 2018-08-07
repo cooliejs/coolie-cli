@@ -106,12 +106,15 @@ module.exports = function (file, options) {
         }
 
         var src = node.attrs.src;
-        src = options.middleware.exec({
-            file: file,
-            progress: 'pre-static',
-            type: 'js',
-            path: src
-        }).path || src;
+        if (options.middleware) {
+            src = options.middleware.exec({
+                file: file,
+                progress: 'pre-static',
+                type: 'js',
+                path: src
+            }).path || src;
+        }
+
         // src 是否静态路径
         var isStaticSrc = pathURI.isURL(src);
 
@@ -137,12 +140,15 @@ module.exports = function (file, options) {
             return process.exit(1);
         }
 
-        dataMain = options.middleware.exec({
-            file: file,
-            progress: 'pre-static',
-            type: 'js',
-            path: dataMain
-        }).path || dataMain;
+        if (options.middleware) {
+            dataMain = options.middleware.exec({
+                file: file,
+                progress: 'pre-static',
+                type: 'js',
+                path: dataMain
+            }).path || dataMain;
+        }
+
         var mainPath = path.join(options.srcCoolieConfigMainModulesDirname, dataMain);
         var mainVersion = options.mainVersionMap[mainPath];
 

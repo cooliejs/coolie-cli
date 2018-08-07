@@ -74,12 +74,15 @@ module.exports = function (file, options) {
         }
 
         var href = node.attrs.href;
-        href = options.middleware.exec({
-            file: file,
-            progress: 'pre-static',
-            type: 'css',
-            path: href
-        }).path || href;
+        if (options.middleware) {
+            href = options.middleware.exec({
+                file: file,
+                progress: 'pre-static',
+                type: 'css',
+                path: href
+            }).path || href;
+        }
+
         var ret = buildCSSPath(href, {
             file: file,
             srcDirname: options.srcDirname,

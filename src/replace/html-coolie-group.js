@@ -111,12 +111,15 @@ module.exports = function (file, options) {
             }
 
             coolieCode.replace(REG_LINK, function (source, quote, href) {
-                href = options.middleware.exec({
-                    file: file,
-                    progress: 'pre-static',
-                    type: 'css',
-                    path: href
-                }).path || href;
+                if (options.middleware) {
+                    href = options.middleware.exec({
+                        file: file,
+                        progress: 'pre-static',
+                        type: 'css',
+                        path: href
+                    }).path || href;
+                }
+
                 var cssFile = pathURI.toAbsoluteFile(href, file, options.srcDirname);
                 var cssCode = reader(cssFile, ENCODING, file);
 
@@ -193,12 +196,15 @@ module.exports = function (file, options) {
             }
 
             coolieCode.replace(REG_SCRIPT, function (source, quote, src) {
-                src = options.middleware.exec({
-                    file: file,
-                    progress: 'pre-static',
-                    type: 'js',
-                    path: src
-                }).path || src;
+                if (options.middleware) {
+                    src = options.middleware.exec({
+                        file: file,
+                        progress: 'pre-static',
+                        type: 'js',
+                        path: src
+                    }).path || src;
+                }
+
                 var jsFile = pathURI.toAbsoluteFile(src, file, options.srcDirname);
                 var jsCode = reader(jsFile, ENCODING, file);
 

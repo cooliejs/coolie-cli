@@ -88,12 +88,15 @@ module.exports = function (file, options) {
         }
 
         var src = node.attrs.src;
-        src = options.middleware.exec({
-            file: file,
-            progress: 'pre-static',
-            type: 'js',
-            path: src
-        }).path || src;
+        if (options.middleware) {
+            src = options.middleware.exec({
+                file: file,
+                progress: 'pre-static',
+                type: 'js',
+                path: src
+            }).path || src;
+        }
+
         var ret = buildJSPath(src, {
             file: file,
             srcDirname: options.srcDirname,

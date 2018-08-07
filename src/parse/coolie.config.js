@@ -318,12 +318,14 @@ module.exports = function (options) {
 
         var coolieConfigJSDir = path.dirname(coolieConfigJSFile);
 
-        mainModulesDir = options.middleware.exec({
-            file: srcCoolieConfigJSPath,
-            path: mainModulesDir,
-            type: 'js',
-            progress: 'pre-static'
-        }).path;
+        if (options.middleware) {
+            mainModulesDir = options.middleware.exec({
+                file: srcCoolieConfigJSPath,
+                path: mainModulesDir,
+                type: 'js',
+                progress: 'pre-static'
+            }).path;
+        }
 
         try {
             if (pathURI.isRelativeRoot(mainModulesDir)) {
@@ -535,10 +537,12 @@ module.exports = function (options) {
     check.chunk();
     check.async();
 
-    options.middleware.exec({
-        progress: 'post-config',
-        configs: configs
-    });
+    if (options.middleware) {
+        options.middleware.exec({
+            progress: 'post-config',
+            configs: configs
+        });
+    }
 
     debug.success('coolie config', configs.configPath);
     debug.success('src dirname', configs.srcDirname);
