@@ -273,6 +273,7 @@ module.exports = function (options) {
     check._coolieConfigJS = function () {
         var coolieConfigs = coolieConfigRuntime(coolieConfigJSFile);
         var mainModulesDir = coolieConfigs.mainModulesDir;
+        var nodeModulesDir = coolieConfigs.nodeModulesDir;
 
         if (coolieConfigs.mode === 'CJS') {
             configs.compatible = false;
@@ -316,7 +317,7 @@ module.exports = function (options) {
             return process.exit(1);
         }
 
-        var coolieConfigJSDir = path.dirname(coolieConfigJSFile);
+        var srcCoolieConfigJSDirname = path.dirname(coolieConfigJSFile);
 
         if (options.middleware) {
             mainModulesDir = options.middleware.exec({
@@ -325,22 +326,28 @@ module.exports = function (options) {
                 type: 'js',
                 progress: 'pre-static'
             }).path;
+            nodeModulesDir = options.middleware.exec({
+                file: srcCoolieConfigJSPath,
+                path: nodeModulesDir,
+                type: 'js',
+                progress: 'pre-static'
+            }).path;
         }
 
+        var srcCoolieConfigMainModulesDirname;
         try {
             if (pathURI.isRelativeRoot(mainModulesDir)) {
-                mainModulesDir = path.join(srcDirname, mainModulesDir);
+                srcCoolieConfigMainModulesDirname = path.join(srcDirname, mainModulesDir);
             } else {
-                mainModulesDir = path.join(coolieConfigJSDir, mainModulesDir);
+                srcCoolieConfigMainModulesDirname = path.join(srcCoolieConfigJSDirname, mainModulesDir);
             }
         } catch (err) {
-            debug.error('coolie-config.js', coolieConfigJSDir);
+            debug.error('coolie-config.js', srcCoolieConfigJSDirname);
             debug.error('coolie-config.js', err.message);
             return process.exit(1);
         }
 
-
-        var toMain = path.relative(srcDirname, mainModulesDir);
+        var toMain = path.relative(srcDirname, srcCoolieConfigMainModulesDirname);
 
         if (/^\.\.\//.test(toMain)) {
             debug.error('coolie-config', 'coolie `mainModulesDir` path must be under ' + srcDirname +
@@ -348,14 +355,15 @@ module.exports = function (options) {
             process.exit(1);
         }
 
-        configs.coolieConfigMainModulesDir = coolieConfigs.mainModulesDir;
-        configs.coolieConfigNodeModulesDir = coolieConfigs.nodeModulesDir;
-        configs.srcCoolieConfigMainModulesDirname = mainModulesDir;
+        configs.coolieConfigMainModulesDir = mainModulesDir;
+        configs.coolieConfigNodeModulesDir = nodeModulesDir;
+        configs.srcCoolieConfigJSDirname = srcCoolieConfigJSDirname;
+        configs.srcCoolieConfigMainModulesDirname = srcCoolieConfigMainModulesDirname;
 
-        if (pathURI.isRelativeFile(coolieConfigs.nodeModulesDir)) {
-            configs.srcCoolieConfigNodeModulesDirname = path.join(mainModulesDir, coolieConfigs.nodeModulesDir);
+        if (pathURI.isRelativeFile(nodeModulesDir)) {
+            configs.srcCoolieConfigNodeModulesDirname = path.join(srcCoolieConfigJSDirname, nodeModulesDir);
         } else {
-            configs.srcCoolieConfigNodeModulesDirname = path.join(srcDirname, coolieConfigs.nodeModulesDir);
+            configs.srcCoolieConfigNodeModulesDirname = path.join(srcDirname, nodeModulesDir);
         }
 
         configs.destMainModulesDirname = path.join(configs.destDirname, configs.js.dest, MAIN_NAME);
