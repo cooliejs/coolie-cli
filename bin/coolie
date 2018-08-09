@@ -117,7 +117,7 @@ command.if('demo', function (args, names) {
     }
 
     if (!names.length) {
-        debug.warn('coolie tips', 'try `coolie demo 1`');
+        debug.warn('coolie tips', '使用示例 1：`coolie demo 1`');
         return process.exit(1);
     }
 
