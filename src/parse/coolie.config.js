@@ -85,19 +85,31 @@ module.exports = function (options) {
 
     /**
      * coolie 中间件
-     * @param [progress] {String}
      * @param middleware {Function}
      * @returns {{coolie}}
      */
-    coolie.use = function (middleware) {
+    coolie.use = function (middleware/*arguments*/) {
         if (!typeis.Function(middleware)) {
-            debug.warn('invalid middleware', '不符合规范的 coolie 中间件');
+            debug.error('coolie middleware', '不符合规范的 coolie 中间件');
             debug.warn('coolie book', '相关 coolie 中间件开发规范，请参阅 ' + bookURL('/document/coolie-middleware/'));
-            debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-*` 为前缀');
+            debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-mid-*` 为前缀');
             process.exit(1);
         }
 
-        options.middleware.use(middleware);
+        var args = access.args(arguments);
+        args.shift();
+        debug.success('coolie middleware', middleware.package && middleware.package.name || '未知');
+        var fn = middleware.apply(coolie, args);
+        options.middleware.use(function (options) {
+            try {
+                return fn.call(coolie, options) || options;
+            } catch (err) {
+                debug.error('coolie middleware', '不符合规范的 coolie 中间件');
+                debug.warn('coolie book', '相关 coolie 中间件开发规范，请参阅 ' + bookURL('/document/coolie-middleware/'));
+                debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-mid-*` 为前缀');
+                process.exit(1);
+            }
+        });
         return coolie;
     };
 

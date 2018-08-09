@@ -90,7 +90,7 @@ module.exports = function (options) {
 
     // 1. 分析配置文件
     console.log();
-    debug.primary('step ' + (++stepIndex) + '/' + stepLength, 'parse coolie-cli profile');
+    debug.primary('step ' + (++stepIndex) + '/' + stepLength, '解析配置');
     /**
      * 配置
      * @type {{js: Object, dest: Object, resource: Object, html: Object}}
@@ -107,7 +107,7 @@ module.exports = function (options) {
 
     // 2. 复制文件
     console.log();
-    debug.primary('step ' + (++stepIndex) + '/' + stepLength, 'copy files');
+    debug.primary('step ' + (++stepIndex) + '/' + stepLength, '复制文件');
     var copiedList = buildCopy({
         srcDirname: srcDirname,
         destDirname: destDirname,
@@ -115,13 +115,13 @@ module.exports = function (options) {
         middleware: middleware
     });
     if (!copiedList.length) {
-        debug.ignore('copy files', 'no files are copied');
+        debug.ignore('copy files', '无文件可以被复制');
     }
 
 
     // 3. 构建入口文件
     console.log();
-    debug.primary('step ' + (++stepIndex) + '/' + stepLength, 'build main modules');
+    debug.primary('step ' + (++stepIndex) + '/' + stepLength, '构建入口模块');
     var buildAPPResult = buildAPP({
         glob: configs.js.main,
         chunk: configs.js.chunk,
@@ -149,7 +149,7 @@ module.exports = function (options) {
 
     // 4. 重写 coolie-config.js
     console.log();
-    debug.primary('step ' + (++stepIndex) + '/' + stepLength, 'generate coolie.js profile');
+    debug.primary('step ' + (++stepIndex) + '/' + stepLength, '生成模块加载器配置文件');
     var destCoolieConfigJSPath = replaceCoolieConfig(configs.srcCoolieConfigJSPath, {
         coolieConfigs: configs.coolieConfigs,
         versionLength: configs.versionLength,
@@ -170,7 +170,7 @@ module.exports = function (options) {
 
     // 5. 构建 html
     console.log();
-    debug.primary('step ' + (++stepIndex) + '/' + stepLength, 'build htmls');
+    debug.primary('step ' + (++stepIndex) + '/' + stepLength, '构建 html');
     var buildHTMLResult = buildHTML({
         middleware: middleware,
         glob: configs.html.src,
@@ -199,7 +199,7 @@ module.exports = function (options) {
 
     // 6. 生成资源地图
     console.log();
-    debug.primary('step ' + (++stepIndex) + '/' + stepLength, 'generate coolie map');
+    debug.primary('step ' + (++stepIndex) + '/' + stepLength, '生成资源引用关系地图');
     buildMap({
         srcDirname: srcDirname,
         destDirname: destDirname,
@@ -237,8 +237,8 @@ module.exports = function (options) {
     humanizeTime += elapsedTime + 'ms';
 
     console.log();
-    debug.primary('build success', 'elapsed ' + humanizeTime + ', ' +
-        'at ' + date.format('YYYY-MM-DD HH:mm:ss.SSS'));
+    debug.primary('build success', '耗时 ' + humanizeTime + ', ' +
+        '于 ' + date.format('YYYY-MM-DD HH:mm:ss.SSS'));
     console.log();
 };
 
