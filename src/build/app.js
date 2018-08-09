@@ -96,7 +96,7 @@ module.exports = function (options) {
     var mainLength = Object.keys(mainMap).length;
 
     if (!mainLength) {
-        debug.ignore('build main', 'no main modules');
+        debug.ignore('build main', '未解析到入口模块');
         return {
             mainVersionMap: mainVersionMap,
             chunkVersionMap: chunkVersionMap,
@@ -109,7 +109,7 @@ module.exports = function (options) {
 
     if (mainLength && !options.destMainModulesDirname) {
         debug.error('mainLength', mainLength);
-        debug.error('build main', '`coolie-config.js` is not defined');
+        debug.error('build main', '`coolie-config.js` 配置未定义');
         return process.exit(1);
     }
 

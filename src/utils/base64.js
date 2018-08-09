@@ -54,7 +54,7 @@ exports.file = function (file, extname) {
             return process.exit(1);
         }
     } else {
-        debug.error('base64 file', file + ' is NOT a local file');
+        debug.error('base64 file', file + ' 不是一个本地文件');
         return process.exit(1);
     }
 

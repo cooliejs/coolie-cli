@@ -227,13 +227,13 @@ var deepCreate = function (type, options) {
     if (isExpress && options.mongoose && options.redis) {
         options.mongoose_redis = true;
         options.mongoose = options.redis = false;
-        debug.success('create', type + ' template with mongoose and redis');
+        debug.success('create', type + ' 工程脚手架（mongoose、redis）');
     } else if (isExpress && options.mongoose) {
-        debug.success('create', type + ' template with mongoose');
+        debug.success('create', type + ' 工程脚手架（mongoose）');
     } else if (isExpress && options.redis) {
-        debug.success('create', type + ' template with redis');
+        debug.success('create', type + ' 工程脚手架（redis）');
     } else {
-        debug.success('create', type + ' template');
+        debug.success('create', type + ' 工程脚手架');
     }
 
     scaffold(meta.name, function (err, template) {
