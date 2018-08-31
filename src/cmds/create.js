@@ -15,41 +15,19 @@ var Template = require('blear.classes.template');
 var console = require('blear.node.console');
 var glob = require('glob');
 var fse = require('fs-extra');
+var fs = require('fs');
 var plan = require('blear.utils.plan');
 
 var banner = require('./banner.js');
 var pkg = require('../../package.json');
 var scaffold = require('../utils/scaffold');
 
-var template_root = path.join(__dirname, '../../scaffolds/');
 var TEMPLATE_MAP = {
     express: {
-        name: 'express',
-        // root: path.join(template_root, 'express'),
-        convert: {
-            'package.json': {
-                mongoose: 'package${mongoose}.json',
-                redis: 'package${redis}.json',
-                mongoose_redis: 'package${mongoose_redis}.json',
-                none: 'package${none}.json'
-            },
-            'configs.js': {
-                mongoose_redis: 'configs${mongoose_redis}.js',
-                mongoose: 'configs${mongoose}.js',
-                redis: 'configs${redis}.js',
-                none: 'configs${none}.js'
-            },
-            'webserver/index.js': {
-                mongoose: 'webserver/index${mongoose}.js',
-                mongoose_redis: 'webserver/index${mongoose_redis}.js',
-                redis: 'webserver/index${redis}.js',
-                none: 'webserver/index${none}.js'
-            }
-        }
+        name: 'express'
     },
     'static': {
         name: 'static'
-        // root: path.join(template_root, 'static')
     }
 };
 // 重命名的文件
@@ -83,7 +61,7 @@ var createTemplate = function (meta, options, callback) {
     var files = path.glob('**/*', {
         srcDirname: root,
         globOptions: {
-            dot: true,
+            dot: false,
             nodir: true
         },
         filter: function (indexGlob, indexFile, file) {
@@ -241,6 +219,7 @@ var deepCreate = function (type, options) {
             return;
         }
 
+        meta.convert = readConvert(template);
         meta.root = template.path;
         createTemplate(meta, options, function () {
             createReadmeMD(meta, options);
@@ -273,3 +252,23 @@ module.exports = function (options) {
     }
 };
 
+
+/**
+ * 读取 convert
+ * @param template
+ * @returns {*}
+ */
+function readConvert(template) {
+    var convert;
+
+    try {
+        convert = JSON.parse(fs.readFileSync(
+            path.join(template.path, '.convert.json'),
+            'utf8'
+        ));
+    } catch (err) {
+        // ignore
+    }
+
+    return convert || {};
+}
