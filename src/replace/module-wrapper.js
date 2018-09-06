@@ -18,6 +18,7 @@ var debug = require('blear.node.debug');
 var console = require('blear.node.console');
 
 
+var minifyJS = require('../minify/js.js');
 var minifyCSS = require('../minify/css.js');
 var minifyHTML = require('../minify/html.js');
 var minifyJSON = require('../minify/json.js');
@@ -237,6 +238,39 @@ module.exports = function (file, options) {
     });
 
     switch (options.inType) {
+        case 'js':
+            switch (options.outType) {
+                case 'url':
+                    options2.filter = function () {
+                        return minifyJS(file, {
+                                code: code,
+                                uglifyJSOptions: options.uglifyJSOptions
+                            });
+                    };
+                    var createURLRet0 = createURL(file, options2);
+                    uri = createURLRet0.code;
+                    createURLRet0.code = uri;
+                    return wrapModuleDefine(file, createURLRet0, options);
+
+                case 'base64':
+                    var minifyJSRet1 = minifyJS(file, {
+                        code: code,
+                        uglifyJSOptions: options.uglifyJSOptions
+                    });
+                    code = base64.string(code, extname);
+                    minifyJSRet1.code = code;
+                    return wrapModuleDefine(file, minifyJSRet1, options);
+
+                // text
+                default :
+                    var minifyJSRet2 = minifyJS(file, {
+                        code: code,
+                        uglifyJSOptions: options.uglifyJSOptions
+                    });
+                    return wrapModuleDefine(file, minifyJSRet2, options);
+            }
+            break;
+
         case 'json':
             switch (options.outType) {
                 case 'url':

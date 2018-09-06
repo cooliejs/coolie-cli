@@ -213,7 +213,7 @@ module.exports = function (file, options) {
                             code: jsCode,
                             uglifyJSOptions: options.uglifyJSOptions,
                             mute: options.mute
-                        }) + '\n';
+                        }).code + '\n';
                 }
 
                 files.push(jsFile);

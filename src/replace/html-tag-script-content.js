@@ -83,7 +83,7 @@ module.exports = function (file, options) {
             code: node.content,
             uglifyJSOptions: options.uglifyJSOptions,
             mute: options.mute
-        });
+        }).code;
 
         if (options.signJS) {
             node.content = sign.js() + node.content;

@@ -198,7 +198,7 @@ module.exports = function (file, options) {
     code = minifyJS(file, {
         code: code,
         uglifyJSOptions: options.uglifyJSOptions
-    });
+    }).code;
 
     return {
         dependencies: dependencies,

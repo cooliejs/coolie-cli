@@ -118,7 +118,7 @@ module.exports = function (file, options) {
     var minifyedDestCoolieConfigCode = minifyJS(file, {
         code: destCoolieConfigCode,
         uglifyJSOptions: options.uglifyJSOptions
-    });
+    }).code;
     var destCoolieConfigJSPath = encryption.md5(minifyedDestCoolieConfigCode).slice(0, options.versionLength) + '.js';
 
     if (options.sign) {

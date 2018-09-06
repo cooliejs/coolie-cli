@@ -63,7 +63,7 @@ module.exports = function (src, options) {
             destCode = minifyJS(srcPath, {
                 code: srcCode,
                 uglifyJSOptions: options.uglifyJSOptions
-            });
+            }).code;
         }
 
         var destVersion = encryption.md5(destCode).slice(0, options.versionLength);

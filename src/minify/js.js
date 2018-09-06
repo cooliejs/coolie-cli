@@ -88,6 +88,7 @@ var compressorOptions = {
  * @param options {Object} 配置
  * @param options.code {String} 代码
  * @param [options.uglifyJSOptions] {Object} 代码压缩配置
+ * @returns {{code: string}}
  */
 module.exports = function (file, options) {
     var code = options.code;
@@ -110,7 +111,7 @@ module.exports = function (file, options) {
             mangle: true,
             // 是否压缩
             compress: object.assign(true, {}, compressorOptions, options.uglifyJSOptions)
-        }).code;
+        });
     } catch (err) {
         debug.error('js code', code);
         debug.error('jsminify', file);
