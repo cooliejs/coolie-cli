@@ -78,7 +78,7 @@ module.exports = function (file, options) {
 
     var resList = [];
     var virtualMap = options.virtualMap;
-    var isJS = options.inType === 'js';
+    var isJS = options.inType === 'js' && options.outType === 'js';
 
     // 读取模块内容
     var code = reader(file, 'utf8', options.parent);
@@ -140,63 +140,58 @@ module.exports = function (file, options) {
         }
     });
 
-    // 分析模块类型
-    switch (options.inType) {
-        case 'js':
-            // 1. 替换 require.async()
-            code = replaceRequire(file, {
-                code: code,
-                async: true,
-                outName2IdMap: asyncOutName2IdMap
-            });
+    if (isJS) {
+        // 1. 替换 require.async()
+        code = replaceRequire(file, {
+            code: code,
+            async: true,
+            outName2IdMap: asyncOutName2IdMap
+        });
 
-            // 2. 替换 require()
-            code = replaceRequire(file, {
-                code: code,
-                async: false,
-                outName2IdMap: syncOutName2IdMap
-            });
+        // 2. 替换 require()
+        code = replaceRequire(file, {
+            code: code,
+            async: false,
+            outName2IdMap: syncOutName2IdMap
+        });
 
-            // 同一个文件，不同的模块出口类型，返回的模块是不一样的
-            // 例：image|js !== image|url
-            var gid = options.main === file ? '0' : globalId.get(file, options.outType);
+        // 同一个文件，不同的模块出口类型，返回的模块是不一样的
+        // 例：image|js !== image|url
+        var gid = options.main === file ? '0' : globalId.get(file, options.outType);
 
-            // 3. 包裹 define()
-            code = wrapDefine(file, {
-                srcDirname: options.srcDirname,
-                destHost: options.destHost,
-                inType: options.inType,
-                id: gid,
-                deps: depGidList,
-                factory: code,
-                rem: true,
-                compatible: options.compatible,
-                middleware: options.middleware
-            });
-            break;
-
-        default:
-            var replaceModuleWrapperRet = replaceModuleWrapper(file, {
-                inType: options.inType,
-                outType: options.outType,
-                srcDirname: options.srcDirname,
-                destDirname: options.destDirname,
-                destJSDirname: options.destJSDirname,
-                destCSSDirname: options.destCSSDirname,
-                destResourceDirname: options.destResourceDirname,
-                destHost: options.destHost,
-                versionLength: options.versionLength,
-                parent: options.parent,
-                minifyResource: options.minifyResource,
-                cleanCSSOptions: options.cleanCSSOptions,
-                uglifyJSOptions: options.uglifyJSOptions,
-                htmlMinifyOptions: options.htmlMinifyOptions,
-                mute: options.mute,
-                middleware: options.middleware
-            });
-            code = replaceModuleWrapperRet.code;
-            resList = replaceModuleWrapperRet.resList;
-            break;
+        // 3. 包裹 define()
+        code = wrapDefine(file, {
+            srcDirname: options.srcDirname,
+            destHost: options.destHost,
+            inType: options.inType,
+            id: gid,
+            deps: depGidList,
+            factory: code,
+            rem: true,
+            compatible: options.compatible,
+            middleware: options.middleware
+        });
+    } else {
+        var replaceModuleWrapperRet = replaceModuleWrapper(file, {
+            inType: options.inType,
+            outType: options.outType,
+            srcDirname: options.srcDirname,
+            destDirname: options.destDirname,
+            destJSDirname: options.destJSDirname,
+            destCSSDirname: options.destCSSDirname,
+            destResourceDirname: options.destResourceDirname,
+            destHost: options.destHost,
+            versionLength: options.versionLength,
+            parent: options.parent,
+            minifyResource: options.minifyResource,
+            cleanCSSOptions: options.cleanCSSOptions,
+            uglifyJSOptions: options.uglifyJSOptions,
+            htmlMinifyOptions: options.htmlMinifyOptions,
+            mute: options.mute,
+            middleware: options.middleware
+        });
+        code = replaceModuleWrapperRet.code;
+        resList = replaceModuleWrapperRet.resList;
     }
 
     // 4. 压缩代码
