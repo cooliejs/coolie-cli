@@ -37,6 +37,9 @@ var moduleInTypeMap = {
 var moduleOutTypeMap = {
     js: {
         js: 1,
+        text: 2,
+        url: 3,
+        base64: 4,
         d: 'js'
     },
     file: {
