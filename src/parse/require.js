@@ -59,16 +59,16 @@ module.exports = function (file, options) {
         var pipeLine = requirePipeline(file, name, async ? '' : (arg1 && arg1.value || ''));
         var inType = pipeLine[0];
         var outType = pipeLine[1];
-        var id;
+        var requireFile;
         var nodeModule = false;
 
         // 相对于根目录
         if (reAbsolute.test(name)) {
-            id = path.join(options.srcDirname, name);
+            requireFile = path.join(options.srcDirname, name);
         }
         // 相对于当前目录
         else if (reRelative.test(name)) {
-            id = path.join(path.dirname(file), name);
+            requireFile = path.join(path.dirname(file), name);
         }
         // 相对于 node_modules 目录
         else {
@@ -112,7 +112,7 @@ module.exports = function (file, options) {
             var fromDirname = path.join(options.srcCoolieConfigNodeModulesDirname, nodeModuleDirname);
 
             if (nodeModulePath) {
-                id = path.join(fromDirname, nodeModulePath);
+                requireFile = path.join(fromDirname, nodeModulePath);
             } else {
                 var reqPkg = {};
                 var pkgJSONFile = path.join(fromDirname, PACKAGE_JSON);
@@ -127,24 +127,43 @@ module.exports = function (file, options) {
                     return process.exit(1);
                 }
 
-                id = path.join(fromDirname, reqPkg.main || 'index.js');
+                requireFile = path.join(fromDirname, reqPkg.main || 'index.js');
             }
         }
 
-        var extname = path.extname(id);
+        var extname = path.extname(requireFile);
 
         if (inType === 'js' && extname !== '.js') {
-            id += '.js';
+            requireFile += '.js';
+        }
+
+        if (options.middleware) {
+            var meta = options.middleware.exec({
+                file: requireFile,
+                name: name,
+                inType: inType,
+                outType: outType,
+                async: async,
+                nodeModule: nodeModule,
+                progress: 'pre-require'
+            });
+
+            requireFile = meta.file;
+            name = meta.name;
+            inType = meta.inType;
+            outType = meta.outType;
+            async = meta.async;
+            nodeModule = meta.nodeModule;
         }
 
         requireList.push({
-            file: id,
-            id: id + '|' + outType,
+            file: requireFile,
+            id: requireFile + '|' + outType,
             name: name,
             outName: name + '|' + outType,
             inType: inType,
             outType: outType,
-            gid: globalId.get(id, outType),
+            gid: globalId.get(requireFile, outType),
             async: async,
             nodeModule: nodeModule,
             dependent: file
