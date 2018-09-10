@@ -115,6 +115,7 @@ module.exports = function (file, options) {
 
         if (options.middleware) {
             var meta = options.middleware.exec({
+                parent: file,
                 file: requireFile,
                 name: name,
                 fullName: fullName,
