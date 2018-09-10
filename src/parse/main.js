@@ -134,7 +134,7 @@ module.exports = function (options) {
     }
 
     parseModules(null, mainFiles);
-    progress.stop('parse module', parseLength + ' modules parsed');
+    progress.stop('parse module', parseLength + ' 个依赖模块');
 
     return {
         mainMap: mainMap,

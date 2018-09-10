@@ -129,7 +129,7 @@ module.exports = function (options) {
     var mainIndex = 0;
 
 
-    debug.success('build main', 'will build ' + mainLength + ' main modules');
+    debug.success('build main', mainLength + ' 个入口模块');
     // 3、chunk 计数统计
     collection.each(mainMap, function (mainFile, mainMeta) {
         var buildMainRet = buildMain(mainFile, {
