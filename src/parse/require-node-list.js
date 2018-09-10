@@ -13,7 +13,7 @@ var console = require('blear.node.console');
 
 
 var Uglify = require("uglify-js");
-var beforeWrap = 'function parseNodeList(){';
+var beforeWrap = 'function parseNodeList(){\n';
 var afterWrap = '\n}';
 
 module.exports = function (file, code, async) {
