@@ -91,6 +91,7 @@ module.exports = function (options) {
     coolie.use = function (middleware/*arguments*/) {
         if (!typeis.Function(middleware)) {
             debug.error('coolie middleware', '不符合规范的 coolie 中间件');
+            debug.error('coolie middleware', 'coolie 中间返回值必须是一个函数');
             debug.warn('coolie book', '相关 coolie 中间件开发规范，请参阅 ' + bookURL('/document/coolie-middleware/'));
             debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-mid-*` 为前缀');
             process.exit(1);
@@ -105,6 +106,7 @@ module.exports = function (options) {
                 return fn.call(coolie, options) || options;
             } catch (err) {
                 debug.error('coolie middleware', '不符合规范的 coolie 中间件');
+                debug.error('coolie middleware', err.message);
                 debug.warn('coolie book', '相关 coolie 中间件开发规范，请参阅 ' + bookURL('/document/coolie-middleware/'));
                 debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-mid-*` 为前缀');
                 process.exit(1);
