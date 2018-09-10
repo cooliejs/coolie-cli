@@ -56,6 +56,7 @@ module.exports = function (file, options) {
         var arg0 = node.args[0];
         var arg1 = node.args[1];
         var name = arg0.value;
+        var fullName = name;
         var pipeLine = requirePipeline(file, name, async ? '' : (arg1 && arg1.value || ''));
         var inType = pipeLine[0];
         var outType = pipeLine[1];
@@ -72,32 +73,6 @@ module.exports = function (file, options) {
         }
         // 相对于 node_modules 目录
         else {
-            // // 找到最近的 node_modules
-            // var closestNodeModulesDirname = pathURI.closest(file, NODE_MODULES, options.srcDirname);
-            // var fromDirname;
-            //
-            // if (closestNodeModulesDirname) {
-            //     // // 当前模块的描述文件
-            //     // var pkg = require(path.join(closestNodeModulesDirname, PACKAGE_JSON));
-            //     //
-            //     // pkg.dependencies = pkg.dependencies || {};
-            //     // pkg.devDependencies = pkg.devDependencies || {};
-            //     // pkg.peerDependencies = pkg.peerDependencies || {};
-            //     //
-            //     // // 从子的 node_modules 开始找
-            //     // if (pkg.dependencies[name] || pkg.devDependencies[name]) {
-            //     //     fromDirname = path.join(closestNodeModulesDirname, NODE_MODULES);
-            //     // }
-            //     // // 根目录的 node_modules 开始
-            //     // else {
-            //     //     fromDirname = options.srcCoolieConfigNodeModulesDirname;
-            //     // }
-            // }
-            // // 根目录的 node_modules 开始
-            // else {
-            //     fromDirname = options.srcCoolieConfigNodeModulesDirname;
-            // }
-
             nodeModule = true;
             var nodeModuleDirname = name;
             var nodeModulePath = nodeModuleMainPath;
@@ -135,12 +110,14 @@ module.exports = function (file, options) {
 
         if (inType === 'js' && extname !== '.js') {
             requireFile += '.js';
+            fullName += '.js';
         }
 
         if (options.middleware) {
             var meta = options.middleware.exec({
                 file: requireFile,
                 name: name,
+                fullName: fullName,
                 inType: inType,
                 outType: outType,
                 async: async,
@@ -149,17 +126,19 @@ module.exports = function (file, options) {
             });
 
             requireFile = meta.file;
-            name = meta.name;
-            inType = meta.inType;
-            outType = meta.outType;
-            async = meta.async;
-            nodeModule = meta.nodeModule;
+            // name = meta.name;
+            // fullname = meta.fullname;
+            // inType = meta.inType;
+            // outType = meta.outType;
+            // async = meta.async;
+            // nodeModule = meta.nodeModule;
         }
 
         requireList.push({
             file: requireFile,
             id: requireFile + '|' + outType,
             name: name,
+            fullName: fullName,
             outName: name + '|' + outType,
             inType: inType,
             outType: outType,
