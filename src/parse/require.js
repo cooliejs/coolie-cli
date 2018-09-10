@@ -123,7 +123,7 @@ module.exports = function (file, options) {
                 outType: outType,
                 async: async,
                 nodeModule: nodeModule,
-                progress: 'pre-require'
+                progress: 'post-require'
             });
 
             requireFile = meta.file;
