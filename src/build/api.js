@@ -165,6 +165,7 @@ module.exports = function (options, middleware) {
         });
     };
 
+
     /**
      * 解析 require 的 name 和 pipeline
      * @param file
@@ -183,6 +184,7 @@ module.exports = function (options, middleware) {
         };
     };
 
+
     /**
      * 解析模块路径
      * @param name
@@ -199,6 +201,7 @@ module.exports = function (options, middleware) {
         });
     };
 
+
     /**
      * 创建一个虚拟文件
      * @param file
@@ -213,7 +216,9 @@ module.exports = function (options, middleware) {
         readerUtil.setCache(file, encoding, buffer);
     };
 
+
     middleware.bindContext(coolieAPI);
+
 
     return coolieAPI;
 };

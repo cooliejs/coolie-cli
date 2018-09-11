@@ -11,6 +11,7 @@
 var fse = require('fs-extra');
 var glob = require('glob');
 var path = require('blear.node.path');
+var array = require('blear.utils.array');
 var collection = require('blear.utils.collection');
 var object = require('blear.utils.object');
 var typeis = require('blear.utils.typeis');
@@ -101,17 +102,22 @@ module.exports = function (options) {
         args.shift();
         debug.success('coolie middleware', middleware.package && middleware.package.name || '未知');
         var fn = middleware.apply(coolie, args);
-        options.middleware.use(function (options) {
-            try {
-                return fn.call(coolie, options) || options;
-            } catch (err) {
-                debug.error('coolie middleware', '不符合规范的 coolie 中间件');
-                debug.error('coolie middleware', err.message);
-                debug.warn('coolie book', '相关 coolie 中间件开发规范，请参阅 ' + bookURL('/document/coolie-middleware/'));
-                debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-mid-*` 为前缀');
-                process.exit(1);
-            }
+        var fns = typeis.Array(fn) ? fn : [fn];
+
+        array.each(fns, function (index, fn) {
+            options.middleware.use(function (options) {
+                try {
+                    return fn.call(coolie, options) || options;
+                } catch (err) {
+                    debug.error('coolie middleware', '不符合规范的 coolie 中间件');
+                    debug.error('coolie middleware', err.message);
+                    debug.warn('coolie book', '相关 coolie 中间件开发规范，请参阅 ' + bookURL('/document/coolie-middleware/'));
+                    debug.warn('coolie tips', '请使用 npm 来安装 coolie 中间件，coolie 中间件都以 `coolie-mid-*` 为前缀');
+                    process.exit(1);
+                }
+            });
         });
+
         return coolie;
     };
 
