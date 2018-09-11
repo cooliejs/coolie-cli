@@ -56,6 +56,10 @@
   "bugs": {
     "url": "https://github.com/cooliejs/coolie-cli/issues"
   },
+  "engines": {
+    "node": ">= 6.0.0",
+    "iojs": ">= 1.0.0"
+  },
   "dependencies": {
     "adm-zip": "0.4.7",
     "blear.classes.class": "1.1.6",
