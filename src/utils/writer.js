@@ -52,7 +52,7 @@ module.exports = function (options) {
     }));
 
     if (options.signType) {
-        options.bufferList.unshift(new Buffer(sign(options.signType), 'utf8'));
+        options.bufferList.unshift(Buffer.from(sign(options.signType), 'utf8'));
     }
 
     var buffer = Buffer.concat(options.bufferList);

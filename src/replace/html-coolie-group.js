@@ -107,7 +107,7 @@ module.exports = function (file, options) {
         // css
         if (REG_LINK.test(coolieCode)) {
             if (options.signCSS) {
-                bfList.push(new Buffer(sign('css') + '\n', ENCODING));
+                bfList.push(Buffer.from(sign('css') + '\n', ENCODING));
             }
 
             coolieCode.replace(REG_LINK, function (source, quote, href) {
@@ -144,7 +144,7 @@ module.exports = function (file, options) {
 
                 files.push(cssFile);
                 md5List.push(encryption.md5(cssCode));
-                bfList.push(new Buffer(cssCode, ENCODING));
+                bfList.push(Buffer.from(cssCode, ENCODING));
                 var url = pathURI.toRootURL(cssFile, options.srcDirname);
 
                 if (!options.mute) {
@@ -192,7 +192,7 @@ module.exports = function (file, options) {
         // js
         else {
             if (options.signJS) {
-                bfList.push(new Buffer(sign('js') + '\n', ENCODING));
+                bfList.push(Buffer.from(sign('js') + '\n', ENCODING));
             }
 
             coolieCode.replace(REG_SCRIPT, function (source, quote, src) {
@@ -210,15 +210,15 @@ module.exports = function (file, options) {
 
                 if (options.minifyJS) {
                     jsCode = minifyJS(jsFile, {
-                            code: jsCode,
-                            uglifyJSOptions: options.uglifyJSOptions,
-                            mute: options.mute
-                        }).code + '\n';
+                        code: jsCode,
+                        uglifyJSOptions: options.uglifyJSOptions,
+                        mute: options.mute
+                    }).code + '\n';
                 }
 
                 files.push(jsFile);
                 md5List.push(encryption.md5(jsCode));
-                bfList.push(new Buffer(jsCode, ENCODING));
+                bfList.push(Buffer.from(jsCode, ENCODING));
                 var url = pathURI.toRootURL(jsFile, options.srcDirname);
 
                 if (!options.mute) {

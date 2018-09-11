@@ -171,27 +171,27 @@ module.exports = function (options) {
             // 符合分块策略 && 不是入口模块
             if (chunkIndex && !mainMap[dependency.file]) {
                 chunkDependingCountMap[dependency.id] = chunkDependingCountMap[dependency.id] || {
-                        chunkIndex: chunkIndex,
-                        id: dependency.id,
-                        file: dependency.file,
-                        buffer: dependency.buffer,
-                        md5: dependency.md5,
-                        count: 0,
-                        mainIndexList: []
-                    };
+                    chunkIndex: chunkIndex,
+                    id: dependency.id,
+                    file: dependency.file,
+                    buffer: dependency.buffer,
+                    md5: dependency.md5,
+                    count: 0,
+                    mainIndexList: []
+                };
                 chunkDependingCountMap[dependency.id].count++;
                 chunkDependingCountMap[dependency.id].mainIndexList.push(mainIndex);
             } else {
                 singleModuleMap[mainIndex] = singleModuleMap[mainIndex] || {
-                        srcFile: mainFile,
-                        bufferList: [],
-                        md5List: [],
-                        mainIndex: mainIndex,
-                        chunkMap: {},
-                        chunkList: [],
-                        async: mainMeta.async,
-                        file: dependency.file
-                    };
+                    srcFile: mainFile,
+                    bufferList: [],
+                    md5List: [],
+                    mainIndex: mainIndex,
+                    chunkMap: {},
+                    chunkList: [],
+                    async: mainMeta.async,
+                    file: dependency.file
+                };
                 singleModuleMap[mainIndex].bufferList.push(dependency.buffer);
                 singleModuleMap[mainIndex].md5List.push(dependency.md5);
             }
@@ -215,9 +215,9 @@ module.exports = function (options) {
         // 被多次引用
         if (chunkMeta.count >= options.minDependingCount2Chunk) {
             chunkGroupMap[chunkIndex] = chunkGroupMap[chunkIndex] || {
-                    bufferList: [],
-                    md5List: []
-                };
+                bufferList: [],
+                md5List: []
+            };
             chunkGroupMap[chunkIndex].bufferList.push(chunkMeta.buffer);
             chunkGroupMap[chunkIndex].md5List.push(chunkMeta.md5);
 
@@ -257,7 +257,7 @@ module.exports = function (options) {
     // [{srcFile: String, bufferList: Array, md5List: Array, chunkList: Array, chunkMap: Object, async: Boolean, mainIndex: Number, file: String}]
     collection.each(singleModuleMap, function (singleIndex, singleMeta) {
         if (singleMeta.chunkList.length) {
-            singleMeta.bufferList.push(new Buffer('\ncoolie.chunk(' + arrayString.stringify(singleMeta.chunkList) + ');'));
+            singleMeta.bufferList.push(Buffer.from('\ncoolie.chunk(' + arrayString.stringify(singleMeta.chunkList) + ');'));
         }
 
         var asyncId = '';

@@ -137,7 +137,7 @@ module.exports = function (options) {
                 var virtualFile = pathURI.replaceVersion(originalFile, virtualName);
                 var rawName = path.basename(asyncMeta.name);
                 var virtualCode = 'module.exports = require("./' + rawName + '");';
-                var virtualBuffer = new Buffer(virtualCode, ENCODING);
+                var virtualBuffer = Buffer.from(virtualCode, ENCODING);
 
                 //debug.info('code', code);
                 //debug.info('asyncMeta', asyncMeta);

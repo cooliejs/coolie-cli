@@ -48,7 +48,7 @@ module.exports = function (file, encoding, embedFile) {
         try {
             var ret = fs.readFileSync(file, encoding);
 
-            bf = bufferMap[encoding][file] = new Buffer(ret, encoding);
+            bf = bufferMap[encoding][file] =  Buffer.from(ret, encoding);
         } catch (err) {
             debug.error('read file', file);
             debug.error('read file', err.message);

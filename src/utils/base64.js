@@ -63,7 +63,7 @@ exports.file = function (file, extname) {
     var base64;
 
     try {
-        base64 = new Buffer(binary, 'binary').toString('base64');
+        base64 = Buffer.from(binary, 'binary').toString('base64');
     } catch (err) {
         debug.error('base64 file', file);
         debug.error('base64 error', err.message);

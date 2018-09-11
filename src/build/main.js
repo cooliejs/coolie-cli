@@ -110,7 +110,7 @@ module.exports = function (file, options) {
         dependencies.push({
             id: file + '|' + options.outType,
             file: file,
-            buffer: new Buffer('\n' + ret.code, 'utf8'),
+            buffer: Buffer.from('\n' + ret.code, 'utf8'),
             md5: ret.md5
         });
 
