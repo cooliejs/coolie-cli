@@ -15,7 +15,8 @@ var console = require('blear.node.console');
 var Uglify = require("uglify-js");
 var beforeWrap = 'function parseNodeList(){\n';
 var afterWrap = '\n}';
-var cache = Object.create(null);
+var syncCache = Object.create(null);
+var asyncCache = Object.create(null);
 
 /**
  * 语法解析
@@ -27,13 +28,14 @@ var cache = Object.create(null);
  * @returns {*}
  */
 module.exports = function (file, options) {
-    if (cache[file]) {
-        return cache[file];
-    }
-
     var ast;
     var code = options.code;
     var async = options.async || false;
+    var cache = async ? asyncCache : syncCache;
+
+    if (cache[file]) {
+        return cache[file];
+    }
 
     code = beforeWrap + code + afterWrap;
 
