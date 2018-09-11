@@ -35,15 +35,6 @@ module.exports = function (file, options) {
     var code = options.code;
     var async = options.async || false;
 
-    if (options.middleware) {
-        code = options.middleware.exec({
-            progress: 'pre-require',
-            file: file,
-            async: async,
-            code: code
-        }).code;
-    }
-
     code = beforeWrap + code + afterWrap;
 
     try {
