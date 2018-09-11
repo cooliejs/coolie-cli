@@ -11,6 +11,7 @@ var object = require('blear.utils.object');
 var console = require('blear.node.console');
 
 var parseHTML = require('../parse/html.js');
+var parseRequirePipeline = require('../parse/require-pipeline');
 var buildCSSPath = require('../build/css-path.js');
 var buildJSPath = require('../build/js-path.js');
 var buildResPath = require('../build/res-path.js');
@@ -58,8 +59,6 @@ var defaults = {
 module.exports = function (options, middleware) {
     options = object.assign({}, defaults, options);
     var coolieAPI = options.coolieAPI;
-
-    middleware.bindContext(coolieAPI);
 
     /**
      * 匹配 HTML 并转换
@@ -163,6 +162,26 @@ module.exports = function (options, middleware) {
             destHost: _options.destHost
         });
     };
+
+    /**
+     * 解析 require 的 name 和 pipeline
+     * @param file
+     * @param name
+     * @param [pipeline]
+     * @returns {{name: *, pipeline: *, inType: *, outType: *}}
+     */
+    coolieAPI.parseRequireNameAndPipeline = function (file, name, pipeline) {
+        var arr = parseRequirePipeline(file, name, pipeline);
+
+        return {
+            name: name,
+            pipeline: pipeline,
+            inType: arr[0],
+            outType: arr[1]
+        };
+    };
+
+    middleware.bindContext(coolieAPI);
 
     return coolieAPI;
 };
