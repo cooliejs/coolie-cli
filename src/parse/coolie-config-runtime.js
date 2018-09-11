@@ -38,7 +38,6 @@ module.exports = function (file) {
                 coolieConfig.baseDir = cnf.baseDir || '';
                 coolieConfig.mainModulesDir = cnf.mainModulesDir || '';
                 coolieConfig.nodeModulesDir = cnf.nodeModulesDir || '';
-                coolieConfig.nodeModuleMainPath = cnf.nodeModuleMainPath || '';
                 coolieConfig.debug = cnf.debug !== false;
                 coolieConfig.global = cnf.global || {};
 
