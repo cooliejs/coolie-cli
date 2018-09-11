@@ -16,8 +16,19 @@ var Uglify = require("uglify-js");
 var beforeWrap = 'function parseNodeList(){\n';
 var afterWrap = '\n}';
 
-module.exports = function (file, code, async) {
+/**
+ * 语法解析
+ * @param file
+ * @param options
+ * @param options.code
+ * @param options.async
+ * @param [options.middleware]
+ * @returns {*}
+ */
+module.exports = function (file, options) {
     var ast;
+    var code = options.code;
+    var async = options.async;
 
     code = beforeWrap + code + afterWrap;
 
@@ -34,6 +45,8 @@ module.exports = function (file, code, async) {
     var requireNodes = [];
 
     ast.walk(new Uglify.TreeWalker(function (node) {
+
+
         if (node.start.value === 'require' &&
             node.expression  &&
             node.args) {

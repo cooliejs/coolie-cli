@@ -41,7 +41,11 @@ var pathRE = /\//;
 module.exports = function (file, options) {
     var code = options.code;
     var requireList = [];
-    var nodeList = parseRequireNodeList(file, code, options.async);
+    var nodeList = parseRequireNodeList(file, {
+        code:code,
+        async:options.async,
+        middleware: options.middleware
+    });
     var coolieConfigs = options.coolieConfigs;
 
     if (!coolieConfigs) {

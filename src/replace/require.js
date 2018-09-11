@@ -27,7 +27,11 @@ var parseRequireNodeList = require('../parse/require-node-list.js');
 module.exports = function (file, options) {
     var code = options.code;
     var outName2IdMap = options.outName2IdMap;
-    var requireNodeList = parseRequireNodeList(file, code, options.async);
+    var requireNodeList = parseRequireNodeList(file, {
+        code: code,
+        async: options.async,
+        middleware: options.middleware
+    });
     var offset = 0;
     var beforeLength = parseRequireNodeList.beforeLength;
 

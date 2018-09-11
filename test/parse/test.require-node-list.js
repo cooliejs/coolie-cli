@@ -20,7 +20,9 @@ var code = fs.readFileSync(file, 'utf8');
 
 describe('require-node-list.js', function () {
     it('main', function () {
-        var nodeList = parseRequireNodeList(file, code);
+        var nodeList = parseRequireNodeList(file, {
+            code: code
+        });
 
         assert.equal(nodeList.length, 1);
     });
