@@ -271,9 +271,10 @@ module.exports = function (options) {
             configs.js.minify = typeis.Object(configs.js.minify) ? configs.js.minify : {};
         }
 
+        var globalDefs = configs.js.minify ? configs.js.minify.global_defs || {} : {};
         configs.uglifyJSOptions = {
             minify: Boolean(configs.js.minify),
-            global_defs: configs.js.minify ? configs.js.minify.global_defs || {} : {}
+            global_defs: globalDefs
         };
 
         if (!configs._noCoolieJS) {
@@ -309,8 +310,9 @@ module.exports = function (options) {
             });
         }
 
-        configs.coolieConfigs = coolieConfigs;
         configs.uglifyJSOptions.global_defs.DEBUG = false;
+        configs.uglifyJSOptions.global_defs['process.env.NODE_ENV'] = 'production';
+        configs.coolieConfigs = coolieConfigs;
 
         if (!mainModulesDir) {
             debug.error('coolie-config.js', coolieConfigJSFile);
