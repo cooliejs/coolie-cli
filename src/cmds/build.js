@@ -147,6 +147,7 @@ module.exports = function (options) {
         middleware: middleware
     });
 
+
     // 4. 重写 coolie-config.js
     console.log();
     debug.primary('step ' + (++stepIndex) + '/' + stepLength, '生成模块加载器配置文件');
