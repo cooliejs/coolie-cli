@@ -15,6 +15,8 @@ var parseRequirePipeline = require('../parse/require-pipeline');
 var buildCSSPath = require('../build/css-path.js');
 var buildJSPath = require('../build/js-path.js');
 var buildResPath = require('../build/res-path.js');
+var resolveModuleUtil = require('../utils/resolve-module');
+var readerUtil = require('../utils/reader');
 
 
 var defaults = {
@@ -170,7 +172,7 @@ module.exports = function (options, middleware) {
      * @param [pipeline]
      * @returns {{name: *, pipeline: *, inType: *, outType: *}}
      */
-    coolieAPI.parseRequireNameAndPipeline = function (file, name, pipeline) {
+    coolieAPI.parseRequire = function (file, name, pipeline) {
         var arr = parseRequirePipeline(file, name, pipeline);
 
         return {
@@ -179,6 +181,36 @@ module.exports = function (options, middleware) {
             inType: arr[0],
             outType: arr[1]
         };
+    };
+
+    /**
+     * 解析模块路径
+     * @param name
+     * @param pipeline
+     * @param options
+     * @param options.file
+     * @param options.srcDirname
+     * @returns {{id, inType, outType, name, pipeline, fullName, nodeModule}}
+     */
+    coolieAPI.resolveModule = function (name, pipeline, options) {
+        return resolveModuleUtil(name, pipeline, {
+            file: options.file,
+            srcDirname: options.srcDirname
+        });
+    };
+
+    /**
+     * 创建一个虚拟文件
+     * @param file
+     * @param encoding
+     * @param buffer
+     */
+    coolieAPI.virtualFile = function (file, encoding, buffer) {
+        if (!Buffer.isBuffer(buffer)) {
+            buffer = Buffer.from(buffer, encoding);
+        }
+
+        readerUtil.setCache(file, encoding, buffer);
     };
 
     middleware.bindContext(coolieAPI);
