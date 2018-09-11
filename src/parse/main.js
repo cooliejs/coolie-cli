@@ -56,14 +56,24 @@ module.exports = function (options) {
     collection.each(mainFiles, function (index, mainFile) {
         mainFilesMap[mainFile] = true;
     });
+    mainFiles = mainFiles.map(function (file) {
+        return {
+            file: file,
+            inType: 'js',
+            outType: 'js',
+            nodeModule: false
+        };
+    });
 
     /**
      * 分析模块
      * @param parentFile
-     * @param files
+     * @param metas
      */
-    function parseModules(parentFile, files) {
-        collection.each(files, function (index, file) {
+    function parseModules(parentFile, metas) {
+        collection.each(metas, function (index, meta) {
+            var file = meta.file;
+
             if (parsedMap[file]) {
                 return;
             }
@@ -71,6 +81,20 @@ module.exports = function (options) {
             parseLength++;
             progress.run('parse module', pathURI.toRootURL(file, options.srcDirname));
             var code = reader(file, 'utf8', parentFile);
+
+            if (options.middleware) {
+                code = options.middleware.exec({
+                    progress: 'pre-module',
+                    file: file,
+                    inType: meta.inType,
+                    outType: meta.outType,
+                    nodeModule: meta.nodeModule,
+                    parent: parentFile,
+                    code: code
+                }).code;
+                reader.setCache(file, 'utf8', Buffer.from(code, 'utf8'));
+            }
+
             parsedMap[file] = true;
             // require.async()
             var requireAsyncList = parseRequireList(file, {
@@ -128,7 +152,7 @@ module.exports = function (options) {
             });
 
             collection.each(requireSyncList.concat(requireAsyncList), function (index, meta) {
-                parseModules(file, [meta.file]);
+                parseModules(file, [meta]);
             });
         });
     }

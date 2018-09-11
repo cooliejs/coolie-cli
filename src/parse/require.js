@@ -127,7 +127,7 @@ module.exports = function (file, options) {
                 outType: outType,
                 async: async,
                 nodeModule: nodeModule,
-                progress: 'post-require'
+                progress: 'post-module'
             });
 
             requireFile = meta.file;
