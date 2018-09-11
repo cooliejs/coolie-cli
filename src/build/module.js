@@ -55,7 +55,7 @@ var defaults = {
  * @param options.parent {String} 父级模块
  * @param options.srcDirname {String} 原始根目录
  * @param options.coolieConfigs {String} coolie-configs.js 配置
- * @param options.srcCoolieConfigMainModulesDirname {String} base 根目录
+ * @param options.srcCoolieConfigMainModulesDirname {String} 主模块根目录
  * @param options.srcCoolieConfigNodeModulesDirname {String} node_modules 根目录
  * @param options.destDirname {String} 目标根目录
  * @param options.destJSDirname {String} 目标 JS 目录
