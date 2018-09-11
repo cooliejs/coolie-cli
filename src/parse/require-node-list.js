@@ -15,20 +15,34 @@ var console = require('blear.node.console');
 var Uglify = require("uglify-js");
 var beforeWrap = 'function parseNodeList(){\n';
 var afterWrap = '\n}';
+var cache = Object.create(null);
 
 /**
  * 语法解析
  * @param file
  * @param options
  * @param options.code
- * @param options.async
+ * @param [options.async]
  * @param [options.middleware]
  * @returns {*}
  */
 module.exports = function (file, options) {
+    if (cache[file]) {
+        return cache[file];
+    }
+
     var ast;
     var code = options.code;
-    var async = options.async;
+    var async = options.async || false;
+
+    if (options.middleware) {
+        code = options.middleware.exec({
+            progress: 'pre-require',
+            file: file,
+            async: async,
+            code: code
+        }).code;
+    }
 
     code = beforeWrap + code + afterWrap;
 
@@ -45,10 +59,8 @@ module.exports = function (file, options) {
     var requireNodes = [];
 
     ast.walk(new Uglify.TreeWalker(function (node) {
-
-
         if (node.start.value === 'require' &&
-            node.expression  &&
+            node.expression &&
             node.args) {
             if (node.args.length === 1 || node.args.length === 2) {
                 if (async && (node.expression.property === 'async' || node.expression.end.value === 'async')) {
@@ -60,7 +72,7 @@ module.exports = function (file, options) {
         }
     }));
 
-    return requireNodes;
+    return (cache[file] = requireNodes);
 };
 
 module.exports.beforeLength = beforeWrap.length;
