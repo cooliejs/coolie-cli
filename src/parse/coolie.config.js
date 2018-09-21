@@ -273,15 +273,15 @@ module.exports = function (options) {
             configs.js.chunk = [];
         }
 
-        if (configs.js.minify !== false) {
-            configs.js.minify = typeis.Object(configs.js.minify) ? configs.js.minify : {};
-        }
-
+        // https://www.npmjs.com/package/uglify-js#minify-options-structure
+        var uglifyJSOptions = typeis.Object(configs.js.minify) ? configs.js.minify : {};
+        uglifyJSOptions.coolieMinify = Boolean(configs.js.minify);
+        uglifyJSOptions.compress = uglifyJSOptions.compress || {};
         var globalDefs = configs.js.minify ? configs.js.minify.global_defs || {} : {};
-        configs.uglifyJSOptions = {
-            minify: Boolean(configs.js.minify),
+        object.assign(true, uglifyJSOptions.compress, {
             global_defs: globalDefs
-        };
+        });
+        configs.uglifyJSOptions = uglifyJSOptions;
 
         if (!configs._noCoolieJS) {
             check._coolieConfigJS();

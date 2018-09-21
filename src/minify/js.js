@@ -12,10 +12,13 @@ var debug = require('blear.node.debug');
 var object = require('blear.utils.object');
 var console = require('blear.node.console');
 
-// @link https://www.npmjs.com/package/uglify-js#compress-options
 var compressorOptions = {
     // 全局常量
     global_defs: {}
+};
+
+var defaultUglifyOptions = {
+    ie8: true
 };
 
 
@@ -30,26 +33,17 @@ var compressorOptions = {
 module.exports = function (file, options) {
     var code = options.code;
 
-    options.uglifyJSOptions = options.uglifyJSOptions || {};
-
-    if (options.uglifyJSOptions.minify === false) {
+    if (options.uglifyJSOptions.coolieMinify === false) {
         return code;
     }
 
-    options.uglifyJSOptions.global_defs = options.uglifyJSOptions.global_defs || {};
-    delete(options.uglifyJSOptions.minify);
+    delete(options.uglifyJSOptions.coolieMinify);
+    options = object.assign({}, defaultUglifyOptions, options.uglifyJSOptions);
+
+    console.log('minify options', options);
 
     try {
-        return uglifyJS.minify(code, {
-            // 是否警告提示
-            warnings: false,
-            // 变量管理
-            mangle: true,
-            // 是否支持 ie8
-            ie8: true,
-            // 是否压缩
-            compress: object.assign(true, {}, compressorOptions, options.uglifyJSOptions)
-        });
+        return uglifyJS.minify(code, options);
     } catch (err) {
         debug.error('js code', code);
         debug.error('jsminify', file);
