@@ -38,11 +38,6 @@ describe('replace/css-resource.js', function () {
 
         ret.resList.forEach(function (file) {
             assert.equal(path.isFile(file), true);
-            try {
-                fs.unlinkSync(file);
-            } catch (err) {
-                // ignore
-            }
         });
     });
 });
