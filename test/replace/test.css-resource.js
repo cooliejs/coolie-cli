@@ -7,9 +7,8 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var fs = require('fs');
-var typeis = require('ydr-utils').typeis;
 var assert = require('assert');
 
 var replaceCSSResource = require('../../src/replace/css-resource.js');
@@ -38,7 +37,7 @@ describe('replace/css-resource.js', function () {
         console.log(ret);
 
         ret.resList.forEach(function (file) {
-            assert.equal(typeis.file(file), true);
+            assert.equal(path.isFile(file), true);
         });
     });
 });

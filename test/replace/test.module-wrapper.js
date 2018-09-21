@@ -7,10 +7,10 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var assert = require('assert');
 var fs = require('fs');
-var dato = require('ydr-utils').dato;
+var object = require('blear.utils.object');
 
 var replaceModuleWrapper = require('../../src/replace/module-wrapper.js');
 var globalId = require('../../src/utils/global-id.js');
@@ -47,27 +47,27 @@ globalId.get(jsPath, 'js');
 
 describe('module-wrapper', function () {
     describe('json', function () {
-        var options2 = dato.extend({}, options);
+        var options2 = object.extend({}, options);
         var file = jsonPath;
 
         options2.code = fs.readFileSync(file, 'utf8');
         options2.inType = 'json';
         it('=>url', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'url';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/\/static\/res\//.test(replaceModuleWrapperRet.code), true);
         });
         it('=>base64', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'base64';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/"data:application\/json;base64,/.test(replaceModuleWrapperRet.code), true);
         });
         it('=>js', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
@@ -76,27 +76,27 @@ describe('module-wrapper', function () {
     });
 
     describe('css', function () {
-        var options2 = dato.extend({}, options);
+        var options2 = object.extend({}, options);
         var file = cssPath;
 
         options2.inType = 'css';
         options2.code = fs.readFileSync(file, 'utf8');
         it('=>url', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'url';
             var replaceModuleWrapperRet = replaceModuleWrapper(cssPath, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/\/static\/css\//.test(replaceModuleWrapperRet.code), true);
         });
         it('=>base64', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'base64';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/data:text\/css;base64,/.test(replaceModuleWrapperRet.code), true);
         });
         it('=>js', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
@@ -105,27 +105,27 @@ describe('module-wrapper', function () {
     });
     //
     describe('text', function () {
-        var options2 = dato.extend({}, options);
+        var options2 = object.extend({}, options);
         var file = textPath;
 
         options2.inType = 'text';
         options2.code = fs.readFileSync(file, 'utf8');
         it('=>url', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'url';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/\/static\/res\//.test(replaceModuleWrapperRet.code), true);
         });
         it('=>base64', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'base64';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/data:text\/plain;base64,/.test(replaceModuleWrapperRet.code), true);
         });
         it('=>js', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
@@ -134,27 +134,27 @@ describe('module-wrapper', function () {
     });
 
     describe('html', function () {
-        var options2 = dato.extend({}, options);
+        var options2 = object.extend({}, options);
         var file = htmlPath;
 
         options2.inType = 'html';
         options2.code = fs.readFileSync(file, 'utf8');
         it('=>url', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'url';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/\/static\/res\//.test(replaceModuleWrapperRet.code), true);
         });
         it('=>base64', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'base64';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/data:text\/html;base64,/.test(replaceModuleWrapperRet.code), true);
         });
         it('=>js', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
@@ -163,26 +163,26 @@ describe('module-wrapper', function () {
     });
 
     describe('image', function () {
-        var options2 = dato.extend({}, options);
+        var options2 = object.extend({}, options);
         var file = imagePath;
 
         options2.inType = 'image';
         it('=>url', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'url';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/\/static\/res\//.test(replaceModuleWrapperRet.code), true);
         });
         it('=>base64', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'base64';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/data:image\/jpeg;base64,/.test(replaceModuleWrapperRet.code), true);
         });
         it('=>js', function () {
-            var options3 = dato.extend({}, options2);
+            var options3 = object.extend({}, options2);
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);

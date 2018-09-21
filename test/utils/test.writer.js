@@ -8,7 +8,8 @@
 'use strict';
 
 var assert = require('assert');
-var typeis = require('ydr-utils').typeis;
+var path = require('blear.node.path');
+var typeis = require('blear.utils.typeis');
 
 var writer = require('../../src/utils/writer.js');
 
@@ -30,8 +31,8 @@ describe('utils/writer.js', function () {
             versionLength: 8
         });
 
-        assert.equal(typeis.file(ret.path), true);
-        assert.equal(typeis.string(ret.version), true);
+        assert.equal(path.isFile(ret.path), true);
+        assert.equal(typeis.String(ret.version), true);
     });
 });
 

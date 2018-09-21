@@ -7,7 +7,6 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
 var assert = require('assert');
 
 var globalId = require('../../src/utils/global-id.js');

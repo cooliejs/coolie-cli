@@ -7,10 +7,9 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var fs = require('fs');
 var assert = require('assert');
-var typeis = require('ydr-utils').typeis;
 
 var copy = require('../../src/utils/copy.js');
 
@@ -31,7 +30,7 @@ describe('utils/copy.js', function () {
         });
 
         console.log(ret);
-        assert.equal(typeis.file(ret), true);
+        assert.equal(path.isFile(ret), true);
     });
 });
 
