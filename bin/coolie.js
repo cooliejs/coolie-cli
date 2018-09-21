@@ -163,6 +163,9 @@ cli
 
     .command('version', '打印版本号并检查更新')
     .helper()
+    .action(function (args, params) {
+        cmdVersion();
+    })
 
     .parse({
         bin: 'coolie',
