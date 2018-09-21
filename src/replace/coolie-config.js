@@ -84,7 +84,7 @@ module.exports = function (file, options) {
     configList.push('mode: "AMD"');
     configList.push('asyncModulesMap: ' + asyncModulesMap);
     configList.push('chunkModulesMap: ' + chunkModulesMap);
-    configList.push('built: ' + '"' + pkg.name + '@' + pkg.version + '"');
+    configList.push('built: ' + '"coolie-cli@' + pkg.version + '"');
 
     collection.each(destCoolieConfig, function (key, val) {
         var one = '';
