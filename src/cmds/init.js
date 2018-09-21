@@ -89,25 +89,25 @@ var writeFile = function (name, destDirname, callback) {
  * 生成配置文件
  * @param options {Object} 配置
  * @param options.destDirname {String} 根目录
- * @param options.coolie.js {Boolean} 是否生成 coolie.js 的配置文件
- * @param options.coolie-cli {Boolean} 是否生成 coolie-cli 的配置文件
+ * @param options.coolieCli {Boolean} 是否生成 coolie-cli 的配置文件
+ * @param options.coolieJs {Boolean} 是否生成 coolie.js 的配置文件
  */
 module.exports = function (options) {
-    if (!options['coolie-cli'] && !options['coolie.js']) {
-        debug.warn('coolie tips', '请选择初始化类型，可选：`--coolie-cli` 或 `--coolie.js`');
+    if (!options.coolieCli && !options.coolieJs) {
+        debug.warn('coolie tips', '请选择初始化类型，可选：`--coolie-cli` 或 `--coolie-js`');
         return;
     }
 
     plan
         .task(function (next) {
-            if (!options['coolie-cli']) {
+            if (!options['coolieCli']) {
                 return next();
             }
 
             writeFile('coolie.config.js', options.destDirname, next);
         })
         .task(function (next) {
-            if (!options['coolie.js']) {
+            if (!options['coolieJs']) {
                 return next();
             }
 

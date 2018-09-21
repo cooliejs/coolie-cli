@@ -139,7 +139,20 @@ cli
     })
 
     .command('init', '初始化配置文件')
+    .option('coolieCli', {
+        alias: 'c',
+        description: 'coolie 构建工具配置文件',
+        type: 'boolean'
+    })
+    .option('coolieJs', {
+        alias: 'j',
+        description: 'coolie 模块加载器配置文件',
+        type: 'boolean'
+    })
     .helper()
+    .action(function (args, params) {
+        cmdInit(args);
+    })
 
     .command('version', '打印版本号并检查更新')
     .helper()
