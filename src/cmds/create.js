@@ -237,14 +237,6 @@ var deepCreate = function (type, options) {
  * @param options.static {Boolean} 是否为 static 模板
  */
 module.exports = function (options) {
-    banner();
-
-    if (!options.express && !options['static']) {
-        debug.warn('coolie tips', '请选择创建的样板类型，如：--express 或 --static，' +
-            '\n使用 --help 查看帮助');
-        return;
-    }
-
     if (options.express) {
         deepCreate('express', options);
     } else if (options.static) {
