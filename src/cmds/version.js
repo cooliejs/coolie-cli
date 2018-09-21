@@ -7,51 +7,33 @@
 
 'use strict';
 
-var npm = require('ydr-utils').npm;
 var debug = require('blear.node.debug');
-var plan = require('blear.utils.plan');
 var console = require('blear.node.console');
 
 
 var pkg = require('../../package.json');
 var banner = require('./banner.js');
+var getModulesVersion = require('../utils/get-modules-version');
 
 module.exports = function () {
     banner();
     debug.success('local coolie-cli', pkg.version);
     console.loading();
-    plan
-        // 获取 coolie-cli 版本
-        .task(function (next) {
-            npm.getLatestVersion(pkg.name, function (err, version) {
-                if (err) {
-                    return next(err);
-                }
 
-                next(err, version);
-            });
-        })
-        // 获取 coolie.js 版本
-        .task(function (next) {
-            npm.getLatestVersion('coolie.js', function (err, version) {
-                if (err) {
-                    return next(err);
-                }
+    getModulesVersion([
+        'coolie',
+        'coolie.js'
+    ], function (err, map) {
+        console.loadingEnd();
 
-                next(err, version);
-            });
-        })
-        .parallel(function () {
-            console.loadingEnd();
-        })
-        .try(function (coolieCliVersion, coolieJSVersion) {
-            debug.success('online coolie-cli', coolieCliVersion);
-            debug.success('online coolie.js', coolieJSVersion);
-        })
-        .catch(function (err) {
+        if (err) {
             debug.error('error', err.message);
             return process.exit(1);
-        });
+        }
+
+        debug.success('online coolie-cli', map.coolie);
+        debug.success('online coolie.js', map['coolie.js']);
+    });
 };
 
 
