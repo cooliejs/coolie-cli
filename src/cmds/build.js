@@ -9,10 +9,10 @@
 
 var object = require('blear.utils.object');
 var debug = require('blear.node.debug');
-var Middleware = require('ydr-utils').Middleware;
 var date = require('blear.utils.date');
 var console = require('blear.node.console');
 
+var Middleware = require('../classes/middleware');
 var parseCoolieConfig = require('../parse/coolie.config.js');
 var buildAPP = require('../build/app.js');
 var buildCopy = require('../build/copy.js');
