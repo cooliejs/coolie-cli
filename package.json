@@ -65,7 +65,7 @@
     "blear.classes.class": "1.1.6",
     "blear.classes.events": "1.0.7",
     "blear.classes.template": "1.1.0",
-    "blear.node.cli": "^1.4.2",
+    "blear.node.cli": "^1.4.3",
     "blear.node.console": "1.0.7",
     "blear.node.debug": "1.0.4",
     "blear.node.encryption": "1.0.2",
