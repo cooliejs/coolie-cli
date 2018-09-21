@@ -11,7 +11,6 @@
 var path = require('blear.node.path');
 var encryption = require('blear.node.encryption');
 var debug = require('blear.node.debug');
-var dato = require('ydr-utils').dato;
 var fse = require('fs-extra');
 var console = require('blear.node.console');
 var object = require('blear.utils.object');
@@ -24,6 +23,7 @@ var pathURI = require('../utils/path-uri.js');
 var minifyJS = require('../minify/js.js');
 var minifyCSS = require('../minify/css.js');
 var progress = require('../utils/progress.js');
+var objectCompare = require('../utils/object-compare');
 
 
 // <!--coolie-->
@@ -286,7 +286,7 @@ function hasCache(files) {
     var find = -1;
 
     collection.each(cacheFilesList, function (index, cache) {
-        var compare = dato.compare(cache, files);
+        var compare = objectCompare(cache, files);
 
         // 没有不同 && 没有独有
         if (!compare.different.length && !compare.only[0].length && !compare.only[1].length) {
