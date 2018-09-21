@@ -283,7 +283,6 @@ module.exports = function (options) {
         delete configs.js.minify.global_defs;
         configs.uglifyJSOptions = uglifyJSOptions;
 
-        console.log(configs.uglifyJSOptions);
         if (!configs._noCoolieJS) {
             check._coolieConfigJS();
         }
@@ -319,6 +318,8 @@ module.exports = function (options) {
 
         configs.uglifyJSOptions.compress.global_defs.DEBUG = false;
         configs.uglifyJSOptions.compress.global_defs['process.env.NODE_ENV'] = 'production';
+        coolieConfigs.global = coolieConfigs.global || {};
+        coolieConfigs.global.DEBUG = false;
         configs.coolieConfigs = coolieConfigs;
 
         if (!mainModulesDir) {

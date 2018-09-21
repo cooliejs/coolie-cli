@@ -43,11 +43,17 @@ describe('replace/coolie-config.js', function () {
             versionMap: versionMap,
             destHost: '/',
             coolieConfigs: {
-                callbacks: []
+                callbacks: [],
+                global: {}
             }
         });
 
         assert.equal(path.isFile(ret), true);
+        try {
+            fs.unlinkSync(ret);
+        } catch (err) {
+            // ignore
+        }
     });
 });
 
