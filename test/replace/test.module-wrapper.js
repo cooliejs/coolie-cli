@@ -47,27 +47,27 @@ globalId.get(jsPath, 'js');
 
 describe('module-wrapper', function () {
     describe('json', function () {
-        var options2 = object.extend({}, options);
+        var options2 = object.assign({}, options);
         var file = jsonPath;
 
         options2.code = fs.readFileSync(file, 'utf8');
         options2.inType = 'json';
         it('=>url', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'url';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/\/static\/res\//.test(replaceModuleWrapperRet.code), true);
         });
         it('=>base64', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'base64';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/"data:application\/json;base64,/.test(replaceModuleWrapperRet.code), true);
         });
         it('=>js', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
@@ -76,27 +76,27 @@ describe('module-wrapper', function () {
     });
 
     describe('css', function () {
-        var options2 = object.extend({}, options);
+        var options2 = object.assign({}, options);
         var file = cssPath;
 
         options2.inType = 'css';
         options2.code = fs.readFileSync(file, 'utf8');
         it('=>url', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'url';
             var replaceModuleWrapperRet = replaceModuleWrapper(cssPath, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/\/static\/css\//.test(replaceModuleWrapperRet.code), true);
         });
         it('=>base64', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'base64';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/data:text\/css;base64,/.test(replaceModuleWrapperRet.code), true);
         });
         it('=>js', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
@@ -105,27 +105,27 @@ describe('module-wrapper', function () {
     });
     //
     describe('text', function () {
-        var options2 = object.extend({}, options);
+        var options2 = object.assign({}, options);
         var file = textPath;
 
         options2.inType = 'text';
         options2.code = fs.readFileSync(file, 'utf8');
         it('=>url', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'url';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/\/static\/res\//.test(replaceModuleWrapperRet.code), true);
         });
         it('=>base64', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'base64';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/data:text\/plain;base64,/.test(replaceModuleWrapperRet.code), true);
         });
         it('=>js', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
@@ -134,27 +134,27 @@ describe('module-wrapper', function () {
     });
 
     describe('html', function () {
-        var options2 = object.extend({}, options);
+        var options2 = object.assign({}, options);
         var file = htmlPath;
 
         options2.inType = 'html';
         options2.code = fs.readFileSync(file, 'utf8');
         it('=>url', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'url';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/\/static\/res\//.test(replaceModuleWrapperRet.code), true);
         });
         it('=>base64', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'base64';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/data:text\/html;base64,/.test(replaceModuleWrapperRet.code), true);
         });
         it('=>js', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
@@ -163,26 +163,26 @@ describe('module-wrapper', function () {
     });
 
     describe('image', function () {
-        var options2 = object.extend({}, options);
+        var options2 = object.assign({}, options);
         var file = imagePath;
 
         options2.inType = 'image';
         it('=>url', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'url';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/\/static\/res\//.test(replaceModuleWrapperRet.code), true);
         });
         it('=>base64', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'base64';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);
             assert.equal(/data:image\/jpeg;base64,/.test(replaceModuleWrapperRet.code), true);
         });
         it('=>js', function () {
-            var options3 = object.extend({}, options2);
+            var options3 = object.assign({}, options2);
             options3.outType = 'js';
             var replaceModuleWrapperRet = replaceModuleWrapper(file, options3);
             console.log(replaceModuleWrapperRet);

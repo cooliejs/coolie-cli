@@ -28,6 +28,8 @@ var defaultUglifyOptions = {
 module.exports = function (file, options) {
     var code = options.code;
 
+    options.uglifyJSOptions = options.uglifyJSOptions || {};
+
     if (options.uglifyJSOptions.coolieMinify === false) {
         return code;
     }
