@@ -8,7 +8,7 @@
 'use strict';
 
 var assert = require('assert');
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 
 var buildHTML = require('../../src/build/html.js');
 

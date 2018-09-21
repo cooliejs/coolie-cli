@@ -7,7 +7,7 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var assert = require('assert');
 var fs = require('fs');
 

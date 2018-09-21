@@ -8,8 +8,7 @@
 'use strict';
 
 var assert = require('assert');
-var path = require('ydr-utils').path;
-var typeis = require('ydr-utils').typeis;
+var path = require('blear.node.path');
 
 var buildMap = require('../../src/build/map.js');
 
@@ -39,6 +38,6 @@ describe('build/map.js', function () {
             }
         });
 
-        assert.equal(typeis.file(destPath), true);
+       assert.equal(path.isFile(destPath), true);
     });
 });

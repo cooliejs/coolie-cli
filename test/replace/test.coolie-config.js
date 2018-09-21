@@ -8,10 +8,9 @@
 'use strict';
 
 var assert = require('assert');
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var fs = require('fs');
-var encryption = require('ydr-utils').encryption;
-var typeis = require('ydr-utils').typeis;
+var encryption = require('blear.node.encryption');
 
 var replaceCoolieConfig = require('../../src/replace/coolie-config.js');
 
@@ -48,7 +47,7 @@ describe('replace/coolie-config.js', function () {
             }
         });
 
-        assert.equal(typeis.file(ret), true);
+        assert.equal(path.isFile(ret), true);
     });
 });
 

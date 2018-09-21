@@ -7,9 +7,8 @@
 
 'use strict';
 
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var assert = require('assert');
-var typeis = require('ydr-utils').typeis;
 
 var parseCoolieConfig = require('../../src/parse/coolie.config.js');
 
@@ -23,7 +22,7 @@ describe('parse/coolie.config.js', function () {
         });
 
         //console.log(JSON.stringify(ret, null, 4));
-        assert.equal(typeis.directory(ret.destDirname), true);
+        assert.equal(path.isDirectory(ret.destDirname), true);
     });
 });
 

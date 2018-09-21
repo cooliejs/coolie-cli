@@ -8,7 +8,7 @@
 'use strict';
 
 
-var path = require('ydr-utils').path;
+var path = require('blear.node.path');
 var fs = require('fs');
 var expect = require('chai-jasmine').expect;
 
