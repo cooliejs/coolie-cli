@@ -19,7 +19,7 @@ var cmdBanner = require('../src/cmds/banner.js');
 var cmdBuild = require('../src/cmds/build.js');
 var cmdCreate = require('../src/cmds/create.js');
 var cmdDemo = require('../src/cmds/demo.js');
-var cmdBook = require('../src/cmds/book.js');
+var cmdDoc = require('../src/cmds/doc.js');
 var cmdInit = require('../src/cmds/init.js');
 var cmdVersion = require('../src/cmds/version.js');
 
@@ -27,9 +27,6 @@ var cmdVersion = require('../src/cmds/version.js');
 cli
     .banner(cmdBanner)
     .command()
-    .usage('coolie build [options]', '在当前目录进行工程构建')
-    .usage('coolie create <options>', '在当前目录新建指定类型的工程脚手架')
-    .usage('coolie demo <id>', '打开指定演示项目')
     .helper()
     .versioning()
     .action(function () {
@@ -136,7 +133,10 @@ cli
     })
 
     .command('doc', '官方文档')
-    .helper()
+    .usage('coolie doc', '使用浏览器打开官方文档')
+    .action(function () {
+        cmdDoc();
+    })
 
     .command('init', '初始化配置文件')
     .helper()

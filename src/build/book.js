@@ -15,7 +15,7 @@ var pkg = require('../../package.json');
 
 module.exports = function () {
     openHelper(pkg.coolie.book);
-    debug.success('coolie book', pkg.coolie.book);
+    debug.success('coolie doc', pkg.coolie.book);
 };
 
 

@@ -18,12 +18,12 @@ var bookURL = require('../utils/book-url');
 module.exports = function () {
     openHelper(bookURL(), function (err) {
         if (err) {
-            debug.error('coolie book', pkg.coolie.book);
-            debug.error('coolie book', err.message);
+            debug.error('coolie doc', pkg.coolie.book);
+            debug.error('coolie doc', err.message);
             return process.exit(1);
         }
 
-        debug.success('coolie book', pkg.coolie.book);
+        debug.success('coolie doc', pkg.coolie.book);
     });
 };
 
