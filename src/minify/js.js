@@ -12,11 +12,6 @@ var debug = require('blear.node.debug');
 var object = require('blear.utils.object');
 var console = require('blear.node.console');
 
-var compressorOptions = {
-    // 全局常量
-    global_defs: {}
-};
-
 var defaultUglifyOptions = {
     ie8: true
 };
@@ -38,12 +33,9 @@ module.exports = function (file, options) {
     }
 
     delete(options.uglifyJSOptions.coolieMinify);
-    options = object.assign({}, defaultUglifyOptions, options.uglifyJSOptions);
-
-    console.log('minify options', options);
 
     try {
-        return uglifyJS.minify(code, options);
+        return uglifyJS.minify(code, object.assign(true, {}, defaultUglifyOptions, options.uglifyJSOptions));
     } catch (err) {
         debug.error('js code', code);
         debug.error('jsminify', file);

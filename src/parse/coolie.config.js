@@ -278,11 +278,12 @@ module.exports = function (options) {
         uglifyJSOptions.coolieMinify = Boolean(configs.js.minify);
         uglifyJSOptions.compress = uglifyJSOptions.compress || {};
         var globalDefs = configs.js.minify ? configs.js.minify.global_defs || {} : {};
-        object.assign(true, uglifyJSOptions.compress, {
-            global_defs: globalDefs
-        });
+        uglifyJSOptions.compress.global_defs = uglifyJSOptions.compress.global_defs || {};
+        object.assign(uglifyJSOptions.compress.global_defs, globalDefs);
+        delete configs.js.minify.global_defs;
         configs.uglifyJSOptions = uglifyJSOptions;
 
+        console.log(configs.uglifyJSOptions);
         if (!configs._noCoolieJS) {
             check._coolieConfigJS();
         }
@@ -311,13 +312,13 @@ module.exports = function (options) {
         if (coolieConfigs.global) {
             collection.each(coolieConfigs.global, function (key, val) {
                 if (typeis.Boolean(val)) {
-                    configs.uglifyJSOptions.global_defs[key] = val;
+                    configs.uglifyJSOptions.compress.global_defs[key] = val;
                 }
             });
         }
 
-        configs.uglifyJSOptions.global_defs.DEBUG = false;
-        configs.uglifyJSOptions.global_defs['process.env.NODE_ENV'] = 'production';
+        configs.uglifyJSOptions.compress.global_defs.DEBUG = false;
+        configs.uglifyJSOptions.compress.global_defs['process.env.NODE_ENV'] = 'production';
         configs.coolieConfigs = coolieConfigs;
 
         if (!mainModulesDir) {
