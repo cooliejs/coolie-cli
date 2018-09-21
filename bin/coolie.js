@@ -139,6 +139,13 @@ cli
     })
 
     .command('init', '初始化配置文件')
+    .option('dirname', {
+        alias: 'd',
+        description: '工程根目录，默认当前工作目录',
+        transform: function (value, args, params) {
+            return path.resolve(value || './');
+        }
+    })
     .usage('coolie init -c', '初始化 coolie 工程构建配置文件')
     .usage('coolie init -j', '初始化 coolie 模块加载器配置文件')
     .option('coolieCli', {
@@ -158,7 +165,11 @@ cli
             return;
         }
 
-        cmdInit(args);
+        cmdInit({
+            destDirname: args.dirname,
+            coolieCli: args.coolieCli,
+            coolieJs: args.coolieJs
+        });
     })
 
     .command('version', '打印版本号并检查更新')
