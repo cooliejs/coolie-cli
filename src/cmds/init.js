@@ -17,7 +17,6 @@ var Template = require('blear.classes.template');
 var console = require('blear.node.console');
 
 
-var banner = require('./banner.js');
 var pkg = require('../../package.json');
 var scaffold = require('../utils/scaffold');
 
@@ -94,8 +93,6 @@ var writeFile = function (name, destDirname, callback) {
  * @param options.coolie-cli {Boolean} 是否生成 coolie-cli 的配置文件
  */
 module.exports = function (options) {
-    banner();
-
     if (!options['coolie-cli'] && !options['coolie.js']) {
         debug.warn('coolie tips', '请选择初始化类型，可选：`--coolie-cli` 或 `--coolie.js`');
         return;

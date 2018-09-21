@@ -12,11 +12,9 @@ var console = require('blear.node.console');
 
 
 var pkg = require('../../package.json');
-var banner = require('./banner.js');
 var getModulesVersion = require('../utils/get-modules-version');
 
 module.exports = function () {
-    banner();
     debug.success('local coolie-cli', pkg.version);
     console.loading();
 

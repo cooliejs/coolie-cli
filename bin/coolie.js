@@ -17,18 +17,11 @@ var debug = require('blear.node.debug');
 
 var cmdBanner = require('../src/cmds/banner.js');
 var cmdBuild = require('../src/cmds/build.js');
-var cmdVersion = require('../src/cmds/version.js');
-var cmdInit = require('../src/cmds/init.js');
-var cmdBook = require('../src/cmds/book.js');
-// var cmdInstall = require('../src/cmds/install.js');
 var cmdCreate = require('../src/cmds/create.js');
 var cmdDemo = require('../src/cmds/demo.js');
-var cmdHelp = require('../src/cmds/help.js');
-var cmdHelpBuild = require('../src/cmds/help-build.js');
-var cmdHelpCreate = require('../src/cmds/help-create.js');
-var cmdHelpInit = require('../src/cmds/help-init.js');
-var cmdHelpDemo = require('../src/cmds/help-demo.js');
-var cmdHelpInstall = require('../src/cmds/help-install.js');
+var cmdBook = require('../src/cmds/book.js');
+var cmdInit = require('../src/cmds/init.js');
+var cmdVersion = require('../src/cmds/version.js');
 
 
 cli
@@ -126,7 +119,9 @@ cli
     .command('demo', '演示项目')
     .usage('coolie demo <id>', '打开指定演示项目')
     .helper()
-    .action(function () {
+    .action(function (args, params) {
+        var id = params[0];
+
 
     })
 

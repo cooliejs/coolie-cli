@@ -11,7 +11,6 @@ var plan = require('blear.utils.plan');
 var debug = require('blear.node.debug');
 var openHelper = require('open');
 
-var banner = require('./banner.js');
 var gitDownload = require('../utils/git-download.js');
 var gitRepo = require('../utils/git-repo.js');
 
@@ -23,8 +22,6 @@ var gitRepo = require('../utils/git-repo.js');
  * @param options.demo {Number} demo 序号
  */
 module.exports = function (options) {
-    banner();
-
     var repo = 'coolie-demo' + options.demo;
 
     plan

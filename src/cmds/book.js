@@ -13,11 +13,9 @@ var console = require('blear.node.console');
 
 
 var pkg = require('../../package.json');
-var banner = require('./banner.js');
 var bookURL = require('../utils/book-url');
 
 module.exports = function () {
-    banner();
     openHelper(bookURL(), function (err) {
         if (err) {
             debug.error('coolie book', pkg.coolie.book);

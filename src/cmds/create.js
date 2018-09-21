@@ -18,7 +18,6 @@ var fse = require('fs-extra');
 var fs = require('fs');
 var plan = require('blear.utils.plan');
 
-var banner = require('./banner.js');
 var pkg = require('../../package.json');
 var scaffold = require('../utils/scaffold');
 
