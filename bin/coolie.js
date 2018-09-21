@@ -139,9 +139,11 @@ cli
     })
 
     .command('init', '初始化配置文件')
+    .usage('coolie init -c', '初始化 coolie 工程构建配置文件')
+    .usage('coolie init -j', '初始化 coolie 模块加载器配置文件')
     .option('coolieCli', {
         alias: 'c',
-        description: 'coolie 构建工具配置文件',
+        description: 'coolie 工程构建配置文件',
         type: 'boolean'
     })
     .option('coolieJs', {
@@ -151,6 +153,11 @@ cli
     })
     .helper()
     .action(function (args, params) {
+        if (args.coolieCli === false && args.coolieJs === false) {
+            cli.help('init');
+            return;
+        }
+
         cmdInit(args);
     })
 

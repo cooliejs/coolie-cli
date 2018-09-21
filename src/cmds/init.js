@@ -93,11 +93,6 @@ var writeFile = function (name, destDirname, callback) {
  * @param options.coolieJs {Boolean} 是否生成 coolie.js 的配置文件
  */
 module.exports = function (options) {
-    if (!options.coolieCli && !options.coolieJs) {
-        debug.warn('coolie tips', '请选择初始化类型，可选：`--coolie-cli` 或 `--coolie-js`');
-        return;
-    }
-
     plan
         .task(function (next) {
             if (!options['coolieCli']) {
