@@ -80,7 +80,6 @@ middleware.on('error', function (err) {
  * @param options.configFile {String} 配置文件
  */
 module.exports = function (options) {
-    banner();
     options = object.assign({}, defaults, options);
 
     var stepIndex = 0;

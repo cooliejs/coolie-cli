@@ -11,6 +11,7 @@
 'use strict';
 
 var cli = require('blear.node.cli');
+var path = require('blear.node.path');
 
 var cmdBanner = require('../src/cmds/banner.js');
 var cmdBuild = require('../src/cmds/build.js');
@@ -31,7 +32,7 @@ var cmdHelpInstall = require('../src/cmds/help-install.js');
 cli
     .banner(cmdBanner)
     .command()
-    .usage('coolie build', '在当前目录进行构建')
+    .usage('coolie build [options]', '在当前目录进行工程构建')
     .usage('coolie create <options>', '在当前目录新建指定类型的工程脚手架')
     .usage('coolie demo <id>', '打开指定演示项目')
     .helper()
@@ -39,26 +40,44 @@ cli
     .action(function () {
         cli.help();
     })
+
     .command('build', '构建工程')
+    .usage('coolie build [options]', '在当前目录进行工程构建')
     .option('dirname', {
         alias: 'd',
-        description: '工程根目录，默认当前工作目录'
+        description: '工程根目录，默认当前工作目录',
+        transform: function (value, args, params) {
+            return path.resolve(value || './');
+        }
     })
     .option('config', {
         alias: 'c',
-        description: '配置文件，默认为 coolie.config.js'
+        description: '配置文件，默认为 coolie.config.js',
+        default: 'coolie.config.js'
     })
     .helper()
+    .action(function (args, params) {
+        cmdBuild({
+            srcDirname: args.dirname,
+            configFile: args.config
+        });
+    })
+
     .command('create', '创建工程')
     .helper()
+
     .command('demo', '演示项目')
     .helper()
+
     .command('doc', '官方文档')
     .helper()
+
     .command('init', '初始化配置文件')
     .helper()
+
     .command('version', '打印版本号并检查更新')
     .helper()
+
     .parse({
         bin: 'coolie',
         package: require('../package.json')
