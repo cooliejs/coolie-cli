@@ -118,11 +118,21 @@ cli
 
     .command('demo', '演示项目')
     .usage('coolie demo <id>', '打开指定演示项目')
+    .option('dirname', {
+        alias: 'd',
+        description: '工程根目录，默认当前工作目录',
+        transform: function (value, args, params) {
+            return path.resolve(value || './');
+        }
+    })
     .helper()
     .action(function (args, params) {
         var id = params[0];
-
-
+        id = id || '1';
+        cmdDemo({
+            destDirname: args.dirname,
+            demo: id
+        });
     })
 
     .command('doc', '官方文档')
