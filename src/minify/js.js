@@ -37,10 +37,21 @@ module.exports = function (file, options) {
     delete(options.uglifyJSOptions.coolieMinify);
 
     try {
-        return uglifyJS.minify(code, object.assign(true, {}, defaultUglifyOptions, options.uglifyJSOptions));
+        var res = uglifyJS.minify(code, object.assign(true, {}, defaultUglifyOptions, options.uglifyJSOptions));
+
+        if (res.error) {
+            console.log();
+            debug.error('jsminify', file);
+            debug.error('js code', code);
+            debug.error('jsminify', res.error.message);
+            process.exit(1);
+        }
+
+        return res;
     } catch (err) {
-        debug.error('js code', code);
+        console.log();
         debug.error('jsminify', file);
+        debug.error('js code', code);
         debug.error('jsminify', err.message);
         process.exit(1);
     }
