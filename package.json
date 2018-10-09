@@ -94,6 +94,7 @@
     "fs-extra": "0.26.0",
     "glob": "5.0.15",
     "open": "0.0.5",
+    "parse5": "^5.1.0",
     "uglify-js": "3.4.9"
   },
   "license": "MIT",
