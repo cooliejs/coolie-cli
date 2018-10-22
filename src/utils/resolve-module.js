@@ -83,7 +83,7 @@ module.exports = function (name, pipeline, options) {
                 return process.exit(1);
             }
 
-            requireFile = path.join(fromDirname, reqPkg.main || 'index.js');
+            requireFile = path.join(fromDirname, reqPkg.browser || reqPkg.main || 'index.js');
         }
     }
 
