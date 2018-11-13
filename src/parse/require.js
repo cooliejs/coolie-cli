@@ -13,7 +13,7 @@ var console = require('blear.node.console');
 var globalId = require('../utils/global-id.js');
 var parseRequireNodeList = require('./require-node-list.js');
 var resolveModule = require('../utils/resolve-module');
-
+var bookURL = require('../utils/book-url');
 
 
 /**
@@ -32,8 +32,8 @@ module.exports = function (file, options) {
     var code = options.code;
     var requireList = [];
     var nodeList = parseRequireNodeList(file, {
-        code:code,
-        async:options.async,
+        code: code,
+        async: options.async,
         middleware: options.middleware
     });
     var coolieConfigs = options.coolieConfigs;
@@ -48,8 +48,18 @@ module.exports = function (file, options) {
         var async = node.expression.property === 'async';
         var arg0 = node.args[0];
         var arg1 = node.args[1];
+        var requireName = arg0.value;
+        var requirePipeline = arg1 && arg1.value;
 
-        var res = resolveModule(arg0.value, arg1 && arg1.value, {
+        if (!requireName) {
+            console.log();
+            debug.error('module file', file);
+            debug.error('parse require', '该模块动态引用了其他模块，导致无法静态解析');
+            debug.warn('warning', '模块路径指南 <' + bookURL('/introduction/module-path/') + '>');
+            process.exit(1);
+        }
+
+        var res = resolveModule(requireName, requirePipeline, {
             file: file,
             srcDirname: options.srcDirname,
             srcNodeModulesDirname: options.srcCoolieConfigNodeModulesDirname
