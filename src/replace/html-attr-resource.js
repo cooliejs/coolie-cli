@@ -44,6 +44,9 @@ var replaceList = [{
 }, {
     tags: ['source'],
     attr: 'srcset'
+}, {
+    tags: ['video'],
+    attr: 'poster'
 }];
 var defaults = {
     code: '',
