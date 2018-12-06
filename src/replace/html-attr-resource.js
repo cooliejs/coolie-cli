@@ -93,6 +93,10 @@ module.exports = function (file, options) {
                 return node;
             }
 
+            if (node.tag === 'link' && node.attrs.rel === 'stylesheet') {
+                return node;
+            }
+
             if (node.attrs.hasOwnProperty(COOLIE_IGNORE)) {
                 node.attrs[COOLIE_IGNORE] = null;
                 return node;
