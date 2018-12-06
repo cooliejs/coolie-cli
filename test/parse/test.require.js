@@ -15,7 +15,7 @@ var parseRequireList = require('../../src/parse/require.js');
 
 var srcDirname = path.join(__dirname, 'src');
 var file = path.join(srcDirname, 'require.js');
-var nodeModulesDirname = path.join(__dirname, 'node_modules');
+var nodeModulesDirname = path.join(__dirname, 'node-modules');
 
 describe('parse/require.js', function () {
     it('sync', function () {
