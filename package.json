@@ -1,6 +1,6 @@
 {
   "name": "coolie",
-  "version": "2.7.8",
+  "version": "2.7.9",
   "description": "前端工程构建工具",
   "preferGlobal": true,
   "bin": {
