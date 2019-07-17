@@ -15,8 +15,8 @@ var console = require('blear.node.console');
 var Uglify = require("uglify-js");
 var beforeWrap = 'function parseNodeList(){\n';
 var afterWrap = '\n}';
-var syncCache = Object.create(null);
-var asyncCache = Object.create(null);
+// var syncCache = Object.create(null);
+// var asyncCache = Object.create(null);
 
 /**
  * 语法解析
@@ -31,11 +31,14 @@ module.exports = function (file, options) {
     var ast;
     var code = options.code;
     var async = options.async || false;
-    var cache = async ? asyncCache : syncCache;
 
-    if (cache[file]) {
-        return cache[file];
-    }
+    // 这里不能加 cache，因为前后两次的 code 是不一样的
+    // 原始代码 => 异步解析 => 同步解析 => 最后结果
+    // var cache = async ? asyncCache : syncCache;
+    //
+    // if (cache[file]) {
+    //     return cache[file];
+    // }
 
     code = beforeWrap + code + afterWrap;
 
@@ -65,7 +68,7 @@ module.exports = function (file, options) {
         }
     }));
 
-    return (cache[file] = requireNodes);
+    return requireNodes;
 };
 
 module.exports.beforeLength = beforeWrap.length;
